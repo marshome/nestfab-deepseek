@@ -73,6 +73,38 @@ private:
 };
 
 // RE Multi::RCompactCanceller (0x7D2CB0) is `xor eax,eax; ret` -- never cancels.
+// RE Tiling::WarpCanceller::ProbeCancel (0x7E80E0, 19 bytes, seven instructions) -- a DELEGATING
+// canceller, transcribed literally:
+//     7E80E0  mov rcx,[rcx+8]      ; the wrapped object
+//     7E80E4  test rcx,rcx ; je    ; no wrapped object -> answer false
+//     7E80E9  mov rax,[rcx]        ; its vtable
+//     7E80EC  jmp qword [rax+0x10] ; TAIL CALL slot 2, i.e. its own ProbeCancel
+//     7E80F0  xor eax,eax ; ret
+// The tail call to slot +0x10 is the same slot the base class's probe occupies, so this forwards the
+// question rather than answering it.
+class DelegatingCanceller : public Canceller {
+public:
+    explicit DelegatingCanceller(Canceller* inner = nullptr) : inner_(inner) {}
+    void setInner(Canceller* inner) { inner_ = inner; }
+    Canceller* inner() const { return inner_; }
+    bool probeCancel() override {
+        if (inner_ == nullptr) {
+            return false;                  // RE 0x7E80F0: no wrapped object, answer false
+        }
+        return inner_->probeCancel();      // RE 0x7E80EC: tail call into slot 2
+    }
+
+private:
+    Canceller* inner_ = nullptr;
+};
+
+// RE Multi::CompactCanceller::ProbeCancel (0x7D2610, 991 bytes). Its own body carries the strings
+// 'm_supervisor', '..\multi\supervisor.cpp', 'Compact cancelled !' and -- recovering the METHOD NAME
+// from the binary rather than guessing it -- 'ProbeCancel'. The doubles it compares against are
+// 0.5, 1.05 and 60.0, and it reads the supervisor at +0x8 plus flags at +0x414/+0x415, so this probe
+// asks the supervisor whether the compaction should stop. lcns models that with TimeCanceller's limit
+// logic; the constants are recorded here because 1.05 is the same slack the surface check uses.
+
 class NeverCanceller : public Canceller {
 public:
     bool probeCancel() override { return false; }

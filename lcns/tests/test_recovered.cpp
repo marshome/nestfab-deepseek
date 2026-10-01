@@ -286,6 +286,19 @@ int main() {
         equivalent::zeroTriple(nullptr);   // the port guards; the original does not
     }
 
+    // --- the delegating canceller (RE 0x7e80e0) -------------------------------------------------
+    {
+        lcns::DelegatingCanceller d(nullptr);
+        CHECK(!d.probeCancel());
+        lcns::NeverCanceller never;
+        d.setInner(&never);
+        CHECK(!d.probeCancel());
+        lcns::TimeCanceller timer(10.0);
+        d.setInner(&timer);
+        timer.cancel();
+        CHECK(d.probeCancel());
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720

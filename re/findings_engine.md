@@ -1957,3 +1957,10 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 **先执行固定检查项 7**（新概念前先搜工程）：六个取消钩子地址在 `lcns/` 里的出现情况见本轮输出。
 
 其次读最大的一个钩子 `0x7D2610`（`Multi::CompactCanceller`，991 B）与 `0x7E80E0`（`Tiling::WarpCanceller`，19 B）：结构数据在本轮输出，结论只写指令能支持的部分。
+
+### 附 31 第七个取消器：代理者（goal round 92）**[已逐条读完 7 条指令]**
+
+`Tiling::WarpCanceller::ProbeCancel` = **`0x7E80E0`**（19 B / 7 条）：取 `[rcx+8]` 作为被包装对象，**空则返回 false**（`xor eax,eax; ret`），否则 **尾调用其 vtable 的 `+0x10` 槽**（即它自己的 `ProbeCancel`）。
+⇒ 它是**代理器**（把问题转发给内层），而不是自己答。
+
+**已落到 `lcns`**：`nester.hpp` 新增 `DelegatingCanceller`（与既有 `Canceller` 同一节，**而不是另起一个重复接口**），并在同位置记下 `0x7D2610`（`CompactCanceller::ProbeCancel`）的证据：它自己的函数体里就带着 **`ProbeCancel`**、`m_supervisor`、`Compact cancelled !` 与常量 **0.5 / 1.05 / 60.0** —— **方法名是从二进制里读出来的，不是我编的**。
