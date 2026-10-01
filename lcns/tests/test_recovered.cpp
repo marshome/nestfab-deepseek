@@ -1758,7 +1758,7 @@ int main() {
     {
         CHECK(kCtorFamilyUnitRva == 0x9C1BF0);
         CHECK(kCtorFamilyCallee == 0x1FD6C0);
-        CHECK(kCtorFamilyMembers == 3);
+        CHECK(kCtorFamilyMembers == 4);
         CHECK(kCtorPairAWord == 0x138);
         CHECK(kCtorPairAFlag == 0x140);
         CHECK(kCtorPairBWord == 0x148);
@@ -1776,7 +1776,21 @@ int main() {
         CHECK(kSize158 == 0x158);
         CHECK(kSize158 == 344);
         CHECK(kSize158 == kTimingRecordStride);               // the stride of round 156, as an allocation size
-        CHECK(kSize158 != kSize148);                           // and this round's other size is different
+        CHECK(kSize158 != kSize148);                           // and that round's other size is different
+        // round 230's fourth member, and the third sighting of 0x158
+        CHECK(kCtorFamilyRecordBytes == 0x158);
+        CHECK(kCtorFamilyRecordBytes == kSize158);
+        CHECK(kCtorFamilyRecordBytes == kTimingRecordStride);
+        CHECK(kCtorVecVtable == 0x00);
+        CHECK(kCtorVecUnit == 0x08);
+        CHECK(kCtorVecZeroA == 0x10);
+        CHECK(kCtorVecZeroB == 0x18);
+        CHECK(kCtorVecZeroC == 0x20);
+        CHECK(kCtorVecArgument == 0x28);
+        CHECK(kCtorVecSource == 0x30);
+        CHECK(kCtorVecZeroC - kCtorVecZeroA == 0x10);          // three zeroed words, eight bytes apart
+        CHECK(kCtorVecArgument - kCtorVecZeroC == 8);
+        CHECK(kCtorVecSource - kCtorVecArgument == 8);
     }
 
     return check::finish("test_recovered");

@@ -608,7 +608,24 @@ inline constexpr std::size_t kCtorPairAFlag = 0x140;             // RE 0x22079B
 inline constexpr std::size_t kCtorPairBWord = 0x148;             // RE 0x2202AD
 inline constexpr std::size_t kCtorPairBFlag = 0x150;             // RE 0x2202A3
 inline constexpr std::size_t kCtorPairSpacing = 0x10;            // the two pairs are this far apart
-inline constexpr std::size_t kCtorFamilyMembers = 3;             // the functions this layout was read from
+inline constexpr std::size_t kCtorFamilyMembers = 4;             // 0x21F9F0, 0x220730, 0x220230, 0x2204A0
+// RE 0x2204A0 (round 230), the fourth member: it initialises [rcx] with a vtable, zeros +0x10/+0x18/+0x20,
+// stores its argument at +0x28, takes +0x30 from the source, writes the family's 1.0 at +0x08 (0x22050D, the
+// same rva 0x9C1BF0), and then walks the source range [r8+0x10]..[r8+0x18] ALLOCATING 0x158 BYTES PER ELEMENT
+// (0x220554/0x220567) while reading the byte flag at +0x140 (0x22055C). So it builds a vector of the family's
+// 344-byte records, and 0x158 is now confirmed a third time: round 156's walk stride, round 228's allocation
+// and this round's per-element allocation.
+inline constexpr std::size_t kCtorFamilyRecordBytes = 0x158;    // RE 0x220554
+inline constexpr std::size_t kCtorVecVtable = 0x00;             // RE 0x2204CE
+inline constexpr std::size_t kCtorVecUnit = 0x08;               // RE 0x22050D
+inline constexpr std::size_t kCtorVecZeroA = 0x10;              // RE 0x2204DC
+inline constexpr std::size_t kCtorVecZeroB = 0x18;              // RE 0x2204E4
+inline constexpr std::size_t kCtorVecZeroC = 0x20;              // RE 0x2204EC
+inline constexpr std::size_t kCtorVecArgument = 0x28;           // RE 0x220505
+inline constexpr std::size_t kCtorVecSource = 0x30;             // RE 0x2204F4
+// NOTE: the equalities with kSize158 (declared below) and kTimingRecordStride are asserted at run time in
+// tests/test_recovered.cpp, which sees the whole header; a static_assert here would precede the declaration.
+static_assert(kCtorFamilyMembers == 4, "four functions carry this layout");
 
 // --- the allocation size of 0x220230 (round 228) ------------------------------------------------------
 //     220243 mov ecx,0x158 ; 220250 call 0x998500
