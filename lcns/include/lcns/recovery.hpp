@@ -193,6 +193,8 @@ inline constexpr Gap kGaps[] = {
     {"module.nester", Status::Substituted, "12 strategies",
      "each strategy's identity (vtable address point, Run size, key literals) is recovered, but "
      "EVERY Run body here is our own placement search: the original bodies are not transcribed"},
+    {"search.nest_all_parts_aux", Status::NotReversed, "0x6D470 (11478 B, rectangle_nester.cpp)",
+     "the rectangle strategy core placement routine, identified by its own inlined strings: NestAllPartsAux, the TU ..\multi\rectangle_nester.cpp, and the assertions sheet->is_rectangular() and availables.size() == nb_parts (rectangular sheets only, and the available-parts array must cover every part). Its constants include 0.99 -- the SAME area slack as 0x73280 -- plus 0.1, 1 and 0.5 four times. It calls the other two large kernels: 0x73280 (11567 B, reads Pb[+0xc8] and the option accessors) and 0x70150 (8524 B, with 0.5/0.25/0.001, i.e. step halving with a 0.001 stop). So the three giants are the rectangle kernel layer, not unknown code. NOT transcribed: the bodies themselves"},
     {"search.pack_all", Status::Substituted, "0x378E0 (NestingNester::Run, 14374 B)",
      "packAll is a bottom-left/beam placement search we wrote; the original main packer was not "
      "transcribed"},

@@ -137,7 +137,8 @@ int main() {
     // --- recovered trace strings (verbatim in the original's log) -----------------------------
     {
         CHECK(std::strcmp(kTraceFlip, "Flip ") == 0);                       // RE 0x4b870
-        CHECK(std::strcmp(kTraceFilter, "Filter ") == 0);                   // RE 0xb3ae0
+        CHECK(std::strcmp(kTraceFilter, "Filter ") == 0);
+        CHECK(std::strcmp(kTraceNoFill, "NoFill(") == 0);   // RE 0x7f240                   // RE 0xb3ae0
         CHECK(std::strcmp(kTracePackerCacheThreads, "Packer Cache max threads: ") == 0);  // RE 0x76a130
         CHECK(std::strcmp(kTraceVisitedNodes, "Visited Nodes=") == 0);      // RE 0x1c7980
         CHECK(std::strcmp(kTraceBucketsEmpty, "Buckets : empty") == 0);     // RE 0x7b3d20
@@ -183,10 +184,10 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 69);
+        CHECK(kGapCount == 70);
         CHECK(countOf(Status::Recovered) == 9);
         CHECK(countOf(Status::Structural) == 19);
-        CHECK(countOf(Status::NotReversed) == 12);
+        CHECK(countOf(Status::NotReversed) == 13);
         CHECK(countOf(Status::Substituted) == 28);
         CHECK(countOf(Status::NotInBinary) == 1);
         // every entry is complete ...

@@ -95,6 +95,7 @@ inline constexpr double kAreaCoverageSlack = 0.99;   // RE 0x9B15E0 via 0x754ED 
 //   0x60A620  error reporter                   "*** INTERNAL ERROR: please contact support ***"
 inline constexpr const char* kTraceFlip = "Flip ";
 inline constexpr const char* kTraceFilter = "Filter ";
+inline constexpr const char* kTraceNoFill = "NoFill(";   // RE 0x7f240
 inline constexpr const char* kTraceThread = "Thread <";
 inline constexpr const char* kTraceUpdatingPart = " updating part ";
 inline constexpr const char* kTraceTilings = " tilings.";
