@@ -2678,3 +2678,22 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 **不成立**：“这一条调用链就是那个计时器”。
 
 **因此种子的乘数目前只能说是**“两个计算量之差 × 1e6”**，**是否为时间尚未证实**。`0x62F940`（归一化助手内部调用的那个）**本轮未读到**，不作声明。
+
+### 附 61 两个函数都从**各自入口**读完：内联 `round()` 与 (−0.5, 0.5] 包裹（goal round 140）
+
+**`0x62F940`（215 B / 45 条 / ★ 0 个被调用者 / 47 个调用者）= 编译器内联的 `round()`**：
+
+```
+62F940  movq rax,xmm0 ; 62F948 sar rcx,0x34 ; 62F94C and ecx,0x7ff ; 62F952 sub ecx,0x3ff
+62F958  cmp ecx,0x33 ; jg <已是整数>
+62F96E  movabs rdx,0xFFFFFFFFFFFFF ; 62F978 sar rdx,cl   ; 小数掩码
+62F984  addsd xmm0,[1e300] ; 62F98C ucomisd … ; 62F996 test rax,rax ; jle …
+62F99B  movabs r8,0x10000000000000 ; 62F9A5 shr r8,cl ; 62F9A8 add rax,r8   ; 加半个 ulp
+62F9AB  not rdx ; 62F9AE and rax,rdx                            ; 截断
+```
+
+⇒ **四舍五入（中间值远离零）**，负指数分支镜像同样处理符号。
+
+**`0x62FD90` = 用它包装的 (−0.5, 0.5] 归一化**（入口已读，round 138 已看全身）：`round(x)`、`round(x)−x`、若 `> 0.5` 则 `−1.0`。
+
+**两者均已落进 `lcns/geom.hpp`**（`wrapToHalf` / `halfFraction`），并加测试（含 `x=0.3/0.6/−0.6/0.5/−0.5` 与一个循环验证 `[−0.5, 0.5)`）。

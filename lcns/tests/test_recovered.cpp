@@ -478,6 +478,25 @@ int main() {
         CHECK(static_cast<long long>(duration * kSeedScale) == 1234);
     }
 
+    // --- the (-0.5, 0.5] wrap (RE 0x62fd90 over the inline round at 0x62f940) ----------------------
+    {
+        CHECK(wrapToHalf(0.3) == 0.0);
+        CHECK(wrapToHalf(0.6) == 1.0);
+        CHECK(wrapToHalf(-0.6) == -1.0);
+        CHECK(wrapToHalf(2.4) == 2.0);
+        CHECK(wrapToHalf(2.6) == 3.0);
+        // round half away from zero, as the inline implementation does
+        CHECK(wrapToHalf(0.5) == 1.0);
+        CHECK(wrapToHalf(-0.5) == -1.0);
+        // the difference form stays inside half a step
+        for (double x = -3.0; x <= 3.0; x += 0.125) {
+            const double frac = halfFraction(x);
+            CHECK(frac >= -0.5);
+            CHECK(frac < 0.5 + 1e-12);
+            CHECK(std::fabs(x - wrapToHalf(x) - frac) < 1e-12);
+        }
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720

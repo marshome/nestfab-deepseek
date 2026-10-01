@@ -484,3 +484,29 @@ inline CornerEdges cornerEdges(const double* previous, const double* corner, con
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 
 }  // namespace lcns::geom
+
+// RE 0x62F940 (215 B / 45 instructions, ZERO callees, 47 callers) is the compiler's inline round():
+// it takes the double's bit pattern, extracts the biased exponent (sar 0x34, and 0x7FF, sub 0x3FF),
+// returns early when the exponent exceeds 51 (no fractional bits present), builds the fractional mask
+// from the mantissa, and for a non-integral value adds half an ulp (movabs 0x10000000000000 ; shr r8,cl ;
+// add rax,r8) before truncating (not rdx ; and rax,rdx) -- round half away from zero.
+//
+// RE 0x62FD90 (138 B / 29 instructions, 18 callers) then wraps with it:
+//     62FDAC  call 0x62F940            ; round(x)
+//     62FDB5  subsd xmm1, xmm6         ; round(x) - x
+//     62FDB9  ucomisd xmm1, [0.5]
+//     62FDC1  jbe    <skip>
+//     62FDC3  subsd xmm0, [1.0]        ; round(x) -= 1.0
+//     62FDDA  (the negative branch mirrors this through the sign mask 0x8000000000000000)
+// RECOVERED: both bodies, read from their own entries. On ordinary inputs round(x) - x is within
+// [-0.5, 0.5], so the correction does not fire; it is kept because the binary has it.
+inline double wrapToHalf(double x) {
+    double r = std::round(x);        // RE 0x62F940, half away from zero
+    if (r - x > 0.5) {               // RE 0x62FDB9/0x62FDC1: the jbe skips the correction at exactly 0.5
+        r -= 1.0;                    // RE 0x62FDC3
+    }
+    return r;
+}
+
+// the difference the wrap is usually taken for: x - wrapToHalf(x), which lies in [-0.5, 0.5)
+inline double halfFraction(double x) { return x - wrapToHalf(x); }
