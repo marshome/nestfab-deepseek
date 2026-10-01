@@ -6833,3 +6833,19 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ 且 round 343 的组合例程调的**正是本例程**（`kComposeHelper2 == kAffineOutOfPlace`）。
 
 **已落 `layout.hpp`**：`kAffineOutOfPlace`(0x5CF6B0)、`kAffineOutOfPlaceCallers`(6)、`kMatrixLayoutConfirmed3`、`kAffineFormulaConfirmed2`、`kAffineVariants`(4)、`kCopiedDoubles`(4)、`kAffineSrcPairA/B`(0x00/0x10) + **五条 `static_assert`** + 测试 24 条（含“非就地与就地对同一输入结果一致、且源未被改动”的验证）。
+
+### 附 263 **四阶段链，且它处理的字段是一个打包的二维点**（goal round 345）**[已落码]**
+
+`0x24C610`（138 B / 4 个调用者）：
+
+```
+24C633  call **0x24C4A0**            ; 在 `rsp+0x20` 建一个局部对象
+24C638/24C648  `movsd` 取 `+0x70`、`movhpd` 取 `+0x78`   ; ★ **两个 double 打包载入**
+24C652  存入 `rsp+0xB0`
+24C65D/24C668/24C676  依次调 **0x5CE7B0**、**0x5CED50**、**0x5CE970**   ; ★ 均在 `0x5CE…` 几何范围
+```
+
+⇒ 它把**一个字段（`+0x70`，即 round 343 传入的那个）当作**二维点**加载**，然后**依次跑三个几何簇例程**。
+★ 打包习语（`movsd` + `movhpd`）**正是 round 333 点加法加载操作数的那个** ⇒ **第二个站点**；该链又为几何簇增添**四个成员**。
+
+**已落 `layout.hpp`**：`kPerFieldHelper`(0x24C610)、`kPerFieldHelperCallers`(4)、`kPointFieldA/B`(0x70/0x78)、`kChainBuild`(0x24C4A0)、`kChainStageA/B/C`(0x5CE7B0/0x5CED50/0x5CE970)、`kChainMembers`(4)、`kChainTempCount`(4)、`kPerFieldFrame`(0xE0)、`kPackedPointLoads`(2)、`kPointLoadPacked` + **五条 `static_assert`** + 测试 26 条。

@@ -3440,6 +3440,30 @@ static_assert(kAffineSrcPairB - kAffineSrcPairA == kSegmentEndA - kSegmentStartA
 static_assert(kMatrixLayoutConfirmed2 && kMatrixLayoutConfirmed3, "confirmed twice over and now a fourth time");
 static_assert(kAffineFormulaConfirmed && kAffineFormulaConfirmed2, "and the formula a third time");
 
+
+// --- a four-stage chain over one field (round 345) -------------------------------------------------------
+//     0x24C633 call 0x24C4A0        ; a local object is built
+//     0x24C638/0x24C648  movsd from +0x70 and movhpd from +0x78   ; a packed two-dimensional point
+//     0x24C65D/0x24C668/0x24C676  then 0x5CE7B0, 0x5CED50 and 0x5CE970 in order
+inline constexpr std::uintptr_t kPerFieldHelper = 0x24C610;  // RE the whole routine
+inline constexpr int kPerFieldHelperCallers = 4;
+inline constexpr std::size_t kPointFieldA = 0x70;            // RE 0x24C638
+inline constexpr std::size_t kPointFieldB = 0x78;            // RE 0x24C648
+inline constexpr std::uintptr_t kChainBuild = 0x24C4A0;      // RE 0x24C633
+inline constexpr std::uintptr_t kChainStageA = 0x5CE7B0;     // RE 0x24C65D
+inline constexpr std::uintptr_t kChainStageB = 0x5CED50;     // RE 0x24C668
+inline constexpr std::uintptr_t kChainStageC = 0x5CE970;     // RE 0x24C676
+inline constexpr int kChainMembers = 4;                      // the build plus the three stages
+inline constexpr int kChainTempCount = 4;                    // RE rsp+0x20, 0x50, 0x80 and 0xB0
+inline constexpr std::size_t kPerFieldFrame = 0xE0;          // RE 0x24C616
+inline constexpr int kPackedPointLoads = 2;                  // rounds 333 and 345
+inline constexpr bool kPointLoadPacked = true;               // RE the movsd/movhpd pair
+static_assert(kPointFieldB - kPointFieldA == 8, "the point's two doubles are adjacent");
+static_assert(kPointFieldA == kComposeFieldB, "and that field is the one round 343 passes in here");
+static_assert(kChainMembers == kChainTempCount, "four stages, four temporaries");
+static_assert(kPackedPointLoads == 2, "the packed load has a second site");
+static_assert(kPerFieldFrame == 0xE0 && kPerFieldFrame > kComposeFrame, "a frame larger still");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

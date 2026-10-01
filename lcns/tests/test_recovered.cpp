@@ -5436,5 +5436,41 @@ int main() {
         CHECK(kCopiedDoubles == 4);
     }
 
+    // --- the four-stage chain over one point (RE 0x24c610) ------------------------------------------
+    {
+        CHECK(kPerFieldHelper == 0x24C610);
+        CHECK(kPerFieldHelperCallers == 4);
+        CHECK(kPointFieldA == 0x70);
+        CHECK(kPointFieldB == 0x78);
+        CHECK(kPointFieldB - kPointFieldA == 8);
+        CHECK(kPointFieldA == kComposeFieldB);            // the field round 343 hands to this helper
+        CHECK(kChainBuild == 0x24C4A0);
+        CHECK(kChainStageA == 0x5CE7B0);
+        CHECK(kChainStageB == 0x5CED50);
+        CHECK(kChainStageC == 0x5CE970);
+        CHECK(kChainStageA != kChainStageB && kChainStageB != kChainStageC);
+        CHECK(kChainStageA != kChainBuild);
+        CHECK(kChainMembers == 4);
+        CHECK(kChainTempCount == 4);
+        CHECK(kChainMembers == kChainTempCount);
+        CHECK(kPerFieldFrame == 0xE0);
+        CHECK(kPerFieldFrame > kComposeFrame);
+        CHECK(kPackedPointLoads == 2);
+        CHECK(kPointLoadPacked);
+        CHECK(kComposeHelperSightings == 2);              // and this helper is called twice by round 343
+        CHECK(kComposeHelper1 == kPerFieldHelper);
+
+        // the chain, in the order the instructions call it
+        const std::uintptr_t chain[4] = {kChainBuild, kChainStageA, kChainStageB, kChainStageC};
+        for (int i = 1; i < kChainMembers; ++i) {
+            CHECK(chain[i] != chain[i - 1]);
+        }
+        CHECK(chain[0] < 0x250000);                       // the build is in its own low range
+        CHECK(chain[1] > 0x5C0000 && chain[3] < 0x5D0000);// the three stages are in the geometry range
+        // the packed pair a point occupies
+        CHECK(kPointFieldB - kPointFieldA == sizeof(double));
+        CHECK(kPerFieldFrame - kComposeFrame == 0x10);
+    }
+
     return check::finish("test_recovered");
 }
