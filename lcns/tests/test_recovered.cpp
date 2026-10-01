@@ -205,7 +205,11 @@ int main() {
         CHECK(std::fabs(geom::kQuarterTurnHalfPi - 3.14159265358979 / 2.0) < 1e-6);
         CHECK(std::fabs(geom::kQuarterTurn3HalfPi - 3.0 * 3.14159265358979 / 2.0) < 1e-6);
         CHECK(std::fabs(geom::kQuarterTurn2Pi - 2.0 * 3.14159265358979) < 1e-6);
-        CHECK(std::fabs(geom::kQuarterTurn2PiPlusHalfPi - (geom::kQuarterTurn2Pi + geom::kQuarterTurnHalfPi)) < 1e-6);
+        // NOTE the stored constants are rounded to six decimals (7.853982 vs the exact sum
+        // 7.853981...), so a DERIVED relation only holds to about 2e-6 -- the recovery bound is the
+        // precision the binary actually stores, not the precision of the real number.
+        CHECK(std::fabs(geom::kQuarterTurn2PiPlusHalfPi
+                        - (geom::kQuarterTurn2Pi + geom::kQuarterTurnHalfPi)) < 2e-6);
         {
             double d[4];
             geom::quarterTurnDirections(d);
