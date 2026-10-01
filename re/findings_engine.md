@@ -4085,3 +4085,36 @@ round 198 找到的标签表是**领域文本**（非库标记），因此**引�
 
 **当前真正的工作集合（按 round 207 的拆分）**：**2,841 个领域函数 / 1,592,426 B**，
 其中本轮又排除 2 个（无公式的容器操作）。
+
+### 附 130 **目标里的“首要目标”已完成并可验证**（goal round 209）**[已核实]
+
+目标文本要求：**用真正的 `OsiClpSolverInterface` 取代 lcns 自研的 Simplex 替代层**。本轮逐项核实：
+
+| 核实点 | 证据 |
+|---|---|
+
+| 代码真的用了真库 | `lcns/src/lp_clp.cpp:16` `#include "OsiClpSolverInterface.hpp"`；**`:129` `OsiClpSolverInterface si;`** |
+
+| 声明与意图 | `lcns/include/lcns/lp_clp.hpp:1`“**the REAL COIN-OR backend: OsiClpSolverInterface, downloaded and linked**” |
+
+| 登记 | `recovery.hpp:358` `{"lp.clp_backend", Status::Recovered, "Coin::CoinLP slots 3/4/5/8; OsiClpSolverInterface", …}`；
+
+| | `recovery.hpp:367` 引用了镜像里的路径串 `@C:\\Users\\renaud\\nest\\external\\clp-1.15.3\\Clp\\src\\ClpSimplexDual.cpp` |
+
+| 构建线接 | `lcns/CMakeLists.txt:73-82` — `libclp.a`、`clp-1.15.3/Clp/src`、`OsiClp`、`osi-0.107/Osi/src/Osi`、`gen/clp`、`gen/osi` |
+
+| **已编入** | `lcns/build/…/lp_clp.cpp.obj`（存在）|
+
+| **已被测试覆盖** | `lcns/tests/test_linear_program.cpp:9` 包含 `lcns/lp_clp.hpp`；`:422` `#ifdef LCNS_HAS_CLP` 下 `:441/:486/:504/:511` 构造 `ClpLinearProgram`，`:527` 经 `makeClpLinearProgram()` |
+
+| 三方库已下载 | `third_party/src/boost_1_63_0`、`third_party/src/clp-1.15.3`（含 `osi-0.107`）；`third_party/build-cmake/libclp.a`；`third_party/test_osiclp.exe` |
+
+| **门禁** | `errors=0 warnings=0`、**ctest 15/15**、`check_recovery` OK、**`g_acceptance.py` 116/116** |
+
+
+
+⇒ **这一项目标要求可以标为完成**（代码 + 测试 + 登记 + 绿门禁四者齐备）。
+`lcns/src/lp.cpp` 的自研双阶段单纯形**仍在**，作为**对照/回退路径**，不冲突；
+但**默认后端已是真库**（`LCNS_WITH_CLP` 默认 `ON`）。
+
+**本轮没有修改代码**（`git status` 干净），因此这是一轮**核实与存证**。
