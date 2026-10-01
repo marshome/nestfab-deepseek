@@ -3664,13 +3664,43 @@ inline constexpr bool kComparisonIsBucketLike = true;        // a value derived 
 inline constexpr bool kDivisorWithdrawn = true;
 inline constexpr bool kImpliedRecordSizeWithdrawn = true;
 inline constexpr bool kIMulIsTwoOperand = true;              // the reason the withdrawal is required
-inline constexpr bool kUseAt243925Unread = true;             // what the comparison guards is not read yet
+inline constexpr bool kUseAt243925Unread = false;            // READ in round 353: an SSO branch and a tolerance
+inline constexpr bool kUseAt243925ReadInRound353 = true;
 static_assert(kShiftBeforeMultiply && kIMulIsTwoOperand, "the shift first, and the low half");
 static_assert(kLowHalfKept != false, "the low half is what a two-operand multiply produces");
 static_assert(kDivisorWithdrawn && kImpliedRecordSizeWithdrawn, "the round-351 reading is withdrawn");
 static_assert(kMagicIs15Inverse && kFifteen == 15, "fifteen times the constant is one, modulo 2^64");
 static_assert(kComparisonValue == 200 && kComparisonIsBucketLike, "and the result faces a comparison with 200");
-static_assert(kUseAt243925Unread, "what that comparison guards is left unread");
+static_assert(!kUseAt243925Unread && kUseAt243925ReadInRound353, "and was read in round 353");
+
+
+// --- the guarded path: the SSO capacity as a branch, and a tolerance (round 353) --------------------------
+//     0x243925 movsd xmm10,[rip+0x9C27C0]   ; the double 0.01
+//     0x243946 call 0x4B81D0 with it in xmm1
+//     0x24394B/0x243956  the range's begin and count
+//     0x24398B cmp rbx,0xF ; ja              ; THE COUNT AGAINST FIFTEEN
+//     0x24399D cmp rbx,1 ; je                ; and a case for one
+//     0x2439AF add rax,0x10                  ; the inline buffer
+inline constexpr std::uintptr_t kGuardedPath = 0x243925;     // RE where the comparison lands
+inline constexpr double kToleranceConstant = 0.01;           // RE 0x243925
+inline constexpr std::uintptr_t kToleranceRva = 0x9C27C0;    // RE 0x243925
+inline constexpr bool kToleranceIsFractional = true;         // the first fractional double recorded here
+inline constexpr std::uintptr_t kToleranceSink = 0x4B81D0;   // RE 0x243946, the constructor it is passed to
+inline constexpr std::size_t kSsoBranchValue = 0xF;          // RE 0x24398B
+inline constexpr int kSsoCapacitySightings = 2;              // rounds 320 and 353
+inline constexpr bool kSsoGovernsControlFlow = true;         // here it is the branch, not just a comparison
+inline constexpr std::size_t kOneLengthCase = 0x2470EC;      // RE 0x24399D
+inline constexpr std::size_t kInlineBufferOffset = 0x10;     // RE 0x2439AF
+inline constexpr int kInlineBufferSightings = 3;             // rounds 288, 336 and 353
+inline constexpr std::uintptr_t kGuardTargetRva = 0x9C2740;  // RE 0x24397F, not in the string table
+inline constexpr bool kGuardTargetNotAString = true;         // so it is data rather than a message
+inline constexpr bool kNullBeginNonzeroCountGuard = true;    // RE 0x243975 and 0x24397A
+static_assert(kSsoBranchValue == kNarrowSsoCapacity, "the branch value IS the narrow SSO capacity");
+static_assert(kSsoCapacitySightings == 2 && kSsoGovernsControlFlow, "a second sighting, and it governs flow");
+static_assert(kToleranceConstant > 0.0 && kToleranceConstant < 1.0, "a fractional tolerance");
+static_assert(kToleranceIsFractional, "the first of its kind here");
+static_assert(kInlineBufferSightings == 3, "the buffer-plus-sixteen idiom, a third time");
+static_assert(kGuardTargetNotAString && kGuardTargetRva != 0, "a target outside the string table");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

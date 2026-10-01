@@ -6984,3 +6984,24 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ⇒ 本轮**撤回除数与隐含记录大小**（`kDivisorWithdrawn`、`kImpliedRecordSizeWithdrawn`），**保留可检验的算术**，并把 `0x243925` 处该结果的用途**标为未读**（`kUseAt243925Unread`）。
 
 **已落 `layout.hpp`**：`kShiftBeforeMultiply`、`kPreShift`(3)、`kLowHalfKept`、`kMagicIs15Inverse`、`kFifteen`(15)、`kComparisonValue`(0xC8)、`kComparisonIsBucketLike`、`kDivisorWithdrawn`、`kImpliedRecordSizeWithdrawn`、`kIMulIsTwoOperand`、`kUseAt243925Unread` + **七条 `static_assert`** + 测试 26 条（含“15 × 魔数 == 1”的运行时验证与序列值的复算）。
+
+### 附 271 ★★ **SSO 容量作为分支条件，以及一个 0.01 容差**（goal round 353）**[已落码]**
+
+`0x243925`（即 round 352 那个比较所守护的分支）：
+
+```
+243925  movsd xmm10,[rip+**0x9C27C0**]   ; double **0.01**
+243941/243946  xmm1 = 它，随后 call **0x4B81D0**
+24394B/243956  rdi = [rsi]、rbx = [rsi+8]        ; 范围：begin 与计数
+243975/24397F/243986  空指针+计数守卫，随后一个**不在字符串表中的目标**
+24398B  `cmp rbx, **0xF**` ; `ja`              ; ★★ **计数与十五相比**
+24399D  `cmp rbx, 1` ; `je 0x2470EC`          ; 长度为一的特例
+2439AF  `add rax, **0x10**`                   ; 内联缓冲区
+```
+
+★★ **十五正是 round 320 记录的窄字符串 SSO 容量**，而在此它**不仅出现，而且是一个分支的条件**：计数决定走内联路径还是长路径。
+⇒ **该值的第二次独立目击，且是第一次由它主宰控制流**（`kSsoGovernsControlFlow`）。
+
+★ `0.01` 是**本工作记录到的第一个小数 double 常量**（此前只有两个 1.0 与一个符号掩码），且它被交给一个构造器 —— **形如几何容差**。**断言的是值与它的去处**，而不超出此做用途断言。
+
+**已落 `layout.hpp`**：`kGuardedPath`(0x243925)、`kToleranceConstant`(0.01)、`kToleranceRva`(0x9C27C0)、`kToleranceIsFractional`、`kToleranceSink`(0x4B81D0)、`kSsoBranchValue`(0xF)、`kSsoCapacitySightings`(2)、`kSsoGovernsControlFlow`、`kOneLengthCase`(0x2470EC)、`kInlineBufferOffset`(0x10)、`kInlineBufferSightings`(3)、`kGuardTargetRva`(0x9C2740)、`kGuardTargetNotAString`、`kNullBeginNonzeroCountGuard` + **六条 `static_assert`** + 测试 26 条。

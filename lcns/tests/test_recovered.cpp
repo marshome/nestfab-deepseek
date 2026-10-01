@@ -5773,7 +5773,7 @@ int main() {
         CHECK(kComparisonIsBucketLike);
         CHECK(kDivisorWithdrawn);                         // round 351's reading of it
         CHECK(kImpliedRecordSizeWithdrawn);               // and the eighteen bytes that followed from it
-        CHECK(kUseAt243925Unread);
+        CHECK(!kUseAt243925Unread);                        // read in round 353
         CHECK(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL); // the constant itself stays recorded
         CHECK(kShiftNotReadYet == false);                 // the shift HAS now been read
 
@@ -5795,6 +5795,46 @@ int main() {
         CHECK(withinBuckets(200));
         CHECK(!withinBuckets(201));
         CHECK(kPreShift == 3);
+    }
+
+    // --- the SSO branch and the tolerance (RE 0x243925 onwards) -------------------------------------
+    {
+        CHECK(kGuardedPath == 0x243925);
+        CHECK(kToleranceConstant == 0.01);
+        CHECK(kToleranceRva == 0x9C27C0);
+        CHECK(kToleranceIsFractional);
+        CHECK(kToleranceSink == 0x4B81D0);
+        CHECK(kSsoBranchValue == 0xF);
+        CHECK(kSsoBranchValue == 15u);
+        CHECK(kSsoBranchValue == kNarrowSsoCapacity);     // the same fifteen as round 320
+        CHECK(kSsoCapacitySightings == 2);
+        CHECK(kSsoGovernsControlFlow);
+        CHECK(kOneLengthCase == 0x2470EC);
+        CHECK(kInlineBufferOffset == 0x10);
+        CHECK(kInlineBufferSightings == 3);
+        CHECK(kGuardTargetRva == 0x9C2740);
+        CHECK(kGuardTargetNotAString);
+        CHECK(kNullBeginNonzeroCountGuard);
+        CHECK(kUseAt243925Unread == false);               // what the comparison guards is now read
+
+        // the branch rule, as the instruction implements it: at most fifteen is inline
+        const auto isInline = [](std::uint64_t count) { return count <= kSsoBranchValue; };
+        CHECK(isInline(0));
+        CHECK(isInline(1));
+        CHECK(isInline(15));
+        CHECK(!isInline(16));
+        CHECK(!isInline(100));
+        // and the guard that precedes it: a null begin with a non-zero count is rejected
+        const auto misformed = [](const void* begin, std::uint64_t count) {
+            return begin == nullptr && count != 0;        // RE the add, the je and the test
+        };
+        CHECK(misformed(nullptr, 1));
+        CHECK(!misformed(nullptr, 0));
+        CHECK(!misformed(reinterpret_cast<const void*>(1), 1));
+        // the tolerance, as the double the constructor receives
+        CHECK(kToleranceConstant < 0.1);
+        CHECK(kToleranceConstant * 100.0 == 1.0);
+        CHECK(sizeof(double) == 8);
     }
 
     return check::finish("test_recovered");
