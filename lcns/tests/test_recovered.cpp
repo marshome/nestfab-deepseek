@@ -11,6 +11,7 @@
 #include <cstring>
 
 #include "check.hpp"
+#include "lcns/model.hpp"
 #include "lcns/boolean.hpp"
 #include "lcns/engine.hpp"
 #include "lcns/geom.hpp"
@@ -369,6 +370,18 @@ int main() {
         CHECK(b_beamnode.value50 == 0.0);
         CHECK(b_beamnode.depth == 0);
         CHECK(b_beamnode.sheetIndex == 0);
+    }
+
+    // --- common-cut reporting scales (RE 0x68a1a0: 'raw_evaluation_ratio_100'/'_10', constant 10.0) --
+    {
+        CHECK(kCommonCutRatioScale100 == 100);
+        CHECK(kCommonCutRatioScale10 == 10);
+        // the two scales are a pair: the same ratio reported in hundredths and in tenths
+        const double ratio = 0.125;
+        CHECK(static_cast<int>(ratio * kCommonCutRatioScale100) == 12);
+        CHECK(static_cast<int>(ratio * kCommonCutRatioScale10) == 1);
+        // and the recovered 10.0 is exactly the tenths scale
+        CHECK(static_cast<double>(kCommonCutRatioScale10) == 10.0);
     }
 
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------

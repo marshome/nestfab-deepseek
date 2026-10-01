@@ -51,6 +51,16 @@ struct MultitorchProperties {
     double userRealMaterialCostPerUnit = 0.0;  // +0x30
 };
 
+// RE 0x68A1A0 (1334 B / 319 instructions): its own identifier strings are
+//     'raw_evaluation_ratio_100'  and  'raw_evaluation_ratio_10'
+// and its body loads the double 10.0. A ratio paired with a scale in the name, plus a 10.0 constant,
+// means the same quantity is reported as hundredths and as tenths.
+// RECOVERED: the two identifier strings and the 10.0 constant.
+// INFERRED:  that 100 and 10 are the scales those names refer to (the names say so; the 100 never
+//            appears as a constant in the body).
+inline constexpr int kCommonCutRatioScale100 = 100;   // RE the identifier 'raw_evaluation_ratio_100'
+inline constexpr int kCommonCutRatioScale10 = 10;     // RE the identifier and the 10.0 constant loaded
+
 struct CommonCutSegment {
     bool commonCut = false;
     double left = 0.0;
