@@ -3666,5 +3666,42 @@ int main() {
         CHECK(kUncaughtOffset % 4 == 0);                 // a dword counter
     }
 
+    // --- the in-place InputBuffer and the self-test gate (RE 0x10fd40) ------------------------------
+    {
+        CHECK(kInputBufferLocal == 0x60);
+        CHECK(kInputBufferLocalMarker == 0x74);
+        CHECK(kInputBufferLocalByte == 0x78);
+        CHECK(kInputBufferLocalLink == 0x80);
+        // the three relative offsets agree with the constructor of round 288
+        CHECK(kInputBufferLocalMarker - kInputBufferLocal == kInputBufferMarker);
+        CHECK(kInputBufferLocalByte - kInputBufferLocal == kInputBufferByte);
+        CHECK(kInputBufferLocalLink - kInputBufferLocal == 0x20);
+        CHECK(kInputBufferMarker == 0x14);
+        CHECK(kInputBufferByte == 0x18);
+        CHECK(kInputBufferInPlace);
+        CHECK(kInputBufferMarkerValue == 0xFFFFFFFFu);
+
+        CHECK(kSelfTestFirst);
+        CHECK(kSelfTestArgument == 0);
+        CHECK(kFlagProbe == 0x1170B0);
+        CHECK(kSelfTestFirst && kCryptoPpSelfTest == 0x118260);
+        CHECK(kVtableSlotI == 0xA0);
+        CHECK(kVtableSlotsKnown7 == 12);
+        CHECK(kVtableSlotsKnown7 == kVtableSlotsKnown6 + 1);
+        CHECK(kVtableSlotI > kVtableSlotF);              // above the ninth slot
+        CHECK(kVtableSlotI < kVtableSlotE);              // and below the eighth
+        CHECK(kDriverCallers == 1);
+
+        // the relative-offset arithmetic the instructions perform
+        const std::size_t base = kInputBufferLocal;
+        CHECK(base + kInputBufferMarker == kInputBufferLocalMarker);
+        CHECK(base + kInputBufferByte == kInputBufferLocalByte);
+        CHECK(base + 0x20 == kInputBufferLocalLink);
+        // and the three constructions of the same object are distinct routines
+        CHECK(kInputBufferCtor != kCryptoPpSelfTest);   // a constructor, not the self-test
+        CHECK(kDriverCallers == 1);                    // and this driver is reached once
+        CHECK(kInputBufferCtor == 0x77A460);
+    }
+
     return check::finish("test_recovered");
 }

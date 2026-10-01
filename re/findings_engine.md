@@ -5939,3 +5939,22 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ **测试把字节拆开验证**：以立即数的字节序重建出 `G`,`N`,`U`,`C`,`C`,`+`,`+`,NUL 八个字节，并断言 `substr(0,7) == "GNUCC++"`；对“这些字节落在何处”**不多说一句**。
 
 **已落**：`layout.hpp` 的 `kCxaThrow`、`kCxaMagic`、`kCxaHeaderOffset`(0x40)、`kUncaughtOffset`(0x08)、`kCxaGlobals`(0x998CB0)、`kCxaTypeLookupA/B`、`kCxaThrowCallers`(476)、`kCxaFieldOffset`、`kCxaIdentifiedByString` + **四条 `static_assert`** + 测试 26 条；`re/covlib.py` 新增一条**字符串证据**条目。
+
+### 附 216 **栈上就地构造的 `InputBuffer`**、**自检门**与**第十二个槽**（goal round 298）**[已落码]**
+
+`0x10FD40`（1134 B / 1 个调用者）的开头：
+
+```
+10FD61  rsi = rsp+0x60                  ; ★ **栈上的本地对象**
+10FD8C  call 0x118260（edx = 0）     ; ★ **先调 CryptoPP 自检**
+10FD9C  dword [rsp+0x74] = 0xFFFFFFFF   ; −1 标记
+10FD94  byte [rsp+0x78] = 0
+10FDB1  qword [rsp+0x80] = rbx          ; 回指外层对象
+10FDC1  call qword [rax+0xA0]           ; ★ **第十二个槽**
+```
+
+★ **关键在相对偏移**：`0x74−0x60 = 0x14`、`0x78−0x60 = 0x18`、`0x80−0x60 = 0x20` —— **正是 round 288 在构造器里读到的 `InputBuffer` 字段**。故同一对象有**三种构造方式**：构造器（r288）、赋值（r291）、**栈上就地**（本轮），而三者偏移一致。
+
+★ **自检调用是领域事实而非库事实**：这个操作**先检查加密自检门**，正是 `0x89F8E6` 两条文本所描述的东西 ⇒ **r289 的 CryptoPP 链接在此得到领域意义**。
+
+**已落 `layout.hpp`**：`kInputBufferLocal*`（四个）、`kInputBufferInPlace`、`kSelfTestFirst`、`kSelfTestArgument`、`kFlagProbe`(0x1170B0)、`kVtableSlotI`(0xA0)、`kVtableSlotsKnown7`(12)、`kDriverCallers` + **五条 `static_assert`** + 测试 24 条。

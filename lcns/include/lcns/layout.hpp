@@ -2251,6 +2251,29 @@ static_assert(kCxaHeaderOffset == 0x40, "the header is forty bytes before the ob
 static_assert(kCxaIdentifiedByString, "identified by its own ABI text");
 static_assert(kCxaThrowCallers == 476, "four hundred and seventy-six throw sites");
 
+
+// --- the in-place InputBuffer and the self-test gate, from 0x10FD40 (round 298) -------------------------
+//     0x10FD61 rsi = rsp+0x60                   ; the object, built on the stack
+//     0x10FD8C call 0x118260 with edx = 0       ; the CryptoPP self-test, called FIRST
+//     0x10FD9C/0x10FD94/0x10FDB1  the fields at 0x74, 0x78 and 0x80
+//     0x10FDC1 call qword [rax+0xA0]            ; a twelfth vtable slot
+inline constexpr std::size_t kInputBufferLocal = 0x60;       // RE 0x10FD61
+inline constexpr std::size_t kInputBufferLocalMarker = 0x74; // RE 0x10FD9C -- 0x14 relative
+inline constexpr std::size_t kInputBufferLocalByte = 0x78;   // RE 0x10FD94 -- 0x18 relative
+inline constexpr std::size_t kInputBufferLocalLink = 0x80;   // RE 0x10FDB1 -- 0x20 relative
+inline constexpr bool kInputBufferInPlace = true;            // the same object, three constructions
+inline constexpr bool kSelfTestFirst = true;                 // RE 0x10FD8C, before any other work
+inline constexpr std::int32_t kSelfTestArgument = 0;         // RE 0x10FD7B (edx zero)
+inline constexpr std::uintptr_t kFlagProbe = 0x1170B0;       // RE 0x10FD71, writes a byte
+inline constexpr std::size_t kVtableSlotI = 0xA0;            // RE 0x10FDC1 -- a TWELFTH slot
+inline constexpr int kVtableSlotsKnown7 = 12;                // with 0xA0 added to the eleven of round 291
+inline constexpr int kDriverCallers = 1;
+static_assert(kInputBufferLocalMarker - kInputBufferLocal == kInputBufferMarker, "the marker offset agrees");
+static_assert(kInputBufferLocalByte - kInputBufferLocal == kInputBufferByte, "the byte offset agrees");
+static_assert(kInputBufferLocalLink - kInputBufferLocal == 0x20, "the link offset agrees");
+static_assert(kVtableSlotsKnown7 == kVtableSlotsKnown6 + 1, "one more slot than round 291");
+static_assert(kSelfTestFirst, "the self-test runs before the operation");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
