@@ -985,5 +985,15 @@ int main() {
         CHECK(kTreeNodeTail < kTreeNodeBytes);
     }
 
+    // --- the size gate of 0x5e78d0 (RE 0x5e7939: cmp rbx,0x2F ; ja) ---------------------------------
+    {
+        CHECK(kMinSpanForOneRecord == 47);
+        CHECK(kMinSpanForOneRecord + 1 == kIndexedRecordStride);   // 47 is one less than 48
+        CHECK(!hasAtLeastOneRecord(0));
+        CHECK(!hasAtLeastOneRecord(47));
+        CHECK(hasAtLeastOneRecord(48));                            // exactly one 48-byte record
+        CHECK(hasAtLeastOneRecord(96));                            // two
+    }
+
     return check::finish("test_recovered");
 }

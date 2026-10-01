@@ -90,4 +90,16 @@ inline constexpr std::size_t kTreeNodeSentinelDouble = 0x78; // RE 0x89D3C5
 inline constexpr std::size_t kTreeNodeTail = 0x80;          // RE 0x89D3CA
 inline constexpr std::int64_t kTreeNodeNoIndex = -1;        // RE 0x89D3B2/0x89D3B9
 
+
+// --- the size gate of 0x5E78D0 (round 179) --------------------------------------------------------
+// RE 0x5E7936/0x5E7939: the container's byte span is compared with 0x2F (47) and the routine returns
+// immediately unless the span EXCEEDS it. 47 is one less than kIndexedRecordStride (48, measured in round 159
+// from `lea rbx,[rax+rax*2] ; shl rbx,4`), so the gate is "is there at least one 48-byte record?", and the two
+// facts corroborate the record size independently.
+inline constexpr std::size_t kMinSpanForOneRecord = 47;   // RE 0x5E7939: cmp rbx,0x2F
+
+inline bool hasAtLeastOneRecord(std::size_t spanBytes) {
+    return spanBytes > kMinSpanForOneRecord;              // RE the `ja` at 0x5E7939
+}
+
 }  // namespace lcns
