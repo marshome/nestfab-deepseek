@@ -2188,3 +2188,46 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 * 浮点常量：`0.25`、`0.999`、`3`
 * 字段偏移：`+0x8`、`+0xc`、`+0x10`、`+0x18`、`+0x20`、`+0x28`、`+0x30`、`+0x38`、`+0x40`、`+0x48`
 * 调用序（前 10）：`0x1a6320` `0x1c0750` `0x183f60` `0x1fb5f0` `0x775500` `0x775600` `0x775c00` `0x1bb490` `0x1bd410` `0x1be400`
+
+### 附 39 `0x1ADC20` 深读：多排样优化器的 choosen/database（goal round 113）
+
+* 规模：3261 B / 655 条，调用者 3；自带文本：`choosen`、`database`
+
+**常量 `0.999`（加载于 `0x1ae387`）的上下文**：
+
+```
+1ae36d   call 0x183f60
+1ae372   test eax, eax
+1ae374   je 0x1ae4fa
+1ae37a   mov rcx, qword ptr [rsp + 0xc68]
+1ae382   call 0x1f8410
+1ae387   movsd xmm6, qword ptr [rip + 0x811249]
+1ae38f   mov rcx, r13
+1ae392   mulsd xmm6, xmm0
+```
+
+**常量 `3`（加载于 `0x1ae646`）的上下文**：
+
+```
+1ae628   mov eax, dword ptr [rax + 0xc]
+1ae62b   jmp 0x1ae132
+1ae630   mov qword ptr [rsp + 0x78], 4
+1ae639   lea rdx, [rsp + 0x70]
+1ae63e   lea rbx, [rsp + 0x8b0]
+1ae646   lea rax, [rip + 0x810cf3]
+1ae64d   mov rcx, rbx
+1ae650   mov qword ptr [rsp + 0x70], rax
+```
+
+**常量 `0.25`（加载于 `0x1ae698`）的上下文**：
+
+```
+1ae682   imul rcx, rdx
+1ae686   test rcx, rcx
+1ae689   js 0x1ae7a2
+1ae68f   pxor xmm0, xmm0
+1ae693   cvtsi2sd xmm0, rcx
+1ae698   mulsd xmm0, qword ptr [rip + 0x810f20]
+1ae6a0   mov eax, eax
+1ae6a2   pxor xmm1, xmm1
+```
