@@ -231,4 +231,21 @@ inline constexpr std::uint64_t kIndexDivMagic = 0xC30C30C30C30C30DULL;
 inline constexpr int kIndexDivShift = 4;
 inline constexpr int kIndexDivisor = 21;   // determined by experiment over 19 samples
 
+
+// --- the blocked container of 0x704400: 21 elements of 24 bytes per block (round 205) ---------------
+//     704420 cmp r8,0x14 ; 704424 ja 0x704430           ; the fast path applies while the index is <= 20
+//     704426 lea rdx,[rdx+rdx*2] ; 70442A lea rax,[rax+rdx*8]   ; base + index*24
+//     704442 imul rdx (0xC30C30C30C30C30D) ; 70444F sar rdx,4 ; 704453 sub rdx,rax   ; q = index / 21
+//     70445A lea rcx,[rdx+rdx*4] ; 70445E lea rcx,[rdx+rcx*4]   ; q * 21
+//     704462 sub r8,rcx                                          ; the remainder
+//     704469 mov rax,[rax + rdx*8] ; 70446D lea rax,[rax + rcx*8] ; block[q] + remainder*24
+// and 21 * 24 = 504, which is exactly kContainerBlockBytes from round 200 -- the two were found in different
+// functions, so this is a cross-verification rather than a repetition.
+inline constexpr std::size_t kBlockElements = 21;        // RE the `q * 21` at 0x70445A/0x70445E
+inline constexpr std::size_t kBlockFastPathLimit = 0x14; // RE 0x704420: 20 = 21 - 1
+inline constexpr std::size_t kBlockElementStride = 24;   // RE 0x70442A: rdx * 3 * 8
+static_assert(kBlockElements * kBlockElementStride == kContainerBlockBytes,
+              "21 elements of 24 bytes is the 504-byte block measured in round 200");
+static_assert(kBlockFastPathLimit + 1 == kBlockElements, "the fast path covers the first block");
+
 }  // namespace lcns

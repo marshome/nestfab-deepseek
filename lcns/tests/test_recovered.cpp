@@ -1272,5 +1272,26 @@ int main() {
         CHECK(kIndexDivShift == 4);
     }
 
+    // --- the blocked container of 0x704400 (RE 0x704420, 0x70445a/0x70445e and 0x704469) --------------
+    {
+        CHECK(kBlockElements == 21);
+        CHECK(kBlockFastPathLimit == 20);
+        CHECK(kBlockElementStride == 24);
+        CHECK(kBlockFastPathLimit + 1 == kBlockElements);
+        CHECK(kBlockElementStride == kSmallRecordStride);              // the 24 of round 157
+        CHECK(kBlockElements * kBlockElementStride == kContainerBlockBytes);   // the 504 of round 200
+        CHECK(kIndexDivisor == 21);                                   // and the divisor of round 203
+        CHECK(kIndexDivisor == static_cast<int>(kBlockElements));
+        // the addressing the instructions perform: blocks[q] + (i - 21*q)*24
+        for (std::size_t i = 0; i <= 42; ++i) {
+            const std::size_t q = i / kBlockElements;
+            const std::size_t r = i - kBlockElements * q;
+            CHECK(r < kBlockElements);
+            CHECK(kBlockElementStride * r < kContainerBlockBytes);
+            // the fast path is taken exactly while the index fits in the first block
+            CHECK((i <= kBlockFastPathLimit) == (q == 0));
+        }
+    }
+
     return check::finish("test_recovered");
 }
