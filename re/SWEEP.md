@@ -1432,3 +1432,16 @@ Itanium 布局：vtable 前两个字分别是 offset-to-top 与 **type_info 指�
 
 
 **口径**：指针链与字符串是硬事实；「该 vtable 属于该类」由 ABI 布局保证。
+
+## vtable 布局探针（goal round 81）**[逐步计数]**
+
+round 80 从 vtable 出发解出 0 个，且脚本没把“跳过”计数分开。本轮**每一步都报数字**：
+
+* 步骤 1：443 个 `vtable_rva` 中能映射到文件偏移的数量
+* 步骤 2：`vtable_rva` 周围 `-0x18/-0x10/-8/0/+8` 五处的值形态
+* 步骤 3：RTTI 形状的名字串数量：**198**
+* 步骤 4：指向名字串的数据槽（type_info 名字槽）：**0**
+* 步骤 5：由此推出的 type_info 对象基址：**0**
+* 步骤 6：指向 type_info 对象的槽（即 vtable 的 type_info 槽）：**0**
+
+**口径**：每一步都是计数，不是结论；只有当步骤 6 为正且能与 `vtables.json` 对上，才能说“类名已配到 vtable”。
