@@ -2588,6 +2588,30 @@ static_assert(kDriverVtables4 != kDriverVtablesPair && kDriverVtables4 != kDrive
 static_assert(kInPlaceConfirmations3 == 6, "six confirmations of the in-place offsets");
 static_assert(kDriverFamilyHelperShared, "one helper serves the whole family");
 
+
+// --- the second type reader: the same shape, requiring tag 2 (round 313) ---------------------------------
+//     0x1127CA call 0x117050                 ; a byte
+//     0x1127D4 cmp byte [rsp+0x34],2 ; je    ; the tag must be TWO -- INTEGER
+//     0x1127DB call 0x77F2D0                 ; the same formatter otherwise
+//     0x1127EB call 0x117050                 ; the next byte, in the adjacent slot 0x35
+//     0x1127F9/0x112800 movzx ebx,byte [...] ; test bl,bl ; js   ; the continuation bit, third site
+//     0x11281B call 0x118470                 ; a helper given the length
+inline constexpr std::uintptr_t kIntegerReader = 0x112740;   // RE the whole routine
+inline constexpr std::uint8_t kRequiredTagInteger = 2;       // RE 0x1127D4
+inline constexpr std::size_t kTagSlot2 = 0x34;               // RE 0x1127D4
+inline constexpr std::size_t kSecondSlot2 = 0x35;            // RE 0x1127F9
+inline constexpr int kTypeReaderFamily = 2;                  // the OID reader and the INTEGER reader
+inline constexpr bool kTypeReadersShareShape = true;         // instruction for instruction but for the tag
+inline constexpr int kContinuationTestSites = 3;             // rounds 300, 309/310 and this
+inline constexpr std::uintptr_t kIntegerHelper = 0x118470;   // RE 0x11281B
+inline constexpr int kIntegerReaderCallers = 9;
+static_assert(kRequiredTagInteger == 2, "the INTEGER tag is two");
+static_assert(kRequiredTagInteger != kRequiredTag, "and it differs from the OID reader's six");
+static_assert(kSecondSlot2 == kTagSlot2 + 1, "the slots are adjacent here too");
+static_assert(kSecondSlot2 - kTagSlot2 == kSecondSlot - kTagSlot, "the same adjacency as the OID reader");
+static_assert(kTypeReadersShareShape && kTypeReaderFamily == 2, "two readers, one shape");
+static_assert(kContinuationTestSites == 3, "a third site for the continuation test");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

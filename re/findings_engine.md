@@ -6218,3 +6218,23 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ⇒ **就地偏移集合第六次确认，自检第五次**。族内变化的是**对象携带几个虚表指针** —— 这是**按接口数参数化的模板**的形状；此读法**作为数字暗示的理解提出，不声称更强**。
 
 **已落 `layout.hpp`**：`kDriverFourth`(0x112740)、`kDriverFourthCallers`(9)、`kDriverFamily`(4)、`kDriverVtables4`(3)、`kDriverVtableCountsDiffer`、`kInPlaceConfirmations3`(6)、`kDriverFamilyHelperShared`、`kFamilyReadingIsTemplate` + **五条 `static_assert`** + 测试 24 条。
+
+### 附 231 ★★ **第二个类型读取器：形状相同，要求 tag 2（INTEGER）**（goal round 313）**[已落码]**
+
+`0x112740` 的主体就是 `0x111E90`的主体**只改了一个数字**：
+
+```
+1127CA  call 0x117050                 ; 读一字节 —— 与 OID 读取器同
+1127D4  cmp byte [rsp+0x34], **2** ; je  ; ★★ **tag 必须是二**（OID 读取器要求的是六）
+1127DB  call 0x77F2D0                 ; 否则同一格式化器
+1127EB  call 0x117050                 ; 下一字节，到**相邻**槽（0x34 后的 0x35）
+1127F9/112800  movzx ebx,byte [..] ; test bl,bl ; js   ; ★ 续接位**第三个站点**
+11281B  call 0x118470                 ; 随后一个收长度的助手
+```
+
+**ASN.1 通用标签 2 是 INTEGER、6 是 OBJECT IDENTIFIER**（均为标准事实） ⇒ **该编解码器有“按类型分设的读取器”，它们是同一个例程配不同的必需 tag**。
+这个读法**很强**，因为两个主体**除了那一次比较之外逐指令对齐**。
+
+★ 且它给 round 312 的“第四个驱动器”**补上了身份**：`0x112740` 就是 **INTEGER 读取器**。
+
+**已落 `layout.hpp`**：`kIntegerReader`(0x112740)、`kRequiredTagInteger`(2)、`kTagSlot2`(0x34)、`kSecondSlot2`(0x35)、`kTypeReaderFamily`(2)、`kTypeReadersShareShape`、`kContinuationTestSites`(3)、`kIntegerHelper`(0x118470) + **六条 `static_assert`** + 测试 24 条。

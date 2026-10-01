@@ -4160,5 +4160,40 @@ int main() {
         CHECK(kInputBufferLocalMarker - kInputBufferLocal == kInputBufferMarker);
     }
 
+    // --- the second type reader and the two standard tags (RE 0x112740) ----------------------------
+    {
+        CHECK(kIntegerReader == 0x112740);
+        CHECK(kRequiredTagInteger == 2);
+        CHECK(kRequiredTag == 6);
+        CHECK(kRequiredTagInteger != kRequiredTag);
+        CHECK(kTagSlot2 == 0x34);
+        CHECK(kSecondSlot2 == 0x35);
+        CHECK(kSecondSlot2 == kTagSlot2 + 1);
+        CHECK(kSecondSlot2 - kTagSlot2 == kSecondSlot - kTagSlot);   // same adjacency in both readers
+        CHECK(kTypeReaderFamily == 2);
+        CHECK(kTypeReadersShareShape);
+        CHECK(kContinuationTestSites == 3);
+        CHECK(kIntegerHelper == 0x118470);
+        CHECK(kIntegerReaderCallers == 9);
+        CHECK(kDriverFourth == kIntegerReader);          // the fourth driver IS the INTEGER reader
+        CHECK(kParserBytes == 692);
+        CHECK(kRequiredTag == 6 && kTag6IsOid);
+
+        // the two standard tags, and the acceptance each reader performs
+        const std::uint8_t kInteger = 0x02;
+        const std::uint8_t kOid = 0x06;
+        CHECK(kRequiredTagInteger == kInteger);
+        CHECK(kRequiredTag == kOid);
+        const auto integerAccepted = [](std::uint8_t t) { return t == kRequiredTagInteger; };
+        const auto oidAccepted = [](std::uint8_t t) { return t == kRequiredTag; };
+        CHECK(integerAccepted(2) && !integerAccepted(6));
+        CHECK(oidAccepted(6) && !oidAccepted(2));
+        // each reader rejects the other's tag, which is what makes them different readers
+        CHECK(!integerAccepted(kRequiredTag));
+        CHECK(!oidAccepted(kRequiredTagInteger));
+        CHECK(kContinuationBit == 0x80);
+        CHECK(kAssemblerSites == 2);
+    }
+
     return check::finish("test_recovered");
 }
