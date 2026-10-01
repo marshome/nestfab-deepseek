@@ -6284,3 +6284,19 @@ round 314 的两行已**替换而非保留**。
 ★ 本站的累加器是 **32 位**，而 rounds 300/310 用的是 64 位 ⇒ **记为第四个站点并标出该差异**，不抹平；`kAssemblerSites` 由 2 **更新为 4**（旧断言同步修正）。
 
 **已落 `layout.hpp`**：`kLeadingZeroCheck`、`kMinimalEncodingRequired`、`kLeadingZeroViolation`(0x112B45)、`kIntegerFastPathBytes`(4)、`kIntegerFastPath`(0x112E70)、`kLengthMustMatch`、`kLengthMismatch`(0x112EEE)、`kSite4AccumulatorBits`(32)、`kIntegerZeroByte` + **四条 `static_assert`** + 测试 24 条。
+
+### 附 235 **短整数路径复用循环，这收窄了我 round 316 的说法**；以及第二套错误面（goal round 317）**[已落码]**
+
+```
+112E73  je 0x112883          ; 零长度走别处
+112E7F  jmp 0x11285C         ; ★ **1..4 字节直接进入同一装配循环**（跳过前导零扫描）
+112EEE/112EF3/112EF8/112EFD  call 0x77F2D0（**步长 5**）
+112E84/112E95/112EA6  三个 **16 位**字段 `+0x3C`/`+0x3E`/`+0x40` 与零相比
+```
+
+★ **这对我 round 316 的说法有影响**：当时我把那个扫描称为“DER 的最小编码规则”，而本轮的指令显示它**对 ≤4 字节的值被跳过** ⇒ 该检查**是有条件的，不是一道普适规则**。
+**证据未变，变的是那句话的适用范围** ⇒ 以 `kMinimalEncodingReadingNarrowed` **在原处记录收窄**，而不是让它站着。
+
+★ 且 **四处相邻错误入口是该编解码器的模式**（round 311 的 `0x111E90` 与本轮的 `0x112740`），而不是单一例程的特征（`kErrorSurfacePatternSites = 2`，且步长相同）。
+
+**已落 `layout.hpp`**：`kFastPathJumpsToLoop`、`kIntegerLoopEntry`(0x11285C)、`kZeroLengthBranch`(0x112883)、`kIntegerErrorSites`(4)、`kErrorSurfacePatternSites`(2)、`kIntegerWordFields`(3)、`kIntegerWordBase`(0x3C)、`kIntegerSource`、`kMinimalEncodingReadingNarrowed`、`kZeroScanSkippedUnder4Bytes` + **四条 `static_assert`** + 测试 22 条。

@@ -2679,6 +2679,31 @@ static_assert(kIntegerFastPathBytes == 4, "four bytes or fewer");
 static_assert(kLengthMustMatch, "and the length is compared with the value's count");
 static_assert(kSite4AccumulatorBits == 32, "this site accumulates in thirty-two bits");
 
+
+// --- the short-integer path reuses the loop, and a second error surface (round 317) ---------------------
+//     0x112E73 je 0x112883          ; a ZERO length goes elsewhere
+//     0x112E7F jmp 0x11285C         ; and 1..4 bytes enter the SAME assembly loop, past the zero scan
+//     0x112EEE/0x112EF3/0x112EF8/0x112EFD  call 0x77F2D0, five bytes apart
+//     0x112E84/0x112E95/0x112EA6    three SIXTEEN-bit fields at +0x3C, +0x3E and +0x40 against zero
+inline constexpr bool kFastPathJumpsToLoop = true;           // RE 0x112E7F
+inline constexpr std::uintptr_t kIntegerLoopEntry = 0x11285C;  // RE the target it jumps to
+inline constexpr std::uintptr_t kZeroLengthBranch = 0x112883;  // RE 0x112E73
+inline constexpr int kIntegerErrorSites = 4;                 // RE the four adjacent calls
+inline constexpr int kErrorSurfacePatternSites = 2;          // rounds 311 and this
+inline constexpr int kIntegerWordFields = 3;                 // RE 0x112E84/0x112E95/0x112EA6
+inline constexpr std::size_t kIntegerWordBase = 0x3C;        // RE the lowest of the three
+inline constexpr std::uintptr_t kIntegerSource = 0x112EFD;   // RE the last error entry
+// NARROWING my round-316 claim: the zero scan is skipped for values of four bytes or fewer, so what I called "DER's
+// minimal-encoding rule" is a CONDITIONAL check, not a blanket one. The evidence has not changed; the scope of the
+// sentence has, and it is corrected here rather than left standing.
+inline constexpr bool kMinimalEncodingReadingNarrowed = true;
+inline constexpr bool kZeroScanSkippedUnder4Bytes = true;
+static_assert(kFastPathJumpsToLoop, "the short case reuses the loop rather than replacing it");
+static_assert(kIntegerErrorSites == 4, "four error entries, as in the OID reader");
+static_assert(kMinimalEncodingReadingNarrowed && kZeroScanSkippedUnder4Bytes,
+              "the claim is narrowed to match the instruction");
+static_assert(kIntegerWordFields == 3, "three sixteen-bit fields are compared here");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

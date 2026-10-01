@@ -4298,5 +4298,39 @@ int main() {
         CHECK((1ull << kSite4AccumulatorBits) == 4294967296ull);
     }
 
+    // --- the reused loop, the second error surface, and the narrowed claim (RE 0x112740) -----------
+    {
+        CHECK(kFastPathJumpsToLoop);
+        CHECK(kIntegerLoopEntry == 0x11285C);
+        CHECK(kZeroLengthBranch == 0x112883);
+        CHECK(kIntegerErrorSites == 4);
+        CHECK(kErrorSurfacePatternSites == 2);
+        CHECK(kErrorSiteStride == 5);                    // the same stride as round 311's block
+        CHECK(kParserErrorSites == 4);
+        CHECK(kIntegerWordFields == 3);
+        CHECK(kIntegerWordBase == 0x3C);
+        CHECK(kIntegerSource == 0x112EFD);
+        CHECK(kMinimalEncodingReadingNarrowed);          // my own claim, narrowed
+        CHECK(kZeroScanSkippedUnder4Bytes);
+        CHECK(kLeadingZeroCheck);                        // the check still exists
+        CHECK(kIntegerFastPathBytes == 4);
+
+        // the two error blocks have the same shape: four entries, five bytes apart
+        const std::uintptr_t integerEntries[4] = {0x112EEE, 0x112EF3, 0x112EF8, 0x112EFD};
+        for (int i = 1; i < kIntegerErrorSites; ++i) {
+            CHECK(integerEntries[i] - integerEntries[i - 1] == kErrorSiteStride);
+        }
+        CHECK(integerEntries[3] - integerEntries[0] == 3 * kErrorSiteStride);
+        CHECK(kParserErrorLast - kParserErrorFirst == integerEntries[3] - integerEntries[0]);
+
+        // and the condition my round-316 sentence was missing
+        const auto scanApplies = [](std::size_t bytes) { return bytes > kIntegerFastPathBytes; };
+        CHECK(!scanApplies(1));
+        CHECK(!scanApplies(4));
+        CHECK(scanApplies(5));
+        CHECK(scanApplies(9));
+        CHECK(kIntegerFastPathBytes * 2 == 8);
+    }
+
     return check::finish("test_recovered");
 }
