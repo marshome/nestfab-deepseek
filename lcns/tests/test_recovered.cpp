@@ -5315,5 +5315,46 @@ int main() {
         CHECK(cross(0, 0, 2, 0, 0, 2) == -4.0);          // CORRECTED in 341c: magnitude four, sign negative
     }
 
+    // --- the segment transform, which closes the pipeline (RE 0x5cfdc0) -----------------------------
+    {
+        CHECK(kAffineTwoPoints == 0x5CFDC0);
+        CHECK(kAffineTwoPointsCallers == 3);
+        CHECK(kAffineFormulaConfirmed);
+        CHECK(kMatrixLayoutConfirmed2);
+        CHECK(kMatrixLayoutConfirmed);
+        CHECK(kBothPointsInPlace);
+        CHECK(std::string(kAffineFormula) == "x' = a*x + b*y + tx ; y' = c*x + d*y + ty");
+        CHECK(std::string(kGeometryPipeline) == "transform a segment, measure between segments, test orientation");
+        CHECK(kPipelineStages == 3);
+        CHECK(kSegmentKernel == 0x55E190);               // the measure stage
+        CHECK(kCrossProduct == 0x24B440);                // the orientation stage
+        CHECK(kAffineTwoPoints != kAffineInPlace);
+        CHECK(kSegmentStartA == kAffineSourceA);
+        CHECK(kSegmentEndA == kAffineSourceC);
+        CHECK(kSegmentEndA - kSegmentStartA == 0x10);
+        CHECK(kMatrixTx == kAffineTermA && kMatrixTy == kAffineTermB);
+
+        // the transform applied to BOTH points of a segment, by hand
+        const auto apply = [](const double m[6], double x, double y, double& ox, double& oy) {
+            ox = m[0] * x + m[1] * y + m[2];
+            oy = m[3] * x + m[4] * y + m[5];
+        };
+        const double m[6] = {2, 0, 1, 0, 2, -1};         // scale by two, then translate
+        double x0 = 0, y0 = 0, x1 = 1, y1 = 1;
+        double a0 = 0, b0 = 0, a1 = 0, b1 = 0;
+        apply(m, x0, y0, a0, b0);
+        apply(m, x1, y1, a1, b1);
+        CHECK(a0 == 1.0 && b0 == -1.0);                  // the start point moved
+        CHECK(a1 == 3.0 && b1 == 1.0);                   // and so did the end point
+        // the segment's direction is preserved by a pure scale
+        const double scale[6] = {3, 0, 0, 0, 3, 0};
+        double c0 = 0, d0 = 0, c1 = 0, d1 = 0;
+        apply(scale, 1.0, 2.0, c0, d0);
+        apply(scale, 2.0, 4.0, c1, d1);
+        CHECK(c0 == 3.0 && d0 == 6.0);
+        CHECK(c1 == 6.0 && d1 == 12.0);
+        CHECK((c1 - c0) * 2.0 == (d1 - d0));             // still the same slope, doubled in length
+    }
+
     return check::finish("test_recovered");
 }

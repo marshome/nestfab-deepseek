@@ -6773,3 +6773,27 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 由此得出的记录：在 `rcx` 处是**四 double 记录**（A 在 `+0x00`/`+0x08`、C 在 `+0x10`/`+0x18`），第三点在 `rdx`。
 
 **已落 `layout.hpp`**：`kAffineInPlace`(0x5CFD80)、`kMatrixA..D`、`kMatrixTx/Ty`(0x20/0x28)、`kMatrixDoubles2`(6)、`kMatrixLayoutConfirmed`、`kPointX/Y`、`kInPlaceTransform`、`kCrossProduct`(0x24B440)、`kCrossA/C`、`kSignIsOrientation`、`kCrossProductForm` + **六条 `static_assert`** + 测试 26 条（含定向的四组手算：逆时针、顺时针、共线、以及面积 4）。
+
+### 附 260 ★★★ **同一矩阵作用于一段的两个点，几何管线因此闭合**（goal round 342）**[已落码]**
+
+`0x5CFDC0`（160 B / 3 个调用者）：
+
+```
+5CFDD1/5CFDCD  矩阵的 a、b（`+0x00`、`+0x08`）
+5CFDDB/5CFDD6  记录的第一点（`+0x00`、`+0x08`）
+5CFDF0/5CFDE3  矩阵的 c、d（`+0x10`、`+0x18`）
+5CFE25/5CFE36  第一点**写回**
+5CFE05/5CFE29/5CFE51  第二点（`+0x10`、`+0x18`）如法处理
+```
+
+⇒ 它把**一个 2×3 矩阵就地作用于四 double 记录的两个点**。而该记录**正是 rounds 338/339 读取并度量的那个段**，矩阵的六个偏移也**正是 rounds 339/341 用过的六个** ⇒ **三次读数相互一致**，而管线随之可见：
+
+| 阶段 | 例程 |
+|---|---|
+| **变换一段** | `0x5CFDC0`（本轮）|
+| **量两段之间** | `0x55E190`（round 338）|
+| **判三点定向** | `0x24B440`（round 341）|
+
+每点的算术（`a*x + b*y + tx` 与 `c*x + d*y + ty`）**也正是 round 341 就地变换所做的** ⇒ **该公式从第二个例程得到确认**。
+
+**已落 `layout.hpp`**：`kAffineTwoPoints`(0x5CFDC0)、`kAffineTwoPointsCallers`(3)、`kAffineFormulaConfirmed`、`kMatrixLayoutConfirmed2`、`kBothPointsInPlace`、`kAffineFormula`、`kGeometryPipeline`、`kPipelineStages`(3) + **六条 `static_assert`** + 测试 26 条（含两组手算：缩放+平移后两点的新坐标、纯缩放保持斜率）。

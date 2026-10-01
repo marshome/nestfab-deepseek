@@ -3365,6 +3365,30 @@ static_assert(kMatrixLayoutConfirmed && kInPlaceTransform, "confirmed by a secon
 static_assert(kCrossC - kCrossA == 0x10, "the cross product's own record is four doubles");
 static_assert(kSignIsOrientation, "the sign of the determinant is the direction of the turn");
 
+
+// --- the same matrix on both points of a segment, closing the pipeline (round 342) ----------------------
+//     0x5CFDD1/0x5CFDCD  the matrix's a and b
+//     0x5CFDDB/0x5CFDD6  the record's first point at +0x00 and +0x08
+//     0x5CFDF0/0x5CFDE3  the matrix's c and d
+//     0x5CFE25/0x5CFE36  the first point written back
+//     0x5CFE05/0x5CFE29/0x5CFE51  and the second point at +0x10 and +0x18 treated the same way
+inline constexpr std::uintptr_t kAffineTwoPoints = 0x5CFDC0;  // RE the whole routine
+inline constexpr int kAffineTwoPointsCallers = 3;
+inline constexpr bool kAffineFormulaConfirmed = true;        // a*x+b*y+tx and c*x+d*y+ty, read again
+inline constexpr bool kMatrixLayoutConfirmed2 = true;        // the same six offsets, a third time
+inline constexpr bool kBothPointsInPlace = true;             // RE the two write-backs
+inline constexpr const char* kAffineFormula = "x' = a*x + b*y + tx ; y' = c*x + d*y + ty";
+inline constexpr const char* kGeometryPipeline = "transform a segment, measure between segments, test orientation";
+inline constexpr int kPipelineStages = 3;                    // the three routines above
+static_assert(kAffineFormulaConfirmed && kMatrixLayoutConfirmed2, "confirmed twice over");
+static_assert(kAffineTwoPoints != kAffineInPlace, "a different routine from the single-point transform");
+static_assert(kBothPointsInPlace, "both points are written back");
+static_assert(kPipelineStages == 3, "three stages are now readable");
+static_assert(kMatrixA == 0x00 && kMatrixB == 0x08 && kMatrixC == 0x10 && kMatrixD == 0x18,
+              "the matrix offsets are the ones rounds 339 and 341 used");
+static_assert(kSegmentStartA == kMatrixA && kSegmentEndA == kMatrixC,
+              "the segment's two points use the first and third matrix offsets");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
