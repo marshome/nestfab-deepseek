@@ -5149,3 +5149,21 @@ u"⇒ 本轮**未新增条目**，口径数字不变（`DOMAIN code STILL TO REV
 u"**不能证明“必定是库代码”** —— 一个只构造 `std::string`、不做别的事的领域 getter 也会满足它们。"
 u"所以新登记的条目一律写明 **INFERRED from the evidence, not proven**。
 
+
+### 附 176 **单链表块析构器**与**8 字节分配路径**（goal round 256）**[已落码]
+
+**（a）`0xC2510`（99 B / **58 个调用者**）= 单链表块的析构器**：
+
+```
+C2521  rbx = [rcx+0x20]   ; 链表头
+C2546  rbp = [rbx]        ; ★ next 在节点 `+0x00`（**单向链表**）
+C2549  rcx = [rbx+0x10]   ; ★ 节点缓冲区
+C2540  rdx = [rbx+0x18]   ; ★ 节点长度
+C2550  rep stosb          ; 将该长度字节置零（al 为 0）
+C2555  call 0xFE240       ; 释放助手
+C2560  call 0x9984B0      ; ★ 共享释放器，**第四次**目击
+```
+
+**（b）`0x998920`（51 B / 44 个调用者）**：`mov ecx,8` + `0x9988C0`（分配 8 字节），然后调 `0x999030`（抛出路径）。两个助手**各自第三次出现**（rounds 252/253 + 本轮）。
+
+**已落 `layout.hpp`**：`kListNode*`、`kListHeadOffset`、`kListReleaseHelper`、`kAlloc8`、`kAllocHelper`、`kThrowHelper`、`kSharedDeallocSightings2`、`kHelperSightings` + **三条 `static_assert`** + 测试 20 条。

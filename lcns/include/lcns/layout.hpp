@@ -1087,6 +1087,37 @@ static_assert(kNestedInnerEnd - kNestedInnerBegin == 8, "the inner pair is eight
 inline constexpr std::uintptr_t kStdStringConstruct = 0xC71D0;   // RE 0xC71E7, toolchain
 inline constexpr int kStdStringConstructCallers = 11;
 
+
+// --- the list-block destructor 0xC2510, fifty-eight callers (round 256) --------------------------------
+//     0xC2518/0xC2528  two vtable pointers are installed at +0x00 and +0x08 first
+//     0xC2521 rbx = [rcx+0x20]   ; the list head
+//     0xC2546 rbp = [rbx]        ; the next pointer, at +0x00 of a node -- a SINGLY linked list
+//     0xC2549 rcx = [rbx+0x10]   ; the node's buffer
+//     0xC2540 rdx = [rbx+0x18]   ; its length
+//     0xC2550 rep stosb          ; zero-fill that many bytes (al is zero)
+//     0xC2555 call 0xFE240       ; a release helper
+//     0xC2560 call 0x9984B0      ; the shared deallocator, now its fourth sighting
+inline constexpr std::size_t kListNodeNext = 0x00;           // RE 0xC2546
+inline constexpr std::size_t kListNodeBuffer = 0x10;         // RE 0xC2549
+inline constexpr std::size_t kListNodeLength = 0x18;         // RE 0xC2540
+inline constexpr std::size_t kListHeadOffset = 0x20;         // RE 0xC2521
+inline constexpr std::uintptr_t kListReleaseHelper = 0xFE240; // RE 0xC2555
+inline constexpr int kListDestructorCallers = 58;
+inline constexpr int kSharedDeallocSightings2 = 4;           // rounds 248, 252, 254 and this one
+static_assert(kListNodeBuffer < kListNodeLength, "the buffer pointer precedes the length");
+static_assert(kListNodeLength < kListHeadOffset, "the node fields precede the head offset");
+
+// --- the eight-byte allocation path 0x998920, forty-four callers (round 256) ---------------------------
+//     0x998924 mov ecx,8 ; 0x998929 call 0x9988C0   ; eight bytes from the allocator of rounds 252/253
+//     0x998943 [rax] = rcx+0x10                     ; the vtable-ish pointer is installed
+//     0x99894D call 0x999030                        ; the throw path, also from rounds 252/253
+inline constexpr std::size_t kAlloc8 = 8;                    // RE 0x998924
+inline constexpr std::uintptr_t kAllocHelper = 0x9988C0;     // RE 0x998929, sighting three
+inline constexpr std::uintptr_t kThrowHelper = 0x999030;     // RE 0x99894D, sighting three
+inline constexpr int kAlloc8Callers = 44;
+inline constexpr int kHelperSightings = 3;                   // rounds 252, 253 and this one
+static_assert(kAlloc8 == 8, "eight bytes");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

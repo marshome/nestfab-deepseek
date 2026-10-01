@@ -2242,5 +2242,30 @@ int main() {
         CHECK(kStdStringConstruct == 0xC71D0);
     }
 
+    // --- the list-block destructor and the allocation path (RE 0xc2510 and 0x998920) ----------------
+    {
+        CHECK(kListNodeNext == 0x00);
+        CHECK(kListNodeBuffer == 0x10);
+        CHECK(kListNodeLength == 0x18);
+        CHECK(kListHeadOffset == 0x20);
+        CHECK(kListNodeBuffer < kListNodeLength);
+        CHECK(kListNodeLength < kListHeadOffset);
+        CHECK(kListReleaseHelper == 0xFE240);
+        CHECK(kListDestructorCallers == 58);
+        CHECK(kSharedDeallocSightings2 == 4);
+        CHECK(kSharedDeallocSightings == 3);                  // round 254 counted the earlier three
+        CHECK(kSharedDealloc == 0x9984B0);
+
+        CHECK(kAlloc8 == 8);
+        CHECK(kAllocHelper == 0x9988C0);
+        CHECK(kThrowHelper == 0x999030);
+        CHECK(kAlloc8Callers == 44);
+        CHECK(kHelperSightings == 3);
+        CHECK(kAllocHelper != kExceptionHelper);   // the allocator is not the exception helper
+        // the allocator and the throw path are the ones rounds 252/253 already recorded
+        CHECK(kAllocHelper == 0x9988C0);
+        CHECK(kThrowHelper == 0x999030);
+    }
+
     return check::finish("test_recovered");
 }
