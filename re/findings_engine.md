@@ -1753,3 +1753,12 @@ Add 的尾部按 `options[+0x2C4]`、`options[+0x2C0]` 与 `0x4FC250(Pb)` 的结
 | 4 | 3 | `0x1a5390` `0x1a5460` `0x1a5500` `0x1a5970` |
 
 **口径**：这是**结构判据**，**不是身份**：共享被调用者只说明同族，族成员各自做什么仍未读。用途是**读一份推及全族**。
+
+### 附 14 等距大族的成员定性（goal round 65）**[已读指令，身份部分已定]**
+
+round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x92CE40 一族 11 个，间距均约 0x120）。本轮读其中的具体成员：
+
+* **`0x6ca720`**（0x6CA720 family (12 members)）279 B / 78 条指令；字符串 `10BeamValues`；被调用者 `0x1a2ab0`, `0x608e40`, `0x62f280`, `0x6d5980`, `0x82b7b0`, `0x8f17b0`, `0x91fd80`, `0x978010`, `0x9984b0`；
+* **`0x6ca840`**（next member of the same family, to see the difference）279 B / 78 条指令；字符串 `10Off2Weight`；被调用者 `0x1a2ab0`, `0x608e40`, `0x62f280`, `0x6d5980`, `0x82b7b0`, `0x8f17b0`, `0x91fd80`, `0x978010`, `0x9984b0`；
+* **`0x92ce40`**（0x92CE40 family (11 members)）284 B / 86 条指令；字符串 `无`；被调用者 `0x1a8d70`, `0x62f280`, `0x89e0d0`, `0x92c7b0`, `0x92dbf0`, `0x9984b0`, `0x998500`, `0x9989a0`, `0x998bc0`, `0x998fe0`；
+* **`0x1acf30`**（0x1ACF30 family (19 shared callees)）1121 B / 267 条指令；字符串 `..\nesting\algos\multinesting_optimizer.cpp、nestings.size() == before_size、RecordAndReplaceIfBetter`；被调用者 `0x183f50`, `0x1a8d70`, `0x1a9350`, `0x1aaba0`, `0x1baf20`, `0x1bb490`, `0x1bbd90`, `0x1bc4a0`, `0x1c09b0`, `0x1c0a00`；
