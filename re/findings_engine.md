@@ -4900,3 +4900,19 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 ⇒ 它**遍历一个容器**，对每条记录把其**键元组**拿到树里查（树布局已由 round 178 落码，**本轮不重复声明为新发现**）。
 
 **已落 `layout.hpp`**：`kJoinBeginOffset`、`kJoinEndOffset`、`kJoinRecord*`、`kJoinKeyWords` + **三条 `static_assert`** + 测试 13 条。
+
+### 附 162 族第五成员与 **19 字（152 字节）步长**（`0x7DE1B0`，goal round 240）**[已落码]
+
+```
+7DE212  xmm3=[50.0]
+7DE21A  lea rdx,[rbp+rbp*8]              ; rbp × 9
+7DE223  lea rdx,[rbp+rdx*2]              ; rbp × 19
+7DE230  lea rdx,[r15 + rdx*8 + 0x30]     ; ★ **rbp × 152 + 0x30**
+7DE23A/7DE23F  xmm1=[rdx+0x10]、xmm2=[rax+0x10]   ; ★ 主字段 = 记录 + 0x40
+7DE254/7DE258/7DE25A  与 50 比较（绝对差）后直接比大小
+```
+
+⇒ 本成员的**主字段是 `+0x40`**（与 round 238 那一对一致），元素步长是 **19 字 = 152 字节**（新值）。
+**族成员计数修正为 5**（`0x7DB6E0`；`0x724E40`/`0x725140`/`0x72D5B0` 孪生组；`0x7DB7D0`/`0x7DC360` 对；本成员）。
+
+**已落 `layout.hpp`**：`kStride152`、`kStride152Words`、`kFamilyMember5*`、`kRatioFamilyMembers2` + **两条 `static_assert`** + 测试 12 条。

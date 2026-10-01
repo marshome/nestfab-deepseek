@@ -627,6 +627,24 @@ inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
 
+// --- the family's fifth member and a NINETEEN-word stride, from 0x7DE1B0 (round 240) -----------------
+//     7DE212 movsd xmm3,[50.0]
+//     7DE21A lea rdx,[rbp+rbp*8]                  ; rbp * 9
+//     7DE223 lea rdx,[rbp+rdx*2]                  ; rbp + 18*rbp  =  rbp * 19
+//     7DE230 lea rdx,[r15 + rdx*8 + 0x30]         ; rbp * 152 + 0x30   <- a 152-byte element stride
+//     7DE235 lea rax,[rdi + rax*8 + 0x30]
+//     7DE23A/7DE23F xmm1 = [rdx+0x10], xmm2 = [rax+0x10]   ; the primary pair, at record + 0x40
+//     7DE254 ucomisd ; 7DE258 ja ; 7DE25A seta             ; the margin test, as in the other members
+// so this member's primary offset is +0x40 (0x30 + 0x10), which agrees with the pair of round 238, and the
+// element stride here is nineteen words -- 152 bytes -- a value not recorded before.
+inline constexpr std::size_t kStride152 = 19 * 8;          // RE 0x7DE230 (152)
+inline constexpr int kStride152Words = 19;                 // RE 0x7DE223
+inline constexpr std::size_t kFamilyMember5Primary = 0x40; // RE 0x7DE23A (record + 0x30 + 0x10)
+inline constexpr std::size_t kFamilyMember5Base = 0x30;    // RE 0x7DE230
+inline constexpr int kRatioFamilyMembers2 = 5;             // 0x7DB6E0, 0x724E40/0x725140/0x72D5B0, 0x7DB7D0/0x7DC360, this one
+static_assert(kStride152 == 152, "nineteen words");
+static_assert(kFamilyMember5Primary == kFamilyMember5Base + 0x10, "the primary field is the base plus ten");
+
 // --- the record container joined against the tree, in 0x71FFB0 (round 239) ---------------------------
 //     71FFE0 r14 = [rcx+0x10]   ; the container's begin
 //     71FFEB rdx = [rcx+0x30]   ; its end

@@ -1831,6 +1831,18 @@ int main() {
         CHECK(kJoinRecordDoubleA - kJoinRecordKey == 0x28);
         CHECK(kJoinEndOffset > kJoinBeginOffset);
         CHECK(kJoinRecordFlag < kJoinRecordKey);
+        // round 240: the family's fifth member and the 152-byte stride
+        CHECK(kStride152 == 152);
+        CHECK(kStride152 == 19 * 8);
+        CHECK(kStride152Words == 19);
+        CHECK(kStride152 != kStride56);
+        CHECK(kStride152 != kScanStride120);
+        CHECK(kStride152 != kIndexedRecordStride);
+        CHECK(kFamilyMember5Base == 0x30);
+        CHECK(kFamilyMember5Primary == 0x40);
+        CHECK(kFamilyMember5Primary == kFamilyMember5Base + 0x10);
+        CHECK(kFamilyMember5Primary == kRatioAlmostPrimary);   // two members share this primary offset
+        CHECK(kRatioFamilyMembers2 == 5);
         CHECK(kWrapperSource - kWrapperFirstField == 0x38);
         CHECK(kAlloc0x1B8 != kSize158);
         CHECK(kAlloc0x50 != kSize148);
