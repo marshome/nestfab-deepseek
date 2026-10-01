@@ -1548,3 +1548,36 @@ round 84 的走链少了一次解引用（`type_info[+8]` **存的是指针**，
 其余：type_info 形状对象 **901** 个；被已录 vtable 槽引用 **428**；**未被任何 vtable 槽引用**（无虚函数的类）**473**；后者中**不在 JSON 键里**的（**新身份**）**473**。
 
 **新身份前 40**：`10CoinSosSet`、`10OsiAuxInfo`、`10OsiLotsize`、`10OsiObject2`、`10OsiRowCut2`、`11ClpPresolve`、`11NestingView`、`11PartPolygon`、`11PosComputer`、`11RealPolygon`、`12ClpHashValue`、`12ClpNodeStuff`、`12ClpObjective`、`12CoinRelFltEq`、`12NestablePart`、`12OsiBabSolver`、`12PolygonProxy`、`13BLeftComputerI7MapViewE`、`13BLeftComputerI9SheetViewE`、`13ClpMatrixBase`、`13ClusterToPart`、`13CoinBaseModel`、`13CoinFileInput`、`13CoinWarmStart`、`13MaxXEvaluator`、`13dupcol_action`、`13duprow_action`、`13gubrow_action`、`14CoinFileIOBase`、`14CoinFileOutput`、`14SheetOptimizer`、`14TilingComputer`、`14twoxtwo_action`、`15ClpCholeskyBase`、`15ClpDualRowPivot`、`15ClpEventHandler`、`15ClpPackedMatrix`、`15MyClusterToPart`、`15OffsetEvaluator`、`16ClpCholeskyDense`
+
+## RTTI 归属通道与 covlib 自检（goal round 87）**[已证实为指针引用]**
+
+**自检**：本轮调用了 `covlib` 的**每个公开助手**（`reachable_uncited_domain`、`classify_identity`、`cited_set`、`classify`、`field_writes_scan`），失败则报错。round 75 至 86 那个“共享库坏了而门禁全绿”的漏洞就在这里被堵上。
+
+**RTTI 通道**：带名字的 type_info 对象 **901** 个；命中 RIP 引用的可达函数 **99**（其中当前**未引用** 82，已引用 17）；被引用的不同类 **48**。
+
+| 类 | 引用它的可达函数数 |
+|---|---:|
+| `NSt6locale5facetE` | 11 |
+| `N8CryptoPP15InvalidArgumentE` | 8 |
+| `N8CryptoPP14NotImplementedE` | 7 |
+| `N9__gnu_cxx26__concurrence_unlock_errorE` | 7 |
+| `N3dbg10file_errorE` | 6 |
+| `N8CryptoPP22BufferedTransformation16NoChannelSupportE` | 4 |
+| `N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13InputRejectedE` | 4 |
+| `N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE` | 4 |
+| `N5Multi4NodeE` | 3 |
+| `N5Multi9SplitNodeE` | 3 |
+| `N8CryptoPP18PK_SignatureScheme11KeyTooShortE` | 3 |
+| `N5boost4asio6detail14typeid_wrapperINS0_22waitable_timer_serviceINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEEE` | 3 |
+| `N5boost4asio6detail14typeid_wrapperINS1_19win_iocp_io_serviceEEE` | 3 |
+| `N5Utils20BadResponseExceptionE` | 2 |
+| `N5Multi12TerminalNodeE` | 2 |
+| `N6Tiling4PartE` | 2 |
+| `N6Tiling13CompositePartE` | 2 |
+| `N5boost10filesystem16filesystem_errorE` | 2 |
+| `N5boost6system12system_errorE` | 2 |
+| `N5boost4asio6detail14typeid_wrapperINS0_2ip16resolver_serviceINS3_3tcpEEEEE` | 2 |
+
+完整映射：`re/rtti_refs.json`（生成物，**不**计入引用）。
+
+**口径**：“该函数引用了该类的 type_info”是硬事实；「因此它属于该类」是**推论**（也可能只是捕获了该类的异常或做了 typeid）。

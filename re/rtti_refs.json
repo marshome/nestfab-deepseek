@@ -1,0 +1,453 @@
+{
+ "by_class": {
+  "N3dbg10file_errorE": 6,
+  "N5Multi12TerminalNodeE": 2,
+  "N5Multi4NodeE": 3,
+  "N5Multi9SplitNodeE": 3,
+  "N5Utils20BadResponseExceptionE": 2,
+  "N5boost10filesystem16filesystem_errorE": 2,
+  "N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_12bad_rationalEEEEE": 2,
+  "N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_6system12system_errorEEEEE": 2,
+  "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt11range_errorEEEE": 2,
+  "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12length_errorEEEE": 2,
+  "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt13runtime_errorEEEE": 2,
+  "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt14overflow_errorEEEE": 2,
+  "N5boost4asio6detail14typeid_wrapperINS0_21stream_socket_serviceINS0_2ip3tcpEEEEE": 1,
+  "N5boost4asio6detail14typeid_wrapperINS0_22waitable_timer_serviceINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEEE": 3,
+  "N5boost4asio6detail14typeid_wrapperINS0_23datagram_socket_serviceINS0_2ip3udpEEEEE": 1,
+  "N5boost4asio6detail14typeid_wrapperINS0_2ip16resolver_serviceINS3_3tcpEEEEE": 2,
+  "N5boost4asio6detail14typeid_wrapperINS0_2ip16resolver_serviceINS3_3udpEEEEE": 1,
+  "N5boost4asio6detail14typeid_wrapperINS1_19win_iocp_io_serviceEEE": 3,
+  "N5boost6system12system_errorE": 2,
+  "N5boost8geometry18centroid_exceptionE": 1,
+  "N5boost8geometry19turn_info_exceptionE": 2,
+  "N5boost8geometry31overlay_invalid_input_exceptionE": 2,
+  "N5boost8geometry6detail20self_get_turn_points17self_ip_exceptionE": 1,
+  "N6Tiling13CompositePartE": 2,
+  "N6Tiling4PartE": 2,
+  "N8CryptoPP11RSAFunctionE": 1,
+  "N8CryptoPP12BERDecodeErrE": 1,
+  "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13InputRejectedE": 4,
+  "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE": 4,
+  "N8CryptoPP14NameValuePairs17ValueTypeMismatchE": 1,
+  "N8CryptoPP14NotImplementedE": 7,
+  "N8CryptoPP15InvalidArgumentE": 8,
+  "N8CryptoPP15SelfTestFailureE": 1,
+  "N8CryptoPP16HashInputTooLongE": 1,
+  "N8CryptoPP18PK_SignatureScheme11KeyTooShortE": 3,
+  "N8CryptoPP22BufferedTransformation16NoChannelSupportE": 4,
+  "N8CryptoPP23AlgorithmParametersBase16ParameterNotUsedE": 1,
+  "N8CryptoPP23ConstByteArrayParameterE": 1,
+  "N8CryptoPP7IntegerE": 1,
+  "N9Structure22ParseSolutionExceptionE": 1,
+  "N9__gnu_cxx24__concurrence_lock_errorE": 1,
+  "N9__gnu_cxx24__concurrence_wait_errorE": 1,
+  "N9__gnu_cxx26__concurrence_unlock_errorE": 7,
+  "N9__gnu_cxx29__concurrence_broadcast_errorE": 1,
+  "NSt6locale5facet6__shimE": 2,
+  "NSt6locale5facetE": 11,
+  "NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE": 1,
+  "NSt8ios_base7failureE": 1
+ },
+ "by_function": {
+  "0x10efa0": [
+   "N8CryptoPP14NameValuePairs17ValueTypeMismatchE",
+   "NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"
+  ],
+  "0x117ea0": [
+   "N8CryptoPP22BufferedTransformation16NoChannelSupportE"
+  ],
+  "0x117f40": [
+   "N8CryptoPP22BufferedTransformation16NoChannelSupportE"
+  ],
+  "0x118000": [
+   "N8CryptoPP22BufferedTransformation16NoChannelSupportE"
+  ],
+  "0x1180c0": [
+   "N8CryptoPP22BufferedTransformation16NoChannelSupportE"
+  ],
+  "0x118260": [
+   "N8CryptoPP15SelfTestFailureE"
+  ],
+  "0x11b880": [
+   "N8CryptoPP15InvalidArgumentE"
+  ],
+  "0x12f460": [
+   "N5boost4asio6detail14typeid_wrapperINS0_22waitable_timer_serviceINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEEE",
+   "N5boost4asio6detail14typeid_wrapperINS0_23datagram_socket_serviceINS0_2ip3udpEEEEE",
+   "N5boost4asio6detail14typeid_wrapperINS0_2ip16resolver_serviceINS3_3udpEEEEE",
+   "N5boost4asio6detail14typeid_wrapperINS1_19win_iocp_io_serviceEEE"
+  ],
+  "0x2af30": [
+   "N5Utils20BadResponseExceptionE"
+  ],
+  "0x2b660": [
+   "N5Utils20BadResponseExceptionE"
+  ],
+  "0x4dea00": [
+   "N6Tiling13CompositePartE",
+   "N6Tiling4PartE"
+  ],
+  "0x50ee50": [
+   "N9Structure22ParseSolutionExceptionE"
+  ],
+  "0x60c160": [
+   "N3dbg10file_errorE"
+  ],
+  "0x60c2f0": [
+   "N3dbg10file_errorE"
+  ],
+  "0x60c430": [
+   "N3dbg10file_errorE"
+  ],
+  "0x60c5c0": [
+   "N3dbg10file_errorE"
+  ],
+  "0x60d380": [
+   "N3dbg10file_errorE"
+  ],
+  "0x610bd0": [
+   "N5boost10filesystem16filesystem_errorE"
+  ],
+  "0x611fa0": [
+   "N5boost10filesystem16filesystem_errorE"
+  ],
+  "0x61e7b0": [
+   "N5boost6system12system_errorE"
+  ],
+  "0x61ea90": [
+   "N5boost6system12system_errorE"
+  ],
+  "0x65c5c0": [
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x65c700": [
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x6daec0": [
+   "N5boost4asio6detail14typeid_wrapperINS0_22waitable_timer_serviceINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEEE",
+   "N5boost4asio6detail14typeid_wrapperINS0_2ip16resolver_serviceINS3_3tcpEEEEE"
+  ],
+  "0x6dc7f0": [
+   "N5boost4asio6detail14typeid_wrapperINS0_22waitable_timer_serviceINSt6chrono3_V212steady_clockENS0_11wait_traitsIS6_EEEEEE",
+   "N5boost4asio6detail14typeid_wrapperINS0_2ip16resolver_serviceINS3_3tcpEEEEE"
+  ],
+  "0x6e8450": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_12bad_rationalEEEEE"
+  ],
+  "0x6e8600": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt11range_errorEEEE"
+  ],
+  "0x6e8960": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt13runtime_errorEEEE"
+  ],
+  "0x6e8b00": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt14overflow_errorEEEE"
+  ],
+  "0x6e8e90": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_6system12system_errorEEEEE"
+  ],
+  "0x6e9050": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12length_errorEEEE"
+  ],
+  "0x6ea520": [
+   "N5boost4asio6detail14typeid_wrapperINS1_19win_iocp_io_serviceEEE"
+  ],
+  "0x6eaf20": [
+   "N5boost4asio6detail14typeid_wrapperINS0_21stream_socket_serviceINS0_2ip3tcpEEEEE"
+  ],
+  "0x6f3500": [
+   "N5boost4asio6detail14typeid_wrapperINS1_19win_iocp_io_serviceEEE"
+  ],
+  "0x712740": [
+   "N5boost8geometry19turn_info_exceptionE"
+  ],
+  "0x713650": [
+   "N5boost8geometry19turn_info_exceptionE"
+  ],
+  "0x71a370": [
+   "N5boost8geometry31overlay_invalid_input_exceptionE"
+  ],
+  "0x71b540": [
+   "N5boost8geometry31overlay_invalid_input_exceptionE"
+  ],
+  "0x77f2d0": [
+   "N8CryptoPP12BERDecodeErrE"
+  ],
+  "0x77fb50": [
+   "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13InputRejectedE"
+  ],
+  "0x77fe00": [
+   "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13InputRejectedE"
+  ],
+  "0x77fe50": [
+   "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13InputRejectedE"
+  ],
+  "0x77fea0": [
+   "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13InputRejectedE"
+  ],
+  "0x77fef0": [
+   "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"
+  ],
+  "0x7801a0": [
+   "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"
+  ],
+  "0x7801f0": [
+   "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"
+  ],
+  "0x780240": [
+   "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"
+  ],
+  "0x780290": [
+   "N8CryptoPP15InvalidArgumentE"
+  ],
+  "0x786700": [
+   "N8CryptoPP16HashInputTooLongE"
+  ],
+  "0x78f740": [
+   "N8CryptoPP15InvalidArgumentE"
+  ],
+  "0x7917f0": [
+   "N8CryptoPP15InvalidArgumentE",
+   "N8CryptoPP7IntegerE"
+  ],
+  "0x796970": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0x798880": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0x799f60": [
+   "N8CryptoPP23AlgorithmParametersBase16ParameterNotUsedE"
+  ],
+  "0x7c4a80": [
+   "N9__gnu_cxx24__concurrence_lock_errorE"
+  ],
+  "0x7c4ab0": [
+   "N9__gnu_cxx29__concurrence_broadcast_errorE"
+  ],
+  "0x7d9c20": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_12bad_rationalEEEEE"
+  ],
+  "0x7da290": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_6system12system_errorEEEEE"
+  ],
+  "0x7da530": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt11range_errorEEEE"
+  ],
+  "0x7da680": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12length_errorEEEE"
+  ],
+  "0x7dab10": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt13runtime_errorEEEE"
+  ],
+  "0x7dad40": [
+   "N5boost16exception_detail10clone_implINS0_19error_info_injectorISt14overflow_errorEEEE"
+  ],
+  "0x7e6010": [
+   "N6Tiling13CompositePartE",
+   "N6Tiling4PartE"
+  ],
+  "0x8106a0": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0x81a050": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0x81b600": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0x827240": [
+   "NSt6locale5facet6__shimE",
+   "NSt6locale5facetE"
+  ],
+  "0x827bf0": [
+   "NSt6locale5facet6__shimE",
+   "NSt6locale5facetE"
+  ],
+  "0x8aab00": [
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x97a7b0": [
+   "NSt8ios_base7failureE"
+  ],
+  "0x990540": [
+   "NSt6locale5facetE"
+  ],
+  "0x990600": [
+   "NSt6locale5facetE"
+  ],
+  "0x990780": [
+   "NSt6locale5facetE"
+  ],
+  "0x990840": [
+   "NSt6locale5facetE"
+  ],
+  "0x9916e0": [
+   "NSt6locale5facetE"
+  ],
+  "0x9917a0": [
+   "NSt6locale5facetE"
+  ],
+  "0x991800": [
+   "NSt6locale5facetE"
+  ],
+  "0x991920": [
+   "NSt6locale5facetE"
+  ],
+  "0x9919e0": [
+   "NSt6locale5facetE"
+  ],
+  "0x998cd0": [
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x998da0": [
+   "N9__gnu_cxx24__concurrence_wait_errorE",
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x998ee0": [
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x99fe70": [
+   "N5boost8geometry18centroid_exceptionE"
+  ],
+  "0x99fea0": [
+   "N5boost8geometry6detail20self_get_turn_points17self_ip_exceptionE"
+  ],
+  "0x9a03b0": [
+   "N3dbg10file_errorE"
+  ],
+  "0x9a0700": [
+   "N9__gnu_cxx26__concurrence_unlock_errorE"
+  ],
+  "0x9c060": [
+   "N5Multi4NodeE",
+   "N5Multi9SplitNodeE"
+  ],
+  "0x9c280": [
+   "N5Multi12TerminalNodeE",
+   "N5Multi4NodeE",
+   "N5Multi9SplitNodeE"
+  ],
+  "0x9cd30": [
+   "N5Multi12TerminalNodeE",
+   "N5Multi4NodeE",
+   "N5Multi9SplitNodeE"
+  ],
+  "0xba6f0": [
+   "N8CryptoPP15InvalidArgumentE"
+  ],
+  "0xbafd0": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0xbdc50": [
+   "N8CryptoPP14NotImplementedE"
+  ],
+  "0xc03b0": [
+   "N8CryptoPP18PK_SignatureScheme11KeyTooShortE"
+  ],
+  "0xc0610": [
+   "N8CryptoPP18PK_SignatureScheme11KeyTooShortE"
+  ],
+  "0xc0ce0": [
+   "N8CryptoPP18PK_SignatureScheme11KeyTooShortE"
+  ],
+  "0xcaaa0": [
+   "N8CryptoPP11RSAFunctionE"
+  ],
+  "0xd2bb0": [
+   "N8CryptoPP15InvalidArgumentE",
+   "N8CryptoPP23ConstByteArrayParameterE"
+  ],
+  "0xf0fb0": [
+   "N8CryptoPP15InvalidArgumentE"
+  ],
+  "0xf17c0": [
+   "N8CryptoPP15InvalidArgumentE"
+  ]
+ },
+ "uncited_functions_with_rtti": [
+  "0x10efa0",
+  "0x117ea0",
+  "0x117f40",
+  "0x118000",
+  "0x1180c0",
+  "0x118260",
+  "0x11b880",
+  "0x60c160",
+  "0x60c2f0",
+  "0x60c430",
+  "0x60c5c0",
+  "0x60d380",
+  "0x611fa0",
+  "0x65c5c0",
+  "0x65c700",
+  "0x6daec0",
+  "0x6dc7f0",
+  "0x6e8450",
+  "0x6e8600",
+  "0x6e8960",
+  "0x6e8b00",
+  "0x6e8e90",
+  "0x6e9050",
+  "0x6ea520",
+  "0x6eaf20",
+  "0x712740",
+  "0x713650",
+  "0x71b540",
+  "0x77f2d0",
+  "0x77fb50",
+  "0x77fe00",
+  "0x77fe50",
+  "0x77fea0",
+  "0x77fef0",
+  "0x7801a0",
+  "0x7801f0",
+  "0x780240",
+  "0x780290",
+  "0x786700",
+  "0x78f740",
+  "0x7917f0",
+  "0x796970",
+  "0x798880",
+  "0x799f60",
+  "0x7c4a80",
+  "0x7c4ab0",
+  "0x7d9c20",
+  "0x7da290",
+  "0x7da530",
+  "0x7da680",
+  "0x7dab10",
+  "0x7dad40",
+  "0x8106a0",
+  "0x81a050",
+  "0x81b600",
+  "0x97a7b0",
+  "0x990540",
+  "0x990600",
+  "0x990780",
+  "0x990840",
+  "0x9916e0",
+  "0x9917a0",
+  "0x991800",
+  "0x991920",
+  "0x9919e0",
+  "0x998cd0",
+  "0x99fe70",
+  "0x9a03b0",
+  "0x9a0700",
+  "0x9c060",
+  "0x9c280",
+  "0x9cd30",
+  "0xba6f0",
+  "0xbafd0",
+  "0xbdc50",
+  "0xc03b0",
+  "0xc0610",
+  "0xc0ce0",
+  "0xcaaa0",
+  "0xd2bb0",
+  "0xf0fb0",
+  "0xf17c0"
+ ]
+}
