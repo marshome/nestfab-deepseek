@@ -621,3 +621,12 @@ LIBRARY_EVIDENCED[0x81C080] = ("third_party", "CryptoPP::PSSR_MEM::<<subst>::P13
 LIBRARY_EVIDENCED[0x998CD0] = ("toolchain", "N9__gnu_cxx26__concurrence_unlock_errorE")
 LIBRARY_EVIDENCED[0x99FE70] = ("third_party", "N5boost8geometry18centroid_exceptionE")
 LIBRARY_EVIDENCED[0x9A0700] = ("toolchain", "N9__gnu_cxx26__concurrence_unlock_errorE")
+# --- library code recognised by its own marker strings (round 115) ---
+LIBRARY_EVIDENCED[0xB8210] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x619F40] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x61B100] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x81F210] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x8200F0] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x829FE0] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x82AD80] = ("toolchain", "%s: printf format helper")
+LIBRARY_EVIDENCED[0x910760] = ("toolchain", "%s: printf format helper")

@@ -394,6 +394,18 @@ int main() {
         CHECK(0.25 * (8 * 4) == 8.0);
     }
 
+    // --- the recovered SetActiveNesting/GetActiveParts precondition (RE 0x69be80) -----------------
+    {
+        CHECK(std::strcmp(kMethodSetActiveNesting, "SetActiveNesting") == 0);
+        CHECK(std::strcmp(kMethodGetActiveParts, "GetActiveParts") == 0);
+        // the assert text is kept verbatim, including the quote the binary stores
+        CHECK(std::strstr(kAssertSetActiveNestingFirst, "SetActiveNesting first") != nullptr);
+        // and its condition is a null check on m_base
+        CHECK(!activeNestingReady(nullptr));
+        int dummy = 0;
+        CHECK(activeNestingReady(&dummy));
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720

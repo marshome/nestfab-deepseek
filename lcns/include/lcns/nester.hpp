@@ -365,6 +365,21 @@ private:
 inline constexpr double kMultinestingTolerance = 0.999;   // RE 0x1AE387
 inline constexpr double kMultinestingQuarter = 0.25;      // RE 0x1AE698, a product scaled by 1/4
 
+// RE 0x69BE80 (3226 B / 668 instructions). Its own assertion text is, verbatim:
+//     'm_base && "call SetActiveNesting first"'
+// and one of its callees carries the text 'GetActiveParts'. So the class that owns m_base has two
+// methods, SetActiveNesting() and GetActiveParts(), and the assert states the precondition of the
+// second: the active nesting must have been set before the parts can be asked for. The condition the
+// assert actually tests is `m_base`, which is what the helper below evaluates.
+inline constexpr const char* kMethodSetActiveNesting = "SetActiveNesting";   // RE 0x69BE80
+inline constexpr const char* kMethodGetActiveParts = "GetActiveParts";       // RE 0x69BE80
+inline constexpr const char* kAssertSetActiveNestingFirst =
+    "m_base && \"call SetActiveNesting first\"";                            // RE 0x69BE80, verbatim
+
+// RE the assert's own condition: the pointer must be non-null before the parts are available.
+inline bool activeNestingReady(const void* mBase) { return mBase != nullptr; }
+
+
 
 class RectangleNester : public Nester {        // RE 0xA3B800, Run = 0x75FB0
 public:
