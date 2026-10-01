@@ -4570,3 +4570,24 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 **同时解释了 round 222 为何扫描为 0**：它们根本不在 `.rdata`，我那两版过滤条件在**错的地方找**。
 
 **代码更正**：`kTypeAnchorA/B/Gap` 改名为 **`kDefaultStubA/B/Gap`**，新增 **`kDefaultStubEncoding = 0x9090909090C3C031`**（字节逐个断言：`31`/`C0`/`C3`/`90`），并重写注释说明撤回原因。
+
+### 附 147 **一小时的纳秒数模环绕**与步数构造器（goal round 224）**[已落码]
+
+**（a）`0x5C2200`（205 B）= “小时内纳秒”的模环绕**：
+
+```
+5C2220  xmm7=[360.0]（rva 0x9DE748）
+5C2232/5C2236/5C223A  除、乘 360、再除
+5C223E  call 0x62FD90                            ; 早前轮次读过的舍入助手
+5C2262  addsd [0.5]（rva 0x9DE750）              ; 舍入项
+5C2273  movabs rdx,0x34630B8A000                 ; ★ 3,600,000,000,000 = **一小时的纳秒数**
+5C2290  add rax,rdx ; js                         ; 负值向上环绕
+5C22AA  movabs rdx,0x34630B89FFF                 ; 上界（少 1）
+5C22B4  cmp rax,rdx ; jle                        ; 超过则向下环绕
+```
+
+⇒ 结果是**小时内的纳秒数**，始终在 `[0, 3.6e12)`。
+
+**（b）`0x1BF1A0`（257 B）= 步数构造器**：先把 `+0x10`/`+0x18`/`+0x20` 三个 double 置零、`dword [rbx+0x28]=1`、`[rbx+0x30]=0`；然后算 `(计数/尺度×360)/种类` 并**截断**存入 `[rbx]`；最后把 `+0x10`、`+0x18` 置 **1.0**、`+0x20` 置 **−1.0**。
+
+**已落 `layout.hpp`**：`kNanosecondsPerHour`、`kNanosecondsPerHourMax`、`kHourRoundTerm`、`kDegreesFullTurn`（含两条 `static_assert`）、`kSteps*`（八个字段与两个默认值）+ 测试 23 条（含环绕函数的七个取值与 `kDegreesFullTurn == kDegreesPerTurn`）。

@@ -1594,5 +1594,48 @@ int main() {
         CHECK(!exceeds(2.0e9, 8, 0.3));
     }
 
+    // --- the hour wraparound (RE 0x5c2273/0x5c22aa) and the steps constructor (RE 0x1bf1a0) -----------
+    {
+        CHECK(kNanosecondsPerHour == 3600000000000ULL);
+        CHECK(kNanosecondsPerHour == 3600ULL * 1000000000ULL);        // one hour, in nanoseconds
+        CHECK(kNanosecondsPerHourMax == kNanosecondsPerHour - 1ULL);
+        CHECK(kHourRoundTerm == 0.5);
+        CHECK(kDegreesFullTurn == 360.0);
+        CHECK(kDegreesFullTurn == kDegreesPerTurn);                   // the 360 of round 168
+
+        // the wraparound the two constants implement
+        const auto wrapHours = [](std::int64_t ns) {
+            const std::int64_t hour = static_cast<std::int64_t>(kNanosecondsPerHour);
+            while (ns < 0) {
+                ns += hour;
+            }
+            while (ns > static_cast<std::int64_t>(kNanosecondsPerHourMax)) {
+                ns -= hour;
+            }
+            return ns;
+        };
+        CHECK(wrapHours(0) == 0);
+        CHECK(wrapHours(1000) == 1000);
+        CHECK(wrapHours(static_cast<std::int64_t>(kNanosecondsPerHour)) == 0);
+        CHECK(wrapHours(static_cast<std::int64_t>(kNanosecondsPerHour) + 5) == 5);
+        CHECK(wrapHours(-5) == static_cast<std::int64_t>(kNanosecondsPerHour) - 5);
+        CHECK(wrapHours(-static_cast<std::int64_t>(kNanosecondsPerHour)) == 0);
+        CHECK(wrapHours(static_cast<std::int64_t>(kNanosecondsPerHour) - 1) ==
+              static_cast<std::int64_t>(kNanosecondsPerHourMax));
+
+        CHECK(kStepsField0 == 0x00);
+        CHECK(kStepsField8 == 0x08);
+        CHECK(kStepsDoubleA == 0x10);
+        CHECK(kStepsDoubleB == 0x18);
+        CHECK(kStepsDoubleC == 0x20);
+        CHECK(kStepsFlag28 == 0x28);
+        CHECK(kStepsField30 == 0x30);
+        CHECK(kStepsDoubleB - kStepsDoubleA == 8);                    // three consecutive doubles
+        CHECK(kStepsDoubleC - kStepsDoubleB == 8);
+        CHECK(kStepsDefaultPlus == 1.0);
+        CHECK(kStepsDefaultMinus == -1.0);
+        CHECK(kStepsDefaultMinus == -kStepsDefaultPlus);
+    }
+
     return check::finish("test_recovered");
 }

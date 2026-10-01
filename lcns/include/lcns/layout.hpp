@@ -468,4 +468,36 @@ inline constexpr double kGuardRetryTerm = 2.0;             // RE 0x65C1A8 (rva 0
 inline constexpr std::size_t kGuardTypeSlotA = 0x10;       // RE 0x65C10D
 inline constexpr std::size_t kGuardTypeSlotB = 0x18;       // RE 0x65C121
 
+
+// --- the time-of-hour wraparound of 0x5C2200 (round 224) ---------------------------------------------
+//     5C2273 movabs rdx,0x34630B8A000     ; 3,600,000,000,000 -- one hour in nanoseconds
+//     5C2290 add rax,rdx ; js             ; negatives wrap upward
+//     5C22AA movabs rdx,0x34630B89FFF     ; one less, the upper bound
+//     5C22B4 cmp rax,rdx ; jle            ; values above it wrap downward
+//     5C2262 addsd [0.5] (rva 0x9DE750)   ; the rounding term added before the second round helper
+//     5C2220 movsd xmm7,[360.0] (rva 0x9DE748)
+inline constexpr std::uint64_t kNanosecondsPerHour = 3600000000000ULL;      // RE 0x5C2273
+inline constexpr std::uint64_t kNanosecondsPerHourMax = 3599999999999ULL;  // RE 0x5C22AA
+inline constexpr double kHourRoundTerm = 0.5;                             // RE 0x5C2262
+inline constexpr double kDegreesFullTurn = 360.0;                         // RE 0x5C2220
+static_assert(kNanosecondsPerHour == 3600ULL * 1000000000ULL, "one hour in nanoseconds");
+static_assert(kNanosecondsPerHourMax == kNanosecondsPerHour - 1ULL, "one less than the hour");
+
+// --- the steps constructor of 0x1BF1A0 (round 224) ---------------------------------------------------
+//     1BF1E1/1BF1E8 [rbx] = [rbx+8] = 0
+//     1BF1C0/1BF1C5/1BF1CA the three doubles at +0x10/+0x18/+0x20 start at zero
+//     1BF1D2 dword [rbx+0x28] = 1
+//     1BF1D9 [rbx+0x30] = 0
+//     1BF23A [rbx] = the truncated steps figure
+//     1BF24D/1BF257 [rbx+0x10] = [rbx+0x18] = 1.0 (rva 0x9BF8B0) ; 1BF252 [rbx+0x20] = -1.0 (rva 0x9BF8E0)
+inline constexpr std::size_t kStepsField0 = 0x00;        // RE 0x1BF23A
+inline constexpr std::size_t kStepsField8 = 0x08;        // RE 0x1BF1E8
+inline constexpr std::size_t kStepsDoubleA = 0x10;       // RE 0x1BF24D
+inline constexpr std::size_t kStepsDoubleB = 0x18;       // RE 0x1BF257
+inline constexpr std::size_t kStepsDoubleC = 0x20;       // RE 0x1BF252
+inline constexpr std::size_t kStepsFlag28 = 0x28;        // RE 0x1BF1D2
+inline constexpr std::size_t kStepsField30 = 0x30;       // RE 0x1BF1D9
+inline constexpr double kStepsDefaultPlus = 1.0;         // RE 0x1BF23D
+inline constexpr double kStepsDefaultMinus = -1.0;       // RE 0x1BF245
+
 }  // namespace lcns
