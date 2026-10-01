@@ -1700,3 +1700,28 @@ class NeverCanceller : public Canceller { ... };
 | `N9__gnu_cxx24__concurrence_lock_errorE` | 1 | 47 |
 | `N9__gnu_cxx29__concurrence_broadcast_errorE` | 1 | 47 |
 | `N5boost8geometry18centroid_exceptionE` | 1 | 47 |
+
+## 两条通道里的第三方占比（goal round 94）**[已计数]**
+
+判来源的**证据就是类名本身**：Itanium 名以 `N5boost`/`N8CryptoPP`/`N9__gnu_cxx`/`N3dbg`/`NSt` 开头就说明它属于哪个库，而目标明确说过 **boost / CryptoPP / libstdc++ 不逆向**。
+
+未引用且引用了 vtable 的函数：**0**。分桶（本轮只计数，**尚未**改分类）：
+
+| 来源 | 函数 | 字节 |
+|---|---:|---:|
+| boost | 17 | 9699 |
+| CryptoPP | 17 | 8503 |
+| dbg (debug-mode library) | 6 | 3009 |
+| libstdc++ | 6 | 934 |
+
+RTTI 通道同样口径：
+
+| 来源 | 函数 | 字节 |
+|---|---:|---:|
+| boost | 21 | 15910 |
+| CryptoPP | 36 | 13887 |
+| DOMAIN | 3 | 5872 |
+| dbg (debug-mode library) | 6 | 3009 |
+| libstdc++ | 16 | 1804 |
+
+**口径**：这是“**引用了该类 vtable**”的硬事实加上“**类名前缀指向哪个库**”的硬事实；不包含任何猜测。
