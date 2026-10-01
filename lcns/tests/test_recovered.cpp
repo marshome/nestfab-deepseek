@@ -1151,5 +1151,16 @@ int main() {
         CHECK(kPolygonDelimiter == ',');
     }
 
+    // --- the five-qword record (RE 0x734634..0x734674) and the stream fallback (RE 0x9920fb) ---------
+    {
+        CHECK(kFiveFieldRecord == 5);
+        CHECK(kRecordWord5Offset == 0x20);
+        CHECK(kFiveFieldRecordBytes == 40);
+        CHECK(kRecordWord5Offset == kTreeNodeKey);            // the same offset the tree keys on
+        CHECK(kRecordWord5Offset == kGetterFieldOffset + 8);  // and the getter's field is one word earlier
+        CHECK(kOstreamSetstateBit == 1);
+        CHECK((static_cast<unsigned>(kOstreamSetstateBit) | 1u) == 1u);   // RE the `or edx,1`
+    }
+
     return check::finish("test_recovered");
 }

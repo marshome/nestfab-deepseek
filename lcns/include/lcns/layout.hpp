@@ -158,4 +158,20 @@ inline bool hasAtLeastPoints(std::size_t spanBytes, std::size_t wanted) {
 // so a comma delimiter precedes the word POLYGON. 0x5E3760 passes it to 0x9920C0 and then calls 0x70C480.
 inline constexpr char kPolygonDelimiter = ',';
 
+
+// --- the five-qword record of 0x734620 (round 197) --------------------------------------------------
+//     734634 mov rax,[rdx]       ; +0x00     73463c mov rax,[rdx+8]    ; +0x08
+//     73465d mov rax,[rdx+0x10]  ; +0x10     73466b mov rax,[rdx+0x18] ; +0x18
+//     734674 mov rax,[rdx+0x20]  ; +0x20
+// Five qwords copied by value, and +0x20 is the offset the search tree of round 178 keys on, so this record
+// carries a key at the end of its five words.
+inline constexpr int kFiveFieldRecord = 5;
+inline constexpr std::size_t kRecordWord5Offset = 0x20;         // RE 0x734674
+inline constexpr std::size_t kFiveFieldRecordBytes = 5 * 8;     // 40
+
+// --- the stream fallback seen in the library operator (round 197) ----------------------------------
+// RE 0x9920F8/0x9920FB: `mov edx,[rcx+0x20] ; or edx,1` -- the setstate bit the C-string insertion sets on the
+// null path. 0x9920C0 is libstdc++'s operator<< for a C string, registered as toolchain in covlib.
+inline constexpr int kOstreamSetstateBit = 1;
+
 }  // namespace lcns

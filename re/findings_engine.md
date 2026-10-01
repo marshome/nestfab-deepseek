@@ -3835,3 +3835,15 @@ round 194 觉得“形状奇怪”的 `je`+`eax=0`，**正是“否定的 AND”
 ⇒ 它**把点列序列化为逗号分隔的文本**（字符串里出现 **POLYGON**）。
 
 **已落 `layout.hpp`**：`kTwoPointSpan`/`kThreePointSpan`/`pointsInSpan`/`hasAtLeastPoints`/`kPolygonDelimiter`+ 测试 14 条（含“31 字节仍只算一个点”这类边界）。
+
+### 附 117 五字记录、坐标打印器、库的流插入（goal round 197）**[已落码]
+
+**（a）`0x734620` 按值拷贝五个 qword**：`[rdx]`、`[rdx+8]`、`[rdx+0x10]`、`[rdx+0x18]`、`[rdx+0x20]`（RE `0x734634`–`0x734674`）
+⇒ **五字记录（40 字节）**，且 `+0x20` **正是 round 178 搜索树的键偏移**。
+
+**（b）`0x70C480` = 坐标打印器**：取 `[rdx]`、带一个格式串（`rip+0x2D2C55`）调 `0x978010`，再调 `0x8688E0`（流插入）；然后对 `[rsi+8]` 重复（第二个格式串 `rip+0x2D2C2E`）⇒ **依次输出一个点的 x 与 y**，即 round 196 序列化路径的末端。
+
+**（c）`0x9920C0` 是 libstdc++ 的 `operator<<(const char*)`**：非空路径先用 `0x63F238` 测长再经 `0x978010` 插入；空路径读 vtable、`add rcx,[rax−0x18]`、`or edx,1`后调 `0x9456A0`（**setstate 回退**）。
+⇒ **已登记为 toolchain**（不计入领域代码）。
+
+**已落 `layout.hpp`**：`kFiveFieldRecord`、`kRecordWord5Offset`、`kFiveFieldRecordBytes`、`kOstreamSetstateBit` + 测试 7 条。

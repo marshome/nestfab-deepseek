@@ -838,3 +838,5 @@ LIBRARY_EVIDENCED[0x8A7F10] = ("toolchain", "deque::: libstdc++ deque")
 LIBRARY_EVIDENCED[0x8A8020] = ("toolchain", "deque::: libstdc++ deque")
 # --- round 186: a CryptoPP self-test message carries the marker ---
 LIBRARY_EVIDENCED[0x118260] = ("third_party", "CryptoPP: power-up self test message")
+# --- round 197: libstdc++ stream insertion for a C string ---
+LIBRARY_EVIDENCED[0x9920C0] = ("toolchain", "libstdc++ operator<<(const char*): measure then insert, setstate fallback via `or edx,1`")
