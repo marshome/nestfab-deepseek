@@ -3540,3 +3540,30 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 **除数列不成立、仍待解决**。正确做法已在 rounds 148/157 用过：
 **逐个打印 imul 周围的真实指令窗口**（而非匹配寄存器名），再用实验对比确定除数。
 
+
+### 附 103 **撤回 round 157 的除数**；保留 round 148（goal round 183）**[反向证据]
+
+本轮打印的**真实窗口**：
+
+```
+0xACF0    adb2 movabs r10,0xAAAAAAAAAAAAAAAB
+          adc5 mov rdx,rax ; adc8 sar rdx,3 ; adcc imul rdx,r10 ; add0 test rdx,rdx
+0x1D870   1d8e7 mov rdx,rbp ; 1d8ea sub rdx,rbx ; 1d8ed sar rdx,3
+0x63EF0   63f44 sar rbx,3 ; 63f4e imul rbx,rsi ; 63f52 mov rax,rbx
+0x15A9E0  15aa11 sar rax,3 ; 15aa15 imul rax,rdx ; 15aa19 test rax,rax
+```
+
+这些 `imul` **全部是双操作数**，**只保留低 64 位**：没有 `rdx:rax` 高位、也没有随后对高位的移位** ⇒ 这些位点**不是除法**，而是 `(span >> 3) * MAGIC` 后接**零检验** —— 即**哈希/混合**步骤。
+
+**因此撤回 round 157**：它的实验模拟的是**高位**（`hi = (prod >> 64) >> shift`），而那些指令**从不产生高位** ⇒ **“`0xCCCC…CD` = ÷10”与“`0xAAAA…AB` = ÷24”不成立**。
+round 157 保留的只有一条：`0x82FA0BE82FA0BE83` **不是除法**（该判断结论正确，但当时的理由不够确切）。
+
+**round 148 不受影响**：它的位点是
+```
+1B4B1E movabs rbp,0x431BDE82D7B634DB
+1B4B37 imul rbp     ; ★ 单操作数 ⇒ rdx:rax，高位确实产生
+1B4B3E mov rax,rdx ; sar rax,0x12 ; sub rax,rcx
+```
+正是实验所模拟的形状 ⇒ **`kTickDivisor = 1e6` 成立**。
+
+**新得到的事实**：那些宽常量（`0xAAAA…AB`、`0xCCCC…CD`、`0x6DB6DB6D…B7`等）在**本类位点**上是**乘法混合**，配 `test`/`je` 使用；它们**是否在别处做除法**需逐窗口重查，不能一网打尽。
