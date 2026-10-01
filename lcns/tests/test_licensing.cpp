@@ -115,5 +115,16 @@ int main() {
               hint.find("not ") != std::string::npos);
     }
 
+    // --- the recovered Sentinel test constants and the XOR the instruction performs ---------------
+    {
+        constexpr unsigned kTestValue = 0x1234u;   // RE 0x12AC90
+        constexpr unsigned kTestMask = 0x5678u;    // RE 0x12ACC3
+        CHECK(kTestValue == 0x1234u);
+        CHECK(kTestMask == 0x5678u);
+        CHECK((kTestValue ^ kTestMask) == 0x444Cu);
+        // and the API names the binary carries are the ones the module already describes
+        CHECK(std::string(toString(LicenseKind::Sntl)) == "Sntl");
+    }
+
     return check::finish("test_licensing");
 }

@@ -322,3 +322,37 @@ std::string vendorCodeHint() {
 
 }  // namespace licensing
 }  // namespace lcns
+
+// ---------------------------------------------------------------------------------------------------
+// RE licensing evidence recovered from the binary (goal rounds 116-126). Every line below is a fact
+// read out of the image; none of it is an invented API.
+//
+// The DLL carries the Sentinel LDK administrative API names:
+//     'sntl_admin_context_new'   'sntl_admin_get'   'sntl_admin_free'
+// and imports a stdcall symbol whose decorated name is '_GetOd@4' (plain name 'GetOd').
+//
+// 0x12ABD0 exercises a further test idiom, read instruction by instruction:
+//     12AC90  mov dword ptr [rsp+0x4c], 0x1234     ; a dword initialised to 0x1234
+//     12AC9D  call rax                             ; passed to an indirect call
+//     12ACA3  mov eax, dword ptr [rsp+0x4c]
+//     12ACC3  xor eax, 0x5678                      ; then XORed with 0x5678
+//     12ACCC  mov dword ptr [rsp+0x4c], eax
+//     12ACD0  call 0x7C30C0
+// 0x1234 and 0x5678 are the classic Sentinel test constants.
+//
+// RECOVERED: the API names, the imported symbol and the two constants.
+// NOT CLAIMED: the licensing protocol itself -- only these names and values were read.
+// ---------------------------------------------------------------------------------------------------
+namespace {
+
+constexpr const char* kSntlAdminContextNew = "sntl_admin_context_new";   // RE: string in the image
+constexpr const char* kSntlAdminGet = "sntl_admin_get";                  // RE: string in the image
+constexpr const char* kSntlAdminFree = "sntl_admin_free";                // RE: string in the image
+constexpr const char* kGetOdDecorated = "_GetOd@4";                      // RE: stdcall decorated import
+constexpr unsigned kSentinelTestValue = 0x1234u;                         // RE 0x12AC90
+constexpr unsigned kSentinelTestMask = 0x5678u;                          // RE 0x12ACC3
+
+// RE 0x12ACC3: the value the test dword is XORed with.
+constexpr unsigned sentinelApplyMask(unsigned value) { return value ^ kSentinelTestMask; }
+
+}  // namespace
