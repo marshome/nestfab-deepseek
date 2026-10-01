@@ -165,6 +165,16 @@ inline constexpr std::int64_t kGrowthSlack = 8;   // RE 0x3C1F1
 inline constexpr double kAverageStageWeight = 0.3;    // RE 0x1AC5C3
 inline constexpr double kAverageFinalWeight = 0.33;   // RE 0x1AC753
 
+// RE 0x1B33B0, the routine that logs 'Using seed ':
+//     1B3427  call 0x1A9060
+//     1B342C  mulsd xmm0, [rip + 0x80C0FC]     ; resolves to rva 0x9BF530
+//     1B3434  cvttsd2si rax, xmm0              ; -> the seed
+// The operand is the double 1000000.0, so the seed is (int)(f(...) * 1e6): a quantity scaled to
+// microseconds. Its neighbours in the same read-only block are 0.9999 and -1.0.
+// RECOVERED: the scale, the truncation and the logging of the result. The source of f itself is still
+// being traced, so no seed function is implemented here.
+inline constexpr double kSeedScale = 1000000.0;   // RE 0x1B342C -> rva 0x9BF530
+
 // RE the exact branch structure above: the weighted value when the gate is set, the prior value otherwise.
 inline double gatedAverage(double product, double count, bool gate, double prior) {
     if (count == 0.0) {

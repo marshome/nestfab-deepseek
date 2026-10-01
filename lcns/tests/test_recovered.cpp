@@ -460,6 +460,14 @@ int main() {
         CHECK(std::fabs(finalScale(gatedAverage(10.0, 4.0, true, 0.0)) - 0.2475) < 1e-12);
     }
 
+    // --- the seed scale (RE 0x1b33b0: (int)(f(...) * 1e6)) ----------------------------------------
+    {
+        CHECK(kSeedScale == 1000000.0);
+        // the truncation the instruction performs, on a sample value
+        CHECK(static_cast<long long>(0.5 * kSeedScale) == 500000);
+        CHECK(static_cast<long long>(1.9999999 * kSeedScale) == 1999999);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
