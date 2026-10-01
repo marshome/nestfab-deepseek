@@ -6890,3 +6890,24 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ 符号取反来自 rva **0x9DE95F** 的掩码，常量读取器将其报为**原始数据**，因为它是**位模式（符号位）而非正常 double** —— 与本工作一贯对非正常值的区分一致。
 
 **已落 `layout.hpp`**：`kAffineInverse`(0x5CED50)、`kAffineInverseCallers`(24)、`kMatrixLayoutConfirmed5`、`kDeterminantComputed`、`kReciprocalUsed`、`kAdjugateForm`、`kTranslationNegated`、`kSignMaskRva`(0x9DE95F)、`kOneRva9DE930Users`(2)、`kSignMaskIsNotANormalDouble` + **六条 `static_assert`** + 测试 26 条（含“前向再逆向得回原点”的往返验证与行列式值 8.0 的手算）。
+
+### 附 266 ★★ **两个仿射变换的复合：该簇完成了一套 2D 仿射库**（goal round 348）**[已落码]**
+
+`0x5CE970`（269 B / **38 个调用者**）：从 `rdx` 与 `r8` **各读六个 double**（a、b、c、d、tx、ty）并交叉相乘，把平移项折入 ⇒ **复合两个仿射变换**。
+**能从两个操作数各读同一套六个**，只有两者是**同类记录**时才可能 ⇒ **第七个放置它们的例程、第八次读取**。
+
+★★ 至此该地址段构成**一套完整的 2×3 仿射库**（七个例程）：
+
+| 操作 | 例程 | 调用者 |
+|---|---|---:|
+| 构造平移 | `0x5CE7B0` | 32 |
+| **求逆** | `0x5CED50` | 24 |
+| **相乘（本轮）** | `0x5CE970` | **38** |
+| 应用（函数式）| `0x5CEA80` | 9 |
+| 应用（非就地）| `0x5CF6B0` | 6 |
+| 应用（就地单点）| `0x5CFD80` | 4 |
+| 应用（就地两点）| `0x5CFDC0` | 3 |
+
+⇒ `kAffineLibraryMembers = 7`、`kLibraryComplete = true`：**一个 2×3 仿射所需的操作已齐备**。
+
+**已落 `layout.hpp`**：`kMatrixMultiply`(0x5CE970)、`kMatrixMultiplyCallers`(38)、`kMulOperandA/B`、`kMatrixLayoutRoutines`(7)、`kMatrixLayoutReads`(8)、`kAffineLibraryMembers`(7)、`kLibraryComplete`、`kBothOperandsSameRecord`、`kAffineLibrary` + **五条 `static_assert`** + 测试 26 条（含“先平移再缩放”与“一步复合”**结果相等**的行为验证，以及 `comp = {2,0,0,1,2,1}` 的手算）。

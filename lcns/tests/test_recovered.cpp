@@ -5574,5 +5574,63 @@ int main() {
         CHECK(kAffineInverse > 0x5C0000 && kAffineInverse < 0x5D0000);
     }
 
+    // --- the composition, and the library it completes (RE 0x5ce970) --------------------------------
+    {
+        CHECK(kMatrixMultiply == 0x5CE970);
+        CHECK(kMatrixMultiplyCallers == 38);
+        CHECK(kMulOperandA == 0);
+        CHECK(kMulOperandB == 1);
+        CHECK(kMatrixLayoutRoutines == 7);
+        CHECK(kMatrixLayoutReads == 8);
+        CHECK(kAffineLibraryMembers == 7);
+        CHECK(kLibraryComplete);
+        CHECK(kBothOperandsSameRecord);
+        CHECK(std::string(kAffineLibrary) == "build, invert, multiply, and apply in four forms");
+        CHECK(kChainStageC == kMatrixMultiply);           // the chain's last stage
+        CHECK(kChainStageA == kMakeTranslation);
+        CHECK(kChainStageB == kAffineInverse);
+        CHECK(kMatrixMultiplyCallers > kMakeTranslationCallers);
+        CHECK(kMatrixMultiplyCallers > kAffineInverseCallers);
+        CHECK(kMatrixMultiplyCallers > kAffineKernelCallers);
+        // the seven routines are seven distinct addresses
+        CHECK(kMatrixMultiply != kMakeTranslation);
+        CHECK(kMatrixMultiply != kAffineInverse);
+        CHECK(kMatrixMultiply != kAffineKernel);
+        CHECK(kMatrixMultiply != kAffineOutOfPlace);
+        CHECK(kMatrixMultiply != kAffineInPlace);
+        CHECK(kMatrixMultiply != kAffineTwoPoints);
+
+        // the composition, in the record's order a, b, c, d, tx, ty, hand-checked against two steps
+        constexpr int IA = 0, IB = 1, IC = 2, ID = 3, ITX = 4, ITY = 5;
+        const auto compose = [](const double A[6], const double B[6], double C[6]) {
+            // C = A after B: the 2x2 parts multiply, and the translation of B is carried through A
+            C[IA] = A[IA] * B[IA] + A[IB] * B[IC];
+            C[IB] = A[IA] * B[IB] + A[IB] * B[ID];
+            C[IC] = A[IC] * B[IA] + A[ID] * B[IC];
+            C[ID] = A[IC] * B[IB] + A[ID] * B[ID];
+            C[ITX] = A[IA] * B[ITX] + A[IB] * B[ITY] + A[ITX];
+            C[ITY] = A[IC] * B[ITX] + A[ID] * B[ITY] + A[ITY];
+        };
+        const auto applyRecord = [](const double m[6], double x, double y, double& ox, double& oy) {
+            ox = m[IA] * x + m[IB] * y + m[ITX];
+            oy = m[IC] * x + m[ID] * y + m[ITY];
+        };
+        const double scale[6] = {2, 0, 0, 1, 0, 0};       // x doubled, y unchanged
+        const double shift[6] = {1, 0, 0, 1, 1, 1};       // translate by one and one
+        double comp[6] = {0, 0, 0, 0, 0, 0};
+        compose(scale, shift, comp);
+        CHECK(comp[IA] == 2.0 && comp[IB] == 0.0);
+        CHECK(comp[IC] == 0.0 && comp[ID] == 1.0);
+        CHECK(comp[ITX] == 2.0 && comp[ITY] == 1.0);      // the shift is carried through the scale
+        // and applying the composition equals applying the two in turn
+        double x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 0, y3 = 0;
+        applyRecord(shift, 3.0, 4.0, x1, y1);             // the shift first
+        applyRecord(scale, x1, y1, x2, y2);               // then the scale
+        applyRecord(comp, 3.0, 4.0, x3, y3);              // against the composition in one step
+        CHECK(x2 == x3 && y2 == y3);
+        CHECK(x3 == 8.0 && y3 == 5.0);
+        CHECK(kAffineLibraryMembers == 7);
+    }
+
     return check::finish("test_recovered");
 }

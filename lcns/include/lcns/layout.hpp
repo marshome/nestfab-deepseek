@@ -3526,6 +3526,36 @@ static_assert(kTestConventionRowMajorInEarlierBlocks && kTestConventionRecordOrd
 static_assert(kMatrixConventions == 2, "and counted");
 static_assert((kMatrixTy - kMatrixA) / 8 == 5, "the record's order runs from a at +0x00 to ty at +0x28");
 
+
+// --- two affine transforms composed, and the library they belong to (round 348) ---------------------------
+//     0x5CE9B7/0x5CE9C2/0x5CE995/0x5CE99A  a, b, c, d of the operand at rdx
+//     0x5CE9E9/0x5CEA06/0x5CE9CB/0x5CE9D5  the same four from the operand at r8
+//     0x5CE99F/0x5CE9A9                    its two translations
+//     0x5CE9E5/0x5CE9F8/0x5CE9FD           addsd chains folding the translation in
+inline constexpr std::uintptr_t kMatrixMultiply = 0x5CE970;  // RE the whole routine
+inline constexpr int kMatrixMultiplyCallers = 38;            // the workhorse of the range
+inline constexpr std::uintptr_t kMulOperandA = 0;            // the operand at rdx, by argument position
+inline constexpr std::uintptr_t kMulOperandB = 1;            // and the one at r8
+inline constexpr int kMatrixLayoutRoutines = 7;              // 339, 341, 342, 344, 346, 347 and this
+inline constexpr int kMatrixLayoutReads = 8;                 // this one reads the record twice
+inline constexpr int kAffineLibraryMembers = 7;              // build, invert, multiply and four appliers
+inline constexpr bool kLibraryComplete = true;               // every operation a 2x3 affine needs
+inline constexpr bool kBothOperandsSameRecord = true;        // six doubles are read from each
+// THE LIBRARY, as the seven routines and what each does:
+//     0x5CE7B0 build a translation      32 callers
+//     0x5CED50 invert                   24 callers
+//     0x5CE970 multiply                 38 callers   <- this round
+//     0x5CEA80 apply (functional)        9 callers
+//     0x5CF6B0 apply (out of place)      6 callers
+//     0x5CFD80 apply (in place, one)     4 callers
+//     0x5CFDC0 apply (in place, two)     3 callers
+inline constexpr const char* kAffineLibrary = "build, invert, multiply, and apply in four forms";
+static_assert(kMatrixLayoutRoutines == 7 && kMatrixLayoutReads == 8, "seven routines, eight reads");
+static_assert(kAffineLibraryMembers == 7, "seven members, one per routine");
+static_assert(kLibraryComplete, "and together they cover the operations a 2x3 affine needs");
+static_assert(kBothOperandsSameRecord, "six doubles from each operand, so both are the same record");
+static_assert(kMatrixMultiplyCallers > kMakeTranslationCallers, "the workhorse is called more than the builder");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
