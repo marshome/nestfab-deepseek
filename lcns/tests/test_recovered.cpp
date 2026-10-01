@@ -4691,5 +4691,48 @@ int main() {
         CHECK(already == -1);
     }
 
+    // --- the refcount trio and the borrow rule (RE 0x862040, 0x862050 and 0x86b750) ------------------
+    {
+        CHECK(kAtomicIncrement == 0x862050);
+        CHECK(kAtomicReleaseTarget == 0x9984B0);
+        CHECK(kAtomicReleaseTarget == kSharedDealloc);   // the release is the shared deallocator
+        CHECK(kRefcountTrio == 3);
+        CHECK(kRefcountPayloadOffset == 0x18);
+        CHECK(kSharedDeallocSightings8 == 9);
+        CHECK(kSharedDeallocSightings8 == kSharedDeallocSightings5 + 2);
+        CHECK(kObtainRef == 0x86B750);
+        CHECK(kObtainRefCallers == 12);
+        CHECK(kBorrowFlagOffset == -8);
+        CHECK(kRefcountBaseDelta == -0x18);
+        CHECK(kBorrowSentinelNegative);
+        CHECK(kBorrowPath == 0x86B780);
+        CHECK(kCounterOffsetSites == 4);
+        CHECK(k888FF0IsRefHolder);
+        CHECK(kRefcountOffset3 == 0x10);                 // the counter the trio works on
+        CHECK(kCtorForwardTarget == kObtainRef);         // and the constructor that reaches it
+        CHECK(kAtomicRelease == 0x862030);
+
+        // the layout the two routines agree on
+        const std::ptrdiff_t base = kRefcountBaseDelta;
+        CHECK(base + static_cast<std::ptrdiff_t>(kRefcountOffset3) == -8);   // the flag sits eight past the base
+        CHECK(base == -0x18);
+        CHECK(kBorrowFlagOffset == base + static_cast<std::ptrdiff_t>(kRefcountOffset3));   // -0x18 + 0x10 = -8
+        CHECK(kRefcountPayloadOffset - kRefcountOffset3 == 8);     // payload eight past the counter
+        // the trio's three operations, in order of what they do
+        std::int32_t count = 1;
+        ++count;                                          // RE 0x862050
+        CHECK(count == 2);
+        const std::int32_t old = count;
+        count += kDecrementAmount;                        // RE 0x862035
+        CHECK(old == 2 && count == 1);
+        CHECK(!(old <= 0));                               // no release for a healthy count
+        // and the borrow rule: a negative flag skips the increment
+        const auto countsThis = [](std::int32_t flag) { return flag >= 0; };
+        CHECK(countsThis(0));
+        CHECK(countsThis(1));
+        CHECK(!countsThis(-1));
+        CHECK(kCounterOffsetSites * 4 == 16);
+    }
+
     return check::finish("test_recovered");
 }

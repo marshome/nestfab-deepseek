@@ -2941,6 +2941,34 @@ static_assert(kAtomicDecrement && kReleaseIfBelowOne, "an atomic decrement with 
 static_assert(kDecrementAmount == -1, "the decrement is one");
 static_assert(kRefcountOffsetsKnown == 3, "three counter offsets are now recorded");
 
+
+// --- the refcount trio, the payload, and the borrow rule (round 327) -------------------------------------
+//     0x862040 jmp 0x9984B0                 ; the release is a tail jump into the shared deallocator
+//     0x862050 lock add dword [rcx+0x10],1  ; the increment, on the same counter
+//     0x862055/0x862059 lea rax,[rcx+0x18]  ; and it returns the payload pointer
+//     0x86B755/0x86B758  rax = [rdx] ; r8d = dword [rax-8]   ; a signed flag eight bytes before
+//     0x86B75F/0x86B763  rcx = rax-0x18 ; rdx = rcx+0x10     ; the same base and counter
+//     0x86B76A js 0x86B780                                   ; negative means: do not count it
+//     0x86B76C lock add dword [rdx],1 ; [rbx] = rax
+inline constexpr std::uintptr_t kAtomicIncrement = 0x862050;  // RE the whole routine
+inline constexpr std::uintptr_t kAtomicReleaseTarget = 0x9984B0;  // RE 0x862040
+inline constexpr int kRefcountTrio = 3;                       // decrement-and-test, release, increment
+inline constexpr std::size_t kRefcountPayloadOffset = 0x18;   // RE 0x862055
+inline constexpr int kSharedDeallocSightings8 = 9;            // rounds 248, 252, 254, 256, 261, 275, 293, 322 and this
+inline constexpr std::uintptr_t kObtainRef = 0x86B750;        // RE the obtain side
+inline constexpr int kObtainRefCallers = 12;
+inline constexpr std::ptrdiff_t kBorrowFlagOffset = -8;       // RE 0x86B758
+inline constexpr std::ptrdiff_t kRefcountBaseDelta = -0x18;   // RE 0x86B75F
+inline constexpr bool kBorrowSentinelNegative = true;         // RE 0x86B76A
+inline constexpr std::uintptr_t kBorrowPath = 0x86B780;       // RE the js target
+inline constexpr int kCounterOffsetSites = 4;                 // 0x862030, 0x862050, 0x86B750 and 0x86B76C's source
+inline constexpr bool k888FF0IsRefHolder = true;              // it installs a vtable and then obtains a reference
+static_assert(kAtomicReleaseTarget == kSharedDealloc, "the release reaches the shared deallocator");
+static_assert(kRefcountTrio == 3, "three operations over one counter");
+static_assert(kRefcountPayloadOffset == 0x18, "the payload sits at +0x18");
+static_assert(kBorrowFlagOffset == -8 && kRefcountBaseDelta == -0x18, "the base and flag offsets");
+static_assert(kCounterOffsetSites == 4, "the counter offset appears in four places");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

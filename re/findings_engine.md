@@ -6473,3 +6473,20 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ 这是**第三个计数偏移**（round 291 记的 `+0x08`/`+0x0C` 属于另一个对象） ⇒ **三者并列记录，不合并为“那个计数器”**。
 
 **已落 `layout.hpp`**：`kLazyForceVariant`(0x111B50)、`kLazyForceCallers`(21)、`kSlot110Impl`(0xC2EC0)、`kSlot110ImplInferred`、`kForceSetsFlagUnconditionally`、`kTwinDelta326`(0x1A0)、`kAtomicRelease`(0x862030)、`kAtomicReleaseCallers`(20)、`kRefcountOffset3`(0x10)、`kAtomicDecrement`、`kReleaseIfBelowOne`、`kDecrementAmount`、`kReleasePath`(0x862040)、`kRefcountOffsetsKnown`(3) + **六条 `static_assert`** + 测试 28 条。
+
+### 附 245 **完整的引用计数三件套，以及“借用”规则**（goal round 327）**[已落码]**
+
+```
+862040  jmp **0x9984B0**                 ; ★ **释放就是尾跳共享释放器**（**第九次目击**）
+862050  lock add dword [rcx+**0x10**],1  ; ★ **同一计数器的原子自增**
+862055/862059  lea rax,[rcx+**0x18**] ; ret   ; ★ 返回**有效载荷指针**
+```
+
+⇒ 与 `0x862030`（递减并测试）合起来，**同一个 `+0x10` 计数器上的三件套**，它保护的**有效载荷在 `+0x18`**。
+
+**取引用侧 `0x86B750`**（70 B / 12 个调用者）：读 `[rax−8]` 的**有符号 dword**（对象前方八字节），负值走另一路；否则 `rax−0x18` 取基址、`+0x10` 取计数器并**原子自增**。
+同一套“**基址 `−0x18`、计数器 `+0x10`**”在**第二个例程**里重现 ⇒ 该布局**是读出来的，不是巧合**；而负值分支显然是“**这个引用不计数**”。
+
+★ 这也**定下了 `0x888FF0` 是什么**：它装虚表后调本取引用例程 ⇒ **持有引用的构造器**（以其指令支持的读法如此陈述）。
+
+**已落 `layout.hpp`**：`kAtomicIncrement`(0x862050)、`kAtomicReleaseTarget`(0x9984B0)、`kRefcountTrio`(3)、`kRefcountPayloadOffset`(0x18)、`kSharedDeallocSightings8`(9)、`kObtainRef`(0x86B750)、`kObtainRefCallers`(12)、`kBorrowFlagOffset`(−8)、`kRefcountBaseDelta`(−0x18)、`kBorrowSentinelNegative`、`kBorrowPath`(0x86B780)、`kCounterOffsetSites`(4)、`k888FF0IsRefHolder` + **五条 `static_assert`** + 测试 28 条。
