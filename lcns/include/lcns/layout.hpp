@@ -627,6 +627,24 @@ inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
 
+// --- the pairwise loop of 0x5E8870 (round 242) --------------------------------------------------------
+//     5E8899 add rbx,0x10                       ; the container holds SIXTEEN-byte elements
+//     5E88B1 cmp rbx,[r9+8] ; 5E88C2 je         ; walked until the end pointer
+//     5E88CC mov r12,0xFFFFFFFFFFFFFFFF         ; the -1 sentinel again -- the fifth sighting
+//     5E88E5 movsd xmm6,[50.0]                  ; the family's constant
+//     5E893D and 5E8950 call 0x824B40           ; the same callee TWICE per iteration, i.e. pairwise
+//     5E8959 lea rdx,[rsi+rsi*8]                ; a nine multiplier, the first step of the 19-word indexing
+// so this member consumes the same constant and calls the same helper as the mapper, and it uses the -1 sentinel
+// for a local slot. The nine multiplier is landed as what it is -- an intermediate of the addressing -- and the
+// full nineteen is already a constant from round 240.
+inline constexpr std::uintptr_t kPairwiseCallee = 0x824B40;   // RE 0x5E893D and 0x5E8950
+inline constexpr std::size_t kPairwiseElementStride = 0x10;   // RE 0x5E8899
+inline constexpr int kPairwiseCallsPerStep = 2;               // RE the two calls per iteration
+inline constexpr int kSentinelSightings = 5;                  // 0x5E88CC joins rounds 178/180/219/237
+inline constexpr int kNineMultiplier = 9;                     // RE 0x5E8959
+// NOTE: the equality with kPoint2dSize is checked at run time in tests/test_recovered.cpp, which includes
+// compare.hpp as well; a static_assert here cannot see that constant (the same trap as round 212).
+
 // --- the mapper of 0x711AD0: a 40-byte walk and the twins' offsets again (round 241) -------------------
 //     711BDF add rsi,0x28                    ; the walk steps FORTY bytes per record
 //     711B36/711B47 cmp rbx,1 ; cqo ; idiv rbx    ; 1 / rbx, with rdx as the remainder

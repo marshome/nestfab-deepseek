@@ -1857,6 +1857,15 @@ int main() {
         CHECK(kMapperCompare == kRatioFamilyDenB);
         CHECK(kMapperFieldB - kMapperFieldA == 8);
         CHECK(kStride152Sightings == 2);
+        // round 242: the pairwise loop
+        CHECK(kPairwiseCallee == 0x824B40);
+        CHECK(kPairwiseElementStride == 0x10);
+        CHECK(kPairwiseElementStride == kPoint2dSize);
+        CHECK(kPairwiseCallsPerStep == 2);
+        CHECK(kSentinelSightings == 5);
+        CHECK(kNineMultiplier == 9);
+        CHECK(kNineMultiplier * 2 == 18);          // the doubling step of the 19-word form
+        CHECK(kNineMultiplier * 2 + 1 == kStride152Words);
         CHECK(kWrapperSource - kWrapperFirstField == 0x38);
         CHECK(kAlloc0x1B8 != kSize158);
         CHECK(kAlloc0x50 != kSize148);

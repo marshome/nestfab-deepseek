@@ -4932,3 +4932,19 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 **19 字步长在此第二次出现**。
 
 **已落 `layout.hpp`**：`kRecordStride40`、`kMapperFieldA/B`、`kMapperCompare`、`kStride152Sightings` + **三条 `static_assert`**（把三个偏移与孪生组绑定）+ 测试 14 条。
+
+### 附 164 **成对循环 `0x5E8870`**；哨兵第五次出现（goal round 242）**[已落码]
+
+```
+5E8899  add rbx,0x10                       ; ★ 容器元素 **16 字节**
+5E88B1/5E88C2  cmp rbx,[r9+8] ; je         ; 走到尾
+5E88CC  mov r12,0xFFFFFFFFFFFFFFFF         ; ★ **−1 哨兵第五次出现**
+5E88E5  xmm6=[50.0]                        ; 族常量
+5E893D 与 5E8950  每轮调 **`0x824B40` 两次**   ; 成对操作
+5E8959  lea rdx,[rsi+rsi*8]                ; 九倍（**19 字索引的第一步**）
+```
+
+⇒ 它与映射函数共享 **同一常量与同一被调**，并在本地位置使用 `−1` 哨兵。
+**九倍**只落它本身为“寻址的中间步”，**19 已是 round 240 的常量**。
+
+**已落 `layout.hpp`**：`kPairwiseCallee`、`kPairwiseElementStride`、`kPairwiseCallsPerStep`、`kSentinelSightings`、`kNineMultiplier` + `static_assert` + 测试 10 条（含 `kNineMultiplier*2+1 == kStride152Words`）。
