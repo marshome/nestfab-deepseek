@@ -20,6 +20,7 @@
 #include "lcns/layout.hpp"
 #include "lcns/steps.hpp"
 #include "lcns/units.hpp"
+#include "lcns/compare.hpp"
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
@@ -884,6 +885,21 @@ int main() {
         CHECK(kSharedFifty == 50.0);
         // the block's scale slot agrees with the 0.5 slot used by so many functions
         CHECK(kSharedHalf == kStepRoundTerm);
+    }
+
+    // --- the twins' comparator (RE 0x74b430 / 0x74b700: seta al ; lea eax,[rax+rax-1]) --------------
+    {
+        // the mapping {0,1} -> {-1,+1} the code performs
+        CHECK(signOf(2.0) == 1);
+        CHECK(signOf(-2.0) == -1);
+        // and the equal case, which the `je` guard sends to zero
+        CHECK(compareToZero(0.0) == 0);
+        CHECK(compareToZero(1e-300) == 1);
+        CHECK(compareToZero(-1e-300) == -1);
+        // the tolerance form the guards imply
+        CHECK(withinTolerance(1.0, 1.0));
+        CHECK(withinTolerance(-1.0, 1.0));
+        CHECK(!withinTolerance(1.5, 1.0));
     }
 
     return check::finish("test_recovered");
