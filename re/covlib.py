@@ -171,6 +171,8 @@ VENDOR_PATH_PAT = re.compile(
 
 
 def classify_identity(a):
+    if a in LIBRARY_EVIDENCED:
+        return LIBRARY_EVIDENCED[a][0]
     if a in LIBSTDCXX_EVIDENCED:
         return "toolchain"
     """Same three names as classify(), but only on identity evidence (see the note above)."""
@@ -392,4 +394,42 @@ LIBSTDCXX_EVIDENCED = {
     0x8F17B0: "classic libstdc++ std::string move: pointer at +0, size at +8, SSO buffer at +0x10, "
               "32 byte objects, and the destination slot advanced by 0x20 with a reallocation "
               "branch at the end -- vector<string>::emplace_back from a moved string (round 74)",
+}
+
+# --- library code PROVEN by the class it references (goal round 94) -----------------------------
+# The rule that produced this list, applied strictly so it cannot swallow domain code:
+#   every class the function references (RTTI or vtable address point) has a library name
+#   prefix, AND the function carries no strings of its own (no TU path, no assertion text).
+# A function that keeps a string is left in the domain bucket, because a domain function may
+# well catch a boost exception.
+LIBRARY_EVIDENCED = {
+    0xC03B0: ("third_party", "N8CryptoPP18PK_SignatureScheme11KeyTooShortE"),
+    0xC0610: ("third_party", "N8CryptoPP18PK_SignatureScheme11KeyTooShortE"),
+    0xC0CE0: ("third_party", "N8CryptoPP18PK_SignatureScheme11KeyTooShortE"),
+    0x117EA0: ("third_party", "N8CryptoPP22BufferedTransformation16NoChannelSupportE"),
+    0x117F40: ("third_party", "N8CryptoPP22BufferedTransformation16NoChannelSupportE"),
+    0x118000: ("third_party", "N8CryptoPP22BufferedTransformation16NoChannelSupportE"),
+    0x1180C0: ("third_party", "N8CryptoPP22BufferedTransformation16NoChannelSupportE"),
+    0x712740: ("third_party", "N5boost8geometry19turn_info_exceptionE"),
+    0x713650: ("third_party", "N5boost8geometry19turn_info_exceptionE"),
+    0x77FB50: ("third_party", "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13In"),
+    0x77FE00: ("third_party", "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13In"),
+    0x77FE50: ("third_party", "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13In"),
+    0x77FEA0: ("third_party", "N8CryptoPP14InputRejectingINS_22BufferedTransformationEE13In"),
+    0x77FEF0: ("third_party", "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"),
+    0x7801A0: ("third_party", "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"),
+    0x7801F0: ("third_party", "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"),
+    0x780240: ("third_party", "N8CryptoPP14InputRejectingINS_6FilterEE13InputRejectedE"),
+    0x786700: ("third_party", "N8CryptoPP16HashInputTooLongE"),
+    0x799F60: ("third_party", "N8CryptoPP23AlgorithmParametersBase16ParameterNotUsedE"),
+    0x97A7B0: ("toolchain", "NSt8ios_base7failureE"),
+    0x990540: ("toolchain", "NSt6locale5facetE"),
+    0x990600: ("toolchain", "NSt6locale5facetE"),
+    0x990780: ("toolchain", "NSt6locale5facetE"),
+    0x990840: ("toolchain", "NSt6locale5facetE"),
+    0x9916E0: ("toolchain", "NSt6locale5facetE"),
+    0x9917A0: ("toolchain", "NSt6locale5facetE"),
+    0x991800: ("toolchain", "NSt6locale5facetE"),
+    0x991920: ("toolchain", "NSt6locale5facetE"),
+    0x9919E0: ("toolchain", "NSt6locale5facetE"),
 }

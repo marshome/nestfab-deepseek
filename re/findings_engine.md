@@ -1964,3 +1964,21 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 ⇒ 它是**代理器**（把问题转发给内层），而不是自己答。
 
 **已落到 `lcns`**：`nester.hpp` 新增 `DelegatingCanceller`（与既有 `Canceller` 同一节，**而不是另起一个重复接口**），并在同位置记下 `0x7D2610`（`CompactCanceller::ProbeCancel`）的证据：它自己的函数体里就带着 **`ProbeCancel`**、`m_supervisor`、`Compact cancelled !` 与常量 **0.5 / 1.05 / 60.0** —— **方法名是从二进制里读出来的，不是我编的**。
+
+### 附 32 有证据的第三方归类（goal round 94）**[规则 + 前后数字]**
+
+**规则（严格）**：一个函数被归为库代码，当且仅当 ① 它经 RTTI 或 vtable 地址点引用的**每一个**类都带库名前缀（`N5boost`/`N8CryptoPP`/`N4Json`/`N9__gnu_cxx`/`NSt`/`N5cxx11`/`N3dbg`），且 ② 它**自己没有任何字符串**（无 TU 路径、无断言文本）。保留字符串的函数**不动** —— 领域代码也会捕获 boost 异常。
+
+符合规则者：**29 个函数 / 10829 字节**（third_party 19，toolchain 10）。
+
+**归类前的正式口径**：
+
+```
+﻿   cited reachable     :   2049  (2474936 bytes)  -> 53.0% of reachable bytes
+=== top 35 NOT-cited reachable functions (the concrete work list) ===
+   not-cited reachable: 4132 functions, 2195106 bytes (47.0% of reachable)
+=== of the un-cited reachable code (identity evidence required, round 7) ===
+   third party to LINK (see third_party/README.md):   379 fns,    55875 B (1.2% of reachable)
+   toolchain libstdc++/MinGW                      :   223 fns,   228658 B (4.9%)
+   libcns DOMAIN code STILL TO REVERSE            :  3530 fns,  1910573 B (40.9%)
+```
