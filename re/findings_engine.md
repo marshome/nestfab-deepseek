@@ -1844,3 +1844,30 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 **口径**：这是**候选数**，**不是重新归类**。
 
 **`0x8F17B0`**：104 B / 29 条，字符串 `无`，调用者 27 个。
+
+### 附 24 `0x82B7B0` 与四个**有证据的** libstdc++ 排除项（goal round 75）
+
+**`0x82B7B0`**：494 B / 126 条指令，字符串 `无`，被调用者 58 个；它被参数处理器用 `[rdi+8]` 调用（round 70）。
+
+**排除项**（每一个都是逐条读过才进来的，证据写在 `covlib.py` 的 `LIBSTDCXX_EVIDENCED` 里）：`0x867DF0`（eofbit）、`0x8682A0`（badbit）、`0x978010`（流提取路径）、`0x8F17B0`（`vector<string>` 移动插入，SSO 布局）。
+
+**归类前的正式口径（`g_coverage.py`）**：
+
+```
+﻿reachable from the exports: 6181 functions, 4670042 bytes (47.0% of all code)
+   cited reachable     :   2041  (2467801 bytes)  -> 52.8% of reachable bytes
+=== top 35 NOT-cited reachable functions (the concrete work list) ===
+   not-cited reachable: 4140 functions, 2202241 bytes (47.2% of reachable)
+=== of the un-cited reachable code (identity evidence required, round 7) ===
+   third party to LINK (see third_party/README.md):   379 fns,    55875 B (1.2% of reachable)
+   toolchain libstdc++/MinGW                      :   225 fns,   230975 B (4.9%)
+   libcns DOMAIN code STILL TO REVERSE            :  3536 fns,  1915391 B (41.0%)
+```
+
+**归类后的正式口径（g_coverage.py）**：
+
+```nreachable from the exports: 6181 functions, 4670042 bytes (47.0% of all code)
+   cited reachable     :   2041  (2467801 bytes)  -> 52.8% of reachable bytes
+=== top 35 NOT-cited reachable functions (the concrete work list) ===
+   not-cited reachable: 4140 functions, 2202241 bytes (47.2% of reachable)
+```n

@@ -171,6 +171,8 @@ VENDOR_PATH_PAT = re.compile(
 
 
 def classify_identity(a):
+    if addr in LIBSTDCXX_EVIDENCED:
+        return "toolchain"
     """Same three names as classify(), but only on identity evidence (see the note above)."""
     f = PROF[a]
     strs = []
@@ -372,3 +374,20 @@ def reachable_uncited_domain():
     unc = seen - cit
     dom = {a for a in unc if classify_identity(a) == "domain"}
     return seen, unc, dom
+
+# --- libstdc++ routines PROVEN by reading them, one at a time (goal round 75) --------------------
+# Each entry carries the evidence that made it a toolchain routine rather than domain code. Nothing
+# enters this set on a guess, and the size of the set is reported together with its effect.
+LIBSTDCXX_EVIDENCED = {
+    0x867DF0: "0x8F17B0 sibling: reads the streambuf out of [+0xE8], calls vtable slot +0x30 and "
+              "compares the result with -1 (traits::eof()), then sets bit 0 of the state word at "
+              "+0x20 -- that is eofbit, i.e. an iostream uflow/underflow path (round 73)",
+    0x8682A0: "builds the (bool, T&) result the try-to-obtain helper returns: first byte = 0 and set "
+              "to 1 on success, and the failure path sets bit 2 of the same state word -- badbit in "
+              "std::ios_base -- then tail calls the throw helper 0x9456A0 (round 72)",
+    0x978010: "the stream extraction path those two serve, entered through 0x8682A0 and with the same "
+              "+0x20 state word and vptr-0x18 virtual base adjustment (rounds 71-73)",
+    0x8F17B0: "classic libstdc++ std::string move: pointer at +0, size at +8, SSO buffer at +0x10, "
+              "32 byte objects, and the destination slot advanced by 0x20 with a reallocation "
+              "branch at the end -- vector<string>::emplace_back from a moved string (round 74)",
+}
