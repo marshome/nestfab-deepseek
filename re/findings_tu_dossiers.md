@@ -1292,8 +1292,109 @@
 | `0x1c1110` | 129 | B2 种子调用者 | `0x20c440` |
 | `0x20c850` | 44 | B1 调用种子 | `0x20c440` |
 
-# 桶 C（修正版，goal round 110b）**[每行带类名证据]**
+# 桶 C（第二次修正，goal round 110c）
 
-> **修正说明**：本桶首版的库判定**只认 mangled 前缀** (`N5boost`)，而 vtable 通道给出的是 **demangled 名** (`boost::exception`)，于是把库类当成了领域类。现同时认**两种写法**。
+> 两次修正：① 库判定需同时认 mangled 与 demangled 写法；② 只要**全部**引用的类都是库类型即为库代码（先前要求同一桶，使 328 个两边不算）。
 
-修正后：库代码 **29** 个 / 10829 字节（已登记排除）；引用领域类者 **0** 个 / 0 字节。
+库代码：**214** 个 / 41846 字节（已登记）；引用领域类者：**101** 个 / 31059 字节。
+| `0x76e440` | 2741 | `Tiling::SqueezeMultiTiler` |
+| `0x9c280` | 2731 | `N5Multi12TerminalNodeE` |
+| `0x199570` | 2703 | `Utils::LogSink` |
+| `0x9cd30` | 2604 | `N5Multi12TerminalNodeE` |
+| `0x4f2a30` | 1944 | `Tiling::MultiOrientedPartPattern` |
+| `0x99360` | 1449 | `Multi::TerminalNode` |
+| `0x162280` | 996 | `Pack::RecursiveNester` |
+| `0x158f60` | 919 | `Tiling::PackerCache` |
+| `0x158be0` | 895 | `Tiling::PackerCache` |
+| `0x4f4850` | 883 | `Tiling::BoxMultiTiler` |
+| `0x7e8520` | 757 | `Tiling::BiModulePattern` |
+| `0x19dd20` | 677 | `Utils::LogSink` |
+| `0x23e70` | 595 | `Engine::NestingEngine` |
+| `0x4e81b0` | 551 | `Tiling::QuantityEvaluator` |
+| `0x9c060` | 537 | `N5Multi4NodeE` |
+| `0x25a20` | 512 | `Engine::EquivalentEngine` |
+| `0x90a030` | 463 | `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::Run` |
+| `0x90a200` | 463 | `<subst>::thread::_State_impl::<Tiling::PackerCache::Implemen` |
+| `0x99910` | 447 | `Multi::SplitNode` |
+| `0x240d0` | 431 | `Engine::MultiEngine` |
+| `0x76f0a0` | 427 | `Tiling::SqueezeMultiTiler` |
+| `0x76ef00` | 416 | `Tiling::SqueezeMultiTiler` |
+| `0x24c40` | 334 | `Engine::CompositeEngine` |
+| `0x91f6f0` | 334 | `<subst>::__cxx11::basic_ostringstream::<>` |
+| `0x4dafc0` | 258 | `Tiling::Part` |
+| `0x4db0d0` | 254 | `Tiling::Part` |
+| `0x4db1d0` | 254 | `Tiling::Part` |
+| `0x4daec0` | 249 | `Tiling::Part` |
+| `0x24fd0` | 209 | `Engine::InfiniteEngine` |
+| `0x6d3a0` | 193 | `Multi::RectangleNester` |
+| `0x24b80` | 192 | `Engine::DelayedEngine` |
+| `0x7bc0c0` | 191 | `Structure::ClusterObserver` |
+| `0x24ab0` | 190 | `Engine::EquivalentEngine` |
+| `0x7bc000` | 188 | `Structure::ClusterObserver` |
+| `0x6d2e0` | 185 | `Multi::RectangleNester` |
+| `0x91a710` | 168 | `<subst>::__cxx11::basic_stringbuf::<>` |
+| `0x681ee0` | 157 | `Pack::BestNester` |
+| `0x4f2870` | 156 | `Tiling::BiModulePattern` |
+| `0x681e40` | 149 | `Pack::BestNester` |
+| `0x91fcf0` | 129 | `<subst>::__cxx11::basic_ostringstream::<>` |
+| `0x5f47c0` | 112 | `Utils::TimerWinImplementation` |
+| `0x45680` | 99 | `Multi::TilingNester` |
+| `0x159480` | 98 | `Tiling::PackerCache` |
+| `0x456f0` | 91 | `Multi::TilingNester` |
+| `0x8aacb0` | 91 | `<subst>::thread::_State_impl::<<subst>::<subst>::<subst>::sh` |
+| `0x69a5d0` | 86 | `Multi::NoMixSheetSelector` |
+| `0x5b100` | 85 | `Multi::DatabaseNester` |
+| `0x5b1f0` | 83 | `Multi::DatabaseNester` |
+| `0x15e3b0` | 81 | `Pack::BestNester` |
+| `0x9444e0` | 80 | `<subst>::ios_base::failure` |
+| `0x5b170` | 77 | `Multi::DatabaseNester` |
+| `0x75e0e0` | 76 | `Engine::EquivalentObserver` |
+| `0x8aad10` | 76 | `<subst>::thread::_State_impl::<<subst>::<subst>::<subst>::sh` |
+| `0x553100` | 75 | `Structure::ClusterObserver` |
+| `0x69a580` | 74 | `Multi::NoMixSheetSelector` |
+| `0x32f30` | 73 | `Multi::NestingNester` |
+| `0x915e70` | 72 | `<subst>::__cxx11::basic_stringbuf::<>` |
+| `0x944470` | 72 | `<subst>::ios_base::failure` |
+| `0x75e130` | 71 | `Engine::EquivalentObserver` |
+| `0x6937e0` | 67 | `Multi::NoFillNester` |
+| `0x921970` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921a10` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921b40` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921be0` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x32ee0` | 65 | `Multi::NestingNester` |
+| `0x693830` | 59 | `Multi::NoFillNester` |
+| `0x76b3e0` | 53 | `Tiling::CompositePart` |
+| `0x695e50` | 48 | `Multi::LimitedNester` |
+| `0x921a60` | 48 | `<subst>::__cxx11::messages::<>` |
+| `0x921c30` | 48 | `<subst>::__cxx11::messages::<>` |
+| `0x76b380` | 45 | `Tiling::BoxMultiTiler` |
+| `0x76b420` | 45 | `Tiling::CompositePart` |
+| `0x5f000` | 44 | `Multi::TraceObserver` |
+| `0x695dc0` | 40 | `Multi::WrapObserver` |
+| `0x695e80` | 40 | `Multi::LimitedNester` |
+| `0x921a90` | 40 | `<subst>::__cxx11::messages::<>` |
+| `0x921c60` | 40 | `<subst>::__cxx11::messages::<>` |
+| `0x687de0` | 36 | `Multi::FlipNester` |
+| `0x6937a0` | 36 | `Multi::FilterNester` |
+| `0x695e10` | 36 | `Multi::CompactNester` |
+| `0x6d58d0` | 36 | `Utils::BadResponseException` |
+| `0x7bfe60` | 36 | `Structure::ParseSolutionException` |
+| `0x8aac60` | 36 | `<subst>::thread::_State_impl::<<subst>>::<subst>` |
+| `0x8aad90` | 36 | `<subst>::thread::_State_impl::<Engine::Engine>::Structure::P` |
+| `0x8aadf0` | 36 | `<subst>::thread::_State_impl::<Multi::Supervisor>` |
+| `0x8aae70` | 36 | `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::Run` |
+| `0x8aaee0` | 36 | `<subst>::thread::_State_impl::<Tiling::PackerCache::Implemen` |
+| `0x76b3b0` | 33 | `Tiling::BoxMultiTiler` |
+| `0x15d1d0` | 29 | `Pack::KnapsackNester` |
+| `0x4f3630` | 19 | `Tiling::BasicCandidater` |
+| `0x695df0` | 19 | `Multi::WrapObserver` |
+| `0x687e10` | 15 | `Multi::FlipNester` |
+| `0x6937d0` | 15 | `Multi::FilterNester` |
+| `0x695e40` | 15 | `Multi::CompactNester` |
+| `0x6d5900` | 15 | `Utils::BadResponseException` |
+| `0x7bfe90` | 15 | `Structure::ParseSolutionException` |
+| `0x8aac90` | 15 | `<subst>::thread::_State_impl::<<subst>>::<subst>` |
+| `0x8aadc0` | 15 | `<subst>::thread::_State_impl::<Engine::Engine>::Structure::P` |
+| `0x8aae20` | 15 | `<subst>::thread::_State_impl::<Multi::Supervisor>` |
+| `0x8aaea0` | 15 | `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::Run` |
+| `0x8aaf10` | 15 | `<subst>::thread::_State_impl::<Tiling::PackerCache::Implemen` |
