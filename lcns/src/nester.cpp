@@ -345,6 +345,7 @@ bool placePart(const Order& order, SolveContext& ctx, Nesting& nesting, int shee
 }
 
 // ---------------------------------------------------------------------------
+LCNS_STRUCTURAL(tu.float_filler);
 LCNS_SUBSTITUTED(module.nester);
 LCNS_SUBSTITUTED(search.pack_all);
 Nesting packAll(const Order& order, SolveContext& ctx, int sheetIndex, const BeamParams& beam,
