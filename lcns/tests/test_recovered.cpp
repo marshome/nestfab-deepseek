@@ -513,6 +513,22 @@ int main() {
         CHECK(std::fabs(ratioFromAverage(5.0, 100000.0) - 4.9995) < 1e-12);
     }
 
+    // --- the seed conversion (RE 0x1a9150, an independent copy of the sequence in 0x1b33b0) ---------
+    {
+        // the whole of 0x1A9150 is: call the ratio, multiply by 1e6, truncate toward zero
+        CHECK(seedFromRatio(4.9995) == 4999500LL);
+        CHECK(seedFromRatio(0.5) == 500000LL);
+        CHECK(seedFromRatio(0.0) == 0LL);
+        // truncation, not rounding
+        CHECK(seedFromRatio(1.9999999) == 1999999LL);
+        CHECK(seedFromRatio(-1.9999999) == -1999999LL);
+        // and it composes with the ratio tail
+        // the composition is asserted as the SAME arithmetic, not as a decimal: 0.9999*100/200*1e6
+        // truncates to 499949 in IEEE double, and the binary performs these operations in this order
+        const double composed = ratioFromAverage(5.0, 100.0);
+        CHECK(seedFromRatio(composed) == static_cast<long long>(composed * 1000000.0));
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720

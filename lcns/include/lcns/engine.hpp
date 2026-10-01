@@ -210,6 +210,17 @@ inline constexpr std::size_t kAggregateStride = 0xF0;   // RE 0x1A90BB: add rbx,
 inline constexpr double kRatioWeight = 0.9999;          // RE 0x1A910A
 inline constexpr int kRatioFloor = 200;                 // RE 0x1A9101 / 0x1A911B
 
+// RE 0x1A9150 (27 B / 6 instructions, read whole) is the seed conversion on its own:
+//     1A9154  call 0x1A9060                  ; the aggregate/ratio above
+//     1A9159  mulsd xmm0,[rip + 0x8163CF]    ; * 1000000.0  (the same double as kSeedScale)
+//     1A9161  cvttsd2si rax,xmm0             ; truncate toward zero
+// 0x1B33B0 carries the identical sequence at 1B3427..1B3434 before logging it as 'Using seed ', so the
+// conversion is confirmed at two independent sites. 0x1B33B0 also re-reads the value (1B3469
+// lea rax,[rsp+0xE0] ; mov rdx,rax ; mov [rsp+0x58],rax) and passes it on: the seed is used, not merely
+// reported.
+inline long long seedFromRatio(double ratio) {         // RE 0x1A9150
+    return static_cast<long long>(ratio * kSeedScale);  // RE 0x1A9159 (1e6) then 0x1A9161 (truncation)
+}
 // RE the tail from 1A90E8 on: with a non-positive threshold the average is returned unchanged.
 inline double ratioFromAverage(double average, double threshold) {
     if (!(threshold > 0.0)) {                 // RE 1A90E8/1A90F1: ucomisd then jbe
