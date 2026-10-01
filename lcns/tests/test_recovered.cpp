@@ -3904,5 +3904,41 @@ int main() {
         CHECK(kSelfTestFirst);                                  // and the same gate, again
     }
 
+    // --- the second in-place object and what it adds (RE 0x112150) ----------------------------------
+    {
+        CHECK(kLocalBase1 == 0x60);
+        CHECK(kLocalBase2 == 0xA0);
+        CHECK(kLocalBase3 == 0x40);
+        CHECK(kLocalBase2 - kLocalBase1 == 0x40);
+        CHECK(kInPlaceConfirmations2 == 5);
+        CHECK(kInPlaceConfirmations == 4);               // round 304 counted four; this is the fifth
+        CHECK(kSelfTestCallsHere == 2);
+        CHECK(kInputBufferByte2 == 0x28);
+        CHECK(kInputBufferByte2 == kInputBufferByte + 0x10);
+        CHECK(kInputBufferByte2 != kInputBufferByte);    // a field the constructor never set
+        CHECK(kVtableSlotK == 0x38);
+        CHECK(kVtableSlotsKnown9 == 14);
+        CHECK(kVtableSlotsKnown9 == kVtableSlotsKnown8 + 1);
+        CHECK(kHelper111E90 == 0x111E90);
+        CHECK(kHelper111890Calls == 2);
+        CHECK(kHelper111890 == 0x111890);
+
+        // the second object's relative offsets, computed rather than copied
+        CHECK(0xB4 - kLocalBase2 == kInputBufferMarker);
+        CHECK(0xB8 - kLocalBase2 == kInputBufferByte);
+        CHECK(0xC0 - kLocalBase2 == 0x20);
+        CHECK(0xC8 - kLocalBase2 == kInputBufferByte2);
+        // and the same relation holds for the first object's local frame
+        CHECK(kInputBufferLocalMarker - kInputBufferLocal == kInputBufferMarker);
+        CHECK(kInputBufferMarker == 0x14);
+
+        // the two objects are distinct frames, and only one helper size is used for both
+        CHECK(kLocalBase1 != kLocalBase2);
+        CHECK(kHelper111890Size == kGetOrCreateBytes);
+        CHECK(kSelfTestCallsHere * kHelper111890Calls == 4);
+        CHECK(kVtableSlotK != kVtableSlotI);             // the two slots differ
+        CHECK(kVtableSlotK < kVtableSlotI);              // and 0x38 comes before 0xA0
+    }
+
     return check::finish("test_recovered");
 }

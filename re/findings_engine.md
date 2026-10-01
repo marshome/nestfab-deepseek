@@ -6083,3 +6083,20 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ 它传给 `0x111890` 的 `0x30` **与 round 280 的 get-or-create 对象同尺寸** —— 以 `static_assert` 锁死而**不合并含义**。
 
 **已落 `layout.hpp`**：`kDriverThird`、`kDriverThirdFrame`(0x128)、`kDriverVtables3`(4)、`kDriverVtablesPair`(2)、`kThirdLocal`(0xA0)、`kHelper111890`、`kHelper111890Size`(0x30)、`kDriverThirdCallers`(0)、`kInPlaceConfirmations`(4) + **四条 `static_assert`** + 测试 22 条。
+
+### 附 223 **第三个驱动器里的第二个就地对象**；自检按对象计数；第十四个槽（goal round 305）**[已落码]**
+
+```
+1121DF  call 0x118260 再次            ; ★ **每构造一个对象就查一次自检门**
+1121EC  dword [rsp+0xB4] = 0xFFFFFFFF   ; `0xB4−0xA0 = 0x14` ★ **同一标记偏移**
+1121F7  byte [rsp+0xB8] = 0              ; `0xB8−0xA0 = 0x18`
+11220F  qword [rsp+0xC0] = rbp           ; `0xC0−0xA0 = 0x20`
+112217  byte [rsp+0xC8] = 0              ; `0xC8−0xA0 = 0x28` ★ **此前站点未设过的字节**
+112224/112237  第三个本地对象 `rsp+0x40`
+11224A  call qword [rax+0x38]            ; ★ **第十四个槽**
+```
+
+⇒ `InputBuffer` 布局**第五次确认**（同一例程内的第二个对象）。
+★ 那个 `+0x28` 字节**按“在此观察到”记录**（`kInputBufferByte2`），**不推广到类型**；自检被调两次同样**记为本例程的行为**，而非关于对象的规则。
+
+**已落 `layout.hpp`**：`kLocalBase1/2/3`、`kInPlaceConfirmations2`(5)、`kSelfTestCallsHere`(2)、`kInputBufferByte2`(0x28)、`kVtableSlotK`(0x38)、`kVtableSlotsKnown9`(14)、`kHelper111E90`、`kHelper111890Calls`(2) + **四条 `static_assert`** + 测试 24 条。

@@ -2413,6 +2413,28 @@ static_assert(kDriverVtables3 > kDriverVtablesPair, "and carries more vtable poi
 static_assert(kHelper111890Size == kGetOrCreateBytes, "the same forty-eight as the get-or-create object");
 static_assert(kThirdLocal == kResultObject, "its second local sits where the pair's result object does");
 
+
+// --- a second in-place object in the third driver, and the fields it sets (round 305) -------------------
+//     0x1121DF call 0x118260 again        ; the self-test is consulted once per object
+//     0x1121EC/0x1121F7/0x11220F/0x112217  the second object's fields at 0xB4, 0xB8, 0xC0 and 0xC8
+//     0x11221F call 0x111890 with 0x30    ; the same helper and size as the first object
+//     0x112224/0x112237 a THIRD local at rsp+0x40
+//     0x11224A call qword [rax+0x38]      ; a FOURTEENTH vtable slot
+inline constexpr std::size_t kLocalBase1 = 0x60;             // RE 0x11217F
+inline constexpr std::size_t kLocalBase2 = 0xA0;             // RE 0x11218A
+inline constexpr std::size_t kLocalBase3 = 0x40;             // RE 0x112224
+inline constexpr int kInPlaceConfirmations2 = 5;             // rounds 288, 291, 298, 301/304 and this
+inline constexpr int kSelfTestCallsHere = 2;                 // RE 0x112197 and 0x1121DF
+inline constexpr std::size_t kInputBufferByte2 = 0x28;       // RE 0x112217 -- observed here, not generalised
+inline constexpr std::size_t kVtableSlotK = 0x38;            // RE 0x11224A -- a FOURTEENTH slot
+inline constexpr int kVtableSlotsKnown9 = 14;                // with 0x38 added to the thirteen of round 301
+inline constexpr std::uintptr_t kHelper111E90 = 0x111E90;    // RE 0x112253
+inline constexpr int kHelper111890Calls = 2;                 // RE 0x1121CB and 0x11221F
+static_assert(kLocalBase2 - kLocalBase1 == 0x40, "the two local objects are sixty-four bytes apart");
+static_assert(kSelfTestCallsHere == 2, "the self-test is consulted once per object");
+static_assert(kVtableSlotsKnown9 == kVtableSlotsKnown8 + 1, "one more slot than round 301");
+static_assert(kInputBufferByte2 == kInputBufferByte + 0x10, "the extra byte sits sixteen past the first");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
