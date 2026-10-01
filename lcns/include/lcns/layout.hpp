@@ -565,4 +565,30 @@ inline constexpr std::size_t kCtor4CPairB = 0x20;        // RE 0x2B39CC
 // three different initialisers.
 inline constexpr std::uintptr_t kSharedUnitRva = 0x9DFBC8;
 
+
+// --- the second member of the ratio comparator family (round 227) ------------------------------------
+// RE 0x724E40, which applies the same margin-then-ratio rule as 0x7DB6E0 of round 216 but on other fields:
+//     724E68/724E6D  the pair whose absolute difference is compared with the margin: +0x50 and +0x88
+//     724E8F/724E94  the cross multiplied pair: (+0x40 * +0x80) against (+0x78 * +0x48)
+//     724E85 jbe     the margin test, as in round 216
+//     724EA6 seta    the ratio test, as in round 216
+//     724EB4 dword [rbx+0x10] = 6   ; the tag this member writes
+//     724ED7 lea rax,[rax+rcx*8]    ; rdx * 7 * 8 = a 56-byte element stride
+inline constexpr double kRatioFamilyMargin = 50.0;         // the same 50.0 as round 216 (rva 0x9DFC20)
+inline constexpr std::size_t kRatioFamilyPrimaryA = 0x50;  // RE 0x724E68
+inline constexpr std::size_t kRatioFamilyPrimaryB = 0x88;  // RE 0x724E6D
+inline constexpr std::size_t kRatioFamilyNumA = 0x40;      // RE 0x724E8F
+inline constexpr std::size_t kRatioFamilyDenA = 0x80;      // RE 0x724E8F
+inline constexpr std::size_t kRatioFamilyNumB = 0x78;      // RE 0x724E94
+inline constexpr std::size_t kRatioFamilyDenB = 0x48;      // RE 0x724E94
+inline constexpr int kRatioFamilyTag = 6;                  // RE 0x724EB4
+inline constexpr int kRatioFamilyMembers = 2;              // the two functions that share this rule
+
+// --- two sizes seen for the first time (round 227) ----------------------------------------------------
+//     724ECC/724ED7  `lea rcx,[rdx*8] ; sub rcx,rdx` then scaled by eight: 7 * 8 = 56 bytes per element
+//     18052A         `mov ecx,0x148`: 328 bytes, in 0x180500
+inline constexpr std::size_t kStride56 = 7 * 8;            // RE 0x724ED7
+inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
+static_assert(kStride56 == 56, "seven words per element");
+
 }  // namespace lcns

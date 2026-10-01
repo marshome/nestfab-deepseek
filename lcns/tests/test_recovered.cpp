@@ -1712,5 +1712,47 @@ int main() {
         CHECK(kCtorDoubleDefault == 1.0);
     }
 
+    // --- the ratio family's second member (RE 0x724e40) and the two new sizes (RE 0x724ed7, 0x18052a) ----
+    {
+        CHECK(kRatioFamilyMargin == kRatioCompareMargin);       // the same 50.0 the round-216 member reads
+        CHECK(kRatioFamilyPrimaryA == 0x50);
+        CHECK(kRatioFamilyPrimaryB == 0x88);
+        CHECK(kRatioFamilyNumA == 0x40);
+        CHECK(kRatioFamilyDenA == 0x80);
+        CHECK(kRatioFamilyNumB == 0x78);
+        CHECK(kRatioFamilyDenB == 0x48);
+        CHECK(kRatioFamilyTag == 6);
+        CHECK(kRatioFamilyMembers == 2);
+        // the fields of this member are distinct from the round-216 member's, which is why it is a second member
+        CHECK(kRatioFamilyPrimaryA != kRatioPrimaryOffset);
+        CHECK(kRatioFamilyNumA != kRatioNumeratorOffset);
+
+        // the rule, restated for this member's fields
+        const auto ratioLess = [](double aNum, double aDen, double aPri,
+                                  double bNum, double bDen, double bPri) {
+            if (std::fabs(aPri - bPri) >= kRatioFamilyMargin) {
+                return bPri > aPri;
+            }
+            return aNum * bDen < bNum * aDen;
+        };
+        // 1/2 against 1/4: 1*4 < 1*2 is 4 < 2, false
+        CHECK(!ratioLess(1.0, 2.0, 0.0, 1.0, 4.0, 0.0));
+        // 1/4 against 1/2: 1*2 < 1*4 is 2 < 4, true
+        CHECK(ratioLess(1.0, 4.0, 0.0, 1.0, 2.0, 0.0));
+        // far apart, so the margin path decides on the primary field
+        CHECK(ratioLess(0.0, 1.0, 10.0, 0.0, 1.0, 100.0));
+
+        CHECK(kStride56 == 56);
+        CHECK(kStride56 == 7 * 8);
+        CHECK(kStride56 != kScanStride120);
+        CHECK(kStride56 != kIndexedRecordStride);
+        CHECK(kStride56 != kSmallRecordStride);
+
+        CHECK(kSize148 == 0x148);
+        CHECK(kSize148 == 328);
+        CHECK(kSize148 != kContainerBlockBytes);
+        CHECK(kSize148 != kFiveFieldRecordBytes);
+    }
+
     return check::finish("test_recovered");
 }
