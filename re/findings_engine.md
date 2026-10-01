@@ -4394,3 +4394,26 @@ README 对 T7 的范围定义是“**先只建立链接能力**”（因为需�
 **已落 `layout.hpp`**：`kOrientationEpsilon`(0.001)、`kOrientationFieldCount`、`kArrayCompareEpsilon`(0.0001)、`kArrayCompareStride`、`kCtorFlagByteOffset`、`kCtorZeroQwordOffset`、`kCtorDoubleDefault` + 测试 18 条（含两个容差相差十倍、`kCtorDoubleDefault == kAlmostEqualSwitch` 等交叉断言）。
 
 **本轮又读到两个候选的部分结构**：`0x16C0D0`（108 B，10 个调用者）先比 `[rcx]` 与 `[rdx]`，再对两者的 `+0x18` 调 `0x5C4CF0`，最后比 `[rsi+8]−[rbx+8]` ⇒ **记录的序谓词**（未定完）。
+
+### 附 138 **比值比较器**与 0.95 加权和、512 字节块（goal round 216）**[已落码]
+
+**（a）`0x7DB6E0`（122 B）= 严格弱序的比较器**（本轮最有价值的一条）：
+
+```
+7DB6E3  先比 +0x00（不等则交给 0x7DB490）
+7DB6F4/7DB6FE/7DB708  依次比 +0x18、+0x10、+0x08           ; 四个键字
+7DB718  xmm3=[50.0]（rva 0x9DFC20，★ round 172 的共享字面量块）
+7DB728  |xmm1−xmm2|；7DB730 jbe → 直接比较
+7DB736  xmm0 = [rcx+0x28] × [rdx+0x30]；7DB73B xmm1 = [rdx+0x28] × [rcx+0x30]
+7DB74A  seta                                          ; ★ 两个比值的交叉相乘比较
+7DB752  seta                                          ; 否则直接比 +0x38
+```
+
+⇒ **四个键字相同时**：主字段相差 ≥ **50** 则按主字段定序，否则按 **`+0x28 / +0x30` 的比值**定序（用**交叉相乘**避免除法）。
+★ 同时说明 `50.0` **确实有实际用途**（不是孤立字面量）。
+
+**（b）`0x525760`（109 B）**：载 **`0.95`**（rva `0x9DBC10`），把 **五个 qword**（`[rdx]`…`[rdx+0x20]`，即 round 197 的五字记录）拷到栈上，调 `0x5253E0`，返回 **[rsp+0x60] + [rsp+0x68]**（两个结果相加）。
+
+**（c）`0x5522B0`（175 B）**：`cmp rcx,0x1ff`、`sar rdx,9`、`shl r8,9`、`[rdx + rax*8]` ⇒ **512 字节块索引**；后段 `10.0`（rva `0x9DC228`）乘字段后与另一字段比较 ⇒ **十倍因子测试**。
+
+**已落 `layout.hpp`**：`kRatioCompareMargin`(50)、`kRatio*Offset`、`kComparatorKeyWords`、`kScale095`、`kScaledSumTerms`、`kDequeBlockSize/Mask/Shift`、`kTenfoldFactor` + 测试 20 条（含比值规则的**四条行为验证**与 `kRatioCompareMargin == kSharedFifty`）。

@@ -1380,5 +1380,38 @@ int main() {
         CHECK(kCtorDoubleDefault == kAlmostEqualSwitch);          // the same 1.0 literal as round 185
     }
 
+    // --- the ratio comparator (RE 0x7db718/0x7db736) and the block indexing (RE 0x5522e3) -------------
+    {
+        CHECK(kRatioCompareMargin == 50.0);
+        CHECK(kRatioCompareMargin == kSharedFifty);            // the shared block's 50.0 from round 172
+        CHECK(kRatioNumeratorOffset == 0x28);
+        CHECK(kRatioDenominatorOffset == 0x30);
+        CHECK(kRatioPrimaryOffset == 0x38);
+        CHECK(kRatioDenominatorOffset - kRatioNumeratorOffset == 8);
+        CHECK(kRatioPrimaryOffset - kRatioDenominatorOffset == 8);   // three consecutive doubles
+        CHECK(kComparatorKeyWords == 4);
+
+        // the rule the instructions implement: margin first, then the cross multiplied ratio
+        const auto ratioLess = [](double aNum, double aDen, double aPri,
+                                  double bNum, double bDen, double bPri) {
+            if (std::fabs(aPri - bPri) >= kRatioCompareMargin) {
+                return bPri > aPri;                       // RE 0x7DB752/0x7DB756
+            }
+            return aNum * bDen < bNum * aDen;             // RE 0x7DB736/0x7DB73B/0x7DB74A
+        };
+        // 1/2 against 1/4: the cross product is 1*4 < 1*2, i.e. 4 < 2, which is false
+        CHECK(!ratioLess(1.0, 2.0, 0.0, 1.0, 4.0, 0.0));
+        CHECK(ratioLess(1.0, 4.0, 0.0, 1.0, 2.0, 0.0));       // 0.25 < 0.5
+        CHECK(ratioLess(0.0, 1.0, 10.0, 0.0, 1.0, 100.0));    // far apart: the primary field decides
+        CHECK(!ratioLess(0.0, 1.0, 100.0, 0.0, 1.0, 10.0));
+
+        CHECK(kScale095 == 0.95);
+        CHECK(kScaledSumTerms == 2);
+        CHECK(kTenfoldFactor == 10.0);
+        CHECK(kDequeBlockSize == 512);
+        CHECK(kDequeBlockMask == kDequeBlockSize - 1);
+        CHECK((1 << kDequeBlockShift) == static_cast<int>(kDequeBlockSize));
+    }
+
     return check::finish("test_recovered");
 }

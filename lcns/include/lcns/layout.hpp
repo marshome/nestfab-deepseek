@@ -314,4 +314,36 @@ inline constexpr std::size_t kCtorFlagByteOffset = 0x140;    // RE 0x21FA27
 inline constexpr std::size_t kCtorZeroQwordOffset = 0x138;   // RE 0x21FA2E
 inline constexpr double kCtorDoubleDefault = 1.0;            // RE 0x21FA15
 
+
+// --- the ratio comparator of 0x7DB6E0 (round 216) ---------------------------------------------------
+// RE the key words it walks first: +0x00 (0x7DB6E3), +0x18 (0x7DB6F4), +0x10 (0x7DB6FE), +0x08 (0x7DB708).
+// Then, with xmm1 = [rcx+0x38] and xmm2 = [rdx+0x38]:
+//     7DB718 movsd xmm3,[50.0]      ; rva 0x9DFC20, the shared literal block of round 172
+//     7DB728 andpd xmm0,<sign mask> ; |xmm1 - xmm2|
+//     7DB730 ucomisd xmm3,xmm0 ; jbe -> the direct comparison at 7DB752
+//     7DB736 mulsd [rcx+0x28],[rdx+0x30] ; 7DB73B mulsd [rdx+0x28],[rcx+0x30]
+//     7DB74A ucomisd xmm1,xmm0 ; seta al   ; the two ratios compared as a cross product
+// so equal keys are ordered by the primary field when it differs by at least the margin, and by the ratio of
+// (+0x28 / +0x30) when it does not.
+inline constexpr double kRatioCompareMargin = 50.0;        // RE 0x7DB718 (rva 0x9DFC20)
+inline constexpr std::size_t kRatioNumeratorOffset = 0x28; // RE 0x7DB736
+inline constexpr std::size_t kRatioDenominatorOffset = 0x30;
+inline constexpr std::size_t kRatioPrimaryOffset = 0x38;   // RE 0x7DB70E
+inline constexpr int kComparatorKeyWords = 4;              // RE the four comparisons at +0x00/+0x18/+0x10/+0x08
+
+// --- the scaled sum of 0x525760 (round 216) ----------------------------------------------------------
+//     525767 movsd xmm1,[0.95] (rva 0x9DBC10) ; 5257B4 call 0x5253E0 ; 5257B9/5257BF add the two results
+inline constexpr double kScale095 = 0.95;                  // RE 0x525767
+inline constexpr int kScaledSumTerms = 2;                  // RE 0x5257BF
+
+// --- the 512-byte block indexing of 0x5522B0 (round 216) ---------------------------------------------
+//     5522E3 cmp rcx,0x1ff ; jbe          ; more than 511 bytes needs block indexing
+//     5522F5 sar rdx,9 ; 55230E shl r8,9  ; divide and multiply by 512
+//     552307/552315 [rdx + rax*8]         ; the block table
+//     552337 movsd xmm0,[10.0] (rva 0x9DC228) ; 552344 mulsd xmm0,[rdx + rax*8] ; 552351 ucomisd ; seta
+inline constexpr std::size_t kDequeBlockSize = 0x200;      // 512
+inline constexpr std::size_t kDequeBlockMask = 0x1FF;      // RE 0x5522E3
+inline constexpr int kDequeBlockShift = 9;                 // RE 0x5522F5 / 0x55230E
+inline constexpr double kTenfoldFactor = 10.0;             // RE 0x552337 (rva 0x9DC228)
+
 }  // namespace lcns
