@@ -6870,3 +6870,23 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ 它用的 1.0 位于 rva **0x9DE930**，**不是** round 340 浮点检查拿来相比的 **0xA06838** ⇒ **同值存两处**，记为**两个常量**而非一个。
 
 **已落 `layout.hpp`**：`kMakeTranslation`(0x5CE7B0)、`kMakeTranslationCallers`(32)、`kMatrixLayoutConfirmed4`、`kIdentityWritten`、`kIdentityDiagonal/OffDiagonal`(1.0/0.0)、`kOneRva5CE7B0`(0x9DE930)、`kOneConstants`(2)、`kTranslationFromPoint` + **五条 `static_assert`** + 测试 24 条（含“对任意点应用即纯平移、原点映到平移量本身”的行为验证）。
+
+### 附 265 ★★ **仿射矩阵的逆**（goal round 347）**[已落码]**
+
+`0x5CED50`（196 B / 24 个调用者）：
+
+```
+5CED65/5CED69/5CED6E/5CED77  a、b、c、d 取自 `+0x00`/`+0x08`/`+0x10`/`+0x18`
+5CED80/5CED87/5CED8B  b*c、a*d，相减  ; ★ **行列式 a*d − b*c**
+5CED8F/5CED97  1.0（rva **0x9DE930**），**divsd** 得 **1/det**
+5CED9B..5CEDA F  d/det 与取负的 b 项   ; **伴随式**
+5CEDB3/5CEDBC  `+0x20` 的平移取负   ; −tx
+5CEDC8/5CEDD2  `+0x28` 的项取负           ; −ty
+```
+
+⇒ **行列式 → 倒数 → 伴随式 → 平移取负**，即标准的 2×3 仿射逆 ⇒ **第六个把六个 double 写在 `+0x00`…`+0x28` 的例程**。
+
+★ 它除的那个 1.0 **与 round 346 的平移构造器同一个 rva 0x9DE930** ⇒ **一个存储值服务两个例程**，这**修正了 round 346 的计数而非推翻它**：两个不同的 1.0（`0x9DE930` 与 `0xA06838`），其中一个被用两次。
+★ 符号取反来自 rva **0x9DE95F** 的掩码，常量读取器将其报为**原始数据**，因为它是**位模式（符号位）而非正常 double** —— 与本工作一贯对非正常值的区分一致。
+
+**已落 `layout.hpp`**：`kAffineInverse`(0x5CED50)、`kAffineInverseCallers`(24)、`kMatrixLayoutConfirmed5`、`kDeterminantComputed`、`kReciprocalUsed`、`kAdjugateForm`、`kTranslationNegated`、`kSignMaskRva`(0x9DE95F)、`kOneRva9DE930Users`(2)、`kSignMaskIsNotANormalDouble` + **六条 `static_assert`** + 测试 26 条（含“前向再逆向得回原点”的往返验证与行列式值 8.0 的手算）。

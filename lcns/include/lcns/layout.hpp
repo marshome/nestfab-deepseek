@@ -3487,6 +3487,45 @@ static_assert(kOneRva5CE7B0 != kOneDoubleRva, "two separate stores of the same v
 static_assert(kOneConstants == 2, "and they are counted separately");
 static_assert(kTranslationFromPoint, "the translation pair comes from the point argument");
 
+
+// --- the affine inverse (round 347) ----------------------------------------------------------------------
+//     0x5CED65/0x5CED69/0x5CED6E/0x5CED77  a, b, c, d from +0x00, +0x08, +0x10, +0x18
+//     0x5CED8B  a*d - b*c                       ; the determinant
+//     0x5CED97  divsd by one from rva 0x9DE930  ; 1/determinant
+//     0x5CED9B..0x5CEDAF  the adjugate entries
+//     0x5CEDBC/0x5CEDD2   the translation negated
+//     0x5CED5D  the sign mask at rva 0x9DE95F, which reads as data because it is a bit pattern
+inline constexpr std::uintptr_t kAffineInverse = 0x5CED50;   // RE the whole routine
+inline constexpr int kAffineInverseCallers = 24;
+inline constexpr bool kMatrixLayoutConfirmed5 = true;        // a SIXTH routine reads the same six offsets
+inline constexpr bool kDeterminantComputed = true;           // RE 0x5CED8B, a*d - b*c
+inline constexpr bool kReciprocalUsed = true;                // RE 0x5CED97
+inline constexpr bool kAdjugateForm = true;                  // d, -b, -c, a over the determinant
+inline constexpr bool kTranslationNegated = true;            // RE 0x5CEDBC and 0x5CEDD2
+inline constexpr std::uintptr_t kSignMaskRva = 0x9DE95F;     // RE 0x5CED5D, a bit pattern
+inline constexpr int kOneRva9DE930Users = 2;                 // rounds 346 and 347
+inline constexpr bool kSignMaskIsNotANormalDouble = true;    // which is why the reader calls it data
+static_assert(kMatrixLayoutConfirmed4 && kMatrixLayoutConfirmed5, "the fifth and sixth routines agree");
+static_assert(kDeterminantComputed && kReciprocalUsed && kAdjugateForm, "the standard inverse");
+static_assert(kTranslationNegated, "and the translation is negated");
+static_assert(kOneRva9DE930Users == 2, "one stored constant, two routines");
+static_assert(kSignMaskRva > kOneRva5CE7B0, "the mask follows the one in the read-only data");
+static_assert(kSignMaskIsNotANormalDouble, "so the constant reader reports it as data");
+
+
+// --- the two matrix conventions inside the tests (round 347) ----------------------------------------------
+// The helper written in round 339 reads a matrix as a, b, tx, c, d, ty, i.e. row-major as it would be written on paper.
+// The applier used from round 347 reads a, b, c, d, tx, ty, which is the order the routines actually read and write at
+// +0x00, +0x08, +0x10, +0x18, +0x20 and +0x28. Both appear in the tests and both are self-consistent within their own
+// blocks, so neither is an error -- but the difference is a trap for a reader, and therefore it is named here.
+inline constexpr bool kTestConventionRowMajorInEarlierBlocks = true;
+inline constexpr bool kTestConventionRecordOrderHere = true;
+inline constexpr int kMatrixConventions = 2;
+static_assert(kTestConventionRowMajorInEarlierBlocks && kTestConventionRecordOrderHere,
+              "two conventions, both in use, both named");
+static_assert(kMatrixConventions == 2, "and counted");
+static_assert((kMatrixTy - kMatrixA) / 8 == 5, "the record's order runs from a at +0x00 to ty at +0x28");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

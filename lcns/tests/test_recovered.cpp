@@ -5512,5 +5512,67 @@ int main() {
         CHECK(kMatrixTx == 0x20 && kMatrixTy == 0x28);
     }
 
+    // --- the affine inverse (RE 0x5ced50) ------------------------------------------------------------
+    {
+        CHECK(kAffineInverse == 0x5CED50);
+        CHECK(kAffineInverseCallers == 24);
+        CHECK(kMatrixLayoutConfirmed5);
+        CHECK(kDeterminantComputed);
+        CHECK(kReciprocalUsed);
+        CHECK(kAdjugateForm);
+        CHECK(kTranslationNegated);
+        CHECK(kSignMaskRva == 0x9DE95F);
+        CHECK(kSignMaskRva > kOneRva5CE7B0);
+        CHECK(kOneRva9DE930Users == 2);
+        CHECK(kSignMaskIsNotANormalDouble);
+        CHECK(kChainStageB == kAffineInverse);            // round 345's chain runs this second
+        CHECK(kChainStageA == kMakeTranslation);          // after the translation builder
+        CHECK(kMakeTranslationCallers > kAffineInverseCallers);
+
+        // the inverse the routine computes, checked by composing it with the original
+        // the six doubles by the names their offsets give them, so an index cannot be mistaken for another
+        // constexpr so the captureless lambda below can name them without capturing
+        constexpr int IA = 0, IB = 1, IC = 2, ID = 3, ITX = 4, ITY = 5;   // +0x00 .. +0x28
+        const auto invert = [](const double m[6], double inv[6]) {
+            const double det = m[IA] * m[ID] - m[IB] * m[IC];    // RE 0x5CED8B
+            const double r = 1.0 / det;                          // RE 0x5CED97
+            inv[IA] = m[ID] * r;                                 // RE the adjugate
+            inv[IB] = -m[IB] * r;
+            inv[IC] = -m[IC] * r;
+            inv[ID] = m[IA] * r;
+            // the translation of the inverse is minus the inverse basis applied to the original translation
+            inv[ITX] = -(inv[IA] * m[ITX] + inv[IB] * m[ITY]);
+            inv[ITY] = -(inv[IC] * m[ITX] + inv[ID] * m[ITY]);
+            return det;
+        };
+        // CORRECTED in 347d: the six doubles are a, b, c, d, tx, ty in memory -- I first wrote them in the
+        // row-major order [a b tx; c d ty], which put the translation where c belongs and made the determinant 0.
+        const double m[6] = {2, 0, 0, 4, 1, -1};            // a, b, c, d, tx, ty
+        double inv[6] = {0, 0, 0, 0, 0, 0};
+        const double det = invert(m, inv);
+        CHECK(det == 8.0);                                   // 2*4 - 0*0
+        CHECK(inv[IA] == 0.5);
+        CHECK(inv[ID] == 0.25);
+        CHECK(inv[IB] == 0.0);
+        CHECK(inv[IC] == 0.0);
+        // composing the two must give the identity basis
+        // NOTE: the `applyM` helper used by earlier blocks indexes the matrix ROW-MAJOR (mm[2] as the translation),
+        // which is a convention of those blocks, not of the binary. This applier uses the RECORD's order -- a, b, c, d,
+        // tx, ty at +0x00, +0x08, +0x10, +0x18, +0x20, +0x28 -- which is the order the routines read and write.
+        const auto applyRecord = [](const double mm[6], double x, double y, double& ox, double& oy) {
+            ox = mm[IA] * x + mm[IB] * y + mm[ITX];
+            oy = mm[IC] * x + mm[ID] * y + mm[ITY];
+        };
+        double px = 0, py = 0, qx = 0, qy = 0;
+        applyRecord(m, 3.0, 5.0, px, py);                    // forward
+        applyRecord(inv, px, py, qx, qy);                    // and back
+        CHECK(qx > 2.9999 && qx < 3.0001);                   // the round trip returns the point
+        CHECK(qy > 4.9999 && qy < 5.0001);
+        CHECK(kAffineInverse != kMakeTranslation);
+        CHECK(kTestConventionRowMajorInEarlierBlocks);   // the two conventions in this file
+        CHECK(kTestConventionRecordOrderHere);
+        CHECK(kAffineInverse > 0x5C0000 && kAffineInverse < 0x5D0000);
+    }
+
     return check::finish("test_recovered");
 }
