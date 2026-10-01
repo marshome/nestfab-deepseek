@@ -587,7 +587,21 @@ inline constexpr int kRatioFamilyMembers = 3;              // 0x7DB6E0, 0x724E40
 // +0x88 for the margin, +0x40/+0x80 and +0x78/+0x48 for the ratio), the same `dword [rbx+0x10] = 6` tag and
 // the same 56-byte stride at 0x7251CC/0x7251D4. Two instantiations of one rule, as with the twins of round
 // 174 -- so the family has three distinct field-sets of which two are a twin pair.
-inline constexpr int kRatioFamilyTwins = 2;                 // 0x724E40 and 0x725140
+inline constexpr int kRatioFamilyTwins = 3;                 // CORRECTED in round 232: see below
+// RE round 232's member scan: 0x72D5B0 touches the SAME field set as 0x725140 and 0x724E40 --
+// +0x10, +0x40, +0x48, +0x50, +0x78, +0x80, +0x88 -- so the twin group is THREE, not two. My round-231
+// value of two was written before that scan and is corrected here.
+// The scan also splits the family's remaining members into groups by the fields they touch and the
+// predicate they call:
+//   +0x30/+0x38 and a call to 0x5E6060 (the almostEqual predicate of round 185): 0x7DB7D0 and 0x7DC360
+//   +0x10/+0x18/+0x20 (the tree layout of round 178): 0x714D40 and 0x716DA0, the latter calling 0x7DB6E0
+//   the wide variant +0x08..+0x38: 0x71FFB0
+inline constexpr std::size_t kRatioFamilyRatioFields = 7;   // the shared field count of the twin group
+inline constexpr std::size_t kRatioFamilyAlmostFieldA = 0x30;   // RE the 0x7DB7D0/0x7DC360 pair
+inline constexpr std::size_t kRatioFamilyAlmostFieldB = 0x38;
+inline constexpr std::uintptr_t kAlmostEqualPredicate = 0x5E6060;   // RE their calls, round 185's predicate
+inline constexpr int kRatioFamilyAlmostPair = 2;            // 0x7DB7D0 and 0x7DC360
+inline constexpr int kRatioFamilyTreePair = 2;              // 0x714D40 and 0x716DA0
 // RE 0x716DA0 (round 231) is the family's USE SITE: it walks a tree with [rax+0x20] as the key and [rax+0x10]
 // / [rax+0x18] as the children -- the layout of round 178 -- and calls the round-216 comparator 0x7DB6E0 from
 // inside that walk (0x716E6A), carrying the family's 50.0 too (0x716E24).

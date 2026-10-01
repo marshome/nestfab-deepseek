@@ -1727,8 +1727,25 @@ int main() {
         CHECK(kRatioFamilyPrimaryA != kRatioPrimaryOffset);
         CHECK(kRatioFamilyNumA != kRatioNumeratorOffset);
         // round 231: a near twin of the second member, so two of the three are that pair
-        CHECK(kRatioFamilyTwins == 2);
+        CHECK(kRatioFamilyTwins == 3);   // corrected in round 232
         CHECK(kRatioFamilyTwins <= kRatioFamilyMembers);
+        // round 232's member scan: three functions share the ratio field set, and two more pairs exist
+        CHECK(kRatioFamilyTwins == 3);
+        CHECK(kRatioFamilyRatioFields == 7);
+        CHECK(kRatioFamilyAlmostFieldA == 0x30);
+        CHECK(kRatioFamilyAlmostFieldB == 0x38);
+        CHECK(kRatioFamilyAlmostFieldB - kRatioFamilyAlmostFieldA == 8);
+        CHECK(kAlmostEqualPredicate == 0x5E6060);
+        CHECK(kRatioFamilyAlmostPair == 2);
+        CHECK(kRatioFamilyTreePair == 2);
+        // the ratio fields the twin group shares are the ones rounds 216/227 landed
+        CHECK(kRatioFamilyPrimaryA == 0x50);
+        CHECK(kRatioFamilyNumA == 0x40);
+        CHECK(kRatioFamilyNumB == 0x78);
+        CHECK(kRatioFamilyDenA == 0x80);
+        CHECK(kRatioFamilyDenB == 0x48);
+        CHECK(kUseSiteTreeChildA == 0x10);
+        CHECK(kUseSiteTreeChildB == 0x18);
         // and the family has a use site: a tree walk that calls the round-216 comparator
         CHECK(kComparatorUseSite == 0x716DA0);
         CHECK(kUseSiteTreeKey == 0x20);
