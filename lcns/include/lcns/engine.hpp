@@ -146,6 +146,37 @@ inline constexpr double kRelativeEpsilon = 1.000001;   // RE 0x3C110
 // n >= INT64_MAX - 8. Transcribed as a predicate because that is exactly what the four instructions say.
 inline constexpr std::int64_t kGrowthSlack = 8;   // RE 0x3C1F1
 
+// RE 0x1AC390 (2962 B / 597 instructions, its own texts are 'never', 'pos1', 'pos2'). The arithmetic was
+// read with its operands:
+//     1AC593  mulsd  xmm6, xmm10     ; xmm6 = (a * b)
+//     1AC58F  sub    rax, [r12]
+//     1AC598  sar    rax, 4
+//     1AC59C  imul   rax, rdx        ; rdx = 0xAAAAAAAAAAAAAAAB, the /24 magic-multiply idiom
+//     1AC5AD  cvtsi2sd xmm0, rax
+//     1AC5B6  divsd  xmm6, xmm0      ; xmm6 = (a * b) / count
+//     1AC5BF  test edx, edx
+//     1AC5C1  jle    <keeps the prior value>
+//     1AC5C3  movsd xmm11, [0.3]
+//     1AC5CC  mulsd xmm11, xmm6      ; gate ? 0.3 * ((a*b)/count) : prior
+//     ...
+//     1AC753  movsd xmm2, [0.33]
+//     1AC760  mulsd xmm2, xmm11      ; then 0.33 * that
+// RECOVERED: the arithmetic and its constants, with the gate. NOT RECOVERED: what a, b and the count are.
+inline constexpr double kAverageStageWeight = 0.3;    // RE 0x1AC5C3
+inline constexpr double kAverageFinalWeight = 0.33;   // RE 0x1AC753
+
+// RE the exact branch structure above: the weighted value when the gate is set, the prior value otherwise.
+inline double gatedAverage(double product, double count, bool gate, double prior) {
+    if (count == 0.0) {
+        return prior;                                 // the divisor is a count; nothing divides by it
+    }
+    const double average = product / count;           // RE 0x1AC5B6
+    return gate ? kAverageStageWeight * average : prior;   // RE 0x1AC5BF..0x1AC5CC
+}
+
+// RE 0x1AC760: the second, unconditional scaling.
+inline double finalScale(double value) { return kAverageFinalWeight * value; }
+
 inline bool exceedsGrowthLimit(std::int64_t n) {
     const std::int64_t room = std::numeric_limits<std::int64_t>::max() - n;   // RE 0x3C1EC
     return room <= kGrowthSlack;                                             // RE 0x3C1F1/0x3C1F5

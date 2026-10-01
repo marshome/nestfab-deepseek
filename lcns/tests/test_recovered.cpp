@@ -445,6 +445,21 @@ int main() {
         CHECK(exceedsGrowthLimit(mx));                       // room = 0
     }
 
+    // --- the gated average and its final scale (RE 0x1ac390) ---------------------------------------
+    {
+        CHECK(kAverageStageWeight == 0.3);
+        CHECK(kAverageFinalWeight == 0.33);
+        // gate set: 0.3 * (product / count)
+        CHECK(std::fabs(gatedAverage(10.0, 4.0, true, 99.0) - 0.75) < 1e-12);
+        // gate clear: the prior value survives untouched
+        CHECK(gatedAverage(10.0, 4.0, false, 99.0) == 99.0);
+        // a zero count must not divide
+        CHECK(gatedAverage(10.0, 0.0, true, 99.0) == 99.0);
+        // the second stage multiplies unconditionally
+        CHECK(std::fabs(finalScale(0.75) - 0.2475) < 1e-12);
+        CHECK(std::fabs(finalScale(gatedAverage(10.0, 4.0, true, 0.0)) - 0.2475) < 1e-12);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
