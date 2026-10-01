@@ -2630,5 +2630,52 @@ int main() {
         CHECK(kRegistryInitCallers == 2);
     }
 
+    // --- addition confirmed twice, and the comparison path's kernel (RE 0xf4830 and 0xf1b20) ---------
+    {
+        CHECK(kAddRoutine == 0xF4830);
+        CHECK(kAddClearsTag);
+        CHECK(kCarryIntoTail);
+        CHECK(kAddRoutineCallers == 4);
+        CHECK(kAdditionConfirmations == 2);
+        CHECK(kLimbAdd == 0xEF280);                     // the kernel the routine calls
+        CHECK(kTagUnsetValue == 1);                     // and the tag it clears is the "unset" one
+
+        // the carry into the tail that the routine performs
+        const auto foldCarry = [](std::uint64_t& limb, std::uint64_t carry) {
+            const std::uint64_t before = limb;
+            limb = before + carry;                      // RE 0xF48AA
+            return limb < before;                       // RE 0xF48AD (setb)
+        };
+        std::uint64_t limb = 5;
+        CHECK(!foldCarry(limb, 1));
+        CHECK(limb == 6);
+        limb = ~0ULL;
+        CHECK(foldCarry(limb, 1));                      // it carries again
+        CHECK(limb == 0);
+
+        CHECK(kCompareKernel == 0xEF300);
+        CHECK(kReverseLimbCompare);
+        CHECK(kComparePathCallers == 4);
+        CHECK(kSignResultOpen);                         // the sign result is NOT claimed
+        // the two kernels are different addresses
+        CHECK(kCompareKernel != kLimbAdd);
+        CHECK(kCompareKernel != kWordAllocator);
+
+        // the descending scan the comparison path performs, limb by limb from the top
+        const auto compareFromTop = [](const std::vector<std::uint64_t>& a,
+                                       const std::vector<std::uint64_t>& b) {
+            for (std::size_t i = a.size(); i-- > 0;) {  // RE 0xF1B86
+                if (a[i] != b[i]) return a[i] < b[i];   // RE 0xF1B98 (jbe continues the scan)
+            }
+            return false;
+        };
+        CHECK(compareFromTop({1, 2}, {1, 2}) == false);
+        CHECK(compareFromTop({1, 2}, {1, 3}) == true);
+        // CORRECTED in round 267: I had these two backwards. The TOP limb is index 1, so {9,1} against {1,2}
+        // compares 1 with 2 -- less, hence true -- and {1,1} against {9,0} compares 1 with 0, hence false.
+        CHECK(compareFromTop({9, 1}, {1, 2}) == true);   // 1 < 2 at the top
+        CHECK(compareFromTop({1, 1}, {9, 0}) == false);  // 1 is not < 0 at the top
+    }
+
     return check::finish("test_recovered");
 }

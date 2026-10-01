@@ -5385,3 +5385,22 @@ EF2A8  setb sil ; EF2CB add r10,2  ; 进位继续，**每轮两字**
 另：`0x8A9510`（4479 B / 2 个调用者）= 注册表初始化**：种类写 `+0x00`，**`+0x10` = `0x2E`（46）**，两个静态数组就地置零，其基址存入 `+0x08` 与 `+0x18`。
 
 **已落 `layout.hpp`**：`kLimbAdd`、`kAddIsAddition`、`kLimbsPerIteration`、`kAdditionSite`、`kRegistry*` + **三条 `static_assert`** + 测试 22 条（含进位链的三个手算样本）。
+
+### 附 187 **加法被第二处证实**；且比较路径有自己的内核（goal round 267）**[已落码]
+
+**（a）`0xF4830` 内部**：
+
+```
+F48D0  call 0xEF280        ; ★ round 266 的**加法内核**（较大字数分支）
+F48DD  mov esi,eax         ; 保留其**进位输出**
+F48AA  add rax,[rcx]       ; 复制后把进位**叠入下一字**
+F48AD  setb dl ; F48B3 jne ; 继续进位则继续传播
+F48BC  dword [rbx+0x20] = 0    ; ★ 运算完成时**清掉标签**
+```
+
+⇒ **加法由两个独立函数确认**（内核本身 + 本例程的使用）；**标签语义又一次被确认**：1 是未设，而完成运算会**写 0**。
+
+**（b）`0xF1B20` 内部**：先从高位向低位**逐字比较**（`sub rdx,1 ; cmp rdx,-1 ; je` + `jbe` 继续扫描），然后调 **`0xEF300`** —— **与加法内核不同的另一个内核**。
+★ **不声称**：不声称它返回符号，也不声称 `0xEF300` 内部算什么（`kSignResultOpen = true`）。
+
+**已落 `layout.hpp`**：`kAddRoutine`、`kAddClearsTag`、`kCarryIntoTail`、`kAdditionConfirmations`、`kCompareKernel`、`kReverseLimbCompare`、`kSignResultOpen` + **三条 `static_assert`** + 测试 22 条。

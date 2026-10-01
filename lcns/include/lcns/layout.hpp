@@ -1435,6 +1435,34 @@ inline constexpr int kRegistryInitCallers = 2;
 static_assert(kRegistryCountValue == 46, "the registry starts with forty-six");
 static_assert(kRegistryArrayB - kRegistryArrayA == 0x10, "the two array bases are sixteen bytes apart");
 
+
+// --- addition confirmed a second time, and the tag cleared on completion (round 267) -------------------
+//     0xF48D0 call 0xEF280        ; the addition kernel inside 0xF4830
+//     0xF48DD mov esi,eax         ; the carry out is kept
+//     0xF48AA add rax,[rcx]       ; and folded into the next limb after the copy
+//     0xF48AD setb dl ; 0xF48B3 jne   ; continue while it keeps carrying
+//     0xF48BC dword [rbx+0x20] = 0    ; the tag is CLEARED when the addition completes
+inline constexpr std::uintptr_t kAddRoutine = 0xF4830;       // RE the whole routine
+inline constexpr bool kAddClearsTag = true;                  // RE 0xF48BC
+inline constexpr bool kCarryIntoTail = true;                 // RE 0xF48AA and 0xF48AD
+inline constexpr int kAddRoutineCallers = 4;
+inline constexpr int kAdditionConfirmations = 2;             // 0xEF280's own body and 0xF4830's use of it
+// The tag at +0x20 means unset when ONE and is CLEARED by a completed operation, which is consistent with every
+// earlier sighting (rounds 249, 253, 263, 264).
+static_assert(kAdditionConfirmations == 2, "two routines carry the addition");
+
+// --- the comparison path's own kernel, 0xF1B20 (round 267) ---------------------------------------------
+//     0xF1B86/0xF1B8A  the index is DECREMENTED from the top: `sub rdx,1 ; cmp rdx,-1 ; je`
+//     0xF1B90/0xF1B94/0xF1B98  each limb compared against its counterpart, `jbe` continuing the scan
+//     0xF1BA1 call 0xEF300     ; a DIFFERENT kernel from the addition one
+inline constexpr std::uintptr_t kCompareKernel = 0xEF300;    // RE 0xF1BA1
+inline constexpr bool kReverseLimbCompare = true;            // RE 0xF1B86..0xF1B98
+inline constexpr int kComparePathCallers = 4;
+// WHAT IS NOT CLAIMED: that this routine returns a sign, or what 0xEF300 computes. Only the descending scan and
+// the call are landed.
+inline constexpr bool kSignResultOpen = true;
+static_assert(kCompareKernel != kLimbAdd, "the comparison kernel is not the addition kernel");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
