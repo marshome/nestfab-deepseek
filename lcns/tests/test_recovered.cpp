@@ -988,7 +988,9 @@ int main() {
     // --- the size gate of 0x5e78d0 (RE 0x5e7939: cmp rbx,0x2F ; ja) ---------------------------------
     {
         CHECK(kMinSpanForOneRecord == 47);
-        CHECK(kMinSpanForOneRecord + 1 == kIndexedRecordStride);   // 47 is one less than 48
+        // the gate is "> 47 bytes" and serves more than one record type (round 190), so it is
+        // NOT tied to the 48-byte stride; that cross-assertion was withdrawn
+        CHECK(kMinSpanForOneRecord == 47);
         CHECK(!hasAtLeastOneRecord(0));
         CHECK(!hasAtLeastOneRecord(47));
         CHECK(hasAtLeastOneRecord(48));                            // exactly one 48-byte record
@@ -1048,10 +1050,26 @@ int main() {
         // the 47-byte gate belongs to the 48-byte records, NOT to these points: for a 16-byte record it
         // would mean 'at least three points'. The two are different types, so the assertion says so.
         CHECK(kPoint2dSize != kIndexedRecordStride);         // 16 is not 48
-        CHECK(kMinSpanForOneRecord + 1 == kIndexedRecordStride);
+        CHECK(kMinSpanForOneRecord == 47);   // the gate alone, not tied to a record size
         Point2dLike p{1.5, -2.5};
         CHECK(p.x == 1.5);
         CHECK(p.y == -2.5);
+    }
+
+    // --- the polygon area of 0x70c810 (RE 0x70c881..0x70c8ee: the shoelace sum times 0.5) ------------
+    {
+        CHECK(kAreaHalf == 0.5);
+        const Point2dLike square[4] = {{0.0, 0.0}, {2.0, 0.0}, {2.0, 2.0}, {0.0, 2.0}};
+        const Point2dLike tri[3] = {{0.0, 0.0}, {4.0, 0.0}, {0.0, 3.0}};
+        const Point2dLike line[3] = {{0.0, 0.0}, {1.0, 0.0}, {2.0, 0.0}};
+        CHECK(polygonArea(square, 4) == 4.0);
+        CHECK(polygonArea(tri, 3) == 6.0);
+        CHECK(polygonArea(line, 3) == 0.0);                 // collinear: no area
+        CHECK(polygonArea(square, 2) == 0.0);               // fewer than three points
+        CHECK(polygonArea(nullptr, 4) == 0.0);
+        // the shoelace term is the one the loop accumulates
+        CHECK(shoelaceTerm(square[0], square[1]) == 0.0);   // (0+0) * (0-2)
+        CHECK(4.0 * kAreaHalf == 2.0);
     }
 
     return check::finish("test_recovered");

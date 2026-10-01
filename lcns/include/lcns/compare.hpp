@@ -161,4 +161,33 @@ inline bool almostEqual(double a, double b) {
     return diff <= m * kSharedEpsilon;              // RE 0x5E60BD/0x5E60C5
 }
 
+
+// --- the polygon area, read whole from 0x70C810 (round 190) ----------------------------------------
+//     70C881  movsd xmm0,[r8-0x10]      ; the previous point's y
+//     70C887  sub r8,0x10               ; a SIXTEEN-byte step: points
+//     70C88B  movsd xmm1,[r8+8]         ; its x
+//     70C894  addsd xmm0,[r9-0x10]      ; + the other point's y
+//     70C89A  subsd xmm1,[r9-8]         ; (x_a - x_b)
+//     70C8A0  mulsd xmm0,xmm1           ; (y_a + y_b) * (x_a - x_b)
+//     70C8A4  addsd xmm0,xmm2           ; accumulate
+//     70C8EE  mulsd xmm0,[0.5]          ; * 0.5 -> the area
+// with 70C8D9/70C8DE (`idiv r11 ; shl rdx,4`) wrapping the index. That is the shoelace form of the area.
+inline constexpr double kAreaHalf = 0.5;      // RE 0x70C8EE (the shared block's 0.5 slot)
+
+// RE 70C8A0/70C8A4: one shoelace term, and the accumulation the loop performs.
+inline double shoelaceTerm(const Point2dLike& a, const Point2dLike& b) {
+    return (a.y + b.y) * (a.x - b.x);          // RE 0x70C894/0x70C89A/0x70C8A0
+}
+
+inline double polygonArea(const Point2dLike* points, std::size_t count) {
+    if (points == nullptr || count < 3) {       // RE 0x70C832: the span > 47 gate means at least three points
+        return 0.0;
+    }
+    double sum = 0.0;                           // RE 0x70C87D
+    for (std::size_t i = 0; i < count; ++i) {
+        sum += shoelaceTerm(points[i], points[(i + 1) % count]);   // RE 0x70C8D9: the wrap-around index
+    }
+    return kAreaHalf * sum;                     // RE 0x70C8EE
+}
+
 }  // namespace lcns

@@ -93,9 +93,11 @@ inline constexpr std::int64_t kTreeNodeNoIndex = -1;        // RE 0x89D3B2/0x89D
 
 // --- the size gate of 0x5E78D0 (round 179) --------------------------------------------------------
 // RE 0x5E7936/0x5E7939: the container's byte span is compared with 0x2F (47) and the routine returns
-// immediately unless the span EXCEEDS it. 47 is one less than kIndexedRecordStride (48, measured in round 159
-// from `lea rbx,[rax+rax*2] ; shl rbx,4`), so the gate is "is there at least one 48-byte record?", and the two
-// facts corroborate the record size independently.
+// immediately unless the span EXCEEDS it. The threshold is "more than 47 bytes", and its meaning depends on the
+// record: for 48-byte records (round 159's stride) it means "at least one", while in 0x70C810 -- which reads the
+// same threshold at 0x70C832 over a container of 16-byte POINTS -- it means "at least three" (3 * 16 = 48).
+// Both readings are recorded; round 189's cross-assertion tying 47+1 to the 48-byte stride was removed because
+// the same literal serves more than one record type.
 inline constexpr std::size_t kMinSpanForOneRecord = 47;   // RE 0x5E7939: cmp rbx,0x2F
 
 inline bool hasAtLeastOneRecord(std::size_t spanBytes) {

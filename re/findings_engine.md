@@ -3687,3 +3687,25 @@ round 157 保留的只有一条：`0x82FA0BE82FA0BE83` **不是除法**（该判
 
 **已落 `compare.hpp`**：`kPoint2dSize` + **两条 `static_assert`**（`sizeof(Point2dLike) == 16`、`kPoint2dSize == 16`）+ 运行时测试 8 条（含与 `kSizeRecordStride`、`kMinSpanForOneRecord` 的交叉断言）。
 ⇒ **布局常量与真实类型相绑**，这比写在注释里强。
+
+### 附 110 `0x70C810` **全读** = **多边形面积（鞋带公式）**；且**47 字节门的真义解开**（goal round 190）**[已落码]
+
+```
+70C878  ecx=1 ; 70C87D xmm2=0                    ; 累加器
+70C881  xmm0=[r8−0x10]                        ; 前一个点的 y
+70C887  sub r8,0x10                              ; ★ 16 字节步长（点）
+70C88B  xmm1=[r8+8]                              ; 它的 x
+70C894  addsd xmm0,[r9−0x10]                    ; + 另一点的 y
+70C89A  subsd xmm1,[r9−8]                       ; − 它的 x
+70C8A0  mulsd xmm0,xmm1                          ; ★ (y_a + y_b) × (x_a − x_b)
+70C8A4  addsd xmm0,xmm2                          ; 累加
+70C8EE  mulsd xmm0,[0.5]                         ; ★ × 0.5 ⇒ 面积
+70C8D9/70C8DE  idiv r11 ; shl rdx,4               ; 环绕索引（i mod n × 16）
+```
+
+⇒ **多边形面积**，鞋带形式 **`0.5 × Σ (y_a + y_b)(x_a − x_b)`**，且**遍历的确是点**（步长 16）。
+
+**47 字节门的真义**：`span > 47`，对 16 字节点而言 **3×16 = 48 > 47** ⇒ **“至少三个点”**。
+round 179 把它命名为“一个 48 字节记录”只是**同一阈值的另一种读法** ⇒ **round 189 那条把 47+1 绑到 48 步长的交叉断言已撤除**，常量改为记作“**超过 47 字节**”并列出**两种**已观测语义。
+
+**已落 `compare.hpp`**：`kAreaHalf`、`shoelaceTerm`、`polygonArea`（含环绕索引与“少于三点返回 0”）+ 测试 9 条。
