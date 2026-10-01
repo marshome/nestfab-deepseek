@@ -1,1940 +1,7993 @@
 {
- "kinds": {
-  "a": 190,
-  "b": 246,
-  "c": 38
+ "depth": {
+  "0": 151,
+  "1": 417,
+  "2": 424,
+  "3": 306,
+  "4": 206,
+  "5": 91
  },
  "labels": {
+  "0x10040": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0x10f30": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0x11640": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
   "0x11b880": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x12a710": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x12a990": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x136df0": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   4
+  ],
+  "0x137410": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   3
+  ],
+  "0x137f60": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   3
   ],
   "0x139110": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x13a450": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x13a580": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x13a6d0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x13a820": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   4
+  ],
+  "0x13aa20": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   3
+  ],
+  "0x13ac20": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   4
+  ],
+  "0x13ade0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x13b0c0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x13b410": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x13bb20": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x13bce0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x13be60": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   3
   ],
   "0x13c8d0": [
    "..\\tiling\\packer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x13d4f0": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   3
+  ],
+  "0x13de40": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x13e0e0": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
   ],
   "0x13f430": [
    "..\\tiling\\packer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x13f980": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x13faa0": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x140540": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x141bf0": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   3
+  ],
+  "0x141e50": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   3
   ],
   "0x141f90": [
    "..\\tiling\\packer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x142510": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   3
+  ],
+  "0x146950": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x146d40": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
   ],
   "0x148e00": [
    "..\\tiling\\packer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
-  "0x154690": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 4 distinctive callees"
+  "0x14ae20": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x14bb60": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   2
+  ],
+  "0x1506a0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x150ca0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x154230": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x154bc0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
   ],
   "0x154df0": [
    "..\\tiling\\packer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x155bb0": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x156be0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x157dc0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x158810": [
+   "..\\tiling\\packer_cache.cpp",
+   "seed",
+   0
+  ],
+  "0x159ba0": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
+  ],
+  "0x15a4d0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x15a4e0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x15a9e0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x15ae70": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
   ],
   "0x15c560": [
    "..\\tiling\\packer.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x15cd60": [
    "..\\tiling\\packer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x15ddc0": [
    "..\\tiling\\packer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x15ea80": [
    "..\\tiling\\packer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x15f100": [
    "..\\tiling\\packer.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x162280": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x16c0a0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   4
+  ],
+  "0x16c140": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   3
+  ],
+  "0x16c1a0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   3
   ],
   "0x16c260": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x16ef80": [
-   "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+  "0x16c4c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x16ccf0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   2
   ],
   "0x16f1f0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x16f350": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b",
+   2
+  ],
+  "0x170290": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x172010": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x172340": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   2
+  ],
+  "0x173750": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   2
+  ],
+  "0x173760": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   3
+  ],
+  "0x1784f0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   4
+  ],
+  "0x178550": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   5
   ],
   "0x178560": [
    "..\\nesting\\structure_interface_private.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x178580": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
   ],
   "0x17b740": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x17b9b0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   3
   ],
   "0x17b9c0": [
    "..\\nesting\\algos\\algo_parameters.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x17b9e0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x17b9f0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x17ba00": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x17bbd0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   2
+  ],
+  "0x17bcc0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   2
+  ],
+  "0x17c0d0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x17c790": [
+   "..\\structure\\stats.cpp",
+   "a",
+   2
   ],
   "0x17e180": [
    "..\\structure\\stats.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x17e470": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
   ],
   "0x17e5f0": [
    "..\\structure\\stats.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x181e80": [
+  "0x17f3e0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   4
+  ],
+  "0x17f4b0": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
+  ],
+  "0x180500": [
+   "internal.cpp",
+   "c",
+   2
+  ],
+  "0x182d90": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x1837e0": [
+   "internal.cpp",
+   "c",
+   4
+  ],
+  "0x183c50": [
+   "internal.cpp",
+   "a",
+   2
+  ],
+  "0x1880": [
+   "..\\multi\\nesting_nester.cpp",
+   "b",
+   2
+  ],
+  "0x18efc0": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x1909f0": [
    "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "a",
+   2
   ],
-  "0x1918d0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 3 distinctive callees"
+  "0x199570": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
   ],
   "0x19da20": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x19dd20": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x1a27c0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   5
+  ],
+  "0x1a2820": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   4
+  ],
+  "0x1a2900": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "c",
+   1
+  ],
+  "0x1a2cd0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   2
+  ],
+  "0x1a38b0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x1a3900": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
+  ],
+  "0x1a3db0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "seed",
+   0
+  ],
+  "0x1a4420": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x1a4c90": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x1a60b0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   2
+  ],
+  "0x1a61a0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x1a6650": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   1
+  ],
+  "0x1a66a0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "seed",
+   0
+  ],
+  "0x1a6de0": [
+   "..\\nesting\\algos\\postop.cpp",
+   "b",
+   2
+  ],
+  "0x1a7580": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
   ],
   "0x1a8780": [
    "..\\nesting\\algos\\algo_parameters.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1a89d0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "seed",
+   0
+  ],
+  "0x1a8af0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "seed",
+   0
   ],
   "0x1a8db0": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x1a8e90": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x1a9150": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a",
+   2
+  ],
+  "0x1a9170": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   4
+  ],
+  "0x1a9250": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x1a9300": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
   ],
   "0x1a93d0": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x1a9450": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x1a9b50": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x1aa000": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x1aa170": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x1aa2f0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x1aa460": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x1aa890": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
   ],
   "0x1aaa20": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1aaca0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1aaef0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x1aafe0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "seed",
+   0
   ],
   "0x1abb20": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x1ac390": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1acf30": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "seed",
+   0
+  ],
+  "0x1ad3a0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "seed",
+   0
+  ],
+  "0x1ad7e0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "seed",
+   0
   ],
   "0x1adc20": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "b: 6 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1ae8e0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
   ],
   "0x1ae990": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1b0220": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
   ],
   "0x1b0760": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1b0f70": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x1b130": [
+   "internal.cpp",
+   "c",
+   1
   ],
   "0x1b170": [
    "internal.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x1b5a70": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 13 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1b64e0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "seed",
+   0
+  ],
+  "0x1b690": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
+  ],
+  "0x1b7be0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
   ],
   "0x1b7c80": [
    "..\\nesting\\algos\\algo_parameters.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1b7d40": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   4
+  ],
+  "0x1b8140": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
   ],
   "0x1b840": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1bb10": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1bc200": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1bd410": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x1be560": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x1bf2b0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   4
+  ],
+  "0x1bf900": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "c",
+   3
   ],
   "0x1c0f10": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c1070": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   3
   ],
   "0x1c12b0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1c1660": [
    "..\\nesting\\algos\\tree_db.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c16e0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
+  ],
+  "0x1c18a0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
+  ],
+  "0x1c1a60": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
+  ],
+  "0x1c1d40": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   1
+  ],
+  "0x1c1e00": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x1c1f30": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
+  ],
+  "0x1c2110": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
   ],
   "0x1c2310": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x1c25c0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1c2640": [
+   "..\\nesting\\algos\\tree_db.hpp",
+   "seed",
+   0
+  ],
+  "0x1c2970": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   3
+  ],
+  "0x1c2a0": [
+   "internal.cpp",
+   "seed",
+   0
+  ],
+  "0x1c2a20": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x1c3200": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b",
+   2
   ],
   "0x1c3420": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c37a0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
   ],
   "0x1c3f30": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c4350": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
   ],
   "0x1c55f0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c5830": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
   ],
   "0x1c6260": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1c65b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x1c7780": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x1c8380": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
   ],
   "0x1c8960": [
    "..\\nesting\\algos\\postop.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c8d30": [
+   "..\\nesting\\algos\\postop.cpp",
+   "seed",
+   0
   ],
   "0x1c8ec0": [
    "..\\nesting\\algos\\postop.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1c9290": [
+   "..\\nesting\\algos\\postop.cpp",
+   "seed",
+   0
+  ],
+  "0x1c97a0": [
+   "..\\nesting\\algos\\postop.cpp",
+   "seed",
+   0
   ],
   "0x1c9c80": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 9 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1cb100": [
+   "..\\nesting\\algos\\postop.cpp",
+   "seed",
+   0
   ],
   "0x1cd840": [
    "internal.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x1cded0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1cdfe0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
   ],
   "0x1ce1c0": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1d26e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   5
+  ],
+  "0x1d28b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   4
+  ],
+  "0x1d47a0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
   ],
   "0x1d70a0": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1d7160": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1d870": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x1da0c0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "seed",
+   0
+  ],
+  "0x1dd870": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   2
   ],
   "0x1dd950": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x1dda60": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   2
   ],
   "0x1de3d0": [
    "..\\nesting\\algos\\algo_parameters.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x1de600": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1dea50": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1e010": [
    "internal.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x1e0d0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x1e140": [
    "internal.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x1e2e0": [
    "internal.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x1e3aa0": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x1e480": [
    "internal.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x1e870": [
    "internal.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1e900": [
+   "internal.cpp",
+   "seed",
+   0
+  ],
+  "0x1eaac0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   4
+  ],
+  "0x1eaed0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   3
+  ],
+  "0x1eb160": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   3
+  ],
+  "0x1eb840": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   2
   ],
   "0x1ec80": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x1eec00": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 3 distinctive callees"
+  "0x1ee50": [
+   "internal.cpp",
+   "seed",
+   0
   ],
-  "0x1efe50": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 4 distinctive callees"
+  "0x1f1c20": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "seed",
+   0
   ],
-  "0x1f0700": [
-   "..\\verify\\equivalent.cpp",
-   "b: 11 distinctive callees"
+  "0x1f2d00": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "seed",
+   0
+  ],
+  "0x1f5c20": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "seed",
+   0
+  ],
+  "0x1f8350": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x1f8410": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
   ],
   "0x1f8580": [
    "..\\nesting\\ios\\log_ios.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x1f8620": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x1fb740": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
+  ],
+  "0x1fb810": [
+   "..\\nesting\\ios\\log_ios.cpp",
+   "seed",
+   0
+  ],
+  "0x1fbaa0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
+  ],
+  "0x1fbd80": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x1fd180": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   2
   ],
   "0x1fd3b0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x1fd6a0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x1fe4e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   3
+  ],
+  "0x2007d0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   4
+  ],
+  "0x207930": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   3
+  ],
+  "0x20b2d0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   5
   ],
   "0x20bec0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x20bf80": [
    "..\\nesting\\algos\\algo_helpers.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x20c0c0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x20c130": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x20c2d0": [
+   "..\\nesting\\algos\\sheet_optimizer.cpp",
+   "seed",
+   0
+  ],
+  "0x20c440": [
+   "..\\nesting\\algos\\sheet_optimizer.cpp",
+   "seed",
+   0
+  ],
+  "0x20c880": [
+   "..\\nesting\\algos\\sheet_optimizer.cpp",
+   "seed",
+   0
   ],
   "0x20cfe0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x20d0a0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x20dc50": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
   ],
   "0x20e020": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x20e0c0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x20e160": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x20e200": [
+   "..\\nesting\\algos\\algo_helpers.hpp",
+   "seed",
+   0
+  ],
+  "0x20e840": [
+   "..\\nesting\\algos\\algo_helpers.hpp",
+   "seed",
+   0
+  ],
+  "0x20ee50": [
+   "..\\nesting\\algos\\algo_helpers.hpp",
+   "seed",
+   0
+  ],
+  "0x20f490": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x20f590": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
+  ],
+  "0x20fe90": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x212d30": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x215720": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x21a0c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x21b7c0": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x21c770": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   2
+  ],
+  "0x21f9f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   3
+  ],
+  "0x21fa40": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x21fab0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x21faf0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x220230": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x2203a0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x2204a0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x220730": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x2209d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x2241f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x224560": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x2248d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x224aa0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x225a10": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x225d30": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x228880": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x229550": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x229570": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x22d8e0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   5
+  ],
+  "0x22d9e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x22da00": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x22da70": [
    "..\\nesting\\algos\\sheet_optimizer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x22dfd0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x22e390": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   3
+  ],
+  "0x22e40": [
+   "internal.cpp",
+   "seed",
+   0
+  ],
+  "0x2303a0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x2304d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x2306c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x2337d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x233990": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x233f50": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x2344e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x234840": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x2348e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x234c60": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x236ad0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x236bc0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x2393f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x239a10": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "c",
+   2
   ],
   "0x239c80": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x243820": [
-   "..\\multi\\float_filler.cpp",
-   "b: 9 distinctive callees"
+  "0x23dc0": [
+   "..\\multi\\nesting_nester.cpp",
+   "a",
+   3
   ],
-  "0x24d6f0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+  "0x23f440": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   3
+  ],
+  "0x23f690": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   3
+  ],
+  "0x23f960": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   2
+  ],
+  "0x247b30": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x2480e0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x248550": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x24b050": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x24b790": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x24c470": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x24c4a0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x24c590": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
+  ],
+  "0x24c610": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   4
+  ],
+  "0x24dcd0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x24dd40": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x24df20": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x24e370": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x24e3f0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x24e940": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x24edd0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x24efa0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x24f420": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x251560": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   4
+  ],
+  "0x2517b0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x251c00": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x2539e0": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x254090": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x254740": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x2582c0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   5
+  ],
+  "0x258430": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x258680": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x2587b0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x25aa60": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   3
+  ],
+  "0x25ad80": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   3
+  ],
+  "0x25c640": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x25c9e0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   2
   ],
   "0x25ca30": [
    "..\\structure\\svg_io.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x25da80": [
+   "..\\multi\\nesting_context.cpp",
+   "c",
+   2
+  ],
+  "0x25de10": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   2
+  ],
+  "0x25eb60": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   2
+  ],
+  "0x25f1e0": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   2
+  ],
+  "0x25f890": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   4
   ],
   "0x260f20": [
    "..\\multi\\nesting_context.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x261f40": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   3
+  ],
+  "0x261f60": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   2
+  ],
+  "0x261ff0": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   2
+  ],
+  "0x262980": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x2663b0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x266400": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x266450": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x266490": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
   ],
   "0x2665f0": [
    "..\\structure\\svg_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x266e00": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
+  ],
+  "0x26a60": [
+   "..\\engine\\cloud_engine.cpp",
+   "seed",
+   0
   ],
   "0x2e590": [
    "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x2e650": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x2fb50": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x30030": [
+   "..\\multi\\supervisor.cpp",
+   "seed",
+   0
+  ],
+  "0x378e0": [
+   "..\\multi\\nesting_nester.cpp",
+   "seed",
+   0
+  ],
+  "0x3b2b0": [
+   "..\\multi\\nesting_context.cpp",
+   "c",
+   1
+  ],
+  "0x3b2f0": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
   ],
   "0x3b590": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x3b5f0": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
+  ],
+  "0x3bcc0": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
   ],
   "0x3c390": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x3d1e0": [
+  "0x3c3f0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 5 distinctive callees"
+   "seed",
+   0
   ],
-  "0x3d920": [
+  "0x3c9e0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "seed",
+   0
   ],
-  "0x3fa50": [
+  "0x3dbe0": [
    "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "seed",
+   0
   ],
-  "0x3fd40": [
+  "0x3e740": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "seed",
+   0
+  ],
+  "0x3f070": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
+  ],
+  "0x40070": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
+  ],
+  "0x40720": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
   ],
   "0x40bf0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x40cd0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x41920": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
+  ],
+  "0x434d0": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
   ],
   "0x452f0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x46190": [
    "..\\multi\\tiling_nester.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x462d0": [
+   "..\\multi\\tiling_nester.cpp",
+   "seed",
+   0
   ],
   "0x4b83e0": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
-  ],
-  "0x4b99b0": [
-   "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "b",
+   1
   ],
   "0x4b9b80": [
    "..\\verify\\equivalent.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x4b9cf0": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4b9d70": [
    "..\\verify\\equivalent.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4b9fa0": [
+   "..\\verify\\equivalent.cpp",
+   "seed",
+   0
+  ],
+  "0x4ba110": [
+   "..\\verify\\equivalent.cpp",
+   "seed",
+   0
   ],
   "0x4ba3e0": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4ba470": [
    "..\\tiling\\packer_cache.cpp",
-   "a: all callers agree"
-  ],
-  "0x4ba4d0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 5 distinctive callees"
+   "a",
+   1
   ],
   "0x4bad90": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x4bb9b0": [
+  "0x4bb040": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "seed",
+   0
   ],
-  "0x4bd070": [
+  "0x4bc9e0": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "seed",
+   0
   ],
-  "0x4c5450": [
+  "0x4bdb70": [
    "..\\verify\\equivalent.cpp",
-   "b: 57 distinctive callees"
+   "seed",
+   0
+  ],
+  "0x4c0700": [
+   "cns_no_fit.cpp",
+   "c",
+   3
   ],
   "0x4cbc50": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
-  "0x4cf000": [
-   "..\\verify\\equivalent.cpp",
-   "b: 13 distinctive callees"
-  ],
-  "0x4d03f0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 5 distinctive callees"
+  "0x4d06e0": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0x4d0950": [
    "..\\structure\\svg_io.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x4d260": [
    "..\\multi\\nesting_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4d7720": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   2
+  ],
+  "0x4da3e0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   4
+  ],
+  "0x4da560": [
+   "..\\multi\\nesting_nester.cpp",
+   "b",
+   2
+  ],
+  "0x4dafc0": [
+   "..\\tiling\\optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x4db0d0": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   4
+  ],
+  "0x4db1d0": [
+   "..\\tiling\\optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x4db810": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
   ],
   "0x4dba70": [
    "..\\tiling\\optimizer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x4dcd90": [
    "..\\tiling\\optimizer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4dcf90": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x4dd300": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x4dd870": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   2
+  ],
+  "0x4dd980": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x4ddac0": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x4ddcc0": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x4ddcf0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x4ddd00": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x4dddd0": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   2
+  ],
+  "0x4dde80": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x4de050": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x4de560": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x4defa0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x4df0a0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
   ],
   "0x4df310": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x4e0730": [
    "..\\tiling\\packer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4e3120": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
+  ],
+  "0x4e3330": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x4e3950": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4e4600": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x4e4a60": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x4e54d0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x4e58e0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
   ],
   "0x4e5d30": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x4e83e0": [
    "..\\tiling\\packer_cache.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4e8870": [
    "..\\tiling\\optimizer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4e8e50": [
    "..\\tiling\\optimizer.cpp",
-   "b: 6 distinctive callees"
+   "b",
+   1
   ],
   "0x4e93c0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 8 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4e9a10": [
+   "..\\tiling\\optimizer.cpp",
+   "seed",
+   0
   ],
   "0x4ea310": [
    "..\\tiling\\optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x4ea9c0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4eaea0": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
   ],
   "0x4ed2e0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x4edd00": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x4f0c60": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x4f1020": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   3
+  ],
+  "0x4f1590": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   2
+  ],
+  "0x4f1740": [
+   "..\\multi\\nesting_context.cpp",
+   "c",
+   3
+  ],
+  "0x4f1bc0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   2
   ],
   "0x4f1dc0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x4f2a30": [
    "..\\tiling\\optimizer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4f31e0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x4f3600": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x4f3630": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x4f3650": [
+   "internal.cpp",
+   "a",
+   2
+  ],
+  "0x4f3810": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x4f3a40": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x4f3cb0": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   4
   ],
   "0x4f3de0": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4f3f60": [
+   "..\\tiling\\optimizer.cpp",
+   "c",
+   3
+  ],
+  "0x4f4270": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x4f4360": [
+   "..\\tiling\\optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x4f4500": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   3
+  ],
+  "0x4f4600": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x4f4770": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x4f4850": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   2
+  ],
+  "0x4f4ec0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x4f4f10": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4f4f20": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4f5090": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x4f50f0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4f51c0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4f5280": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x4f67e0": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4f6d80": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
+  ],
+  "0x4f6fe0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4f7000": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x4f73d0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   2
+  ],
+  "0x4f7830": [
+   "..\\structure\\problem.cpp",
+   "c",
+   2
+  ],
+  "0x4f79d0": [
+   "..\\structure\\problem.cpp",
+   "b",
+   2
   ],
   "0x4f7a50": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4f8a80": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4f8c70": [
    "..\\structure\\problem.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x4f9fe0": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x4faaf0": [
+   "cns_no_fit.cpp",
+   "b",
+   4
+  ],
+  "0x4fb400": [
+   "..\\structure\\problem.cpp",
+   "a",
+   2
+  ],
+  "0x4fc5b0": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
+  ],
+  "0x4fc6f0": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
+  ],
+  "0x4fc940": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
+  ],
+  "0x4fca80": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
   ],
   "0x4fcc90": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x4fcd80": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
+  ],
+  "0x4fcf90": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
   ],
   "0x4fd130": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x4fdfe0": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
   ],
   "0x4ff920": [
    "..\\structure\\problem.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x4ffc50": [
    "..\\structure\\problem.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x500390": [
    "..\\structure\\problem.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x500a90": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
   ],
   "0x501660": [
    "..\\structure\\problem.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x5018c0": [
    "..\\structure\\problem.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x501b60": [
+   "..\\structure\\problem.cpp",
+   "seed",
+   0
+  ],
+  "0x50210": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
   ],
   "0x50250": [
    "..\\multi\\database.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x503b0": [
    "..\\multi\\database.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5050a0": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   1
+  ],
+  "0x5051a0": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
   ],
   "0x505280": [
    "..\\structure\\text_io.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x5052c0": [
    "..\\structure\\text_io.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x505320": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0x505430": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5055e0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   2
   ],
   "0x505780": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x505ce0": [
+   "..\\structure\\text_io.cpp",
+   "seed",
+   0
+  ],
+  "0x5065f0": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0x506780": [
    "..\\structure\\svg_io.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x5069a0": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x509a40": [
+   "..\\structure\\text_io.cpp",
+   "seed",
+   0
+  ],
+  "0x50a550": [
+   "..\\structure\\text_io.cpp",
+   "seed",
+   0
   ],
   "0x50ac80": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x50ee50": [
+   "..\\structure\\text_io.cpp",
+   "seed",
+   0
   ],
   "0x50ffd0": [
    "..\\structure\\svg_io.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x5100d0": [
+   "..\\structure\\svg_io.cpp",
+   "seed",
+   0
+  ],
+  "0x510560": [
+   "..\\structure\\svg_io.cpp",
+   "seed",
+   0
   ],
   "0x510a40": [
    "..\\structure\\svg_io.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x510a90": [
+   "..\\structure\\svg_io.cpp",
+   "seed",
+   0
   ],
   "0x510c90": [
    "..\\structure\\svg_io.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x513880": [
+   "..\\structure\\svg_io.cpp",
+   "seed",
+   0
   ],
   "0x515090": [
    "..\\structure\\svg_io.cpp",
-   "b: 17 distinctive callees"
+   "b",
+   1
   ],
   "0x515750": [
    "..\\structure\\svg_io.cpp",
-   "b: 12 distinctive callees"
+   "b",
+   1
   ],
   "0x516050": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x516380": [
+   "..\\structure\\svg_io.cpp",
+   "seed",
+   0
   ],
   "0x518910": [
    "..\\structure\\svg_io.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
+  ],
+  "0x518fc0": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   4
+  ],
+  "0x51bd10": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   4
+  ],
+  "0x51bd80": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   3
   ],
   "0x51c4b0": [
    "..\\multi\\tiling_nester.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x51d0e0": [
    "..\\multi\\marker.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x51d4c0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+  "0x51e020": [
+   "..\\multi\\database.cpp",
+   "a",
+   3
   ],
   "0x51ecf0": [
    "..\\multi\\supervisor.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x51f070": [
    "..\\multi\\supervisor.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x51f6a0": [
    "..\\structure\\text_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x51f750": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
   ],
   "0x520770": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x520810": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   2
+  ],
+  "0x520a30": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
+  ],
+  "0x520e30": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
+  ],
+  "0x521210": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
   ],
   "0x5215d0": [
    "..\\structure\\stats.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x521f90": [
+   "..\\structure\\stats.cpp",
+   "c",
+   2
+  ],
+  "0x522b30": [
+   "..\\structure\\stats.cpp",
+   "b",
+   3
   ],
   "0x523100": [
    "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x523a40": [
    "..\\structure\\stats.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x523d0": [
    "..\\multi\\database.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x523fe0": [
+   "..\\multi\\nesting_nester.cpp",
+   "c",
+   2
   ],
   "0x5240b0": [
    "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x524250": [
    "..\\structure\\stats.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x524ee0": [
    "..\\structure\\svg_io.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x52520": [
    "..\\multi\\database.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x525300": [
+   "..\\multi\\tiling_nester.cpp",
+   "c",
+   2
+  ],
+  "0x5253e0": [
+   "..\\structure\\stats.cpp",
+   "c",
+   1
   ],
   "0x5257d0": [
    "..\\structure\\stats.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
+  ],
+  "0x525e0": [
+   "..\\multi\\database.cpp",
+   "seed",
+   0
+  ],
+  "0x525ef0": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
   ],
   "0x526160": [
    "..\\structure\\stats.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x5266a0": [
    "..\\structure\\stats.cpp",
-   "b: 3 distinctive callees"
-  ],
-  "0x5271a0": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x5275f0": [
    "..\\multi\\database.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x527870": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
   ],
   "0x527ab0": [
    "..\\structure\\stats.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x527b20": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0x527bf0": [
    "..\\structure\\stats.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x528020": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
+  ],
+  "0x528ae0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   2
+  ],
+  "0x528d10": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
+  ],
+  "0x5297c0": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
+  ],
+  "0x52aad0": [
+   "..\\structure\\stats.cpp",
+   "seed",
+   0
   ],
   "0x52b3d0": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
-  ],
-  "0x52be50": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 2 distinctive callees"
+   "a",
+   1
   ],
   "0x52c4c0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x52c5e0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 7 distinctive callees"
+  "0x52c70": [
+   "..\\multi\\database.cpp",
+   "seed",
+   0
   ],
   "0x52e7e0": [
    "..\\multi\\nesting_nester.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x52f980": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x52f9e0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x52fa10": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x52fa70": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x52faa0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
   ],
   "0x531bd0": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 3 distinctive callees"
-  ],
-  "0x531f70": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x533ea0": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
-  ],
-  "0x535c60": [
-   "..\\verify\\equivalent.cpp",
-   "b: 14 distinctive callees"
+   "a",
+   1
   ],
   "0x538fd0": [
    "..\\structure\\multitorch_eval.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x5393c0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   5
   ],
   "0x53a100": [
    "..\\multi\\supervisor.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x53a520": [
    "..\\multi\\supervisor.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x53a680": [
    "..\\structure\\svg_io.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x53a920": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x53bf10": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
   ],
   "0x53c0": [
    "..\\engine\\cloud_engine.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x53c2c0": [
    "..\\structure\\multitorch_eval.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x53cc30": [
+   "..\\structure\\multitorch_eval.cpp",
+   "seed",
+   0
+  ],
+  "0x53d990": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   5
+  ],
+  "0x53e020": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   5
+  ],
+  "0x53eca0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x53f910": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x542480": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x5426c0": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   2
   ],
   "0x542f30": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x544600": [
    "..\\multi\\database.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x544790": [
    "..\\tiling\\packer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x5448c0": [
    "..\\multi\\supervisor.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x544e10": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   3
+  ],
+  "0x5451d0": [
+   "..\\multi\\database.cpp",
+   "c",
+   2
   ],
   "0x545220": [
    "..\\structure\\svg_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x545290": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
   ],
   "0x5452a0": [
    "..\\multi\\nesting_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x5455a0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 4 distinctive callees"
+  "0x545370": [
+   "..\\multi\\database.cpp",
+   "b",
+   2
+  ],
+  "0x545cf0": [
+   "..\\multi\\database.cpp",
+   "c",
+   2
   ],
   "0x545e50": [
    "..\\multi\\database.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x5461b0": [
+   "..\\multi\\database.cpp",
+   "b",
+   2
+  ],
+  "0x546540": [
+   "..\\multi\\database.cpp",
+   "b",
+   3
   ],
   "0x5465e0": [
    "..\\multi\\database.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x546670": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x546ab0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x546d50": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   3
+  ],
+  "0x547140": [
+   "..\\multi\\nesting_nester.cpp",
+   "a",
+   2
+  ],
+  "0x5471a0": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   3
+  ],
+  "0x547680": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0x547730": [
    "..\\structure\\svg_io.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x5479d0": [
    "..\\structure\\svg_io.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x547ad0": [
    "..\\structure\\svg_io.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x547c10": [
    "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x547dc0": [
    "..\\verify\\equivalent.cpp",
-   "c: one labelled caller + shared distinctive callee"
-  ],
-  "0x548680": [
-   "..\\verify\\equivalent.cpp",
-   "b: 4 distinctive callees"
-  ],
-  "0x549650": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "c",
+   1
   ],
   "0x549ab0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x54ac00": [
-   "..\\verify\\equivalent.cpp",
-   "b: 3 distinctive callees"
+  "0x549ac0": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
   ],
-  "0x54b600": [
-   "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+  "0x549c70": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
   ],
-  "0x54ba40": [
-   "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+  "0x549e60": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x549fa0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x54a350": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
+  ],
+  "0x54a930": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0x54bfe0": [
    "..\\structure\\svg_io.cpp",
-   "b: 3 distinctive callees"
-  ],
-  "0x54d760": [
-   "..\\verify\\equivalent.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x54e1a0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x54e1c0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x54e270": [
-   "..\\verify\\equivalent.cpp",
-   "b: 7 distinctive callees"
+  "0x552230": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
   ],
-  "0x54f5d0": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x5522b0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
   ],
-  "0x54fcb0": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 2 distinctive callees"
-  ],
-  "0x550a80": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x552370": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
   ],
   "0x552470": [
    "..\\structure\\automatic_cluster.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x5528b0": [
+   "cns_no_fit.cpp",
+   "b",
+   3
+  ],
+  "0x552e30": [
+   "..\\structure\\automatic_cluster.cpp",
+   "seed",
+   0
   ],
   "0x553090": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x553150": [
+   "..\\structure\\automatic_cluster.cpp",
+   "c",
+   2
   ],
   "0x553230": [
    "..\\structure\\automatic_cluster.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x555d40": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 6 distinctive callees"
+   "b",
+   1
   ],
   "0x555f70": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5563c0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "seed",
+   0
+  ],
+  "0x557140": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x557240": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
   ],
   "0x557660": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x5584b0": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 8 distinctive callees"
+   "b",
+   1
   ],
-  "0x559430": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 5 distinctive callees"
+  "0x559d0": [
+   "..\\multi\\database.cpp",
+   "a",
+   2
+  ],
+  "0x55a0f0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x55a230": [
+   "internal.cpp",
+   "c",
+   2
   ],
   "0x55b550": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x55ed00": [
-   "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+  "0x55be20": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x55e2c0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x560380": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   2
+  ],
+  "0x560c30": [
+   "cns_no_fit.cpp",
+   "a",
+   2
   ],
   "0x561740": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x561910": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x561c40": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x5634d0": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
   ],
   "0x56a280": [
    "..\\tiling\\packer_cache.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x56a980": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
   ],
   "0x56ab0": [
    "..\\multi\\database.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x56e6b0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 2 distinctive callees"
+  "0x56b090": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
   ],
   "0x56f990": [
    "..\\tiling\\packer_cache.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x56fab0": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
+  ],
+  "0x571820": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x57a860": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x57d7f0": [
+   "internal.cpp",
+   "a",
+   5
+  ],
+  "0x57f20": [
+   "..\\multi\\database.cpp",
+   "a",
+   2
+  ],
+  "0x57f540": [
+   "internal.cpp",
+   "c",
+   3
+  ],
+  "0x580a00": [
+   "internal.cpp",
+   "c",
+   5
+  ],
+  "0x580e70": [
+   "internal.cpp",
+   "a",
+   4
+  ],
+  "0x580f80": [
+   "internal.cpp",
+   "c",
+   5
+  ],
+  "0x581fd0": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x583600": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x583810": [
+   "internal.cpp",
+   "a",
+   2
+  ],
+  "0x587ec0": [
+   "internal.cpp",
+   "c",
+   5
+  ],
+  "0x5894e0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
   ],
   "0x589a40": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x58c50": [
+   "..\\multi\\database.cpp",
+   "a",
+   2
+  ],
+  "0x592740": [
+   "internal.cpp",
+   "a",
+   5
+  ],
+  "0x597920": [
+   "internal.cpp",
+   "c",
+   4
   ],
   "0x597a0": [
    "..\\multi\\database.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x598140": [
+   "internal.cpp",
+   "b",
+   5
+  ],
+  "0x598a30": [
+   "internal.cpp",
+   "b",
+   5
+  ],
+  "0x598d20": [
+   "internal.cpp",
+   "b",
+   5
+  ],
+  "0x598dd0": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x598fc0": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x599870": [
+   "internal.cpp",
+   "c",
+   4
+  ],
+  "0x599d60": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x59a870": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x59b930": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x59d30": [
+   "..\\multi\\database.cpp",
+   "seed",
+   0
   ],
   "0x5b3500": [
    "..\\exact\\relinker_internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x5b3bf0": [
+   "..\\exact\\relinker_internal.cpp",
+   "seed",
+   0
+  ],
+  "0x5bea50": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x5bebe0": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x5bed00": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x5bee40": [
+   "internal.cpp",
+   "b",
+   4
+  ],
+  "0x5c2200": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x5c2fa0": [
+   "..\\multi\\nesting_nester.cpp",
+   "a",
+   3
+  ],
+  "0x5c3060": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   4
+  ],
+  "0x5c3820": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   2
+  ],
+  "0x5c3d90": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   2
+  ],
+  "0x5c3f0": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   2
   ],
   "0x5c4140": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5c4610": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x5c5c0": [
    "..\\structure\\stats.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5c5ff0": [
    "internal.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
-  "0x5c830": [
-   "..\\multi\\float_filler.cpp",
-   "b: 6 distinctive callees"
+  "0x5c6170": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x5c61f0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   4
+  ],
+  "0x5c7c40": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   3
+  ],
+  "0x5c86e0": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   2
   ],
   "0x5c90a0": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5ca550": [
+   "internal.cpp",
+   "c",
+   2
+  ],
+  "0x5ca6a0": [
+   "cns_no_fit.cpp",
+   "c",
+   4
+  ],
+  "0x5ca7e0": [
+   "cns_no_fit.cpp",
+   "b",
+   5
   ],
   "0x5cac70": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5cb6f0": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5cbf00": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5cc0d0": [
+   "cns_no_fit.cpp",
+   "b",
+   4
+  ],
+  "0x5cc190": [
+   "cns_no_fit.cpp",
+   "a",
+   3
+  ],
+  "0x5ccb10": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   2
+  ],
+  "0x5ccc10": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x5ccd80": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x5ce270": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x5ce350": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x5cf060": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x5cfe60": [
+   "..\\structure\\stats.cpp",
+   "a",
+   2
   ],
   "0x5d0500": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5d1360": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5d1580": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5d1b40": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x5d1c50": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5d2370": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5d24f0": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x5d2a60": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5d5780": [
+   "..\\tiling\\optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x5d57c0": [
+   "..\\tiling\\optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x5d5800": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x5d5cc0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   2
   ],
   "0x5d7070": [
    "..\\structure\\svg_io.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x5d7270": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   2
+  ],
+  "0x5d790": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   2
   ],
   "0x5d9350": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x5d9da0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   2
   ],
   "0x5da140": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x5e6360": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x5e6460": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   3
+  ],
+  "0x5e7350": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x5e7790": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x5e78d0": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x5e7b70": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x5e7c40": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x5e8020": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x5e8100": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x5e8340": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x5e8570": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x5e9df0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x5e9fd0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x5ea310": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x5eaff0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   5
+  ],
+  "0x5eb090": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   4
+  ],
+  "0x5eb200": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x5eb470": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x5ec430": [
+   "..\\structure\\stats.cpp",
+   "c",
+   2
+  ],
+  "0x5ed870": [
+   "internal.cpp",
+   "c",
+   3
+  ],
+  "0x5edbc0": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x5ede60": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x5ee1a0": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x5ef7e0": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x5f0480": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x5f1f90": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x5f2790": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x5f4870": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   3
+  ],
+  "0x5f4d50": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x5f6620": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x5f6b40": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x5f7040": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   4
+  ],
+  "0x5f73c0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   3
+  ],
+  "0x5f79d0": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x5f8760": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   3
+  ],
+  "0x5f8860": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x5f8e20": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x5f9680": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
   ],
   "0x5f9d30": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x5fa240": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x5fb230": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   3
+  ],
+  "0x5fc7f0": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   3
+  ],
+  "0x5fc960": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   3
+  ],
+  "0x5fca80": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   3
+  ],
+  "0x5fcb90": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   3
+  ],
+  "0x5fcea0": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x5fcef0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   2
+  ],
+  "0x5fcf60": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x5fd870": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   3
+  ],
+  "0x5fe060": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   3
+  ],
+  "0x5feb70": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x5ff5a0": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x5ffad0": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   1
   ],
   "0x5ffe30": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x600300": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x600c40": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x601dc0": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   3
+  ],
+  "0x602270": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   3
+  ],
+  "0x602510": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   3
+  ],
+  "0x602f00": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   2
   ],
   "0x603010": [
    "..\\structure\\text_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x603740": [
    "..\\structure\\text_io.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
+  ],
+  "0x604020": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
   ],
   "0x604170": [
    "..\\structure\\text_io.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x608f60": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x60b720": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
+  ],
+  "0x60b7a0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
+  ],
+  "0x60ba50": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60bb40": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60bbb0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60be30": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x60bf30": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x60c110": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60c160": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60c2d0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60c2f0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c430": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c5a0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c750": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c780": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c7b0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c7e0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x60c8d0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   4
+  ],
+  "0x60c980": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60c9b0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x60ca30": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x60cd20": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   4
+  ],
+  "0x60cf60": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   3
+  ],
+  "0x60d380": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   4
+  ],
+  "0x62640": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x62650": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x62660": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x62670": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x62680": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x62690": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x626a0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x626b0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x626c0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x626d0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x626e0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   2
+  ],
+  "0x6451c0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   4
   ],
   "0x64b1c0": [
    "cns.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x64c290": [
    "cns_no_fit.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x64c480": [
    "cns_no_fit.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x64f850": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x652f60": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   3
   ],
   "0x653550": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x653670": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x656110": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x656a60": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x658250": [
+   "internal.cpp",
+   "a",
+   4
+  ],
+  "0x65a7a0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x65a8c0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "c",
+   2
+  ],
+  "0x65b820": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
+  ],
+  "0x65bc00": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x65bfc0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x65c0f0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x65c230": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
   ],
   "0x65c320": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x65cb60": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x65cc50": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
+  ],
+  "0x65dae0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
   ],
   "0x65dbf0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x65e310": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x65e530": [
    "..\\nesting\\algos\\postop.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x65e8d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
   ],
   "0x65f120": [
    "..\\nesting\\algos\\postop.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x65f640": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
   ],
   "0x660010": [
    "..\\nesting\\algos\\algo_parameters.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x660550": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   4
+  ],
+  "0x665f40": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
+  ],
+  "0x668f20": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
   ],
   "0x669df0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x669e60": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x66d9d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x66da90": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x66e960": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
   ],
   "0x66fd80": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x66ffa0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x6706a0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x671210": [
+   "..\\structure\\stats.cpp",
+   "c",
+   3
   ],
   "0x671b60": [
    "internal.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x673c60": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "seed",
+   0
   ],
   "0x6742b0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x674360": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x677af0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x677cb0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "seed",
+   0
   ],
   "0x678f40": [
    "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x679280": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
   ],
   "0x679f40": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x67d680": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x67dc00": [
    "cns_no_fit.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x67eca0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x67ef20": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x67ff00": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   3
+  ],
+  "0x680870": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   3
+  ],
+  "0x681040": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x6859f0": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x687e20": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
   ],
   "0x688fa0": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 6 distinctive callees"
+   "b",
+   1
   ],
   "0x68a1a0": [
    "..\\structure\\svg_io.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x68a6e0": [
+   "..\\multi\\supervisor.cpp",
+   "seed",
+   0
+  ],
+  "0x68f750": [
+   "..\\multi\\float_filler.cpp",
+   "seed",
+   0
+  ],
+  "0x693520": [
+   "..\\multi\\float_filler.cpp",
+   "seed",
+   0
+  ],
+  "0x693950": [
+   "..\\multi\\tiling_nester.cpp",
+   "seed",
+   0
+  ],
+  "0x696c50": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
+  ],
+  "0x698f10": [
+   "..\\multi\\nesting_nester.cpp",
+   "b",
+   2
+  ],
+  "0x69a110": [
+   "..\\engine\\cloud_engine.cpp",
+   "a",
+   3
+  ],
+  "0x69a720": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
   ],
   "0x69a8f0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x69aa40": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
   ],
   "0x69bd10": [
    "..\\multi\\nesting_context.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
-  "0x69be80": [
-   "..\\multi\\float_filler.cpp",
-   "b: 5 distinctive callees"
+  "0x6a7800": [
+   "..\\multi\\database.cpp",
+   "seed",
+   0
   ],
-  "0x69cb20": [
-   "..\\multi\\float_filler.cpp",
-   "b: 6 distinctive callees"
+  "0x6aab10": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   4
   ],
   "0x6bbf20": [
    "..\\multi\\tiling_nester.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x6bc540": [
    "..\\multi\\tiling_nester.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x6bd4a0": [
    "..\\multi\\marker.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x6be250": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   3
+  ],
+  "0x6be760": [
+   "internal.cpp",
+   "c",
+   3
   ],
   "0x6c78f0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x6c81d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   4
+  ],
+  "0x6c8590": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   4
+  ],
+  "0x6cb4a0": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a",
+   3
+  ],
+  "0x6cbc30": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   2
   ],
   "0x6cbe80": [
    "..\\nesting\\algos\\algo_parameters.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x6cc580": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
+  ],
+  "0x6cc950": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   4
+  ],
+  "0x6d2980": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "c",
+   2
+  ],
+  "0x6d2ea0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x6d3640": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   2
+  ],
+  "0x6d41a0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   3
+  ],
+  "0x6d470": [
+   "..\\multi\\rectangle_nester.cpp",
+   "seed",
+   0
+  ],
+  "0x6d4ad0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   3
   ],
   "0x6d5b30": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x6d5d80": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x6d5f90": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x6d6270": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x6d63c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
   ],
   "0x6d6680": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x6d6870": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x6d6940": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x6d6b50": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
+  ],
+  "0x6d6ca0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
+  ],
+  "0x6d6f60": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   5
+  ],
+  "0x6d70b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   5
+  ],
+  "0x6d7200": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "c",
+   3
+  ],
+  "0x6dd5a0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x6dd700": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
   ],
   "0x6ddec0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x6de0f0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x6de240": [
    "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x6de8a0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x6f8e60": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x6f8ec0": [
+   "cns_no_fit.cpp",
+   "c",
+   2
+  ],
+  "0x7003e0": [
+   "cns_no_fit.cpp",
+   "a",
+   5
+  ],
+  "0x700460": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x700e80": [
+   "cns_no_fit.cpp",
+   "b",
+   3
+  ],
+  "0x707830": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x707fd0": [
+   "cns_no_fit.cpp",
+   "b",
+   3
   ],
   "0x70d220": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x70d4e0": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x722a0": [
+  "0x70d610": [
    "..\\verify\\equivalent.cpp",
-   "b: 6 distinctive callees"
+   "a",
+   3
+  ],
+  "0x70ede0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x7101d0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   5
+  ],
+  "0x715320": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x716a10": [
+   "cns_no_fit.cpp",
+   "a",
+   3
+  ],
+  "0x717460": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x71b540": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x71be70": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   3
+  ],
+  "0x71c660": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   3
+  ],
+  "0x71f670": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   3
+  ],
+  "0x721de0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x721ff0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   3
+  ],
+  "0x723910": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x723b20": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   3
+  ],
+  "0x7243e0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x7257e0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   2
+  ],
+  "0x726550": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   2
+  ],
+  "0x7270": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
   ],
   "0x72b7d0": [
    "cns_no_fit.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x72e930": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   3
+  ],
+  "0x72eee0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   3
+  ],
+  "0x72ffd0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x7384e0": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x7391c0": [
+   "cns_no_fit.cpp",
+   "c",
+   5
+  ],
+  "0x739c20": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x73a300": [
+   "cns_no_fit.cpp",
+   "a",
+   3
+  ],
+  "0x73b6f0": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x73bdd0": [
+   "cns_no_fit.cpp",
+   "a",
+   3
+  ],
+  "0x73d1c0": [
+   "cns_no_fit.cpp",
+   "c",
+   5
+  ],
+  "0x73d250": [
+   "cns_no_fit.cpp",
+   "b",
+   4
+  ],
+  "0x7418f0": [
+   "cns_no_fit.cpp",
+   "b",
+   4
+  ],
+  "0x7460b0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x746830": [
+   "cns_no_fit.cpp",
+   "b",
+   2
+  ],
+  "0x7469b0": [
+   "cns_no_fit.cpp",
+   "c",
+   4
+  ],
+  "0x747b30": [
+   "cns_no_fit.cpp",
+   "b",
+   5
+  ],
+  "0x74b390": [
+   "cns_no_fit.cpp",
+   "a",
+   5
+  ],
+  "0x74b430": [
+   "cns_no_fit.cpp",
+   "b",
+   4
+  ],
+  "0x74b660": [
+   "cns_no_fit.cpp",
+   "a",
+   4
+  ],
+  "0x74b700": [
+   "cns_no_fit.cpp",
+   "c",
+   3
+  ],
+  "0x74b9b0": [
+   "cns_no_fit.cpp",
+   "c",
+   4
+  ],
+  "0x74c0": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
+  ],
+  "0x754e70": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x754f10": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x75ddf0": [
+   "..\\engine\\engine.cpp",
+   "seed",
+   0
+  ],
+  "0x760330": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x760d90": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x762900": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x763b10": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x764a80": [
+   "..\\tiling\\packer_cache.cpp",
+   "seed",
+   0
+  ],
+  "0x765460": [
+   "..\\tiling\\packer_cache.cpp",
+   "seed",
+   0
   ],
   "0x768a60": [
    "..\\tiling\\packer_cache.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x768b80": [
+   "..\\tiling\\packer_cache.cpp",
+   "seed",
+   0
+  ],
+  "0x769410": [
+   "..\\tiling\\packer_cache.cpp",
+   "seed",
+   0
+  ],
+  "0x76a010": [
+   "..\\tiling\\packer_cache.cpp",
+   "seed",
+   0
   ],
   "0x76b450": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 6 distinctive callees"
+   "b",
+   1
+  ],
+  "0x76c8d0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
   ],
   "0x76db50": [
    "..\\tiling\\optimizer.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x76df60": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   5
   ],
   "0x76e210": [
    "..\\tiling\\optimizer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x76e440": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x76ef00": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x76f0a0": [
+   "internal.cpp",
+   "b",
+   3
+  ],
+  "0x76f270": [
+   "internal.cpp",
+   "a",
+   3
   ],
   "0x76f340": [
    "..\\tiling\\optimizer.cpp",
-   "b: 8 distinctive callees"
+   "b",
+   1
   ],
   "0x76fa20": [
    "..\\tiling\\packer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x772d40": [
-   "..\\multi\\nesting_context.cpp",
-   "b: 4 distinctive callees"
+  "0x770d10": [
+   "..\\tiling\\packer.cpp",
+   "seed",
+   0
+  ],
+  "0x7751e0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "c",
+   2
+  ],
+  "0x775fb0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   3
   ],
   "0x7763a0": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x786e0": [
    "..\\multi\\nesting_nester.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x79540": [
    "..\\multi\\nesting_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7b2a60": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x7b2fc0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   3
+  ],
+  "0x7b4000": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x7b4b60": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
   ],
   "0x7b53e0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x7b56c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
   ],
   "0x7b6260": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7b8620": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x7b8dc0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b",
+   2
+  ],
+  "0x7b9690": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x7b9860": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x7ba050": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x7ba1d0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
   ],
   "0x7ba5f0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x7ba830": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x7ba9a0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
   ],
   "0x7bab90": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x7bb330": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x7bb9a0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
+  ],
+  "0x7bbcd0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x7bc180": [
+   "..\\structure\\border_property.hpp",
+   "seed",
+   0
   ],
   "0x7bfea0": [
    "..\\structure\\problem.cpp",
-   "a: all callers agree"
-  ],
-  "0x7c21c0": [
-   "..\\multi\\float_filler.cpp",
-   "b: 4 distinctive callees"
+   "a",
+   1
   ],
   "0x7c4ae0": [
    "..\\structure\\svg_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x7c5b70": [
+   "..\\nesting\\algos\\postop.cpp",
+   "seed",
+   0
+  ],
+  "0x7c68d0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x7c73a0": [
+   "..\\nesting\\algos\\postop.cpp",
+   "b",
+   2
+  ],
+  "0x7c7e70": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
+  ],
+  "0x7d2610": [
+   "..\\multi\\supervisor.cpp",
+   "seed",
+   0
+  ],
+  "0x7d29f0": [
+   "..\\multi\\supervisor.cpp",
+   "seed",
+   0
+  ],
+  "0x7d34c0": [
+   "..\\multi\\tiling_nester.cpp",
+   "b",
+   2
   ],
   "0x7d3530": [
    "..\\multi\\tiling_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x7d36e0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 3 distinctive callees"
-  ],
-  "0x7d5790": [
+  "0x7d3e50": [
    "..\\multi\\nesting_context.cpp",
-   "b: 4 distinctive callees"
+   "seed",
+   0
+  ],
+  "0x7d4050": [
+   "..\\multi\\nesting_context.cpp",
+   "seed",
+   0
+  ],
+  "0x7d7c00": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   5
+  ],
+  "0x7db7d0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   5
+  ],
+  "0x7dbb00": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x7deed0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x7df160": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x7dffb0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   4
+  ],
+  "0x7e0240": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x7e0550": [
+   "cns_no_fit.cpp",
+   "b",
+   3
+  ],
+  "0x7e1200": [
+   "cns_no_fit.cpp",
+   "c",
+   2
   ],
   "0x7e5850": [
    "..\\tiling\\packer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7e8150": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
   ],
   "0x7e8520": [
    "..\\tiling\\packer.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7e8820": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
   ],
   "0x7e8dd0": [
    "..\\tiling\\packer.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x7e9580": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x7eb5e0": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x7eb990": [
    "..\\tiling\\packer_cache.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7ebb90": [
+   "..\\tiling\\optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x7ebc30": [
+   "..\\tiling\\optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x7ebdb0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x7ebfc0": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x7ec210": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
   ],
   "0x7ec460": [
    "..\\tiling\\optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x7ec9a0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 8 distinctive callees"
+   "b",
+   1
   ],
   "0x7ed7c0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x7ee010": [
    "..\\tiling\\optimizer.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7ee7b0": [
+   "..\\tiling\\optimizer.cpp",
+   "seed",
+   0
   ],
   "0x7eedb0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
+  ],
+  "0x7f0f00": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
   ],
   "0x7f1b50": [
    "..\\tiling\\optimizer.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x7f2ae0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
-  "0x83dc0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 4 distinctive callees"
+  "0x7f3090": [
+   "cns_no_fit.cpp",
+   "a",
+   2
   ],
-  "0x86160": [
+  "0x81350": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x814a0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   5
+  ],
+  "0x81700": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x81b30": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x81c370": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x81c690": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x81c9b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x81ccd0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "seed",
+   0
+  ],
+  "0x81e80": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x82050": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x82390": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x824b0": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
+  ],
+  "0x8286f0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x8539c0": [
    "..\\verify\\equivalent.cpp",
-   "b: 5 distinctive callees"
+   "c",
+   5
+  ],
+  "0x853a60": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x853b00": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
   ],
   "0x8642d0": [
    "..\\engine\\cloud_engine.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x86d8f0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   5
+  ],
+  "0x86e940": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   3
+  ],
+  "0x8704d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x871270": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   2
   ],
   "0x871b20": [
    "..\\multi\\marker.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8721a0": [
    "..\\multi\\tiling_nester.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x872730": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x8733b0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x873470": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   3
   ],
   "0x873750": [
    "..\\structure\\problem.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
   ],
   "0x874270": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8743a0": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8743f0": [
+   "..\\nesting\\ios\\log_ios.cpp",
+   "a",
+   2
+  ],
+  "0x874490": [
+   "internal.cpp",
+   "b",
+   2
+  ],
+  "0x889d00": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   3
+  ],
+  "0x88f530": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   4
+  ],
+  "0x88f5c0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b",
+   3
+  ],
+  "0x8926a0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x892830": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x896210": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   4
+  ],
+  "0x8964d0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
+  ],
+  "0x896560": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x896a10": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
+  ],
+  "0x896cc0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
   ],
   "0x896dd0": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x896f30": [
+  "0x896e60": [
    "..\\multi\\nesting_context.cpp",
-   "b: 2 distinctive callees"
+   "a",
+   4
+  ],
+  "0x897100": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "c",
+   3
+  ],
+  "0x8971a0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   3
+  ],
+  "0x8971e0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x897400": [
+   "internal.cpp",
+   "a",
+   2
+  ],
+  "0x8975c0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
   ],
   "0x897650": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x897a10": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x897c50": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x897ff0": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x8981a0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   3
+  ],
+  "0x898220": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
   ],
   "0x899690": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x89a240": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x89b7b0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
   ],
   "0x89c1a0": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x89cdc0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   5
+  ],
+  "0x89d5e0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x89d8f0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x89dfa0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x89dfe0": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
   ],
   "0x89e2b0": [
    "..\\structure\\problem.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x89e5f0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x89ed70": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x89ef70": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x89f440": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   5
+  ],
+  "0x89f580": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x89f760": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   4
+  ],
+  "0x89f7b0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x89fb20": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x89fdd0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   4
+  ],
+  "0x8a0de0": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   3
   ],
   "0x8ae730": [
    "..\\nesting\\algos\\postop.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x8b3d60": [
+  "0x8aeb30": [
+   "internal.cpp",
+   "a",
+   4
+  ],
+  "0x8aecd0": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x8af220": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   3
+  ],
+  "0x8b1080": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   2
+  ],
+  "0x8b280": [
+   "..\\multi\\marker.cpp",
+   "seed",
+   0
+  ],
+  "0x8b3fa0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   4
   ],
   "0x8b4bb0": [
    "..\\nesting\\algos\\compact.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x8b8250": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x8b5230": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x8b5a20": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x8b6360": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   2
+  ],
+  "0x8b6ac0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x8b7200": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
   ],
   "0x8b8420": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x8b8650": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x8b93b0": [
+   "internal.cpp",
+   "a",
+   2
+  ],
+  "0x8b9550": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x8b9620": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8b9d10": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
   ],
   "0x8ba000": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x8ba380": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8ba400": [
    "..\\nesting\\structure_interface_private.hpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0x8bf4c0": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x8ba440": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
   ],
-  "0x8c0570": [
-   "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+  "0x8ba550": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x8ba70": [
+   "..\\multi\\marker.cpp",
+   "seed",
+   0
+  ],
+  "0x8bb280": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   4
+  ],
+  "0x8bccb0": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   3
+  ],
+  "0x8bda70": [
+   "..\\tiling\\packer.cpp",
+   "c",
+   3
+  ],
+  "0x8bdec0": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
+  ],
+  "0x8be440": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x8be780": [
+   "internal.cpp",
+   "a",
+   4
+  ],
+  "0x8be930": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x8c1050": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   3
   ],
   "0x8c1920": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8c20a0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8c21f0": [
+   "internal.cpp",
+   "c",
+   2
+  ],
+  "0x8c2380": [
+   "internal.cpp",
+   "c",
+   2
+  ],
+  "0x8c28a0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x8c2b60": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x8c33b0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x8c3940": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x8c3d30": [
+   "cns_no_fit.cpp",
+   "c",
+   2
+  ],
+  "0x8c5960": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
   ],
   "0x8c6fc0": [
    "..\\tiling\\packer.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x8c7310": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x8c7f90": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x8c8160": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
   ],
   "0x8c8450": [
    "..\\tiling\\packer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x8c9e20": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x8ca320": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x8cdad0": [
+   "internal.cpp",
+   "c",
+   4
+  ],
+  "0x8ce5b0": [
+   "internal.cpp",
+   "a",
+   5
   ],
   "0x8cee00": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8cf220": [
    "..\\multi\\marker.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d0840": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d0a90": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d0cd0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d0d30": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d0f80": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d11c0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d1220": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d1470": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8d16b0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8d1710": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   5
+  ],
+  "0x8d1fe0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x8d20a0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   3
+  ],
+  "0x8d22f0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   4
+  ],
+  "0x8d4500": [
+   "..\\engine\\engine.cpp",
+   "seed",
+   0
+  ],
+  "0x8d4d90": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x8d5630": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x8d5dd0": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x8d6460": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x8d6990": [
+   "..\\tiling\\packer_cache.cpp",
+   "b",
+   2
+  ],
+  "0x8d7260": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x8d82c0": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   2
+  ],
+  "0x8d8a80": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x8d9600": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   4
+  ],
+  "0x8db320": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   5
+  ],
+  "0x8db50": [
+   "..\\structure\\stats.cpp",
+   "b",
+   2
+  ],
+  "0x8dff50": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x8e0390": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x8e0890": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x8e0a20": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
   ],
   "0x8e1bd0": [
    "..\\structure\\text_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8e1dd0": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   4
+  ],
+  "0x8e22a0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x8e2a60": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x8e5a10": [
+   "..\\structure\\text_io.cpp",
+   "c",
+   2
+  ],
+  "0x8e62e0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x8e6af0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x8e6d70": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x8e70": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
   ],
   "0x8e7160": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x8e7510": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
   "0x8e76a0": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
   "0x8e7760": [
    "..\\structure\\automatic_cluster.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
   ],
   "0x8e77c0": [
    "..\\structure\\automatic_cluster.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8e7c50": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x8e7eb0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x8e7f10": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   5
   ],
   "0x8e8690": [
    "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x8e8840": [
+   "..\\multi\\nesting_context.cpp",
+   "c",
+   3
+  ],
+  "0x8e8db0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x8e92b0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
   ],
   "0x8e9840": [
    "..\\structure\\multitorch_eval.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8ea5e0": [
    "..\\structure\\text_io.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8eab20": [
+   "internal.cpp",
+   "c",
+   2
   ],
   "0x8eb110": [
    "..\\structure\\problem.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
   ],
-  "0x8ed190": [
-   "..\\multi\\float_filler.cpp",
-   "b: 6 distinctive callees"
+  "0x8ec0a0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   2
+  ],
+  "0x8eca70": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   3
+  ],
+  "0x8ed960": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x8f0f20": [
+   "..\\structure\\multitorch_eval.cpp",
+   "a",
+   2
+  ],
+  "0x8f2d00": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b",
+   3
+  ],
+  "0x8f31d0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   4
+  ],
+  "0x8f3470": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
   ],
   "0x8f4e40": [
    "..\\verify\\equivalent.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f5530": [
    "..\\structure\\automatic_cluster.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f5840": [
    "..\\structure\\automatic_cluster.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f5990": [
    "..\\structure\\automatic_cluster.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f5fd0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8f6710": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
   ],
   "0x8f69f0": [
    "..\\nesting\\algos\\compact.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f74a0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8f7840": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
   ],
   "0x8f7b80": [
    "..\\nesting\\algos\\tree_db.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f7ce0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8f7e30": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b",
+   2
+  ],
+  "0x8f8010": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x8f81b0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x8f8610": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x8f87e0": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x8f89b0": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
   ],
   "0x8f90f0": [
    "cns.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8f9dc0": [
    "cns.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8fc6b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x8fc870": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
+  ],
+  "0x8fcd60": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   3
   ],
   "0x8fcf20": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8fcf80": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x8fd1e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x8fe420": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
   ],
   "0x8fe5e0": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x8fe860": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x8fea20": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
   ],
   "0x8febe0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8ff520": [
    "..\\structure\\problem.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8ff620": [
    "..\\structure\\problem.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x8ffb20": [
    "..\\nesting\\algos\\postop.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x9007b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   4
   ],
   "0x900820": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x900980": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x900ae0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   1
   ],
   "0x900c00": [
    "..\\nesting\\algos\\bucket_manager.hpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x902440": [
-   "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+  "0x900d40": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x900db0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x900fc0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x9016c0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x901f60": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x902100": [
+   "..\\structure\\stats.cpp",
+   "a",
+   2
+  ],
+  "0x902220": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x9040d0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
+  ],
+  "0x9041f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
+  ],
+  "0x904250": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "c",
+   2
+  ],
+  "0x9058e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   5
+  ],
+  "0x905b60": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x9067e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x906950": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x906b60": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x906fb0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x907150": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x9074f0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x908200": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
+  ],
+  "0x9083b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
+  ],
+  "0x908890": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   2
+  ],
+  "0x908a20": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x908f60": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
   ],
   "0x9098e0": [
    "..\\nesting\\ios\\log_ios.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x909e40": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a",
+   3
+  ],
+  "0x90b1d0": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
+  ],
+  "0x90bfd0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   4
+  ],
+  "0x90c000": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x90cdd0": [
+   "..\\multi\\supervisor.cpp",
+   "a",
+   2
+  ],
+  "0x90dcc0": [
+   "..\\structure\\multitorch_eval.cpp",
+   "a",
+   2
+  ],
+  "0x915480": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   3
+  ],
+  "0x91c0": [
+   "cns_no_fit.cpp",
+   "seed",
+   0
+  ],
+  "0x922f40": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x922ff0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x923110": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x9232b0": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x923360": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x923480": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x923620": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x9236d0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x9237f0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x92a6d0": [
-   "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+  "0x9243d0": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
+  ],
+  "0x924580": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   3
+  ],
+  "0x924e60": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x924f80": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x924fd0": [
+   "..\\verify\\equivalent.cpp",
+   "a",
+   5
+  ],
+  "0x9250b0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x925150": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x925890": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   5
+  ],
+  "0x925930": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x926580": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   3
+  ],
+  "0x926880": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x926e80": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x9273c0": [
+   "internal.cpp",
+   "c",
+   3
+  ],
+  "0x927630": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   2
+  ],
+  "0x927b10": [
+   "internal.cpp",
+   "c",
+   3
+  ],
+  "0x928bc0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
   ],
   "0x92af20": [
    "..\\structure\\problem.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x92dcf0": [
+   "..\\structure\\text_io.cpp",
+   "b",
+   2
   ],
   "0x92efd0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x92f2b0": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   3
+  ],
+  "0x9302c0": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   3
+  ],
+  "0x9308c0": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   3
+  ],
+  "0x931320": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x9313d0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x9314f0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x931da0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   2
   ],
   "0x931e50": [
    "..\\nesting\\algos\\multinesting_optimizer.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x931ff0": [
    "..\\multi\\nesting_context.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x9320a0": [
+   "..\\multi\\nesting_context.cpp",
+   "c",
+   1
+  ],
+  "0x9325c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   5
+  ],
+  "0x9326d0": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x932780": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x932840": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x9328f0": [
    "internal.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x9329b0": [
+   "internal.cpp",
+   "a",
+   2
   ],
   "0x932a60": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x932b80": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
-  "0x934080": [
-   "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+  "0x934460": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   2
+  ],
+  "0x934600": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x934780": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   3
+  ],
+  "0x935190": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x935590": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x9356c0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
+  ],
+  "0x935b70": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   4
+  ],
+  "0x935d80": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   3
+  ],
+  "0x935f30": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x9367c0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   3
+  ],
+  "0x9368b0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a",
+   2
+  ],
+  "0x937a70": [
+   "cns_no_fit.cpp",
+   "a",
+   3
+  ],
+  "0x938a40": [
+   "internal.cpp",
+   "a",
+   3
+  ],
+  "0x938b20": [
+   "internal.cpp",
+   "a",
+   2
+  ],
+  "0x938d80": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x939110": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   2
+  ],
+  "0x9392b0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x93ab30": [
+   "..\\structure\\stats.cpp",
+   "a",
+   2
+  ],
+  "0x93ad70": [
+   "..\\structure\\stats.cpp",
+   "b",
+   4
+  ],
+  "0x93b100": [
+   "..\\structure\\stats.cpp",
+   "c",
+   2
+  ],
+  "0x93c180": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   3
+  ],
+  "0x93c930": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   4
+  ],
+  "0x93cef0": [
+   "..\\structure\\svg_io.cpp",
+   "c",
+   4
+  ],
+  "0x93d090": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x93d430": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x93d5b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "c",
+   2
   ],
   "0x93e2c0": [
    "internal.cpp",
-   "a: all callers agree"
+   "a",
+   1
   ],
   "0x93e7b0": [
    "internal.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x93eb80": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x93ee10": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   2
+  ],
+  "0x93f660": [
+   "..\\multi\\nesting_context.cpp",
+   "c",
+   2
   ],
   "0x93fbb0": [
    "..\\multi\\nesting_context.cpp",
-   "c: one labelled caller + shared distinctive callee"
+   "c",
+   1
+  ],
+  "0x9424b0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   3
+  ],
+  "0x942780": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x942890": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x942a30": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   3
+  ],
+  "0x942dd0": [
+   "..\\verify\\equivalent.cpp",
+   "b",
+   5
+  ],
+  "0x942f50": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x946b00": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x949740": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x94b430": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x94b800": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
+  ],
+  "0x94bb20": [
+   "..\\tiling\\optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x94c320": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   4
+  ],
+  "0x94c410": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x94c560": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x94c820": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x951240": [
+   "..\\structure\\text_io.cpp",
+   "a",
+   5
+  ],
+  "0x9513a0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x951570": [
+   "cns_no_fit.cpp",
+   "a",
+   5
+  ],
+  "0x951ca0": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   5
+  ],
+  "0x9538f0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x953aa0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   3
+  ],
+  "0x9552d0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x956a80": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x9575a0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x957d40": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   2
+  ],
+  "0x958090": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x9594a0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   3
+  ],
+  "0x95a210": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x95abe0": [
+   "internal.cpp",
+   "a",
+   5
+  ],
+  "0x95c40": [
+   "..\\multi\\tiling_nester.cpp",
+   "c",
+   3
   ],
   "0x95cdc0": [
    "..\\tiling\\optimizer.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x96110": [
+   "..\\multi\\tiling_nester.cpp",
+   "c",
+   2
+  ],
+  "0x962be0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "c",
+   2
+  ],
+  "0x962c60": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x962d80": [
+   "..\\structure\\automatic_cluster.cpp",
+   "c",
+   2
+  ],
+  "0x962e00": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x9640d0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   4
   ],
   "0x96460": [
    "..\\multi\\tiling_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x966410": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   4
+  ],
+  "0x966c30": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
+  ],
+  "0x9681c0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b",
+   2
+  ],
+  "0x969e80": [
+   "..\\tiling\\packer_cache.cpp",
+   "c",
+   5
   ],
   "0x96a820": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 4 distinctive callees"
+   "b",
+   1
+  ],
+  "0x96aa90": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   5
+  ],
+  "0x96acf0": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   3
   ],
   "0x96b260": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x96b740": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b",
+   3
+  ],
+  "0x96b9a0": [
+   "..\\structure\\stats.cpp",
+   "c",
+   3
+  ],
+  "0x96bb00": [
+   "..\\structure\\stats.cpp",
+   "b",
+   3
+  ],
+  "0x96cd70": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   2
+  ],
+  "0x96d4b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   2
+  ],
+  "0x96e520": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   2
+  ],
+  "0x96f8f0": [
+   "cns_no_fit.cpp",
+   "c",
+   4
+  ],
+  "0x970050": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   4
   ],
   "0x972ec0": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x973890": [
+   "..\\structure\\stats.cpp",
+   "c",
+   3
+  ],
+  "0x9759b0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x975e90": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x9763c0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
+  ],
+  "0x976800": [
+   "..\\structure\\stats.cpp",
+   "b",
+   3
+  ],
+  "0x977a0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x9787d0": [
+   "..\\structure\\stats.cpp",
+   "b",
+   3
+  ],
+  "0x979210": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   3
+  ],
+  "0x9794f0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
+  ],
+  "0x9797e0": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x97a40": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x97afc0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x97b090": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x97b150": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x97b60": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x97bf10": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   5
+  ],
+  "0x97c1e0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b",
+   2
   ],
   "0x97c4a0": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0x97c670": [
+   "..\\structure\\stats.cpp",
+   "b",
+   3
+  ],
+  "0x97d10": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x97d940": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   5
+  ],
+  "0x97e2f0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x97e420": [
+   "..\\structure\\svg_io.cpp",
+   "a",
+   4
+  ],
+  "0x97e530": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x97ea90": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a",
+   3
+  ],
+  "0x97eba0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   3
+  ],
+  "0x97f400": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x97f660": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x97f750": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   2
+  ],
+  "0x97f850": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x98050": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
   ],
   "0x981ab0": [
    "..\\structure\\automatic_cluster.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x982410": [
+   "..\\structure\\stats.cpp",
+   "b",
+   3
+  ],
+  "0x983d40": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x984a0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x986150": [
+   "..\\tiling\\packer.cpp",
+   "a",
+   5
+  ],
+  "0x9862a0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c",
+   2
+  ],
+  "0x986760": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a",
+   2
+  ],
+  "0x986860": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x987c50": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   5
+  ],
+  "0x98820": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x98a6f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a",
+   4
+  ],
+  "0x98b920": [
+   "..\\engine\\cloud_engine.cpp",
+   "b",
+   2
+  ],
+  "0x98c1b0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a",
+   3
+  ],
+  "0x98c390": [
+   "..\\tiling\\optimizer.cpp",
+   "a",
+   4
   ],
   "0x98d960": [
    "..\\nesting\\algos\\tree_db.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x98da70": [
+   "..\\structure\\stats.cpp",
+   "a",
+   4
+  ],
+  "0x98db50": [
+   "..\\structure\\stats.cpp",
+   "a",
+   3
+  ],
+  "0x98ee60": [
+   "..\\tiling\\packer_cache.cpp",
+   "a",
+   3
   ],
   "0x98ef50": [
    "..\\structure\\automatic_cluster.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x991f80": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
   ],
   "0x992c0": [
    "..\\multi\\nesting_context.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
+  ],
+  "0x99360": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x9985d0": [
+   "..\\nesting\\algos\\algo_helpers.hpp",
+   "seed",
+   0
+  ],
+  "0x99910": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
   ],
   "0x999af0": [
    "..\\engine\\cloud_engine.cpp",
-   "a: all callers agree"
+   "a",
+   1
+  ],
+  "0x99ad0": [
+   "..\\multi\\tiling_nester.cpp",
+   "c",
+   2
+  ],
+  "0x99fed0": [
+   "..\\verify\\equivalent.cpp",
+   "c",
+   4
+  ],
+  "0x9a01e0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a",
+   3
+  ],
+  "0x9a690": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x9acd0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   4
+  ],
+  "0x9af90": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x9b300": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   3
+  ],
+  "0x9c060": [
+   "..\\multi\\tiling_nester.cpp",
+   "a",
+   2
   ],
   "0x9c280": [
    "..\\multi\\tiling_nester.cpp",
-   "b: 5 distinctive callees"
+   "b",
+   1
   ],
   "0x9cd30": [
    "..\\multi\\tiling_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
+  ],
+  "0x9d760": [
+   "..\\multi\\tiling_nester.cpp",
+   "b",
+   2
   ],
   "0x9e1d0": [
    "..\\multi\\tiling_nester.cpp",
-   "b: 2 distinctive callees"
+   "b",
+   1
   ],
-  "0xa3900": [
-   "..\\multi\\float_filler.cpp",
-   "b: 6 distinctive callees"
+  "0x9e510": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   4
   ],
-  "0xa3e10": [
-   "..\\multi\\float_filler.cpp",
-   "b: 7 distinctive callees"
+  "0x9e660": [
+   "..\\tiling\\packer.cpp",
+   "b",
+   2
   ],
-  "0xa53b0": [
-   "..\\multi\\float_filler.cpp",
-   "b: 7 distinctive callees"
+  "0x9ed20": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   3
   ],
-  "0xa6950": [
-   "..\\multi\\float_filler.cpp",
-   "b: 6 distinctive callees"
+  "0xaa250": [
+   "..\\multi\\nesting_context.cpp",
+   "a",
+   3
   ],
-  "0xa85d0": [
-   "..\\multi\\float_filler.cpp",
-   "b: 6 distinctive callees"
+  "0xaa9d0": [
+   "..\\multi\\nesting_context.cpp",
+   "b",
+   2
   ],
-  "0xadad0": [
-   "..\\verify\\equivalent.cpp",
-   "b: 3 distinctive callees"
+  "0xaac40": [
+   "..\\structure\\svg_io.cpp",
+   "b",
+   2
   ],
   "0xaf7d0": [
    "..\\multi\\nesting_nester.cpp",
-   "b: 3 distinctive callees"
+   "b",
+   1
+  ],
+  "0xb5ba0": [
+   "..\\multi\\nesting_nester.cpp",
+   "a",
+   3
+  ],
+  "0xb5d10": [
+   "..\\multi\\nesting_nester.cpp",
+   "a",
+   3
+  ],
+  "0xb600": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xb750": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xba50": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xbd90": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xcf20": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xd460": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xd710": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xd870": [
+   "cns.cpp",
+   "seed",
+   0
+  ],
+  "0xf7c0": [
+   "cns.cpp",
+   "seed",
+   0
   ]
  },
- "top_tus": {
-  "..\\engine\\cloud_engine.cpp": 3,
-  "..\\exact\\relinker_internal.cpp": 1,
-  "..\\multi\\database.cpp": 10,
-  "..\\multi\\float_filler.cpp": 11,
-  "..\\multi\\marker.cpp": 4,
-  "..\\multi\\nesting_context.cpp": 54,
-  "..\\multi\\nesting_nester.cpp": 6,
-  "..\\multi\\supervisor.cpp": 5,
-  "..\\multi\\tiling_nester.cpp": 10,
-  "..\\nesting\\algos\\algo_helpers.hpp": 1,
-  "..\\nesting\\algos\\algo_parameters.cpp": 6,
-  "..\\nesting\\algos\\bucket_manager.hpp": 42,
-  "..\\nesting\\algos\\compact.hpp": 16,
-  "..\\nesting\\algos\\multinesting_optimizer.cpp": 14,
-  "..\\nesting\\algos\\postop.cpp": 6,
-  "..\\nesting\\algos\\sheet_optimizer.cpp": 1,
-  "..\\nesting\\algos\\tree_db.cpp": 20,
-  "..\\nesting\\algos\\tree_db.hpp": 2,
-  "..\\nesting\\ios\\log_ios.cpp": 2,
-  "..\\nesting\\structure_interface_private.hpp": 8,
-  "..\\structure\\automatic_cluster.cpp": 21,
-  "..\\structure\\multitorch_eval.cpp": 3,
-  "..\\structure\\problem.cpp": 13,
-  "..\\structure\\stats.cpp": 11,
-  "..\\structure\\svg_io.cpp": 26,
-  "..\\structure\\text_io.cpp": 14,
-  "..\\tiling\\optimizer.cpp": 20,
-  "..\\tiling\\packer.cpp": 18,
-  "..\\tiling\\packer_cache.cpp": 17,
-  "..\\verify\\equivalent.cpp": 47,
-  "cns.cpp": 3,
-  "cns_no_fit.cpp": 16,
-  "internal.cpp": 43
+ "rules": {
+  "a": 718,
+  "b": 495,
+  "c": 231,
+  "seed": 151
  }
 }
