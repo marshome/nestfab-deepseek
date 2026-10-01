@@ -176,6 +176,10 @@ int main() {
         CHECK(c[2].x == 5.0 && c[2].y == 8.0);   // (x1,y1)
         CHECK(c[3].x == 1.0 && c[3].y == 8.0);   // (x0,y1)
         for (int i = 0; i < 4; ++i) CHECK(c[i].z == 0.0);   // every third slot is zero
+        // the recovered allocation size and point count, and that our struct matches the record
+        CHECK(geom::kRectangleCornerCount == 4);
+        CHECK(geom::kRectangleRecordBytes == 0x60);
+        CHECK(sizeof(geom::RectCorner) * geom::kRectangleCornerCount == geom::kRectangleRecordBytes);
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----

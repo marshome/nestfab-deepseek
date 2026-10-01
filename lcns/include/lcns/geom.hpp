@@ -310,6 +310,14 @@ struct RectCorner {
     double z = 0.0;   // the third slot of every triple is zero in the original
 };
 
+// RE the same three Add* entries (0x15620 AddRectanglePart, 0x13800 AddHoleToPart,
+// 0x13410 AddExternalBoundaryToPart) all build the same thing: a stack record of 12 doubles
+// (0x60 bytes), the count 4 written to a field, then operator new(0x60) at 0x998500 and a call into
+// the shared "attach geometry to part" routine. The two numbers below are therefore not guesses:
+// they are the allocation size and the point count those routines use.
+inline constexpr int kRectangleCornerCount = 4;        // RE 0x156D1 r8d = 4, 0x138DE [rsp+0x40] = 4
+inline constexpr std::size_t kRectangleRecordBytes = 0x60;   // RE 0x1566F / 0x138xx ecx = 0x60
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 
