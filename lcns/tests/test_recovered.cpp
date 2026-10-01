@@ -1843,6 +1843,20 @@ int main() {
         CHECK(kFamilyMember5Primary == kFamilyMember5Base + 0x10);
         CHECK(kFamilyMember5Primary == kRatioAlmostPrimary);   // two members share this primary offset
         CHECK(kRatioFamilyMembers2 == 5);
+        // round 241: the mapper, a 40-byte walk and the twins' offsets confirmed again
+        CHECK(kRecordStride40 == 0x28);
+        CHECK(kRecordStride40 == 40);
+        CHECK(kRecordStride40 != kStride56);
+        CHECK(kRecordStride40 != kStride152);
+        CHECK(kRecordStride40 != kScanStride120);
+        CHECK(kMapperFieldA == 0x78);
+        CHECK(kMapperFieldB == 0x80);
+        CHECK(kMapperCompare == 0x48);
+        CHECK(kMapperFieldA == kRatioFamilyNumB);
+        CHECK(kMapperFieldB == kRatioFamilyDenA);
+        CHECK(kMapperCompare == kRatioFamilyDenB);
+        CHECK(kMapperFieldB - kMapperFieldA == 8);
+        CHECK(kStride152Sightings == 2);
         CHECK(kWrapperSource - kWrapperFirstField == 0x38);
         CHECK(kAlloc0x1B8 != kSize158);
         CHECK(kAlloc0x50 != kSize148);

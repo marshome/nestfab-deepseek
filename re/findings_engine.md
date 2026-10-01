@@ -4916,3 +4916,19 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 **族成员计数修正为 5**（`0x7DB6E0`；`0x724E40`/`0x725140`/`0x72D5B0` 孪生组；`0x7DB7D0`/`0x7DC360` 对；本成员）。
 
 **已落 `layout.hpp`**：`kStride152`、`kStride152Words`、`kFamilyMember5*`、`kRatioFamilyMembers2` + **两条 `static_assert`** + 测试 12 条。
+
+### 附 163 **映射函数 `0x711AD0`：40 字节遍历 + 孪生组偏移的三重印证**（goal round 241）**[已落码]
+
+```
+711BDF  add rsi,0x28                       ; ★ **每条记录 40 字节**（新步长）
+711B36/711B47  cmp rbx,1 ; cqo ; idiv rbx   ; **1 / rbx**，余数在 rdx
+711B4A/711B51  lea rax,[rdx+rdx*4] ; lea r14,[rsi+rax*8]   ; 余数 × 40
+711BA1/711BA5/711BAD  … lea rdx,[rax+rdx*2] ; shl rdx,3   ; ★ **又是 19 字（152）**
+711BB5/711BC0  [r8+0x80]=r10 ; [r8+0x78]=rax      ; ★ 写在孪生组的比值偏移
+711BD5  cmp [r8+0x48], rax                        ; ★ 比在它们的分母偏移
+```
+
+⇒ 它**遍历 40 字节记录**，生成/校验与孪生组同样的 152 字节元素，**写 `+0x78`、`+0x80` 并比 `+0x48`** —— 与 rounds 227/232 的 `kRatioFamilyNumB`/`DenA`/`DenB` **独立一致**（三重印证）。
+**19 字步长在此第二次出现**。
+
+**已落 `layout.hpp`**：`kRecordStride40`、`kMapperFieldA/B`、`kMapperCompare`、`kStride152Sightings` + **三条 `static_assert`**（把三个偏移与孪生组绑定）+ 测试 14 条。

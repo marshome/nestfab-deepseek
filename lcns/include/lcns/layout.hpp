@@ -627,6 +627,26 @@ inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
 
+// --- the mapper of 0x711AD0: a 40-byte walk and the twins' offsets again (round 241) -------------------
+//     711BDF add rsi,0x28                    ; the walk steps FORTY bytes per record
+//     711B36/711B47 cmp rbx,1 ; cqo ; idiv rbx    ; 1 / rbx, with rdx as the remainder
+//     711B4A/711B51 lea rax,[rdx+rdx*4] ; lea r14,[rsi+rax*8]   ; the remainder times 40
+//     711BA1/711BA5/711BAD lea rdx,[rax+rax*8] ; lea rdx,[rax+rdx*2] ; shl rdx,3   ; 19 words again
+//     711BB5/711BC0 [r8+0x80] = ... ; [r8+0x78] = ...          ; writes at the twins' ratio offsets
+//     711BD5 cmp [r8+0x48], rax                                ; and compares at their denominator offset
+// so this function walks 40-byte records and produces or checks the same 152-byte elements the twins read, writing
+// +0x78 and +0x80 and comparing +0x48 -- which independently agrees with kRatioFamilyNumB, kRatioFamilyDenA and
+// kRatioFamilyDenB from rounds 227/232. The 40-byte walk is new. That the 19-word stride appears here too is its
+// second sighting.
+inline constexpr std::size_t kRecordStride40 = 0x28;      // RE 0x711BDF (40)
+inline constexpr std::size_t kMapperFieldA = 0x78;        // RE 0x711BC0, agrees with kRatioFamilyNumB
+inline constexpr std::size_t kMapperFieldB = 0x80;        // RE 0x711BB5, agrees with kRatioFamilyDenA
+inline constexpr std::size_t kMapperCompare = 0x48;       // RE 0x711BD5, agrees with kRatioFamilyDenB
+inline constexpr int kStride152Sightings = 2;             // RE 0x7DE230 and 0x711BAD
+static_assert(kMapperFieldA == kRatioFamilyNumB, "the mapper writes the numerator offset the twins read");
+static_assert(kMapperFieldB == kRatioFamilyDenA, "and the denominator offset");
+static_assert(kMapperCompare == kRatioFamilyDenB, "and compares the other denominator offset");
+
 // --- the family's fifth member and a NINETEEN-word stride, from 0x7DE1B0 (round 240) -----------------
 //     7DE212 movsd xmm3,[50.0]
 //     7DE21A lea rdx,[rbp+rbp*8]                  ; rbp * 9
