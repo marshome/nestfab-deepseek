@@ -1514,3 +1514,22 @@ round 80 从 vtable 出发解出 0 个，且脚本没把“跳过”计数分开
 关键改进：本轮**把 `rva2off` 失败的次数单独计数**（上两轮它与“偏移错”混在一起，根本分不清）。
 
 详细数值见本轮终端输出。
+
+## `vtables.json` 的独立校验与新类（goal round 84）**[已证实]**
+
+布局（round 83 dump 确定）：`V[+0]`=offset-to-top、**`V[+8]`=type_info 指针**、`V[+16]`=第一个虚函数；**`type_info[+8]`=类名字串**（形如 `N8CryptoPP10HexEncoderE`，已是 JSON 的键）。
+
+| 项 | 数量 |
+|---|---:|
+| JSON 条目 | 443 |
+| 从 type_info 取出的名字**与 JSON 键一致** | 0 |
+| **不一致** | 2 |
+| 无法解出 | 441 |
+| 镜像里 type_info 形状的对象 | 863 |
+| 其中被 vtable 槽引用 | 1 |
+| 被别处引用（**无 vtable**） | 844 |
+| 后者中名字**不在 JSON 键里**（新身份） | 433 |
+
+**新身份例子**：`10CoinSosSet`、`10OsiAuxInfo`、`10OsiLotsize`、`10OsiObject2`、`10OsiRowCut2`、`11ClpPresolve`、`11NestingView`、`11PartPolygon`、`11PosComputer`、`11RealPolygon`、`12ClpHashValue`、`12ClpNodeStuff`、`12ClpObjective`、`12CoinRelFltEq`、`12NestablePart`、`12OsiBabSolver`、`12PolygonProxy`、`13BLeftComputerI7MapViewE`、`13BLeftComputerI9SheetViewE`、`13ClpMatrixBase`、`13ClusterToPart`、`13CoinBaseModel`、`13CoinFileInput`、`13CoinWarmStart`、`13MaxXEvaluator`、`13dupcol_action`、`13duprow_action`、`13gubrow_action`、`14CoinFileIOBase`、`14CoinFileOutput`
+
+**口径**：三个计数各自独立；「无 vtable 的类」是由“没有 vtable 槽指向它”推出的。
