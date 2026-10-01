@@ -200,4 +200,21 @@ inline constexpr std::size_t kContainerBlockBytes = 0x1F8;   // RE 0x5E5F06: 504
 inline constexpr std::size_t kContainerFieldLow = 0x10;      // RE 0x5E5F39
 inline constexpr std::size_t kContainerFieldHigh = 0x48;     // RE 0x5E5F2D
 
+
+// --- the large object of 0x5E6200 (round 201) -------------------------------------------------------
+// RE the fields that function touches: +0x10, +0x20, +0x28, +0x30, +0xB8, +0xBD, +0x150, +0x155, +0x158.
+// Two pairs sit five bytes apart, so each is a byte field followed by something five bytes later:
+inline constexpr std::size_t kLargeObjectByteFieldA = 0xB8;    // RE 0x5E6200
+inline constexpr std::size_t kLargeObjectByteFieldB = 0xBD;    // RE 0x5E6200
+inline constexpr std::size_t kLargeObjectFieldA = 0x150;       // RE 0x5E6200
+inline constexpr std::size_t kLargeObjectFieldB = 0x155;       // RE 0x5E6200
+inline constexpr std::size_t kLargeObjectLastField = 0x158;    // RE 0x5E6200
+inline constexpr std::size_t kLargeObjectSpacing = 5;          // RE 0xBD-0xB8 and 0x155-0x150
+inline constexpr std::size_t kLargeObjectMinBytes = 0x159;     // one past the highest field touched
+
+// --- the container fields of 0x5E5CD0 (round 201) ---------------------------------------------------
+// RE the offsets it touches while allocating: +0x8, +0x10, +0x18, +0x20, +0x28, +0x30, +0x38, +0x40.
+inline constexpr std::size_t kContainerLastField = 0x40;       // RE 0x5E5CD0
+inline constexpr int kContainerFieldStep = 8;                  // the fields are eight bytes apart
+
 }  // namespace lcns

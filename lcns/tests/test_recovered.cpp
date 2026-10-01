@@ -1212,5 +1212,23 @@ int main() {
         CHECK(kContainerFieldLow < kContainerFieldHigh);
     }
 
+    // --- the large object of 0x5e6200 and the container fields (RE the offsets it touches) -------------
+    {
+        CHECK(kLargeObjectByteFieldA == 0xB8);
+        CHECK(kLargeObjectByteFieldB == 0xBD);
+        CHECK(kLargeObjectFieldA == 0x150);
+        CHECK(kLargeObjectFieldB == 0x155);
+        CHECK(kLargeObjectLastField == 0x158);
+        CHECK(kLargeObjectSpacing == 5);
+        CHECK(kLargeObjectByteFieldB - kLargeObjectByteFieldA == kLargeObjectSpacing);
+        CHECK(kLargeObjectFieldB - kLargeObjectFieldA == kLargeObjectSpacing);
+        CHECK(kLargeObjectMinBytes == kLargeObjectLastField + 1);
+        // 0x158 is also the timing-record stride of round 156; the object merely has a field there
+        CHECK(kLargeObjectLastField == kTimingRecordStride);
+        CHECK(kContainerLastField == 0x40);
+        CHECK(kContainerFieldStep == 8);
+        CHECK((kContainerLastField - kContainerFieldLow) / kContainerFieldStep == 6);   // seven fields
+    }
+
     return check::finish("test_recovered");
 }
