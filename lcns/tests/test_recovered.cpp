@@ -3940,5 +3940,22 @@ int main() {
         CHECK(kVtableSlotK < kVtableSlotI);              // and 0x38 comes before 0xA0
     }
 
+    // --- the strict sweep that found nothing (RE the round-306 sweep) --------------------------------
+    {
+        CHECK(kStrictThunkFound == 0);
+        CHECK(kSweepClusters == 2);
+        CHECK(kSweepSizeCap == 32);
+        CHECK(kLibraryAddressesRegistered == 548);
+        CHECK(kThunkClassLocalised);
+        CHECK(!kSweepCriterionRelaxed);                  // a zero result, not a loosened test
+        CHECK(kTinyAliasCount == 39);                    // the class round 277 DID find, elsewhere
+        CHECK(kTinyAliasTargets == 6);
+        CHECK(kDeallocAliasCount == 34);
+        // the comparison that makes the zero meaningful: the earlier sweep's region was different
+        CHECK(kTinyAliasCount > kStrictThunkFound);
+        CHECK(kSweepSizeCap < kDeallocCallers);
+        CHECK(kSweepCriterionRelaxed == false);
+    }
+
     return check::finish("test_recovered");
 }

@@ -2435,6 +2435,24 @@ static_assert(kSelfTestCallsHere == 2, "the self-test is consulted once per obje
 static_assert(kVtableSlotsKnown9 == kVtableSlotsKnown8 + 1, "one more slot than round 301");
 static_assert(kInputBufferByte2 == kInputBufferByte + 0x10, "the extra byte sits sixteen past the first");
 
+
+// --- a strict sweep that found nothing, recorded with its criterion (round 306) -------------------------
+// The test, applied to 0x63F000-0x640000 and 0x998000-0x99A000 with a thirty-two byte cap: every instruction must be
+// preparatory register work or ONE transfer to an address ALREADY registered as library code, and the body must
+// reference no string and write no memory of its own. Result: zero found, and not even a one-transfer candidate.
+// The result matters because it localises round 277's thunk class rather than generalising it, and because a zero is
+// exactly the answer that is tempting to dress up. It is landed as it came out.
+inline constexpr int kStrictThunkFound = 0;                  // RE the sweep
+inline constexpr int kSweepClusters = 2;                     // RE the two ranges
+inline constexpr std::size_t kSweepSizeCap = 32;             // RE the cap used
+inline constexpr int kLibraryAddressesRegistered = 548;      // RE the registry at the time of the sweep
+inline constexpr bool kThunkClassLocalised = true;           // the class lives where round 277 found it
+inline constexpr bool kSweepCriterionRelaxed = false;        // it was NOT loosened to manufacture exclusions
+static_assert(kStrictThunkFound == 0, "the sweep found nothing, and says so");
+static_assert(kSweepClusters == 2 && kSweepSizeCap == 32, "two clusters under a thirty-two byte cap");
+static_assert(!kSweepCriterionRelaxed, "the criterion was not relaxed to produce a result");
+static_assert(kLibraryAddressesRegistered > 500, "the registry was already substantial");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

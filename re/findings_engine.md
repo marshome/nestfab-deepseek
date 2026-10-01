@@ -6100,3 +6100,16 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ 那个 `+0x28` 字节**按“在此观察到”记录**（`kInputBufferByte2`），**不推广到类型**；自检被调两次同样**记为本例程的行为**，而非关于对象的规则。
 
 **已落 `layout.hpp`**：`kLocalBase1/2/3`、`kInPlaceConfirmations2`(5)、`kSelfTestCallsHere`(2)、`kInputBufferByte2`(0x28)、`kVtableSlotK`(0x38)、`kVtableSlotsKnown9`(14)、`kHelper111E90`、`kHelper111890Calls`(2) + **四条 `static_assert`** + 测试 24 条。
+
+### 附 224 **一次严格扫描的否定结果：零**（goal round 306）**[已落码]**
+
+将 round 277 的**严格 thunk 判据**施于两个运行时簇 `0x63F000–0x640000`、`0x998000–0x99A000`（上限 32 字节）：
+
+- 每条指令必须是准备性寄存器动作，或**一次转移**（直接 `jmp`/`call`）到**已登记为库代码**的地址；
+- 且身体**不引用字符串、不写自己的内存**。
+
+**结果：零个**（连“单次转移候选”也一个都没有）。当时已登记库地址 **548** 个。
+
+★ 为何值得记下来：**(1)** 它说明 round 277 发现的 thunk 类**是局域的**，而非全库普遍特征 —— 别处不应期待重复；**(2)** “零”正是**最容易被粉饰的答案**，而**放宽判据去凑几条排除**会直接虚增指标 ⇒ 判据与结果**一并落码**，任人可复跑。
+
+**已落 `layout.hpp`**：`kStrictThunkFound`(0)、`kSweepClusters`(2)、`kSweepSizeCap`(32)、`kLibraryAddressesRegistered`(548)、`kThunkClassLocalised`、`kSweepCriterionRelaxed`(false) + **四条 `static_assert`** + 测试 12 条。
