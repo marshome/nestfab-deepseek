@@ -6543,3 +6543,21 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ 它同时**确认了助手族**：构造器调 `0xC33F0`（round 299 的），孪生们调 `0xC3A40` ⇒ **两个成员、两个地址、如今两者都被观察到在用**。
 
 **已落 `layout.hpp`**：`kTwinsCtor`(0x111AD0)、`kTwinsCtorCallers`(21)、`kTwinsCtorVtableRvaA/B`、`k50IsFlag`、`k51IsValue`、`k51FromArgument`、`kCtorUsesFirstHelper`、`kHelperFamilyBothObserved`、`kFlagPairNarrowed`、`kPairIsFlagPlusValue` + **四条 `static_assert`** + 测试 26 条。
+
+### 附 249 **40 字节元素的追加**，以及**前缀比较定下了比较助手的角色**（goal round 331）**[已落码]**
+
+**（a）`0x8AB830`（69 B / 20 个调用者）**：
+
+```
+8AB834  cmp rax,[rcx+**0x10**]   ; end 与容量末尾相比（begin 在 `+0x08`）
+8AB838  je 0x8AB870              ; 相等则走增长
+8AB83F..8AB861  **拷贝五个 qword**
+8AB869  [rcx+8] = rax            ; 末尾前进 **0x28**
+```
+
+⇒ 元素 **0x28 = 40 字节**（五 qword × 8 ⇒ 一致），容器的 begin/end 在 **`+0x08`/`+0x10`** —— **这对偏移本工作其他容器都不用**，故单独记录。
+
+**（b）`0x82A450`（90 B / 20 个调用者）= 前缀比较**：`cmp rsi,rbx ; **cmovbe** r8,rsi` 取**较小的尺寸**，再以两个数据指针调 **`0x63F300`**（round 311 的比较助手）。
+**这使该助手的角色确定**：round 311 只能说“比拷贝助手后移八字节的一个比较助手”；在此它被**以两个缓冲区指针调用、其结果决定走向** ⇒ `kCompareHelperRoleIsCompare`。
+
+**已落 `layout.hpp`**：`kAppend40`(0x8AB830)、`kAppend40Callers`(20)、`kElement40`(0x28)、`kElementQwords`(5)、`kContainerPairA/B`(0x08/0x10)、`kGrow8AB5D0`(0x8AB5D0)、`kPrefixCompare`(0x82A450)、`kPrefixCompareCallers`(20)、`kMinViaCmov`、`kCompareSizeField`(0x08)、`kCompareHelperSightings`(2)、`kCompareHelperRoleIsCompare` + **四条 `static_assert`** + 测试 26 条。

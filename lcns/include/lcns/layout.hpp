@@ -3048,6 +3048,32 @@ static_assert(kLazyInitFlag2 - kLazyInitFlag == kFlagPairStride, "the spacing is
 static_assert(kCtorUsesFirstHelper && kHelperFamilyBothObserved, "both helpers are now seen in use");
 static_assert(kLocalConstruct == 0xC33F0 && kLocalConstruct2 == 0xC3A40, "the two members are distinct");
 
+
+// --- an append with a forty-byte element, and a prefix compare (round 331) -------------------------------
+//     0x8AB834 cmp rax,[rcx+0x10]      ; the end against the capacity end
+//     0x8AB838 je 0x8AB870             ; equal, so grow
+//     0x8AB83F..0x8AB861               ; five qwords copied
+//     0x8AB869 [rcx+8] = rax           ; and the end advanced by 0x28
+//     0x82A45A/0x82A464  two sizes, cmovbe taking the smaller
+//     0x82A473 call 0x63F300 with both data pointers
+inline constexpr std::uintptr_t kAppend40 = 0x8AB830;        // RE the whole routine
+inline constexpr int kAppend40Callers = 20;
+inline constexpr std::size_t kElement40 = 0x28;              // RE 0x8AB869
+inline constexpr int kElementQwords = 5;                     // RE the five copies
+inline constexpr std::size_t kContainerPairA = 0x08;         // RE 0x8AB830
+inline constexpr std::size_t kContainerPairB = 0x10;         // RE 0x8AB834
+inline constexpr std::uintptr_t kGrow8AB5D0 = 0x8AB5D0;      // RE 0x8AB870
+inline constexpr std::uintptr_t kPrefixCompare = 0x82A450;   // RE the whole routine
+inline constexpr int kPrefixCompareCallers = 20;
+inline constexpr bool kMinViaCmov = true;                    // RE 0x82A464 (cmovbe)
+inline constexpr std::size_t kCompareSizeField = 0x08;       // RE 0x82A45A
+inline constexpr int kCompareHelperSightings = 2;            // rounds 311 and 331
+inline constexpr bool kCompareHelperRoleIsCompare = true;    // now definite rather than guessed
+static_assert(kElementQwords * 8 == kElement40, "five qwords are forty bytes");
+static_assert(kContainerPairB - kContainerPairA == 8, "begin and end are eight bytes apart");
+static_assert(kCompareSizeField == kContainerPairA, "the size read by the compare is the same +0x08");
+static_assert(kMinViaCmov && kCompareHelperSightings == 2, "a min by cmov, and a second sighting");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

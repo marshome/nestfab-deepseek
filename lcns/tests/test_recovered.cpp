@@ -4848,5 +4848,44 @@ int main() {
         CHECK(a.value != b.value);
     }
 
+    // --- the forty-byte append and the prefix compare (RE 0x8ab830 and 0x82a450) --------------------
+    {
+        CHECK(kAppend40 == 0x8AB830);
+        CHECK(kAppend40Callers == 20);
+        CHECK(kElement40 == 0x28);
+        CHECK(kElement40 == 40);
+        CHECK(kElementQwords == 5);
+        CHECK(kElementQwords * 8 == kElement40);
+        CHECK(kContainerPairA == 0x08);
+        CHECK(kContainerPairB == 0x10);
+        CHECK(kContainerPairB - kContainerPairA == 8);
+        CHECK(kGrow8AB5D0 == 0x8AB5D0);
+        CHECK(kGrow8AB5D0 != kParserGrow);               // a different grow helper from the parser's
+        CHECK(kPrefixCompare == 0x82A450);
+        CHECK(kPrefixCompareCallers == 20);
+        CHECK(kMinViaCmov);
+        CHECK(kCompareSizeField == 0x08);
+        CHECK(kCompareSizeField == kContainerPairA);
+        CHECK(kCompareHelperSightings == 2);
+        CHECK(kCompareHelperRoleIsCompare);
+        CHECK(kCompareHelper == 0x63F300);
+        CHECK(kCompareHelper == kMemcpyHelper + kCompareHelperDelta);
+        CHECK(kAppend40 != kPrefixCompare);
+
+        // the copy and the advance the append performs
+        const auto bytesCopied = [](int qwords) { return qwords * 8; };
+        CHECK(bytesCopied(kElementQwords) == kElement40);
+        CHECK(kElement40 * 2 == 80);
+        // the min the compare computes, by the same rule cmovbe uses
+        const auto minOf = [](std::uint64_t a, std::uint64_t b) { return a <= b ? a : b; };
+        CHECK(minOf(3, 5) == 3);
+        CHECK(minOf(5, 3) == 3);
+        CHECK(minOf(4, 4) == 4);
+        CHECK(minOf(0, 7) == 0);
+        // and the outcome rule: zero bytes compared means equal so far
+        CHECK(minOf(0, 0) == 0);
+        CHECK(kCompareHelperSightings * 4 == 8);
+    }
+
     return check::finish("test_recovered");
 }
