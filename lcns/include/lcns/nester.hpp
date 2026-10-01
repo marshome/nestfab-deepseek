@@ -15,6 +15,7 @@
 #pragma once
 
 #include <chrono>
+#include "lcns/engine.hpp"
 #include "lcns/recovery.hpp"
 #include <cstdint>
 #include <functional>
@@ -244,6 +245,10 @@ class Nester {
 public:
     virtual ~Nester() = default;
     virtual const char* name() const = 0;                 // v2
+    // RE: the original writes a fixed prefix into its log from each Run body; those strings
+    // were recovered verbatim (engine.hpp kTrace*). Classes with a proven prefix override this,
+    // the default is empty so classes whose prefix was never observed invent nothing.
+    virtual const char* tracePrefix() const { return ""; }
     virtual bool prepare(SolveContext&) { return true; }  // v3
     virtual double estimate(const SolveContext&) const;   // v4
     virtual Solution run(SolveContext&) = 0;              // v5
@@ -261,6 +266,7 @@ class FlipNester : public Nester {             // RE 0xA3B490, Run = 0x4B870
 public:
     explicit FlipNester(double flipPartsRatio = 1.0) : ratio_(flipPartsRatio) {}
     const char* name() const override { return "FlipNester"; }
+    const char* tracePrefix() const override { return kTraceFlip; }   // RE verbatim
     Solution run(SolveContext&) override;
 private:
     double ratio_;
@@ -269,6 +275,7 @@ private:
 class FilterNester : public Nester {           // RE 0xA3B4F0, Run = 0xB3AE0
 public:
     const char* name() const override { return "FilterNester"; }
+    const char* tracePrefix() const override { return kTraceFilter; }   // RE verbatim
     double estimate(const SolveContext&) const override;
     Solution run(SolveContext&) override;
 };
@@ -276,6 +283,7 @@ public:
 class NoFillNester : public Nester {           // RE 0xA3B530, Run = 0x7F240
 public:
     const char* name() const override { return "NoFillNester"; }
+    const char* tracePrefix() const override { return kTraceNoFill; }   // RE verbatim
     Solution run(SolveContext&) override;
 };
 
