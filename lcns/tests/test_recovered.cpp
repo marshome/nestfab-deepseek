@@ -3080,5 +3080,31 @@ int main() {
         CHECK(kChainUnroll * 1 == 3);                   // three copies of the block, one loop
     }
 
+    // --- the branch bodies and the corrected +0xc0 reading (RE 0x11a8b0..0x11a91a) ------------------
+    {
+        CHECK(kSlotIsCalled);
+        CHECK(kChainBranchArgs == 2);
+        CHECK(kVtableSlotE == 0x110);
+        CHECK(kVtableSlotsKnown3 == 8);
+        CHECK(kVtableSlotsKnown3 == kVtableSlotsKnown2 + 1);
+        CHECK(kGlobalGateRva == 0xA06744);
+        CHECK(kGateArgA == 0xA066ED);
+        CHECK(kGateArgB == 0xA06726);
+        CHECK(kGateArgA != kGateArgB);
+        CHECK(kGateConstant == 1);
+        CHECK(kSlotBothComparedAndCalled);
+        // the correction: +0xc0 is the slot read at entry, compared per node and CALLED on the mismatch path
+        CHECK(kChainTypeField == 0xC0);
+        CHECK(kChainTypeField == kBerVtableSlotB);
+        CHECK(kSlotIsCalled && kSlotBothComparedAndCalled);
+        // the eight slots, all distinct and ascending
+        CHECK(kVtableSlotD == 0x08 && kVtableSlotA == 0x18 && kVtableSlotB == 0x30);
+        CHECK(kVtableSlotC == 0x68 && kBerVtableSlotA == 0xB8 && kBerVtableSlotB == 0xC0);
+        CHECK(kVtableSlotE == 0x110 && kVtableSlotStep == 0x158);
+        CHECK(kVtableSlotE < kVtableSlotStep);
+        // the tail call takes the object and the value, which is the shape both branches share
+        CHECK(kChainBranchArgs == 2 && kChainUnroll == 3);
+    }
+
     return check::finish("test_recovered");
 }

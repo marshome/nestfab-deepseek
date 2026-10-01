@@ -5637,3 +5637,18 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ★ **虚表槽扩到七个**：`+0x08`、`+0x18`、`+0x30`、`+0x68`、`+0xB8`、`+0xC0`、**`+0x158`**；且 `+0xC0` 从 round 281 的“被读出”升级为**逐节点被比较的字段**。
 
 **已落 `layout.hpp`**：`kVtableSlotStep`(0x158)、`kChainTypeField`(0xC0)、`kChainUnroll`(3)、`kVtableSlotsKnown2`(7)、`kChainMismatchBranch`、`kChainNullBranch` + **三条 `static_assert`** + 测试 18 条。
+
+### 附 201 分支体纠正了我对 `+0xC0` 的描述；且虚表槽达八个（goal round 283）**[已落码]**
+
+```
+11A8B0/11A8D0  mov rdx,rbp ; mov rcx,rbx ; call r8 / call rsi   ; 两个参数的**尾调**
+11A8D6  call rsi          ; ★ **rsi 就是 round 281 从 `[vtable+0xC0]` 取出的值**
+11A8E5  movzx eax,byte [rip+0xA06744] ; test ; je   ; ★ **全局标志**控制后续调用
+11A91A  call qword [rax+0x110]（带栈上输出参数、常量 1、两个地址）  ; ★ 第八个槽
+```
+
+★ **纠正**：round 282 把 `+0xC0` 描述为“被比较的字段”。它**既逐节点被比较、也在不匹配分支上被调用** ⇒ 该槽存的是**函数指针**；此前的措辞**属实但不完整**，已在原处更正。
+
+⇒ **虚表槽达八个**：`+0x08`、`+0x18`、`+0x30`、`+0x68`、`+0xB8`、`+0xC0`、**`+0x110`**、`+0x158`；两个分支都是**带两个参数的尾调**（对象 + 值）。
+
+**已落 `layout.hpp`**：`kSlotIsCalled`、`kChainBranchArgs`、`kVtableSlotE`(0x110)、`kVtableSlotsKnown3`(8)、`kGlobalGateRva`、`kGateArgA/B`、`kGateConstant`、`kSlotBothComparedAndCalled` + **两条 `static_assert`** + 测试 18 条。

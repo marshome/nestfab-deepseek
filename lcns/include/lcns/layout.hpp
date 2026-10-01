@@ -1821,6 +1821,27 @@ static_assert(kChainUnroll == 3, "the compiler unrolled the walk three times");
 static_assert(kVtableSlotsKnown2 == kVtableSlotsKnown + 1, "one more slot than round 281 recorded");
 static_assert(kChainTypeField == kBerVtableSlotB, "the compared field is the slot loaded at entry");
 
+
+// --- the branch bodies of 0x11A780, and a correction (round 283) ---------------------------------------
+//     0x11A8B0/0x11A8D0  both branches are `mov rdx,rbp ; mov rcx,rbx ; call r8` / `call rsi`, i.e. a TAIL CALL with
+//                        the object and the value as its two arguments
+//     0x11A8D6 call rsi  ; rsi is what round 281 read from [vtable+0xC0]
+//     0x11A8E5 movzx eax,byte [rip+0xA06744] ; test ; je   ; a GLOBAL flag gates the next call
+//     0x11A91A call qword [rax+0x110] with a stack out-parameter, 1, and two addresses
+inline constexpr bool kSlotIsCalled = true;                  // RE 0x11A8D6
+inline constexpr int kChainBranchArgs = 2;                   // RE rcx and rdx before the call
+inline constexpr std::size_t kVtableSlotE = 0x110;           // RE 0x11A91A -- an eighth slot
+inline constexpr int kVtableSlotsKnown3 = 8;                 // 0x08, 0x18, 0x30, 0x68, 0xB8, 0xC0, 0x110, 0x158
+inline constexpr std::uintptr_t kGlobalGateRva = 0xA06744;   // RE 0x11A8E5, a byte in the data section
+inline constexpr std::uintptr_t kGateArgA = 0xA066ED;        // RE 0x11A90C
+inline constexpr std::uintptr_t kGateArgB = 0xA06726;        // RE 0x11A913
+inline constexpr int kGateConstant = 1;                      // RE 0x11A904 (dword 1 on the stack)
+// CORRECTION: round 282 described +0xC0 as "a compared field". It is compared per node AND it is CALLED here, so the
+// slot holds a function pointer. The earlier wording was true but incomplete and is corrected rather than left.
+inline constexpr bool kSlotBothComparedAndCalled = true;
+static_assert(kVtableSlotsKnown3 == kVtableSlotsKnown2 + 1, "one more slot than round 282");
+static_assert(kChainBranchArgs == 2, "two arguments precede the tail call");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
