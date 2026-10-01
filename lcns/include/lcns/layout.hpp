@@ -420,4 +420,23 @@ inline constexpr std::uintptr_t kTypeAnchorA = 0x7C2460;   // RE 0x7C68E5
 inline constexpr std::uintptr_t kTypeAnchorB = 0x7C2470;   // RE 0x7C6904
 inline constexpr std::uintptr_t kTypeAnchorGap = 0x10;     // the two are one object apart
 
+
+// --- the hash table of 0x1C65B0 (round 220) ---------------------------------------------------------
+//     1C667E mov eax,[rax+0x48]                            ; the 32 bit hash
+//     1C668B and ebx,0x7F                                  ; the bucket is hash modulo 128
+//     1C669B sar edx,7                                     ; and hash / 128 indexes the bucket array
+//     1C66A7 lea rcx,[rax+rdx*8]  (rdx = bucket * 3)        ; 24 bytes per entry
+//     1C66AF cmp rax,[rcx+0x10]                            ; the chain continues at +0x10
+//     1C6658 lock add dword [rdx+8],1                       ; an atomic reference count at +8
+// Both the modulo and the quotient look the way they do because the hash is signed, so the four instructions
+// around them are the sign correction; the test below reproduces the whole sequence.
+inline constexpr std::size_t kHashFieldOffset = 0x48;      // RE 0x1C667E
+inline constexpr int kBucketCount = 128;                   // RE 0x1C668B (`and 0x7F`) and 0x1C669B (`sar 7`)
+inline constexpr int kBucketShift = 7;                     // RE 0x1C669B
+inline constexpr std::size_t kBucketEntryStride = 24;      // RE 0x1C66A7 (bucket * 3 scaled by 8)
+inline constexpr std::size_t kBucketChainOffset = 0x10;    // RE 0x1C66AF
+inline constexpr std::size_t kRefCountOffset = 0x08;       // RE 0x1C6658: the `lock add` target
+static_assert((1 << kBucketShift) == kBucketCount, "the shift and the bucket count agree");
+static_assert(kBucketEntryStride == kSmallRecordStride, "the entries are the 24-byte records of round 157");
+
 }  // namespace lcns

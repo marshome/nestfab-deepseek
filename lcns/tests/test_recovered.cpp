@@ -1515,5 +1515,46 @@ int main() {
         CHECK(kTypeAnchorB == 0x7C6904 + 7 - 0x449B);
     }
 
+    // --- the hash table of 0x1c65b0 (RE 0x1c667e/0x1c668b/0x1c669b/0x1c66a7) -------------------------
+    {
+        CHECK(kHashFieldOffset == 0x48);
+        CHECK(kBucketCount == 128);
+        CHECK(kBucketShift == 7);
+        CHECK((1 << kBucketShift) == kBucketCount);
+        CHECK(kBucketEntryStride == 24);
+        CHECK(kBucketEntryStride == kSmallRecordStride);      // the 24 of round 157
+        CHECK(kBucketChainOffset == 0x10);
+        CHECK(kRefCountOffset == 0x08);
+
+        // reproduce the sign-corrected modulo and quotient the four instructions around the `and`/`sar` perform
+        const auto modBuckets = [](std::int32_t h) {
+            const std::int32_t correction = static_cast<std::int32_t>(
+                static_cast<std::uint32_t>(h) >> 31 ? 0x7F : 0);   // the `shr edx,0x19` term is 0 or 0x7F
+            return ((h + correction) & 0x7F) - correction;
+        };
+        const auto divBuckets = [](std::int32_t h) {
+            const std::int32_t adjusted = h >= 0 ? h : h + 0x7F;   // the `cmovns` keeps h when non-negative
+            return adjusted >> kBucketShift;
+        };
+        for (std::int32_t h = -300; h <= 300; h += 7) {
+            const int expectedMod = h % kBucketCount;
+            const int expectedDiv = h / kBucketCount;              // C++ truncates toward zero, like the code
+            CHECK(modBuckets(h) == expectedMod);
+            CHECK(divBuckets(h) == expectedDiv);
+            // NOTE: the remainder keeps the sign of the hash, exactly as C's % does -- it is NOT a floored
+            // modulo. My first version asserted it was non-negative, which the instructions do not do, and
+            // that wrong assumption is what this comment replaces.
+            CHECK(modBuckets(h) + kBucketCount >= 0);
+        }
+        CHECK(modBuckets(0) == 0);
+        CHECK(divBuckets(0) == 0);
+        CHECK(modBuckets(128) == 0);
+        CHECK(divBuckets(128) == 1);
+        CHECK(modBuckets(-128) == 0);
+        CHECK(divBuckets(-128) == -1);
+        // a bucket's byte offset from the entry stride
+        CHECK(3 * kBucketEntryStride == 72);                       // `lea rdx,[rbx+rbx*2]` then scaled by 8
+    }
+
     return check::finish("test_recovered");
 }

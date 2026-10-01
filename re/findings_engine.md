@@ -4491,3 +4491,25 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 ```
 
 ⇒ 命中函数已列在上方输出，它们是**该类型的使用者**。
+
+### 附 143 **从类型锚点回流到一个哈希表结构**（goal round 220）**[已落码]
+
+**锚点回流结果（与 round 199 的文本通道相反）**：`0x7C2460`/`0x7C2470`（round 219 由位移算出）在未引用集合里被 **2 个函数**引用：**`0x1C65B0`** 与 **`0x65C0F0`**（偏移 `+0` 与 `+16`）。
+
+读 `0x1C65B0`（673 B）得到**哈希表结构**：
+
+```
+1C6675  rax=[rsi] ; rax=[rax+8]                 ; 指向的对象
+1C667E  eax = dword [rax+0x48]                  ; ★ 32 位哈希
+1C6684  cdq ; 1C6685 shr edx,0x19                ; 符号修正项
+1C668B  and ebx,0x7F ; 1C668E sub ebx,edx         ; ★ 桶 = 哈希 % 128
+1C6690  test ; 1C6692 lea edx,[rax+0x7F] ; 1C6698 cmovns ; 1C669B sar edx,7   ; ★ 哈希 / 128
+1C66A7  lea rcx,[rax+rdx*8]（rdx = 桶×3）      ; ★ 24 字节/桶项
+1C66AF  cmp rax,[rcx+0x10] ; jne                  ; 链在 +0x10
+1C6658  lock add dword [rdx+8],1                 ; ★ +8 为**原子引用计数**
+```
+
+⇒ **128 个桶、每项 24 字节、键为 `+0x48` 的 32 位哈希、共享指针带原子引用计数** —— 一个**具体的领域数据结构**。
+其中模与除都是 GCC 对**有符号**哈希生成的形式（四条符号修正），**测试逐个复现并与 C++ 的 `%`/`/` 对比 87 个取值**。
+
+**已落 `layout.hpp`**：`kHashFieldOffset`、`kBucketCount`、`kBucketShift`、`kBucketEntryStride`、`kBucketChainOffset`、`kRefCountOffset` + 两条 `static_assert` + 测试 12 条（含逐点对比）。
