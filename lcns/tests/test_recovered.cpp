@@ -4365,5 +4365,46 @@ int main() {
         CHECK(kThirdMemberWordFields > kIntegerWordFields);
     }
 
+    // --- the words hold BER lengths (RE 0x112740) ----------------------------------------------------
+    {
+        CHECK(kWordFieldsAreLengths);
+        CHECK(kLengthReaderSites2 == 2);
+        CHECK(kLengthDestA == 0x38);
+        CHECK(kLengthDestB == 0x3C);
+        CHECK(kLengthDestA == kIntegerWordFirst);
+        CHECK(kLengthDestB == kIntegerWordBase);
+        CHECK(kBerLengthReader == 0x11A780);             // the reader rounds 281-284 described
+        CHECK(kStatusAcceptanceSites == 4);
+        CHECK(kStatusExpected == 2);
+        CHECK(kStatusExpected2 == 2);
+        CHECK(kStatusCall == 0x11A780);
+        CHECK(kBerReaderCaller == kBerLengthReader);     // round 285's caller-list entry for it
+        CHECK(kIntegerIsALengthCaller);
+        CHECK(kObjectLinkA == 0xC0);
+        CHECK(kObjectLinkB == 0x100);
+        CHECK(kLocalBase4 == 0xE0);
+        CHECK(kLocalBase4Inferred);
+        CHECK(kObjectLinkA - 0x20 == kLocalBase2);       // 0xC0 minus the link offset is the local at 0xA0
+        CHECK(kObjectLinkB - 0x20 == kLocalBase4);
+        CHECK(kIntegerWordFields == 5);
+        CHECK(kWordDispatchTargets == 3);
+
+        // the two destinations are two of the five words, and both are in the chain
+        const std::size_t words[5] = {kIntegerWordFirst, kIntegerWordFirst + kIntegerWordStride,
+                                      kIntegerWordBase, kIntegerWordBase + kIntegerWordStride,
+                                      kIntegerWordLast};
+        bool foundA = false, foundB = false;
+        for (int i = 0; i < kIntegerWordFields; ++i) {
+            if (words[i] == kLengthDestA) foundA = true;
+            if (words[i] == kLengthDestB) foundB = true;
+        }
+        CHECK(foundA && foundB);
+        // and the acceptance code the callers share
+        const auto accepted = [](std::int32_t status) { return status == kStatusExpected; };
+        CHECK(accepted(2));
+        CHECK(!accepted(1));
+        CHECK(!accepted(0));
+    }
+
     return check::finish("test_recovered");
 }

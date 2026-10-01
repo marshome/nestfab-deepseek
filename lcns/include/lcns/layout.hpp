@@ -2728,6 +2728,28 @@ static_assert((kIntegerWordLast - kIntegerWordFirst) / kIntegerWordStride + 1 ==
 static_assert(kIndirectCallSites == 2 && kIndirectViaRegister, "two indirect calls through a register");
 static_assert(kWordDispatchTargets == 3, "three dispatch targets were read");
 
+
+// --- the sixteen-bit fields hold BER lengths, written by the length reader (round 319) ------------------
+//     0x112CB8/0x112CC3  rdx = rsp+0x38 and call 0x11A780   ; the reader fills the first of the five words
+//     0x112CE8/0x112CF3  rdx = rsp+0x3C and call 0x11A780   ; and the word at +0x3C
+//     0x112CC8/0x112CF8  cmp rax,2                          ; the same acceptance code as rounds 280/285/299
+//     0x112CB0/0x112CE0  the objects at [rsp+0xC0] and [rsp+0x100], i.e. links of locals at 0xA0 and 0xE0
+inline constexpr bool kWordFieldsAreLengths = true;          // RE the two calls and their destinations
+inline constexpr int kLengthReaderSites2 = 2;                // RE 0x112CC3 and 0x112CF3
+inline constexpr std::size_t kLengthDestA = 0x38;            // RE 0x112CB8
+inline constexpr std::size_t kLengthDestB = 0x3C;            // RE 0x112CE8
+inline constexpr int kStatusAcceptanceSites = 4;             // rounds 280, 285, 299 and this
+inline constexpr std::size_t kObjectLinkA = 0xC0;            // RE 0x112CB0
+inline constexpr std::size_t kObjectLinkB = 0x100;           // RE 0x112CE0
+inline constexpr std::size_t kLocalBase4 = 0xE0;             // inferred from the +0x20 link offset
+inline constexpr bool kLocalBase4Inferred = true;            // said so rather than presented as read
+inline constexpr bool kIntegerIsALengthCaller = true;        // which is why round 285 listed it
+static_assert(kWordFieldsAreLengths && kLengthReaderSites2 == 2, "two calls into the length reader");
+static_assert(kObjectLinkA - 0x20 == kLocalBase2, "the first link belongs to the local at 0xA0");
+static_assert(kObjectLinkB - 0x20 == kLocalBase4, "the second implies a local at 0xE0");
+static_assert(kStatusAcceptanceSites == 4, "four sites accept status two");
+static_assert(kLocalBase4Inferred, "and that base is marked as inferred");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

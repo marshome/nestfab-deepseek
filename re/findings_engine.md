@@ -6318,3 +6318,23 @@ round 314 的两行已**替换而非保留**。
 ★ 另：该读取器**通过寄存器间接调用函数指针两次**（`call rax`），每次传对象与不同的值；三个分派目标（`0x112CD2`/`0x112CA2`/`0x112C32`）已记录。
 
 **已落 `layout.hpp`**：`kIntegerWordFields`（修正为 5）、`kIntegerWordFieldsUpdated`、`kIntegerWordStride`(2)、`kIntegerWordFirst/Last`(0x38/0x40)、`kIndirectCallSites`(2)、`kIndirectViaRegister`、`kWordDispatch*` + **四条 `static_assert`** + 测试 22 条。
+
+### 附 237 ★★ **那些 16 位字段就是 BER 长度**（goal round 319）**[已落码]**
+
+rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284 的长度读取器）**：
+
+```
+112CB0/112CB8/112CC3  rcx = [rsp+0xC0] ; rdx = **+0x38** ; call **0x11A780**
+112CC8/112CCC/112CD2  cmp rax,**2** ; je… ; 否则格式化器
+112CE0/112CE8/112CF3  rcx = [rsp+0x100] ; rdx = **+0x3C** ; call **0x11A780**
+112CF8/112CFC  cmp rax,**2** ; je 0x112EA6
+```
+
+三件事都是**交叉核对**而非新断言：
+**(1)** 读取器写入 `rsp+0x38` 与 `rsp+0x3C`，正是 rounds 317/318 发现的五个 16 位字段中的两个 ⇒ **那些字段存的是 BER 长度**；
+**(2)** 比较的状态是 **2**，与 rounds 280/285/299 同一接受码；
+**(3)** 这**正是 round 285 把 `0x112740` 列入长度读取器调用者名单的原因** —— 当时只能看到它在名单里，而理由到本轮才可见。
+
+传入的对象在 `[rsp+0xC0]`、`[rsp+0x100]`；因就地对象的链接字段在 `+0x20`，可推出本地基址 `0xA0`（已记录）与 **`0xE0`**（以 `kLocalBase4Inferred` **标明为推出**）。
+
+**已落 `layout.hpp`**：`kWordFieldsAreLengths`、`kLengthReaderSites2`(2)、`kLengthDestA/B`(0x38/0x3C)、`kStatusAcceptanceSites`(4)、`kObjectLinkA/B`(0xC0/0x100)、`kLocalBase4`(0xE0)、`kLocalBase4Inferred`、`kIntegerIsALengthCaller` + **五条 `static_assert`** + 测试 22 条。
