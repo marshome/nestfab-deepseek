@@ -3389,6 +3389,34 @@ static_assert(kMatrixA == 0x00 && kMatrixB == 0x08 && kMatrixC == 0x10 && kMatri
 static_assert(kSegmentStartA == kMatrixA && kSegmentEndA == kMatrixC,
               "the segment's two points use the first and third matrix offsets");
 
+
+// --- a composition over two transformed fields (round 343) -----------------------------------------------
+//     0x24DD52/0x24DD5F  the field at +0x68 through 0x24C610
+//     0x24DD70 call 0x5CF6B0 with the object's +0x38
+//     0x24DD75/0x24DD84  and the field at +0x70 through 0x24C610 again
+//     0x24DD93/0x24DD9C  the weights at +0x60 and +0x58
+//     0x24DDBD..0x24DDCE four multiplications combining them
+inline constexpr std::uintptr_t kCompose = 0x24DD40;         // RE the whole routine
+inline constexpr int kComposeCallers = 1;
+inline constexpr std::size_t kComposeFieldA = 0x68;          // RE 0x24DD52
+inline constexpr std::size_t kComposeFieldB = 0x70;          // RE 0x24DD75
+inline constexpr std::size_t kComposeFieldC = 0x38;          // RE 0x24DD6C
+inline constexpr std::size_t kComposeWeightA = 0x58;         // RE 0x24DD9C
+inline constexpr std::size_t kComposeWeightB = 0x60;         // RE 0x24DD93
+inline constexpr std::uintptr_t kComposeHelper1 = 0x24C610;  // RE both per-field calls
+inline constexpr int kComposeHelperSightings = 2;            // RE 0x24DD5F and 0x24DD84
+inline constexpr std::uintptr_t kComposeHelper2 = 0x5CF6B0;  // RE 0x24DD70
+inline constexpr bool kGeometryClusterMember = true;         // its range matches rounds 341 and 342
+inline constexpr std::size_t kComposeFrame = 0xD0;           // RE 0x24DD43
+inline constexpr std::size_t kComposeTempA = 0x70;           // RE 0x24DD4A
+inline constexpr std::size_t kComposeTempB = 0x20;           // RE 0x24DD64
+inline constexpr std::size_t kComposeTempC = 0xA0;           // RE 0x24DD79
+static_assert(kComposeHelperSightings == 2, "the per-field helper is called twice");
+static_assert(kComposeFieldA != kComposeFieldB, "for two different fields");
+static_assert(kComposeWeightB - kComposeWeightA == 8, "the two weights are one double apart");
+static_assert(kComposeFrame == 0xD0, "a frame of two hundred and eight bytes");
+static_assert(kGeometryClusterMember, "the second helper sits in the geometry range");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

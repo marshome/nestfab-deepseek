@@ -6797,3 +6797,20 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 每点的算术（`a*x + b*y + tx` 与 `c*x + d*y + ty`）**也正是 round 341 就地变换所做的** ⇒ **该公式从第二个例程得到确认**。
 
 **已落 `layout.hpp`**：`kAffineTwoPoints`(0x5CFDC0)、`kAffineTwoPointsCallers`(3)、`kAffineFormulaConfirmed`、`kMatrixLayoutConfirmed2`、`kBothPointsInPlace`、`kAffineFormula`、`kGeometryPipeline`、`kPipelineStages`(3) + **六条 `static_assert`** + 测试 26 条（含两组手算：缩放+平移后两点的新坐标、纯缩放保持斜率）。
+
+### 附 261 **两个字段各经同一助手变换后的组合**（goal round 343）**[已落码]**
+
+`0x24DD40`（238 B / 1 个调用者）：
+
+```
+24DD52/24DD5F  字段 `+0x68` 经 **0x24C610**（输出在 `rsp+0x70`）
+24DD70  对象的 `+0x38` 与前一输出送入 **0x5CF6B0**   ; ★ 同一 `0x5CF…` 几何范围
+24DD75/24DD84  字段 `+0x70` 再经 **0x24C610**（输出在 `rsp+0xA0`）
+24DD9C/24DD93  加权量 `+0x58`、`+0x60`
+24DDBD..24DDCE  四次乘法将两者与权重交叉相乘
+```
+
+⇒ **一个助手被调两次（每字段一次）**，另一个（**`0x5CF6B0`**，与 rounds 341/342 的段变换**同一地址范围**）调一次；`+0x58`、`+0x60` 作为**权重**参与交叉相乘。
+对象因此携带 `+0x38`、`+0x58`、`+0x60`、`+0x68`、`+0x70` 处的子对象，而本例程是**本工作读到的第一个帧高 `0xD0` 的例程**。
+
+**已落 `layout.hpp`**：`kCompose`(0x24DD40)、`kComposeCallers`(1)、`kComposeFieldA/B/C`(0x68/0x70/0x38)、`kComposeWeightA/B`(0x58/0x60)、`kComposeHelper1`(0x24C610)、`kComposeHelperSightings`(2)、`kComposeHelper2`(0x5CF6B0)、`kGeometryClusterMember`、`kComposeFrame`(0xD0)、`kComposeTempA/B/C` + **五条 `static_assert`** + 测试 24 条。

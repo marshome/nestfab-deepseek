@@ -5356,5 +5356,44 @@ int main() {
         CHECK((c1 - c0) * 2.0 == (d1 - d0));             // still the same slope, doubled in length
     }
 
+    // --- the composition over two fields (RE 0x24dd40) -----------------------------------------------
+    {
+        CHECK(kCompose == 0x24DD40);
+        CHECK(kComposeCallers == 1);
+        CHECK(kComposeFieldA == 0x68);
+        CHECK(kComposeFieldB == 0x70);
+        CHECK(kComposeFieldC == 0x38);
+        CHECK(kComposeFieldA != kComposeFieldB);
+        CHECK(kComposeFieldB - kComposeFieldA == 8);
+        CHECK(kComposeWeightA == 0x58);
+        CHECK(kComposeWeightB == 0x60);
+        CHECK(kComposeWeightB - kComposeWeightA == 8);
+        CHECK(kComposeHelper1 == 0x24C610);
+        CHECK(kComposeHelperSightings == 2);
+        CHECK(kComposeHelper2 == 0x5CF6B0);
+        CHECK(kComposeHelper1 != kComposeHelper2);
+        CHECK(kGeometryClusterMember);
+        CHECK(kComposeFrame == 0xD0);
+        CHECK(kComposeFrame == 208);
+        CHECK(kComposeTempA == 0x70 && kComposeTempB == 0x20 && kComposeTempC == 0xA0);
+        CHECK(kComposeTempA != kComposeTempB);
+        // the geometry routines already recorded all live in the same address range
+        CHECK(kAffineInPlace > 0x5C0000 && kAffineInPlace < 0x5D0000);
+        CHECK(kAffineTwoPoints > 0x5C0000 && kAffineTwoPoints < 0x5D0000);
+        CHECK(kAffineKernel > 0x5C0000 && kAffineKernel < 0x5D0000);
+
+        // the weighted combination the four multiplications implement
+        const auto weighted = [](double wa, double wb, double a, double b) {
+            return wa * a + wb * b;                      // the crosswise products, added
+        };
+        CHECK(weighted(1.0, 1.0, 3.0, 4.0) == 7.0);
+        CHECK(weighted(2.0, 0.0, 3.0, 4.0) == 6.0);
+        CHECK(weighted(0.0, 0.5, 3.0, 4.0) == 2.0);
+        CHECK(weighted(0.5, 0.5, 2.0, 4.0) == 3.0);
+        // the frame is large because it holds three temporaries of at least 0x30 bytes each
+        CHECK(kComposeFrame > kSegmentBytes);
+        CHECK(kComposeFrame - kComposeTempC == 0x30);
+    }
+
     return check::finish("test_recovered");
 }
