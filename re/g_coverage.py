@@ -260,6 +260,11 @@ try:
 except NameError:
     vendor = [a for a in missing if classify_identity(a) in ("third_party", "toolchain")]
     vb = sum((P[a].get("size") or 0) for a in vendor)
+try:
+    domain
+except NameError:
+    domain = [a for a in missing if classify_identity(a) not in ("third_party", "toolchain")]
+    db = sum((P[a].get("size") or 0) for a in domain)
 
 # ---------------------------------------------------------------- write the list
 out = [u"# 未覆盖函数清单（按体积排序，来自 `re/g_coverage.py`）\n",
