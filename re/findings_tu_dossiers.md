@@ -1661,3 +1661,30 @@
 | `..\structure\border_property.hpp` | 1 | 413 |
 
 **结论**：剩下的未引用领域函数**没有路径证据**，这与 round 109 对 D 桶（无锚定证据）的统计一致。
+
+# 附正：“TU 路径”通道**并未见底**（goal round 162）
+
+**更正**：round 161 的结论是**我自己的正则漏了斜杠方向**造成的假象：当时只匹配 `..\`（反斜杠），而镜像里还有 `../utils/evaluated_object.hpp` 这类**正斜杠**路径。换成**两种分隔符都接受**后：**44 个 TU、199 个函数、其中 10 个尚未引用**。
+
+
+## `../utils/evaluated_object.hpp`—9 个未引用 / 5202 字节
+
+| 函数 | 字节 | 证据（自带路径文本）|
+|---|---:|---|
+| `0x6c78f0` | 1411 | `../utils/evaluated_object.hpp` |
+| `0x6c81d0` | 946 | `../utils/evaluated_object.hpp` |
+| `0x6c8590` | 847 | `../utils/evaluated_object.hpp` |
+| `0x6d6270` | 333 | `../utils/evaluated_object.hpp` |
+| `0x6d63c0` | 333 | `../utils/evaluated_object.hpp` |
+| `0x6d6a00` | 333 | `../utils/evaluated_object.hpp` |
+| `0x6d6b50` | 333 | `../utils/evaluated_object.hpp` |
+| `0x6d6f60` | 333 | `../utils/evaluated_object.hpp` |
+| `0x6d70b0` | 333 | `../utils/evaluated_object.hpp` |
+
+## `..\nesting\algos\../nesting.hpp`—1 个未引用 / 284 字节
+
+| 函数 | 字节 | 证据（自带路径文本）|
+|---|---:|---|
+| `0x65e310` | 284 | `..\nesting\algos\../nesting.hpp` |
+
+**合计归档**：**10** 个未引用函数。
