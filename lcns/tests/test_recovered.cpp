@@ -3294,10 +3294,42 @@ int main() {
         CHECK(kSizeAccessorSentinel == -1);
         CHECK(kGuardPatternSightings == 3);
         CHECK(kSizeAccessorCallers == 6);
-        CHECK(kHelperClassificationOpen);               // recorded as open, not settled
+        CHECK(!kHelperClassificationOpen);              // settled in round 289: the callee IS CryptoPP
         // the domain strings this area carries
         CHECK(std::string(kTagBerDecodeError) == "BER decode error");
         CHECK(std::string(kTagInputBuffer) == "InputBuffer");
+    }
+
+    // --- the settled classification and the rule it produced (RE 0x118260) --------------------------
+    {
+        CHECK(kCryptoPpSelfTest == 0x118260);
+        CHECK(kSelfTestProbe == 0xD5970);
+        CHECK(kSelfTestStatus == 0xD5990);
+        CHECK(kSelfTestStatusDisabled == 1);
+        CHECK(kSelfTestTextA == 0x89F8E6);
+        CHECK(kSelfTestCtor == 0x1171F0);
+        CHECK(kSelfTestAlloc == 0x30);
+        CHECK(kSelfTestCallers == 169);
+        CHECK(!kHelperClassificationOpen);              // closed: it references CryptoPP's own text
+        CHECK(kDomainCallingLibraryStaysDomain);        // and the rule the case produced
+        // the caller of the self-test is domain code, and that does not change either classification
+        CHECK(kInputBufferHelper == kCryptoPpSelfTest);
+        CHECK(kInputBufferCtor == 0x77A460);
+        CHECK(kInputBufferCtor != kCryptoPpSelfTest);
+        CHECK(kSelfTestCallers > kBerReaderCallers);
+        CHECK(kSelfTestCallers > kBigIntAssignCallers);
+
+        // the status the routine acts on: disabled only when the value is exactly one
+        const auto disabled = [](std::int32_t status) { return status == kSelfTestStatusDisabled; };
+        CHECK(disabled(1));
+        CHECK(!disabled(0));
+        CHECK(!disabled(2));
+
+        // the rule restated: classification of caller and callee are independent
+        const auto callerIsDomain = [] { return true; };        // the 'InputBuffer' constructor
+        const auto calleeIsLibrary = [] { return true; };       // CryptoPP's self-test
+        CHECK(callerIsDomain() && calleeIsLibrary());
+        CHECK(kDomainCallingLibraryStaysDomain == (callerIsDomain() && calleeIsLibrary()));
     }
 
     return check::finish("test_recovered");

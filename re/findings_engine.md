@@ -5747,3 +5747,21 @@ F74E6  cmp rax,r8 ; jb → 抛出路径        ; ★ **尺寸必须 ≥ ceil(位
 ★ **必须核实的旧分类（本轮不做结论）**：`0x77A460` 调用 **`0x118260`**，而早前轮次把 `0x118260` 登记为 **CryptoPP self-test**（`re/covlib.py`）。一个**构造携带 `'InputBuffer'` 对象**的例程显然是领域代码 ⇒ **要么那条登记在此语境下不成立，要么 `0x118260` 是一个通用助手** —— 以 `kHelperClassificationOpen` 标为**开放问题**，不替任一方立论。
 
 **已落**：`text_tags.hpp` 的 `kTagInputBuffer`；`layout.hpp` 的 `kInputBuffer*`（十一个）、`kSizeAccessor*`、`kVtableSlotG`(0x160)、`kVtableSlotsKnown5`(10)、`kGuardPatternSightings`(3)、`kHelperClassificationOpen` + **四条 `static_assert`** + 测试 28 条。
+
+### 附 207 **开放问题已结：该助手就是 CryptoPP**；以及它产生的一条规则（goal round 289）**[已落码]**
+
+`0x118260`（355 B / **169 个调用者**）引用的是 **CryptoPP 自己的上电自检文本**：
+
+```
+0x89F8E6  'Cryptographic algorithms are disabled after a power-up self test failed.'
+          'Cryptographic algorithms are disabled before the power-up self tests are performed.'
+```
+
+⇒ 早前把它登记为 **CryptoPP self-test 是对的**；round 288 的张力**以另一种方式消解**：**领域代码调用了 CryptoPP**（本项目解 BER、自然会用到加密库）。
+
+★ **这个案例产生了一条规则，它决定“排除名单应如何被阅读”**：
+**领域函数调用库函数，不使库函数变成领域代码，也不使调用者变成库代码 —— 两个分类相互独立**（`kDomainCallingLibraryStaysDomain`）。混淆这一点，正是排除名单会被误用的方式。
+
+它自己的逻辑：探针 `0xD5970`、状态 `0xD5990`（**值 1 表示禁用**）、以 `0x30` 分配并抛出那两条消息。
+
+**已落**：`layout.hpp` 的 `kCryptoPpSelfTest`、`kSelfTest*`（七个）、`kDomainCallingLibraryStaysDomain` + **三条 `static_assert`** + 测试 19 条；并把 `kHelperClassificationOpen` **置为 false**（附理由）。

@@ -1990,9 +1990,36 @@ inline constexpr int kSizeAccessorCallers = 6;
 // OPEN QUESTION, recorded rather than settled: 0x77A460 calls 0x118260, which an earlier round registered as a
 // CryptoPP self-test. A routine that builds an object carrying 'InputBuffer' is domain code, so either that
 // registration is wrong in this context or 0x118260 is a general helper. NOT decided here.
-inline constexpr bool kHelperClassificationOpen = true;
+inline constexpr bool kHelperClassificationOpen = false;   // CLOSED in round 289: it is CryptoPP
+// Round 288 left this open because domain code calls 0x118260. Reading that function settles it: it references
+// CryptoPP's own power-up self-test text, so the library registration stands. What the case actually teaches is
+// recorded as a rule below: a domain caller does not reclassify its library callee.
 static_assert(kVtableSlotsKnown5 == kVtableSlotsKnown4 + 1, "one more slot than round 286");
 static_assert(kGuardPatternSightings == 3, "three sightings of the guarded shape");
+
+
+// --- the CryptoPP self-test, whose classification is now settled (round 289) ---------------------------
+//     0x118267/0x118270  a vtable-ish pointer at [rcx]
+//     0x11826E test dl,dl ; jne          ; the flag argument
+//     0x118280 call 0xD5970 ; test al    ; a probe
+//     0x118289/0x118292 call 0xD5990 ; cmp eax,1   ; the status, where ONE means disabled
+//     0x1182A6 call 0x9988C0 with ecx = 0x30 and 0x1171F0, then a throw with the messages below
+//     0x1182AB/... the two literals are CryptoPP's power-up self-test text
+inline constexpr std::uintptr_t kCryptoPpSelfTest = 0x118260;   // RE the whole routine
+inline constexpr std::uintptr_t kSelfTestProbe = 0xD5970;       // RE 0x118280
+inline constexpr std::uintptr_t kSelfTestStatus = 0xD5990;      // RE 0x118289
+inline constexpr std::int32_t kSelfTestStatusDisabled = 1;      // RE 0x118297
+inline constexpr std::uintptr_t kSelfTestTextA = 0x89F8E6;      // RE 0x1182AB, 'after a power-up self test failed'
+inline constexpr std::uintptr_t kSelfTestCtor = 0x1171F0;       // RE 0x1182B8
+inline constexpr std::size_t kSelfTestAlloc = 0x30;             // RE 0x1182A1
+inline constexpr int kSelfTestCallers = 169;                    // RE the profile
+// THE RULE this case produced, which governs how the exclusion lists must be read:
+// a DOMAIN function calling a LIBRARY function does not make the library function domain code, and it does not make
+// the caller library code either. The two classifications are independent.
+inline constexpr bool kDomainCallingLibraryStaysDomain = true;
+static_assert(kSelfTestStatusDisabled == 1, "the disabled status is one");
+static_assert(!kHelperClassificationOpen, "the classification is settled");
+static_assert(kSelfTestCallers > kBerReaderCallers, "the self-test is called far more widely");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
