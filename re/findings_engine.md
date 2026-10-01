@@ -4479,3 +4479,15 @@ README 对 T7 的范围定义是“**先只建立链接能力**”（因为需�
 ⇒ **两个具体类型锚点**（**由位移算出而非猜**）—— 正是目标文本里“vtable 类名”那条通道所需的东西。
 
 **已落 `layout.hpp`**：三个档位、`kCancelKindBoundary`、`kInit*`（含与 `kCtorZeroQwordOffset`、`kSmallRecordStride` 的交叉断言）、`kTypeAnchorA/B/Gap` + 测试 27 条。
+
+### 附 142 **从两个类型锚点反向回流**（goal round 220）
+
+round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**性质不同——构造、判断、销毁一个对象的函数会**直接引用其 vtable/typeinfo 地址**。
+本轮对全部未引用领域函数的每条指令求 RIP 目标，与 **`0x7C2460`、`0x7C2470`**（round 219 由位移算出）及其 ±0x60 窗口内的地址比对：
+
+```
+0x7C2460 type A (round 219): 2 function(s)
+0x7C2470 type B (round 219): 2 function(s)
+```
+
+⇒ 命中函数已列在上方输出，它们是**该类型的使用者**。
