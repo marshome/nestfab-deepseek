@@ -4975,5 +4975,44 @@ int main() {
         CHECK(sizeof(double) == kPointCoordBytes);
     }
 
+    // --- the formatting wrapper and the five-field constructor (RE 0x634c40 and 0x4b6d80) -----------
+    {
+        CHECK(kFormatWrapper == 0x634C40);
+        CHECK(kFormatWrapperCallers == 19);
+        CHECK(kFormatLimit == 0x4000);
+        CHECK(kFormatLimit == 16384);
+        CHECK(kFormatEngine == 0x63B140);
+        CHECK(kFormatEngine != kFormatWrapper);
+        CHECK(kNulTerminated);
+        CHECK(kVaListConvention);
+        CHECK(kCtor4B6D80 == 0x4B6D80);
+        CHECK(kCtor4B6D80Callers == 18);
+        CHECK(kCtor4B6D80VtableRva == 0x5817A1);
+        CHECK(kZeroedDwords == 3);
+        CHECK(kZeroedQwords == 2);
+        CHECK(kPlainDataFields == 5);
+        CHECK(kZeroedDwords + kZeroedQwords == kPlainDataFields);
+        CHECK(kDwordBase4B6D80 == 0x08);
+        CHECK(kQwordBase4B6D80 == 0x18);
+        CHECK(kQwordBase4B6D80 - (kDwordBase4B6D80 + 4 * kZeroedDwords) == 4);   // a four-byte gap
+        CHECK(kCtor4B6D80 != kCtor10F200);
+
+        // the layout the constructor leaves, and the terminator the formatter writes
+        const std::size_t dwords[kZeroedDwords] = {kDwordBase4B6D80, kDwordBase4B6D80 + 4,
+                                                   kDwordBase4B6D80 + 8};
+        for (int i = 0; i < kZeroedDwords; ++i) {
+            CHECK(dwords[i] % 4 == 0);
+        }
+        CHECK(kQwordBase4B6D80 - (dwords[2] + 4) == 4);   // the gap again, from the last dword
+        const std::size_t qwords[kZeroedQwords] = {kQwordBase4B6D80, kQwordBase4B6D80 + 8};
+        CHECK(qwords[1] - qwords[0] == 8);
+        // the terminator index: a returned length of n puts the zero at n
+        const auto terminatorAt = [](int length) { return static_cast<std::size_t>(length); };
+        CHECK(terminatorAt(0) == 0);
+        CHECK(terminatorAt(5) == 5);
+        CHECK(kFormatLimit > 1000);
+        CHECK(kFormatLimit / 1024 == 16);                 // sixteen kilobytes
+    }
+
     return check::finish("test_recovered");
 }

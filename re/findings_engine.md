@@ -6613,3 +6613,21 @@ F72C8/72CF  字面量 **`'UWVSH'`** 写入对象首字   ; ★★ **第三次出
 ⇒ **这是本工作读到的第一个浮点内核**（SSE 指令使其无疑），且**两个操作数读自不同偏移**（`+0x08`/`+0x10` 对 `+0x00`/`+0x08`） —— **如实记录，不强拐成对称图景**。
 
 **已落 `layout.hpp`**：`kSwapThree`、`kSwapThreeCallers`(20)、`kSwapQword`(0x00)、`kSwapByteA/B`(0x08/0x09)、`kBitfieldSwapMask`(0xFFFFFFFE)、`kBitSwapMask`(1)、`kSwapHelperA/B`、`kPointAddSSE`(0x16C270)、`kPointAddCallers`(19)、`kPackedDoubleAdd`、`kPointCoordsA0/A1/B0/B1`、`kPointCoordBytes`(8) + **五条 `static_assert`** + 测试 26 条。
+
+### 附 252 **格式化包装（上限 16KB）与五字段构造器**（goal round 334）**[已落码]**
+
+**（a）`0x634C40`（45 B / 19 个调用者）**：
+
+```
+634C48/634C4B  r9 = 格式串；`[rsp+0x20] = r8`（参数列表）
+634C56  `ecx = **0x4000**`              ; ★ **16384 字节上限**
+634C5B  call **0x63B140**               ; 格式化引擎
+634C63  `byte [rbx+rdx] = 0`            ; ★ **以返回长度为索引写终止符**
+```
+
+参数列表经 `rsp+0x20` 传递是 **va_list 惯例**：**记为惯例**，而非某个具体函数的证据。
+
+**（b）`0x4B6D80`（48 B / 18 个调用者）**：装虚表（rva `0x5817A1`）后**清零五个字段**：三个相邻 dword（`+0x08`、`+0x0C`、`+0x10`）与两个相邻 qword（`+0x18`、`+0x20`）。
+没有任何指针被存入 ⇒ **纯数据对象**（一个虚表加五个标量）。
+
+**已落 `layout.hpp`**：`kFormatWrapper`(0x634C40)、`kFormatWrapperCallers`(19)、`kFormatLimit`(0x4000)、`kFormatEngine`(0x63B140)、`kNulTerminated`、`kVaListConvention`、`kCtor4B6D80`(0x4B6D80)、`kCtor4B6D80VtableRva`、`kZeroedDwords`(3)、`kZeroedQwords`(2)、`kPlainDataFields`(5)、`kDwordBase4B6D80`(0x08)、`kQwordBase4B6D80`(0x18) + **四条 `static_assert`** + 测试 26 条。

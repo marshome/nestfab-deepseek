@@ -3135,6 +3135,34 @@ static_assert(kPointCoordsA1 - kPointCoordsA0 == kPointCoordBytes, "the coordina
 static_assert(kPointCoordsB1 - kPointCoordsB0 == kPointCoordBytes, "in both operands");
 static_assert(kPackedDoubleAdd, "the addition is packed");
 
+
+// --- a formatting wrapper and a five-field constructor (round 334) --------------------------------------
+//     0x634C48/0x634C4B  the format and the argument list on the stack
+//     0x634C56 mov ecx,0x4000          ; a limit of 16384 bytes
+//     0x634C5B call 0x63B140           ; the formatting engine
+//     0x634C63 byte [rbx+rdx] = 0      ; the terminator, indexed by the returned length
+//     0x4B6D87 [rcx] = a vtable (rva 0x5817A1)
+//     0x4B6D8A/0x4B6D91/0x4B6D98  three dwords ; 0x4B6D9F/0x4B6DA7 two qwords
+inline constexpr std::uintptr_t kFormatWrapper = 0x634C40;   // RE the whole routine
+inline constexpr int kFormatWrapperCallers = 19;
+inline constexpr std::size_t kFormatLimit = 0x4000;          // RE 0x634C56
+inline constexpr std::uintptr_t kFormatEngine = 0x63B140;    // RE 0x634C5B
+inline constexpr bool kNulTerminated = true;                 // RE 0x634C63
+inline constexpr bool kVaListConvention = true;              // RE the stack argument at rsp+0x20
+inline constexpr std::uintptr_t kCtor4B6D80 = 0x4B6D80;      // RE the second routine
+inline constexpr int kCtor4B6D80Callers = 18;
+inline constexpr std::uintptr_t kCtor4B6D80VtableRva = 0x5817A1;  // RE 0x4B6D80
+inline constexpr int kZeroedDwords = 3;                      // RE +0x08, +0x0C, +0x10
+inline constexpr int kZeroedQwords = 2;                      // RE +0x18, +0x20
+inline constexpr int kPlainDataFields = 5;                   // three dwords and two qwords
+inline constexpr std::size_t kDwordBase4B6D80 = 0x08;        // RE 0x4B6D8A
+inline constexpr std::size_t kQwordBase4B6D80 = 0x18;        // RE 0x4B6D9F
+static_assert(kFormatLimit == 16384, "the formatting limit is sixteen kilobytes");
+static_assert(kNulTerminated && kVaListConvention, "terminated, with the argument list on the stack");
+static_assert(kZeroedDwords + kZeroedQwords == kPlainDataFields, "the fields add up");
+static_assert(kQwordBase4B6D80 - (kDwordBase4B6D80 + 4 * kZeroedDwords) == 4,
+              "there is a four-byte gap between the dwords and the qwords");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
