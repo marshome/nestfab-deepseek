@@ -3074,6 +3074,37 @@ static_assert(kContainerPairB - kContainerPairA == 8, "begin and end are eight b
 static_assert(kCompareSizeField == kContainerPairA, "the size read by the compare is the same +0x08");
 static_assert(kMinViaCmov && kCompareHelperSightings == 2, "a min by cmov, and a second sighting");
 
+
+// --- the move-assigned type's constructor, and three threads meeting (round 332) -------------------------
+//     0x10F207/0x10F20A/0x10F212  the vtable, a null at +0x8 and the byte at +0x10 set to ONE
+//     0xF7278 cmp qword [rcx],0 where rcx came from rva 0x91084E   ; a global guard
+//     0xF72A3 call 0x77A460   ; the InputBuffer constructor of round 288
+//     0xF72C3 call 0xEEEE0    ; the lazy-init callee of round 259
+//     0xF72C8/0xF72CF the literal 'UWVSH' stored as the object's first word
+inline constexpr std::uintptr_t kCtor10F200 = 0x10F200;      // RE the whole routine
+inline constexpr int kCtor10F200Callers = 20;
+inline constexpr std::uintptr_t kCtor10F200VtableRva = 0x939AD9;  // RE 0x10F200
+inline constexpr std::size_t kFlagAt10 = 0x10;               // RE 0x10F212, the byte the move copies
+inline constexpr bool kFlagAt10InitOne = true;               // RE the stored one
+inline constexpr std::uintptr_t kFunctionF7260 = 0xF7260;    // RE the second routine
+inline constexpr int kFunctionF7260Callers = 20;
+inline constexpr std::uintptr_t kFunctionF7260VtableRva = 0x95A45B;  // RE 0xF728E
+inline constexpr std::uintptr_t kGlobalGuardRva = 0x91084E;  // RE 0xF726B
+inline constexpr std::uintptr_t kF7260Helper = 0xF7010;      // RE 0xF72B4
+inline constexpr std::size_t kFunctionF7260FieldA = 0x10;    // RE 0xF7283
+inline constexpr std::size_t kFunctionF7260FieldB = 0x18;    // RE 0xF7295
+inline constexpr int kInputBufferCtorCallSites = 2;          // rounds 288 and 332
+inline constexpr int kLazyInitCalleeSightings = 2;           // rounds 259 and 332
+inline constexpr std::uintptr_t kTagUwvshRva = 0xF72C8;      // RE the literal's address here
+inline constexpr int kTagUwvsh = 3;                          // rounds 263, 281 and 332
+inline constexpr bool kTypeTagStoredAtZero = true;           // RE 0xF72CF
+inline constexpr bool kTypeTagIsAMarker = true;              // written in, not merely compared
+static_assert(kFlagAt10 == kMoveByte, "the byte the constructor sets is the byte the move copies");
+static_assert(kFlagAt10InitOne, "and it starts at one");
+static_assert(kInputBufferCtorCallSites == 2, "the InputBuffer constructor has two known call sites");
+static_assert(kLazyInitCalleeSightings == 2 && kTagUwvsh == 3, "two more sightings of older findings");
+static_assert(kTypeTagStoredAtZero && kTypeTagIsAMarker, "the tag is installed, not just compared");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

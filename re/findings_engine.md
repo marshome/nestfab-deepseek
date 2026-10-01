@@ -6561,3 +6561,29 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 **这使该助手的角色确定**：round 311 只能说“比拷贝助手后移八字节的一个比较助手”；在此它被**以两个缓冲区指针调用、其结果决定走向** ⇒ `kCompareHelperRoleIsCompare`。
 
 **已落 `layout.hpp`**：`kAppend40`(0x8AB830)、`kAppend40Callers`(20)、`kElement40`(0x28)、`kElementQwords`(5)、`kContainerPairA/B`(0x08/0x10)、`kGrow8AB5D0`(0x8AB5D0)、`kPrefixCompare`(0x82A450)、`kPrefixCompareCallers`(20)、`kMinViaCmov`、`kCompareSizeField`(0x08)、`kCompareHelperSightings`(2)、`kCompareHelperRoleIsCompare` + **四条 `static_assert`** + 测试 26 条。
+
+### 附 250 ★★ **三条旧线索在同一个函数里相遇**（goal round 332）**[已落码]**
+
+**（a）`0x10F200`（23 B / 20 个调用者）= round 324 移动赋值那个类型的构造器**：
+
+```
+10F207  [rcx] = 虚表（rva 0x939AD9）
+10F20A  [rcx+8] = 0
+10F212  byte [rcx+**0x10**] = **1**
+```
+
+⇒ round 324 那个移动赋值的两个字段（`+0x8`、`+0x10`）**正是本构造器的字段** ⇒ 该对**闭合**。
+
+**（b）`0xF7260`（152 B / 20 个调用者）—— 三条线索在此相遇**：
+
+```
+F7278  cmp qword [rcx],0（rcx 取自 rva 0x91084E）  ; 全局守卫
+F72A0  [rbx] = 虚表（rva 0x95A45B）
+F72A3  call **0x77A460**   ; ★ **round 288 的 `InputBuffer` 构造器**（**第二个调用点**）
+F72C3  call **0xEEEE0**    ; ★ **round 259 的惰性初始化被调者**（第二次目击）
+F72C8/72CF  字面量 **`'UWVSH'`** 写入对象首字   ; ★★ **第三次出现**
+```
+
+★ **`'UWVSH'` 的地位因此改变**：rounds 263/281 只见它被**拿来比较**，而在此它被**写入对象** ⇒ 它是**构造时安装的按类型标记**，而不仅仅是“拿来比较的字面量”。
+
+**已落 `layout.hpp`**：`kCtor10F200`、`kCtor10F200Callers`(20)、`kCtor10F200VtableRva`、`kFlagAt10`(0x10)、`kFlagAt10InitOne`、`kFunctionF7260`、`kFunctionF7260VtableRva`、`kGlobalGuardRva`、`kF7260Helper`(0xF7010)、`kFunctionF7260FieldA/B`、`kInputBufferCtorCallSites`(2)、`kLazyInitCalleeSightings`(2)、`kTagUwvshRva`、`kTagUwvsh`(3)、`kTypeTagStoredAtZero`、`kTypeTagIsAMarker` + **五条 `static_assert`** + 测试 26 条。

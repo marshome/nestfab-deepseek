@@ -4887,5 +4887,48 @@ int main() {
         CHECK(kCompareHelperSightings * 4 == 8);
     }
 
+    // --- three threads meeting (RE 0x10f200 and 0xf7260) --------------------------------------------
+    {
+        CHECK(kCtor10F200 == 0x10F200);
+        CHECK(kCtor10F200Callers == 20);
+        CHECK(kCtor10F200VtableRva == 0x939AD9);
+        CHECK(kFlagAt10 == 0x10);
+        CHECK(kFlagAt10 == kMoveByte);                   // the same byte the move of round 324 copies
+        CHECK(kFlagAt10InitOne);
+        CHECK(kMoveAssignment == 0x10F220);
+        CHECK(kMoveAssignment - kCtor10F200 == 0x20);    // the constructor sits a step before the move
+
+        CHECK(kFunctionF7260 == 0xF7260);
+        CHECK(kFunctionF7260Callers == 20);
+        CHECK(kFunctionF7260VtableRva == 0x95A45B);
+        CHECK(kGlobalGuardRva == 0x91084E);
+        CHECK(kF7260Helper == 0xF7010);
+        CHECK(kFunctionF7260FieldA == 0x10);
+        CHECK(kFunctionF7260FieldB == 0x18);
+        CHECK(kInputBufferCtor == 0x77A460);
+        CHECK(kInputBufferCtorCallSites == 2);           // rounds 288 and this
+        CHECK(kLazyInitCallee == 0xEEEE0);
+        CHECK(kLazyInitCalleeSightings == 2);            // rounds 259 and this
+        CHECK(kTagUwvshRva == 0xF72C8);
+        CHECK(kTagUwvsh == 3);                           // rounds 263, 281 and this
+        CHECK(kTypeTagStoredAtZero);
+        CHECK(kTypeTagIsAMarker);
+        CHECK(kTypeLiteralSite == 0x11A7DF);             // one of the earlier sightings
+        CHECK(kFunctionF7260FieldA != kFunctionF7260FieldB);
+
+        // the state the two constructors leave
+        struct Moved { void* p; unsigned char b; };
+        const auto ctor10F200 = [] { Moved m{}; m.p = nullptr; m.b = 1; return m; };
+        const Moved a = ctor10F200();
+        CHECK(a.p == nullptr);
+        CHECK(a.b == 1);
+        // and the tag marker the other routine installs
+        const std::string tag = "UWVSH";
+        CHECK(tag.size() == 5);
+        CHECK(tag == std::string("UWVSH"));
+        CHECK(kTagUwvsh == 3);
+        CHECK(kInputBufferCtorCallSites + kLazyInitCalleeSightings == 4);
+    }
+
     return check::finish("test_recovered");
 }
