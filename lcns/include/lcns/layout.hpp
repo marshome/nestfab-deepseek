@@ -605,6 +605,14 @@ inline constexpr int kRatioFamilyTreePair = 2;              // 0x714D40 and 0x71
 // RE 0x716DA0 (round 231) is the family's USE SITE: it walks a tree with [rax+0x20] as the key and [rax+0x10]
 // / [rax+0x18] as the children -- the layout of round 178 -- and calls the round-216 comparator 0x7DB6E0 from
 // inside that walk (0x716E6A), carrying the family's 50.0 too (0x716E24).
+// RE round 235: 0x714D40 is the SAME shape as 0x716DA0 -- a tree walk on [rax+0x20] with children at
+// [rax+0x10] / [rax+0x18] followed by a call to the same comparator 0x7DB6E0 (0x714E21) -- but its branch
+// uses `setl` (0x714DF3) where 0x716DA0 uses `setg` (0x716E43). So these are the two DIRECTIONS of the same
+// ordered container, not two unrelated users, and they share the comparator and the tree layout.
+inline constexpr std::uintptr_t kTreeLookupGreater = 0x716DA0;   // RE 0x716E43, `setg`
+inline constexpr std::uintptr_t kTreeLookupLess = 0x714D40;      // RE 0x714DF3, `setl`
+inline constexpr int kTreeLookupDirections = 2;
+inline constexpr std::size_t kTreeLookupAlloc = 0x68;            // RE 0x714E2E: 104 bytes
 inline constexpr std::uintptr_t kComparatorUseSite = 0x716DA0;   // RE 0x716E6A
 inline constexpr std::size_t kUseSiteTreeKey = 0x20;             // RE 0x716E3C
 inline constexpr std::size_t kUseSiteTreeChildA = 0x10;          // RE 0x716E33

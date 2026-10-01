@@ -1754,6 +1754,14 @@ int main() {
         CHECK(kUseSiteTreeChildA == kTreeNodeLeft);              // the tree layout of round 178
         CHECK(kUseSiteTreeChildB == kTreeNodeRight);
         CHECK(kUseSiteTreeKey == kTreeNodeKey);
+        // round 235: the same walk in the other direction, calling the same comparator
+        CHECK(kTreeLookupGreater == 0x716DA0);
+        CHECK(kTreeLookupLess == 0x714D40);
+        CHECK(kTreeLookupDirections == 2);
+        CHECK(kTreeLookupAlloc == 0x68);
+        CHECK(kTreeLookupAlloc == 104);
+        CHECK(kTreeLookupGreater != kTreeLookupLess);
+        CHECK(kComparatorUseSite == kTreeLookupGreater);   // the constant still names the same function
 
         // the rule, restated for this member's fields
         const auto ratioLess = [](double aNum, double aDen, double aPri,
