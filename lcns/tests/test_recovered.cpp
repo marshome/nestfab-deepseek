@@ -2477,5 +2477,45 @@ int main() {
         CHECK(kWideCharBytes * 8 == 16);
     }
 
+    // --- the tag dispatch and the constructor that corrects two figures (RE 0xf49e0, 0x87edf0) -------
+    {
+        CHECK(kTagDispatch == 0xF49E0);
+        CHECK(kTagDispatchCore == 0xF17C0);
+        CHECK(kTagDispatchA == 0xF4830);
+        CHECK(kTagDispatchB == 0xF1B20);
+        CHECK(kTagDispatchCallers == 34);
+        CHECK(kBigIntFamilyMembers3 == 4);
+        CHECK(kTagSightings == 5);
+        // the tag field and its unset value are the ones rounds 249/253 landed
+        CHECK(kTagFieldOffset == 0x20);
+        CHECK(kTagUnsetValue == 1);
+        // the dispatch takes the larger word count first, as cmovae does
+        const auto larger = [](std::uint64_t a, std::uint64_t b) { return a >= b ? a : b; };
+        CHECK(larger(3, 5) == 5);
+        CHECK(larger(5, 3) == 5);
+        CHECK(larger(4, 4) == 4);
+
+        CHECK(kObjectCtor == 0x87EDF0);
+        CHECK(kObjectCtorVtableRva == 0x1D67ED);
+        CHECK(kObjectCtorThunk == 0x8774E0);
+        CHECK(kObjectCtorHelper == 0x8AAB00);
+        CHECK(kObjectCtorCallers == 35);
+        // CORRECTION: the byte group is a QUARTET, not the trio round 260 recorded
+        CHECK(kByteQuartetA == 0x78);
+        CHECK(kByteQuartetB == 0x79);
+        CHECK(kByteQuartetC == 0x7A);
+        CHECK(kByteQuartetD == 0x7B);
+        CHECK(kByteQuartetD - kByteQuartetA == 3);
+        CHECK(kByteQuartetA == kByteTrioA);
+        CHECK(kByteQuartetC == kResetByteB);          // round 258's bytes are the middle two
+        CHECK(kByteQuartetD == kStatusFlag + 1);
+        // and the object starts with a capacity of 512
+        CHECK(kInitialCapacity == 0x200);
+        CHECK(kInitialCapacity == 512);
+        CHECK(kInitialCapacity == kDequeBlockSize);   // the same value as round 218's block size
+        CHECK(kObjectCtorThunk != kThunkCallers);     // the thunk is 0x8774E0, not the caller count
+        CHECK(kObjectCtorThunk != 0x8774F0);          // and it is a DIFFERENT thunk from round 248's
+    }
+
     return check::finish("test_recovered");
 }

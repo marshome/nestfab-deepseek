@@ -1298,6 +1298,43 @@ inline constexpr std::uintptr_t kFromCStringTail = 0x20BFC0; // RE 0x20C0B7
 inline constexpr int kFromCStringCallers = 32;
 static_assert(kSsoInline == kWideCapacity, "both objects keep the inline buffer at 0x10");
 
+
+// --- the big-integer binary operation 0xF49E0, thirty-four callers (round 263) -------------------------
+//     0xF49EA/0xF49F4/0xF49F8  r8 takes the LARGER of the two word counts (cmovae)
+//     0xF49FF call 0xF17C0      ; the core helper
+//     0xF4A04/0xF4A0A           BOTH operands are tested for the tag of rounds 249 and 253
+//     0xF4A19/0xF4A3F/0xF4A59   dispatch by tag into 0xF4830 or 0xF1B20
+//     0xF4A61 dword [rsi+0x20] = 1   ; the result's own tag is set
+//  So the tag now has its fourth and fifth sightings (one per operand), and this is a fourth family member.
+inline constexpr std::uintptr_t kTagDispatch = 0xF49E0;      // RE the whole routine
+inline constexpr std::uintptr_t kTagDispatchCore = 0xF17C0;  // RE 0xF49FF
+inline constexpr std::uintptr_t kTagDispatchA = 0xF4830;     // RE 0xF4A19 and 0xF4A59
+inline constexpr std::uintptr_t kTagDispatchB = 0xF1B20;     // RE 0xF4A3F
+inline constexpr int kTagDispatchCallers = 34;
+inline constexpr int kBigIntFamilyMembers3 = 4;              // bits, bytes, is-zero and this
+inline constexpr int kTagSightings = 5;                      // rounds 249, 253 and both operands here
+
+// --- the constructor 0x87EDF0, thirty-five callers (round 263) ----------------------------------------
+//     It zeroes +0x08, +0x10, +0x18, +0x20, +0x28 and +0x30; +0x40; the dwords +0x58, +0x5C, +0x60, +0x64;
+//     the buffer at +0x68; +0x80, +0x88; the byte at +0x90; the interface at +0x98; and +0xA0.
+//     TWO CORRECTIONS come from it:
+//       0x87EE99..0x87EEA5 clears FOUR bytes: +0x78, +0x79, +0x7A AND +0x7B. Round 260 recorded a trio of three,
+//       so the group is a QUARTET and the fourth member is added here.
+//       0x87EE91 `mov qword [rbx+0x70],0x200` gives the object an initial 512.
+inline constexpr std::uintptr_t kObjectCtor = 0x87EDF0;      // RE the whole routine
+inline constexpr std::uintptr_t kObjectCtorVtableRva = 0x1D67ED;   // RE 0x87EE4C
+inline constexpr std::uintptr_t kObjectCtorThunk = 0x8774E0; // RE 0x87EE65, the sibling of 0x8774F0
+inline constexpr std::uintptr_t kObjectCtorHelper = 0x8AAB00; // RE 0x87EE47
+inline constexpr std::size_t kByteQuartetA = 0x78;           // RE 0x87EE99
+inline constexpr std::size_t kByteQuartetB = 0x79;           // RE 0x87EE9D
+inline constexpr std::size_t kByteQuartetC = 0x7A;           // RE 0x87EEA1
+inline constexpr std::size_t kByteQuartetD = 0x7B;           // RE 0x87EEA5 -- NOT in round 260's trio
+inline constexpr std::size_t kInitialCapacity = 0x200;       // RE 0x87EE91 (512)
+inline constexpr int kObjectCtorCallers = 35;
+static_assert(kByteQuartetD - kByteQuartetA == 3, "four adjacent bytes");
+static_assert(kByteQuartetA == kByteTrioA, "the quartet starts where round 260's trio did");
+static_assert(kInitialCapacity == 512, "the initial capacity is 512");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
