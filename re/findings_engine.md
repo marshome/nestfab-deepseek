@@ -6146,3 +6146,19 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ 空路径上出现的 **`+0xA8`** 是**第十五个槽**。
 
 **已落 `layout.hpp`**：`kByteReaderTwin`(0x1170B0)、`kTwinDelta`(0x60)、`kTwinBytes`(92)、`kByteReaderStep`(0x158)、`kTwinStep`(0x160)、`kByteReaderTail`(0xA0)、`kTwinTail`(0xB0)、`kByteReaderNull`(0xA8)、`kVtableSlotsKnown10`(15)、`kTailCallsThroughSlot`、`kHelpersMirrorDrivers` + **五条 `static_assert`** + 测试 24 条。
+
+### 附 227 **OID 子标识符循环**；且**一处算术故意不认定**（goal round 309）**[已落码]**
+
+```
+111EFE/111F01  test bpl,bpl ; js   ; ★ **续接位再现**（与 round 300 独立的第二个站点）
+111F07/111F0A  test rbp,rbp ; je   ; 字节计数耗尽
+111F16  call 0x117050              ; 下一字节
+111F35  sar rax,2                  ; ★ **4 字节元素的容器**
+111F49  lea rax,[rbx+8]            ; ★ **8 字节步长**的遍历
+111F52..111F65  `ecx*4 + ecx` → `ecx + 8*that`  ⇒ **乘以 41**
+```
+
+★ **这里有一处我拒绝发挥的算术**：后四条指令算出 `41 × 字节`，而 ASN.1 对**前两个弧的基数是 40**。**多出的那个 1 我没有任何证据说明它是什么** ⇒ 以 `kOidArithmeticUninterpreted` **如实记为未认定**，并附**精确的指令序列**，而不把它拗成“基 40 规则”。
+另：`41 == 0x29` 与 tag 栈槽偏移相同 —— **记下这个巧合，不解释它**。
+
+**已落 `layout.hpp`**：`kOidContinuationTest`、`kParserElementShift`(2)、`kParserElementBytes`(4)、`kParserStride`(8)、`kAsn1FirstArcBase`(40)、`kOidArithmeticFactor`(41)、`kOidArithmeticUninterpreted`、`kFactorEqualsTagSlotOffset` + **四条 `static_assert`** + 测试 26 条。

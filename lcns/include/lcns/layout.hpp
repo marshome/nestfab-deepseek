@@ -2499,6 +2499,28 @@ static_assert(kByteReaderTail != kTwinTail, "the two tails differ, which is the 
 static_assert(kVtableSlotsKnown10 == kVtableSlotsKnown9 + 1, "one more slot than round 305");
 static_assert(kTailCallsThroughSlot && kHelpersMirrorDrivers, "both findings hold");
 
+
+// --- the OID sub-identifier loop of 0x111E90 (round 309) -------------------------------------------------
+//     0x111EFE/0x111F01 test bpl,bpl ; js    ; the continuation bit again, a second independent site
+//     0x111F07/0x111F0A test rbp,rbp ; je    ; the byte count runs out
+//     0x111F35 sar rax,2                     ; a container of FOUR-byte elements
+//     0x111F49 lea rax,[rbx+8]               ; and a walk with an EIGHT-byte stride
+//     0x111F52..0x111F65  ecx*4 + ecx then ecx + 8*that  -- forty-one times the byte
+inline constexpr bool kOidContinuationTest = true;           // RE 0x111F01, second site of the same test
+inline constexpr std::size_t kParserElementShift = 2;        // RE 0x111F35 (divide by four)
+inline constexpr std::size_t kParserElementBytes = 4;        // RE the shift
+inline constexpr std::size_t kParserStride = 8;              // RE 0x111F49
+inline constexpr std::uint8_t kAsn1FirstArcBase = 40;        // the standard's base for the first two arcs
+inline constexpr std::uint8_t kOidArithmeticFactor = 41;     // RE what the instructions actually compute
+// The factor is recorded because it is what the instructions do, and the interpretation is LEFT OPEN: forty would be
+// the standard's base and forty-one is not, so the arithmetic is not claimed to be the first-arc rule.
+inline constexpr bool kOidArithmeticUninterpreted = true;
+inline constexpr bool kFactorEqualsTagSlotOffset = true;     // 41 == 0x29, noted and not explained
+static_assert(kParserElementBytes == (1u << kParserElementShift), "the shift is the element size");
+static_assert(kOidArithmeticFactor == 1 + 8 * 5, "the factor the instructions compute");
+static_assert(kOidArithmeticFactor != kAsn1FirstArcBase, "and it is NOT the standard's base, hence left open");
+static_assert(kOidArithmeticUninterpreted, "so it is recorded as uninterpreted");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

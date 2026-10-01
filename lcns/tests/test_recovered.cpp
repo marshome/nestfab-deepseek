@@ -4027,5 +4027,39 @@ int main() {
         CHECK(b.tail - a.tail == 0x10);
     }
 
+    // --- the OID loop and the arithmetic left open (RE 0x111e90) -------------------------------------
+    {
+        CHECK(kOidContinuationTest);
+        CHECK(kParserElementShift == 2);
+        CHECK(kParserElementBytes == 4);
+        CHECK(kParserElementBytes == (1u << kParserElementShift));
+        CHECK(kParserStride == 8);
+        CHECK(kParserStride != kParserElementBytes);
+        CHECK(kAsn1FirstArcBase == 40);
+        CHECK(kOidArithmeticFactor == 41);
+        CHECK(kOidArithmeticFactor == 1 + 8 * 5);
+        CHECK(kOidArithmeticFactor != kAsn1FirstArcBase);
+        CHECK(kOidArithmeticUninterpreted);              // left open on purpose
+        CHECK(kFactorEqualsTagSlotOffset);
+        CHECK(kTagSlot == 0x29);
+        CHECK(kOidArithmeticFactor == kTagSlot);         // the coincidence, asserted as a coincidence only
+        CHECK(kContinuationBit == 0x80);                 // the same bit round 300 identified
+        CHECK(kRequiredTag == 6);
+
+        // what the four instructions compute, step by step
+        const auto factorOf = [](std::uint8_t b) {
+            const std::uint32_t four = static_cast<std::uint32_t>(b) * 4u;   // lea eax,[rcx*4]
+            const std::uint32_t five = four + b;                              // add eax,ecx
+            return static_cast<std::uint32_t>(b) + five * 8u;                 // lea eax,[r8+rax*8]
+        };
+        CHECK(factorOf(1) == 41);
+        CHECK(factorOf(0) == 0);
+        CHECK(factorOf(2) == 82);
+        CHECK(factorOf(255) == 41u * 255u);
+        // and the base-forty rule it superficially resembles would give a different number
+        CHECK(factorOf(2) != 2 * kAsn1FirstArcBase);
+        CHECK(kParserElementBytes * 2 == 8);
+    }
+
     return check::finish("test_recovered");
 }
