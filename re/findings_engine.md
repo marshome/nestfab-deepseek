@@ -6399,3 +6399,23 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 **另：`0x888FF0`**（27 B / 21 个调用者）以“全局描述符 + 0x10”装虚表（与 round 288 同习语），两个指针各加 8，再尾调 `0x86B750` ⇒ **转发到基类/子对象构造**；习语重现**记为重现**，**不声称两个描述符是同一对象**。
 
 **已落 `layout.hpp`**：`kNested3*`（四个）、`kReleaseHelperSightings`(2)、`kNestedLayouts`(3)、`kSharedDeallocSightings7`(8)、`kCtorForward*`、`kDescriptorRva2/Offset2`、`kDescriptorOffsetRepeats` + **五条 `static_assert`** + 测试 26 条。
+
+### 附 241 **宽字符串追加：三元组第三次确认、两字节终止符**（goal round 323）**[已落码]**
+
+`0x913540`（136 B / 23 个调用者）：
+
+```
+91354D/913550  data = [rbx]、inline = rbx+0x10
+913554  rsi = size + count          ; 新尺寸
+91355B  cmp rax,r10 ; je 0x9135C0    ; ★ **SSO 判定第三个站点**
+91356B  lea rcx,[rax + rcx*2]        ; ★ **元素两字节**
+913581  mov word [rax + rsi*2], dx   ; ★ **16 位终止符写在新末尾**
+9135B3  call 0x63F2F8                ; memcpy 助手
+9135A1  call 0x913710                ; 增长助手
+```
+
+⇒ 三元组（data `+0x00`、size `+0x08`、capacity/inline `+0x10`）**第三次得到确认**；缩放为 **乘 2**（宽字符）；终止符是**写在新末尾后一位的 16 位零**。
+
+★ **本轮打印在第二个函数前截断** ⇒ **只对这一个下声明**，第二个（`0x10F220`）**留给后续轮次**。
+
+**已落 `layout.hpp`**：`kWideAppend`(0x913540)、`kWideAppendCallers`(23)、`kElementBytesWide`(2)、`kWideSsoChecks`(3)、`kTerminatorBytes`(2)、`kTerminatorValue`、`kWideAppendGrow`(0x913710)、`kSingleElementPath`、`kMemcpySightingsAtAppend` + **四条 `static_assert`** + 测试 24 条。

@@ -2827,6 +2827,30 @@ static_assert(kNestedLayouts == 3, "three nested layouts are now recorded separa
 static_assert(kSharedDeallocSightings7 == kSharedDeallocSightings5 + 1, "the deallocator again");
 static_assert(kCtorForwardTarget == 0x86B750, "the constructor it forwards to");
 
+
+// --- the wide string's append, third confirmation of the trio (round 323) --------------------------------
+//     0x91354D/0x913550  data = [rbx] ; inline = rbx+0x10
+//     0x913554 lea rsi,[rcx+r8]                 ; the new size
+//     0x91355B cmp rax,r10 ; je 0x9135C0         ; the SSO check, a THIRD site
+//     0x91356B lea rcx,[rax + rcx*2]             ; an element is two bytes
+//     0x913581 mov word [rax + rsi*2], dx        ; the sixteen-bit terminator at the new end
+//     0x9135B3 call 0x63F2F8                     ; the memcpy helper
+//     0x9135A1 call 0x913710                     ; the grow helper
+inline constexpr std::uintptr_t kWideAppend = 0x913540;      // RE the whole routine
+inline constexpr int kWideAppendCallers = 23;
+inline constexpr int kElementBytesWide = 2;                  // RE the *2 scaling
+inline constexpr int kWideSsoChecks = 3;                     // rounds 293, 294 and this
+inline constexpr std::size_t kTerminatorBytes = 2;           // RE the sixteen-bit store
+inline constexpr std::uint8_t kTerminatorValue = 0;          // RE edx zeroed before the store
+inline constexpr std::uintptr_t kWideAppendGrow = 0x913710;  // RE 0x9135A1
+inline constexpr int kSingleElementPath = 1;                 // RE 0x913573 (cmp r8,1)
+inline constexpr int kMemcpySightingsAtAppend = 1;           // RE 0x9135B3
+static_assert(kElementBytesWide == 2, "the element is two bytes");
+static_assert(kWideData == 0x00 && kWideSize == 0x08 && kWideCapacity == 0x10,
+              "the same trio for the third time");
+static_assert(kTerminatorBytes == kElementBytesWide, "the terminator is one element");
+static_assert(kWideSsoChecks == 3, "a third SSO check site");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

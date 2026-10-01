@@ -4517,5 +4517,44 @@ int main() {
         CHECK(kDescriptorOffset2 == kLengthErrorTypeOffset);   // the idiom repeats
     }
 
+    // --- the wide append and its terminator (RE 0x913540) -------------------------------------------
+    {
+        CHECK(kWideAppend == 0x913540);
+        CHECK(kWideAppendCallers == 23);
+        CHECK(kElementBytesWide == 2);
+        CHECK(kWideSsoChecks == 3);
+        CHECK(kTerminatorBytes == 2);
+        CHECK(kTerminatorValue == 0);
+        CHECK(kWideAppendGrow == 0x913710);
+        CHECK(kSingleElementPath == 1);
+        CHECK(kMemcpySightingsAtAppend == 1);
+        // the trio, a third time
+        CHECK(kWideData == 0x00);
+        CHECK(kWideSize == 0x08);
+        CHECK(kWideCapacity == 0x10);
+        CHECK(kStringAssignData == kWideData && kStringAssignSize == kWideSize);
+        CHECK(kStringAssignCapacity == kWideCapacity);
+        CHECK(kSsoInline == kWideCapacity);
+        CHECK(kMemcpyHelper == 0x63F2F8);
+        CHECK(kWideAppend != kStringAssign);
+        CHECK(kWideAppendGrow != kWideInsert);
+
+        // the arithmetic the instructions perform: an element is two bytes, and the terminator follows
+        const auto byteOffset = [](std::size_t elements) { return elements * kElementBytesWide; };
+        CHECK(byteOffset(0) == 0);
+        CHECK(byteOffset(1) == 2);
+        CHECK(byteOffset(7) == 14);
+        CHECK(byteOffset(15) == 30);
+        const auto terminatorAt = [](std::size_t newSize) { return newSize * kElementBytesWide; };
+        CHECK(terminatorAt(0) == 0);
+        CHECK(terminatorAt(3) == 6);
+        CHECK(terminatorAt(3) + kTerminatorBytes == 8);
+        // and the capacity check: appending beyond the capacity takes the grow path
+        const auto needsGrow = [](std::size_t newSize, std::size_t capacity) { return newSize > capacity; };
+        CHECK(!needsGrow(15, 15));
+        CHECK(needsGrow(16, 15));
+        CHECK(kSmallCapacity == 7);
+    }
+
     return check::finish("test_recovered");
 }
