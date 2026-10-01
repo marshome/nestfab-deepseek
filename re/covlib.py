@@ -942,3 +942,7 @@ LIBRARY_EVIDENCED[0x15A500] = ("toolchain", "reads the typeinfo at vtable-0x18: 
 LIBRARY_EVIDENCED[0x86EC10] = ("toolchain", "reads the typeinfo at vtable-0x18: 182 bytes, 1 callers, no domain text referenced; within the 320-byte cap")
 LIBRARY_EVIDENCED[0x23F600] = ("toolchain", "reads the typeinfo at vtable-0x18: 123 bytes, 1 callers, no domain text referenced; within the 320-byte cap")
 LIBRARY_EVIDENCED[0x592740] = ("toolchain", "reads the typeinfo at vtable-0x18: 57 bytes, 1 callers, no domain text referenced; within the 320-byte cap")
+# Round 274: import dispatch machinery, not domain code. The address is the first of a run of eight-byte
+# `jmp qword ptr [rip+...]` stubs; the profiler records no size and no callers for it, and the close
+# routine of round 270 reaches its function through it.
+LIBRARY_EVIDENCED[0x63F3E0] = ("toolchain", "import dispatch stub: jmp qword ptr [rip+...] in an eight-byte run, no size and no callers recorded")

@@ -2818,5 +2818,33 @@ int main() {
         CHECK(static_cast<std::int64_t>(kVectorFailure) == -32);
     }
 
+    // --- the import-thunk block and the forwarder through it (RE 0x63f3e0 and 0x877120) -------------
+    {
+        CHECK(kImportThunkBlock == 0x63F3E0);
+        CHECK(kImportThunkStride == 8);
+        CHECK(kImportThunkStride == 0x63F3E8 - 0x63F3E0);
+        CHECK(kImportStubClose == 0x63F3E0);            // the FIRST stub, which the close reaches
+        CHECK(kImportStubClose == kImportThunkBlock);   // the close's stub is the block's first entry
+        CHECK(kImportStubForwarder - kImportThunkBlock == 0xD8);   // the forwarder's is 0xD8 in
+        CHECK(kCloseCalleeIsImport);                    // round 270's callee is an import stub
+        CHECK(kImportStubsAreNotDomain);                // so it must not count as domain work
+        CHECK(kCloseCallee == kImportStubClose);        // and it is the address round 270 recorded
+
+        CHECK(kForwarder == 0x877120);
+        CHECK(kForwarderDeref == 0x00);
+        CHECK(kForwarderCallee == 0x63F4B8);
+        CHECK(kForwarderCalleeIsImportStub);
+        CHECK(kForwarderDeref == 0);                    // the object's FIRST field, dereferenced
+        CHECK(kForwarderCallers == 7);
+        CHECK(kForwarderFailureA == 0x62F280);
+        CHECK(kForwarderFailureB == 0x998A60);
+        // the two sites are DIFFERENT: I had conflated them, and the gate caught the false equality
+        CHECK(kForwarderCallee != kCloseCallee);
+        CHECK(kForwarderCallee == kImportStubForwarder);
+        CHECK(kCloseCallee == kImportStubClose);
+        // and the trampoline of round 260 routes here
+        CHECK(kTrampolineInner == kForwarder);
+    }
+
     return check::finish("test_recovered");
 }

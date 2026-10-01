@@ -1572,6 +1572,39 @@ static_assert(kVectorFailure == static_cast<std::uint64_t>(-32), "the failure va
 // tests/test_recovered.cpp, which sees both constants; the name kExceptionAllocHelperOrZero never existed and
 // was a slip of mine, so it is removed rather than left to break the build.
 
+
+// --- the import-thunk block at 0x63F3E0 (round 274) ----------------------------------------------------
+//     0x63F3E0 jmp qword ptr [rip+0x4E996E] ; two nops
+//     0x63F3E8 jmp qword ptr [rip+0x4E995E] ; two nops   -- eight bytes apart, a run of stubs
+// The profiler gives it no size and no callers, which fits a dispatch table rather than a routine.
+inline constexpr std::uintptr_t kImportThunkBlock = 0x63F3E0;   // RE the first stub
+inline constexpr std::size_t kImportThunkStride = 8;            // RE 0x63F3E0/0x63F3E8
+// CORRECTED in round 274d: the close routine of round 270 reaches the stub at 0x63F3E0, which is the FIRST
+// entry of this block. The forwarder reaches 0x63F4B8, 0xD8 further in. They are two sites, not one, and I had
+// written the second address under the first name.
+inline constexpr std::uintptr_t kImportStubClose = 0x63F3E0;    // RE 0x877202 (round 270), the first stub
+inline constexpr std::uintptr_t kImportStubForwarder = 0x63F4B8; // RE 0x877127, 0xD8 into the block
+// So the "close callee" of round 270 is an import stub, i.e. the close reaches an imported function through it. That
+// SUPPORTS the close reading rather than contradicting it, but it also means the address is import machinery: the
+// proxy metric must not count it as domain code to reverse.
+inline constexpr bool kCloseCalleeIsImport = true;
+inline constexpr bool kImportStubsAreNotDomain = true;
+static_assert(kImportThunkStride == 8, "the stubs are eight bytes apart");
+
+// --- the forwarder 0x877120, seven callers (round 274) --------------------------------------------------
+//     0x877124 mov rcx,[rcx]     ; the object's FIRST field
+//     0x877127 call 0x63F4B8     ; an import stub in the block above
+//     0x87713B/0x877140          the failure path calls 0x62F280 and 0x998A60
+inline constexpr std::uintptr_t kForwarder = 0x877120;          // RE the whole routine
+inline constexpr std::size_t kForwarderDeref = 0x00;            // RE 0x877124
+inline constexpr std::uintptr_t kForwarderCallee = kImportStubForwarder;   // RE 0x877127
+inline constexpr bool kForwarderCalleeIsImportStub = true;
+inline constexpr int kForwarderCallers = 7;
+inline constexpr std::uintptr_t kForwarderFailureA = 0x62F280;  // RE 0x87713B
+inline constexpr std::uintptr_t kForwarderFailureB = 0x998A60;  // RE 0x877140
+static_assert(kForwarderCallee - kImportThunkBlock == 0xD8, "the forwarder's stub is 0xD8 into the block");
+static_assert(kForwarderCallee == 0x63F4B8, "the forwarder calls the stub 0xD8 into the block");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

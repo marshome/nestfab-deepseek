@@ -5486,3 +5486,20 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ★ **偏差如实写入条目**：round 255 的判据限定**≤ 320 字节**，而它是 **412**；我以**更强的证据**（typeinfo-−0x18 读）登记它，**并把这一偏差写在条目里**，而不是隐去。
 
 **已落 `layout.hpp`**：`kVector32`、`kElement32*`、`kMaxSizeVec32`、`kVectorFailure`、`kVectorMinCapacity`、`kVectorAlloc`、`kVectorGrowsByDoubling` + **三条 `static_assert`** + 测试 20 条；`re/covlib.py` 新增 1 条库证据。
+
+### 附 192 **导入跳转桩块**与**通过它的转发器**（goal round 274）**[已落码]**
+
+**（a）`0x63F3E0` 不是函数体，而是一段导入跳转桩**：
+
+```
+63F3E0  jmp qword ptr [rip+0x4E996E] ; 63F3E6/63F3E7 nop
+63F3E8  jmp qword ptr [rip+0x4E995E] ; …… **每隔 8 字节一个**
+```
+
+★ **分析器对它记录为“无尺寸、无调用者”**，与“调度表而非例程”一致。
+因此 **round 270 的“关闭被调 `0x63F3E0`”实为导入桩** —— 关闭例程是**通过它到达一个导入函数**。这**支持**而非推翻“关闭”的判定，但同时说明这些地址是**导入机制、不是领域代码**，**不应计入待逆向集**。
+
+**（b）`0x877120`（38 B / 7 个调用者）= 转发器**：解引用对象的**首字段**（`0x877124`），调 **`0x63F4B8`**（同一桩块内，偏移 `0xD8`）；失败路径调 `0x62F280` 与 `0x998A60`。
+⇒ round 260 的两级跳板**内层就是它**（测试断言 `kTrampolineInner == kForwarder`）。
+
+**已落 `layout.hpp`**：`kImportThunk*`、`kImportStubClose`、`kCloseCalleeIsImport`、`kImportStubsAreNotDomain`、`kForwarder*` + **三条 `static_assert`** + 测试 20 条；`re/covlib.py` 新增 1 条机制证据。
