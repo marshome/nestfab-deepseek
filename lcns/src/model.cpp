@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cmath>
 
+LCNS_STRUCTURAL(tu.problem);
 LCNS_RECOVERED(module.model);
 namespace lcns {
 namespace {
