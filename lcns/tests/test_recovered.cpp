@@ -2548,5 +2548,40 @@ int main() {
         CHECK(kRefcountInitCallers > kAccessorCallers);
     }
 
+    // --- the even-rounded word count and the per-limb kernel (RE 0xf1b20 and 0xf4830) ----------------
+    {
+        CHECK(kBigIntRoundMask == 0xFFFFFFFEu);
+        CHECK(kBigIntRoundMask == 0xFFFFFFFFu - 1u);
+        CHECK(kBigIntGrowStep == 1);
+        CHECK(kBigIntDispatchBranch == 0xF1B20);
+        CHECK(kBigIntDispatchBranchCallers == 4);
+        CHECK(kOperationIdentityOpen);                  // the operation is NOT identified
+        // the arithmetic the instructions do, for the first few counts
+        const auto rounded = [](std::uint32_t n) { return (n + kBigIntGrowStep) & kBigIntRoundMask; };
+        CHECK(rounded(0) == 0);
+        CHECK(rounded(1) == 2);
+        CHECK(rounded(2) == 2);
+        CHECK(rounded(3) == 4);
+        CHECK(rounded(4) == 4);
+        CHECK(rounded(5) == 6);
+        for (std::uint32_t n = 0; n < 16; ++n) {
+            CHECK(rounded(n) % 2 == 0);                 // always even
+            CHECK(rounded(n) >= n);                     // never smaller than the count
+        }
+
+        CHECK(kLimbRoutine == 0xF4830);
+        CHECK(kLimbKernel == 0xEF280);
+        CHECK(kLimbRoutineCallers == 4);
+        CHECK(kLimbCountCases == 3);
+        // the tail copy is the memcpy the assignment and the wide-string path also use
+        CHECK(kMemcpyHelper == 0x63F2F8);
+
+        CHECK(kRegistryGuard == 0x8A81C0);
+        CHECK(kRegistryInit == 0x8A9510);
+        CHECK(kRegistryKind == 2);
+        CHECK(kOnceHelperSightings == 3);
+        CHECK(kOnceCallee == 0x63F6A8);                 // the once helper round 248 landed
+    }
+
     return check::finish("test_recovered");
 }

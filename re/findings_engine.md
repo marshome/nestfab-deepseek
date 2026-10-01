@@ -5345,3 +5345,23 @@ F185E  ud2                         ; ★ **不可能情形的故意陷阱**
 ⇒ 这是目前读到的**第二高调用者**（仅次于 `0xF3460` 的 162）。
 
 **已落 `layout.hpp`**：`kLadderSecondMember`、`kLadderLowerBranch`、`kWordAllocator`、`kZeroFillHelper`、`kImpossibleCaseTraps`、`kRefcount*` + **三条 `static_assert`** + 测试 24 条。
+
+### 附 185 **分派内部：向上取偶的字数与逐字内核**（goal round 265）**[已落码]
+
+**（a）`0xF1B20`（610 B / 4 个调用者）**：
+
+```
+F1B2E/F1B42  操作数的字数；为 0 则跳转
+F1B50/F1B56  族的跳尾零字循环再现
+F1B5E  lea ebx,[rax+1] ; F1B66 and ebx,0xFFFFFFFE   ; ★ **(count + 1) 向上取偶**
+F1B61/F1B69  另一个操作数的 `+0x10` 字数与 `+0x18` 字数组
+```
+
+★ **只落算术，不认定运算**：**本轮不声称它是乘法、也不声称那一个多出的字是进位** （代码以 `kOperationIdentityOpen = true` 标记）。测试逐个核对 n=0..15：结果**恒为偶数**且**不小于 n**。
+
+**（b）`0xF4830`（430 B / 4 个调用者）**：三路比较两个字数（相等 / 前者更大），然后逐字走 **`0xEF280`（★ 本轮新发现的逐字内核）**，最后用 **`0x63F2F8`** 拷贝尾部。
+**方向未定**（未声称是加还是减）。
+
+**（c）`0x8A81C0`（91 B）= 全局注册表的一次性守卫**：`0x63F6A8`（**第三次目击**）+ 全局测试，首次调用时以 `edx = 2` 调 `0x8A9510`。
+
+**已落 `layout.hpp`**：`kBigIntRoundMask`、`kBigIntGrowStep`、`kOperationIdentityOpen`、`kLimbRoutine`、`kLimbKernel`、`kLimbCountCases`、`kRegistry*`、`kOnceHelperSightings` + **两条 `static_assert`** + 测试 30 条。

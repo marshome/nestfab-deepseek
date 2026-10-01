@@ -1365,6 +1365,40 @@ inline constexpr int kRefcountInitCallers = 132;
 inline constexpr bool kRefcountInitAtomic = true;              // RE the two lock add forms
 static_assert(kRefcountOnceA != kRefcountOnceB, "the once check uses two distinct helpers");
 
+
+// --- inside the dispatch: an even-rounded word count and a per-limb kernel (round 265) -----------------
+//     0xF1B5E lea ebx,[rax+1] ; 0xF1B66 and ebx,0xFFFFFFFE   ; (count + 1) rounded up to even
+//     0xF1B50/0xF1B56  the family's trailing-zero-word skip once more
+//     0xF1B61/0xF1B69  the other operand's count at +0x10 and words at +0x18
+inline constexpr std::uint32_t kBigIntRoundMask = 0xFFFFFFFEu;   // RE 0xF1B66
+inline constexpr int kBigIntGrowStep = 1;                        // RE 0xF1B5E
+inline constexpr std::uintptr_t kBigIntDispatchBranch = 0xF1B20; // RE the whole routine
+inline constexpr int kBigIntDispatchBranchCallers = 4;
+// WHAT IS NOT CLAIMED: that the operation is a multiplication, or that the extra word is a carry. Only the
+// arithmetic the instructions perform -- add one, then clear the low bit -- is landed.
+inline constexpr bool kOperationIdentityOpen = true;
+
+// --- the per-limb routine 0xF4830 and its kernel (round 265) ------------------------------------------
+//     0xF4855/0xF4858/0xF485E  the two word counts compared three ways: equal, or the first greater
+//     0xF4863 call 0xEF280     ; the per-limb kernel -- new here
+//     0xF4872/0xF4875/0xF4889  a difference of counts, scaled by eight
+//     0xF488D call 0x63F2F8    ; the tail copy, the same memcpy as the big-integer assignment
+inline constexpr std::uintptr_t kLimbRoutine = 0xF4830;      // RE the whole routine
+inline constexpr std::uintptr_t kLimbKernel = 0xEF280;       // RE 0xF4863
+inline constexpr int kLimbRoutineCallers = 4;
+inline constexpr int kLimbCountCases = 3;                    // RE the je/ja dispatch
+
+// --- the registry's once-guard 0x8A81C0 (round 265) ---------------------------------------------------
+//     0x8A81D3 call 0x63F6A8   ; the once helper, its third sighting
+//     0x8A81DF/0x8A81E3 cmp qword [rbx],0 ; je   ; first call only
+//     0x8A81F0/0x8A81FC call 0x8A9510 with edx = 2
+inline constexpr std::uintptr_t kRegistryGuard = 0x8A81C0;   // RE the whole routine
+inline constexpr std::uintptr_t kRegistryInit = 0x8A9510;    // RE 0x8A81FC
+inline constexpr int kRegistryKind = 2;                      // RE 0x8A81F7
+inline constexpr int kOnceHelperSightings = 3;               // rounds 248, 253 and this one
+static_assert(kBigIntRoundMask == 0xFFFFFFFEu, "the low bit is cleared");
+static_assert(kOnceHelperSightings == 3, "the once helper has three sightings");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
