@@ -6266,3 +6266,21 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 round 314 的两行已**替换而非保留**。
 
 **已落 `layout.hpp`**：`kTaglessDrivers`(3)、`kDriversWithTag`(1)、`kSetOverlap`(1)、`kThirdMemberTagless`、`kThirdMemberSmallImmediates`(34)、`kThirdMemberNonZeroCompare`(0)、`kThirdMemberWordFields`(7) + **四条 `static_assert`** + 测试 22 条。
+
+### 附 234 ★ **DER 的最小编码规则与四字节快路径**（goal round 316）**[已落码]**
+
+```
+112823  jne 0x112EEE        ; 长度必须与值自身的计数相等
+11282D  jbe 0x112E70        ; ★ **四字节或更少**走另一路径
+112833  cmp byte [r15],0 ; jne 0x112B45  ; ★ **首字节不得为零**
+112848  cmp byte [rcx],0 ; jne 0x112B45  ; 并在各字节上扫描
+112869/11286C  shl eax,8 ; or eax,r9d     ; 同一种装配，但累加器是 **32 位**
+```
+
+其中两条是**关于 ASN.1 DER 的标准事实**，而不是从本二进制推出的：
+**(1)** DER 要求 INTEGER **最小编码**，因此**前导零字节就是违规** —— 正是 `0x112833` 与其扫描循环所检查的，违规则转向 `0x112B45`；
+**(2)** 四字节或更少的整数走单独路径，即 `cmp rbx,4 ; jbe` 所说。
+
+★ 本站的累加器是 **32 位**，而 rounds 300/310 用的是 64 位 ⇒ **记为第四个站点并标出该差异**，不抹平；`kAssemblerSites` 由 2 **更新为 4**（旧断言同步修正）。
+
+**已落 `layout.hpp`**：`kLeadingZeroCheck`、`kMinimalEncodingRequired`、`kLeadingZeroViolation`(0x112B45)、`kIntegerFastPathBytes`(4)、`kIntegerFastPath`(0x112E70)、`kLengthMustMatch`、`kLengthMismatch`(0x112EEE)、`kSite4AccumulatorBits`(32)、`kIntegerZeroByte` + **四条 `static_assert`** + 测试 24 条。

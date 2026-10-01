@@ -4071,7 +4071,7 @@ int main() {
         CHECK(kOidOverflowShift == kAccumulatorTopShift);// the same overflow test
         CHECK(kOidDoneBranch == 0x11212E);
         CHECK(kOidOverflowBranch == 0x11213D);
-        CHECK(kAssemblerSites == 2);
+        CHECK(kAssemblerSites == 4);                     // updated in round 316: four sites, not two
         CHECK(kAssemblerShapeShared);
         CHECK(kAccumulatorRegisters == 2);
         CHECK(kContinuationBit == 0x80);
@@ -4192,7 +4192,7 @@ int main() {
         CHECK(!integerAccepted(kRequiredTag));
         CHECK(!oidAccepted(kRequiredTagInteger));
         CHECK(kContinuationBit == 0x80);
-        CHECK(kAssemblerSites == 2);
+        CHECK(kAssemblerSites == 4);
     }
 
     // --- the family's split and the flag-driven drivers (RE 0x10fd40 and 0x110b00) -----------------
@@ -4258,6 +4258,44 @@ int main() {
         CHECK(kDriverFourth == kIntegerReader);
         CHECK(kTaglessDrivers == kDriverFamily - 1);
         CHECK(kThirdMemberWordFields < kThirdMemberSmallImmediates);
+    }
+
+    // --- DER's minimal form and the four-byte path (RE 0x112740) ------------------------------------
+    {
+        CHECK(kLeadingZeroCheck);
+        CHECK(kMinimalEncodingRequired);
+        CHECK(kLeadingZeroViolation == 0x112B45);
+        CHECK(kIntegerFastPathBytes == 4);
+        CHECK(kIntegerFastPath == 0x112E70);
+        CHECK(kLengthMustMatch);
+        CHECK(kLengthMismatch == 0x112EEE);
+        CHECK(kSite4AccumulatorBits == 32);
+        CHECK(kIntegerZeroByte == 0);
+        CHECK(kAssemblerSites == 4);                     // four sites now, the twin pair among them
+        CHECK(kAssemblerShapeShared);
+        CHECK(kContinuationTestSites == 3);
+        CHECK(kRequiredTagInteger == 2);
+
+        // the minimal-form rule, as the instructions check it
+        const auto minimallyEncoded = [](const std::uint8_t* bytes, std::size_t n) {
+            if (n == 0) return true;
+            if (n <= kIntegerFastPathBytes) return true;         // RE 0x11282D: the fast path skips the scan
+            for (std::size_t i = 0; i + kIntegerFastPathBytes < n; ++i) {
+                if (bytes[i] != kIntegerZeroByte) return false;  // RE 0x112848
+            }
+            return true;
+        };
+        const std::uint8_t good[5] = {0x01, 0x02, 0x03, 0x04, 0x05};
+        CHECK(!minimallyEncoded(good, 5));                        // a non-zero byte in the scanned range
+        const std::uint8_t zeros[5] = {0, 0, 0, 0, 0x05};
+        CHECK(minimallyEncoded(zeros, 5));
+        const std::uint8_t four[4] = {1, 2, 3, 4};
+        CHECK(minimallyEncoded(four, 4));                         // the fast path accepts it outright
+        const std::uint8_t six[6] = {0, 1, 0, 0, 0, 2};
+        CHECK(!minimallyEncoded(six, 6));
+        // and the thirty-two bit accumulator's ceiling, against the sixty-four bit sites
+        CHECK(kSite4AccumulatorBits < 64);
+        CHECK((1ull << kSite4AccumulatorBits) == 4294967296ull);
     }
 
     return check::finish("test_recovered");

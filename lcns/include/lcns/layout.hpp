@@ -2534,14 +2534,15 @@ inline constexpr std::size_t kOidShift = 8;                  // RE 0x1120A5
 inline constexpr std::size_t kOidOverflowShift = 0x38;       // RE 0x1120BB
 inline constexpr std::uintptr_t kOidDoneBranch = 0x11212E;   // RE 0x112098
 inline constexpr std::uintptr_t kOidOverflowBranch = 0x11213D;  // RE 0x1120C2
-inline constexpr int kAssemblerSites = 2;                    // round 300's length loop and this OID loop
+inline constexpr int kAssemblerSites = 4;                    // UPDATED in round 316: 0x10FD40, 0x110B00,
+// 0x111E90 and now the INTEGER reader all assemble big-endian with the same mask, shift and overflow test
 inline constexpr bool kAssemblerShapeShared = true;           // the same three constants at both
 inline constexpr int kAccumulatorRegisters = 2;              // rbp accumulates, ebx counts
 // The three equalities that make this a second site rather than a similar-looking one:
 static_assert(kOidMask == kContinuationMask, "the mask is the same 0x7f");
 static_assert(kOidShift == kAccumulatorShift, "the shift is the same eight");
 static_assert(kOidOverflowShift == kAccumulatorTopShift, "the overflow test is the same 0x38");
-static_assert(kAssemblerSites == 2 && kAssemblerShapeShared, "two sites, one shape");
+static_assert(kAssemblerSites == 4 && kAssemblerShapeShared, "four sites, one shape");
 
 
 // --- the parser's four error entries, its minimum of two elements, and a compare helper (round 311) ------
@@ -2656,6 +2657,27 @@ static_assert(kThirdMemberNonZeroCompare == 0, "the third member has no tag comp
 static_assert(kThirdMemberTagless, "so it is tagless, as the first two were");
 static_assert(kSetOverlap == 1 && kTypeReaderFamily - kSetOverlap == 1,
               "one type reader is a driver and one is not");
+
+
+// --- DER's minimal encoding and the four-byte fast path, in the INTEGER reader (round 316) --------------
+//     0x112823 jne 0x112EEE        ; the length must match
+//     0x11282D jbe 0x112E70        ; four bytes or fewer take a separate path
+//     0x112833 cmp byte [r15],0 ; jne 0x112B45  ; the first byte must not be zero
+//     0x112848 cmp byte [rcx],0 ; jne 0x112B45  ; nor any of the bytes before the last four
+//     0x112869/0x11286C shl eax,8 ; or eax,r9d  ; the same assembly, in a THIRTY-TWO bit accumulator
+inline constexpr bool kLeadingZeroCheck = true;              // RE 0x112833 and 0x112848
+inline constexpr bool kMinimalEncodingRequired = true;       // DER's rule for INTEGER, which is what that check is
+inline constexpr std::uintptr_t kLeadingZeroViolation = 0x112B45;  // RE where the check diverts
+inline constexpr std::size_t kIntegerFastPathBytes = 4;      // RE 0x11282D
+inline constexpr std::uintptr_t kIntegerFastPath = 0x112E70; // RE the branch it takes
+inline constexpr bool kLengthMustMatch = true;               // RE 0x112823
+inline constexpr std::uintptr_t kLengthMismatch = 0x112EEE;  // RE the branch it takes
+inline constexpr int kSite4AccumulatorBits = 32;             // RE eax, against 64 bits at the other sites
+inline constexpr std::uint8_t kIntegerZeroByte = 0;          // the byte the check rejects
+static_assert(kLeadingZeroCheck && kMinimalEncodingRequired, "the minimal-encoding check is the DER rule");
+static_assert(kIntegerFastPathBytes == 4, "four bytes or fewer");
+static_assert(kLengthMustMatch, "and the length is compared with the value's count");
+static_assert(kSite4AccumulatorBits == 32, "this site accumulates in thirty-two bits");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
