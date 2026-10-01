@@ -65,3 +65,17 @@ push_retry.log
 re/g_doc*.py
 re/_tmp_*.py
 re/fix_*.py
+
+# One-off probe/generator scripts under re/ are NOT deliverables. Only the named KEEPERS are
+# tracked; everything else matching re/g_*.py is a throwaway and must never enter a commit again.
+re/g_*.py
+!re/g_coverage.py
+!re/g_acceptance.py
+!re/g_tu_map.py
+!re/g_tu_list.py
+!re/g_tu_strings.py
+!re/g_fs.py
+!re/g_identify.py
+!re/g_vtable_slots.py
+!re/g_strategy_methods.py
+!re/g_run_read.py
