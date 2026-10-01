@@ -6254,3 +6254,15 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ **扫描未到达第三个成员 `0x112150` 的清单** ⇒ 对它**不作任何声称**；“无 tag”这一断言**仅针对实际打印出的两个函数**（`kThirdMemberListUnread`）。
 
 **已落 `layout.hpp`**：`kFirstTwoDriversTagless`、`kDriverFamilySplits`、`kDriverFlagA/B/C`(0x88/0x89/0xF0)、`kDriverWordA/B`(0x4C/0x4E)、`kDriverGateConstantOffset`(0x20)、`kThirdMemberListUnread` + **四条 `static_assert`** + 测试 22 条。
+
+### 附 233 **第三个成员也无 tag，且更正 round 314 的算法**（goal round 315）**[已落码]**
+
+`0x112150` 的 **34 条**小立即数栈操作中，**非零立即数比较为 0** —— 与前两个驱动器一样。
+其中：10 条标志与零相比、**7 个 16 位字段**与零相比（`+0x38`/`+0x3A`/`+0x3C`/`+0x3E`/`+0x40`）。
+
+★ **这使 round 314 的一条断言错了**：它以 `demandingATag = kTypeReaderFamily`（= 2）去数 `kDriverFamily`（= 4），等于**静默地把 `0x111E90` 算作四个驱动器之一**。它**不是**：`0x111E90` 是 OID 读取器，而 `0x112150` **调用它**。两个集合**恰好重叠一个成员**（`0x112740`）。
+
+正确的算法：**驱动器 4（三个无 tag + INTEGER 读取器）；类型读取器 2；重叠 1**。
+round 314 的两行已**替换而非保留**。
+
+**已落 `layout.hpp`**：`kTaglessDrivers`(3)、`kDriversWithTag`(1)、`kSetOverlap`(1)、`kThirdMemberTagless`、`kThirdMemberSmallImmediates`(34)、`kThirdMemberNonZeroCompare`(0)、`kThirdMemberWordFields`(7) + **四条 `static_assert`** + 测试 22 条。

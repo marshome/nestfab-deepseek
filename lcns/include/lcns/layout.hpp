@@ -2627,11 +2627,35 @@ inline constexpr std::size_t kDriverFlagC = 0xF0;            // RE 0x10FE6A
 inline constexpr std::size_t kDriverWordA = 0x4C;            // RE 0x10FEC2, sixteen bits
 inline constexpr std::size_t kDriverWordB = 0x4E;            // RE 0x110137, sixteen bits
 inline constexpr std::uintptr_t kDriverGateConstantOffset = 0x20;  // RE 0x10FFAB, as in round 283
-inline constexpr bool kThirdMemberListUnread = true;         // the sweep did not reach 0x112150
+inline constexpr bool kThirdMemberListUnread = false;        // CLOSED in round 315: the list was read, and
+// it holds thirty-four small-immediate operations with no non-zero comparison among them
 static_assert(kDriverWordB - kDriverWordA == 2, "the two words are adjacent");
 static_assert(kDriverGateConstantOffset == 0x20, "the gate constant sits where round 283 found it");
 static_assert(kFirstTwoDriversTagless && kDriverFamilySplits, "the split is asserted, not assumed");
-static_assert(kThirdMemberListUnread, "and the third member is left unread rather than guessed");
+static_assert(!kThirdMemberListUnread,
+              "the third member was read in round 315, so the flag is closed");
+// The tagless claim for the third member is asserted in its own block below, where the constant is declared:
+// a static_assert cannot refer to a name declared later in the same namespace.
+
+
+// --- the third member is tagless too, and the accounting that follows (round 315) -----------------------
+// 0x112150 has thirty-four small-immediate stack operations and NOT ONE comparison against a non-zero immediate:
+//     0x112267/0x1122A9/0x112340/0x112386/0x1123AB/0x1123C5/0x1123E3/0x112410/0x112440/0x112470  flags vs zero
+//     0x1124F2/0x112600/0x112611/0x112622/0x1126B4/0x1126C5/0x1126E0  seven SIXTEEN-bit fields vs zero
+// So among the four drivers, three are tagless and one is the INTEGER reader. Round 314 had counted both type readers
+// as drivers, which was wrong: the OID reader is CALLED BY a driver rather than being one. Corrected here.
+inline constexpr int kTaglessDrivers = 3;                    // 0x10FD40, 0x110B00 and 0x112150
+inline constexpr int kDriversWithTag = 1;                    // 0x112740, the INTEGER reader
+inline constexpr int kSetOverlap = 1;                        // the drivers and the type readers share one member
+inline constexpr bool kThirdMemberTagless = true;            // RE the sweep of this round
+inline constexpr int kThirdMemberSmallImmediates = 34;       // RE the count
+inline constexpr int kThirdMemberNonZeroCompare = 0;         // RE the count that decides it
+inline constexpr int kThirdMemberWordFields = 7;             // RE the seven sixteen-bit comparisons
+static_assert(kTaglessDrivers + kDriversWithTag == kDriverFamily, "three and one make the four");
+static_assert(kThirdMemberNonZeroCompare == 0, "the third member has no tag comparison");
+static_assert(kThirdMemberTagless, "so it is tagless, as the first two were");
+static_assert(kSetOverlap == 1 && kTypeReaderFamily - kSetOverlap == 1,
+              "one type reader is a driver and one is not");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

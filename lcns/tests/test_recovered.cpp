@@ -4208,17 +4208,22 @@ int main() {
         CHECK(kDriverWordB - kDriverWordA == 2);
         CHECK(kDriverGateConstantOffset == 0x20);
         CHECK(kGateConstant == 1);                       // the same constant round 283 recorded
-        CHECK(kThirdMemberListUnread);                   // left unread on purpose
+        CHECK(!kThirdMemberListUnread);                  // closed in round 315: the list was read
         CHECK(kTypeReaderFamily == 2);                   // two of the four demand a tag
         CHECK(kDriverFamily == 4);
         CHECK(kRequiredTag == 6 && kRequiredTagInteger == 2);
 
-        // the split, stated: two members demand a tag, two do not
-        const int demandingATag = kTypeReaderFamily;
-        const int notDemanding = kDriverFamily - kTypeReaderFamily;
-        CHECK(demandingATag == 2);
-        CHECK(notDemanding == 2);
-        CHECK(demandingATag + notDemanding == kDriverFamily);
+        // CORRECTED in round 315b: among the four DRIVERS only one demands a tag. Round 314 counted
+        // kTypeReaderFamily (= 2) as if both type readers were drivers, but 0x111e90 is the OID reader
+        // which 0x112150 CALLS, so it is not one of the four. The overlap is exactly one member.
+        const int driversWithTag = kDriversWithTag;
+        const int tagless = kTaglessDrivers;
+        CHECK(driversWithTag == 1);
+        CHECK(tagless == 3);
+        CHECK(driversWithTag + tagless == kDriverFamily);
+        CHECK(kTypeReaderFamily == 2);
+        CHECK(kSetOverlap == 1);
+        CHECK(kTypeReaderFamily - kSetOverlap == 1);      // one type reader is not a driver
         // and the two tagless ones share their flag offsets with each other, not with the readers
         CHECK(kDriverFlagA != kTagSlot);
         CHECK(kDriverWordA != kTagSlot2);
@@ -4226,6 +4231,33 @@ int main() {
         // the sixteen-bit fields are half the size of the four-byte parser elements
         CHECK(kParserElementBytes == 4);
         CHECK(kDriverWordB - kDriverWordA == kParserElementBytes / 2);
+    }
+
+    // --- the third member, and the corrected accounting (RE 0x112150) -------------------------------
+    {
+        CHECK(kTaglessDrivers == 3);
+        CHECK(kDriversWithTag == 1);
+        CHECK(kTaglessDrivers + kDriversWithTag == kDriverFamily);
+        CHECK(kSetOverlap == 1);
+        CHECK(kTypeReaderFamily == 2);
+        CHECK(kTypeReaderFamily - kSetOverlap == 1);
+        CHECK(kThirdMemberTagless);
+        CHECK(kThirdMemberSmallImmediates == 34);
+        CHECK(kThirdMemberNonZeroCompare == 0);          // nothing to compare a tag against
+        CHECK(kThirdMemberWordFields == 7);
+        CHECK(!kThirdMemberListUnread);                  // round 314's flag, closed by this round
+        CHECK(kFirstTwoDriversTagless);
+        CHECK(kDriverFamilySplits);
+        CHECK(kDriverThird != kDriverSibling);
+        CHECK(kDriverThird != kDriverFourth);
+        CHECK(kDriverSibling != kDriverFourth);
+        CHECK(kDriversWithTag == 1 && kRequiredTagInteger == 2);
+        CHECK(kIntegerReader != kDriverThird);
+        CHECK(kRequiredTag == 6);
+        // the three tagless members are three of the four, and the fourth is the INTEGER reader
+        CHECK(kDriverFourth == kIntegerReader);
+        CHECK(kTaglessDrivers == kDriverFamily - 1);
+        CHECK(kThirdMemberWordFields < kThirdMemberSmallImmediates);
     }
 
     return check::finish("test_recovered");
