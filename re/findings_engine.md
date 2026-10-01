@@ -6162,3 +6162,19 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 另：`41 == 0x29` 与 tag 栈槽偏移相同 —— **记下这个巧合，不解释它**。
 
 **已落 `layout.hpp`**：`kOidContinuationTest`、`kParserElementShift`(2)、`kParserElementBytes`(4)、`kParserStride`(8)、`kAsn1FirstArcBase`(40)、`kOidArithmeticFactor`(41)、`kOidArithmeticUninterpreted`、`kFactorEqualsTagSlotOffset` + **四条 `static_assert`** + 测试 26 条。
+
+### 附 228 ★★ **OID 续接循环与 round 300 的长度累加器逐指令同构**（goal round 310）**[已落码]**
+
+```
+11208E  and eax, **0x7f**        ; ★ 与 round 300 相同的掩码
+112093  movzx ebx, al           ; 掩后的值即**字节数**
+1120A5  shl rbp, **8**           ; ★ 相同的移位
+1120A9  or rbp, rax             ; ★ 相同的大端装配
+1120B8/1120BB  sub ebx,1 ; shr rax,**0x38**   ; ★ 相同的八字节溢出检查
+112098/1120C2  完成与溢出两个分支（`0x11212E` / `0x11213D`）
+```
+
+⇒ **长度解码（round 300）与 OID 子标识符解码（本轮）是同一个形状、同三个常量**。
+对每一个常量而言，这是**第二个独立站点** —— 正是本工作一直使用的确认方式：**掩码、移位、溢出测试三者都重现了**，而不是只断言一次。
+
+**已落 `layout.hpp`**：`kOidMask`(0x7F)、`kOidShift`(8)、`kOidOverflowShift`(0x38)、`kOidDoneBranch`(0x11212E)、`kOidOverflowBranch`(0x11213D)、`kAssemblerSites`(2)、`kAssemblerShapeShared`、`kAccumulatorRegisters`(2) + **四条 `static_assert`**（三条即为三个等式）+ 测试 22 条。

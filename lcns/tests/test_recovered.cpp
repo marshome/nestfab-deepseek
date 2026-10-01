@@ -4061,5 +4061,41 @@ int main() {
         CHECK(kParserElementBytes * 2 == 8);
     }
 
+    // --- the OID loop as a second assembler site (RE 0x11208A) ---------------------------------------
+    {
+        CHECK(kOidMask == 0x7F);
+        CHECK(kOidMask == kContinuationMask);            // the same mask as the length loop
+        CHECK(kOidShift == 8);
+        CHECK(kOidShift == kAccumulatorShift);           // the same shift
+        CHECK(kOidOverflowShift == 0x38);
+        CHECK(kOidOverflowShift == kAccumulatorTopShift);// the same overflow test
+        CHECK(kOidDoneBranch == 0x11212E);
+        CHECK(kOidOverflowBranch == 0x11213D);
+        CHECK(kAssemblerSites == 2);
+        CHECK(kAssemblerShapeShared);
+        CHECK(kAccumulatorRegisters == 2);
+        CHECK(kContinuationBit == 0x80);
+        CHECK(kOidContinuationTest);
+
+        // the count the mask yields and the assembly both sites perform, run once more
+        const auto count = [](std::uint8_t lead) { return static_cast<unsigned>(lead & kOidMask); };
+        CHECK(count(0x81) == 1);
+        CHECK(count(0x02) == 2);
+        CHECK(count(0x7F) == 0x7F);
+        const auto assemble = [](const std::uint8_t* b, std::size_t n) {
+            std::uint64_t acc = 0;
+            for (std::size_t i = 0; i < n; ++i) acc = (acc << kOidShift) | b[i];
+            return acc;
+        };
+        const std::uint8_t two[2] = {0x2A, 0x03};
+        CHECK(assemble(two, 2) == 0x2A03);
+        CHECK(assemble(two, 2) == 10755);
+        // the overflow test fires only when the top byte is set
+        const std::uint8_t eight[8] = {1, 0, 0, 0, 0, 0, 0, 0};
+        CHECK((assemble(eight, 8) >> kOidOverflowShift) == 1);
+        const std::uint8_t seven[7] = {1, 0, 0, 0, 0, 0, 0};
+        CHECK((assemble(seven, 7) >> kOidOverflowShift) == 0);
+    }
+
     return check::finish("test_recovered");
 }

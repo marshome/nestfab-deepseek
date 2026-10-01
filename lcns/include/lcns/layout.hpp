@@ -2521,6 +2521,28 @@ static_assert(kOidArithmeticFactor == 1 + 8 * 5, "the factor the instructions co
 static_assert(kOidArithmeticFactor != kAsn1FirstArcBase, "and it is NOT the standard's base, hence left open");
 static_assert(kOidArithmeticUninterpreted, "so it is recorded as uninterpreted");
 
+
+// --- the OID's continuation loop, second site of the same assembler (round 310) -------------------------
+//     0x11208E and eax,0x7f        ; the SAME mask as round 300's length loop
+//     0x112093 movzx ebx,al        ; the masked value is the byte COUNT
+//     0x1120A5 shl rbp,8           ; the SAME shift
+//     0x1120A9 or rbp,rax          ; the SAME big-endian assembly
+//     0x1120B8/0x1120BB sub ebx,1 ; shr rax,0x38   ; the SAME eight-byte overflow check
+//     0x112098/0x1120C2  the done and overflow branches
+inline constexpr std::uint8_t kOidMask = 0x7F;               // RE 0x11208E
+inline constexpr std::size_t kOidShift = 8;                  // RE 0x1120A5
+inline constexpr std::size_t kOidOverflowShift = 0x38;       // RE 0x1120BB
+inline constexpr std::uintptr_t kOidDoneBranch = 0x11212E;   // RE 0x112098
+inline constexpr std::uintptr_t kOidOverflowBranch = 0x11213D;  // RE 0x1120C2
+inline constexpr int kAssemblerSites = 2;                    // round 300's length loop and this OID loop
+inline constexpr bool kAssemblerShapeShared = true;           // the same three constants at both
+inline constexpr int kAccumulatorRegisters = 2;              // rbp accumulates, ebx counts
+// The three equalities that make this a second site rather than a similar-looking one:
+static_assert(kOidMask == kContinuationMask, "the mask is the same 0x7f");
+static_assert(kOidShift == kAccumulatorShift, "the shift is the same eight");
+static_assert(kOidOverflowShift == kAccumulatorTopShift, "the overflow test is the same 0x38");
+static_assert(kAssemblerSites == 2 && kAssemblerShapeShared, "two sites, one shape");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
