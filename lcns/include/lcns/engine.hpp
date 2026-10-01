@@ -246,7 +246,41 @@ inline constexpr std::size_t kMt19937StateBytes = 2504;        // RE 0x1A357E: o
 inline std::uint32_t mt19937InitStep(std::uint32_t previous, std::uint32_t i) {
     return kMt19937InitMultiplier * (previous ^ (previous >> 30)) + i;   // RE 0x1A3595..0x1A35A1
 }// RE the tail from 1A90E8 on: with a non-positive threshold the average is returned unchanged.
-inline double ratioFromAverage(double average, double threshold) {
+
+
+// RE 0x1B33B0's budget arithmetic, read instruction by instruction:
+//     1B474E  movsd xmm5,[1e8] ; 1B4756 movsd [rsi+0x18],xmm5  ; the field at +0x18 is 1e8
+//     1B492B  movsd xmm7,[0.7] ; 1B4933 mulsd xmm7,[rsi+0x18]  ; 0.7 * base
+//     1B4938  movsd xmm1,[0.5] ; 1B4956 mulsd xmm1,xmm7         ; 0.5 * (0.7 * base)
+//     1B4978  movsd xmm0,[0.15] ; 1B4983 mulsd xmm0,[rsi+0x18]  ; 0.15 * base
+//     1B4B2C  movsd xmm6,[1000]
+//     1B4B48  cvtsi2sd xmm0,rax ; 1B4B4D divsd xmm0,xmm6 ; 1B4B51 subsd xmm7,xmm0
+//     1B4B84  cvtsi2sd xmm0,rax ; 1B4B89 divsd xmm0,xmm6 ; 1B4B8D subsd xmm7,xmm0
+//     1B4B95  cvtsi2sd xmm0,r12d ; 1B4B9E addsd xmm1,xmm0
+// RECOVERED: the base, the three weights, the factor of 1000 and the two subtractions.
+// NOT RECOVERED: what the two subtracted integers measure, so they are named for their position only.
+inline constexpr double kBudgetBase = 1e8;        // RE 0x1B474E
+inline constexpr double kBudgetWeightLow = 0.7;   // RE 0x1B492B
+inline constexpr double kBudgetWeightHalf = 0.5;  // RE 0x1B4938
+inline constexpr double kBudgetWeightSmall = 0.15;  // RE 0x1B4978
+inline constexpr double kMsPerSecond = 1000.0;    // RE 0x1B4B2C
+
+// RE 0x1B4933: the base weighted by 0.7.
+inline double weightedBudget(double base) { return kBudgetWeightLow * base; }
+
+// RE 0x1B4B48..0x1B4B8D: the 0.7-weighted base, less two integer quantities each divided by 1000.
+inline double budgetAfterTwoCounts(double base, std::int64_t first, std::int64_t second) {
+    const double scale = static_cast<double>(first) / kMsPerSecond;    // RE 0x1B4B48/0x1B4B4D
+    double value = weightedBudget(base) - scale;                       // RE 0x1B4B51
+    const double second_scaled = static_cast<double>(second) / kMsPerSecond;  // RE 0x1B4B84/0x1B4B89
+    return value - second_scaled;                                      // RE 0x1B4B8D
+}
+
+// RE 0x1B4956: half of the weighted base, to which an integer is later added (0x1B4B9E).
+inline double halfOfWeightedBudget(double base) { return kBudgetWeightHalf * weightedBudget(base); }
+
+// RE 0x1B4983: the base weighted by 0.15.
+inline double smallWeightedBudget(double base) { return kBudgetWeightSmall * base; }inline double ratioFromAverage(double average, double threshold) {
     if (!(threshold > 0.0)) {                 // RE 1A90E8/1A90F1: ucomisd then jbe
         return average;
     }

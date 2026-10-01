@@ -2817,3 +2817,19 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 ⇒ **只把“用法已读到”的落进 `lcns`**（`1e6`、`-1`、`30`）；其余作为**待命名清单**记在此处并带 RVA —— **仅凭数值起名就是自编**。
 
 **`0x898A80`（44 B，全读）**：`mov rbx,rcx ; mov rcx,rdx ; lea rdx,[静态对象] ; add rbx,0x10 ; call 0x861A30 ; test al,al ; mov eax,0 ; cmovne rax,rbx` ⇒ 返回 **容器+0x10 或 nullptr**，即**插入第一个元素并以返回其地址表示成功**。
+
+### 附 68 `0x1B33B0` 的**预算算式**（goal round 147）**[可判定，已落码]
+
+```
+1B474E  xmm5=[1e8] ; 1B4756 [rsi+0x18]=xmm5      ; 字段 +0x18 置为 1e8
+1B492B  xmm7=[0.7] ; 1B4933 mulsd xmm7,[rsi+0x18]  ; 0.7 × base
+1B4938  xmm1=[0.5] ; 1B4956 mulsd xmm1,xmm7         ; 0.5 × (0.7 × base)
+1B4978  xmm0=[0.15] ; 1B4983 mulsd xmm0,[rsi+0x18]  ; 0.15 × base
+1B4B2C  xmm6=[1000]
+1B4B48  cvtsi2sd xmm0,rax ; 1B4B4D divsd xmm0,xmm6 ; 1B4B51 subsd xmm7,xmm0
+1B4B84  cvtsi2sd xmm0,rax ; 1B4B89 divsd xmm0,xmm6 ; 1B4B8D subsd xmm7,xmm0
+1B4B95  cvtsi2sd xmm0,r12d ; 1B4B9E addsd xmm1,xmm0
+```
+
+⇒ **已恢复**：基数 `1e8`、三个权重 `0.7`/`0.5`/`0.15`、因子 `1000`、两次 **`计数/1000` 的递减**、以及 `0.5×(0.7×base)` 上的一次整数加。
+**未恢复**：那两个被减的整数到底量的是什么（因此参数只按**位置**命名，不按猜想的语义）。已落 `lcns`：五个常量 + `weightedBudget`/`budgetAfterTwoCounts`/`halfOfWeightedBudget`/`smallWeightedBudget` + 10 条测试。

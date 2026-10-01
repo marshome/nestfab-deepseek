@@ -553,6 +553,22 @@ int main() {
         }
     }
 
+    // --- the budget arithmetic (RE 0x1b33b0: 0.7*1e8, 0.5 of it, 0.15*1e8, minus ms/1000 twice) --------
+    {
+        CHECK(kBudgetBase == 1e8);
+        CHECK(kBudgetWeightLow == 0.7);
+        CHECK(kBudgetWeightHalf == 0.5);
+        CHECK(kBudgetWeightSmall == 0.15);
+        CHECK(kMsPerSecond == 1000.0);
+        CHECK(weightedBudget(kBudgetBase) == 7e7);
+        CHECK(smallWeightedBudget(kBudgetBase) == 1.5e7);
+        CHECK(halfOfWeightedBudget(kBudgetBase) == 3.5e7);
+        // two counts are each divided by 1000 and subtracted
+        CHECK(budgetAfterTwoCounts(kBudgetBase, 1000, 0) == 7e7 - 1.0);
+        CHECK(budgetAfterTwoCounts(kBudgetBase, 1000, 500) == 7e7 - 1.5);
+        CHECK(budgetAfterTwoCounts(kBudgetBase, 0, 0) == 7e7);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
