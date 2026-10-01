@@ -96,6 +96,8 @@ inline constexpr double kAreaCoverageSlack = 0.99;   // RE 0x9B15E0 via 0x754ED 
 inline constexpr const char* kTraceFlip = "Flip ";
 inline constexpr const char* kTraceFilter = "Filter ";
 inline constexpr const char* kTraceNoFill = "NoFill(";   // RE 0x7f240
+inline constexpr const char* kTraceRow = "Row ";          // RE 0x913e0
+inline constexpr const char* kTracePipe = "Pipe ";        // RE 0x913e0
 inline constexpr const char* kTraceThread = "Thread <";
 inline constexpr const char* kTraceUpdatingPart = " updating part ";
 inline constexpr const char* kTraceTilings = " tilings.";
@@ -109,6 +111,16 @@ inline constexpr const char* kTraceBeamWidth = "Beam width=";
 inline constexpr const char* kTraceBeamTryNb = "Beam try nb : ";
 inline constexpr const char* kTraceNbBuckets = "nb_buckets=";
 inline constexpr const char* kTraceInternalError = "*** INTERNAL ERROR: please contact support ***";
+
+
+// RE 0x7BCC0 (MultiTorchNester::Run) -- the tolerance family this binary uses. Its own
+// assertion text spells one of them out: 'res <= y * 1.001'. The rest are read from the
+// constants it loads: 1.001 and 0.999 (a +-0.1% pair, used repeatedly), 0.99 (the 1% area
+// slack already named kAreaCoverageSlack), 0.5 and 0.25 (step halving), 0.05, and 3. The
+// VALUES are recovered; the SEMANTICS of each one is inferred from its use, so they are named
+// after their role in the comparison rather than after any symbol.
+inline constexpr double kToleranceUpper = 1.001;   // RE 0x9B1740, see 'res <= y * 1.001'
+inline constexpr double kToleranceLower = 0.999;   // RE 0x9B1758
 
 struct EngineParams {
     int threads = 1;                    // RE: Problem::nb_max_threads

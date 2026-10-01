@@ -134,11 +134,17 @@ int main() {
     // the 0.99 area coverage slack (RE 0x9b15e0, used at 0x754ed / 0x75ef3)
     CHECK(kAreaCoverageSlack == 0.99);
 
+    // the +-0.1% tolerance pair (RE 0x9b1740 / 0x9b1758, 0x7bcc0 asserts 'res <= y * 1.001')
+    CHECK(kToleranceUpper == 1.001);
+    CHECK(kToleranceLower == 0.999);
+
     // --- recovered trace strings (verbatim in the original's log) -----------------------------
     {
         CHECK(std::strcmp(kTraceFlip, "Flip ") == 0);                       // RE 0x4b870
         CHECK(std::strcmp(kTraceFilter, "Filter ") == 0);
-        CHECK(std::strcmp(kTraceNoFill, "NoFill(") == 0);   // RE 0x7f240                   // RE 0xb3ae0
+        CHECK(std::strcmp(kTraceNoFill, "NoFill(") == 0);   // RE 0x7f240
+        CHECK(std::strcmp(kTraceRow, "Row ") == 0);        // RE 0x913e0
+        CHECK(std::strcmp(kTracePipe, "Pipe ") == 0);      // RE 0x913e0                   // RE 0xb3ae0
         CHECK(std::strcmp(kTracePackerCacheThreads, "Packer Cache max threads: ") == 0);  // RE 0x76a130
         CHECK(std::strcmp(kTraceVisitedNodes, "Visited Nodes=") == 0);      // RE 0x1c7980
         CHECK(std::strcmp(kTraceBucketsEmpty, "Buckets : empty") == 0);     // RE 0x7b3d20
