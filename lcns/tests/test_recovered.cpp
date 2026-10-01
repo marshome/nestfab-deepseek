@@ -1,3 +1,4 @@
+#include <limits>
 #include <random>
 // tests/test_recovered.cpp -- ACCEPTANCE TEST for the recovered constants.
 //
@@ -868,6 +869,21 @@ int main() {
         CHECK(kMicroInverse * kMicroScale == 1.0);
         // and the shared 0.0001 slot is the same value as the fine step of 0x1a1810
         CHECK(kTenThousandth == kStepFine);
+    }
+
+    // --- the shared constant block (RE rva 0x9dfb98..0x9dfc20) -------------------------------------
+    {
+        // the epsilon is confirmed by COMPUTATION, not by recognising the digits
+        CHECK(kSharedEpsilon == std::numeric_limits<double>::epsilon());
+        CHECK(kSharedEpsilon > 0.0);
+        CHECK(kSharedEpsilon < 1e-15);
+        CHECK(kSharedHalf == 0.5);
+        CHECK(kSharedMicroScale == 1e6);
+        CHECK(kSharedMicroScale == kMicroScale);          // the same scale as round 171's site
+        CHECK(kSharedNegativeOne == -1.0);
+        CHECK(kSharedFifty == 50.0);
+        // the block's scale slot agrees with the 0.5 slot used by so many functions
+        CHECK(kSharedHalf == kStepRoundTerm);
     }
 
     return check::finish("test_recovered");

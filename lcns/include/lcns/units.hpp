@@ -26,4 +26,23 @@ inline double microToUnit(std::int64_t micro) {
 // RE the reverse direction, which the same constants block expresses as kMicroInverse.
 inline double unitToMicro(double value) { return value * kMicroScale; }
 
+
+// --- the shared constant block (round 172) -------------------------------------------------------
+// Scanning un-cited functions for double slots reached from three or more of them found 33 such slots. Six of
+// them lie in one contiguous read-only block used by a family of functions (597 to 3850 bytes):
+//     0x9DFB98  1e+06        5 functions
+//     0x9DFBA0  2.22045e-16  9 functions   <- 2**-52, the machine epsilon
+//     0x9DFBC8  1             16 functions
+//     0x9DFBD0  0.5           11 functions
+//     0x9DFBD8  -1            7 functions
+//     0x9DFC20  50            14 functions
+// The epsilon is the one value here that can be confirmed by COMPUTATION instead of recognition: the test
+// compares it against std::numeric_limits<double>::epsilon(), so the claim does not rest on remembering the
+// constant. The others are recorded with their slots and left unnamed, because 50 and 1 are not names.
+inline constexpr double kSharedEpsilon = 2.220446049250313e-16;   // RE rva 0x9DFBA0, 9 functions
+inline constexpr double kSharedHalf = 0.5;                        // RE rva 0x9DFBD0, 11 functions
+inline constexpr double kSharedMicroScale = 1e6;                  // RE rva 0x9DFB98, 5 functions
+inline constexpr double kSharedNegativeOne = -1.0;                // RE rva 0x9DFBD8, 7 functions
+inline constexpr double kSharedFifty = 50.0;                      // RE rva 0x9DFC20, 14 functions
+
 }  // namespace lcns
