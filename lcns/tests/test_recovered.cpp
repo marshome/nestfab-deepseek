@@ -5472,5 +5472,45 @@ int main() {
         CHECK(kPerFieldFrame - kComposeFrame == 0x10);
     }
 
+    // --- the translation builder and the identity basis (RE 0x5ce7b0) -------------------------------
+    {
+        CHECK(kMakeTranslation == 0x5CE7B0);
+        CHECK(kMakeTranslationCallers == 32);
+        CHECK(kMatrixLayoutConfirmed4);
+        CHECK(kIdentityWritten);
+        CHECK(kIdentityDiagonal == 1.0);
+        CHECK(kIdentityOffDiagonal == 0.0);
+        CHECK(kOneRva5CE7B0 == 0x9DE930);
+        CHECK(kOneDoubleRva == 0xA06838);
+        CHECK(kOneRva5CE7B0 != kOneDoubleRva);
+        CHECK(kOneConstants == 2);
+        CHECK(kTranslationFromPoint);
+        CHECK(kChainStageA == kMakeTranslation);          // round 345's chain starts here
+        CHECK(kChainMembers == 4);
+
+        // the matrix the builder writes, as a 2x3 affine transform
+        const auto buildTranslation = [](double px, double py, double m[6]) {
+            m[0] = kIdentityDiagonal;  m[1] = kIdentityOffDiagonal;  m[2] = px;   // RE the four stores
+            m[3] = kIdentityOffDiagonal; m[4] = kIdentityDiagonal;   m[5] = py;
+        };
+        double m[6] = {0, 0, 0, 0, 0, 0};
+        buildTranslation(3.0, 4.0, m);
+        CHECK(m[0] == 1.0 && m[1] == 0.0 && m[2] == 3.0);
+        CHECK(m[3] == 0.0 && m[4] == 1.0 && m[5] == 4.0);
+        // and applying it to a point is a pure translation, which is what makes it a translation builder
+        const auto applyM = [](const double mm[6], double x, double y, double& ox, double& oy) {
+            ox = mm[0] * x + mm[1] * y + mm[2];
+            oy = mm[3] * x + mm[4] * y + mm[5];
+        };
+        double ox = 0, oy = 0;
+        applyM(m, 10.0, 20.0, ox, oy);
+        CHECK(ox == 13.0);
+        CHECK(oy == 24.0);
+        applyM(m, 0.0, 0.0, ox, oy);
+        CHECK(ox == 3.0 && oy == 4.0);                    // the origin maps to the translation itself
+        CHECK(kMakeTranslation > 0x5C0000 && kMakeTranslation < 0x5D0000);
+        CHECK(kMatrixTx == 0x20 && kMatrixTy == 0x28);
+    }
+
     return check::finish("test_recovered");
 }

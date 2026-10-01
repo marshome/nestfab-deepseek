@@ -3464,6 +3464,29 @@ static_assert(kChainMembers == kChainTempCount, "four stages, four temporaries")
 static_assert(kPackedPointLoads == 2, "the packed load has a second site");
 static_assert(kPerFieldFrame == 0xE0 && kPerFieldFrame > kComposeFrame, "a frame larger still");
 
+
+// --- the translation builder, which writes the identity basis (round 346) ---------------------------------
+//     0x5CE7C6 [rcx]      = 1.0        ; a
+//     0x5CE7CA [rcx+0x08] = 0.0        ; b
+//     0x5CE7CF [rcx+0x10] = 0.0        ; c
+//     0x5CE7D4 [rcx+0x18] = 1.0        ; d
+//     0x5CE7D9/0x5CE7DD [rcx+0x20] and [rcx+0x28] = the point's two doubles
+//     0x5CE7B4 the one comes from rva 0x9DE930, NOT the 0xA06838 that round 340 compares against
+inline constexpr std::uintptr_t kMakeTranslation = 0x5CE7B0;  // RE the whole routine
+inline constexpr int kMakeTranslationCallers = 32;
+inline constexpr bool kMatrixLayoutConfirmed4 = true;         // a FIFTH routine writes the same six offsets
+inline constexpr bool kIdentityWritten = true;                // the 2x2 part is set to the identity as literals
+inline constexpr double kIdentityDiagonal = 1.0;              // RE 0x5CE7C6 and 0x5CE7D4
+inline constexpr double kIdentityOffDiagonal = 0.0;           // RE 0x5CE7CA and 0x5CE7CF
+inline constexpr std::uintptr_t kOneRva5CE7B0 = 0x9DE930;     // RE 0x5CE7B4
+inline constexpr int kOneConstants = 2;                       // 0x9DE930 here and 0xA06838 in round 340
+inline constexpr bool kTranslationFromPoint = true;           // RE 0x5CE7D9 and 0x5CE7DD
+static_assert(kMatrixLayoutConfirmed3 && kMatrixLayoutConfirmed4, "confirmed at the fourth and fifth routines");
+static_assert(kIdentityWritten, "the identity is written, not inferred");
+static_assert(kOneRva5CE7B0 != kOneDoubleRva, "two separate stores of the same value");
+static_assert(kOneConstants == 2, "and they are counted separately");
+static_assert(kTranslationFromPoint, "the translation pair comes from the point argument");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

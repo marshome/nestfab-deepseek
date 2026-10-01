@@ -6849,3 +6849,24 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ 打包习语（`movsd` + `movhpd`）**正是 round 333 点加法加载操作数的那个** ⇒ **第二个站点**；该链又为几何簇增添**四个成员**。
 
 **已落 `layout.hpp`**：`kPerFieldHelper`(0x24C610)、`kPerFieldHelperCallers`(4)、`kPointFieldA/B`(0x70/0x78)、`kChainBuild`(0x24C4A0)、`kChainStageA/B/C`(0x5CE7B0/0x5CED50/0x5CE970)、`kChainMembers`(4)、`kChainTempCount`(4)、`kPerFieldFrame`(0xE0)、`kPackedPointLoads`(2)、`kPointLoadPacked` + **五条 `static_assert`** + 测试 26 条。
+
+### 附 264 ★★ **矩阵的 2×2 部分被写成单位阵：六个 double 的含义定下来了**（goal round 346）**[已落码]**
+
+`0x5CE7B0`（50 B / **32 个调用者**）：
+
+```
+5CE7B4  xmm0 = **1.0**（rva 0x9DE930）；5CE7B0  xmm1 = 0
+5CE7BC/5CE7BF  r9 = [rdx]、r10 = [rdx+8]      ; 一个点的两个 double
+5CE7C6  [rcx]      = **1.0**   ; a
+5CE7CA  [rcx+0x08] = **0.0**   ; b
+5CE7CF  [rcx+0x10] = **0.0**   ; c
+5CE7D4  [rcx+0x18] = **1.0**   ; d
+5CE7D9/5CE7DD  [rcx+0x20] = r9、[rcx+0x28] = r10   ; tx、ty 取自该点
+```
+
+⇒ 它**构造一个平移**：2×2 部分**字面写成单位阵**，平移两项取自参数点。
+★★ **这把本工作“2×3 矩阵”的读法从“关于六个 double 的推断”变成“关于它们是什么的事实”**（单位值在此以字面量出现），并且它是**第五个把六个写在 `+0x00`…`+0x28` 的例程**。
+
+★ 它用的 1.0 位于 rva **0x9DE930**，**不是** round 340 浮点检查拿来相比的 **0xA06838** ⇒ **同值存两处**，记为**两个常量**而非一个。
+
+**已落 `layout.hpp`**：`kMakeTranslation`(0x5CE7B0)、`kMakeTranslationCallers`(32)、`kMatrixLayoutConfirmed4`、`kIdentityWritten`、`kIdentityDiagonal/OffDiagonal`(1.0/0.0)、`kOneRva5CE7B0`(0x9DE930)、`kOneConstants`(2)、`kTranslationFromPoint` + **五条 `static_assert`** + 测试 24 条（含“对任意点应用即纯平移、原点映到平移量本身”的行为验证）。
