@@ -4307,7 +4307,7 @@ int main() {
         CHECK(kErrorSurfacePatternSites == 2);
         CHECK(kErrorSiteStride == 5);                    // the same stride as round 311's block
         CHECK(kParserErrorSites == 4);
-        CHECK(kIntegerWordFields == 3);
+        CHECK(kIntegerWordFields == 5);                  // corrected in round 318: five, not three
         CHECK(kIntegerWordBase == 0x3C);
         CHECK(kIntegerSource == 0x112EFD);
         CHECK(kMinimalEncodingReadingNarrowed);          // my own claim, narrowed
@@ -4330,6 +4330,39 @@ int main() {
         CHECK(scanApplies(5));
         CHECK(scanApplies(9));
         CHECK(kIntegerFastPathBytes * 2 == 8);
+    }
+
+    // --- five sixteen-bit fields and two indirect calls (RE 0x112740) -------------------------------
+    {
+        CHECK(kIntegerWordFieldsUpdated);
+        CHECK(kIntegerWordFields == 5);
+        CHECK(kIntegerWordStride == 2);
+        CHECK(kIntegerWordFirst == 0x38);
+        CHECK(kIntegerWordLast == 0x40);
+        CHECK((kIntegerWordLast - kIntegerWordFirst) / kIntegerWordStride + 1 == kIntegerWordFields);
+        CHECK(kIndirectCallSites == 2);
+        CHECK(kIndirectViaRegister);
+        CHECK(kWordDispatchTargets == 3);
+        CHECK(kWordDispatchA == 0x112CD2);
+        CHECK(kWordDispatchB == 0x112CA2);
+        CHECK(kWordDispatchC == 0x112C32);
+        CHECK(kWordDispatchA != kWordDispatchB && kWordDispatchB != kWordDispatchC);
+        CHECK(kIntegerWordBase == 0x3C);                 // round 317's lowest of the three it had seen
+        CHECK(kIntegerWordFirst < kIntegerWordBase);     // and the chain revealed two more below it
+
+        // the five fields, laid out as the comparisons treat them
+        const std::size_t words[5] = {kIntegerWordFirst, kIntegerWordFirst + kIntegerWordStride,
+                                      kIntegerWordBase, kIntegerWordBase + kIntegerWordStride,
+                                      kIntegerWordLast};
+        for (int i = 1; i < kIntegerWordFields; ++i) {
+            CHECK(words[i] - words[i - 1] == kIntegerWordStride);
+        }
+        CHECK(words[0] == 0x38);
+        CHECK(words[4] == 0x40);
+        CHECK(kIntegerWordFields * kIntegerWordStride == 10);   // they occupy ten bytes
+        // round 315 saw seven words in the OTHER routine over the same base offsets
+        CHECK(kThirdMemberWordFields == 7);
+        CHECK(kThirdMemberWordFields > kIntegerWordFields);
     }
 
     return check::finish("test_recovered");

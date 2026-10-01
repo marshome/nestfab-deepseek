@@ -2690,7 +2690,8 @@ inline constexpr std::uintptr_t kIntegerLoopEntry = 0x11285C;  // RE the target 
 inline constexpr std::uintptr_t kZeroLengthBranch = 0x112883;  // RE 0x112E73
 inline constexpr int kIntegerErrorSites = 4;                 // RE the four adjacent calls
 inline constexpr int kErrorSurfacePatternSites = 2;          // rounds 311 and this
-inline constexpr int kIntegerWordFields = 3;                 // RE 0x112E84/0x112E95/0x112EA6
+inline constexpr int kIntegerWordFields = 5;                 // CORRECTED in round 318: five, not three --
+// rounds 316/317 had only seen +0x3C, +0x3E and +0x40; the chain at 0x112D83/0x112D94/0x112DA5 adds +0x38 and +0x3A
 inline constexpr std::size_t kIntegerWordBase = 0x3C;        // RE the lowest of the three
 inline constexpr std::uintptr_t kIntegerSource = 0x112EFD;   // RE the last error entry
 // NARROWING my round-316 claim: the zero scan is skipped for values of four bytes or fewer, so what I called "DER's
@@ -2702,7 +2703,30 @@ static_assert(kFastPathJumpsToLoop, "the short case reuses the loop rather than 
 static_assert(kIntegerErrorSites == 4, "four error entries, as in the OID reader");
 static_assert(kMinimalEncodingReadingNarrowed && kZeroScanSkippedUnder4Bytes,
               "the claim is narrowed to match the instruction");
-static_assert(kIntegerWordFields == 3, "three sixteen-bit fields are compared here");
+static_assert(kIntegerWordFields == 5, "five sixteen-bit fields, two bytes apart");
+
+
+// --- the five sixteen-bit fields and the indirect calls (round 318) --------------------------------------
+//     0x112D60 call 0x77F2D0                       ; an error entry, and the head of the chain
+//     0x112D6B/0x112D78 call rax                   ; TWO indirect calls through a register
+//     0x112D83/0x112D89 cmp word [rsp+0x38],0 ; jne 0x112CD2
+//     0x112D94/0x112D9A cmp word [rsp+0x3A],0 ; jne 0x112CA2
+//     0x112DA5/0x112DAB cmp word [rsp+0x3E],0 ; jne 0x112C32
+inline constexpr bool kIntegerWordFieldsUpdated = true;      // the count moved from three to five
+inline constexpr std::size_t kIntegerWordStride = 2;         // RE the spacing of the five words
+inline constexpr std::size_t kIntegerWordFirst = 0x38;       // RE 0x112D83
+inline constexpr std::size_t kIntegerWordLast = 0x40;        // RE 0x112E84 (round 317)
+inline constexpr int kIndirectCallSites = 2;                 // RE 0x112D6B and 0x112D78
+inline constexpr bool kIndirectViaRegister = true;           // RE `call rax`
+inline constexpr int kWordDispatchTargets = 3;               // RE 0x112CD2, 0x112CA2 and 0x112C32
+inline constexpr std::uintptr_t kWordDispatchA = 0x112CD2;   // RE 0x112D89
+inline constexpr std::uintptr_t kWordDispatchB = 0x112CA2;   // RE 0x112D9A
+inline constexpr std::uintptr_t kWordDispatchC = 0x112C32;   // RE 0x112DAB
+static_assert(kIntegerWordFields == 5, "five fields, and the count was corrected to say so");
+static_assert((kIntegerWordLast - kIntegerWordFirst) / kIntegerWordStride + 1 == kIntegerWordFields,
+              "they are contiguous at a stride of two");
+static_assert(kIndirectCallSites == 2 && kIndirectViaRegister, "two indirect calls through a register");
+static_assert(kWordDispatchTargets == 3, "three dispatch targets were read");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

@@ -6300,3 +6300,21 @@ round 314 的两行已**替换而非保留**。
 ★ 且 **四处相邻错误入口是该编解码器的模式**（round 311 的 `0x111E90` 与本轮的 `0x112740`），而不是单一例程的特征（`kErrorSurfacePatternSites = 2`，且步长相同）。
 
 **已落 `layout.hpp`**：`kFastPathJumpsToLoop`、`kIntegerLoopEntry`(0x11285C)、`kZeroLengthBranch`(0x112883)、`kIntegerErrorSites`(4)、`kErrorSurfacePatternSites`(2)、`kIntegerWordFields`(3)、`kIntegerWordBase`(0x3C)、`kIntegerSource`、`kMinimalEncodingReadingNarrowed`、`kZeroScanSkippedUnder4Bytes` + **四条 `static_assert`** + 测试 22 条。
+
+### 附 236 **五个 16 位字段（非三个）与两处间接调用**（goal round 318）**[已落码]**
+
+```
+112D60  call 0x77F2D0                       ; 一处错误入口，也是这条链的起点
+112D6B/112D78  **call rax**                   ; ★ **两处经寄存器的间接调用**（参数各异）
+112D83/112D89  cmp word [rsp+**0x38**],0 ; jne 0x112CD2
+112D94/112D9A  cmp word [rsp+**0x3A**],0 ; jne 0x112CA2
+112DA5/112DAB  cmp word [rsp+**0x3E**],0 ; jne 0x112C32
+```
+
+加上 rounds 316/317 已见的 `+0x3C`、`+0x40` ⇒ **五个连续的 16 位字段，步长 2**。
+
+★ **因此 round 317 的计数（3）是短的** —— 它只数了当时已见的三个。已**在原处修正为 5**，并新增步长断言使连续性留档。
+
+★ 另：该读取器**通过寄存器间接调用函数指针两次**（`call rax`），每次传对象与不同的值；三个分派目标（`0x112CD2`/`0x112CA2`/`0x112C32`）已记录。
+
+**已落 `layout.hpp`**：`kIntegerWordFields`（修正为 5）、`kIntegerWordFieldsUpdated`、`kIntegerWordStride`(2)、`kIntegerWordFirst/Last`(0x38/0x40)、`kIndirectCallSites`(2)、`kIndirectViaRegister`、`kWordDispatch*` + **四条 `static_assert`** + 测试 22 条。
