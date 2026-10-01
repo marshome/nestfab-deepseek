@@ -5996,3 +5996,18 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 因此本轮把那个符号测试**从观察提升为语义**（`kContinuationBitIsSignBit`）。
 
 **已落 `layout.hpp`**：`kContinuationBit`(0x80)、`kContinuationMask`(0x7F)、`kAccumulator*`（五个）、`kBigEndianAccumulate`、`kContinuationBitIsSignBit` + **四条 `static_assert`** + 测试 30 条（含装配的四个手算取值与溢出保护的验证）。
+
+### 附 219 **一对驱动器：同样的解码，不同的字节来源**（goal round 301）**[已落码]**
+
+`0x110B00`（1134 B / 2 个调用者）几乎逐指令重复 `0x10FD40`：同样的 `0x108` 帧、同样的**就地 `InputBuffer`**（`rsp+0x60`，字段 `+0x14`/`+0x18` 同位）、**同样先调 CryptoPP 自检**（`edx = 0`）。
+
+★ **一处差异而已（并非巧合）**：
+
+```
+10FD40：首个字节来自**直接助手 `0x1170B0`**
+110B00：110B21/110B34  rax = [rcx] ; **call qword [rax+0xB0]**   ; ★ **第十三个槽**
+```
+
+⇒ 两者**解码方式相同、字节来源不同** —— 此读法由指令差异本身支撑，并**作为差异记录**（`kDriversDifferInSource`）而不是抹平。
+
+**已落 `layout.hpp`**：`kDriverSibling`、`kDriverSiblingCallers`(2)、`kDriverFrameBytes`(0x108)、`kVtableSlotJ`(0xB0)、`kVtableSlotsKnown8`(13)、`kDriverPair`、`kDriversDifferInSource`、`kDriverByteSourceA/B`、`kDriverLocal/Marker/Byte/Probe` + **五条 `static_assert`** + 测试 26 条（含两个驱动器偏移互相相等的断言）。

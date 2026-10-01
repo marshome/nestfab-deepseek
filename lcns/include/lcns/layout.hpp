@@ -2321,6 +2321,33 @@ static_assert(kAccumulatorTopShift == kAccumulatorMaxBytes * 8 - 8, "the top byt
 static_assert(kBigEndianAccumulate, "the bytes are assembled big-endian");
 static_assert(kContinuationBitIsSignBit, "the sign test of round 299 is the continuation test");
 
+
+// --- the sibling driver 0x110B00, and the one difference that matters (round 301) -----------------------
+//     0x110B0C sub rsp,0x108             ; the same frame as 0x10FD40
+//     0x110B24 lea rsi,[rsp+0x60]        ; the same in-place InputBuffer
+//     0x110B50 call 0x118260 with edx = 0  ; the same self-test, again first
+//     0x110B60 dword [rsp+0x74] = 0xFFFFFFFF and 0x110B58 byte [rsp+0x78] = 0
+//     0x110B34 call qword [rax+0xB0]     ; but the leading byte comes through slot 0xB0
+inline constexpr std::uintptr_t kDriverSibling = 0x110B00;   // RE the whole routine
+inline constexpr int kDriverSiblingCallers = 2;              // RE the profile
+inline constexpr std::size_t kDriverFrameBytes = 0x108;      // RE 0x10FD4C and 0x110B0C alike
+inline constexpr std::size_t kVtableSlotJ = 0xB0;            // RE 0x110B34 -- a THIRTEENTH slot
+inline constexpr int kVtableSlotsKnown8 = 13;                // with 0xB0 added to the twelve of round 298
+inline constexpr int kDriverPair = 2;                        // the two 1134-byte drivers
+inline constexpr bool kDriversDifferInSource = true;         // RE 0xB0 against the helper 0x1170B0
+inline constexpr std::uintptr_t kDriverByteSourceA = 0xB0;   // the slot this one uses
+inline constexpr std::uintptr_t kDriverByteSourceB = 0x1170B0;  // the helper the other uses
+inline constexpr std::size_t kDriverLocal = 0x60;            // RE 0x110B24
+inline constexpr std::size_t kDriverMarker = 0x74;           // RE 0x110B60
+inline constexpr std::size_t kDriverByte = 0x78;             // RE 0x110B58
+inline constexpr std::size_t kDriverProbe = 0x4A;            // RE 0x110B2F
+static_assert(kDriverFrameBytes == 0x108, "both drivers frame the same way");
+static_assert(kDriverPair == 2, "a pair of drivers");
+static_assert(kDriversDifferInSource, "and they differ in where the bytes come from");
+static_assert(kVtableSlotsKnown8 == kVtableSlotsKnown7 + 1, "one more slot than round 298");
+static_assert(kDriverLocal - 0x14 == kDriverMarker - 0x28 || kDriverMarker - kDriverLocal == kInputBufferMarker,
+              "the marker sits where round 288 put it");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -3785,5 +3785,37 @@ int main() {
         CHECK((assemble(nine, 8) >> kAccumulatorTopShift) != 0);   // the top byte is set: the check fires
     }
 
+    // --- the driver pair and their differing byte sources (RE 0x110b00) -----------------------------
+    {
+        CHECK(kDriverSibling == 0x110B00);
+        CHECK(kDriverSiblingCallers == 2);
+        CHECK(kDriverFrameBytes == 0x108);
+        CHECK(kDriverFrameBytes == 264);
+        CHECK(kVtableSlotJ == 0xB0);
+        CHECK(kVtableSlotsKnown8 == 13);
+        CHECK(kVtableSlotsKnown8 == kVtableSlotsKnown7 + 1);
+        CHECK(kDriverPair == 2);
+        CHECK(kDriversDifferInSource);
+        CHECK(kDriverByteSourceA == 0xB0);
+        CHECK(kDriverByteSourceB == 0x1170B0);
+        CHECK(kDriverByteSourceA != kDriverByteSourceB);   // the difference, asserted
+        CHECK(kDriverLocal == 0x60);
+        CHECK(kDriverMarker == 0x74);
+        CHECK(kDriverByte == 0x78);
+        CHECK(kDriverProbe == 0x4A);
+        // the in-place object sits at the same offsets in BOTH drivers
+        CHECK(kDriverMarker - kDriverLocal == kInputBufferMarker);
+        CHECK(kDriverByte - kDriverLocal == kInputBufferByte);
+        CHECK(kDriverLocal == kInputBufferLocal);
+        CHECK(kDriverMarker == kInputBufferLocalMarker);
+        CHECK(kDriverByte == kInputBufferLocalByte);
+        CHECK(kDriverProbe == 0x4A && kInputBufferLocal != kDriverProbe);
+
+        // both call the self-test first, and both reach the same slot for further bytes
+        CHECK(kSelfTestFirst);
+        CHECK(kCryptoPpSelfTest == 0x118260);
+        CHECK(kVtableSlotA0CallSites == 2);
+    }
+
     return check::finish("test_recovered");
 }
