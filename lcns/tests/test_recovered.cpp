@@ -560,13 +560,17 @@ int main() {
         CHECK(kBudgetWeightHalf == 0.5);
         CHECK(kBudgetWeightSmall == 0.15);
         CHECK(kMsPerSecond == 1000.0);
+        CHECK(kTickDivisor == 1000000);
         CHECK(weightedBudget(kBudgetBase) == 7e7);
         CHECK(smallWeightedBudget(kBudgetBase) == 1.5e7);
         CHECK(halfOfWeightedBudget(kBudgetBase) == 3.5e7);
-        // two counts are each divided by 1000 and subtracted
-        CHECK(budgetAfterTwoCounts(kBudgetBase, 1000, 0) == 7e7 - 1.0);
-        CHECK(budgetAfterTwoCounts(kBudgetBase, 1000, 500) == 7e7 - 1.5);
-        CHECK(budgetAfterTwoCounts(kBudgetBase, 0, 0) == 7e7);
+        // the arguments are tick differences from a 1e9-scaled source: each is divided by 1e6 (the
+        // magic-multiply divisor) and then by 1000, so 1,000,000,000 ticks is one second
+        CHECK(budgetAfterElapsedTicks(kBudgetBase, 1000000000LL, 0LL) == 7e7 - 1.0);
+        CHECK(budgetAfterElapsedTicks(kBudgetBase, 1000000000LL, 500000000LL) == 7e7 - 1.5);
+        CHECK(budgetAfterElapsedTicks(kBudgetBase, 0LL, 0LL) == 7e7);
+        // and the sub-second part is preserved rather than dropped
+        CHECK(budgetAfterElapsedTicks(kBudgetBase, 1000000LL, 0LL) == 7e7 - 0.001);
     }
 
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------

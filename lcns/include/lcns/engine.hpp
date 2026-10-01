@@ -258,21 +258,34 @@ inline std::uint32_t mt19937InitStep(std::uint32_t previous, std::uint32_t i) {
 //     1B4B84  cvtsi2sd xmm0,rax ; 1B4B89 divsd xmm0,xmm6 ; 1B4B8D subsd xmm7,xmm0
 //     1B4B95  cvtsi2sd xmm0,r12d ; 1B4B9E addsd xmm1,xmm0
 // RECOVERED: the base, the three weights, the factor of 1000 and the two subtractions.
-// NOT RECOVERED: what the two subtracted integers measure, so they are named for their position only.
+// RECOVERED LATER (round 148): the two integers come from `call 0x8A8190` followed by
+// `sub rax,[rsp+0x48]` / `sub rax,[rsp+0x78]`, i.e. they are ELAPSED TICK DIFFERENCES. The sequence
+//     1B4B1E  movabs rbp,0x431BDE82D7B634DB ; 1B4B37 imul rbp
+//     1B4B3E  mov rax,rdx ; 1B4B41 sar rax,0x12 ; 1B4B45 sub rax,rcx
+// divides by 1,000,000 -- confirmed by experiment, not by memory: emulating that exact sequence
+// matches truncation toward zero for divisor 1e6 on all of 12 samples including negatives -- and the
+// following `divsd xmm0,[1000]` divides by 1000 again, so the tick source is 1e9-scaled (nanoseconds)
+// and what is subtracted from the weighted budget is ELAPSED SECONDS.
+// NOT RECOVERED: what the tick source at 0x8A8190 actually reads (a counter, a clock, or a
+// synthesised value) -- only that two of its readings are differenced here.
 inline constexpr double kBudgetBase = 1e8;        // RE 0x1B474E
 inline constexpr double kBudgetWeightLow = 0.7;   // RE 0x1B492B
 inline constexpr double kBudgetWeightHalf = 0.5;  // RE 0x1B4938
 inline constexpr double kBudgetWeightSmall = 0.15;  // RE 0x1B4978
 inline constexpr double kMsPerSecond = 1000.0;    // RE 0x1B4B2C
+// RE 0x1B4B1E/0x1B4B41: the magic-multiply divisor, confirmed by experiment (round 148)
+inline constexpr std::int64_t kTickDivisor = 1000000;
 
 // RE 0x1B4933: the base weighted by 0.7.
 inline double weightedBudget(double base) { return kBudgetWeightLow * base; }
 
 // RE 0x1B4B48..0x1B4B8D: the 0.7-weighted base, less two integer quantities each divided by 1000.
-inline double budgetAfterTwoCounts(double base, std::int64_t first, std::int64_t second) {
-    const double scale = static_cast<double>(first) / kMsPerSecond;    // RE 0x1B4B48/0x1B4B4D
+inline double budgetAfterElapsedTicks(double base, std::int64_t firstTick, std::int64_t secondTick) {
+    const double scale = static_cast<double>(firstTick / kTickDivisor)
+                       / kMsPerSecond;                                  // RE 0x1B4B48/0x1B4B4D
     double value = weightedBudget(base) - scale;                       // RE 0x1B4B51
-    const double second_scaled = static_cast<double>(second) / kMsPerSecond;  // RE 0x1B4B84/0x1B4B89
+    const double second_scaled = static_cast<double>(secondTick / kTickDivisor)
+                               / kMsPerSecond;                              // RE 0x1B4B84/0x1B4B89
     return value - second_scaled;                                      // RE 0x1B4B8D
 }
 

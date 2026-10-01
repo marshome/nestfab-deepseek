@@ -2833,3 +2833,22 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 
 ⇒ **已恢复**：基数 `1e8`、三个权重 `0.7`/`0.5`/`0.15`、因子 `1000`、两次 **`计数/1000` 的递减**、以及 `0.5×(0.7×base)` 上的一次整数加。
 **未恢复**：那两个被减的整数到底量的是什么（因此参数只按**位置**命名，不按猜想的语义）。已落 `lcns`：五个常量 + `weightedBudget`/`budgetAfterTwoCounts`/`halfOfWeightedBudget`/`smallWeightedBudget` + 10 条测试。
+
+### 附 69 被减的两个整数 = **时间差**，魔数除法已**实验确认**（goal round 148）
+
+```
+1B4B14  call 0x8A8190                 ; 取一个 tick
+1B4B19  sub rax,[rsp+0x48]            ; ★ 与先前的值相减 = 已经历 tick 差
+1B4B1E  movabs rbp,0x431BDE82D7B634DB ; 魔数
+1B4B37  imul rbp ; 1B4B3E mov rax,rdx ; 1B4B41 sar rax,0x12 ; 1B4B45 sub rax,rcx
+1B4B48  cvtsi2sd xmm0,rax ; 1B4B4D divsd xmm0,[1000] ; 1B4B51 subsd xmm7,xmm0
+1B4B55  call 0x8A8190 ; 1B4B5A sub rax,[rsp+0x78] ; 同样处理 ; 1B4B8D subsd xmm7,xmm0
+1B4B95  cvtsi2sd xmm0,r12d ; 1B4B9E addsd xmm1,xmm0
+```
+
+**实验确认（不凭记忆）**：在 Python 里**完全模拟该序列**（`imul` 有符号 128 位 → `sar rdx,18` → 符号校正），对 **12 个样本（含负数）**与**向零截断的 ÷1,000,000** 完全一致（而 ÷1000、÷1e7、÷1e8 均不一致）。
+**第一次实验报“不一致”的原因**：我拿 Python 的**向下取整**去比，而指令实现的是**向零截断** —— 差异只在负数余数上。修正后一致。
+
+⇒ 再除以 `1000` ⇒ **tick 源是 1e9 缩放（纳秒），被减掉的是“已经历秒数”**，即预算形如 **`0.7×base − 历时秒数`**。已把 `budgetAfterTwoCounts` 更名为 `budgetAfterElapsedTicks`，并加 `kTickDivisor = 1000000`（含实验依据）。
+
+**仍未恢复**：`0x8A8190` 到底读的是什么（计数器/时钟/合成值），只知道它的**两次读数在此处被相减**。
