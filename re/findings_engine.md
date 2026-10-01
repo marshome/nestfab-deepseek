@@ -6436,3 +6436,21 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 两个助手**分开记录**，不合并。
 
 **已落 `layout.hpp`**：`kMoveAssignment`、`kMoveAssignmentCallers`(21)、`kMovePointer/Byte`(0x08/0x10)、`kMoveNullsSource`、`kSlotDRole`、`kSlotDRoleName`、`kMoveIdentifiedByNullStore`、`kLazyInit50`、`kLazyInitFlag`(0x50)、`kLazyInitField`(0x48)、`kLocalConstruct2`(0xC3A40)、`kLocalConstructFamily`(2) + **五条 `static_assert`** + 测试 26 条。
+
+### 附 243 **标志对、虚表槽 `+0x30` 首次投入使用、全 1 哨兵**（goal round 325）**[已落码]**
+
+```
+10FBED/10FBF6  第二个标志字节 **`+0x51`**
+10FC05  call qword [rax+**0x30**]（字节指针 + 常量 1）   ; ★ 槽 `+0x30` 首次使用
+10FC0F  call **0x10F8C0**                  ; 与本函数同类的邻居（相差 `0x2F0`）
+10FC2F  qword [rsp+0x38] = **0xFFFFFFFFFFFFFFFF** ; 10FC38 call 0xC2EC0
+10FC40  call 0xC2510
+```
+
+★ **`+0x50` 与 `+0x51` 是一对标志字节**，相隔 1 —— 正是 rounds 280/285/313 在 `+0x28`/`+0x29` 记录的形状 ⇒ **该习语现有三次目击**（`kFlagPairIdiom`），且两处的间距相同。
+
+★ **虚表槽 `+0x30`**（round 259 只记为地址）在此被**以字节指针与常量 1 调用**。
+
+★ 存入 `rsp+0x38` 的 **全 1 哨兵**与 round 260 记录的状态哨兵（−1）**同值**。
+
+**已落 `layout.hpp`**：`kLazyInitFlag2`(0x51)、`kFlagPairStride`(1)、`kFlagPairIdiom`、`kFlagPairCount`(3)、`kSlotBUsed`、`kSlotBArgConstant`、`kNeighbourHelper`(0x10F8C0)、`kNeighbourDelta`(0x2F0)、`kAllOnesSentinel`、`kGlobalArgRva`(0x8F7E31)、`kFinalCall10FBB0`(0xC2510)、`kSentinelUser`(0xC2EC0) + **六条 `static_assert`** + 测试 26 条。

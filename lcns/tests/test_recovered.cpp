@@ -4600,5 +4600,44 @@ int main() {
         CHECK(!needsInit(1));
     }
 
+    // --- the flag pair, slot +0x30, and the sentinel (RE 0x10fbb0) -----------------------------------
+    {
+        CHECK(kLazyInitFlag2 == 0x51);
+        CHECK(kLazyInitFlag == 0x50);
+        CHECK(kLazyInitFlag2 - kLazyInitFlag == kFlagPairStride);
+        CHECK(kFlagPairStride == 1);
+        CHECK(kFlagPairIdiom);
+        CHECK(kFlagPairCount == 3);
+        CHECK(kFinaliseFlagA == 0x28 && kFinaliseFlagB == 0x29);
+        CHECK(kFinaliseFlagB - kFinaliseFlagA == kFlagPairStride);   // the same spacing there
+        CHECK(kSlotBUsed);
+        CHECK(kVtableSlotB == 0x30);
+        CHECK(kSlotBArgConstant == 1);
+        CHECK(kGateConstant == 1);                       // the same constant the guarded calls push
+        CHECK(kNeighbourHelper == 0x10F8C0);
+        CHECK(kNeighbourDelta == 0x2F0);
+        CHECK(kNeighbourHelper + kNeighbourDelta == kLazyInit50);
+        CHECK(kAllOnesSentinel == 0xFFFFFFFFFFFFFFFFULL);
+        CHECK(kAllOnesSentinel == static_cast<std::uint64_t>(-1));
+        CHECK(static_cast<std::int64_t>(kAllOnesSentinel) == -1);
+        CHECK(kStatusSentinel == -1);                    // round 260's sentinel, the same value
+        CHECK(kGlobalArgRva == 0x8F7E31);
+        CHECK(kFinalCall10FBB0 == 0xC2510);
+        CHECK(kSentinelUser == 0xC2EC0);
+
+        // the three flag pairs, with the spacing between members of each
+        const std::size_t pairs[3][2] = {{kFinaliseFlagA, kFinaliseFlagB},
+                                         {kFinaliseFlagA, kFinaliseFlagB},
+                                         {kLazyInitFlag, kLazyInitFlag2}};
+        for (int i = 0; i < kFlagPairCount; ++i) {
+            CHECK(pairs[i][1] - pairs[i][0] == kFlagPairStride);
+        }
+        CHECK(pairs[0][0] == pairs[1][0]);               // the first two are the same object's fields
+        CHECK(pairs[2][0] != pairs[0][0]);               // the third is elsewhere
+        // and the sentinel arithmetic
+        CHECK(kAllOnesSentinel + 1 == 0);
+        CHECK(~kAllOnesSentinel == 0);
+    }
+
     return check::finish("test_recovered");
 }

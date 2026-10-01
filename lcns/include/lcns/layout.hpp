@@ -2883,6 +2883,32 @@ static_assert(kLocalConstruct2 - kLocalConstruct == 0x650, "the two helpers are 
 static_assert(kLocalConstructFamily == 2, "two members, recorded separately");
 static_assert(kLazyInitFlag == 0x50, "the flag sits at +0x50");
 
+
+// --- a flag pair, slot +0x30 in use, and the all-ones sentinel (round 325) -------------------------------
+//     0x10FBED/0x10FBF6  the second flag byte at +0x51
+//     0x10FC05 call qword [rax+0x30] with a byte pointer and the constant one
+//     0x10FC0F call 0x10F8C0          ; a neighbour of this function in the same class
+//     0x10FC2F qword [rsp+0x38] = 0xFFFFFFFFFFFFFFFF ; 0x10FC38 call 0xC2EC0 with a global argument
+//     0x10FC40 call 0xC2510
+inline constexpr std::size_t kLazyInitFlag2 = 0x51;          // RE 0x10FBED
+inline constexpr int kFlagPairStride = 1;                    // RE 0x51 - 0x50
+inline constexpr bool kFlagPairIdiom = true;                 // rounds 280/285/313 and this
+inline constexpr int kFlagPairCount = 3;                     // the pairs at +0x28/+0x29 twice and +0x50/+0x51
+inline constexpr bool kSlotBUsed = true;                     // RE 0x10FC05
+inline constexpr std::uintptr_t kSlotBArgConstant = 1;       // RE 0x10FBFD (dword 1 on the stack)
+inline constexpr std::uintptr_t kNeighbourHelper = 0x10F8C0; // RE 0x10FC0F
+inline constexpr std::size_t kNeighbourDelta = 0x2F0;        // RE 0x10FBB0 - 0x10F8C0
+inline constexpr std::uint64_t kAllOnesSentinel = 0xFFFFFFFFFFFFFFFFULL;  // RE 0x10FC2F
+inline constexpr std::uintptr_t kGlobalArgRva = 0x8F7E31;    // RE 0x10FC28
+inline constexpr std::uintptr_t kFinalCall10FBB0 = 0xC2510;  // RE 0x10FC40
+inline constexpr std::uintptr_t kSentinelUser = 0xC2EC0;     // RE 0x10FC38
+static_assert(kLazyInitFlag2 - kLazyInitFlag == kFlagPairStride, "the pair is one byte apart");
+static_assert(kFinaliseFlagB - kFinaliseFlagA == kFlagPairStride, "as the other pairs are");
+static_assert(kFlagPairIdiom && kFlagPairCount == 3, "the idiom has three sightings");
+static_assert(kSlotBUsed && kVtableSlotB == 0x30, "the slot used is the one round 259 recorded");
+static_assert(kAllOnesSentinel == static_cast<std::uint64_t>(-1), "the sentinel is all ones");
+static_assert(kNeighbourDelta == 0x2F0, "the helper sits 0x2F0 below this function");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
