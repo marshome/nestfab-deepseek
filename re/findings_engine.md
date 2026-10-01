@@ -7005,3 +7005,21 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ `0.01` 是**本工作记录到的第一个小数 double 常量**（此前只有两个 1.0 与一个符号掩码），且它被交给一个构造器 —— **形如几何容差**。**断言的是值与它的去处**，而不超出此做用途断言。
 
 **已落 `layout.hpp`**：`kGuardedPath`(0x243925)、`kToleranceConstant`(0.01)、`kToleranceRva`(0x9C27C0)、`kToleranceIsFractional`、`kToleranceSink`(0x4B81D0)、`kSsoBranchValue`(0xF)、`kSsoCapacitySightings`(2)、`kSsoGovernsControlFlow`、`kOneLengthCase`(0x2470EC)、`kInlineBufferOffset`(0x10)、`kInlineBufferSightings`(3)、`kGuardTargetRva`(0x9C2740)、`kGuardTargetNotAString`、`kNullBeginNonzeroCountGuard` + **六条 `static_assert`** + 测试 26 条。
+
+### 附 272 **容差的归属：一个 56 字节对象与它的空区间**（goal round 354）**[已落码]**
+
+`0x4B81D0`（78 B / 4 个调用者）：
+
+```
+4B81D8  `mov ecx, **0x38**`                 ; 向分配器要的尺寸
+4B81E3  call **0x998500**                    ; 分配器
+4B81F9  `movsd [rax], xmm1`                 ; ★★ **容差就是该对象的首成员**
+4B81F2  `dword [rax+0x10] = 0`
+4B820D/4B8211  `[rax+0x20] = [rax+0x28] = rax+0x10`   ; ★ **两者同值 ⇒ 空区间**
+```
+
+⇒ begin 与 end 是**同一个地址**、且都指向对象自己的 `+0x10` ⇒ **空容器惯用式**（内联缓冲区从 `+0x10` 开始，当下还没有东西）。
+★ 这是 `+0x10` 内联缓冲区的**第四次目击**，也把 round 353 的容差**落到了确定的归属**：一个 56 字节对象的偏移零。
+★ 分配器 `0x998500` 在早前轮次仅由调用点登记；**此处首次可见它被要求的尺寸** ⇒ **第七次目击，且比前六次更强**。
+
+**已落 `layout.hpp`**：`kToleranceOwner`(0x4B81D0)、`kToleranceOwnerCallers`(4)、`kToleranceObjectBytes`(0x38)、`kToleranceField`(0x00)、`kObjectFlag10`、`kObjectZeroA/B`、`kRangeBegin/End`(0x20/0x28)、`kEmptyRangePair`、`kEmptyRangeBase`、`kAllocator998500Used`、`kAllocatorSightings7`(7)、`kAllocatorSizeVisible`、`kInlineBufferSightings2`(4) + **六条 `static_assert`** + 测试 26 条（含“空区间即 begin == end”的行为验证）。

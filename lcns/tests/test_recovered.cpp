@@ -5837,5 +5837,46 @@ int main() {
         CHECK(sizeof(double) == 8);
     }
 
+    // --- the tolerance's owner (RE 0x4b81d0) ---------------------------------------------------------
+    {
+        CHECK(kToleranceOwner == 0x4B81D0);
+        CHECK(kToleranceOwnerCallers == 4);
+        CHECK(kToleranceSink == kToleranceOwner);         // the constructor round 353 found
+        CHECK(kToleranceObjectBytes == 0x38);
+        CHECK(kToleranceObjectBytes == 56);
+        CHECK(kToleranceField == 0x00);
+        CHECK(kObjectFlag10 == 0x10);
+        CHECK(kObjectZeroA == 0x18);
+        CHECK(kObjectZeroB == 0x30);
+        CHECK(kRangeBegin == 0x20);
+        CHECK(kRangeEnd == 0x28);
+        CHECK(kRangeEnd - kRangeBegin == 8);
+        CHECK(kEmptyRangePair);
+        CHECK(kEmptyRangeBase);
+        CHECK(kAllocator998500Used == 0x998500);
+        CHECK(kAllocatorSightings7 == 7);
+        CHECK(kAllocatorSizeVisible);
+        CHECK(kInlineBufferSightings2 == 4);
+        CHECK(kInlineBufferOffset == 0x10);               // the same base the empty range points at
+        CHECK(kObjectFlag10 == kInlineBufferOffset);
+        CHECK(kToleranceConstant == 0.01);                // the value that lands at offset zero
+
+        // the object as the constructor leaves it: the tolerance first, then an empty range
+        struct Tol { double tolerance; char pad[8]; unsigned int flag; unsigned char buf[0x20]; };
+        CHECK(sizeof(Tol) >= kToleranceField + sizeof(double));
+        Tol obj{};
+        obj.tolerance = kToleranceConstant;
+        obj.flag = 0;
+        CHECK(obj.tolerance == 0.01);
+        CHECK(obj.flag == 0u);
+        // an empty range: the two pointers are equal, which is what "begin == end" means
+        const auto isEmpty = [](const void* begin, const void* end) { return begin == end; };
+        const void* base = static_cast<const void*>(obj.buf);
+        CHECK(isEmpty(base, base));
+        CHECK(!isEmpty(base, static_cast<const void*>(obj.buf + 1)));
+        CHECK(kToleranceObjectBytes > kRangeEnd);
+        CHECK(kAllocatorSightings7 > kAccumulateCallers);
+    }
+
     return check::finish("test_recovered");
 }

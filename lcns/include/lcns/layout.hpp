@@ -3702,6 +3702,35 @@ static_assert(kToleranceIsFractional, "the first of its kind here");
 static_assert(kInlineBufferSightings == 3, "the buffer-plus-sixteen idiom, a third time");
 static_assert(kGuardTargetNotAString && kGuardTargetRva != 0, "a target outside the string table");
 
+
+// --- the tolerance's owner: a 56-byte object with an empty range (round 354) ------------------------------
+//     0x4B81D8 mov ecx,0x38                  ; the size asked of the allocator
+//     0x4B81E3 call 0x998500                 ; the allocator
+//     0x4B81F9 movsd [rax],xmm1              ; the tolerance at offset zero
+//     0x4B81F2 dword [rax+0x10] = 0
+//     0x4B820D/0x4B8211 [rax+0x20] = [rax+0x28] = rax+0x10   ; an empty range
+inline constexpr std::uintptr_t kToleranceOwner = 0x4B81D0;  // RE the whole routine
+inline constexpr int kToleranceOwnerCallers = 4;
+inline constexpr std::size_t kToleranceObjectBytes = 0x38;   // RE 0x4B81D8
+inline constexpr std::size_t kToleranceField = 0x00;         // RE 0x4B81F9
+inline constexpr std::size_t kObjectFlag10 = 0x10;           // RE 0x4B81F2, a zeroed dword
+inline constexpr std::size_t kObjectZeroA = 0x18;            // RE 0x4B81FD
+inline constexpr std::size_t kObjectZeroB = 0x30;            // RE 0x4B8205
+inline constexpr std::size_t kRangeBegin = 0x20;             // RE 0x4B820D
+inline constexpr std::size_t kRangeEnd = 0x28;               // RE 0x4B8211
+inline constexpr bool kEmptyRangePair = true;                // both hold the same address
+inline constexpr bool kEmptyRangeBase = true;                // namely the object's own +0x10
+inline constexpr std::uintptr_t kAllocator998500Used = 0x998500;  // RE 0x4B81E3
+inline constexpr int kAllocatorSightings7 = 7;               // six earlier, and this one with an explicit size
+inline constexpr bool kAllocatorSizeVisible = true;          // RE the 0x38 in ecx
+inline constexpr int kInlineBufferSightings2 = 4;            // rounds 288, 336, 353 and 354
+static_assert(kToleranceObjectBytes == 0x38, "the object is fifty-six bytes");
+static_assert(kToleranceField == 0x00, "and the tolerance is its first member");
+static_assert(kRangeEnd - kRangeBegin == 8, "the range pair is eight bytes apart");
+static_assert(kEmptyRangePair && kEmptyRangeBase, "an empty range based at the object's own +0x10");
+static_assert(kAllocatorSightings7 == 7 && kAllocatorSizeVisible, "a seventh sighting, this one with the size");
+static_assert(kInlineBufferSightings2 == 4, "and a fourth inline buffer");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
