@@ -26,8 +26,7 @@
 | 证据等级 | 函数数 | 字节 |
 |---|---:|---:|
 | `shape only` | 3952 | 2247404 |
-| `strings` | 340 | 427371 |
-| `vtable` | 595 | 89405 |
+| `strings` | 338 | 426519 |
 | `callers` | 31 | 9315 |
 
 ## 清单
@@ -56,7 +55,6 @@
 | `0x5b7a90` | 8833 | 2 | `shape only` | has a backward branch (often a loop), 1741 ins | has a backward branch (often a loop) |
 | `0x53790` | 8763 | 2 | `shape only` | has a backward branch (often a loop), 1467 ins | has a backward branch (often a loop) |
 | `0x74f820` | 8400 | 2 | `shape only` | has a backward branch (often a loop), 1503 ins | has a backward branch (often a loop) |
-| `0x681fa0` | 7633 | 1 | `vtable` | slot 1 of Pack::RecursiveNester | has a backward branch (often a loop) |
 | `0x147180` | 7237 | 2 | `shape only` | has a backward branch (often a loop), 1354 ins | has a backward branch (often a loop) |
 | `0x635fc0` | 7120 | 4 | `strings` | inity | has a backward branch (often a loop) |
 | `0x530110` | 6835 | 4 | `shape only` | has a backward branch (often a loop), 1269 ins | has a backward branch (often a loop) |
@@ -85,7 +83,6 @@
 | `0x8a9510` | 4479 | 3 | `strings` | .,-+xX0123456789abcdef0123456789ABCDEF-+ | has a backward branch (often a loop) |
 | `0x559d0` | 4316 | 2 | `shape only` | has a backward branch (often a loop), 723 ins | has a backward branch (often a loop) |
 | `0x693950` | 4157 | 3 | `strings` | ..\multi\tiling_nester.cpp \| sheet | has a backward branch (often a loop) |
-| `0x1192c0` | 4152 | 1 | `vtable` | slot 30 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x7f3090` | 4122 | 2 | `shape only` | has a backward branch (often a loop), 889 ins | has a backward branch (often a loop) |
 | `0x762900` | 4061 | 2 | `shape only` | has a backward branch (often a loop), 848 ins | has a backward branch (often a loop) |
 | `0x1bd410` | 4054 | 3 | `strings` | vector::reserve | has a backward branch (often a loop) |
@@ -173,7 +170,6 @@
 | `0x76e440` | 2741 | 4 | `shape only` | has a backward branch (often a loop), 518 ins | has a backward branch (often a loop) |
 | `0x5a9c90` | 2739 | 2 | `shape only` | has a backward branch (often a loop), 577 ins | has a backward branch (often a loop) |
 | `0x175fb0` | 2734 | 2 | `strings` | vector::reserve | has a backward branch (often a loop) |
-| `0xbdc50` | 2727 | 1 | `vtable` | slot 9 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | has a backward branch (often a loop) |
 | `0x18f4b0` | 2705 | 3 | `shape only` | has a backward branch (often a loop), 652 ins | has a backward branch (often a loop) |
 | `0x18ff50` | 2705 | 3 | `shape only` | has a backward branch (often a loop), 652 ins | has a backward branch (often a loop) |
 | `0x6dc7f0` | 2679 | 2 | `strings` | UWVSH \| VSH | has a backward branch (often a loop) |
@@ -283,8 +279,6 @@
 | `0x6c0770` | 2126 | 3 | `shape only` | has a backward branch (often a loop), 501 ins | has a backward branch (often a loop) |
 | `0x7ed7c0` | 2125 | 2 | `shape only` | has a backward branch (often a loop), 421 ins | has a backward branch (often a loop) |
 | `0x65e8d0` | 2120 | 39 | `shape only` | has a backward branch (often a loop), 412 ins | has a backward branch (often a loop) |
-| `0x683d80` | 2119 | 2 | `vtable` | slot 0 of Pack::RecursiveNester | has a backward branch (often a loop) |
-| `0xbd410` | 2103 | 1 | `vtable` | slot 7 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | has a backward branch (often a loop) |
 | `0x55b550` | 2100 | 3 | `shape only` | has a backward branch (often a loop), 409 ins | has a backward branch (often a loop) |
 | `0x534860` | 2095 | 2 | `shape only` | has a backward branch (often a loop), 525 ins | has a backward branch (often a loop) |
 | `0x17e5f0` | 2089 | 3 | `shape only` | has a backward branch (often a loop), 434 ins | has a backward branch (often a loop) |
@@ -410,7 +404,6 @@
 | `0x20f590` | 1650 | 4 | `shape only` | has a backward branch (often a loop), 372 ins | has a backward branch (often a loop) |
 | `0x4d86c0` | 1650 | 2 | `strings` | basic_string::_M_construct null not vali \|  \|  | has a backward branch (often a loop) |
 | `0x871b20` | 1649 | 1 | `shape only` | has a backward branch (often a loop), 457 ins | has a backward branch (often a loop) |
-| `0x6ec870` | 1643 | 1 | `vtable` | slot 2 of boost::asio::datagram_socket_service::<<subst>::ip::udp> | has a backward branch (often a loop) |
 | `0x4ee1f0` | 1637 | 3 | `shape only` | has a backward branch (often a loop), 325 ins | has a backward branch (often a loop) |
 | `0x8ee7d0` | 1633 | 2 | `shape only` | has a backward branch (often a loop), 346 ins | has a backward branch (often a loop) |
 | `0x625170` | 1631 | 4 | `shape only` | has a backward branch (often a loop), 436 ins | has a backward branch (often a loop) |
@@ -458,7 +451,6 @@
 | `0x8a82f0` | 1517 | 1 | `shape only` | straight line / call sequence, 282 ins | straight line / call sequence |
 | `0x54f5d0` | 1516 | 2 | `shape only` | has a backward branch (often a loop), 353 ins | has a backward branch (often a loop) |
 | `0x94ca90` | 1512 | 3 | `shape only` | has a backward branch (often a loop), 344 ins | has a backward branch (often a loop) |
-| `0x6f0110` | 1509 | 1 | `vtable` | slot 2 of boost::asio::detail::win_thread::func::<<subst>::resolver_service_base::work_io_service_runner> | has a backward branch (often a loop) |
 | `0x8eab20` | 1506 | 3 | `shape only` | has a backward branch (often a loop), 334 ins | has a backward branch (often a loop) |
 | `0x52be50` | 1505 | 5 | `shape only` | has a backward branch (often a loop), 342 ins | has a backward branch (often a loop) |
 | `0x5d6a90` | 1502 | 6 | `strings` | VERTEX \| 0.0 | has a backward branch (often a loop) |
@@ -506,7 +498,6 @@
 | `0x60f7e0` | 1422 | 7 | `strings` | .exe \| .com | has a backward branch (often a loop) |
 | `0x937a70` | 1420 | 2 | `shape only` | has a backward branch (often a loop), 359 ins | has a backward branch (often a loop) |
 | `0x5884d0` | 1419 | 9 | `shape only` | has a backward branch (often a loop), 354 ins | has a backward branch (often a loop) |
-| `0x7fcc20` | 1419 | 1 | `vtable` | slot 20 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
 | `0x197090` | 1418 | 2 | `shape only` | has a backward branch (often a loop), 294 ins | has a backward branch (often a loop) |
 | `0x56fab0` | 1418 | 3 | `strings` | ERROR.... | has a backward branch (often a loop) |
 | `0x233f50` | 1414 | 8 | `shape only` | has a backward branch (often a loop), 334 ins | has a backward branch (often a loop) |
@@ -574,7 +565,6 @@
 | `0x70d610` | 1313 | 2 | `shape only` | has a backward branch (often a loop), 277 ins | has a backward branch (often a loop) |
 | `0x13be60` | 1312 | 2 | `shape only` | has a backward branch (often a loop), 287 ins | has a backward branch (often a loop) |
 | `0x25f890` | 1302 | 5 | `shape only` | has a backward branch (often a loop), 250 ins | has a backward branch (often a loop) |
-| `0x7d2ed0` | 1299 | 1 | `vtable` | slot 2 of Multi::NoMixSheetSelector | has a backward branch (often a loop) |
 | `0x5c66c0` | 1298 | 10 | `strings` | vector::reserve | has a backward branch (often a loop) |
 | `0x54d130` | 1297 | 3 | `shape only` | has a backward branch (often a loop), 306 ins | has a backward branch (often a loop) |
 | `0x5f6620` | 1297 | 2 | `strings` | %lf \| basic_string::append | has a backward branch (often a loop) |
@@ -606,7 +596,6 @@
 | `0x959d10` | 1267 | 2 | `shape only` | has a backward branch (often a loop), 337 ins | has a backward branch (often a loop) |
 | `0x9626f0` | 1264 | 3 | `shape only` | has a backward branch (often a loop), 306 ins | has a backward branch (often a loop) |
 | `0x63ac50` | 1263 | 2 | `strings` | NaN \| Inf | has a backward branch (often a loop) |
-| `0x7d7d30` | 1263 | 1 | `vtable` | slot 2 of boost::filesystem::filesystem_error | has a backward branch (often a loop) |
 | `0x18efc0` | 1261 | 2 | `shape only` | has a backward branch (often a loop), 315 ins | has a backward branch (often a loop) |
 | `0x81e330` | 1261 | 5 | `shape only` | has a backward branch (often a loop), 266 ins | has a backward branch (often a loop) |
 | `0x81e820` | 1261 | 6 | `shape only` | has a backward branch (often a loop), 266 ins | has a backward branch (often a loop) |
@@ -637,7 +626,6 @@
 | `0x53cc30` | 1215 | 2 | `strings` | vector::_M_range_check: __n (which is %z \| !torch_configs.empty() | has a backward branch (often a loop) |
 | `0x9334f0` | 1214 | 2 | `shape only` | has a backward branch (often a loop), 321 ins | has a backward branch (often a loop) |
 | `0x55e2c0` | 1211 | 2 | `shape only` | has a backward branch (often a loop), 237 ins | has a backward branch (often a loop) |
-| `0x1188a0` | 1210 | 8 | `vtable` | slot 24 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x8c4530` | 1209 | 9 | `shape only` | has a backward branch (often a loop), 305 ins | has a backward branch (often a loop) |
 | `0x1a9b50` | 1190 | 2 | `strings` | basic_string::append \| before | has a backward branch (often a loop) |
 | `0x8d9830` | 1189 | 2 | `shape only` | has a backward branch (often a loop), 266 ins | has a backward branch (often a loop) |
@@ -730,7 +718,6 @@
 | `0x557240` | 1044 | 2 | `shape only` | has a backward branch (often a loop), 273 ins | has a backward branch (often a loop) |
 | `0x6bb0e0` | 1043 | 2 | `shape only` | has a backward branch (often a loop), 274 ins | has a backward branch (often a loop) |
 | `0x4dc640` | 1042 | 22 | `shape only` | has a backward branch (often a loop), 252 ins | has a backward branch (often a loop) |
-| `0xc0ce0` | 1040 | 1 | `vtable` | slot 11 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
 | `0x6b1150` | 1039 | 2 | `shape only` | has a backward branch (often a loop), 258 ins | has a backward branch (often a loop) |
 | `0x5f8860` | 1035 | 4 | `shape only` | has a backward branch (often a loop), 244 ins | has a backward branch (often a loop) |
 | `0x8db620` | 1035 | 4 | `shape only` | has a backward branch (often a loop), 240 ins | has a backward branch (often a loop) |
@@ -807,7 +794,6 @@
 | `0x15ddc0` | 956 | 2 | `shape only` | has a backward branch (often a loop), 231 ins | has a backward branch (often a loop) |
 | `0x260b60` | 956 | 2 | `shape only` | has a backward branch (often a loop), 201 ins | has a backward branch (often a loop) |
 | `0x521210` | 955 | 4 | `strings` | sheet \| ..\structure\stats.cpp | has a backward branch (often a loop) |
-| `0x6eda00` | 953 | 1 | `vtable` | slot 1 of boost::asio::ip::resolver_service::<<subst>::udp> | has a backward branch (often a loop) |
 | `0x8bc500` | 951 | 2 | `shape only` | has a backward branch (often a loop), 209 ins | has a backward branch (often a loop) |
 | `0x5feb70` | 950 | 25 | `strings` | VSH \| Comments must start with / | has a backward branch (often a loop) |
 | `0x1c85a0` | 947 | 4 | `shape only` | has a backward branch (often a loop), 264 ins | has a backward branch (often a loop) |
@@ -815,11 +801,9 @@
 | `0x15ed50` | 944 | 4 | `shape only` | has a backward branch (often a loop), 199 ins | has a backward branch (often a loop) |
 | `0x14b470` | 942 | 2 | `shape only` | has a backward branch (often a loop), 249 ins | has a backward branch (often a loop) |
 | `0x179820` | 941 | 12 | `shape only` | has a backward branch (often a loop), 280 ins | has a backward branch (often a loop) |
-| `0x7eb5e0` | 939 | 1 | `vtable` | slot 3 of Tiling::MultiOrientedPartPattern | has a backward branch (often a loop) |
 | `0x205a30` | 938 | 3 | `strings` | vector::reserve | has a backward branch (often a loop) |
 | `0x549fa0` | 938 | 2 | `shape only` | has a backward branch (often a loop), 249 ins | has a backward branch (often a loop) |
 | `0x62c1c0` | 937 | 3 | `strings` | {default arg# \| }:: | has a backward branch (often a loop) |
-| `0x6eddc0` | 937 | 1 | `vtable` | slot 0 of boost::asio::ip::resolver_service::<<subst>::udp> | has a backward branch (often a loop) |
 | `0x53bf10` | 933 | 2 | `shape only` | has a backward branch (often a loop), 200 ins | has a backward branch (often a loop) |
 | `0x775c00` | 932 | 108 | `shape only` | has a backward branch (often a loop), 269 ins | has a backward branch (often a loop) |
 | `0x57b3d0` | 931 | 2 | `shape only` | has a backward branch (often a loop), 247 ins | has a backward branch (often a loop) |
@@ -828,10 +812,8 @@
 | `0x6f3020` | 929 | 2 | `strings` | WVSH \| timer | has a backward branch (often a loop) |
 | `0x5d5800` | 926 | 2 | `strings` | vector::reserve | has a backward branch (often a loop) |
 | `0x70ede0` | 926 | 4 | `shape only` | has a backward branch (often a loop), 192 ins | has a backward branch (often a loop) |
-| `0x7e8150` | 923 | 1 | `vtable` | slot 5 of Tiling::BiModulePattern | has a backward branch (often a loop) |
 | `0x635b50` | 922 | 2 | `shape only` | has a backward branch (often a loop), 250 ins | has a backward branch (often a loop) |
 | `0x725440` | 920 | 3 | `shape only` | has a backward branch (often a loop), 260 ins | has a backward branch (often a loop) |
-| `0x158f60` | 919 | 4 | `vtable` | slot 1 of Tiling::PackerCache | has a backward branch (often a loop) |
 | `0x7c1090` | 919 | 5 | `shape only` | has a backward branch (often a loop), 146 ins | has a backward branch (often a loop) |
 | `0x5e0d90` | 918 | 3 | `shape only` | has a backward branch (often a loop), 200 ins | has a backward branch (often a loop) |
 | `0x6c5690` | 918 | 3 | `shape only` | has a backward branch (often a loop), 209 ins | has a backward branch (often a loop) |
@@ -853,7 +835,6 @@
 | `0x66f180` | 900 | 21 | `shape only` | has a backward branch (often a loop), 263 ins | has a backward branch (often a loop) |
 | `0x96b3b0` | 900 | 2 | `shape only` | has a backward branch (often a loop), 210 ins | has a backward branch (often a loop) |
 | `0x984a0` | 895 | 2 | `shape only` | has a backward branch (often a loop), 243 ins | has a backward branch (often a loop) |
-| `0x158be0` | 895 | 0 | `vtable` | slot 0 of Tiling::PackerCache | has a backward branch (often a loop) |
 | `0x73aec0` | 895 | 3 | `shape only` | has a backward branch (often a loop), 188 ins | has a backward branch (often a loop) |
 | `0x73c990` | 895 | 2 | `shape only` | has a backward branch (often a loop), 188 ins | has a backward branch (often a loop) |
 | `0x260000` | 894 | 3 | `shape only` | has a backward branch (often a loop), 209 ins | has a backward branch (often a loop) |
@@ -964,7 +945,6 @@
 | `0x89c1a0` | 798 | 3 | `shape only` | has a backward branch (often a loop), 209 ins | has a backward branch (often a loop) |
 | `0x89cdc0` | 798 | 2 | `shape only` | has a backward branch (often a loop), 192 ins | has a backward branch (often a loop) |
 | `0x1c52d0` | 797 | 2 | `strings` | vector::reserve | has a backward branch (often a loop) |
-| `0x6ed490` | 797 | 0 | `vtable` | slot 3 of boost::asio::ip::resolver_service::<<subst>::udp> | has a backward branch (often a loop) |
 | `0x14e900` | 794 | 2 | `shape only` | has a backward branch (often a loop), 208 ins | has a backward branch (often a loop) |
 | `0x5d1c50` | 793 | 4 | `shape only` | has a backward branch (often a loop), 210 ins | has a backward branch (often a loop) |
 | `0x61b100` | 793 | 6 | `strings` | basic_string::_M_construct null not vali \| %s: __pos (which is %zu) > this->size()  | has a backward branch (often a loop) |
@@ -1020,7 +1000,6 @@
 | `0x173450` | 758 | 4 | `shape only` | has a backward branch (often a loop), 163 ins | has a backward branch (often a loop) |
 | `0x526160` | 757 | 4 | `shape only` | has a backward branch (often a loop), 171 ins | has a backward branch (often a loop) |
 | `0x5ed8c0` | 757 | 4 | `shape only` | has a backward branch (often a loop), 152 ins | has a backward branch (often a loop) |
-| `0x7e8520` | 757 | 1 | `vtable` | slot 4 of Tiling::BiModulePattern | has a backward branch (often a loop) |
 | `0x8db320` | 757 | 3 | `shape only` | has a backward branch (often a loop), 166 ins | has a backward branch (often a loop) |
 | `0x25f1e0` | 755 | 2 | `shape only` | has a backward branch (often a loop), 162 ins | has a backward branch (often a loop) |
 | `0x926580` | 755 | 3 | `shape only` | has a backward branch (often a loop), 192 ins | has a backward branch (often a loop) |
@@ -1132,7 +1111,6 @@
 | `0x53c0` | 677 | 5 | `shape only` | has a backward branch (often a loop), 159 ins | has a backward branch (often a loop) |
 | `0x19dd20` | 677 | 2 | `shape only` | has a backward branch (often a loop), 160 ins | has a backward branch (often a loop) |
 | `0x1d76b0` | 676 | 3 | `shape only` | has a backward branch (often a loop), 152 ins | has a backward branch (often a loop) |
-| `0x6f4870` | 676 | 1 | `vtable` | slot 2 of boost::asio::detail::win_iocp_io_service | has a backward branch (often a loop) |
 | `0x896a10` | 675 | 3 | `shape only` | has a backward branch (often a loop), 172 ins | has a backward branch (often a loop) |
 | `0x1c2310` | 674 | 4 | `shape only` | has a backward branch (often a loop), 181 ins | has a backward branch (often a loop) |
 | `0x8f3720` | 674 | 2 | `shape only` | has a backward branch (often a loop), 196 ins | has a backward branch (often a loop) |
@@ -1199,7 +1177,6 @@
 | `0x8e95c0` | 640 | 3 | `shape only` | has a backward branch (often a loop), 173 ins | has a backward branch (often a loop) |
 | `0x9531e0` | 640 | 2 | `shape only` | has a backward branch (often a loop), 182 ins | has a backward branch (often a loop) |
 | `0x3c110` | 639 | 2 | `strings` | basic_string::append \| enlarged_ | has a backward branch (often a loop) |
-| `0xc0610` | 639 | 0 | `vtable` | slot 16 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
 | `0x563de0` | 639 | 2 | `shape only` | has a backward branch (often a loop), 137 ins | has a backward branch (often a loop) |
 | `0x57f540` | 639 | 11 | `strings` | AUATUWVSH \| AVAUATUWVSH | has a backward branch (often a loop) |
 | `0x7c7120` | 639 | 2 | `shape only` | straight line / call sequence, 85 ins | straight line / call sequence |
@@ -1271,10 +1248,7 @@
 | `0x8cb6f0` | 609 | 9 | `shape only` | has a backward branch (often a loop), 165 ins | has a backward branch (often a loop) |
 | `0x967e40` | 609 | 2 | `shape only` | has a backward branch (often a loop), 169 ins | has a backward branch (often a loop) |
 | `0x552e30` | 608 | 3 | `strings` | !nesteds.empty() \| ..\structure\automatic_cluster.cpp | has a backward branch (often a loop) |
-| `0x786700` | 608 | 3 | `vtable` | slot 4 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | has a backward branch (often a loop) |
 | `0x7c0c90` | 608 | 6 | `shape only` | has a backward branch (often a loop), 187 ins | has a backward branch (often a loop) |
-| `0xc03b0` | 607 | 0 | `vtable` | slot 13 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
-| `0xc2200` | 607 | 1 | `vtable` | slot 23 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x24d6f0` | 607 | 2 | `shape only` | has a backward branch (often a loop), 152 ins | has a backward branch (often a loop) |
 | `0x5483d0` | 607 | 2 | `shape only` | has a backward branch (often a loop), 160 ins | has a backward branch (often a loop) |
 | `0x5d7270` | 607 | 3 | `strings` |   0 \| ENDSEC | has a backward branch (often a loop) |
@@ -1309,21 +1283,17 @@
 | `0x814a0` | 596 | 2 | `shape only` | has a backward branch (often a loop), 166 ins | has a backward branch (often a loop) |
 | `0x4db810` | 596 | 2 | `shape only` | has a backward branch (often a loop), 157 ins | has a backward branch (often a loop) |
 | `0x8e7c50` | 595 | 2 | `shape only` | has a backward branch (often a loop), 162 ins | has a backward branch (often a loop) |
-| `0x61ea90` | 594 | 13 | `strings` | boost::filesystem::path codecvt to strin | has a backward branch (often a loop) |
 | `0x639470` | 594 | 2 | `shape only` | has a backward branch (often a loop), 168 ins | has a backward branch (often a loop) |
 | `0xf2700` | 593 | 6 | `shape only` | has a backward branch (often a loop), 145 ins | has a backward branch (often a loop) |
 | `0x141bf0` | 593 | 2 | `shape only` | has a backward branch (often a loop), 145 ins | has a backward branch (often a loop) |
 | `0x501660` | 593 | 5 | `shape only` | has a backward branch (often a loop), 164 ins | has a backward branch (often a loop) |
 | `0x1a8780` | 592 | 3 | `shape only` | has a backward branch (often a loop), 160 ins | has a backward branch (often a loop) |
 | `0x8ae450` | 592 | 4 | `strings` | vector::reserve | has a backward branch (often a loop) |
-| `0xc2610` | 591 | 1 | `vtable` | slot 23 of CryptoPP::ByteQueue::Walker | has a backward branch (often a loop) |
-| `0xc2860` | 591 | 1 | `vtable` | slot 22 of CryptoPP::ByteQueue::Walker | has a backward branch (often a loop) |
 | `0x14abc0` | 591 | 2 | `shape only` | has a backward branch (often a loop), 135 ins | has a backward branch (often a loop) |
 | `0x7917f0` | 591 | 2 | `strings` | : Missing required parameter ' \| N8CryptoPP11RSAFunctionE | has a backward branch (often a loop) |
 | `0x960f00` | 591 | 2 | `shape only` | has a backward branch (often a loop), 168 ins | has a backward branch (often a loop) |
 | `0x1fe4e0` | 590 | 4 | `shape only` | has a backward branch (often a loop), 136 ins | has a backward branch (often a loop) |
 | `0x5eaaf0` | 590 | 3 | `shape only` | has a backward branch (often a loop), 165 ins | has a backward branch (often a loop) |
-| `0x7ec210` | 590 | 1 | `vtable` | slot 2 of Tiling::UnlimitedXDensityEvaluator | has a backward branch (often a loop) |
 | `0x9339b0` | 590 | 4 | `shape only` | has a backward branch (often a loop), 156 ins | has a backward branch (often a loop) |
 | `0x9356c0` | 590 | 2 | `shape only` | has a backward branch (often a loop), 156 ins | has a backward branch (often a loop) |
 | `0x937480` | 590 | 5 | `shape only` | has a backward branch (often a loop), 156 ins | has a backward branch (often a loop) |
@@ -1337,7 +1307,6 @@
 | `0x521f90` | 589 | 7 | `shape only` | has a backward branch (often a loop), 137 ins | has a backward branch (often a loop) |
 | `0x534610` | 588 | 3 | `shape only` | has a backward branch (often a loop), 153 ins | has a backward branch (often a loop) |
 | `0x57cc20` | 588 | 3 | `shape only` | has a backward branch (often a loop), 178 ins | has a backward branch (often a loop) |
-| `0x6ed7b0` | 588 | 1 | `vtable` | slot 2 of boost::asio::ip::resolver_service::<<subst>::udp> | has a backward branch (often a loop) |
 | `0x8e77c0` | 588 | 2 | `shape only` | has a backward branch (often a loop), 163 ins | has a backward branch (often a loop) |
 | `0x956f60` | 587 | 2 | `shape only` | has a backward branch (often a loop), 147 ins | has a backward branch (often a loop) |
 | `0x154230` | 586 | 2 | `shape only` | has a backward branch (often a loop), 175 ins | has a backward branch (often a loop) |
@@ -1362,7 +1331,6 @@
 | `0xc18d0` | 578 | 7 | `shape only` | has a backward branch (often a loop), 142 ins | has a backward branch (often a loop) |
 | `0x1628b0` | 578 | 2 | `shape only` | has a backward branch (often a loop), 137 ins | has a backward branch (often a loop) |
 | `0x261510` | 578 | 4 | `shape only` | has a backward branch (often a loop), 152 ins | has a backward branch (often a loop) |
-| `0x7ebfc0` | 578 | 1 | `vtable` | slot 2 of Tiling::UnlimitedDensityEvaluator | has a backward branch (often a loop) |
 | `0xaddf0` | 577 | 8 | `shape only` | has a backward branch (often a loop), 119 ins | has a backward branch (often a loop) |
 | `0xf6dc0` | 577 | 4 | `shape only` | has a backward branch (often a loop), 165 ins | has a backward branch (often a loop) |
 | `0xf7010` | 577 | 6 | `shape only` | has a backward branch (often a loop), 165 ins | has a backward branch (often a loop) |
@@ -1388,7 +1356,6 @@
 | `0x1a3670` | 567 | 4 | `strings` | vector::reserve | has a backward branch (often a loop) |
 | `0x60cd20` | 567 | 2 | `shape only` | has a backward branch (often a loop), 163 ins | has a backward branch (often a loop) |
 | `0x19a00` | 565 | 4 | `shape only` | has a backward branch (often a loop), 169 ins | has a backward branch (often a loop) |
-| `0xff210` | 565 | 1 | `vtable` | slot 28 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x1c55f0` | 565 | 4 | `shape only` | has a backward branch (often a loop), 166 ins | has a backward branch (often a loop) |
 | `0x4fc6f0` | 565 | 5 | `strings` | ..\structure\problem.cpp \| number < GetNumberOfParts() | has a backward branch (often a loop) |
 | `0x8d0a90` | 565 | 2 | `shape only` | has a backward branch (often a loop), 151 ins | has a backward branch (often a loop) |
@@ -1405,7 +1372,6 @@
 | `0x527870` | 561 | 2 | `strings` | sheet \| ..\structure\stats.cpp | has a backward branch (often a loop) |
 | `0x5e7110` | 561 | 3 | `shape only` | has a backward branch (often a loop), 153 ins | has a backward branch (often a loop) |
 | `0x798070` | 561 | 5 | `strings` | basic_string::_M_construct null not vali \| basic_string::append | has a backward branch (often a loop) |
-| `0xc2ec0` | 560 | 13 | `vtable` | slot 34 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x1174a0` | 560 | 5 | `strings` | WVSH | has a backward branch (often a loop) |
 | `0x1de3d0` | 560 | 3 | `shape only` | has a backward branch (often a loop), 126 ins | has a backward branch (often a loop) |
 | `0x5cdc60` | 560 | 2 | `strings` | vector::reserve | has a backward branch (often a loop) |
@@ -1422,7 +1388,6 @@
 | `0x522b30` | 555 | 4 | `shape only` | has a backward branch (often a loop), 129 ins | has a backward branch (often a loop) |
 | `0x526460` | 555 | 8 | `shape only` | has a backward branch (often a loop), 133 ins | has a backward branch (often a loop) |
 | `0x5269a0` | 555 | 11 | `shape only` | has a backward branch (often a loop), 133 ins | has a backward branch (often a loop) |
-| `0x809f30` | 555 | 1 | `vtable` | slot 10 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
 | `0x154bc0` | 554 | 3 | `shape only` | has a backward branch (often a loop), 129 ins | has a backward branch (often a loop) |
 | `0x418fe0` | 554 | 3 | `shape only` | has a backward branch (often a loop), 161 ins | has a backward branch (often a loop) |
 | `0x8f2d00` | 554 | 11 | `shape only` | has a backward branch (often a loop), 169 ins | has a backward branch (often a loop) |
@@ -1456,8 +1421,6 @@
 | `0x1c3200` | 543 | 2 | `strings` | mm Final # | has a backward branch (often a loop) |
 | `0x24f420` | 543 | 2 | `strings` | vector::reserve | has a backward branch (often a loop) |
 | `0x66fd80` | 543 | 3 | `shape only` | has a backward branch (often a loop), 166 ins | has a backward branch (often a loop) |
-| `0x7863a0` | 542 | 3 | `vtable` | slot 15 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
-| `0x7e8f60` | 542 | 1 | `vtable` | slot 2 of Tiling::ReusableEvaluator | has a backward branch (often a loop) |
 | `0x89e2b0` | 541 | 1 | `shape only` | has a backward branch (often a loop), 160 ins | has a backward branch (often a loop) |
 | `0x4f9c60` | 540 | 7 | `shape only` | has a backward branch (often a loop), 122 ins | has a backward branch (often a loop) |
 | `0x506780` | 540 | 2 | `strings` | border_property \| geometry | has a backward branch (often a loop) |
@@ -1492,9 +1455,7 @@
 | `0x5cd5c0` | 528 | 16 | `shape only` | has a backward branch (often a loop), 125 ins | has a backward branch (often a loop) |
 | `0x873470` | 528 | 6 | `shape only` | has a backward branch (often a loop), 158 ins | has a backward branch (often a loop) |
 | `0x89d0e0` | 527 | 3 | `shape only` | has a backward branch (often a loop), 151 ins | has a backward branch (often a loop) |
-| `0xc30f0` | 526 | 4 | `vtable` | slot 21 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x57e580` | 526 | 2 | `shape only` | has a backward branch (often a loop), 145 ins | has a backward branch (often a loop) |
-| `0x7ebdb0` | 525 | 1 | `vtable` | slot 6 of Tiling::MultiOrientedPartPattern | has a backward branch (often a loop) |
 | `0x87bd10` | 522 | 2 | `shape only` | has a backward branch (often a loop), 152 ins | has a backward branch (often a loop) |
 | `0x87c1b0` | 522 | 2 | `shape only` | has a backward branch (often a loop), 152 ins | has a backward branch (often a loop) |
 | `0x8f9f10` | 522 | 2 | `shape only` | has a backward branch (often a loop), 139 ins | has a backward branch (often a loop) |
@@ -1522,7 +1483,6 @@
 | `0x510a90` | 512 | 2 | `strings` | ..\structure\svg_io.cpp \| s && "can not find sheet." | has a backward branch (often a loop) |
 | `0x1370a0` | 511 | 4 | `shape only` | has a backward branch (often a loop), 145 ins | has a backward branch (often a loop) |
 | `0x96b060` | 511 | 2 | `shape only` | has a backward branch (often a loop), 141 ins | has a backward branch (often a loop) |
-| `0x7eb990` | 510 | 1 | `vtable` | slot 5 of Tiling::MultiOrientedPartPattern | has a backward branch (often a loop) |
 | `0x89ed70` | 510 | 5 | `shape only` | has a backward branch (often a loop), 137 ins | has a backward branch (often a loop) |
 | `0x25ad80` | 509 | 2 | `shape only` | has a backward branch (often a loop), 149 ins | has a backward branch (often a loop) |
 | `0x418bd0` | 509 | 26 | `shape only` | has a backward branch (often a loop), 144 ins | has a backward branch (often a loop) |
@@ -1543,8 +1503,6 @@
 | `0x966840` | 500 | 2 | `shape only` | has a backward branch (often a loop), 120 ins | has a backward branch (often a loop) |
 | `0x64e430` | 499 | 3 | `shape only` | has a backward branch (often a loop), 131 ins | has a backward branch (often a loop) |
 | `0x8a0de0` | 499 | 4 | `shape only` | has a backward branch (often a loop), 138 ins | has a backward branch (often a loop) |
-| `0x915480` | 499 | 1 | `vtable` | slot 13 of <subst>::__cxx11::basic_stringbuf::<> | has a backward branch (often a loop) |
-| `0xcaaa0` | 498 | 7 | `vtable` | slot 14 of CryptoPP::RSAFunction_ISO | has a backward branch (often a loop) |
 | `0x13a820` | 498 | 2 | `shape only` | has a backward branch (often a loop), 143 ins | has a backward branch (often a loop) |
 | `0x13aa20` | 498 | 2 | `shape only` | has a backward branch (often a loop), 143 ins | has a backward branch (often a loop) |
 | `0x51d0f0` | 498 | 12 | `shape only` | has a backward branch (often a loop), 117 ins | has a backward branch (often a loop) |
@@ -1690,7 +1648,6 @@
 | `0x6d41a0` | 445 | 2 | `shape only` | has a backward branch (often a loop), 91 ins | has a backward branch (often a loop) |
 | `0x6f07e0` | 445 | 3 | `shape only` | has a backward branch (often a loop), 124 ins | has a backward branch (often a loop) |
 | `0x95b7a0` | 445 | 2 | `shape only` | has a backward branch (often a loop), 136 ins | has a backward branch (often a loop) |
-| `0x915150` | 444 | 1 | `vtable` | slot 4 of <subst>::__cxx11::basic_stringbuf::<> | has a backward branch (often a loop) |
 | `0x57bb00` | 443 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
 | `0x7d10e0` | 443 | 2 | `shape only` | has a backward branch (often a loop), 119 ins | has a backward branch (often a loop) |
 | `0x8f1e20` | 443 | 28 | `shape only` | has a backward branch (often a loop), 134 ins | has a backward branch (often a loop) |
@@ -1718,10 +1675,8 @@
 | `0x64b960` | 435 | 3 | `strings` | ->  | has a backward branch (often a loop) |
 | `0x64beb0` | 435 | 4 | `strings` | ->  | has a backward branch (often a loop) |
 | `0x9252b0` | 435 | 2 | `shape only` | has a backward branch (often a loop), 136 ins | has a backward branch (often a loop) |
-| `0xc2c60` | 434 | 1 | `vtable` | slot 21 of CryptoPP::ByteQueue::Walker | has a backward branch (often a loop) |
 | `0x4f9200` | 434 | 22 | `shape only` | has a backward branch (often a loop), 97 ins | has a backward branch (often a loop) |
 | `0x5ceb90` | 434 | 1 | `shape only` | straight line / call sequence, 88 ins | straight line / call sequence |
-| `0xd3e50` | 433 | 4 | `vtable` | slot 6 of CryptoPP::HashFilter | has a backward branch (often a loop) |
 | `0x29c550` | 433 | 6 | `shape only` | has a backward branch (often a loop), 120 ins | has a backward branch (often a loop) |
 | `0x419300` | 433 | 3 | `shape only` | has a backward branch (often a loop), 127 ins | has a backward branch (often a loop) |
 | `0x6451c0` | 433 | 3 | `shape only` | has a backward branch (often a loop), 121 ins | has a backward branch (often a loop) |
@@ -1741,17 +1696,11 @@
 | `0x97b60` | 429 | 2 | `shape only` | has a backward branch (often a loop), 120 ins | has a backward branch (often a loop) |
 | `0x4fd130` | 429 | 2 | `shape only` | has a backward branch (often a loop), 99 ins | has a backward branch (often a loop) |
 | `0x892830` | 429 | 2 | `shape only` | has a backward branch (often a loop), 115 ins | has a backward branch (often a loop) |
-| `0xc2ab0` | 428 | 2 | `vtable` | slot 20 of CryptoPP::ByteQueue::Walker | has a backward branch (often a loop) |
 | `0x5b3e20` | 428 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
-| `0x812c80` | 428 | 1 | `vtable` | slot 5 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | has a backward branch (often a loop) |
 | `0x95b5f0` | 428 | 2 | `shape only` | has a backward branch (often a loop), 129 ins | has a backward branch (often a loop) |
 | `0x1cc0` | 427 | 2 | `strings` | // LocalCancel waiting for threads termi | has a backward branch (often a loop) |
 | `0x5d90` | 427 | 2 | `strings` | // LocalTerminate waiting for threads te | has a backward branch (often a loop) |
 | `0x547c10` | 427 | 3 | `shape only` | has a backward branch (often a loop), 106 ins | has a backward branch (often a loop) |
-| `0x76f0a0` | 427 | 1 | `vtable` | slot 0 of Tiling::SqueezeMultiTiler | has a backward branch (often a loop) |
-| `0x7d9a70` | 427 | 1 | `vtable` | slot 3 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::bad_rational>> | has a backward branch (often a loop) |
-| `0x7da380` | 426 | 1 | `vtable` | slot 3 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | has a backward branch (often a loop) |
-| `0x7dab90` | 426 | 1 | `vtable` | slot 3 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | has a backward branch (often a loop) |
 | `0x86cad0` | 426 | 3 | `shape only` | has a backward branch (often a loop), 117 ins | has a backward branch (often a loop) |
 | `0x86d1a0` | 426 | 3 | `shape only` | has a backward branch (often a loop), 117 ins | has a backward branch (often a loop) |
 | `0x86d740` | 426 | 3 | `shape only` | has a backward branch (often a loop), 117 ins | has a backward branch (often a loop) |
@@ -1774,7 +1723,6 @@
 | `0x57f7c0` | 422 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
 | `0x6e8450` | 422 | 3 | `shape only` | has a backward branch (often a loop), 118 ins | has a backward branch (often a loop) |
 | `0x202590` | 420 | 4 | `shape only` | has a backward branch (often a loop), 117 ins | has a backward branch (often a loop) |
-| `0x119110` | 419 | 1 | `vtable` | slot 29 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x29ed80` | 419 | 4 | `shape only` | has a backward branch (often a loop), 78 ins | has a backward branch (often a loop) |
 | `0x89f1a0` | 419 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
 | `0x89fb20` | 419 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
@@ -1789,7 +1737,6 @@
 | `0x8f5fd0` | 418 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
 | `0x908200` | 418 | 3 | `shape only` | has a backward branch (often a loop), 120 ins | has a backward branch (often a loop) |
 | `0x1a2ab0` | 417 | 23 | `shape only` | has a backward branch (often a loop), 96 ins | has a backward branch (often a loop) |
-| `0x76ef00` | 416 | 1 | `vtable` | slot 1 of Tiling::SqueezeMultiTiler | has a backward branch (often a loop) |
 | `0x8aeb30` | 416 | 3 | `shape only` | has a backward branch (often a loop), 128 ins | has a backward branch (often a loop) |
 | `0x8aecd0` | 416 | 3 | `shape only` | has a backward branch (often a loop), 128 ins | has a backward branch (often a loop) |
 | `0x9a01e0` | 416 | 2 | `shape only` | has a backward branch (often a loop), 106 ins | has a backward branch (often a loop) |
@@ -1801,7 +1748,6 @@
 | `0x6471e0` | 413 | 2 | `shape only` | has a backward branch (often a loop), 100 ins | has a backward branch (often a loop) |
 | `0x785bc0` | 413 | 5 | `strings` | basic_string::_M_construct null not vali \| basic_string::append | has a backward branch (often a loop) |
 | `0x8b93b0` | 413 | 2 | `shape only` | has a backward branch (often a loop), 131 ins | has a backward branch (often a loop) |
-| `0x7da970` | 412 | 1 | `vtable` | slot 3 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | has a backward branch (often a loop) |
 | `0x8668d0` | 412 | 38 | `shape only` | has a backward branch (often a loop), 121 ins | has a backward branch (often a loop) |
 | `0x901dc0` | 412 | 2 | `shape only` | has a backward branch (often a loop), 113 ins | has a backward branch (often a loop) |
 | `0x960d60` | 412 | 3 | `shape only` | has a backward branch (often a loop), 122 ins | has a backward branch (often a loop) |
@@ -1891,7 +1837,6 @@
 | `0x1594f0` | 392 | 5 | `shape only` | has a backward branch (often a loop), 111 ins | has a backward branch (often a loop) |
 | `0x5069a0` | 392 | 2 | `strings` | quality_zone_enable \| quality_zone_interactions | has a backward branch (often a loop) |
 | `0x63a750` | 390 | 2 | `shape only` | has a backward branch (often a loop), 104 ins | has a backward branch (often a loop) |
-| `0x7e8dd0` | 390 | 1 | `vtable` | slot 2 of Tiling::QuantityEvaluator | has a backward branch (often a loop) |
 | `0x9302c0` | 390 | 6 | `shape only` | has a backward branch (often a loop), 109 ins | has a backward branch (often a loop) |
 | `0x60c5c0` | 389 | 6 | `strings` | failed to read from file | has a backward branch (often a loop) |
 | `0x775a70` | 389 | 6 | `shape only` | straight line / call sequence, 62 ins | straight line / call sequence |
@@ -1921,14 +1866,12 @@
 | `0x14d7f0` | 381 | 2 | `shape only` | has a backward branch (often a loop), 84 ins | has a backward branch (often a loop) |
 | `0x1a8ee0` | 381 | 11 | `shape only` | has a backward branch (often a loop), 101 ins | has a backward branch (often a loop) |
 | `0x64d420` | 381 | 1 | `strings` | ->  | straight line / call sequence |
-| `0x81df30` | 381 | 1 | `vtable` | slot 2 of Structure::SizeDimensioner | has a backward branch (often a loop) |
 | `0x8bec40` | 381 | 2 | `shape only` | has a backward branch (often a loop), 109 ins | has a backward branch (often a loop) |
 | `0x172010` | 380 | 4 | `shape only` | has a backward branch (often a loop), 95 ins | has a backward branch (often a loop) |
 | `0x62ff90` | 380 | 4 | `shape only` | has a backward branch (often a loop), 97 ins | has a backward branch (often a loop) |
 | `0x64b040` | 380 | 6 | `strings` | ->  | has a backward branch (often a loop) |
 | `0x63bda0` | 379 | 2 | `shape only` | has a backward branch (often a loop), 126 ins | has a backward branch (often a loop) |
 | `0x6de430` | 379 | 24 | `shape only` | has a backward branch (often a loop), 102 ins | has a backward branch (often a loop) |
-| `0x812a90` | 378 | 1 | `vtable` | slot 4 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | has a backward branch (often a loop) |
 | `0x934600` | 378 | 4 | `shape only` | has a backward branch (often a loop), 110 ins | has a backward branch (often a loop) |
 | `0x63e7b0` | 377 | 3 | `shape only` | has a backward branch (often a loop), 109 ins | has a backward branch (often a loop) |
 | `0x870500` | 377 | 2 | `shape only` | has a backward branch (often a loop), 118 ins | has a backward branch (often a loop) |
@@ -1982,7 +1925,6 @@
 | `0x529c40` | 360 | 3 | `shape only` | has a backward branch (often a loop), 104 ins | has a backward branch (often a loop) |
 | `0x7460b0` | 360 | 2 | `shape only` | has a backward branch (often a loop), 97 ins | has a backward branch (often a loop) |
 | `0x95a7f0` | 360 | 2 | `shape only` | has a backward branch (often a loop), 103 ins | has a backward branch (often a loop) |
-| `0x79cc80` | 359 | 1 | `vtable` | slot 1 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | has a backward branch (often a loop) |
 | `0x934c40` | 359 | 5 | `shape only` | has a backward branch (often a loop), 104 ins | has a backward branch (often a loop) |
 | `0x8cf220` | 358 | 2 | `shape only` | has a backward branch (often a loop), 106 ins | has a backward branch (often a loop) |
 | `0x5c90a0` | 357 | 6 | `shape only` | has a backward branch (often a loop), 85 ins | has a backward branch (often a loop) |
@@ -1990,8 +1932,6 @@
 | `0x1ee910` | 356 | 4 | `shape only` | has a backward branch (often a loop), 89 ins | has a backward branch (often a loop) |
 | `0x60c160` | 356 | 2 | `strings` | failed to open file \| failed to get file size | has a backward branch (often a loop) |
 | `0x87b530` | 356 | 2 | `shape only` | has a backward branch (often a loop), 102 ins | has a backward branch (often a loop) |
-| `0xc1fa0` | 355 | 18 | `vtable` | slot 6 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
-| `0xd2bb0` | 355 | 14 | `vtable` | slot 47 of CryptoPP::StringStore | has a backward branch (often a loop) |
 | `0x14d510` | 355 | 3 | `shape only` | has a backward branch (often a loop), 94 ins | has a backward branch (often a loop) |
 | `0x220230` | 355 | 2 | `shape only` | has a backward branch (often a loop), 94 ins | has a backward branch (often a loop) |
 | `0x65000` | 354 | 4 | `shape only` | has a backward branch (often a loop), 83 ins | has a backward branch (often a loop) |
@@ -2026,7 +1966,6 @@
 | `0x586300` | 349 | 6 | `shape only` | has a backward branch (often a loop), 107 ins | has a backward branch (often a loop) |
 | `0x586460` | 349 | 12 | `shape only` | has a backward branch (often a loop), 107 ins | has a backward branch (often a loop) |
 | `0x5ea310` | 349 | 2 | `shape only` | has a backward branch (often a loop), 94 ins | has a backward branch (often a loop) |
-| `0x7ebc30` | 349 | 1 | `vtable` | slot 4 of Tiling::MultiOrientedPartPattern | has a backward branch (often a loop) |
 | `0x50250` | 347 | 2 | `shape only` | has a backward branch (often a loop), 107 ins | has a backward branch (often a loop) |
 | `0x16f1f0` | 347 | 1 | `shape only` | has a backward branch (often a loop), 98 ins | has a backward branch (often a loop) |
 | `0x6f2e30` | 347 | 5 | `shape only` | has a backward branch (often a loop), 114 ins | has a backward branch (often a loop) |
@@ -2042,14 +1981,12 @@
 | `0x1fd6c0` | 343 | 7 | `shape only` | straight line / call sequence, 45 ins | straight line / call sequence |
 | `0x262740` | 343 | 3 | `shape only` | has a backward branch (often a loop), 94 ins | has a backward branch (often a loop) |
 | `0x773c90` | 343 | 2 | `shape only` | has a backward branch (often a loop), 96 ins | has a backward branch (often a loop) |
-| `0x79cdf0` | 343 | 1 | `vtable` | slot 0 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | has a backward branch (often a loop) |
 | `0x900820` | 342 | 4 | `shape only` | has a backward branch (often a loop), 101 ins | has a backward branch (often a loop) |
 | `0x900980` | 342 | 2 | `shape only` | has a backward branch (often a loop), 101 ins | has a backward branch (often a loop) |
 | `0x62ed70` | 341 | 5 | `shape only` | has a backward branch (often a loop), 118 ins | has a backward branch (often a loop) |
 | `0x6eb020` | 341 | 3 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x90e520` | 341 | 13 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x90e8d0` | 341 | 13 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
-| `0x4f4600` | 340 | 0 | `vtable` | slot 2 of Tiling::BasicCandidater | has a backward branch (often a loop) |
 | `0x545cf0` | 340 | 7 | `strings` | @w\| | has a backward branch (often a loop) |
 | `0x5d7b90` | 340 | 3 | `shape only` | has a backward branch (often a loop), 75 ins | has a backward branch (often a loop) |
 | `0x64cc30` | 340 | 1 | `strings` | ->  | straight line / call sequence |
@@ -2092,13 +2029,11 @@
 | `0x6d6b50` | 333 | 2 | `strings` | !m_elements.empty() \| ../utils/evaluated_object.hpp | has a backward branch (often a loop) |
 | `0x6d6f60` | 333 | 2 | `strings` | !m_elements.empty() \| ../utils/evaluated_object.hpp | has a backward branch (often a loop) |
 | `0x6d70b0` | 333 | 2 | `strings` | !m_elements.empty() \| ../utils/evaluated_object.hpp | has a backward branch (often a loop) |
-| `0x81e1e0` | 333 | 1 | `vtable` | slot 2 of Structure::BoxAreaDimensioner | has a backward branch (often a loop) |
 | `0x873ab0` | 333 | 3 | `shape only` | has a backward branch (often a loop), 87 ins | has a backward branch (often a loop) |
 | `0x4fcf90` | 332 | 2 | `strings` | ..\structure\problem.cpp \| m_implementation->common_cut_computer.ge | has a backward branch (often a loop) |
 | `0x5ca550` | 332 | 5 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
 | `0x164190` | 331 | 4 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x4da8e0` | 331 | 6 | `shape only` | has a backward branch (often a loop), 90 ins | has a backward branch (often a loop) |
-| `0x77c200` | 331 | 1 | `vtable` | slot 6 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x88b840` | 331 | 10 | `shape only` | has a backward branch (often a loop), 87 ins | has a backward branch (often a loop) |
 | `0x1c8ec0` | 330 | 2 | `shape only` | has a backward branch (often a loop), 82 ins | has a backward branch (often a loop) |
 | `0x62ec20` | 330 | 5 | `shape only` | has a backward branch (often a loop), 105 ins | has a backward branch (often a loop) |
@@ -2106,7 +2041,6 @@
 | `0x8c20a0` | 330 | 2 | `shape only` | has a backward branch (often a loop), 100 ins | has a backward branch (often a loop) |
 | `0x8e8690` | 330 | 3 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x51e060` | 329 | 3 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
-| `0x117350` | 328 | 1 | `vtable` | slot 41 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x13a580` | 328 | 2 | `shape only` | has a backward branch (often a loop), 95 ins | has a backward branch (often a loop) |
 | `0x13a6d0` | 328 | 2 | `shape only` | has a backward branch (often a loop), 95 ins | has a backward branch (often a loop) |
 | `0x161b80` | 328 | 2 | `shape only` | has a backward branch (often a loop), 89 ins | has a backward branch (often a loop) |
@@ -2126,7 +2060,6 @@
 | `0x92daa0` | 325 | 2 | `shape only` | has a backward branch (often a loop), 93 ins | has a backward branch (often a loop) |
 | `0x986150` | 325 | 3 | `shape only` | has a backward branch (often a loop), 80 ins | has a backward branch (often a loop) |
 | `0x523d0` | 324 | 2 | `shape only` | has a backward branch (often a loop), 91 ins | has a backward branch (often a loop) |
-| `0xb3920` | 324 | 1 | `vtable` | slot 3 of Multi::FilterNester | has a backward branch (often a loop) |
 | `0x14b320` | 324 | 2 | `shape only` | has a backward branch (often a loop), 99 ins | has a backward branch (often a loop) |
 | `0x1c3f30` | 324 | 4 | `shape only` | has a backward branch (often a loop), 103 ins | has a backward branch (often a loop) |
 | `0x64cfa0` | 324 | 1 | `strings` | ->  | straight line / call sequence |
@@ -2187,8 +2120,6 @@
 | `0x98e1b0` | 311 | 2 | `shape only` | has a backward branch (often a loop), 105 ins | has a backward branch (often a loop) |
 | `0x531bd0` | 310 | 6 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x9688d0` | 310 | 4 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
-| `0xb0130` | 309 | 1 | `vtable` | slot 3 of Multi::CompactNester | has a backward branch (often a loop) |
-| `0x1176d0` | 309 | 1 | `vtable` | slot 25 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1c5830` | 309 | 2 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x6b80e0` | 309 | 2 | `shape only` | has a backward branch (often a loop), 84 ins | has a backward branch (often a loop) |
 | `0x6ca5e0` | 309 | 3 | `shape only` | has a backward branch (often a loop), 89 ins | has a backward branch (often a loop) |
@@ -2235,7 +2166,6 @@
 | `0x4f3cb0` | 303 | 2 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
 | `0x8ceac0` | 303 | 2 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x618610` | 302 | 5 | `shape only` | has a backward branch (often a loop), 84 ins | has a backward branch (often a loop) |
-| `0x812960` | 302 | 1 | `vtable` | slot 2 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | has a backward branch (often a loop) |
 | `0x716a10` | 301 | 5 | `shape only` | has a backward branch (often a loop), 91 ins | has a backward branch (often a loop) |
 | `0x897400` | 301 | 2 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
 | `0x90de20` | 301 | 13 | `shape only` | has a backward branch (often a loop), 63 ins | has a backward branch (often a loop) |
@@ -2250,8 +2180,6 @@
 | `0x910c20` | 299 | 44 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x913710` | 299 | 17 | `shape only` | has a backward branch (often a loop), 92 ins | has a backward branch (often a loop) |
 | `0x922020` | 299 | 13 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
-| `0xc1b50` | 298 | 5 | `vtable` | slot 34 of CryptoPP::ByteQueue::Walker | has a backward branch (often a loop) |
-| `0x81e0b0` | 297 | 1 | `vtable` | slot 2 of Structure::WidthDimensioner | has a backward branch (often a loop) |
 | `0x86f110` | 297 | 14 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
 | `0x86f490` | 297 | 14 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
 | `0x951110` | 297 | 2 | `shape only` | has a backward branch (often a loop), 95 ins | has a backward branch (often a loop) |
@@ -2259,7 +2187,6 @@
 | `0x623ec0` | 296 | 3 | `shape only` | has a backward branch (often a loop), 104 ins | has a backward branch (often a loop) |
 | `0x63a570` | 296 | 3 | `strings` | PRINTF_EXPONENT_DIGITS | has a backward branch (often a loop) |
 | `0x935590` | 296 | 2 | `shape only` | has a backward branch (often a loop), 99 ins | has a backward branch (often a loop) |
-| `0x117810` | 295 | 2 | `vtable` | slot 27 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x6199c0` | 295 | 7 | `shape only` | has a backward branch (often a loop), 65 ins | has a backward branch (often a loop) |
 | `0x70c810` | 295 | 14 | `shape only` | has a backward branch (often a loop), 89 ins | has a backward branch (often a loop) |
 | `0x871440` | 295 | 2 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
@@ -2294,7 +2221,6 @@
 | `0x8c5e70` | 291 | 4 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
 | `0x8ce990` | 291 | 7 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
 | `0x8cebf0` | 291 | 3 | `shape only` | has a backward branch (often a loop), 88 ins | has a backward branch (often a loop) |
-| `0xbe830` | 290 | 1 | `vtable` | slot 8 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | has a backward branch (often a loop) |
 | `0x1a8af0` | 290 | 2 | `strings` | ..\nesting\algos\algo_parameters.cpp \| parameters.m_offset_manager | has a backward branch (often a loop) |
 | `0x657fb0` | 290 | 4 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
 | `0x66e830` | 290 | 4 | `shape only` | has a backward branch (often a loop), 63 ins | has a backward branch (often a loop) |
@@ -2382,7 +2308,6 @@
 | `0x900ae0` | 279 | 10 | `strings` | vector::reserve | has a backward branch (often a loop) |
 | `0x1b910` | 278 | 3 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x82390` | 278 | 2 | `shape only` | has a backward branch (often a loop), 93 ins | has a backward branch (often a loop) |
-| `0x915310` | 278 | 1 | `vtable` | slot 5 of <subst>::__cxx11::basic_stringbuf::<> | has a backward branch (often a loop) |
 | `0x97dc80` | 278 | 2 | `shape only` | has a backward branch (often a loop), 77 ins | has a backward branch (often a loop) |
 | `0x4ef910` | 277 | 1 | `shape only` | straight line / call sequence, 63 ins | straight line / call sequence |
 | `0x962c60` | 277 | 2 | `shape only` | has a backward branch (often a loop), 80 ins | has a backward branch (often a loop) |
@@ -2468,12 +2393,9 @@
 | `0x906030` | 260 | 4 | `shape only` | has a backward branch (often a loop), 83 ins | has a backward branch (often a loop) |
 | `0x98e0a0` | 260 | 8 | `shape only` | has a backward branch (often a loop), 79 ins | has a backward branch (often a loop) |
 | `0x5d9e90` | 259 | 2 | `shape only` | straight line / call sequence, 47 ins | straight line / call sequence |
-| `0x4dafc0` | 258 | 6 | `vtable` | slot 0 of Tiling::Part | has a backward branch (often a loop) |
 | `0x55e190` | 258 | 3 | `shape only` | straight line / call sequence, 65 ins | straight line / call sequence |
 | `0x57e470` | 258 | 2 | `shape only` | has a backward branch (often a loop), 72 ins | has a backward branch (often a loop) |
 | `0x5c72a0` | 258 | 5 | `shape only` | has a backward branch (often a loop), 83 ins | has a backward branch (often a loop) |
-| `0x6eb8e0` | 258 | 6 | `strings` | boost::asio::streambuf too long | has a backward branch (often a loop) |
-| `0x7da180` | 258 | 1 | `vtable` | slot 3 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::system::system_error>> | has a backward branch (often a loop) |
 | `0x896cc0` | 258 | 2 | `shape only` | has a backward branch (often a loop), 81 ins | has a backward branch (often a loop) |
 | `0x986860` | 258 | 4 | `shape only` | has a backward branch (often a loop), 68 ins | has a backward branch (often a loop) |
 | `0x1bf1a0` | 257 | 3 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
@@ -2502,7 +2424,6 @@
 | `0x908f60` | 256 | 2 | `shape only` | has a backward branch (often a loop), 80 ins | has a backward branch (often a loop) |
 | `0x9108e0` | 256 | 60 | `shape only` | has a backward branch (often a loop), 81 ins | has a backward branch (often a loop) |
 | `0x96acf0` | 256 | 2 | `shape only` | has a backward branch (often a loop), 83 ins | has a backward branch (often a loop) |
-| `0x1186c0` | 255 | 7 | `vtable` | slot 18 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x119010` | 255 | 5 | `shape only` | has a backward branch (often a loop), 80 ins | has a backward branch (often a loop) |
 | `0x15e5a0` | 255 | 8 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x50ffd0` | 255 | 2 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
@@ -2548,7 +2469,6 @@
 | `0x942bd0` | 250 | 5 | `shape only` | has a backward branch (often a loop), 82 ins | has a backward branch (often a loop) |
 | `0x942cd0` | 250 | 6 | `shape only` | has a backward branch (often a loop), 82 ins | has a backward branch (often a loop) |
 | `0x1d770` | 249 | 3 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
-| `0x4daec0` | 249 | 0 | `vtable` | slot 1 of Tiling::Part | has a backward branch (often a loop) |
 | `0x63ddb0` | 249 | 5 | `shape only` | has a backward branch (often a loop), 82 ins | has a backward branch (often a loop) |
 | `0x63e930` | 249 | 5 | `shape only` | has a backward branch (often a loop), 83 ins | has a backward branch (often a loop) |
 | `0x6eba90` | 249 | 3 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
@@ -2612,7 +2532,6 @@
 | `0x1a9060` | 237 | 2 | `shape only` | has a backward branch (often a loop), 58 ins | has a backward branch (often a loop) |
 | `0x24c4a0` | 237 | 5 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x5c3d90` | 237 | 7 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
-| `0x7da290` | 237 | 1 | `vtable` | slot 4 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::system::system_error>> | has a backward branch (often a loop) |
 | `0x4b82f0` | 236 | 7 | `shape only` | has a backward branch (often a loop), 80 ins | has a backward branch (often a loop) |
 | `0x542f30` | 236 | 2 | `shape only` | has a backward branch (often a loop), 66 ins | has a backward branch (often a loop) |
 | `0x639d40` | 236 | 3 | `shape only` | has a backward branch (often a loop), 75 ins | has a backward branch (often a loop) |
@@ -2631,7 +2550,6 @@
 | `0x65cb60` | 233 | 2 | `shape only` | straight line / call sequence, 78 ins | straight line / call sequence |
 | `0x86d8f0` | 233 | 2 | `shape only` | has a backward branch (often a loop), 70 ins | has a backward branch (often a loop) |
 | `0x98ee60` | 233 | 2 | `shape only` | has a backward branch (often a loop), 91 ins | has a backward branch (often a loop) |
-| `0xc3300` | 232 | 2 | `vtable` | slot 20 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x5c14d0` | 232 | 1 | `shape only` | straight line / call sequence, 58 ins | straight line / call sequence |
 | `0x8c9c30` | 232 | 8 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x8fd3c0` | 232 | 3 | `shape only` | has a backward branch (often a loop), 81 ins | has a backward branch (often a loop) |
@@ -2641,7 +2559,6 @@
 | `0x592780` | 230 | 5 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x92f2b0` | 230 | 3 | `shape only` | has a backward branch (often a loop), 73 ins | has a backward branch (often a loop) |
 | `0x998a60` | 230 | 26 | `shape only` | straight line / call sequence, 60 ins | straight line / call sequence |
-| `0x100470` | 229 | 1 | `vtable` | slot 35 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x1aaef0` | 229 | 3 | `strings` | new | has a backward branch (often a loop) |
 | `0x8ae030` | 229 | 2 | `shape only` | straight line / call sequence, 59 ins | straight line / call sequence |
 | `0x96cc80` | 229 | 3 | `shape only` | has a backward branch (often a loop), 68 ins | has a backward branch (often a loop) |
@@ -2660,12 +2577,10 @@
 | `0x89f350` | 226 | 5 | `shape only` | has a backward branch (often a loop), 78 ins | has a backward branch (often a loop) |
 | `0x9367c0` | 226 | 1 | `shape only` | has a backward branch (often a loop), 73 ins | has a backward branch (often a loop) |
 | `0x992750` | 226 | 31 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
-| `0xc2110` | 225 | 5 | `vtable` | slot 35 of CryptoPP::DERGeneralEncoder | straight line / call sequence |
 | `0xeeee0` | 225 | 17 | `strings` | SE1 \| WVSE1 | straight line / call sequence |
 | `0x58a100` | 225 | 1 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
 | `0x7763a0` | 225 | 11 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
 | `0x925970` | 225 | 2 | `shape only` | has a backward branch (often a loop), 72 ins | has a backward branch (often a loop) |
-| `0x1187c0` | 224 | 1 | `vtable` | slot 26 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x62fbd0` | 224 | 6 | `shape only` | has a backward branch (often a loop), 50 ins | has a backward branch (often a loop) |
 | `0x62fcb0` | 224 | 2 | `shape only` | has a backward branch (often a loop), 50 ins | has a backward branch (often a loop) |
 | `0x7baf10` | 224 | 2 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
@@ -2674,13 +2589,9 @@
 | `0x40cd0` | 223 | 2 | `shape only` | has a backward branch (often a loop), 75 ins | has a backward branch (often a loop) |
 | `0x5b37b0` | 223 | 5 | `shape only` | has a backward branch (often a loop), 68 ins | has a backward branch (often a loop) |
 | `0x9376d0` | 223 | 1 | `shape only` | has a backward branch (often a loop), 72 ins | has a backward branch (often a loop) |
-| `0x77edb0` | 222 | 0 | `vtable` | slot 1 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | straight line / call sequence |
-| `0x786620` | 222 | 1 | `vtable` | slot 22 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
-| `0x78a870` | 222 | 0 | `vtable` | slot 1 of CryptoPP::PK_FinalTemplate::<<subst>::TF_VerifierImpl::<<subst>::TF_SignatureSchemeOptions::<<subst> | straight line / call sequence |
 | `0x8c280` | 221 | 3 | `shape only` | has a backward branch (often a loop), 64 ins | has a backward branch (often a loop) |
 | `0x609e20` | 221 | 9 | `shape only` | has a backward branch (often a loop), 51 ins | has a backward branch (often a loop) |
 | `0x61e510` | 221 | 13 | `shape only` | has a backward branch (often a loop), 55 ins | has a backward branch (often a loop) |
-| `0x77c120` | 221 | 1 | `vtable` | slot 12 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x924d80` | 221 | 2 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
 | `0x924ea0` | 221 | 2 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
 | `0x924fd0` | 221 | 2 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
@@ -2714,7 +2625,6 @@
 | `0x1d10e0` | 219 | 2 | `shape only` | has a backward branch (often a loop), 70 ins | has a backward branch (often a loop) |
 | `0x6248f0` | 219 | 2 | `shape only` | has a backward branch (often a loop), 63 ins | has a backward branch (often a loop) |
 | `0x6c3380` | 219 | 2 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
-| `0x88fb80` | 219 | 2 | `vtable` | slot 8 of boost::asio::basic_streambuf::<> | has a backward branch (often a loop) |
 | `0x8cf900` | 219 | 3 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x8e7a10` | 219 | 2 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x523100` | 218 | 4 | `shape only` | has a backward branch (often a loop), 76 ins | has a backward branch (often a loop) |
@@ -2727,12 +2637,9 @@
 | `0x4184e0` | 216 | 15 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
 | `0x8bafc0` | 216 | 2 | `shape only` | has a backward branch (often a loop), 70 ins | has a backward branch (often a loop) |
 | `0x72dbd0` | 215 | 5 | `shape only` | has a backward branch (often a loop), 58 ins | has a backward branch (often a loop) |
-| `0x77ee90` | 215 | 0 | `vtable` | slot 0 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | straight line / call sequence |
 | `0x77f2d0` | 215 | 44 | `strings` | BER decode error | has a backward branch (often a loop) |
-| `0x78a950` | 215 | 0 | `vtable` | slot 0 of CryptoPP::PK_FinalTemplate::<<subst>::TF_VerifierImpl::<<subst>::TF_SignatureSchemeOptions::<<subst> | straight line / call sequence |
 | `0x78f660` | 215 | 17 | `shape only` | has a backward branch (often a loop), 74 ins | has a backward branch (often a loop) |
 | `0x7bb620` | 215 | 5 | `shape only` | has a backward branch (often a loop), 56 ins | has a backward branch (often a loop) |
-| `0xc1d50` | 214 | 1 | `vtable` | slot 4 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x1d52c0` | 214 | 2 | `shape only` | has a backward branch (often a loop), 58 ins | has a backward branch (often a loop) |
 | `0x22aca0` | 213 | 2 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
 | `0x55aa90` | 213 | 7 | `shape only` | straight line / call sequence, 51 ins | straight line / call sequence |
@@ -2741,9 +2648,6 @@
 | `0x1a5970` | 212 | 2 | `shape only` | has a backward branch (often a loop), 56 ins | has a backward branch (often a loop) |
 | `0x3bc140` | 212 | 3 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x5ffe30` | 212 | 15 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
-| `0x7db0d0` | 212 | 1 | `vtable` | slot 3 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | has a backward branch (often a loop) |
-| `0x7db1b0` | 212 | 1 | `vtable` | slot 4 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | has a backward branch (often a loop) |
-| `0x7eca0` | 211 | 0 | `vtable` | slot 3 of Multi::NoFillNester | straight line / call sequence |
 | `0x5fbb10` | 211 | 9 | `strings` | VSH | has a backward branch (often a loop) |
 | `0x5c2370` | 210 | 5 | `shape only` | has a backward branch (often a loop), 52 ins | has a backward branch (often a loop) |
 | `0x7c68d0` | 210 | 2 | `shape only` | has a backward branch (often a loop), 63 ins | has a backward branch (often a loop) |
@@ -2763,15 +2667,12 @@
 | `0x15a500` | 208 | 2 | `shape only` | has a backward branch (often a loop), 57 ins | has a backward branch (often a loop) |
 | `0x5e5cd0` | 208 | 3 | `shape only` | has a backward branch (often a loop), 55 ins | has a backward branch (often a loop) |
 | `0x8b7ad0` | 208 | 5 | `shape only` | has a backward branch (often a loop), 68 ins | has a backward branch (often a loop) |
-| `0x118540` | 207 | 0 | `vtable` | slot 23 of CryptoPP::HexEncoder | straight line / call sequence |
 | `0x504ef0` | 207 | 10 | `shape only` | has a backward branch (often a loop), 59 ins | has a backward branch (often a loop) |
 | `0x678f40` | 207 | 6 | `shape only` | straight line / call sequence, 61 ins | straight line / call sequence |
 | `0x5da160` | 206 | 7 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
 | `0x5c2200` | 205 | 2 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
 | `0x621de0` | 205 | 3 | `shape only` | has a backward branch (often a loop), 70 ins | has a backward branch (often a loop) |
 | `0x7bbf30` | 205 | 2 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
-| `0x7da5b0` | 205 | 1 | `vtable` | slot 3 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | has a backward branch (often a loop) |
-| `0x7e8840` | 205 | 1 | `vtable` | slot 6 of Tiling::BiModulePattern | has a backward branch (often a loop) |
 | `0x159ba0` | 204 | 2 | `shape only` | straight line / call sequence, 54 ins | straight line / call sequence |
 | `0x527b20` | 204 | 4 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
 | `0x63e310` | 204 | 4 | `shape only` | has a backward branch (often a loop), 52 ins | has a backward branch (often a loop) |
@@ -2794,7 +2695,6 @@
 | `0x505780` | 201 | 2 | `strings` | clustered_parts | has a backward branch (often a loop) |
 | `0x5fda80` | 201 | 6 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x60b260` | 201 | 2 | `strings` | [no call frames available] | has a backward branch (often a loop) |
-| `0x7d3530` | 201 | 1 | `vtable` | slot 2 of Multi::PartUpdaterLimiter | has a backward branch (often a loop) |
 | `0x873680` | 201 | 2 | `shape only` | has a backward branch (often a loop), 56 ins | has a backward branch (often a loop) |
 | `0x90d490` | 201 | 5 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
 | `0x998cd0` | 201 | 37 | `shape only` | has a backward branch (often a loop), 49 ins | has a backward branch (often a loop) |
@@ -2813,23 +2713,18 @@
 | `0x8b4ae0` | 196 | 30 | `shape only` | has a backward branch (often a loop), 69 ins | has a backward branch (often a loop) |
 | `0x8bf8c0` | 196 | 15 | `shape only` | has a backward branch (often a loop), 72 ins | has a backward branch (often a loop) |
 | `0x8f89b0` | 196 | 3 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
-| `0xc1c80` | 195 | 0 | `vtable` | slot 35 of CryptoPP::ByteQueue::Walker | straight line / call sequence |
-| `0x118470` | 195 | 3 | `vtable` | slot 21 of CryptoPP::HexEncoder | straight line / call sequence |
 | `0x17f3e0` | 195 | 6 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
 | `0x1fb740` | 195 | 3 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
 | `0x544790` | 195 | 2 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
 | `0x5d2420` | 195 | 5 | `shape only` | has a backward branch (often a loop), 57 ins | has a backward branch (often a loop) |
 | `0x33f20` | 194 | 2 | `shape only` | has a backward branch (often a loop), 50 ins | has a backward branch (often a loop) |
 | `0x76f270` | 194 | 2 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
-| `0x7f56c0` | 194 | 1 | `vtable` | slot 2 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | has a backward branch (often a loop) |
 | `0x8f5460` | 194 | 2 | `shape only` | has a backward branch (often a loop), 70 ins | has a backward branch (often a loop) |
-| `0x6d3a0` | 193 | 0 | `vtable` | slot 1 of Multi::RectangleNester | has a backward branch (often a loop) |
 | `0x4e8470` | 193 | 4 | `shape only` | has a backward branch (often a loop), 51 ins | has a backward branch (often a loop) |
 | `0x4fbca0` | 193 | 3 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x523e60` | 193 | 6 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x523fe0` | 193 | 5 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x7c30c0` | 193 | 5 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
-| `0x7d33f0` | 193 | 1 | `vtable` | slot 3 of Multi::NoMixSheetSelector | has a backward branch (often a loop) |
 | `0x99b1d2` | 193 | 3 | `shape only` | straight line / call sequence, 54 ins | straight line / call sequence |
 | `0x1e010` | 192 | 3 | `shape only` | has a backward branch (often a loop), 59 ins | has a backward branch (often a loop) |
 | `0x24b80` | 192 | 1 | `shape only` | straight line / call sequence, 50 ins | straight line / call sequence |
@@ -2846,13 +2741,9 @@
 | `0x82b1b0` | 192 | 3 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
 | `0x24e50` | 191 | 1 | `strings` | `HNk \|  GNk | straight line / call sequence |
 | `0x24f10` | 191 | 1 | `shape only` | straight line / call sequence, 49 ins | straight line / call sequence |
-| `0xd0960` | 191 | 1 | `vtable` | slot 34 of CryptoPP::StringStore | straight line / call sequence |
-| `0x10fa20` | 191 | 1 | `vtable` | slot 1 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
-| `0x117f40` | 191 | 8 | `vtable` | slot 37 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x172360` | 191 | 1 | `strings` |  $ck | straight line / call sequence |
 | `0x1a1570` | 191 | 10 | `shape only` | straight line / call sequence, 49 ins | straight line / call sequence |
 | `0x57c470` | 191 | 1 | `shape only` | has a backward branch (often a loop), 62 ins | has a backward branch (often a loop) |
-| `0x7bc0c0` | 191 | 0 | `vtable` | slot 0 of Structure::ClusterObserver | has a backward branch (often a loop) |
 | `0x9135d0` | 191 | 33 | `shape only` | has a backward branch (often a loop), 59 ins | has a backward branch (often a loop) |
 | `0x24ab0` | 190 | 3 | `shape only` | straight line / call sequence, 48 ins | straight line / call sequence |
 | `0xf49e0` | 190 | 34 | `shape only` | straight line / call sequence, 64 ins | straight line / call sequence |
@@ -2867,7 +2758,6 @@
 | `0x72e060` | 189 | 11 | `shape only` | has a backward branch (often a loop), 63 ins | has a backward branch (often a loop) |
 | `0x1b8140` | 188 | 1 | `shape only` | has a backward branch (often a loop), 59 ins | has a backward branch (often a loop) |
 | `0x6d33a0` | 188 | 1 | `shape only` | straight line / call sequence, 58 ins | straight line / call sequence |
-| `0x7bc000` | 188 | 0 | `vtable` | slot 1 of Structure::ClusterObserver | has a backward branch (often a loop) |
 | `0x82a0a0` | 188 | 11 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
 | `0x925e70` | 188 | 2 | `shape only` | has a backward branch (often a loop), 67 ins | has a backward branch (often a loop) |
 | `0x932780` | 188 | 4 | `shape only` | has a backward branch (often a loop), 63 ins | has a backward branch (often a loop) |
@@ -2878,11 +2768,9 @@
 | `0x86c380` | 187 | 2 | `shape only` | has a backward branch (often a loop), 59 ins | has a backward branch (often a loop) |
 | `0x5d2900` | 186 | 28 | `callers` | called by 0x8ac0 GetNoFitMap | has a backward branch (often a loop) |
 | `0x6ba980` | 186 | 2 | `shape only` | has a backward branch (often a loop), 64 ins | has a backward branch (often a loop) |
-| `0x6d2e0` | 185 | 0 | `vtable` | slot 0 of Multi::RectangleNester | has a backward branch (often a loop) |
 | `0x25af80` | 185 | 6 | `shape only` | has a backward branch (often a loop), 58 ins | has a backward branch (often a loop) |
 | `0x51f970` | 185 | 4 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x7ba5f0` | 185 | 2 | `shape only` | has a backward branch (often a loop), 66 ins | has a backward branch (often a loop) |
-| `0x7da680` | 185 | 0 | `vtable` | slot 4 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
 | `0x8733b0` | 185 | 2 | `shape only` | has a backward branch (often a loop), 58 ins | has a backward branch (often a loop) |
 | `0x8e76a0` | 185 | 2 | `shape only` | has a backward branch (often a loop), 57 ins | has a backward branch (often a loop) |
 | `0x15a410` | 184 | 8 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
@@ -2890,7 +2778,6 @@
 | `0x89dfe0` | 184 | 3 | `shape only` | has a backward branch (often a loop), 50 ins | has a backward branch (often a loop) |
 | `0x93f110` | 184 | 2 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
 | `0xf1340` | 183 | 7 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
-| `0x10fbb0` | 183 | 24 | `vtable` | slot 0 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x1a4920` | 183 | 9 | `shape only` | straight line / call sequence, 40 ins | straight line / call sequence |
 | `0x97abf0` | 183 | 209 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x9330 NewNoFitNesting; 0x9af0 NewNoFitContext | has a backward branch (often a loop) |
 | `0x51f8b0` | 182 | 2 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
@@ -2906,7 +2793,6 @@
 | `0x8aab00` | 181 | 133 | `shape only` | has a backward branch (often a loop), 54 ins | has a backward branch (often a loop) |
 | `0x1c1d40` | 180 | 8 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
 | `0x51f7f0` | 180 | 10 | `shape only` | has a backward branch (often a loop), 39 ins | has a backward branch (often a loop) |
-| `0x118000` | 179 | 1 | `vtable` | slot 39 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1aa170` | 178 | 1 | `shape only` | has a backward branch (often a loop), 56 ins | has a backward branch (often a loop) |
 | `0x1b7c80` | 178 | 4 | `shape only` | has a backward branch (often a loop), 49 ins | has a backward branch (often a loop) |
 | `0x57d920` | 178 | 7 | `shape only` | has a backward branch (often a loop), 46 ins | has a backward branch (often a loop) |
@@ -2915,7 +2801,6 @@
 | `0x5e5fa0` | 178 | 5 | `shape only` | straight line / call sequence, 45 ins | straight line / call sequence |
 | `0x5fcb90` | 178 | 11 | `strings` | Type is not convertible to double | has a backward branch (often a loop) |
 | `0x6ba8c0` | 178 | 2 | `shape only` | has a backward branch (often a loop), 60 ins | has a backward branch (often a loop) |
-| `0x77c350` | 178 | 0 | `vtable` | slot 1 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x799f60` | 178 | 28 | `shape only` | has a backward branch (often a loop), 55 ins | has a backward branch (often a loop) |
 | `0x7b7910` | 178 | 3 | `shape only` | has a backward branch (often a loop), 53 ins | has a backward branch (often a loop) |
 | `0x8c3730` | 178 | 12 | `shape only` | has a backward branch (often a loop), 53 ins | has a backward branch (often a loop) |
@@ -2945,9 +2830,6 @@
 | `0xf0f00` | 176 | 12 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x4efa30` | 176 | 1 | `shape only` | straight line / call sequence, 38 ins | straight line / call sequence |
 | `0x5fa940` | 176 | 2 | `shape only` | straight line / call sequence, 50 ins | straight line / call sequence |
-| `0x6ec760` | 176 | 1 | `vtable` | slot 0 of boost::asio::waitable_timer_service::<<subst>::chrono::_V2::steady_clock>::<subst>::wait_traits::<> | has a backward branch (often a loop) |
-| `0x7d2e20` | 176 | 0 | `vtable` | slot 2 of Multi::NestingContextPool | straight line / call sequence |
-| `0xc2460` | 175 | 1 | `vtable` | slot 10 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x1a9250` | 175 | 3 | `shape only` | has a backward branch (often a loop), 54 ins | has a backward branch (often a loop) |
 | `0x203db0` | 175 | 3 | `shape only` | has a backward branch (often a loop), 57 ins | has a backward branch (often a loop) |
 | `0x261e60` | 175 | 5 | `shape only` | has a backward branch (often a loop), 53 ins | has a backward branch (often a loop) |
@@ -2970,8 +2852,6 @@
 | `0x523f30` | 171 | 4 | `shape only` | has a backward branch (often a loop), 52 ins | has a backward branch (often a loop) |
 | `0x2c6f30` | 170 | 3 | `strings` | 0oxk | straight line / call sequence |
 | `0x5fac70` | 170 | 9 | `shape only` | has a backward branch (often a loop), 61 ins | has a backward branch (often a loop) |
-| `0x6ec6b0` | 170 | 1 | `vtable` | slot 1 of boost::asio::waitable_timer_service::<<subst>::chrono::_V2::steady_clock>::<subst>::wait_traits::<> | has a backward branch (often a loop) |
-| `0x77c410` | 170 | 0 | `vtable` | slot 0 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x63e5a0` | 169 | 4 | `shape only` | has a backward branch (often a loop), 54 ins | has a backward branch (often a loop) |
 | `0x63ef50` | 169 | 2 | `shape only` | has a backward branch (often a loop), 51 ins | has a backward branch (often a loop) |
 | `0x6742b0` | 169 | 3 | `shape only` | straight line / call sequence, 29 ins | straight line / call sequence |
@@ -3006,11 +2886,9 @@
 | `0x6efa30` | 168 | 1 | `shape only` | has a backward branch (often a loop), 54 ins | has a backward branch (often a loop) |
 | `0x7c4ae0` | 168 | 1 | `shape only` | straight line / call sequence, 60 ins | straight line / call sequence |
 | `0x871270` | 168 | 5 | `shape only` | has a backward branch (often a loop), 55 ins | has a backward branch (often a loop) |
-| `0x91a710` | 168 | 0 | `vtable` | slot 1 of <subst>::__cxx11::basic_stringstream::<> | straight line / call sequence |
 | `0x1c2970` | 167 | 6 | `shape only` | has a backward branch (often a loop), 57 ins | has a backward branch (often a loop) |
 | `0x598d20` | 167 | 2 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x8f7330` | 167 | 4 | `shape only` | has a backward branch (often a loop), 55 ins | has a backward branch (often a loop) |
-| `0x1180c0` | 166 | 1 | `vtable` | slot 40 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x5ec430` | 166 | 2 | `shape only` | has a backward branch (often a loop), 49 ins | has a backward branch (often a loop) |
 | `0x7bfd70` | 166 | 4 | `shape only` | has a backward branch (often a loop), 55 ins | has a backward branch (often a loop) |
 | `0x8ba440` | 166 | 8 | `shape only` | straight line / call sequence, 46 ins | straight line / call sequence |
@@ -3036,19 +2914,14 @@
 | `0x51f750` | 160 | 2 | `shape only` | has a backward branch (often a loop), 36 ins | has a backward branch (often a loop) |
 | `0x5cfdc0` | 160 | 3 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x76dec0` | 160 | 19 | `shape only` | has a backward branch (often a loop), 50 ins | has a backward branch (often a loop) |
-| `0x91a7c0` | 160 | 36 | `vtable` | slot 0 of <subst>::__cxx11::basic_stringstream::<> | straight line / call sequence |
 | `0x31210` | 159 | 3 | `shape only` | has a backward branch (often a loop), 54 ins | has a backward branch (often a loop) |
-| `0x117ea0` | 159 | 1 | `vtable` | slot 36 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1a1630` | 159 | 11 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x717460` | 159 | 4 | `shape only` | has a backward branch (often a loop), 51 ins | has a backward branch (often a loop) |
-| `0xbd370` | 158 | 1 | `vtable` | slot 3 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | has a backward branch (often a loop) |
 | `0x15ea80` | 158 | 1 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x5c7200` | 158 | 6 | `shape only` | straight line / call sequence, 47 ins | straight line / call sequence |
-| `0x88fc60` | 158 | 2 | `vtable` | slot 12 of boost::asio::basic_streambuf::<> | has a backward branch (often a loop) |
 | `0x20e020` | 157 | 2 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
 | `0x20e0c0` | 157 | 2 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
 | `0x20e160` | 157 | 2 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
-| `0x681ee0` | 157 | 1 | `vtable` | slot 0 of Pack::BestNester | has a backward branch (often a loop) |
 | `0x52b10` | 156 | 5 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
 | `0x1fb1f0` | 156 | 3 | `shape only` | straight line / call sequence, 36 ins | straight line / call sequence |
 | `0x4f2870` | 156 | 4 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
@@ -3066,22 +2939,16 @@
 | `0x5e7790` | 154 | 3 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
 | `0x639ca0` | 154 | 5 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x704400` | 154 | 19 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
-| `0x778290` | 154 | 1 | `vtable` | slot 0 of CryptoPP::HashFilter | has a backward branch (often a loop) |
 | `0x897100` | 154 | 3 | `shape only` | has a backward branch (often a loop), 52 ins | has a backward branch (often a loop) |
 | `0x911470` | 154 | 22 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
-| `0xd0a20` | 153 | 0 | `vtable` | slot 14 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
-| `0x10f810` | 153 | 1 | `vtable` | slot 1 of CryptoPP::BERGeneralDecoder | has a backward branch (often a loop) |
 | `0x6d3300` | 153 | 1 | `shape only` | straight line / call sequence, 36 ins | straight line / call sequence |
 | `0x81c080` | 153 | 11 | `shape only` | has a backward branch (often a loop), 36 ins | has a backward branch (often a loop) |
 | `0x8642d0` | 153 | 1 | `shape only` | straight line / call sequence, 43 ins | straight line / call sequence |
-| `0xd08c0` | 152 | 7 | `vtable` | slot 43 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0xf7260` | 152 | 21 | `strings` | UWVSH | has a backward branch (often a loop) |
 | `0x159c70` | 152 | 3 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x538f30` | 152 | 2 | `shape only` | has a backward branch (often a loop), 45 ins | has a backward branch (often a loop) |
 | `0x6845d0` | 152 | 1 | `shape only` | has a backward branch (often a loop), 51 ins | has a backward branch (often a loop) |
 | `0x6d2ca0` | 152 | 3 | `shape only` | has a backward branch (often a loop), 51 ins | has a backward branch (often a loop) |
-| `0x75cc90` | 152 | 1 | `vtable` | slot 3 of Engine::CompositeObserver | has a backward branch (often a loop) |
-| `0x7ebb90` | 152 | 0 | `vtable` | slot 2 of Tiling::MultiOrientedPartPattern | straight line / call sequence |
 | `0x8bb6f0` | 152 | 4 | `shape only` | has a backward branch (often a loop), 46 ins | has a backward branch (often a loop) |
 | `0x98dec0` | 152 | 2 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x992c0` | 151 | 2 | `shape only` | has a backward branch (often a loop), 52 ins | has a backward branch (often a loop) |
@@ -3092,28 +2959,19 @@
 | `0x8d3190` | 151 | 5 | `shape only` | straight line / call sequence, 39 ins | straight line / call sequence |
 | `0x1bb10` | 150 | 1 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
 | `0xbafd0` | 150 | 3 | `strings` | PK_MessageEncodingMethod: this signature | has a backward branch (often a loop) |
-| `0x116c30` | 150 | 1 | `vtable` | slot 17 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
 | `0x1a5250` | 150 | 2 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
 | `0x1a52f0` | 150 | 2 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
 | `0x240300` | 150 | 2 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
 | `0x5eaff0` | 150 | 13 | `shape only` | has a backward branch (often a loop), 46 ins | has a backward branch (often a loop) |
 | `0x6de8a0` | 150 | 17 | `shape only` | straight line / call sequence, 45 ins | straight line / call sequence |
 | `0x70ca50` | 150 | 3 | `shape only` | straight line / call sequence, 36 ins | straight line / call sequence |
-| `0x796970` | 150 | 1 | `vtable` | slot 15 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | has a backward branch (often a loop) |
-| `0x798880` | 150 | 1 | `vtable` | slot 45 of CryptoPP::StringStore | has a backward branch (often a loop) |
-| `0x8106a0` | 150 | 1 | `vtable` | slot 8 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | has a backward branch (often a loop) |
-| `0x81a050` | 150 | 1 | `vtable` | slot 10 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | has a backward branch (often a loop) |
 | `0x89eba0` | 150 | 4 | `shape only` | has a backward branch (often a loop), 45 ins | has a backward branch (often a loop) |
-| `0xd0ac0` | 149 | 1 | `vtable` | slot 15 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1a5460` | 149 | 2 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
 | `0x546540` | 149 | 2 | `shape only` | has a backward branch (often a loop), 46 ins | has a backward branch (often a loop) |
 | `0x660550` | 149 | 4 | `shape only` | has a backward branch (often a loop), 50 ins | has a backward branch (often a loop) |
-| `0x681e40` | 149 | 1 | `vtable` | slot 1 of Pack::BestNester | has a backward branch (often a loop) |
-| `0x6f0a20` | 149 | 1 | `vtable` | slot 5 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | has a backward branch (often a loop) |
 | `0x754e70` | 149 | 11 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x754f10` | 149 | 7 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x1c2a20` | 148 | 2 | `shape only` | has a backward branch (often a loop), 46 ins | has a backward branch (often a loop) |
-| `0x81b600` | 148 | 1 | `vtable` | slot 2 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1c020` | 147 | 1 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
 | `0x430e0` | 147 | 7 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x5cc190` | 147 | 1 | `shape only` | straight line / call sequence, 44 ins | straight line / call sequence |
@@ -3128,14 +2986,11 @@
 | `0x5fcf60` | 146 | 14 | `shape only` | has a backward branch (often a loop), 54 ins | has a backward branch (often a loop) |
 | `0x15b800` | 145 | 4 | `shape only` | straight line / call sequence, 42 ins | straight line / call sequence |
 | `0x4daa30` | 145 | 2 | `shape only` | has a backward branch (often a loop), 37 ins | has a backward branch (often a loop) |
-| `0x7781f0` | 145 | 0 | `vtable` | slot 1 of CryptoPP::HashFilter | straight line / call sequence |
-| `0x78ee50` | 145 | 0 | `vtable` | slot 14 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
 | `0x983ca0` | 145 | 289 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x3ef590` | 144 | 1 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
 | `0x6f4b20` | 144 | 9 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x57a9f0` | 143 | 5 | `shape only` | straight line / call sequence, 36 ins | straight line / call sequence |
 | `0x60be30` | 143 | 2 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
-| `0x6de750` | 143 | 1 | `vtable` | slot 1 of boost::filesystem::filesystem_error | has a backward branch (often a loop) |
 | `0x31ce0` | 142 | 14 | `shape only` | has a backward branch (often a loop), 39 ins | has a backward branch (often a loop) |
 | `0x4baba0` | 142 | 2 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x1be470` | 141 | 7 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
@@ -3147,7 +3002,6 @@
 | `0x6ef370` | 140 | 2 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x6ef9a0` | 140 | 2 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x6f83f0` | 140 | 2 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
-| `0x11bb20` | 139 | 1 | `vtable` | slot 17 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
 | `0x1f8410` | 139 | 2 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x57b340` | 139 | 1 | `shape only` | straight line / call sequence, 39 ins | straight line / call sequence |
 | `0x635f30` | 139 | 2 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
@@ -3158,11 +3012,9 @@
 | `0x1e870` | 138 | 3 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
 | `0x24c610` | 138 | 4 | `shape only` | straight line / call sequence, 39 ins | straight line / call sequence |
 | `0x62fd90` | 138 | 18 | `shape only` | straight line / call sequence, 29 ins | straight line / call sequence |
-| `0x681ab0` | 138 | 2 | `vtable` | slot 0 of Json::StyledWriter | has a backward branch (often a loop) |
 | `0x889d00` | 138 | 9 | `shape only` | straight line / call sequence, 28 ins | straight line / call sequence |
 | `0x8c8980` | 138 | 1 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
 | `0x50bd0` | 137 | 8 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
-| `0x10f770` | 137 | 25 | `vtable` | slot 0 of CryptoPP::BERGeneralDecoder | has a backward branch (often a loop) |
 | `0x60b090` | 137 | 1 | `shape only` | straight line / call sequence, 35 ins | straight line / call sequence |
 | `0x6240d0` | 137 | 2 | `shape only` | has a backward branch (often a loop), 39 ins | has a backward branch (often a loop) |
 | `0x86ff70` | 137 | 5 | `shape only` | has a backward branch (often a loop), 48 ins | has a backward branch (often a loop) |
@@ -3180,7 +3032,6 @@
 | `0x5dedd0` | 136 | 12 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x5e5dd0` | 136 | 2 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
 | `0x7befc0` | 136 | 8 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
-| `0x7d3c50` | 136 | 1 | `vtable` | slot 2 of Multi::LargestSheetSelector | has a backward branch (often a loop) |
 | `0x913540` | 136 | 24 | `shape only` | has a backward branch (often a loop), 45 ins | has a backward branch (often a loop) |
 | `0x544e10` | 135 | 1 | `shape only` | straight line / call sequence, 44 ins | straight line / call sequence |
 | `0x6315b0` | 135 | 3 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
@@ -3194,13 +3045,10 @@
 | `0x234840` | 133 | 3 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x6530a0` | 133 | 3 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x944530` | 133 | 165 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x6100 LaunchComputation | has a backward branch (often a loop) |
-| `0x116b50` | 132 | 2 | `vtable` | slot 14 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | has a backward branch (often a loop) |
 | `0x1f8350` | 132 | 9 | `shape only` | has a backward branch (often a loop), 33 ins | has a backward branch (often a loop) |
 | `0x418920` | 132 | 13 | `shape only` | straight line / call sequence, 34 ins | straight line / call sequence |
 | `0x63def0` | 132 | 2 | `strings` | ABCDEF \| abcdef | has a backward branch (often a loop) |
-| `0x78eef0` | 132 | 0 | `vtable` | slot 12 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
 | `0x7b5b00` | 132 | 1 | `shape only` | has a backward branch (often a loop), 44 ins | has a backward branch (often a loop) |
-| `0xcffa0` | 131 | 0 | `vtable` | slot 10 of CryptoPP::HashFilter | has a backward branch (often a loop) |
 | `0x1994e0` | 131 | 32 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x505850` | 131 | 2 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x5066f0` | 131 | 2 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
@@ -3223,7 +3071,6 @@
 | `0xaf510` | 129 | 4 | `shape only` | has a backward branch (often a loop), 33 ins | has a backward branch (often a loop) |
 | `0x1c1110` | 129 | 2 | `shape only` | straight line / call sequence, 26 ins | straight line / call sequence |
 | `0x5e6060` | 129 | 49 | `shape only` | straight line / call sequence, 33 ins | straight line / call sequence |
-| `0x91fcf0` | 129 | 0 | `vtable` | slot 1 of <subst>::__cxx11::basic_ostringstream::<> | straight line / call sequence |
 | `0x92efd0` | 129 | 3 | `shape only` | has a backward branch (often a loop), 37 ins | has a backward branch (often a loop) |
 | `0x172460` | 128 | 16 | `strings` | `$ck | has a backward branch (often a loop) |
 | `0x4b9cf0` | 128 | 1 | `shape only` | straight line / call sequence, 36 ins | straight line / call sequence |
@@ -3231,15 +3078,12 @@
 | `0x653280` | 128 | 2 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x669d70` | 128 | 10 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x7003e0` | 128 | 2 | `shape only` | straight line / call sequence, 31 ins | straight line / call sequence |
-| `0xfb1c0` | 127 | 13 | `vtable` | slot 2 of CryptoPP::Integer | has a backward branch (often a loop) |
 | `0x1850c0` | 127 | 2 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x1a93d0` | 127 | 2 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x4efbf0` | 127 | 1 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x5231e0` | 127 | 4 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x523260` | 127 | 8 | `shape only` | has a backward branch (often a loop), 47 ins | has a backward branch (often a loop) |
 | `0x630d20` | 127 | 2 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
-| `0x681a30` | 127 | 0 | `vtable` | slot 1 of Json::StyledWriter | has a backward branch (often a loop) |
-| `0x6de7e0` | 127 | 1 | `vtable` | slot 0 of boost::filesystem::filesystem_error | has a backward branch (often a loop) |
 | `0x111b50` | 126 | 21 | `shape only` | straight line / call sequence, 32 ins | straight line / call sequence |
 | `0x2f10d0` | 126 | 9 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x60bbb0` | 126 | 2 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
@@ -3257,7 +3101,6 @@
 | `0x74b9b0` | 125 | 4 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x925150` | 125 | 11 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
 | `0x9424b0` | 125 | 6 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
-| `0x100560` | 124 | 1 | `vtable` | slot 34 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x4dddd0` | 124 | 7 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x624050` | 124 | 2 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
 | `0x6e9e90` | 124 | 2 | `shape only` | straight line / call sequence, 35 ins | straight line / call sequence |
@@ -3267,7 +3110,6 @@
 | `0x54e1f0` | 123 | 2 | `shape only` | straight line / call sequence, 44 ins | straight line / call sequence |
 | `0x5ca6a0` | 123 | 3 | `shape only` | straight line / call sequence, 34 ins | straight line / call sequence |
 | `0x65c4c0` | 123 | 2 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
-| `0x69a480` | 123 | 0 | `vtable` | slot 1 of Multi::NestingContextPool | has a backward branch (often a loop) |
 | `0x7602b0` | 123 | 15 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x897ff0` | 123 | 3 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x8981a0` | 123 | 1 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
@@ -3282,12 +3124,10 @@
 | `0x7db6e0` | 122 | 4 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x82a270` | 122 | 6 | `shape only` | has a backward branch (often a loop), 45 ins | has a backward branch (often a loop) |
 | `0xf19e0` | 121 | 51 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
-| `0x117110` | 121 | 0 | `vtable` | slot 46 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x468110` | 121 | 38 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x63f0c0` | 121 | 3 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x6f8630` | 121 | 17 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x6f86b0` | 121 | 3 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
-| `0x91fd80` | 121 | 91 | `vtable` | slot 0 of <subst>::__cxx11::basic_ostringstream::<> | straight line / call sequence |
 | `0x999eb0` | 121 | 2 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x24e370` | 120 | 1 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x262900` | 120 | 1 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
@@ -3301,10 +3141,7 @@
 | `0xf1aa0` | 119 | 56 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
 | `0x624160` | 119 | 9 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x630ef0` | 119 | 4 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
-| `0x6f0070` | 119 | 1 | `vtable` | slot 2 of boost::asio::detail::win_thread::func::<<subst>::win_iocp_io_service::timer_thread_function> | has a backward branch (often a loop) |
-| `0x6f4d80` | 119 | 0 | `vtable` | slot 0 of boost::asio::detail::win_iocp_io_service | straight line / call sequence |
 | `0x7c39f0` | 119 | 2 | `shape only` | has a backward branch (often a loop), 37 ins | has a backward branch (often a loop) |
-| `0x8128e0` | 119 | 1 | `vtable` | slot 6 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | has a backward branch (often a loop) |
 | `0xd1750` | 118 | 13 | `shape only` | straight line / call sequence, 34 ins | straight line / call sequence |
 | `0x179710` | 118 | 13 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x207930` | 118 | 1 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
@@ -3315,10 +3152,6 @@
 | `0x6dd700` | 118 | 2 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x6dd780` | 118 | 5 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
 | `0x6dd800` | 118 | 4 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
-| `0x7d9c20` | 118 | 0 | `vtable` | slot 4 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::bad_rational>> | straight line / call sequence |
-| `0x7da530` | 118 | 0 | `vtable` | slot 4 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x7dab10` | 118 | 0 | `vtable` | slot 4 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x7dad40` | 118 | 0 | `vtable` | slot 4 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
 | `0x8890e0` | 118 | 2 | `shape only` | straight line / call sequence, 32 ins | straight line / call sequence |
 | `0x4f72b0` | 117 | 3 | `shape only` | straight line / call sequence, 32 ins | straight line / call sequence |
 | `0x704260` | 117 | 7 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
@@ -3331,11 +3164,7 @@
 | `0x5c3e80` | 116 | 1 | `shape only` | straight line / call sequence, 28 ins | straight line / call sequence |
 | `0x60c9b0` | 116 | 2 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
 | `0x97a7b0` | 116 | 11 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
-| `0x3b110` | 115 | 0 | `vtable` | slot 2 of Multi::NestingNester | has a backward branch (often a loop) |
-| `0xb3890` | 115 | 0 | `vtable` | slot 2 of Multi::CompactNester | has a backward branch (often a loop) |
-| `0xb43b0` | 115 | 0 | `vtable` | slot 2 of Multi::FilterNester | has a backward branch (often a loop) |
 | `0x5c5f70` | 115 | 2 | `shape only` | has a backward branch (often a loop), 43 ins | has a backward branch (often a loop) |
-| `0x69a500` | 115 | 0 | `vtable` | slot 0 of Multi::NestingContextPool | has a backward branch (often a loop) |
 | `0x86e940` | 115 | 5 | `shape only` | has a backward branch (often a loop), 37 ins | has a backward branch (often a loop) |
 | `0xef140` | 114 | 5 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0xef280` | 114 | 18 | `shape only` | has a backward branch (often a loop), 41 ins | has a backward branch (often a loop) |
@@ -3355,9 +3184,7 @@
 | `0xf12c0` | 113 | 65 | `strings` | UWVSH | has a backward branch (often a loop) |
 | `0x67d990` | 113 | 2 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x6cc950` | 113 | 1 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
-| `0x6f09a0` | 113 | 1 | `vtable` | slot 6 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | has a backward branch (often a loop) |
 | `0x42f30` | 112 | 1 | `shape only` | straight line / call sequence, 33 ins | straight line / call sequence |
-| `0x10f700` | 112 | 1 | `vtable` | slot 34 of CryptoPP::BERGeneralDecoder | has a backward branch (often a loop) |
 | `0x22da00` | 112 | 5 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
 | `0x4188a0` | 112 | 2 | `shape only` | straight line / call sequence, 41 ins | straight line / call sequence |
 | `0x51bd10` | 112 | 4 | `callers` | called by 0x104d0 WaitComputationTermination; 0x10650 WaitNextSolution | has a backward branch (often a loop) |
@@ -3368,11 +3195,9 @@
 | `0x89a440` | 112 | 1 | `shape only` | has a backward branch (often a loop), 39 ins | has a backward branch (often a loop) |
 | `0x9878c0` | 112 | 67 | `shape only` | has a backward branch (often a loop), 34 ins | has a backward branch (often a loop) |
 | `0xef300` | 111 | 15 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
-| `0xfa690` | 111 | 13 | `vtable` | slot 3 of CryptoPP::Integer | straight line / call sequence |
 | `0x5e60f0` | 111 | 2 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x5fef30` | 111 | 20 | `shape only` | straight line / call sequence, 34 ins | straight line / call sequence |
 | `0x6dde50` | 111 | 5 | `shape only` | has a backward branch (often a loop), 39 ins | has a backward branch (often a loop) |
-| `0x6f4d10` | 111 | 0 | `vtable` | slot 1 of boost::asio::detail::win_iocp_io_service | straight line / call sequence |
 | `0x6fc3b0` | 111 | 7 | `shape only` | has a backward branch (often a loop), 34 ins | has a backward branch (often a loop) |
 | `0x81f210` | 111 | 6 | `strings` | %s: __pos (which is %zu) > this->size()  \| basic_string::copy | straight line / call sequence |
 | `0x82ad80` | 111 | 3 | `strings` | %s: __pos (which is %zu) > this->size()  \| basic_string::copy | straight line / call sequence |
@@ -3386,7 +3211,6 @@
 | `0x5c4c60` | 109 | 16 | `shape only` | has a backward branch (often a loop), 28 ins | has a backward branch (often a loop) |
 | `0x8bc8c0` | 109 | 1 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
 | `0x30af0` | 108 | 9 | `shape only` | straight line / call sequence, 37 ins | straight line / call sequence |
-| `0xc2590` | 108 | 0 | `vtable` | slot 1 of CryptoPP::ByteQueue | has a backward branch (often a loop) |
 | `0x137410` | 108 | 7 | `shape only` | straight line / call sequence, 32 ins | straight line / call sequence |
 | `0x16c0d0` | 108 | 11 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x4189b0` | 108 | 58 | `shape only` | has a backward branch (often a loop), 42 ins | has a backward branch (often a loop) |
@@ -3431,10 +3255,7 @@
 | `0x522f70` | 105 | 1 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x5d9350` | 105 | 1 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x624280` | 105 | 4 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
-| `0x6eb9f0` | 105 | 1 | `vtable` | slot 13 of boost::asio::basic_streambuf::<> | has a backward branch (often a loop) |
 | `0x6f0e30` | 105 | 7 | `shape only` | straight line / call sequence, 26 ins | straight line / call sequence |
-| `0x7a2b00` | 105 | 1 | `vtable` | slot 1 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | has a backward branch (often a loop) |
-| `0x7acf30` | 105 | 1 | `vtable` | slot 1 of CryptoPP::SHA1 | has a backward branch (often a loop) |
 | `0x7d1070` | 105 | 2 | `shape only` | has a backward branch (often a loop), 34 ins | has a backward branch (often a loop) |
 | `0x1e0d0` | 104 | 2 | `shape only` | has a backward branch (often a loop), 28 ins | has a backward branch (often a loop) |
 | `0xaa9d0` | 104 | 1 | `shape only` | has a backward branch (often a loop), 40 ins | has a backward branch (often a loop) |
@@ -3445,7 +3266,6 @@
 | `0x6dd5a0` | 104 | 3 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x6dd610` | 104 | 2 | `shape only` | has a backward branch (often a loop), 38 ins | has a backward branch (often a loop) |
 | `0x7bbec0` | 104 | 3 | `shape only` | has a backward branch (often a loop), 36 ins | has a backward branch (often a loop) |
-| `0x7d34c0` | 104 | 0 | `vtable` | slot 3 of Multi::PartUpdaterLimiter | straight line / call sequence |
 | `0x829fe0` | 104 | 6 | `strings` | %s: __pos (which is %zu) > this->size()  \| basic_string::copy | straight line / call sequence |
 | `0x8bcc40` | 104 | 2 | `shape only` | has a backward branch (often a loop), 36 ins | has a backward branch (often a loop) |
 | `0x8be160` | 104 | 3 | `shape only` | has a backward branch (often a loop), 36 ins | has a backward branch (often a loop) |
@@ -3471,15 +3291,10 @@
 | `0x1be400` | 101 | 4 | `shape only` | has a backward branch (often a loop), 28 ins | has a backward branch (often a loop) |
 | `0x24b790` | 101 | 1 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x4ddf30` | 101 | 3 | `shape only` | has a backward branch (often a loop), 28 ins | has a backward branch (often a loop) |
-| `0x7f4460` | 101 | 0 | `vtable` | slot 3 of CryptoPP::HashFilter | straight line / call sequence |
 | `0x8771c0` | 101 | 3 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x24dcd0` | 100 | 1 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
 | `0x4d8d40` | 100 | 1 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
-| `0x7a2b70` | 100 | 1 | `vtable` | slot 0 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | has a backward branch (often a loop) |
-| `0x7acfa0` | 100 | 1 | `vtable` | slot 0 of CryptoPP::SHA1 | has a backward branch (often a loop) |
 | `0x8682a0` | 100 | 13 | `shape only` | straight line / call sequence, 35 ins | straight line / call sequence |
-| `0x45680` | 99 | 0 | `vtable` | slot 1 of Multi::TilingNester | straight line / call sequence |
-| `0xc2510` | 99 | 58 | `vtable` | slot 0 of CryptoPP::ByteQueue | has a backward branch (often a loop) |
 | `0x10f220` | 99 | 21 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
 | `0x2a9610` | 99 | 6 | `strings` |  \|vk | straight line / call sequence |
 | `0x63e530` | 99 | 11 | `shape only` | straight line / call sequence, 28 ins | straight line / call sequence |
@@ -3492,7 +3307,6 @@
 | `0x61ef80` | 98 | 2 | `shape only` | has a backward branch (often a loop), 21 ins | has a backward branch (often a loop) |
 | `0x6f0ea0` | 98 | 22 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x99b170` | 98 | 3 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
-| `0x32d90` | 97 | 0 | `vtable` | slot 4 of Multi::NestingNester | has a backward branch (often a loop) |
 | `0x1a5000` | 97 | 4 | `shape only` | has a backward branch (often a loop), 39 ins | has a backward branch (often a loop) |
 | `0x203d40` | 97 | 10 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
 | `0x2671f0` | 97 | 2 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
@@ -3527,8 +3341,6 @@
 | `0x873a50` | 93 | 3 | `shape only` | has a backward branch (often a loop), 35 ins | has a backward branch (often a loop) |
 | `0x1b4a0` | 92 | 2 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
 | `0x1b500` | 92 | 2 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
-| `0x117050` | 92 | 13 | `vtable` | slot 20 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
-| `0x1170b0` | 92 | 3 | `vtable` | slot 22 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x4dc330` | 92 | 9 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x4f5090` | 92 | 2 | `shape only` | straight line / call sequence, 31 ins | straight line / call sequence |
 | `0x634be0` | 92 | 70 | `shape only` | straight line / call sequence, 33 ins | straight line / call sequence |
@@ -3536,18 +3348,14 @@
 | `0x6bac60` | 92 | 4 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x8d1920` | 92 | 2 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x8da660` | 92 | 2 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
-| `0x456f0` | 91 | 0 | `vtable` | slot 0 of Multi::TilingNester | straight line / call sequence |
 | `0x5cc0d0` | 91 | 2 | `shape only` | straight line / call sequence, 28 ins | straight line / call sequence |
 | `0x5d19d0` | 91 | 2 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x631830` | 91 | 1 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x65c090` | 91 | 9 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
 | `0x66da30` | 91 | 19 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
 | `0x6ec810` | 91 | 19 | `shape only` | has a backward branch (often a loop), 30 ins | has a backward branch (often a loop) |
-| `0x6fc580` | 91 | 0 | `vtable` | slot 2 of boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp> | straight line / call sequence |
 | `0x89ec90` | 91 | 2 | `shape only` | has a backward branch (often a loop), 27 ins | has a backward branch (often a loop) |
 | `0x8a81c0` | 91 | 3 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
-| `0x8aacb0` | 91 | 1 | `vtable` | slot 1 of <subst>::thread::_State_impl::<<subst>::<subst>::<subst>::shared_ptr::<Engine::Engine>>::<subst>::<s | has a backward branch (often a loop) |
-| `0x915680` | 91 | 0 | `vtable` | slot 11 of <subst>::__cxx11::basic_stringbuf::<> | straight line / call sequence |
 | `0x1a8db0` | 90 | 6 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
 | `0x1f06a0` | 90 | 3 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
 | `0x20c130` | 90 | 8 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
@@ -3561,15 +3369,12 @@
 | `0x5e8690` | 90 | 6 | `shape only` | has a backward branch (often a loop), 29 ins | has a backward branch (often a loop) |
 | `0x630280` | 90 | 1 | `shape only` | straight line / call sequence, 30 ins | straight line / call sequence |
 | `0x6dedc0` | 90 | 3 | `shape only` | straight line / call sequence, 28 ins | straight line / call sequence |
-| `0x78f070` | 90 | 0 | `vtable` | slot 13 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
-| `0x7e8910` | 90 | 0 | `vtable` | slot 2 of Tiling::DensityEvaluator | straight line / call sequence |
 | `0x82a450` | 90 | 20 | `shape only` | has a backward branch (often a loop), 30 ins | has a backward branch (often a loop) |
 | `0x4fc010` | 89 | 3 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x5a4550` | 89 | 2 | `shape only` | straight line / call sequence, 29 ins | straight line / call sequence |
 | `0x6019e0` | 89 | 3 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
 | `0x623ff0` | 89 | 2 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x65c940` | 89 | 3 | `shape only` | has a backward branch (often a loop), 36 ins | has a backward branch (often a loop) |
-| `0x79c870` | 89 | 1 | `vtable` | slot 4 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | has a backward branch (often a loop) |
 | `0x8d0cd0` | 89 | 2 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
 | `0x8d11c0` | 89 | 2 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
 | `0x8d16b0` | 89 | 2 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
@@ -3578,7 +3383,6 @@
 | `0x8f2ca0` | 89 | 51 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x9041f0` | 89 | 3 | `shape only` | has a backward branch (often a loop), 32 ins | has a backward branch (often a loop) |
 | `0x9454d0` | 89 | 139 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x6100 LaunchComputation | straight line / call sequence |
-| `0xd0860` | 88 | 1 | `vtable` | slot 13 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x225a10` | 88 | 1 | `shape only` | straight line / call sequence, 28 ins | straight line / call sequence |
 | `0x2aa000` | 88 | 5 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x678a80` | 88 | 3 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
@@ -3618,11 +3422,8 @@
 | `0x1a29a0` | 87 | 1 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x5d8eb0` | 87 | 1 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
 | `0x6399e0` | 87 | 11 | `shape only` | straight line / call sequence, 29 ins | straight line / call sequence |
-| `0x7865c0` | 87 | 1 | `vtable` | slot 5 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | has a backward branch (often a loop) |
-| `0x78f010` | 87 | 0 | `vtable` | slot 6 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | has a backward branch (often a loop) |
 | `0x9445e0` | 87 | 237 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x6100 LaunchComputation; 0x104d0 WaitComputationTermination | has a backward branch (often a loop) |
 | `0xab190` | 86 | 6 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
-| `0xcfce0` | 86 | 0 | `vtable` | slot 35 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1a2940` | 86 | 6 | `shape only` | has a backward branch (often a loop), 28 ins | has a backward branch (often a loop) |
 | `0x1c25c0` | 86 | 4 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x261e00` | 86 | 2 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
@@ -3632,8 +3433,6 @@
 | `0x634b20` | 86 | 4 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x65cac0` | 86 | 3 | `shape only` | straight line / call sequence, 26 ins | straight line / call sequence |
 | `0x65deb0` | 86 | 3 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
-| `0x69a5d0` | 86 | 0 | `vtable` | slot 0 of Multi::NoMixSheetSelector | has a backward branch (often a loop) |
-| `0x6e93b0` | 86 | 0 | `vtable` | slot 1 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::bad_rational>> | straight line / call sequence |
 | `0x874430` | 86 | 3 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x9916e0` | 86 | 49 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x9917a0` | 86 | 3 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
@@ -3641,16 +3440,12 @@
 | `0x991920` | 86 | 1 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x9919e0` | 86 | 1 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x9988c0` | 86 | 476 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
-| `0x5b100` | 85 | 0 | `vtable` | slot 1 of Multi::DatabaseNester | straight line / call sequence |
 | `0x5cac70` | 85 | 5 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x62eed0` | 85 | 2 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
-| `0x6e9e30` | 85 | 5 | `vtable` | slot 0 of boost::exception_detail::error_info_injector::<<subst>::system::system_error> | straight line / call sequence |
-| `0x77c0c0` | 85 | 0 | `vtable` | slot 10 of CryptoPP::MessageQueue | straight line / call sequence |
 | `0x2a940` | 84 | 2 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x3b590` | 84 | 1 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x1c10b0` | 84 | 2 | `shape only` | straight line / call sequence, 27 ins | straight line / call sequence |
 | `0x5fcef0` | 84 | 1 | `shape only` | has a backward branch (often a loop), 28 ins | has a backward branch (often a loop) |
-| `0x81b6c0` | 84 | 0 | `vtable` | slot 14 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | has a backward branch (often a loop) |
 | `0x8aabf0` | 84 | 35 | `shape only` | straight line / call sequence, 26 ins | straight line / call sequence |
 | `0x9437a0` | 84 | 5 | `shape only` | has a backward branch (often a loop), 31 ins | has a backward branch (often a loop) |
 | `0x999af0` | 84 | 2 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
@@ -3658,15 +3453,12 @@
 | `0x5b1f0` | 83 | 1 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
 | `0x4f77d0` | 83 | 5 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
 | `0x580f80` | 83 | 4 | `shape only` | has a backward branch (often a loop), 30 ins | has a backward branch (often a loop) |
-| `0x7f6a10` | 83 | 0 | `vtable` | slot 32 of CryptoPP::MessageQueue | straight line / call sequence |
 | `0x9a0040` | 83 | 6 | `shape only` | has a backward branch (often a loop), 21 ins | has a backward branch (often a loop) |
-| `0x45560` | 82 | 0 | `vtable` | slot 4 of Multi::TilingNester | straight line / call sequence |
 | `0x2b3990` | 82 | 8 | `shape only` | straight line / call sequence, 15 ins | straight line / call sequence |
 | `0x684b00` | 82 | 34 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x7011c0` | 82 | 34 | `shape only` | straight line / call sequence, 29 ins | straight line / call sequence |
 | `0x82a970` | 82 | 6 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
 | `0x991f20` | 82 | 3 | `shape only` | has a backward branch (often a loop), 30 ins | has a backward branch (often a loop) |
-| `0x116ff0` | 81 | 1 | `vtable` | slot 19 of CryptoPP::HexEncoder | straight line / call sequence |
 | `0x15e3b0` | 81 | 2 | `shape only` | straight line / call sequence, 17 ins | straight line / call sequence |
 | `0x16c140` | 81 | 9 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
 | `0x16c1a0` | 81 | 5 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
@@ -3697,7 +3489,6 @@
 | `0x889070` | 80 | 37 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x9227c0` | 80 | 7 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x9228d0` | 80 | 10 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
-| `0x9444e0` | 80 | 1 | `vtable` | slot 0 of <subst>::ios_base::failure | straight line / call sequence |
 | `0x990de0` | 80 | 3 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
 | `0x16c450` | 79 | 19 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x1a9300` | 79 | 2 | `strings` | TOTAL CURRENT =  | straight line / call sequence |
@@ -3709,13 +3500,10 @@
 | `0x6859a0` | 79 | 1 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x943840` | 79 | 3 | `shape only` | has a backward branch (often a loop), 27 ins | has a backward branch (often a loop) |
 | `0x998390` | 79 | 1 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
-| `0x117190` | 78 | 1 | `vtable` | slot 38 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x4b81d0` | 78 | 4 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x5451d0` | 78 | 5 | `shape only` | has a backward branch (often a loop), 23 ins | has a backward branch (often a loop) |
 | `0x5ed870` | 78 | 2 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
 | `0x6d7200` | 78 | 2 | `shape only` | straight line / call sequence, 31 ins | straight line / call sequence |
-| `0x6e9410` | 78 | 0 | `vtable` | slot 0 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::bad_rational>> | straight line / call sequence |
-| `0x5b170` | 77 | 0 | `vtable` | slot 0 of Multi::DatabaseNester | straight line / call sequence |
 | `0x6241e0` | 77 | 2 | `shape only` | straight line / call sequence, 26 ins | straight line / call sequence |
 | `0x7b2fc0` | 77 | 5 | `shape only` | has a backward branch (often a loop), 27 ins | has a backward branch (often a loop) |
 | `0x8286f0` | 77 | 2 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
@@ -3723,24 +3511,16 @@
 | `0x24900` | 76 | 2 | `strings` | `HNk | has a backward branch (often a loop) |
 | `0x24950` | 76 | 2 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x510a40` | 76 | 1 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
-| `0x6e9630` | 76 | 0 | `vtable` | slot 1 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6e96d0` | 76 | 0 | `vtable` | slot 1 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6e9810` | 76 | 0 | `vtable` | slot 1 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6e98b0` | 76 | 0 | `vtable` | slot 1 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
 | `0x6f8e10` | 76 | 3 | `strings` | mutex \| p`\ | has a backward branch (often a loop) |
 | `0x7043b0` | 76 | 6 | `shape only` | straight line / call sequence, 17 ins | straight line / call sequence |
-| `0x75e0e0` | 76 | 1 | `vtable` | slot 1 of Engine::EquivalentObserver | has a backward branch (often a loop) |
-| `0x88f980` | 76 | 0 | `vtable` | slot 10 of boost::asio::basic_streambuf::<> | has a backward branch (often a loop) |
 | `0x8a00c0` | 76 | 1 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
 | `0x8a0540` | 76 | 4 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
-| `0x8aad10` | 76 | 1 | `vtable` | slot 0 of <subst>::thread::_State_impl::<<subst>::<subst>::<subst>::shared_ptr::<Engine::Engine>>::<subst>::<s | has a backward branch (often a loop) |
 | `0x944160` | 76 | 2 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0xab140` | 75 | 2 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x524e10` | 75 | 3 | `shape only` | has a backward branch (often a loop), 27 ins | has a backward branch (often a loop) |
 | `0x553100` | 75 | 1 | `shape only` | straight line / call sequence, 17 ins | straight line / call sequence |
 | `0x5a4cd0` | 75 | 2 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
 | `0x5a6530` | 75 | 2 | `shape only` | has a backward branch (often a loop), 27 ins | has a backward branch (often a loop) |
-| `0x6e9c30` | 75 | 0 | `vtable` | slot 1 of boost::exception_detail::error_info_injector::<<subst>::bad_rational> | straight line / call sequence |
 | `0x72b6a0` | 75 | 18 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x873d40` | 75 | 3 | `shape only` | has a backward branch (often a loop), 29 ins | has a backward branch (often a loop) |
 | `0x873f20` | 75 | 5 | `shape only` | has a backward branch (often a loop), 29 ins | has a backward branch (often a loop) |
@@ -3753,21 +3533,15 @@
 | `0x97aba0` | 75 | 5 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x983c50` | 75 | 3 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0xb5d10` | 74 | 1 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
-| `0xcfd40` | 74 | 2 | `vtable` | slot 34 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0xf2000` | 74 | 66 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
 | `0x111a50` | 74 | 19 | `shape only` | has a backward branch (often a loop), 20 ins | has a backward branch (often a loop) |
 | `0x4e8100` | 74 | 2 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
 | `0x5b34b0` | 74 | 3 | `shape only` | has a backward branch (often a loop), 17 ins | has a backward branch (often a loop) |
-| `0x69a580` | 74 | 0 | `vtable` | slot 1 of Multi::NoMixSheetSelector | straight line / call sequence |
-| `0x7e8100` | 74 | 0 | `vtable` | slot 3 of Tiling::BiModulePattern | straight line / call sequence |
 | `0x979ff0` | 74 | 98 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
-| `0x32f30` | 73 | 0 | `vtable` | slot 1 of Multi::NestingNester | straight line / call sequence |
 | `0x5afb80` | 73 | 3 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
 | `0x5c6120` | 73 | 4 | `shape only` | has a backward branch (often a loop), 27 ins | has a backward branch (often a loop) |
 | `0x5f3bd0` | 73 | 16 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x701220` | 73 | 16 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
-| `0x7f69b0` | 73 | 0 | `vtable` | slot 33 of CryptoPP::MessageQueue | straight line / call sequence |
-| `0x116930` | 72 | 0 | `vtable` | slot 28 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x1f8300` | 72 | 10 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
 | `0x2252d0` | 72 | 1 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x543670` | 72 | 2 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
@@ -3778,13 +3552,6 @@
 | `0x86f7c0` | 72 | 11 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
 | `0x86fb70` | 72 | 11 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
 | `0x86ff20` | 72 | 11 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
-| `0x90e150` | 72 | 11 | `vtable` | slot 0 of <subst>::__cxx11::moneypunct::<> | has a backward branch (often a loop) |
-| `0x90e4d0` | 72 | 11 | `vtable` | slot 0 of <subst>::__cxx11::moneypunct::<> | has a backward branch (often a loop) |
-| `0x90e880` | 72 | 11 | `vtable` | slot 0 of <subst>::__cxx11::moneypunct::<> | has a backward branch (often a loop) |
-| `0x90ec30` | 72 | 11 | `vtable` | slot 0 of <subst>::__cxx11::moneypunct::<> | has a backward branch (often a loop) |
-| `0x915e70` | 72 | 0 | `vtable` | slot 1 of <subst>::__cxx11::basic_stringbuf::<> | straight line / call sequence |
-| `0x921fd0` | 72 | 11 | `vtable` | slot 0 of <subst>::__cxx11::numpunct::<> | has a backward branch (often a loop) |
-| `0x922350` | 72 | 11 | `vtable` | slot 0 of <subst>::__cxx11::numpunct::<> | has a backward branch (often a loop) |
 | `0x925470` | 72 | 4 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
 | `0x925a60` | 72 | 6 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
 | `0x93caf0` | 72 | 3 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
@@ -3792,7 +3559,6 @@
 | `0x944cf0` | 72 | 11 | `shape only` | has a backward branch (often a loop), 23 ins | has a backward branch (often a loop) |
 | `0x945070` | 72 | 11 | `shape only` | has a backward branch (often a loop), 23 ins | has a backward branch (often a loop) |
 | `0xfe1f0` | 71 | 121 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
-| `0x116be0` | 71 | 0 | `vtable` | slot 15 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | straight line / call sequence |
 | `0x1a38b0` | 71 | 1 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x261f60` | 71 | 13 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x266400` | 71 | 1 | `shape only` | straight line / call sequence, 23 ins | straight line / call sequence |
@@ -3801,8 +3567,6 @@
 | `0x531f20` | 71 | 5 | `shape only` | straight line / call sequence, 25 ins | straight line / call sequence |
 | `0x5a6480` | 71 | 10 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x639c50` | 71 | 2 | `strings` | (null) | has a backward branch (often a loop) |
-| `0x75e130` | 71 | 0 | `vtable` | slot 0 of Engine::EquivalentObserver | has a backward branch (often a loop) |
-| `0x812c10` | 71 | 0 | `vtable` | slot 9 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | straight line / call sequence |
 | `0x910760` | 71 | 2 | `strings` | %s: __pos (which is %zu) > this->size()  \| basic_string::replace | has a backward branch (often a loop) |
 | `0x1a8e90` | 70 | 2 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
 | `0x1b7be0` | 70 | 3 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
@@ -3812,7 +3576,6 @@
 | `0x6eb810` | 70 | 2 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
 | `0x7bf070` | 70 | 3 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
 | `0x7d0fb0` | 70 | 6 | `shape only` | has a backward branch (often a loop), 26 ins | has a backward branch (often a loop) |
-| `0x7f6960` | 70 | 0 | `vtable` | slot 26 of CryptoPP::MessageQueue | straight line / call sequence |
 | `0x86b750` | 70 | 12 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x99fed0` | 70 | 4 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0xb4d20` | 69 | 12 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
@@ -3822,45 +3585,24 @@
 | `0x5229f0` | 69 | 1 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x544530` | 69 | 1 | `shape only` | has a backward branch (often a loop), 21 ins | has a backward branch (often a loop) |
 | `0x621d80` | 69 | 2 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
-| `0x77fb50` | 69 | 0 | `vtable` | slot 37 of CryptoPP::StringStore | straight line / call sequence |
-| `0x77fe00` | 69 | 0 | `vtable` | slot 40 of CryptoPP::StringStore | straight line / call sequence |
-| `0x77fe50` | 69 | 0 | `vtable` | slot 12 of CryptoPP::StringStore | straight line / call sequence |
-| `0x77fea0` | 69 | 0 | `vtable` | slot 6 of CryptoPP::StringStore | straight line / call sequence |
-| `0x77fef0` | 69 | 0 | `vtable` | slot 37 of CryptoPP::StringSource | straight line / call sequence |
-| `0x7801a0` | 69 | 0 | `vtable` | slot 40 of CryptoPP::StringSource | straight line / call sequence |
-| `0x7801f0` | 69 | 0 | `vtable` | slot 12 of CryptoPP::StringSource | straight line / call sequence |
-| `0x780240` | 69 | 0 | `vtable` | slot 6 of CryptoPP::StringSource | straight line / call sequence |
 | `0x8ab830` | 69 | 20 | `shape only` | has a backward branch (often a loop), 20 ins | has a backward branch (often a loop) |
 | `0xaf5a0` | 68 | 2 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x1969e0` | 68 | 5 | `shape only` | has a backward branch (often a loop), 25 ins | has a backward branch (often a loop) |
 | `0x4fc0b0` | 68 | 3 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x5dee60` | 68 | 5 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x630da0` | 68 | 3 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
-| `0x6e9680` | 68 | 0 | `vtable` | slot 0 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6e9720` | 68 | 0 | `vtable` | slot 0 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6e9860` | 68 | 0 | `vtable` | slot 0 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6e9900` | 68 | 0 | `vtable` | slot 0 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<>> | straight line / call sequence |
-| `0x6ebb90` | 68 | 0 | `vtable` | slot 1 of boost::asio::basic_streambuf::<> | straight line / call sequence |
-| `0x915ec0` | 68 | 73 | `vtable` | slot 0 of <subst>::__cxx11::basic_stringbuf::<> | has a backward branch (often a loop) |
 | `0x9a0700` | 68 | 3 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
-| `0xbd270` | 67 | 0 | `vtable` | slot 2 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | straight line / call sequence |
-| `0xc1e30` | 67 | 1 | `vtable` | slot 22 of CryptoPP::DERGeneralEncoder | straight line / call sequence |
 | `0xf1580` | 67 | 45 | `shape only` | has a backward branch (often a loop), 23 ins | has a backward branch (often a loop) |
 | `0x2663b0` | 67 | 4 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
 | `0x51bfc0` | 67 | 34 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x543030` | 67 | 5 | `strings` | ffffff | straight line / call sequence |
 | `0x63f000` | 67 | 2 | `shape only` | has a backward branch (often a loop), 20 ins | has a backward branch (often a loop) |
-| `0x6937e0` | 67 | 0 | `vtable` | slot 1 of Multi::NoFillNester | straight line / call sequence |
-| `0x6d5910` | 67 | 0 | `vtable` | slot 2 of Utils::TimerWinImplementation | straight line / call sequence |
-| `0x6e9c80` | 67 | 4 | `vtable` | slot 0 of boost::exception_detail::error_info_injector::<<subst>::bad_rational> | straight line / call sequence |
-| `0x701f70` | 67 | 0 | `vtable` | slot 1 of boost::geometry::turn_info_exception | straight line / call sequence |
 | `0x86b6b0` | 67 | 37 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
 | `0x875f00` | 67 | 6 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x888fa0` | 67 | 7 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x910030` | 67 | 9 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
 | `0x3b7c0` | 66 | 2 | `shape only` | straight line / call sequence, 26 ins | straight line / call sequence |
 | `0xd15e0` | 66 | 13 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
-| `0x116b00` | 66 | 0 | `vtable` | slot 12 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | straight line / call sequence |
 | `0x12dfd0` | 66 | 2 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
 | `0x1a6650` | 66 | 5 | `shape only` | straight line / call sequence, 24 ins | straight line / call sequence |
 | `0x4dd980` | 66 | 2 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
@@ -3878,7 +3620,6 @@
 | `0x944730` | 66 | 3 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x944860` | 66 | 1 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
 | `0x944900` | 66 | 3 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
-| `0x32ee0` | 65 | 0 | `vtable` | slot 0 of Multi::NestingNester | straight line / call sequence |
 | `0x69f90` | 65 | 4 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
 | `0x11a670` | 65 | 1 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
 | `0x1a2c80` | 65 | 4 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
@@ -3886,10 +3627,6 @@
 | `0x62f230` | 65 | 3 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x63ea30` | 65 | 4 | `shape only` | has a backward branch (often a loop), 21 ins | has a backward branch (often a loop) |
 | `0x63fa50` | 65 | 7 | `shape only` | straight line / call sequence, 15 ins | straight line / call sequence |
-| `0x6e9f10` | 65 | 0 | `vtable` | slot 1 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6e9fa0` | 65 | 0 | `vtable` | slot 1 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6ea1b0` | 65 | 0 | `vtable` | slot 1 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6ea2c0` | 65 | 0 | `vtable` | slot 1 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
 | `0x82b0b0` | 65 | 6 | `shape only` | has a backward branch (often a loop), 20 ins | has a backward branch (often a loop) |
 | `0x875eb0` | 65 | 8 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
 | `0x888f50` | 65 | 19 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
@@ -3900,10 +3637,6 @@
 | `0x266450` | 63 | 1 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
 | `0x400650` | 63 | 1 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x4dc5d0` | 63 | 1 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
-| `0x5593f0` | 63 | 1 | `vtable` | slot 4 of Structure::ClusterObserver | has a backward branch (often a loop) |
-| `0x781240` | 63 | 0 | `vtable` | slot 51 of CryptoPP::StringSource | straight line / call sequence |
-| `0x7812a0` | 63 | 0 | `vtable` | slot 50 of CryptoPP::StringSource | straight line / call sequence |
-| `0xd03d0` | 62 | 0 | `vtable` | slot 47 of CryptoPP::HexEncoder | straight line / call sequence |
 | `0x4f9fa0` | 62 | 2 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x51e670` | 62 | 6 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x522540` | 62 | 3 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
@@ -3925,7 +3658,6 @@
 | `0x2fc50` | 60 | 6 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x3b2b0` | 60 | 23 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
 | `0xc7290` | 60 | 10 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
-| `0xd0270` | 60 | 0 | `vtable` | slot 28 of CryptoPP::StringStore | has a backward branch (often a loop) |
 | `0xd0670` | 60 | 24 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
 | `0x15c8c0` | 60 | 1 | `shape only` | has a backward branch (often a loop), 21 ins | has a backward branch (often a loop) |
 | `0x197620` | 60 | 2 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
@@ -3942,9 +3674,6 @@
 | `0x552470` | 60 | 1 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
 | `0x62b910` | 60 | 3 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x63deb0` | 60 | 3 | `shape only` | has a backward branch (often a loop), 24 ins | has a backward branch (often a loop) |
-| `0x6ebbe0` | 60 | 2 | `vtable` | slot 0 of boost::asio::basic_streambuf::<> | straight line / call sequence |
-| `0x77ce40` | 60 | 0 | `vtable` | slot 1 of CryptoPP::StringSource | straight line / call sequence |
-| `0x781320` | 60 | 0 | `vtable` | slot 1 of CryptoPP::SourceTemplate::<<subst>::StringStore> | straight line / call sequence |
 | `0x87f2a0` | 60 | 35 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x6100 LaunchComputation | straight line / call sequence |
 | `0x21fab0` | 59 | 2 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x3f9090` | 59 | 32 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
@@ -3952,20 +3681,13 @@
 | `0x531ee0` | 59 | 2 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x5c71c0` | 59 | 4 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x5f3c70` | 59 | 4 | `shape only` | straight line / call sequence, 22 ins | straight line / call sequence |
-| `0x693830` | 59 | 0 | `vtable` | slot 0 of Multi::NoFillNester | has a backward branch (often a loop) |
 | `0x6f0cb0` | 59 | 2 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
 | `0x6f0df0` | 59 | 2 | `shape only` | straight line / call sequence, 16 ins | straight line / call sequence |
-| `0x701fc0` | 59 | 0 | `vtable` | slot 0 of boost::geometry::turn_info_exception | straight line / call sequence |
 | `0x74c400` | 59 | 5 | `shape only` | has a backward branch (often a loop), 19 ins | has a backward branch (often a loop) |
-| `0x78dbf0` | 59 | 0 | `vtable` | slot 21 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | straight line / call sequence |
-| `0x78ef90` | 59 | 0 | `vtable` | slot 18 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
-| `0x809e90` | 59 | 0 | `vtable` | slot 22 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | straight line / call sequence |
 | `0xb5b10` | 58 | 1 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
-| `0x1168a0` | 58 | 0 | `vtable` | slot 9 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x4fc100` | 58 | 3 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x5d5780` | 58 | 7 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x5d57c0` | 58 | 2 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
-| `0x6e95c0` | 58 | 0 | `vtable` | slot 1 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::system::system_error>> | straight line / call sequence |
 | `0x924e60` | 58 | 7 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
 | `0x925930` | 58 | 11 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
 | `0x925e30` | 58 | 7 | `shape only` | has a backward branch (often a loop), 22 ins | has a backward branch (often a loop) |
@@ -3978,35 +3700,13 @@
 | `0x51e7a0` | 57 | 4 | `shape only` | straight line / call sequence, 15 ins | straight line / call sequence |
 | `0x592740` | 57 | 1 | `shape only` | has a backward branch (often a loop), 17 ins | has a backward branch (often a loop) |
 | `0x656260` | 57 | 5 | `shape only` | straight line / call sequence, 17 ins | straight line / call sequence |
-| `0x6e9f60` | 57 | 4 | `vtable` | slot 0 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6e9ff0` | 57 | 2 | `vtable` | slot 0 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6ea200` | 57 | 4 | `vtable` | slot 0 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6ea310` | 57 | 4 | `vtable` | slot 0 of boost::exception_detail::error_info_injector::<> | straight line / call sequence |
-| `0x6fdfe0` | 57 | 0 | `vtable` | slot 1 of boost::system::system_error | straight line / call sequence |
-| `0x77ac60` | 57 | 0 | `vtable` | slot 1 of CryptoPP::BERDecodeErr | straight line / call sequence |
-| `0x77fd70` | 57 | 0 | `vtable` | slot 1 of CryptoPP::InputRejecting::<<subst>::BufferedTransformation>::InputRejected | straight line / call sequence |
-| `0x780110` | 57 | 0 | `vtable` | slot 1 of CryptoPP::InputRejecting::<<subst>::Filter>::InputRejected | straight line / call sequence |
-| `0x780850` | 57 | 0 | `vtable` | slot 1 of CryptoPP::NameValuePairs::ValueTypeMismatch | straight line / call sequence |
-| `0x780980` | 57 | 0 | `vtable` | slot 1 of CryptoPP::NotImplemented | straight line / call sequence |
-| `0x7822b0` | 57 | 0 | `vtable` | slot 1 of CryptoPP::InvalidArgument | straight line / call sequence |
-| `0x782630` | 57 | 0 | `vtable` | slot 1 of CryptoPP::SelfTestFailure | straight line / call sequence |
-| `0x785d60` | 57 | 0 | `vtable` | slot 1 of CryptoPP::HashInputTooLong | straight line / call sequence |
-| `0x78d7b0` | 57 | 0 | `vtable` | slot 1 of CryptoPP::InvalidDataFormat | straight line / call sequence |
-| `0x78f540` | 57 | 0 | `vtable` | slot 1 of CryptoPP::PK_SignatureScheme::KeyTooShort | straight line / call sequence |
-| `0x78f5c0` | 57 | 0 | `vtable` | slot 1 of CryptoPP::PK_SignatureScheme::InvalidKeyLength | straight line / call sequence |
-| `0x7982b0` | 57 | 0 | `vtable` | slot 1 of CryptoPP::BufferedTransformation::NoChannelSupport | straight line / call sequence |
-| `0x799ee0` | 57 | 0 | `vtable` | slot 1 of CryptoPP::AlgorithmParametersBase::ParameterNotUsed | straight line / call sequence |
-| `0x7b0490` | 57 | 0 | `vtable` | slot 1 of CryptoPP::Integer | straight line / call sequence |
-| `0x7b2060` | 57 | 0 | `vtable` | slot 1 of CryptoPP::Exception | straight line / call sequence |
 | `0x8743f0` | 57 | 1 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x8f7ce0` | 57 | 1 | `shape only` | has a backward branch (often a loop), 17 ins | has a backward branch (often a loop) |
 | `0x4f0c60` | 56 | 1 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
 | `0x4f9be0` | 56 | 2 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x57a860` | 56 | 1 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
-| `0x78efd0` | 56 | 0 | `vtable` | slot 16 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
 | `0x889010` | 56 | 4 | `shape only` | straight line / call sequence, 19 ins | straight line / call sequence |
 | `0x889160` | 56 | 7 | `shape only` | straight line / call sequence, 21 ins | straight line / call sequence |
-| `0x8aae30` | 56 | 0 | `vtable` | slot 2 of <subst>::thread::_State_impl::<NoFitMultiThreadComputer::RunAllComputations> | has a backward branch (often a loop) |
 | `0x8ab100` | 56 | 11 | `shape only` | has a backward branch (often a loop), 18 ins | has a backward branch (often a loop) |
 | `0x4194c0` | 55 | 2 | `shape only` | straight line / call sequence, 20 ins | straight line / call sequence |
 | `0x51e020` | 55 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
@@ -4029,7 +3729,6 @@
 | `0x7bb7a0` | 54 | 56 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x89e0d0` | 54 | 12 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x89e4d0` | 54 | 14 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
-| `0x915710` | 54 | 1 | `vtable` | slot 9 of <subst>::__cxx11::basic_stringbuf::<> | has a backward branch (often a loop) |
 | `0x136c50` | 53 | 1 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x15e560` | 53 | 3 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x1bebc0` | 53 | 3 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
@@ -4038,10 +3737,8 @@
 | `0x5ce2d0` | 53 | 6 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x5ce310` | 53 | 2 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x5ce740` | 53 | 4 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
-| `0x76b3e0` | 53 | 0 | `vtable` | slot 1 of Tiling::CompositePart | straight line / call sequence |
 | `0x8c36f0` | 53 | 7 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x8d2fa0` | 53 | 3 | `shape only` | has a backward branch (often a loop), 16 ins | has a backward branch (often a loop) |
-| `0x10f2d0` | 52 | 0 | `vtable` | slot 35 of CryptoPP::BERGeneralDecoder | straight line / call sequence |
 | `0x24b050` | 52 | 2 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x4f76e0` | 52 | 6 | `shape only` | straight line / call sequence, 17 ins | straight line / call sequence |
 | `0x552270` | 52 | 5 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
@@ -4065,30 +3762,9 @@
 | `0x20bf80` | 50 | 1 | `shape only` | has a backward branch (often a loop), 17 ins | has a backward branch (often a loop) |
 | `0x552370` | 50 | 2 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x5ce7b0` | 50 | 32 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
-| `0x7d3c10` | 50 | 0 | `vtable` | slot 3 of Multi::RandomSheetSelector | straight line / call sequence |
-| `0x915040` | 50 | 0 | `vtable` | slot 3 of <subst>::__cxx11::basic_stringbuf::<> | straight line / call sequence |
 | `0x2fc10` | 49 | 1 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x4f8d30` | 49 | 31 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x5c4100` | 49 | 7 | `shape only` | has a backward branch (often a loop), 20 ins | has a backward branch (often a loop) |
-| `0x69a690` | 49 | 0 | `vtable` | slot 1 of Multi::SupervisorCanceller | straight line / call sequence |
-| `0x6fe020` | 49 | 5 | `vtable` | slot 0 of boost::system::system_error | straight line / call sequence |
-| `0x77aca0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::BERDecodeErr | straight line / call sequence |
-| `0x77ce80` | 49 | 0 | `vtable` | slot 0 of CryptoPP::StringSource | straight line / call sequence |
-| `0x77fdb0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::InputRejecting::<<subst>::BufferedTransformation>::InputRejected | straight line / call sequence |
-| `0x780150` | 49 | 0 | `vtable` | slot 0 of CryptoPP::InputRejecting::<<subst>::Filter>::InputRejected | straight line / call sequence |
-| `0x780890` | 49 | 0 | `vtable` | slot 0 of CryptoPP::NameValuePairs::ValueTypeMismatch | straight line / call sequence |
-| `0x7809c0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::NotImplemented | straight line / call sequence |
-| `0x7812e0` | 49 | 3 | `vtable` | slot 52 of CryptoPP::StringSource | has a backward branch (often a loop) |
-| `0x781360` | 49 | 0 | `vtable` | slot 0 of CryptoPP::SourceTemplate::<<subst>::StringStore> | straight line / call sequence |
-| `0x7822f0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::InvalidArgument | straight line / call sequence |
-| `0x782670` | 49 | 0 | `vtable` | slot 0 of CryptoPP::SelfTestFailure | straight line / call sequence |
-| `0x785da0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::HashInputTooLong | straight line / call sequence |
-| `0x78d7f0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::InvalidDataFormat | straight line / call sequence |
-| `0x78f580` | 49 | 0 | `vtable` | slot 0 of CryptoPP::PK_SignatureScheme::KeyTooShort | straight line / call sequence |
-| `0x78f600` | 49 | 0 | `vtable` | slot 0 of CryptoPP::PK_SignatureScheme::InvalidKeyLength | straight line / call sequence |
-| `0x7982f0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::BufferedTransformation::NoChannelSupport | straight line / call sequence |
-| `0x799f20` | 49 | 0 | `vtable` | slot 0 of CryptoPP::AlgorithmParametersBase::ParameterNotUsed | straight line / call sequence |
-| `0x7b20a0` | 49 | 0 | `vtable` | slot 0 of CryptoPP::Exception | straight line / call sequence |
 | `0x7bbaf0` | 49 | 14 | `shape only` | straight line / call sequence, 15 ins | straight line / call sequence |
 | `0x50210` | 48 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x14d430` | 48 | 1 | `shape only` | has a backward branch (often a loop), 12 ins | has a backward branch (often a loop) |
@@ -4098,11 +3774,7 @@
 | `0x60c980` | 48 | 1 | `shape only` | straight line / call sequence, 7 ins | straight line / call sequence |
 | `0x631580` | 48 | 1 | `shape only` | straight line / call sequence, 18 ins | straight line / call sequence |
 | `0x63bcd0` | 48 | 1 | `shape only` | has a backward branch (often a loop), 18 ins | has a backward branch (often a loop) |
-| `0x695e50` | 48 | 0 | `vtable` | slot 1 of Multi::LimitedNester | straight line / call sequence |
-| `0x82d220` | 48 | 0 | `vtable` | slot 3 of <subst>::__cxx11::messages_byname::<> | straight line / call sequence |
 | `0x8761b0` | 48 | 98 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x9330 NewNoFitNesting; 0x9af0 NewNoFitContext | straight line / call sequence |
-| `0x921a60` | 48 | 0 | `vtable` | slot 1 of <subst>::__cxx11::messages::<> | straight line / call sequence |
-| `0x921c30` | 48 | 0 | `vtable` | slot 1 of <subst>::__cxx11::messages::<> | straight line / call sequence |
 | `0x24c470` | 47 | 1 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x5c4d30` | 47 | 39 | `shape only` | straight line / call sequence, 15 ins | straight line / call sequence |
 | `0x7c4a80` | 47 | 7 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
@@ -4112,18 +3784,13 @@
 | `0x4f35d0` | 46 | 5 | `shape only` | has a backward branch (often a loop), 15 ins | has a backward branch (often a loop) |
 | `0x4f8ce0` | 46 | 4 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x5ce270` | 46 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
-| `0x78fb10` | 46 | 0 | `vtable` | slot 1 of CryptoPP::AlgorithmParameters | straight line / call sequence |
 | `0x7db490` | 46 | 12 | `shape only` | has a backward branch (often a loop), 15 ins | has a backward branch (often a loop) |
-| `0xc1b20` | 45 | 0 | `vtable` | slot 10 of CryptoPP::ByteQueue::Walker | straight line / call sequence |
 | `0x1f83e0` | 45 | 2 | `shape only` | has a backward branch (often a loop), 13 ins | has a backward branch (often a loop) |
 | `0x516020` | 45 | 1 | `shape only` | has a backward branch (often a loop), 15 ins | has a backward branch (often a loop) |
 | `0x563a40` | 45 | 7 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x5cb400` | 45 | 6 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x5ce2a0` | 45 | 9 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x634c40` | 45 | 19 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
-| `0x6f0b40` | 45 | 0 | `vtable` | slot 1 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | straight line / call sequence |
-| `0x76b380` | 45 | 0 | `vtable` | slot 1 of Tiling::BoxMultiTiler | straight line / call sequence |
-| `0x76b420` | 45 | 0 | `vtable` | slot 0 of Tiling::CompositePart | has a backward branch (often a loop) |
 | `0x89e0a0` | 45 | 1 | `shape only` | has a backward branch (often a loop), 12 ins | has a backward branch (often a loop) |
 | `0x5f000` | 44 | 2 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x20c850` | 44 | 2 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
@@ -4131,31 +3798,23 @@
 | `0x57d8f0` | 44 | 4 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x5cd7d0` | 44 | 5 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x60b4e0` | 44 | 1 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
-| `0x7d3ce0` | 44 | 0 | `vtable` | slot 3 of Multi::LargestSheetSelector | straight line / call sequence |
-| `0x801040` | 44 | 0 | `vtable` | slot 53 of CryptoPP::StringSource | straight line / call sequence |
 | `0x898780` | 44 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x898a80` | 44 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x8991c0` | 44 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x899690` | 44 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x899710` | 44 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x8997d0` | 44 | 1 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
-| `0x9156e0` | 44 | 0 | `vtable` | slot 7 of <subst>::__cxx11::basic_stringbuf::<> | straight line / call sequence |
 | `0xb4da0` | 43 | 7 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
 | `0x4dc3f0` | 43 | 12 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x5c5bc0` | 43 | 10 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x679f40` | 43 | 1 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x67d680` | 43 | 1 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x6de940` | 43 | 21 | `shape only` | straight line / call sequence, 15 ins | straight line / call sequence |
-| `0x81b750` | 43 | 0 | `vtable` | slot 3 of CryptoPP::HexEncoder | straight line / call sequence |
 | `0x942fb0` | 43 | 8 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
-| `0x116860` | 42 | 0 | `vtable` | slot 8 of CryptoPP::HexEncoder | has a backward branch (often a loop) |
 | `0x4de020` | 42 | 5 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x5b3fd0` | 42 | 1 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x5ba5d0` | 42 | 2 | `shape only` | has a backward branch (often a loop), 14 ins | has a backward branch (often a loop) |
 | `0x5ce240` | 42 | 13 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
-| `0x809f00` | 42 | 0 | `vtable` | slot 26 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | straight line / call sequence |
-| `0x80a180` | 42 | 0 | `vtable` | slot 27 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | straight line / call sequence |
-| `0x8aad60` | 42 | 0 | `vtable` | slot 2 of <subst>::thread::_State_impl::<Engine::Engine>::Structure::Problem | straight line / call sequence |
 | `0x8fc3b0` | 42 | 1 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x4dde50` | 41 | 1 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x4e8db0` | 41 | 6 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
@@ -4164,12 +3823,7 @@
 | `0x5f4870` | 41 | 1 | `strings` | %lf | straight line / call sequence |
 | `0x600740` | 41 | 1 | `strings` | %#.16g | straight line / call sequence |
 | `0x63f140` | 41 | 2 | `shape only` | has a backward branch (often a loop), 18 ins | has a backward branch (often a loop) |
-| `0x6ecee0` | 41 | 0 | `vtable` | slot 1 of boost::asio::datagram_socket_service::<<subst>::ip::udp> | straight line / call sequence |
 | `0x6efae0` | 41 | 2 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
-| `0x7c4660` | 41 | 0 | `vtable` | slot 1 of __gnu_cxx::__concurrence_lock_error | straight line / call sequence |
-| `0x7c46e0` | 41 | 0 | `vtable` | slot 1 of __gnu_cxx::__concurrence_unlock_error | straight line / call sequence |
-| `0x81b780` | 41 | 0 | `vtable` | slot 3 of CryptoPP::BitBucket | straight line / call sequence |
-| `0x81b810` | 41 | 0 | `vtable` | slot 18 of CryptoPP::ByteQueue::Walker | has a backward branch (often a loop) |
 | `0x86c130` | 41 | 2 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x8aabc0` | 41 | 257 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x6100 LaunchComputation; 0x104d0 WaitComputationTermination | straight line / call sequence |
 | `0x998c70` | 41 | 420 | `shape only` | has a backward branch (often a loop), 9 ins | has a backward branch (often a loop) |
@@ -4181,24 +3835,15 @@
 | `0x4e80d0` | 40 | 1 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x4e83e0` | 40 | 1 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x60b770` | 40 | 2 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
-| `0x695dc0` | 40 | 0 | `vtable` | slot 1 of Multi::WrapObserver | straight line / call sequence |
-| `0x695e80` | 40 | 0 | `vtable` | slot 0 of Multi::LimitedNester | has a backward branch (often a loop) |
-| `0x697100` | 40 | 0 | `vtable` | slot 1 of Multi::CompactCanceller | straight line / call sequence |
 | `0x8704d0` | 40 | 3 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x873380` | 40 | 31 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
 | `0x873a20` | 40 | 4 | `shape only` | straight line / call sequence, 14 ins | straight line / call sequence |
-| `0x921a90` | 40 | 0 | `vtable` | slot 0 of <subst>::__cxx11::messages::<> | has a backward branch (often a loop) |
-| `0x921c60` | 40 | 0 | `vtable` | slot 0 of <subst>::__cxx11::messages::<> | has a backward branch (often a loop) |
 | `0x30220` | 39 | 9 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
-| `0x45750` | 39 | 0 | `vtable` | slot 3 of Multi::TilingNester | straight line / call sequence |
 | `0x64350` | 39 | 7 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x60c750` | 39 | 1 | `shape only` | straight line / call sequence, 8 ins | straight line / call sequence |
-| `0x8aaeb0` | 39 | 0 | `vtable` | slot 2 of <subst>::thread::_State_impl::<Tiling::PackerCache::Implementation::PreUpdateTilings>::<subst>::vect | has a backward branch (often a loop) |
-| `0xcfcb0` | 38 | 13 | `vtable` | slot 45 of CryptoPP::HexEncoder | straight line / call sequence |
 | `0x178590` | 38 | 1 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
 | `0x1785c0` | 38 | 1 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
 | `0x63e650` | 38 | 2 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
-| `0x6eba60` | 38 | 0 | `vtable` | slot 9 of boost::asio::basic_streambuf::<> | straight line / call sequence |
 | `0x86b700` | 38 | 8 | `shape only` | straight line / call sequence, 13 ins | straight line / call sequence |
 | `0x877120` | 38 | 7 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
 | `0x8772a0` | 38 | 4 | `shape only` | has a backward branch (often a loop), 11 ins | has a backward branch (often a loop) |
@@ -4214,34 +3859,11 @@
 | `0x5ce780` | 37 | 2 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
 | `0x60c780` | 37 | 1 | `shape only` | straight line / call sequence, 8 ins | straight line / call sequence |
 | `0x60c7b0` | 37 | 1 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
-| `0x6e9600` | 37 | 0 | `vtable` | slot 0 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::system::system_error>> | straight line / call sequence |
-| `0x7e8da0` | 37 | 0 | `vtable` | slot 3 of Tiling::QuantityEvaluator | straight line / call sequence |
-| `0x81b7e0` | 37 | 0 | `vtable` | slot 18 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x90bfd0` | 37 | 1 | `shape only` | has a backward branch (often a loop), 11 ins | has a backward branch (often a loop) |
 | `0x172430` | 36 | 1 | `strings` |  $ck | straight line / call sequence |
 | `0x4fc080` | 36 | 4 | `shape only` | straight line / call sequence, 8 ins | straight line / call sequence |
 | `0x4fc190` | 36 | 4 | `shape only` | straight line / call sequence, 8 ins | straight line / call sequence |
 | `0x5cd590` | 36 | 7 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
-| `0x679220` | 36 | 0 | `vtable` | slot 1 of dbg::file_error | straight line / call sequence |
-| `0x687de0` | 36 | 0 | `vtable` | slot 1 of Multi::FlipNester | straight line / call sequence |
-| `0x6937a0` | 36 | 0 | `vtable` | slot 1 of Multi::FilterNester | straight line / call sequence |
-| `0x695e10` | 36 | 0 | `vtable` | slot 1 of Multi::CompactNester | straight line / call sequence |
-| `0x6d58d0` | 36 | 0 | `vtable` | slot 1 of Utils::BadResponseException | straight line / call sequence |
-| `0x6de860` | 36 | 0 | `vtable` | slot 1 of boost::bad_rational | straight line / call sequence |
-| `0x701270` | 36 | 0 | `vtable` | slot 1 of boost::geometry::centroid_exception | straight line / call sequence |
-| `0x704370` | 36 | 0 | `vtable` | slot 1 of boost::geometry::overlay_invalid_input_exception | straight line / call sequence |
-| `0x7080c0` | 36 | 0 | `vtable` | slot 1 of boost::geometry::detail::self_get_turn_points::self_ip_exception | straight line / call sequence |
-| `0x74b970` | 36 | 0 | `vtable` | slot 1 of boost::geometry::exception | straight line / call sequence |
-| `0x7781c0` | 36 | 0 | `vtable` | slot 4 of CryptoPP::HashFilter | has a backward branch (often a loop) |
-| `0x7b04d0` | 36 | 0 | `vtable` | slot 0 of CryptoPP::Integer | has a backward branch (often a loop) |
-| `0x7bfe60` | 36 | 0 | `vtable` | slot 1 of Structure::ParseSolutionException | straight line / call sequence |
-| `0x7c46a0` | 36 | 0 | `vtable` | slot 1 of __gnu_cxx::__concurrence_wait_error | straight line / call sequence |
-| `0x7c4a40` | 36 | 0 | `vtable` | slot 1 of __gnu_cxx::__concurrence_broadcast_error | straight line / call sequence |
-| `0x8aac60` | 36 | 0 | `vtable` | slot 1 of <subst>::thread::_State_impl::<<subst>>::<subst> | straight line / call sequence |
-| `0x8aad90` | 36 | 0 | `vtable` | slot 1 of <subst>::thread::_State_impl::<Engine::Engine>::Structure::Problem | straight line / call sequence |
-| `0x8aadf0` | 36 | 0 | `vtable` | slot 1 of <subst>::thread::_State_impl::<Multi::Supervisor> | straight line / call sequence |
-| `0x8aae70` | 36 | 0 | `vtable` | slot 1 of <subst>::thread::_State_impl::<NoFitMultiThreadComputer::RunAllComputations> | straight line / call sequence |
-| `0x8aaee0` | 36 | 0 | `vtable` | slot 1 of <subst>::thread::_State_impl::<Tiling::PackerCache::Implementation::PreUpdateTilings>::<subst>::vect | straight line / call sequence |
 | `0xcca40` | 35 | 11 | `shape only` | straight line / call sequence, 6 ins | straight line / call sequence |
 | `0x1c82d0` | 35 | 2 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x544890` | 35 | 2 | `shape only` | straight line / call sequence, 12 ins | straight line / call sequence |
@@ -4250,7 +3872,6 @@
 | `0x6258f0` | 35 | 4 | `shape only` | has a backward branch (often a loop), 11 ins | has a backward branch (often a loop) |
 | `0x631760` | 35 | 1 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x63f170` | 35 | 2 | `shape only` | has a backward branch (often a loop), 15 ins | has a backward branch (often a loop) |
-| `0x81b7b0` | 35 | 0 | `vtable` | slot 19 of CryptoPP::DERGeneralEncoder | has a backward branch (often a loop) |
 | `0x89e5f0` | 35 | 2 | `shape only` | straight line / call sequence, 11 ins | straight line / call sequence |
 | `0x8aa7e0` | 35 | 65 | `shape only` | straight line / call sequence, 7 ins | straight line / call sequence |
 | `0x64380` | 34 | 7 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
@@ -4259,8 +3880,6 @@
 | `0x1b7750` | 34 | 1 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x52f850` | 34 | 3 | `shape only` | straight line / call sequence, 8 ins | straight line / call sequence |
 | `0x6791f0` | 34 | 2 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
-| `0x7e84f0` | 34 | 0 | `vtable` | slot 2 of Tiling::BiModulePattern | straight line / call sequence |
-| `0x7fc280` | 34 | 0 | `vtable` | slot 3 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | straight line / call sequence |
 | `0x826c60` | 34 | 104 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0xb4dd0` | 33 | 16 | `shape only` | straight line / call sequence, 9 ins | straight line / call sequence |
 | `0x16c0a0` | 33 | 10 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
@@ -4272,10 +3891,6 @@
 | `0x4f8fb0` | 33 | 17 | `shape only` | straight line / call sequence, 6 ins | straight line / call sequence |
 | `0x57a680` | 33 | 2 | `shape only` | has a backward branch (often a loop), 11 ins | has a backward branch (often a loop) |
 | `0x5c3d30` | 33 | 2 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
-| `0x69a6d0` | 33 | 0 | `vtable` | slot 0 of Multi::SupervisorCanceller | straight line / call sequence |
-| `0x6f0b70` | 33 | 0 | `vtable` | slot 0 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | straight line / call sequence |
-| `0x76b3b0` | 33 | 0 | `vtable` | slot 0 of Tiling::BoxMultiTiler | straight line / call sequence |
-| `0x78fb40` | 33 | 0 | `vtable` | slot 0 of CryptoPP::AlgorithmParameters | straight line / call sequence |
 | `0x876040` | 33 | 3 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x877a20` | 33 | 4 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
 | `0x877b20` | 33 | 2 | `shape only` | straight line / call sequence, 10 ins | straight line / call sequence |
@@ -4331,10 +3946,7 @@
 | `0x4f7720` | 26 | 7 | `shape only` | tiny helper, 9 ins | tiny helper |
 | `0x54e1c0` | 26 | 1 | `shape only` | tiny helper, 9 ins | tiny helper |
 | `0x60bdb0` | 26 | 1 | `shape only` | tiny helper, 9 ins | tiny helper |
-| `0x6e9e10` | 26 | 0 | `vtable` | slot 1 of boost::exception_detail::error_info_injector::<<subst>::system::system_error> | tiny helper |
-| `0x7e8820` | 26 | 0 | `vtable` | slot 7 of Tiling::BiModulePattern | tiny helper |
 | `0x8a8140` | 26 | 1 | `shape only` | tiny helper, 9 ins | tiny helper |
-| `0x9444c0` | 26 | 0 | `vtable` | slot 1 of <subst>::ios_base::failure | tiny helper |
 | `0x1ee8f0` | 25 | 1 | `shape only` | tiny helper, 9 ins | tiny helper |
 | `0x2610c0` | 25 | 6 | `shape only` | tiny helper, 9 ins | tiny helper |
 | `0x4f6fe0` | 25 | 1 | `shape only` | tiny helper, 9 ins | tiny helper |
@@ -4353,8 +3965,6 @@
 | `0x5c6100` | 24 | 57 | `shape only` | tiny helper, 4 ins | tiny helper |
 | `0x5fd080` | 24 | 4 | `shape only` | has a backward branch (often a loop), 7 ins | has a backward branch (often a loop) |
 | `0x5fda60` | 24 | 7 | `shape only` | tiny helper, 9 ins | tiny helper |
-| `0x786960` | 24 | 0 | `vtable` | slot 7 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | tiny helper |
-| `0x812c60` | 24 | 0 | `vtable` | slot 7 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | tiny helper |
 | `0x8ab0e0` | 24 | 5 | `shape only` | tiny helper, 7 ins | tiny helper |
 | `0x339c0` | 23 | 1 | `shape only` | tiny helper, 6 ins | tiny helper |
 | `0x10f200` | 23 | 20 | `shape only` | tiny helper, 5 ins | tiny helper |
@@ -4381,16 +3991,13 @@
 | `0x2664c0` | 21 | 3 | `shape only` | tiny helper, 7 ins | tiny helper |
 | `0x5fd060` | 21 | 12 | `shape only` | has a backward branch (often a loop), 6 ins | has a backward branch (often a loop) |
 | `0x62f380` | 21 | 1 | `shape only` | has a backward branch (often a loop), 7 ins | has a backward branch (often a loop) |
-| `0x6ecf10` | 21 | 0 | `vtable` | slot 0 of boost::asio::datagram_socket_service::<<subst>::ip::udp> | tiny helper |
 | `0x6f4650` | 21 | 4 | `shape only` | tiny helper, 5 ins | tiny helper |
 | `0x754cd0` | 21 | 9 | `callers` | called by 0x6100 LaunchComputation | tiny helper |
 | `0x862030` | 21 | 20 | `shape only` | tiny helper, 7 ins | tiny helper |
 | `0x86a2c0` | 21 | 61 | `shape only` | tiny helper, 7 ins | tiny helper |
-| `0x8aadd0` | 21 | 0 | `vtable` | slot 2 of <subst>::thread::_State_impl::<Multi::Supervisor> | has a backward branch (often a loop) |
 | `0x33ce0` | 20 | 2 | `shape only` | tiny helper, 7 ins | tiny helper |
 | `0x266d90` | 20 | 9 | `shape only` | tiny helper, 8 ins | tiny helper |
 | `0x877530` | 20 | 4 | `shape only` | tiny helper, 6 ins | tiny helper |
-| `0x10f1e0` | 19 | 0 | `vtable` | slot 2 of CryptoPP::AlgorithmParameters | has a backward branch (often a loop) |
 | `0x22d9e0` | 19 | 4 | `shape only` | tiny helper, 5 ins | tiny helper |
 | `0x261f20` | 19 | 11 | `shape only` | tiny helper, 6 ins | tiny helper |
 | `0x266d70` | 19 | 9 | `shape only` | tiny helper, 8 ins | tiny helper |
@@ -4399,11 +4006,6 @@
 | `0x5203d0` | 19 | 45 | `shape only` | tiny helper, 6 ins | tiny helper |
 | `0x5203f0` | 19 | 33 | `shape only` | tiny helper, 6 ins | tiny helper |
 | `0x5d2a40` | 19 | 17 | `shape only` | tiny helper, 6 ins | tiny helper |
-| `0x695df0` | 19 | 0 | `vtable` | slot 0 of Multi::WrapObserver | has a backward branch (often a loop) |
-| `0x697130` | 19 | 0 | `vtable` | slot 0 of Multi::CompactCanceller | has a backward branch (often a loop) |
-| `0x7e80e0` | 19 | 0 | `vtable` | slot 2 of Tiling::WarpCanceller | tiny helper |
-| `0x809ee0` | 19 | 0 | `vtable` | slot 18 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | accessor (load and return) |
-| `0x80a160` | 19 | 0 | `vtable` | slot 25 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | tiny helper |
 | `0x200cf0` | 18 | 2 | `shape only` | tiny helper, 5 ins | tiny helper |
 | `0x4dc3d0` | 18 | 8 | `shape only` | tiny helper, 5 ins | tiny helper |
 | `0x4f9bc0` | 18 | 17 | `shape only` | accessor (load and return), 4 ins | accessor (load and return) |
@@ -4412,13 +4014,8 @@
 | `0x57d760` | 18 | 2 | `shape only` | tiny helper, 6 ins | tiny helper |
 | `0x5fd640` | 18 | 9 | `shape only` | tiny helper, 7 ins | tiny helper |
 | `0x5fd660` | 18 | 3 | `shape only` | tiny helper, 7 ins | tiny helper |
-| `0x798050` | 18 | 0 | `vtable` | slot 7 of CryptoPP::StringSource | tiny helper |
-| `0x7ebd90` | 18 | 0 | `vtable` | slot 7 of Tiling::MultiOrientedPartPattern | tiny helper |
-| `0x88fd30` | 18 | 0 | `vtable` | slot 4 of boost::asio::basic_streambuf::<> | accessor (load and return) |
-| `0x88fd50` | 18 | 0 | `vtable` | slot 5 of boost::asio::basic_streambuf::<> | accessor (load and return) |
 | `0x3ba90` | 17 | 1 | `shape only` | tiny helper, 5 ins | tiny helper |
 | `0x4ebe0` | 17 | 1 | `shape only` | tiny helper, 5 ins | tiny helper |
-| `0x116900` | 17 | 0 | `vtable` | slot 14 of CryptoPP::StringStore | has a backward branch (often a loop) |
 | `0x266ff0` | 17 | 7 | `shape only` | tiny helper, 7 ins | tiny helper |
 | `0x531eb0` | 17 | 3 | `shape only` | tiny helper, 4 ins | tiny helper |
 | `0x5da250` | 17 | 2 | `shape only` | accessor (load and return), 4 ins | accessor (load and return) |
@@ -4441,43 +4038,18 @@
 | `0x5fb920` | 15 | 7 | `shape only` | tiny helper, 4 ins | tiny helper |
 | `0x5fbc10` | 15 | 6 | `shape only` | tiny helper, 4 ins | tiny helper |
 | `0x62efc0` | 15 | 2 | `shape only` | tiny helper, 5 ins | tiny helper |
-| `0x687e10` | 15 | 0 | `vtable` | slot 0 of Multi::FlipNester | has a backward branch (often a loop) |
-| `0x6937d0` | 15 | 0 | `vtable` | slot 0 of Multi::FilterNester | has a backward branch (often a loop) |
-| `0x695e40` | 15 | 0 | `vtable` | slot 0 of Multi::CompactNester | has a backward branch (often a loop) |
-| `0x6d5900` | 15 | 0 | `vtable` | slot 0 of Utils::BadResponseException | tiny helper |
-| `0x6de890` | 15 | 0 | `vtable` | slot 0 of boost::bad_rational | tiny helper |
-| `0x7012a0` | 15 | 0 | `vtable` | slot 0 of boost::geometry::centroid_exception | tiny helper |
-| `0x7043a0` | 15 | 0 | `vtable` | slot 0 of boost::geometry::overlay_invalid_input_exception | tiny helper |
-| `0x7080f0` | 15 | 0 | `vtable` | slot 0 of boost::geometry::detail::self_get_turn_points::self_ip_exception | tiny helper |
-| `0x74b9a0` | 15 | 0 | `vtable` | slot 0 of boost::geometry::exception | tiny helper |
-| `0x78f0d0` | 15 | 0 | `vtable` | slot 7 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | has a backward branch (often a loop) |
-| `0x7bfe90` | 15 | 0 | `vtable` | slot 0 of Structure::ParseSolutionException | tiny helper |
-| `0x7c4690` | 15 | 0 | `vtable` | slot 0 of __gnu_cxx::__concurrence_lock_error | tiny helper |
-| `0x7c46d0` | 15 | 0 | `vtable` | slot 0 of __gnu_cxx::__concurrence_wait_error | tiny helper |
-| `0x7c4710` | 15 | 0 | `vtable` | slot 0 of __gnu_cxx::__concurrence_unlock_error | tiny helper |
-| `0x7c4a70` | 15 | 0 | `vtable` | slot 0 of __gnu_cxx::__concurrence_broadcast_error | tiny helper |
 | `0x8760f0` | 15 | 9 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x877ad0` | 15 | 12 | `shape only` | has a backward branch (often a loop), 3 ins | has a backward branch (often a loop) |
 | `0x877bd0` | 15 | 8 | `shape only` | has a backward branch (often a loop), 3 ins | has a backward branch (often a loop) |
 | `0x88dc00` | 15 | 10 | `shape only` | has a backward branch (often a loop), 3 ins | has a backward branch (often a loop) |
-| `0x8aac90` | 15 | 0 | `vtable` | slot 0 of <subst>::thread::_State_impl::<<subst>>::<subst> | tiny helper |
-| `0x8aaca0` | 15 | 0 | `vtable` | slot 2 of <subst>::thread::_State_impl::<<subst>::<subst>::<subst>::shared_ptr::<Engine::Engine>>::<subst>::<s | tiny helper |
-| `0x8aadc0` | 15 | 0 | `vtable` | slot 0 of <subst>::thread::_State_impl::<Engine::Engine>::Structure::Problem | tiny helper |
-| `0x8aae20` | 15 | 0 | `vtable` | slot 0 of <subst>::thread::_State_impl::<Multi::Supervisor> | tiny helper |
-| `0x8aaea0` | 15 | 0 | `vtable` | slot 0 of <subst>::thread::_State_impl::<NoFitMultiThreadComputer::RunAllComputations> | tiny helper |
-| `0x8aaf10` | 15 | 0 | `vtable` | slot 0 of <subst>::thread::_State_impl::<Tiling::PackerCache::Implementation::PreUpdateTilings>::<subst>::vect | tiny helper |
 | `0x15a4d0` | 14 | 1 | `shape only` | accessor (load and return), 4 ins | accessor (load and return) |
 | `0x1c8370` | 14 | 1 | `shape only` | accessor (load and return), 4 ins | accessor (load and return) |
 | `0x4dac90` | 14 | 2 | `shape only` | tiny helper, 3 ins | tiny helper |
-| `0x7af200` | 14 | 0 | `vtable` | slot 10 of CryptoPP::StringStore | tiny helper |
 | `0x21fa90` | 13 | 1 | `shape only` | has a backward branch (often a loop), 3 ins | has a backward branch (often a loop) |
 | `0x4d3ef0` | 13 | 6 | `shape only` | accessor (load and return), 4 ins | accessor (load and return) |
 | `0x549ab0` | 13 | 1 | `shape only` | tiny helper, 4 ins | tiny helper |
 | `0x54ce70` | 13 | 2 | `shape only` | tiny helper, 6 ins | tiny helper |
 | `0x60be20` | 13 | 1 | `shape only` | tiny helper, 5 ins | tiny helper |
-| `0x781280` | 13 | 3 | `vtable` | slot 10 of CryptoPP::StringSource | has a backward branch (often a loop) |
-| `0x7e9180` | 13 | 0 | `vtable` | slot 4 of Tiling::SqueezeMultiTiler | tiny helper |
-| `0x7e9190` | 13 | 0 | `vtable` | slot 3 of Tiling::SqueezeMultiTiler | tiny helper |
 | `0x45530` | 12 | 1 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x62640` | 12 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x62650` | 12 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4506,13 +4078,9 @@
 | `0x545290` | 12 | 1 | `strings` | @w\| | tiny helper |
 | `0x5479c0` | 12 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x6562a0` | 12 | 2 | `shape only` | tiny helper, 4 ins | tiny helper |
-| `0x7a2ad0` | 12 | 0 | `vtable` | slot 21 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
-| `0x7a2ae0` | 12 | 0 | `vtable` | slot 19 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | has a backward branch (often a loop) |
-| `0x7f6940` | 12 | 0 | `vtable` | slot 19 of CryptoPP::MessageQueue | accessor (load and return) |
 | `0x8774e0` | 12 | 4 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x998cb0` | 12 | 9 | `shape only` | has a backward branch (often a loop), 2 ins | has a backward branch (often a loop) |
 | `0x30250` | 11 | 25 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
-| `0x116920` | 11 | 0 | `vtable` | slot 15 of CryptoPP::StringStore | tiny helper |
 | `0x157d60` | 11 | 2 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x157d70` | 11 | 1 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x157d80` | 11 | 1 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
@@ -4528,11 +4096,7 @@
 | `0x4fc340` | 11 | 7 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x52f8c0` | 11 | 4 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x600690` | 11 | 2 | `shape only` | has a backward branch (often a loop), 3 ins | has a backward branch (often a loop) |
-| `0x75ddd0` | 11 | 0 | `vtable` | slot 2 of Engine::EquivalentObserver | tiny helper |
-| `0x75dde0` | 11 | 0 | `vtable` | slot 3 of Engine::EquivalentObserver | tiny helper |
-| `0x81b4b0` | 11 | 0 | `vtable` | slot 26 of CryptoPP::StringStore | tiny helper |
 | `0x8aaaf0` | 11 | 53 | `shape only` | accessor (load and return), 4 ins | accessor (load and return) |
-| `0x8aac50` | 11 | 0 | `vtable` | slot 2 of <subst>::thread::_State_impl::<<subst>>::<subst> | tiny helper |
 | `0x962f10` | 11 | 2 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x963560` | 11 | 2 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x9635f0` | 11 | 2 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
@@ -4560,12 +4124,6 @@
 | `0x54cbf0` | 10 | 3 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x5da240` | 10 | 2 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x60c2d0` | 10 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x6fc5e0` | 10 | 0 | `vtable` | slot 1 of boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp> | tiny helper |
-| `0x78ef80` | 10 | 0 | `vtable` | slot 5 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | tiny helper |
-| `0x798040` | 10 | 0 | `vtable` | slot 4 of CryptoPP::HexEncoder | tiny helper |
-| `0x7ad010` | 10 | 0 | `vtable` | slot 34 of CryptoPP::Redirector | tiny helper |
-| `0x810c40` | 10 | 0 | `vtable` | slot 44 of CryptoPP::StringStore | tiny helper |
-| `0x810c60` | 10 | 0 | `vtable` | slot 32 of CryptoPP::HexEncoder | tiny helper |
 | `0x50bb0` | 9 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0xb4d80` | 9 | 10 | `shape only` | has a backward branch (often a loop), 2 ins | has a backward branch (often a loop) |
 | `0x159b90` | 9 | 2 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4589,9 +4147,6 @@
 | `0x51d8e0` | 9 | 5 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x520810` | 9 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x62f010` | 9 | 1 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
-| `0x6fc6c0` | 9 | 0 | `vtable` | slot 2 of boost::detail::sp_counted_impl_p::<<subst>::random::mersenne_twister_engine::<>> | tiny helper |
-| `0x7db290` | 9 | 0 | `vtable` | slot 2 of boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock> | tiny helper |
-| `0x7f6a00` | 9 | 0 | `vtable` | slot 25 of CryptoPP::MessageQueue | has a backward branch (often a loop) |
 | `0x33a20` | 8 | 2 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x33a50` | 8 | 1 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x3b7b0` | 8 | 4 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
@@ -4625,13 +4180,6 @@
 | `0x54ce50` | 8 | 4 | `shape only` | tiny helper, 4 ins | tiny helper |
 | `0x600680` | 8 | 19 | `shape only` | has a backward branch (often a loop), 2 ins | has a backward branch (often a loop) |
 | `0x60bdf0` | 8 | 1 | `shape only` | tiny helper, 3 ins | tiny helper |
-| `0x79c9a0` | 8 | 0 | `vtable` | slot 19 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | tiny helper |
-| `0x7a2af0` | 8 | 0 | `vtable` | slot 24 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | accessor (load and return) |
-| `0x7db470` | 8 | 0 | `vtable` | slot 2 of boost::geometry::centroid_exception | tiny helper |
-| `0x7db4d0` | 8 | 0 | `vtable` | slot 2 of boost::geometry::overlay_invalid_input_exception | tiny helper |
-| `0x7e1470` | 8 | 0 | `vtable` | slot 2 of boost::geometry::detail::self_get_turn_points::self_ip_exception | tiny helper |
-| `0x7f6950` | 8 | 0 | `vtable` | slot 18 of CryptoPP::MessageQueue | accessor (load and return) |
-| `0x81ed20` | 8 | 0 | `vtable` | slot 2 of Structure::ParseSolutionException | tiny helper |
 | `0x822590` | 8 | 36 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x895f80` | 8 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x89a730` | 8 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4639,7 +4187,6 @@
 | `0x8aa880` | 8 | 153 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x9635e0` | 8 | 2 | `shape only` | accessor (load and return), 2 ins | accessor (load and return) |
 | `0xd5990` | 7 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x1168f0` | 7 | 6 | `vtable` | slot 13 of CryptoPP::StringStore | tiny helper |
 | `0x1333a0` | 7 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4dd9f0` | 7 | 4 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4dda00` | 7 | 8 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4652,16 +4199,9 @@
 | `0x5433e0` | 7 | 4 | `shape only` | tiny helper, 3 ins | tiny helper |
 | `0x5d74d0` | 7 | 3 | `shape only` | accessor (load and return), 3 ins | accessor (load and return) |
 | `0x63f5d0` | 7 | 1 | `shape only` | thunk (jmp), 1 ins | thunk (jmp) |
-| `0x6fc3a0` | 7 | 0 | `vtable` | slot 3 of boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp> | tiny helper |
-| `0x7f4280` | 7 | 0 | `vtable` | slot 4 of CryptoPP::DL_GroupParameters_DSA | tiny helper |
-| `0x8053a0` | 7 | 0 | `vtable` | slot 10 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | tiny helper |
-| `0x80bf70` | 7 | 0 | `vtable` | slot 3 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | tiny helper |
-| `0x81a030` | 7 | 0 | `vtable` | slot 6 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | tiny helper |
 | `0x23e60` | 6 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x5b0f0` | 6 | 0 | `vtable` | slot 4 of Multi::DatabaseNester | tiny helper |
 | `0x6c0f0` | 6 | 4 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0xb5b90` | 6 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x116840` | 6 | 0 | `vtable` | slot 11 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | tiny helper |
 | `0x252b40` | 6 | 3 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4dc4a0` | 6 | 6 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4dc4b0` | 6 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4680,16 +4220,6 @@
 | `0x547640` | 6 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x547650` | 6 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x547660` | 6 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x7af950` | 6 | 0 | `vtable` | slot 42 of CryptoPP::HexEncoder | tiny helper |
-| `0x7f6900` | 6 | 0 | `vtable` | slot 20 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | tiny helper |
-| `0x7f6910` | 6 | 0 | `vtable` | slot 9 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | tiny helper |
-| `0x8053b0` | 6 | 0 | `vtable` | slot 11 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | tiny helper |
-| `0x809ed0` | 6 | 0 | `vtable` | slot 19 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | tiny helper |
-| `0x80bf30` | 6 | 0 | `vtable` | slot 10 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | tiny helper |
-| `0x819c20` | 6 | 0 | `vtable` | slot 8 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_ | tiny helper |
-| `0x81b4c0` | 6 | 0 | `vtable` | slot 48 of CryptoPP::HexEncoder | tiny helper |
-| `0x81b4d0` | 6 | 0 | `vtable` | slot 49 of CryptoPP::HexEncoder | tiny helper |
-| `0x88fe70` | 6 | 0 | `vtable` | slot 11 of boost::asio::basic_streambuf::<> | tiny helper |
 | `0x1be60` | 5 | 1 | `callers` | called by 0x10650 WaitNextSolution | thunk (jmp) |
 | `0x6c0e0` | 5 | 19 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0xb4d70` | 5 | 9 | `shape only` | accessor (load and return), 2 ins | accessor (load and return) |
@@ -4719,7 +4249,6 @@
 | `0x4ddcc0` | 5 | 2 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4ddd10` | 5 | 18 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4f35c0` | 5 | 4 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x4f3610` | 5 | 0 | `vtable` | slot 1 of Tiling::BasicCandidater | thunk (jmp) |
 | `0x4f4f10` | 5 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x4f7040` | 5 | 1 | `shape only` | thunk (jmp), 1 ins | thunk (jmp) |
 | `0x4f72a0` | 5 | 5 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4748,46 +4277,6 @@
 | `0x5c5f40` | 5 | 81 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x5fbc70` | 5 | 3 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x630fd0` | 5 | 1 | `shape only` | thunk (jmp), 1 ins | thunk (jmp) |
-| `0x679260` | 5 | 0 | `vtable` | slot 1 of dbg::symlog | thunk (jmp) |
-| `0x681f80` | 5 | 0 | `vtable` | slot 1 of Pack::KnapsackNester | thunk (jmp) |
-| `0x696c30` | 5 | 0 | `vtable` | slot 1 of Multi::TraceObserver | thunk (jmp) |
-| `0x6970c0` | 5 | 0 | `vtable` | slot 1 of Multi::NestingObserver | thunk (jmp) |
-| `0x69a400` | 5 | 0 | `vtable` | slot 1 of Multi::NoFitMapCanceller | thunk (jmp) |
-| `0x69a420` | 5 | 0 | `vtable` | slot 1 of Multi::RCompactCanceller | thunk (jmp) |
-| `0x69a460` | 5 | 0 | `vtable` | slot 1 of Multi::AdvancedStrategist | thunk (jmp) |
-| `0x69a630` | 5 | 0 | `vtable` | slot 1 of Multi::PartUpdaterLimiter | thunk (jmp) |
-| `0x69a670` | 5 | 0 | `vtable` | slot 1 of Multi::RandomSheetSelector | thunk (jmp) |
-| `0x69a700` | 5 | 0 | `vtable` | slot 1 of Multi::LargestSheetSelector | thunk (jmp) |
-| `0x6d5960` | 5 | 0 | `vtable` | slot 1 of Utils::TimerWinImplementation | thunk (jmp) |
-| `0x6da1d0` | 5 | 0 | `vtable` | slot 1 of Utils::Canceller | thunk (jmp) |
-| `0x6f00f0` | 5 | 0 | `vtable` | slot 1 of boost::asio::detail::win_thread::func::<<subst>::win_iocp_io_service::timer_thread_function> | thunk (jmp) |
-| `0x6f0700` | 5 | 0 | `vtable` | slot 1 of boost::asio::detail::win_thread::func::<<subst>::resolver_service_base::work_io_service_runner> | thunk (jmp) |
-| `0x6fc6d0` | 5 | 0 | `vtable` | slot 1 of boost::detail::sp_counted_impl_p::<<subst>::random::mersenne_twister_engine::<>> | thunk (jmp) |
-| `0x75ddb0` | 5 | 0 | `vtable` | slot 1 of Engine::CompositeObserver | thunk (jmp) |
-| `0x76db10` | 5 | 0 | `vtable` | slot 1 of Tiling::WarpCanceller | thunk (jmp) |
-| `0x76db30` | 5 | 0 | `vtable` | slot 1 of Tiling::BiModulePattern | thunk (jmp) |
-| `0x76e380` | 5 | 0 | `vtable` | slot 1 of Tiling::DensityEvaluator | thunk (jmp) |
-| `0x76e400` | 5 | 0 | `vtable` | slot 1 of Tiling::QuantityEvaluator | thunk (jmp) |
-| `0x76e420` | 5 | 0 | `vtable` | slot 1 of Tiling::ReusableEvaluator | thunk (jmp) |
-| `0x76f9c0` | 5 | 0 | `vtable` | slot 1 of Tiling::MultiOrientedPartPattern | thunk (jmp) |
-| `0x76f9e0` | 5 | 0 | `vtable` | slot 1 of Tiling::UnlimitedDensityEvaluator | thunk (jmp) |
-| `0x76fa00` | 5 | 0 | `vtable` | slot 1 of Tiling::UnlimitedXDensityEvaluator | thunk (jmp) |
-| `0x77c090` | 5 | 0 | `vtable` | slot 23 of CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS | accessor (load and return) |
-| `0x77eda0` | 5 | 0 | `vtable` | slot 24 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | tiny helper |
-| `0x7b1040` | 5 | 0 | `vtable` | slot 1 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | thunk (jmp) |
-| `0x7b11e0` | 5 | 0 | `vtable` | slot 1 of CryptoPP::Algorithm | thunk (jmp) |
-| `0x7b1240` | 5 | 0 | `vtable` | slot 1 of CryptoPP::BitBucket | thunk (jmp) |
-| `0x7b1260` | 5 | 0 | `vtable` | slot 1 of CryptoPP::ByteQueue::Walker | thunk (jmp) |
-| `0x7bc320` | 5 | 0 | `vtable` | slot 1 of Structure::SizeDimensioner | thunk (jmp) |
-| `0x7befa0` | 5 | 0 | `vtable` | slot 1 of Structure::WidthDimensioner | thunk (jmp) |
-| `0x7bf050` | 5 | 0 | `vtable` | slot 1 of Structure::BoxAreaDimensioner | thunk (jmp) |
-| `0x7c24a0` | 5 | 0 | `vtable` | slot 1 of Structure::Observer | thunk (jmp) |
-| `0x7db4c0` | 5 | 0 | `vtable` | slot 2 of boost::geometry::turn_info_exception | accessor (load and return) |
-| `0x8006a0` | 5 | 0 | `vtable` | slot 23 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>:: | tiny helper |
-| `0x81bd20` | 5 | 0 | `vtable` | slot 2 of CryptoPP::OS_RNG_Err | accessor (load and return) |
-| `0x822580` | 5 | 1 | `vtable` | slot 2 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::bad_rational>> | accessor (load and return) |
-| `0x824ab0` | 5 | 2 | `vtable` | slot 2 of boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::bad_function_call>> | accessor (load and return) |
-| `0x854020` | 5 | 0 | `vtable` | slot 2 of <subst>::ios_base::failure | accessor (load and return) |
 | `0x862020` | 5 | 10 | `shape only` | thunk (jmp), 1 ins | thunk (jmp) |
 | `0x86a2b0` | 5 | 27 | `shape only` | thunk (jmp), 1 ins | thunk (jmp) |
 | `0x8774f0` | 5 | 67 | `callers` | called by 0x2ab0 LaunchLocalComputation; 0x6100 LaunchComputation; 0x104d0 WaitComputationTermination | thunk (jmp) |
@@ -4849,15 +4338,6 @@
 | `0x62dbe0` | 4 | 2 | `shape only` | accessor (load and return), 2 ins | accessor (load and return) |
 | `0x62dbf0` | 4 | 2 | `shape only` | accessor (load and return), 2 ins | accessor (load and return) |
 | `0x67db00` | 4 | 2 | `shape only` | accessor (load and return), 2 ins | accessor (load and return) |
-| `0x77d2c0` | 4 | 0 | `vtable` | slot 16 of CryptoPP::StringStore | tiny helper |
-| `0x77d2d0` | 4 | 0 | `vtable` | slot 16 of CryptoPP::MessageQueue | tiny helper |
-| `0x781290` | 4 | 0 | `vtable` | slot 16 of CryptoPP::StringSource | tiny helper |
-| `0x7fd7a0` | 4 | 0 | `vtable` | slot 17 of CryptoPP::StringStore | tiny helper |
-| `0x7fd7b0` | 4 | 0 | `vtable` | slot 17 of CryptoPP::MessageQueue | tiny helper |
-| `0x801070` | 4 | 0 | `vtable` | slot 17 of CryptoPP::StringSource | tiny helper |
-| `0x81b720` | 4 | 0 | `vtable` | slot 12 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | accessor (load and return) |
-| `0x88fa40` | 4 | 0 | `vtable` | slot 3 of boost::asio::basic_streambuf::<> | accessor (load and return) |
-| `0xbd2c0` | 3 | 0 | `vtable` | slot 4 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | tiny helper |
 | `0xd5970` | 3 | 7 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0xd59a0` | 3 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x133180` | 3 | 3 | `shape only` | tiny helper, 2 ins | tiny helper |
@@ -4865,90 +4345,12 @@
 | `0x54d110` | 3 | 2 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x559fd0` | 3 | 6 | `shape only` | tiny helper, 2 ins | tiny helper |
 | `0x62f000` | 3 | 1 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x6fc560` | 3 | 0 | `vtable` | slot 4 of boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp> | tiny helper |
-| `0x6fc570` | 3 | 0 | `vtable` | slot 5 of boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp> | tiny helper |
-| `0x6fc6a0` | 3 | 0 | `vtable` | slot 4 of boost::detail::sp_counted_impl_p::<<subst>::random::mersenne_twister_engine::<>> | tiny helper |
-| `0x6fc6b0` | 3 | 0 | `vtable` | slot 5 of boost::detail::sp_counted_impl_p::<<subst>::random::mersenne_twister_engine::<>> | tiny helper |
 | `0x6fc810` | 3 | 3 | `shape only` | tiny helper, 2 ins | tiny helper |
-| `0x7778c0` | 3 | 0 | `vtable` | slot 11 of CryptoPP::DERGeneralEncoder | tiny helper |
-| `0x7778d0` | 3 | 0 | `vtable` | slot 11 of CryptoPP::ArrayXorSink | tiny helper |
-| `0x7778e0` | 3 | 0 | `vtable` | slot 11 of CryptoPP::HashFilter | tiny helper |
-| `0x77c0b0` | 3 | 0 | `vtable` | slot 11 of CryptoPP::MessageQueue | tiny helper |
-| `0x77fdf0` | 3 | 0 | `vtable` | slot 11 of CryptoPP::StringStore | tiny helper |
-| `0x780190` | 3 | 0 | `vtable` | slot 11 of CryptoPP::StringSource | tiny helper |
-| `0x798030` | 3 | 0 | `vtable` | slot 42 of CryptoPP::StringStore | tiny helper |
-| `0x798840` | 3 | 0 | `vtable` | slot 31 of CryptoPP::HexEncoder | tiny helper |
-| `0x798850` | 3 | 0 | `vtable` | slot 43 of CryptoPP::StringStore | tiny helper |
-| `0x798860` | 3 | 0 | `vtable` | slot 12 of CryptoPP::HexEncoder | tiny helper |
-| `0x7b1230` | 3 | 0 | `vtable` | slot 6 of CryptoPP::BitBucket | tiny helper |
-| `0x7c2470` | 3 | 0 | `vtable` | slot 3 of Multi::TraceObserver | tiny helper |
-| `0x7e7e80` | 3 | 0 | `vtable` | slot 4 of Tiling::BoxMultiTiler | tiny helper |
-| `0x80bf40` | 3 | 0 | `vtable` | slot 9 of CryptoPP::PK_MessageAccumulatorImpl::<<subst>::SHA1> | tiny helper |
-| `0x80bf60` | 3 | 0 | `vtable` | slot 8 of CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::T | tiny helper |
-| `0x810c20` | 3 | 0 | `vtable` | slot 5 of CryptoPP::HexEncoder | tiny helper |
-| `0x810c30` | 3 | 0 | `vtable` | slot 33 of CryptoPP::HexEncoder | tiny helper |
-| `0x810c50` | 3 | 0 | `vtable` | slot 17 of CryptoPP::HexEncoder | tiny helper |
-| `0x81b110` | 3 | 0 | `vtable` | slot 35 of CryptoPP::Redirector | tiny helper |
-| `0x81b6b0` | 3 | 0 | `vtable` | slot 11 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | tiny helper |
-| `0x81b730` | 3 | 0 | `vtable` | slot 13 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | tiny helper |
-| `0x82d120` | 3 | 0 | `vtable` | slot 2 of <subst>::__cxx11::messages_byname::<> | tiny helper |
-| `0x82d250` | 3 | 0 | `vtable` | slot 2 of <subst>::__cxx11::messages_byname::<> | tiny helper |
-| `0x88f8a0` | 3 | 0 | `vtable` | slot 6 of boost::asio::basic_streambuf::<> | tiny helper |
-| `0x88feb0` | 3 | 0 | `vtable` | slot 7 of boost::asio::basic_streambuf::<> | tiny helper |
 | `0xb4490` | 1 | 15 | `shape only` | tiny helper, 1 ins | tiny helper |
 | `0x2b3a50` | 1 | 19 | `shape only` | tiny helper, 1 ins | tiny helper |
 | `0x3715e0` | 1 | 11 | `shape only` | tiny helper, 1 ins | tiny helper |
 | `0x371fd0` | 1 | 12 | `shape only` | tiny helper, 1 ins | tiny helper |
 | `0x418810` | 1 | 2 | `shape only` | tiny helper, 1 ins | tiny helper |
-| `0x4f3600` | 1 | 2 | `vtable` | slot 0 of Tiling::BasicCandidater | tiny helper |
 | `0x601980` | 1 | 2 | `shape only` | tiny helper, 1 ins | tiny helper |
-| `0x681f90` | 1 | 0 | `vtable` | slot 0 of Pack::KnapsackNester | tiny helper |
-| `0x696c40` | 1 | 0 | `vtable` | slot 0 of Multi::TraceObserver | tiny helper |
-| `0x6970d0` | 1 | 0 | `vtable` | slot 0 of Multi::NestingObserver | tiny helper |
-| `0x69a410` | 1 | 0 | `vtable` | slot 0 of Multi::NoFitMapCanceller | tiny helper |
-| `0x69a430` | 1 | 0 | `vtable` | slot 0 of Multi::RCompactCanceller | tiny helper |
-| `0x69a470` | 1 | 0 | `vtable` | slot 0 of Multi::AdvancedStrategist | tiny helper |
-| `0x69a640` | 1 | 0 | `vtable` | slot 0 of Multi::PartUpdaterLimiter | tiny helper |
-| `0x69a680` | 1 | 0 | `vtable` | slot 0 of Multi::RandomSheetSelector | tiny helper |
-| `0x69a710` | 1 | 0 | `vtable` | slot 0 of Multi::LargestSheetSelector | tiny helper |
-| `0x6d5970` | 1 | 0 | `vtable` | slot 0 of Utils::TimerWinImplementation | tiny helper |
-| `0x6da1e0` | 1 | 0 | `vtable` | slot 0 of Utils::Canceller | tiny helper |
-| `0x6ea510` | 1 | 0 | `vtable` | slot 3 of boost::asio::stream_socket_service::<<subst>::ip::tcp> | tiny helper |
-| `0x6ec6a0` | 1 | 0 | `vtable` | slot 2 of boost::asio::waitable_timer_service::<<subst>::chrono::_V2::steady_clock>::<subst>::wait_traits::<> | tiny helper |
-| `0x6f0100` | 1 | 0 | `vtable` | slot 0 of boost::asio::detail::win_thread::func::<<subst>::win_iocp_io_service::timer_thread_function> | tiny helper |
-| `0x6f0710` | 1 | 0 | `vtable` | slot 0 of boost::asio::detail::win_thread::func::<<subst>::resolver_service_base::work_io_service_runner> | tiny helper |
-| `0x6fc5f0` | 1 | 0 | `vtable` | slot 0 of boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp> | tiny helper |
-| `0x6fc6e0` | 1 | 0 | `vtable` | slot 0 of boost::detail::sp_counted_impl_p::<<subst>::random::mersenne_twister_engine::<>> | tiny helper |
-| `0x75ddc0` | 1 | 0 | `vtable` | slot 0 of Engine::CompositeObserver | tiny helper |
-| `0x76db20` | 1 | 0 | `vtable` | slot 0 of Tiling::WarpCanceller | tiny helper |
-| `0x76db40` | 1 | 0 | `vtable` | slot 0 of Tiling::BiModulePattern | tiny helper |
-| `0x76e390` | 1 | 0 | `vtable` | slot 0 of Tiling::DensityEvaluator | tiny helper |
-| `0x76e410` | 1 | 0 | `vtable` | slot 0 of Tiling::QuantityEvaluator | tiny helper |
-| `0x76e430` | 1 | 0 | `vtable` | slot 0 of Tiling::ReusableEvaluator | tiny helper |
-| `0x76f9d0` | 1 | 0 | `vtable` | slot 0 of Tiling::MultiOrientedPartPattern | tiny helper |
-| `0x76f9f0` | 1 | 0 | `vtable` | slot 0 of Tiling::UnlimitedDensityEvaluator | tiny helper |
-| `0x76fa10` | 1 | 0 | `vtable` | slot 0 of Tiling::UnlimitedXDensityEvaluator | tiny helper |
-| `0x78b4c0` | 1 | 0 | `vtable` | slot 47 of CryptoPP::BERGeneralDecoder | tiny helper |
-| `0x798870` | 1 | 0 | `vtable` | slot 16 of CryptoPP::HexEncoder | tiny helper |
-| `0x7b1050` | 1 | 0 | `vtable` | slot 0 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | tiny helper |
-| `0x7b11f0` | 1 | 0 | `vtable` | slot 0 of CryptoPP::Algorithm | tiny helper |
-| `0x7b1220` | 1 | 0 | `vtable` | slot 10 of CryptoPP::BitBucket | tiny helper |
-| `0x7b1250` | 1 | 0 | `vtable` | slot 0 of CryptoPP::BitBucket | tiny helper |
-| `0x7b1270` | 1 | 0 | `vtable` | slot 0 of CryptoPP::ByteQueue::Walker | tiny helper |
-| `0x7b3010` | 1 | 0 | `vtable` | slot 5 of RCompact::RotateLogger | tiny helper |
-| `0x7b3040` | 1 | 0 | `vtable` | slot 7 of RCompact::RotateLogger | tiny helper |
-| `0x7b3050` | 1 | 0 | `vtable` | slot 6 of RCompact::RotateLogger | tiny helper |
-| `0x7b3060` | 1 | 0 | `vtable` | slot 3 of RCompact::RotateLogger | tiny helper |
-| `0x7bc330` | 1 | 0 | `vtable` | slot 0 of Structure::SizeDimensioner | tiny helper |
-| `0x7befb0` | 1 | 0 | `vtable` | slot 0 of Structure::WidthDimensioner | tiny helper |
-| `0x7bf060` | 1 | 0 | `vtable` | slot 0 of Structure::BoxAreaDimensioner | tiny helper |
-| `0x7c2480` | 1 | 0 | `vtable` | slot 5 of Multi::NestingObserver | tiny helper |
-| `0x7c2490` | 1 | 0 | `vtable` | slot 4 of Multi::NestingObserver | tiny helper |
-| `0x7c24b0` | 1 | 0 | `vtable` | slot 0 of Structure::Observer | tiny helper |
-| `0x819f80` | 1 | 0 | `vtable` | slot 5 of CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E:: | tiny helper |
-| `0x82d130` | 1 | 0 | `vtable` | slot 4 of <subst>::__cxx11::messages_byname::<> | tiny helper |
-| `0x82d260` | 1 | 0 | `vtable` | slot 4 of <subst>::__cxx11::messages_byname::<> | tiny helper |
-| `0x88f8c0` | 1 | 0 | `vtable` | slot 2 of boost::asio::basic_streambuf::<> | tiny helper |
-| `0x8aa8b0` | 1 | 398 | `vtable` | slot 0 of <subst>::locale::facet | tiny helper |
 | `0x8ab150` | 1 | 16 | `shape only` | tiny helper, 1 ins | tiny helper |
 | `0x9465c0` | 1 | 164 | `shape only` | tiny helper, 1 ins | tiny helper |

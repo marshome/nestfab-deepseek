@@ -244,8 +244,14 @@ if ident.get("by_evidence"):
     print("        by evidence class: " + ", ".join(parts))
     print("        NOTE: 'shape only' means no identity at all is known -- size, instruction count")
     print("        and branch shape. Tier C is NOT reverse engineering; it is a worklist.")
-print("   D no record at all                                          : %5d fns"
-      % max(0, len(seen) - _in_code - _in_docs - ident.get("total", 0)))
+_excluded = len(buckets["third_party"]) + len(buckets["toolchain"])
+print("   (the remaining %d uncited functions are the EXCLUDED buckets: %d third party + %d"
+      % (_excluded, len(buckets["third_party"]), len(buckets["toolchain"])))
+print("    toolchain -- downloaded and linked, or libstdc++/MinGW, so not to be reversed)")
+print("   REAL remaining unknown inside tier C: the 'shape only' rows -- %s fns / %s B,"
+      % (ident.get("by_evidence", {}).get("shape only", {}).get("fns", 0),
+         ident.get("by_evidence", {}).get("shape only", {}).get("bytes", 0)))
+print("    i.e. size, instruction count and branch shape are all that is known about them.")
 print()
 print("=== top 25 DOMAIN functions still not looked at ===")
 for a in sorted(buckets["domain"], key=lambda x: -(P[x].get("size") or 0))[:25]:

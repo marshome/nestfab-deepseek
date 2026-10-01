@@ -121,8 +121,8 @@ TOOLCHAIN_PAT = re.compile(
     r"(std::__|__gnu_cxx|libstdc\+\+|\[abi:|_M_|basic_string::|vector::_M|"
     r"terminate called|__cxa_|operator new|operator delete|std::(length|out_of)_error)", re.I)
 THIRD_PARTY_PAT = re.compile(
-    r"(boost_1_63_0|/boost/|cryptopp|CryptoPP|\bCrypto|sha1|sha256|\bAES\b|RSA|DSA|"
-    r"\bClp\b|\bOsi\b|OsiClp|OsiSolverInterface|CoinUtils|\bCoin\b|coin-or|clpModel|"
+    r"(boost_1_63_0|/boost/|boost::|asio::|cryptopp|CryptoPP|\bCrypto|sha1|sha256|\bAES\b|RSA|DSA|"
+    r"\bClp\b|\bOsi\b|OsiClp|OsiSolverInterface|CoinUtils|\bCoin\b|Coin::|coin-or|clpModel|"
     r"jsoncpp|json/value\.h|Json::|absl::|\bAbseil\b)", re.I)
 
 
@@ -172,6 +172,13 @@ def classify_identity(a):
         return "toolchain"
     if THIRD_PARTY_PAT.search(name):
         return "third_party"
+    # the class that owns this vtable slot, when there is one, is identity evidence too
+    cls = slot_class_of(a)
+    if cls:
+        if THIRD_PARTY_PAT.search(cls):
+            return "third_party"
+        if TOOLCHAIN_PAT.search(cls) or cls.startswith("std::"):
+            return "toolchain"
     if any(VENDOR_PATH_PAT.search(s) for s in strs):
         return "third_party"
     if strs:
@@ -189,6 +196,37 @@ def has_identity_evidence(a):
     if f.get("strings"):
         return True
     return False
+
+
+# --- vtable CLASS ownership as identity evidence (goal round 9) --------------------------------
+# Round 9 measured that of the 595 un-cited domain functions that are slots of a known vtable, most
+# are members of THIRD PARTY classes -- CryptoPP::HexEncoder (43), CryptoPP::PSSR_MEM (15),
+# CryptoPP::DERGeneralEncoder (14), boost::asio::ip::resolver_service<udp> (4) and so on. Only a
+# minority are domain classes (Pack::RecursiveNester, Multi::*, Tiling::*). A function that occupies
+# slot k of CryptoPP::HexEncoder IS CryptoPP code, so the class name is identity evidence and those
+# functions must not sit in the "domain still to reverse" bucket. (This is the mirror image of the
+# round 7 fix: there the rule was too eager to exclude, here it was too eager to include. Both
+# directions are now driven by evidence rather than by a called function's name.)
+_SLOT_CLASS = None
+
+
+def slot_class_of(a):
+    """Class name owning the vtable slot at `a`, or None."""
+    global _SLOT_CLASS
+    if _SLOT_CLASS is None:
+        _SLOT_CLASS = {}
+        try:
+            import json as _json
+            p = r"D:\Nesting\nestfab\re\vtables.json"
+            vts = _json.load(io.open(p, encoding="utf-8"))
+            for cls, v in vts.items():
+                nm = v.get("demangled") or cls
+                for s in (v.get("slots") or []):
+                    if s:
+                        _SLOT_CLASS.setdefault(s, nm)
+        except Exception:
+            pass
+    return _SLOT_CLASS.get(a)
 
 
 def hint_of(f):

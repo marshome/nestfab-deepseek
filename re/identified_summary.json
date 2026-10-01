@@ -1,29 +1,25 @@
 {
- "total": 4918,
- "bytes": 2773495,
+ "total": 4321,
+ "bytes": 2683238,
  "by_evidence": {
   "shape only": {
    "fns": 3952,
    "bytes": 2247404
   },
   "strings": {
-   "fns": 340,
-   "bytes": 427371
+   "fns": 338,
+   "bytes": 426519
   },
   "callers": {
    "fns": 31,
    "bytes": 9315
-  },
-  "vtable": {
-   "fns": 595,
-   "bytes": 89405
   }
  },
  "shapes": {
-  "has a backward branch (often a loop)": 3430,
-  "straight line / call sequence": 854,
-  "thunk (jmp)": 48,
-  "tiny helper": 480,
-  "accessor (load and return)": 106
+  "has a backward branch (often a loop)": 3215,
+  "straight line / call sequence": 672,
+  "thunk (jmp)": 15,
+  "tiny helper": 327,
+  "accessor (load and return)": 92
  }
 }
