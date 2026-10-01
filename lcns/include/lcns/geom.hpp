@@ -336,6 +336,16 @@ inline constexpr double kCornerOffset = 0.292893;
 // RE 0x9AD9C8, an epsilon both paths use (hole: twice, boundary: once).
 inline constexpr double kGeometryEpsilon = 0.0001;
 
+// RE the final call each Add* entry makes, read from the call sites in round 49:
+//   0x15620 AddRectanglePart          -> 0x14D10 last
+//   0x13410 AddExternalBoundaryToPart -> 0x64C940 then 0x1BA30
+//   0x13800 AddHoleToPart             -> 0x64C940 then 0x5CD5C0, plus one extra flag store
+// Kept as data so a port can name the step it reproduces instead of guessing which routine it is.
+inline constexpr unsigned long kRectangleFinalStep = 0x14D10;   // RE 0x15620
+inline constexpr unsigned long kBoundaryPrepStep = 0x64C940;    // RE 0x13410 and 0x13800
+inline constexpr unsigned long kBoundaryFinalStep = 0x1BA30;    // RE 0x13410
+inline constexpr unsigned long kHoleFinalStep = 0x5CD5C0;       // RE 0x13800
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 

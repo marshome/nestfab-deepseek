@@ -188,6 +188,11 @@ int main() {
         CHECK(geom::kGeometryEpsilon == 0.0001);     // RE 0x9ad9c8
         // the recovered value fits 1 - 1/sqrt(2) to six digits (that reading is an inference)
         CHECK(std::fabs(geom::kCornerOffset - (1.0 - 1.0 / std::sqrt(2.0))) < 1e-6);
+        CHECK(std::fabs(geom::kCornerOffset - (1.0 - 1.0 / std::sqrt(2.0))) < 1e-6);
+        CHECK(geom::kRectangleFinalStep == 0x14D10);
+        CHECK(geom::kBoundaryPrepStep == 0x64C940);
+        CHECK(geom::kBoundaryFinalStep == 0x1BA30);
+        CHECK(geom::kHoleFinalStep == 0x5CD5C0);
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
