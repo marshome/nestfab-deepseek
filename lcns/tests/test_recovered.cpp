@@ -131,6 +131,18 @@ int main() {
         for (const std::shared_ptr<Nester>& s : def) CHECK(s != nullptr);
     }
 
+    // --- recovered trace strings (verbatim in the original's log) -----------------------------
+    {
+        CHECK(std::strcmp(kTraceFlip, "Flip ") == 0);                       // RE 0x4b870
+        CHECK(std::strcmp(kTraceFilter, "Filter ") == 0);                   // RE 0xb3ae0
+        CHECK(std::strcmp(kTracePackerCacheThreads, "Packer Cache max threads: ") == 0);  // RE 0x76a130
+        CHECK(std::strcmp(kTraceVisitedNodes, "Visited Nodes=") == 0);      // RE 0x1c7980
+        CHECK(std::strcmp(kTraceBucketsEmpty, "Buckets : empty") == 0);     // RE 0x7b3d20
+        CHECK(std::strcmp(kTraceBeamTryNb, "Beam try nb : ") == 0);         // RE 0x655a30
+        CHECK(std::strcmp(kTraceInternalError,
+                          "*** INTERNAL ERROR: please contact support ***") == 0);  // RE 0x60a620
+    }
+
     // --- the tiling pattern catalogue (RE ..\tiling\packer_cache.cpp, 0x765460) ----------------
     {
         CHECK(tiling::kPatternKeyCount == 16);
