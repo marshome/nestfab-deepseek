@@ -295,3 +295,346 @@
 | 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
 |---|---:|---:|---|---:|
 | `0x5053c0` | 107 | 33 | `extra_infos` | 5 |
+
+# 两条**证据随行**的归属通道（goal round 99）
+
+* **A**：该函数引用了某 TU 的**特异字符串**（阈值 ≤25 个引用者，每行给出该串与它的被引用次数，可单条复核）；
+* **B**：该函数的**每一个调用者都是种子**（种子自带 TU 路径 = 身份级）且它们指向同一 TU（每行列出调用者）。**不做链式传播**，所以不会漂移。
+
+**两条都是推论（A 强推论 / B 较强），不等同于身份级证据。**
+
+## `..\nesting\algos\bucket_manager.hpp`—31 个函数 / 17946 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x236bc0` | 3646 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x234c60` | 3014 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x224aa0` | 2082 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x21faf0` | 916 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x7b53e0` | 730 | B | callers: 0x20fe90 |
+| `0x8d0840` | 581 | B | callers: 0x7b4000 |
+| `0x8d0d30` | 581 | B | callers: 0x7b4b60 |
+| `0x8d1220` | 581 | B | callers: 0x7b56c0 |
+| `0x1c55f0` | 565 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x8d0a90` | 565 | B | callers: 0x7b4000 |
+| `0x8d0f80` | 565 | B | callers: 0x7b4b60 |
+| `0x8d1470` | 565 | B | callers: 0x7b56c0 |
+| `0x6d5f90` | 364 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x900820` | 342 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x1c3f30` | 324 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x900c00` | 309 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x674360` | 287 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x653550` | 276 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x236ad0` | 230 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x656110` | 202 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x20cfe0` | 184 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x20bec0` | 172 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x6742b0` | 169 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x6ddec0` | 107 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x20c0c0` | 106 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x6de0f0` | 106 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x8d0cd0` | 89 | B | callers: 0x215720, 0x7b4000 |
+| `0x8d11c0` | 89 | B | callers: 0x212d30, 0x7b4b60 |
+| `0x8d16b0` | 89 | B | callers: 0x20fe90, 0x7b56c0 |
+| `0x8fe5e0` | 88 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+| `0x1c12b0` | 22 | B | callers: 0x20fe90, 0x212d30, 0x215720 |
+
+## `..\multi\nesting_context.cpp`—24 个函数 / 15562 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x550a80` | 6056 | B | callers: 0x3c9e0, 0x69aa40 |
+| `0x54f5d0` | 1516 | B | callers: 0x3c9e0 |
+| `0x549650` | 1083 | B | callers: 0x40070 |
+| `0x3fd40` | 805 | B | callers: 0x40070 |
+| `0x669e60` | 749 | B | callers: 0x3e740 |
+| `0x3d920` | 690 | B | callers: 0x40070 |
+| `0x8b3d60` | 572 | B | callers: 0x3f070 |
+| `0x902440` | 563 | B | callers: 0x69aa40 |
+| `0x8b8250` | 458 | B | callers: 0x69aa40 |
+| `0x8b8650` | 454 | B | callers: 0x69aa40 |
+| `0x8bf4c0` | 438 | B | callers: 0x3c9e0 |
+| `0x8f5fd0` | 418 | B | callers: 0x69aa40 |
+| `0x17b740` | 352 | B | callers: 0x69aa40 |
+| `0x16f1f0` | 347 | B | callers: 0x40070 |
+| `0x8cee00` | 256 | B | callers: 0x69aa40 |
+| `0x931ff0` | 169 | B | callers: 0x3f070 |
+| `0x92efd0` | 129 | B | callers: 0x40720, 0x41920 |
+| `0x52c4c0` | 118 | B | callers: 0x3b5f0 |
+| `0x669df0` | 102 | B | callers: 0x3c3f0, 0x3e740, 0x41920 |
+| `0x3c390` | 96 | B | callers: 0x3c3f0, 0x3e740 |
+| `0x3b590` | 84 | B | callers: 0x69aa40 |
+| `0x4f0c60` | 56 | B | callers: 0x3e740 |
+| `0x54e1c0` | 26 | B | callers: 0x69aa40 |
+| `0x54e1a0` | 25 | B | callers: 0x69aa40 |
+
+## `..\tiling\packer.cpp`—6 个函数 / 10204 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x154df0` | 3045 | B | callers: 0x770d10 |
+| `0x76fa20` | 3013 | B | callers: 0x770d10 |
+| `0x15f100` | 2837 | B | callers: 0x770d10 |
+| `0x15ddc0` | 956 | B | callers: 0x770d10 |
+| `0x544790` | 195 | B | callers: 0x770d10 |
+| `0x15ea80` | 158 | B | callers: 0x770d10 |
+
+## `internal.cpp`—23 个函数 / 7845 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x93e2c0` | 1252 | B | callers: 0x1ee50 |
+| `0x8c1920` | 754 | B | callers: 0x22e40 |
+| `0x1ec80` | 457 | B | callers: 0x1ee50 |
+| `0x923110` | 408 | B | callers: 0x1ee50 |
+| `0x923480` | 408 | B | callers: 0x1ee50 |
+| `0x9237f0` | 408 | B | callers: 0x1ee50 |
+| `0x9314f0` | 408 | B | callers: 0x1ee50 |
+| `0x932b80` | 408 | B | callers: 0x1ee50 |
+| `0x64f850` | 350 | B | callers: 0x22e40 |
+| `0x677af0` | 350 | B | callers: 0x1ee50 |
+| `0x8c20a0` | 330 | B | callers: 0x22e40 |
+| `0x897650` | 292 | B | callers: 0x22e40 |
+| `0x922ff0` | 288 | B | callers: 0x1ee50 |
+| `0x923360` | 288 | B | callers: 0x1ee50 |
+| `0x9236d0` | 288 | B | callers: 0x1ee50 |
+| `0x9313d0` | 288 | B | callers: 0x1ee50 |
+| `0x932a60` | 288 | B | callers: 0x1ee50 |
+| `0x1b840` | 203 | B | callers: 0x22e40 |
+| `0x1bb10` | 150 | B | callers: 0x1ee50 |
+| `0x1e0d0` | 104 | B | callers: 0x1ee50 |
+| `0x4f7a50` | 66 | B | callers: 0x1ee50 |
+| `0x899690` | 44 | B | callers: 0x1ee50 |
+| `0x549ab0` | 13 | B | callers: 0x1ee50 |
+
+## `..\verify\equivalent.cpp`—16 个函数 / 7710 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x4bd070` | 2816 | B | callers: 0x4bdb70 |
+| `0x4bb9b0` | 1364 | B | callers: 0x4bdb70 |
+| `0x8c0570` | 648 | B | callers: 0x4bdb70 |
+| `0x4b99b0` | 460 | B | callers: 0x4bdb70 |
+| `0x4f8a80` | 449 | B | callers: 0x4bdb70 |
+| `0x4fd130` | 429 | B | callers: 0x4bdb70 |
+| `0x874270` | 291 | B | callers: 0x4bdb70 |
+| `0x533ea0` | 255 | B | callers: 0x4bdb70 |
+| `0x4fcc90` | 239 | B | callers: 0x4bdb70 |
+| `0x8f4e40` | 220 | B | callers: 0x4bdb70 |
+| `0x4ba3e0` | 136 | B | callers: 0x4bdb70 |
+| `0x4b9cf0` | 128 | B | callers: 0x4bc9e0 |
+| `0x4bad90` | 114 | B | callers: 0x4bc9e0 |
+| `0x8743a0` | 75 | B | callers: 0x4bdb70 |
+| `0x679f40` | 43 | B | callers: 0x4bdb70 |
+| `0x67d680` | 43 | B | callers: 0x4bdb70 |
+
+## `..\nesting\algos\postop.cpp`—5 个函数 / 5813 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8ffb20` | 3207 | B | callers: 0x1c9290, 0x1c97a0 |
+| `0x1c8960` | 973 | B | callers: 0x1c8d30 |
+| `0x65e530` | 673 | B | callers: 0x7c5b70 |
+| `0x8ae730` | 630 | B | callers: 0x1cb100 |
+| `0x1c8ec0` | 330 | B | callers: 0x1cb100 |
+
+## `..\structure\problem.cpp`—5 个函数 / 4082 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x7bfea0` | 3031 | B | callers: 0x500a90 |
+| `0x89e2b0` | 541 | B | callers: 0x500a90 |
+| `0x8ff520` | 253 | B | callers: 0x500a90 |
+| `0x8ff620` | 253 | B | callers: 0x4fdfe0 |
+| `0x4f8c70` | 4 | B | callers: 0x4fdfe0 |
+
+## `..\nesting\algos\compact.hpp`—6 个函数 / 3818 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x1dea50` | 1355 | B | callers: 0x1da0c0 |
+| `0x1d7160` | 1348 | B | callers: 0x1da0c0 |
+| `0x1de600` | 581 | B | callers: 0x1da0c0 |
+| `0x1dd950` | 269 | B | callers: 0x1da0c0 |
+| `0x1d70a0` | 177 | B | callers: 0x1da0c0 |
+| `0x8f69f0` | 88 | B | callers: 0x1da0c0 |
+
+## `..\structure\multitorch_eval.cpp`—3 个函数 / 3733 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x53c2c0` | 2414 | B | callers: 0x53cc30 |
+| `0x8e9840` | 1138 | B | callers: 0x53cc30 |
+| `0x538fd0` | 181 | B | callers: 0x53cc30 |
+
+## `..\structure\svg_io.cpp`—7 个函数 / 3705 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x52b3d0` | 2198 | B | callers: 0x516380 |
+| `0x516050` | 812 | B | callers: 0x516380 |
+| `0x542f30` | 236 | B | callers: 0x516380 |
+| `0x7c4ae0` | 168 | B | callers: 0x516380 |
+| `0x520770` | 159 | B | callers: 0x516380 |
+| `0x5d9350` | 105 | B | callers: 0x516380 |
+| `0x5da140` | 27 | B | callers: 0x516380 |
+
+## `..\multi\tiling_nester.cpp`—3 个函数 / 3301 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x6bbf20` | 1561 | B | callers: 0x462d0 |
+| `0x8721a0` | 1423 | B | callers: 0x462d0 |
+| `0x46190` | 317 | B | callers: 0x462d0 |
+
+## `..\nesting\algos\tree_db.cpp`—12 个函数 / 3229 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8f74a0` | 913 | B | callers: 0x65cc50 |
+| `0x972ec0` | 701 | B | callers: 0x65cc50 |
+| `0x96b260` | 327 | B | callers: 0x65cc50 |
+| `0x65dbf0` | 304 | B | callers: 0x1c4350 |
+| `0x98d960` | 266 | B | callers: 0x65cc50 |
+| `0x1c3420` | 239 | B | callers: 0x1c37a0 |
+| `0x7ba5f0` | 185 | B | callers: 0x65cc50 |
+| `0x8fcf20` | 88 | B | callers: 0x1c4350 |
+| `0x8febe0` | 88 | B | callers: 0x1c4350, 0x673c60 |
+| `0x8f7ce0` | 57 | B | callers: 0x1c4350 |
+| `0x1c0f10` | 50 | B | callers: 0x65cc50 |
+| `0x16c260` | 11 | B | callers: 0x1c4350 |
+
+## `..\nesting\algos\multinesting_optimizer.cpp`—4 个函数 / 2672 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8b9620` | 1768 | B | callers: 0x1acf30, 0x1ad3a0, 0x1ad7e0 |
+| `0x931e50` | 408 | B | callers: 0x1aafe0 |
+| `0x1aaa20` | 376 | B | callers: 0x1aafe0 |
+| `0x8ba380` | 120 | B | callers: 0x1acf30, 0x1ad3a0, 0x1ad7e0 |
+
+## `..\structure\automatic_cluster.cpp`—6 个函数 / 2244 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8f5530` | 776 | B | callers: 0x5563c0 |
+| `0x8e77c0` | 588 | B | callers: 0x5563c0 |
+| `0x98ef50` | 344 | B | callers: 0x5563c0 |
+| `0x8f5840` | 321 | B | callers: 0x5563c0 |
+| `0x8f5990` | 155 | B | callers: 0x5563c0 |
+| `0x552470` | 60 | B | callers: 0x552e30 |
+
+## `..\multi\marker.cpp`—3 个函数 / 2012 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x871b20` | 1649 | B | callers: 0x8ba70 |
+| `0x8cf220` | 358 | B | callers: 0x8b280 |
+| `0x51d0e0` | 5 | B | callers: 0x8ba70 |
+
+## `..\multi\database.cpp`—5 个函数 / 1552 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x597a0` | 448 | B | callers: 0x6a7800 |
+| `0x544600` | 362 | B | callers: 0x525e0 |
+| `0x523d0` | 324 | B | callers: 0x6a7800 |
+| `0x56ab0` | 237 | B | callers: 0x6a7800 |
+| `0x52520` | 181 | B | callers: 0x525e0 |
+
+## `..\structure\stats.cpp`—1 个函数 / 1072 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x527bf0` | 1072 | B | callers: 0x528020, 0x528d10 |
+
+## `..\tiling\optimizer.cpp`—2 个函数 / 1060 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x76db50` | 879 | B | callers: 0x7ee7b0 |
+| `0x4e8870` | 181 | B | callers: 0x4e9a10, 0x7ee7b0 |
+
+## `cns_no_fit.cpp`—2 个函数 / 1030 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x64c480` | 547 | B | callers: 0x91c0 |
+| `0x64c290` | 483 | B | callers: 0x8e70 |
+
+## `..\structure\text_io.cpp`—3 个函数 / 970 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8e1bd0` | 501 | B | callers: 0x509a40 |
+| `0x8ea5e0` | 305 | B | callers: 0x50a550 |
+| `0x51f6a0` | 164 | B | callers: 0x50ee50 |
+
+## `cns.cpp`—3 个函数 / 865 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8f9dc0` | 322 | B | callers: 0x11640 |
+| `0x8f90f0` | 292 | B | callers: 0x10f30 |
+| `0x64b1c0` | 251 | B | callers: 0x10040 |
+
+## `..\nesting\ios\log_ios.cpp`—1 个函数 / 751 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x9098e0` | 751 | B | callers: 0x1fb810 |
+
+## `..\tiling\packer_cache.cpp`—5 个函数 / 674 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x768a60` | 275 | B | callers: 0x768b80 |
+| `0x56f990` | 260 | B | callers: 0x768b80 |
+| `0x4ba470` | 94 | B | callers: 0x769410 |
+| `0x4e83e0` | 40 | B | callers: 0x158810 |
+| `0x56a280` | 5 | B | callers: 0x768b80 |
+
+## `..\nesting\algos\algo_parameters.cpp`—2 个函数 / 597 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x1a8780` | 592 | B | callers: 0x1a89d0, 0x1a8af0 |
+| `0x17b9c0` | 5 | B | callers: 0x1a3db0 |
+
+## `..\nesting\algos\tree_db.hpp`—2 个函数 / 452 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8f7b80` | 338 | B | callers: 0x1c2640 |
+| `0x1c1660` | 114 | B | callers: 0x1c2640 |
+
+## `..\exact\relinker_internal.cpp`—1 个函数 / 253 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x5b3500` | 253 | B | callers: 0x5b3bf0 |
+
+## `..\engine\cloud_engine.cpp`—2 个函数 / 237 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x8642d0` | 153 | B | callers: 0x26a60 |
+| `0x999af0` | 84 | B | callers: 0x26a60 |
+
+## `..\nesting\algos\algo_helpers.hpp`—1 个函数 / 50 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x20bf80` | 50 | B | callers: 0x20e840 |
+
+## `..\multi\supervisor.cpp`—1 个函数 / 29 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x53a100` | 29 | B | callers: 0x68a6e0 |
+
+## `..\nesting\structure_interface_private.hpp`—1 个函数 / 4 字节
+
+| 函数 | 字节 | 通道 | 证据 |
+|---|---:|---|---|
+| `0x178560` | 4 | B | callers: 0x1f1c20 |
