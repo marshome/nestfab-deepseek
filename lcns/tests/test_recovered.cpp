@@ -234,6 +234,12 @@ int main() {
         CHECK(geom::kBoundaryChainStep2 == 0x1B910);
         CHECK(geom::kBoundaryChainStep3 == 0x5ED8C0);
         CHECK(geom::kBoundaryChainStep4 == 0x5ED3D0);
+        CHECK(geom::kBoundaryChainStep4 == 0x5ED3D0);
+        // RE 0x5ed828 / 0x5ed85e: one full turn back, in whichever direction it left the turn
+        CHECK(geom::normaliseAngle(0.5) == 0.5);
+        CHECK(geom::normaliseAngle(0.0) == 0.0);
+        CHECK(std::fabs(geom::normaliseAngle(-0.5) - (6.283185 - 0.5)) < 2e-6);
+        CHECK(std::fabs(geom::normaliseAngle(6.283185 + 0.5) - 0.5) < 2e-6);
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----

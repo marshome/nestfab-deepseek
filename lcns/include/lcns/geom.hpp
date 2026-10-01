@@ -399,6 +399,25 @@ inline constexpr unsigned long kBoundaryChainStep2 = 0x1B910;   // RE 0x1BA30
 inline constexpr unsigned long kBoundaryChainStep3 = 0x5ED8C0;  // RE 0x1B910
 inline constexpr unsigned long kBoundaryChainStep4 = 0x5ED3D0;  // RE 0x5ED8C0, the 1183 B body
 
+// RE 0x5ED3D0, the two uses of 2pi (goal round 55), which CONFIRM the wrap that round 52 only read
+// off the constant list:
+//     5ED828  subsd xmm0, [2pi]   ; angle -= 2pi
+//     5ED830  movsd [rax], xmm0   ; store it back
+//     5ED85E  addsd xmm0, [2pi]   ; angle += 2pi
+//     5ED866  movsd [rax], xmm0   ; store it back
+// Each site is a SINGLE adjustment, not an unbounded loop, and the two are separate branches (the
+// jump into 5ED828 comes from a comparison, the one into 5ED85E from another). So the recovered
+// behaviour is: bring the angle back into the turn by one full turn in whichever direction it left.
+inline double normaliseAngle(double angle) {
+    if (angle < 0.0) {
+        return angle + kQuarterTurn2Pi;        // RE 0x5ED85E
+    }
+    if (angle >= kQuarterTurn2Pi) {
+        return angle - kQuarterTurn2Pi;        // RE 0x5ED828
+    }
+    return angle;
+}
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 
