@@ -2978,5 +2978,38 @@ int main() {
         CHECK(kAccessorAddressesUnlanded);                  // these stay unlanded too
     }
 
+    // --- the get-or-create accessor and the BER-linked finaliser (RE 0x799f60 and 0x10f770) ---------
+    {
+        CHECK(kGetOrCreate == 0x799F60);
+        CHECK(kGetOrCreateVtableRva == 0x2B1FB2);
+        CHECK(kGetOrCreateFlagA == 0x10);
+        CHECK(kGetOrCreateFlagB == 0x11);
+        CHECK(kGetOrCreateFlagB - kGetOrCreateFlagA == 1);
+        CHECK(kGetOrCreateSource == 0x08);
+        CHECK(kGetOrCreateInterface == 0x18);
+        CHECK(kGetOrCreateCtor == 0x799BA0);
+        CHECK(kGetOrCreateBytes == 0x30);
+        CHECK(kGetOrCreateBytes == 48);
+        CHECK(kGetOrCreateCallers == 27);
+        CHECK(kVtableSlotD == 0x08);
+        CHECK(kVtableSlotD < kVtableSlotA);            // a fourth, lower slot
+
+        CHECK(kFinaliseWithRetry == 0x10F770);
+        CHECK(kBerErrorFormatter == 0x77F2D0);
+        CHECK(kBerDecoderSite == kFinaliseWithRetry);
+        CHECK(kStatusCall == 0x11A780);
+        CHECK(kFinaliseFlagA == 0x28);
+        CHECK(kFinaliseFlagB == 0x29);
+        CHECK(kFinaliseFlagB - kFinaliseFlagA == 1);
+        CHECK(kFinalisePointer == 0x30);
+        CHECK(kStatusExpected == 2);
+        CHECK(kFinaliseCallers == 24);
+        CHECK(kRetriesOnNonZeroWord);
+        // the domain link: the formatter this routine reports through is the one carrying the BER text
+        CHECK(std::string(kTagBerDecodeError) == "BER decode error");
+        CHECK(kBerErrorFormatter != kStringReplace);
+        CHECK(kBerErrorFormatter != kGetOrCreate);
+    }
+
     return check::finish("test_recovered");
 }

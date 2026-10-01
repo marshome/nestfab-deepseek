@@ -1725,6 +1725,46 @@ inline constexpr int kMultiGetterCount = 11;                 // RE the sweep: lo
 inline constexpr int kMultiGetterOffsets = 8;                // the distinct offsets in their histogram
 inline constexpr bool kSetterClassEmpty = true;              // reported as zero rather than dressed up
 
+
+// --- the get-or-create accessor 0x799F60, twenty-seven callers (round 280) -----------------------------
+//     0x799F6E a vtable at [rcx] (rva 0x2B1FB2)
+//     0x799F7D/0x799FA0  two flags at +0x10 and +0x11 decide whether construction is needed
+//     0x799FA6/0x799FAB  `mov ecx,0x30 ; call 0x9988C0` -- a forty-eight byte object
+//     0x799FB0/0x799FBA  built from the field at +0x08 by 0x799BA0
+//     0x799F8A/0x799F8F/0x799F9A  the interface at +0x18, then a TAIL JUMP through its vtable slot +0x08
+inline constexpr std::uintptr_t kGetOrCreate = 0x799F60;     // RE the whole routine
+inline constexpr std::uintptr_t kGetOrCreateVtableRva = 0x2B1FB2;  // RE 0x799F67
+inline constexpr std::size_t kGetOrCreateFlagA = 0x10;       // RE 0x799F7D
+inline constexpr std::size_t kGetOrCreateFlagB = 0x11;       // RE 0x799FA0
+inline constexpr std::size_t kGetOrCreateSource = 0x08;      // RE 0x799FB0
+inline constexpr std::size_t kGetOrCreateInterface = 0x18;   // RE 0x799F83
+inline constexpr std::uintptr_t kGetOrCreateCtor = 0x799BA0; // RE 0x799FBA
+inline constexpr std::size_t kGetOrCreateBytes = 0x30;       // RE 0x799FA6 (48)
+inline constexpr std::size_t kVtableSlotD = 0x08;            // RE 0x799F8F -- a new virtual slot
+inline constexpr int kGetOrCreateCallers = 27;
+static_assert(kVtableSlotD < kVtableSlotA, "the new slot is below the three known ones");
+static_assert(kGetOrCreateInterface == kInterfaceOffset + 0x80 || kGetOrCreateInterface == 0x18,
+              "the interface offset of this object");
+
+// --- the finaliser 0x10F770 and its BER link, twenty-four callers (round 280) ---------------------------
+//     0x10F77B/0x10F794/0x10F798  flags at +0x28 and +0x29, the first set on entry
+//     0x10F79E  the pointer at +0x30, whose absence ends the routine
+//     0x10F7A5/0x10F7CA  call 0x77F2D0 -- the error formatter of round 252, which builds 'BER decode error'
+//     0x10F7BF call 0x11A780 with a status buffer ; 0x10F7C4 cmp rax,2
+//     0x10F7E0 cmp word [rsp+0x2E],0 ; jne 0x10F7CA   ; retry while the sixteen-bit status is non-zero
+inline constexpr std::uintptr_t kFinaliseWithRetry = 0x10F770;     // RE the whole routine
+inline constexpr std::uintptr_t kBerErrorFormatter = 0x77F2D0;     // RE 0x10F7A5, round 252's formatter
+inline constexpr std::uintptr_t kBerDecoderSite = 0x10F770;        // RE the site that reports it
+inline constexpr std::uintptr_t kStatusCall = 0x11A780;            // RE 0x10F7BF
+inline constexpr std::size_t kFinaliseFlagA = 0x28;                // RE 0x10F77B
+inline constexpr std::size_t kFinaliseFlagB = 0x29;                // RE 0x10F794
+inline constexpr std::size_t kFinalisePointer = 0x30;              // RE 0x10F79E
+inline constexpr std::int32_t kStatusExpected = 2;                 // RE 0x10F7C4
+inline constexpr int kFinaliseCallers = 24;
+inline constexpr bool kRetriesOnNonZeroWord = true;                // RE 0x10F7E0
+static_assert(kBerErrorFormatter == 0x77F2D0, "the formatter address");
+static_assert(kBerDecoderSite == kFinaliseWithRetry, "the BER site is this routine");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

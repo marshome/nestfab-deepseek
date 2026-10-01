@@ -5585,3 +5585,22 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 同 round 278：**这些类的地址一律不写入源码**，只落形状与直方图。
 
 **已落 `layout.hpp`**：`kNested2*`（五个）、`kSetterClassCount`(0)、`kMultiGetter*`、`kSetterClassEmpty` + **三条 `static_assert`** + 测试 21 条。
+
+### 附 198 **get-or-create 访问器**与**一条明确的 BER 线索**（goal round 280）**[已落码]**
+
+**（a）`0x799F60`（178 B / 27 个调用者）= get-or-create 访问器**：先看 `+0x10`、`+0x11` 两个标志，需要时以 **`ecx = 0x30`（48 字节）**调 `0x9988C0` 构造（由 `0x799BA0` 完成），然后取 **`+0x18` 的接口**并 **尾调穿过它的虚表槽 `+0x08`**。
+⇒ 虚表槽此刻有第四个：**`+0x08`**（此前 rounds 259 已有 `+0x18`、`+0x30`、`+0x68`）。
+
+**（b）`0x10F770`（137 B / 24 个调用者）= 带重试的收尾例程，且★ **它调 round 252 的错误格式化器 `0x77F2D0`** —— 正是**构造 `'BER decode error'`** 的那一个。
+
+```
+10F77B/10F794/10F798  标志 `+0x28`/`+0x29`，进入时置位第一个
+10F79E  `+0x30` 的指针为空则直接返回
+10F7A5/10F7CA  call 0x77F2D0        ; ★ round 252 的错误格式化器
+10F7BF  call 0x11A780（带 `rsp+0x2E` 的状态缓冲区）→ `cmp rax,2`
+10F7E0  cmp word [rsp+0x2E],0 ; jne 回到重试   ; ★ **16 位状态非零则重试**
+```
+
+⇒ 这是 **round 252 那个 BER 文本的第一条领域连接**：**该对象通过它报告 BER 解码错误** —— 项目**确实在解 BER**，这是说出这件事的站点之一。
+
+**已落 `layout.hpp`**：`kGetOrCreate*`（九个）、`kVtableSlotD`、`kFinalise*`（七个）、`kBerErrorFormatter`、`kBerDecoderSite`、`kStatusCall`、`kRetriesOnNonZeroWord` + **三条 `static_assert`** + 测试 26 条。
