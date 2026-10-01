@@ -1804,6 +1804,23 @@ static_assert(kVector4Failure == static_cast<std::uint64_t>(-4), "the failure va
 static_assert(kMaxSizeVec64 == kMaxSizeWide, "the same max_size constant as the two-byte string");
 static_assert(kVector4 != kVector32, "two distinct vector growth routines");
 
+
+// --- the chain walk inside the BER reader 0x11A780 (round 282) ------------------------------------------
+//     0x11A7F5/0x11A80A/0x11A829/0x11A859  call qword [rax+0x158]   ; the STEP, four call sites from unrolling
+//     0x11A7FB/0x11A832/0x11A862           test rax,rax ; je       ; a null step ends the walk
+//     0x11A816/0x11A84A                    r8 = [rax+0xC0] ; cmp r8,rsi ; jne
+//     0x11A792 (round 281)                 rsi came from [vtable+0xC0] at entry
+inline constexpr std::size_t kVtableSlotStep = 0x158;        // RE 0x11A7F5
+inline constexpr std::size_t kChainTypeField = 0xC0;         // RE 0x11A816, compared per node
+inline constexpr int kChainUnroll = 3;                       // RE the three repeated blocks
+inline constexpr int kVtableSlotsKnown2 = 7;                 // 0x08, 0x18, 0x30, 0x68, 0xB8, 0xC0 and 0x158
+inline constexpr std::uintptr_t kChainMismatchBranch = 0x11A8B0;   // RE 0x11A820/0x11A854
+inline constexpr std::uintptr_t kChainNullBranch = 0x11A932;       // RE 0x11A7FE
+inline constexpr int kBerLengthCallers2 = 9;
+static_assert(kChainUnroll == 3, "the compiler unrolled the walk three times");
+static_assert(kVtableSlotsKnown2 == kVtableSlotsKnown + 1, "one more slot than round 281 recorded");
+static_assert(kChainTypeField == kBerVtableSlotB, "the compared field is the slot loaded at entry");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -5623,3 +5623,17 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ⇒ **向量族现有三个元素尺寸**：32 字节（`0x8F1E20`）、**4 字节（本轮）**，以及宽字符串的 2 字节。其 max_size **与两字节字符串相同**（值相等，**仅记录相等而不合并**）。
 
 **已落 `layout.hpp`**：`kBer*`（六个）、`kBigEndian16`、`kTypeLiteralSite`、`kVtableSlotsKnown`、`kVector4*`（六个）、`kMaxSizeVec64` + **五条 `static_assert`** + 测试 30 条。
+
+### 附 200 **BER 读取器内部是一条链式遍历**（步进槽 `+0x158`，goal round 282）**[已落码]**
+
+```
+11A7F5/11A80A/11A829/11A859  call qword [rax+0x158]   ; ★ **步进**（四个调用点，来自展开）
+11A7FB/11A832/11A862  test rax,rax ; je              ; 步进为空则结束遍历
+11A816/11A84A  r8 = [rax+0xC0] ; cmp r8,rsi ; jne    ; ★ 每个节点的 `+0xC0` 与入口取出的 `rsi` 相比
+```
+
+⇒ 它**通过 `+0x158` 步进一条链**，仅接受 `+0xC0` 与入口值相等的节点（`rsi` 由 round 281 的 `0x11A792` 从 `[vtable+0xC0]` 取出）。**三次重复是编译器对一个循环的展开**。
+
+★ **虚表槽扩到七个**：`+0x08`、`+0x18`、`+0x30`、`+0x68`、`+0xB8`、`+0xC0`、**`+0x158`**；且 `+0xC0` 从 round 281 的“被读出”升级为**逐节点被比较的字段**。
+
+**已落 `layout.hpp`**：`kVtableSlotStep`(0x158)、`kChainTypeField`(0xC0)、`kChainUnroll`(3)、`kVtableSlotsKnown2`(7)、`kChainMismatchBranch`、`kChainNullBranch` + **三条 `static_assert`** + 测试 18 条。

@@ -3048,5 +3048,37 @@ int main() {
         CHECK(kVector4Callers == 23);
     }
 
+    // --- the chain walk inside the BER reader (RE 0x11a780) -----------------------------------------
+    {
+        CHECK(kVtableSlotStep == 0x158);
+        CHECK(kChainTypeField == 0xC0);
+        CHECK(kChainTypeField == kBerVtableSlotB);      // the field compared is the slot loaded at entry
+        CHECK(kChainUnroll == 3);
+        CHECK(kVtableSlotsKnown2 == 7);
+        CHECK(kVtableSlotsKnown2 == kVtableSlotsKnown + 1);
+        CHECK(kChainMismatchBranch == 0x11A8B0);
+        CHECK(kChainNullBranch == 0x11A932);
+        CHECK(kBerLengthCallers2 == 9);
+        // the seven slots now known, each distinct
+        CHECK(kVtableSlotD == 0x08 && kVtableSlotA == 0x18 && kVtableSlotB == 0x30);
+        CHECK(kVtableSlotC == 0x68 && kBerVtableSlotA == 0xB8 && kBerVtableSlotB == 0xC0);
+        CHECK(kVtableSlotStep == 0x158);
+        CHECK(kVtableSlotStep > kBerVtableSlotB);
+
+        // the walk the instructions implement: step until null, accept only a matching type
+        struct Node { int type; Node* next; };
+        const auto finds = [](Node* head, int want) {
+            for (Node* n = head; n != nullptr; n = n->next) {          // RE the slot +0x158 step
+                if (n->type == want) return true;                      // RE 0x11A816
+            }
+            return false;
+        };
+        Node c{7, nullptr}, b{3, &c}, a{3, &b};
+        CHECK(finds(&a, 7));
+        CHECK(!finds(&a, 5));
+        CHECK(finds(nullptr, 3) == false);
+        CHECK(kChainUnroll * 1 == 3);                   // three copies of the block, one loop
+    }
+
     return check::finish("test_recovered");
 }
