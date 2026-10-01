@@ -60,3 +60,8 @@ re/*.bin
 
 push_retry.ps1
 push_retry.log
+
+# one-off generator/helper scripts, never part of the deliverable
+re/g_doc*.py
+re/_tmp_*.py
+re/fix_*.py
