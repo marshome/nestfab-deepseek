@@ -2405,3 +2405,80 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 
 * `0x3C110`（自带 `enlarged_`）加载 **`1.000001`** ⇒ 已作为 `kRelativeEpsilon` 落进 `engine.hpp`（比 `kToleranceUpper = 1.001` 紧一个数量级）。
 * `0x12ABD0` 访问 **`+0x4C`** 的次数与比较值：见本轮输出（若出现 9/10 以外的值，则状态机可扩展；若只读不比，则如实记为“只读”）。
+
+### 附 49 两个带“机制名”的函数（goal round 127）
+
+**`0x86160` 引用 `__small_mark__`（@`0x862bf`）的上下文**：
+
+```
+8629c    call 0x5c6be0
+862a1    lea r13, [rsp + 0xc0]
+862a9    lea rax, [r13 + 0x10]
+862ad    mov rcx, r13
+862b0    lea r8, [rip + 0x92b631]
+862b7    mov qword ptr [rsp + 0xc0], rax
+862bf    lea rdx, [rip + 0x92b614]
+862c6    call 0x84ac0
+862cb    mov qword ptr [rsp + 0x20], rdi
+862d0    mov r9, rsi
+```
+
+**`0x86160` 引用 `__big_mark__`（@`0x86440`）的上下文**：
+
+```
+86421    mov rcx, rdi
+86424    call 0x5c6be0
+86429    lea rax, [r12 + 0x10]
+8642e    mov rcx, r12
+86431    lea r8, [rip + 0x92b4bd]
+86438    mov qword ptr [rsp + 0xe0], rax
+86440    lea rdx, [rip + 0x92b4a2]
+86447    call 0x84ac0
+8644c    mov qword ptr [rsp + 0x20], rsi
+86451    mov r9, rdi
+```
+
+**`0x86160` 加载 `0.5`（@`0x8622f`）的上下文**：
+
+```
+86217    mov rcx, rdi
+8621a    call 0x5c3d90
+8621f    lea rax, [rsp + 0x100]
+86227    movapd xmm1, xmm6
+8622b    movapd xmm7, xmm6
+8622f    movsd xmm0, qword ptr [rip + 0x92b779]
+86237    xorpd xmm7, xmmword ptr [rip + 0x92b781]
+8623f    mov rcx, rax
+```
+
+* `0x86160`：被调用者 17 个；字段 `+0x8`、`+0x10`、`+0x18`、`+0x20`、`+0x38`、`+0x40`、`+0x60`、`+0x68`、`+0x80`、`+0xa0`
+
+**`0x3c110` 引用 `enlarged_`（@`0x3c204`）的上下文**：
+
+```
+3c1e2    movabs rax, 0x7fffffffffffffff
+3c1ec    sub rax, qword ptr [rsp + 0x48]
+3c1f1    cmp rax, 8
+3c1f5    jbe 0x3c346
+3c1fb    mov r8d, 9
+3c201    mov rcx, rbp
+3c204    lea rdx, [rip + 0x97311d]
+3c20b    call 0x910a60
+3c210    mov r8, qword ptr [rbx + 8]
+3c214    mov rcx, rbp
+```
+
+**`0x3c110` 加载 `1`（@`0x3c178`）的上下文**：
+
+```
+3c160    mov rcx, r8
+3c163    mov qword ptr [rsp + 0x38], rdx
+3c168    movsd xmm6, qword ptr [r9 + 0x18]
+3c16e    call 0x4f8370
+3c173    mov rdx, qword ptr [rsp + 0x38]
+3c178    mulsd xmm0, qword ptr [rip + 0x973620]
+3c180    ucomisd xmm6, xmm0
+3c184    jbe 0x3c135
+```
+
+* `0x3c110`：被调用者 15 个；字段 `+0x8`、`+0x9`、`+0x10`、`+0x18`、`+0x20`、`+0x38`、`+0x40`、`+0x48`、`+0x50`、`+0x60`
