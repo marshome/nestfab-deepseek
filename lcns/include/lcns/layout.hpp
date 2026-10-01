@@ -123,4 +123,16 @@ inline constexpr int kSentinelCount = 3;                  // RE both sites: thre
 inline constexpr std::int64_t kInvalidIndexSentinel = -1; // RE the all-ones word
 inline constexpr double kInvalidDoubleSentinel = -1.0;    // RE 0x5E6400 and 0x89D3C5
 
+
+// --- the 4-byte accessors of the geometry chain (round 191) ----------------------------------------
+//     0x5C61D0  mov rax,rcx ; ret          67 callers     -> identity
+//     0x5C5260  mov rax,rcx ; ret          81 callers     -> identity
+//     0x5C5F30  mov rax,rcx ; ret         103 callers     -> identity
+//     0x5C5270  mov rax,rcx ; ret          23 callers     -> identity
+//     0x5C5F40  lea rax,[rcx+0x18] ; ret    81 callers     -> a FIELD getter
+// The identity ones are inline member accessors the compiler kept as distinct symbols; when reading the
+// geometry functions their calls can be treated as no-ops, which is what makes that disassembly tractable.
+inline constexpr int kIdentityAccessorCount = 4;      // RE the four `mov rax,rcx ; ret` sites
+inline constexpr std::size_t kGetterFieldOffset = 0x18;   // RE 0x5C5F44, 81 callers
+
 }  // namespace lcns

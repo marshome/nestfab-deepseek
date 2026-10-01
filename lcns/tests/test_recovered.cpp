@@ -1072,5 +1072,14 @@ int main() {
         CHECK(4.0 * kAreaHalf == 2.0);
     }
 
+    // --- the 4-byte accessors (RE 0x5c61d0/0x5c5260/0x5c5f30/0x5c5270 identities, 0x5c5f40 the getter) --
+    {
+        CHECK(kIdentityAccessorCount == 4);
+        CHECK(kGetterFieldOffset == 0x18);
+        CHECK(kGetterFieldOffset == kObjectFieldC);          // the same offset 0x5E6360 touches
+        CHECK(kGetterFieldOffset == kTreeNodeRight);         // and the tree node's right child
+        CHECK(kGetterFieldOffset != kCounterOffset);         // but not the thread state field at 0x4C
+    }
+
     return check::finish("test_recovered");
 }
