@@ -191,6 +191,37 @@ inline constexpr const char* kTimerQpcFailure =
 inline constexpr const char* kTimerQpfFailure =
     "Timer: QueryPerformanceFrequency failed with error ";      // RE 0x9B67C8
 
+// RE 0x1A9060 (237 B / 58 instructions, 2 callers: 0x1A9150 and 0x1B33B0 -- the routine that logs the
+// seed). Read whole:
+//     1A908B  mov rbx,[rcx] ; 1A908E mov rsi,[rcx+8]     ; a container's [begin,end)
+//     1A9092  mov edi,edx                                 ; an integer count
+//     1A9094  movapd xmm8,xmm2                            ; a threshold parameter
+//     loop with add rbx,0xF0 (a 240-byte stride):
+//         1A90B3 call 0x1785C0 ; 1A90C2 maxsd xmm7,xmm0
+//         1A90C6 call 0x178590 ; 1A90CE maxsd xmm6,xmm0
+//     1A90E4  cvtsi2sd xmm0,edi ; 1A90ED divsd xmm6,xmm0   ; the average of the maxima over the count
+//     1A90E8  ucomisd xmm8,xmm9 (0.0) ; jbe <return xmm6>
+//     1A90F8  divsd xmm0,xmm6 (xmm0 = threshold / average)
+//     1A90FC  call 0x62FD90                                ; wrapped to the nearest integer
+//     1A9112  cvttsd2si eax,xmm0 ; 1A911B cmp eax,0xC8 ; 1A9120 cmovl eax,edx(200)
+//     1A910A  movsd xmm6,[0.9999] ; 1A9116 mulsd xmm6,xmm8 ; 1A9127 divsd xmm6,xmm1
+// RECOVERED: the whole body, its stride, its constants and both branches.
+inline constexpr std::size_t kAggregateStride = 0xF0;   // RE 0x1A90BB: add rbx,0xF0
+inline constexpr double kRatioWeight = 0.9999;          // RE 0x1A910A
+inline constexpr int kRatioFloor = 200;                 // RE 0x1A9101 / 0x1A911B
+
+// RE the tail from 1A90E8 on: with a non-positive threshold the average is returned unchanged.
+inline double ratioFromAverage(double average, double threshold) {
+    if (!(threshold > 0.0)) {                 // RE 1A90E8/1A90F1: ucomisd then jbe
+        return average;
+    }
+    const double wrapped = wrapToHalf(threshold / average);   // RE 1A90F8/1A90FC
+    int n = static_cast<int>(wrapped);        // RE 1A9112: cvttsd2si
+    if (n < kRatioFloor) {                    // RE 1A911B/1A9120: cmp/cmovl
+        n = kRatioFloor;
+    }
+    return kRatioWeight * threshold / static_cast<double>(n);  // RE 1A9116/1A9127
+}
 // RE the exact branch structure above: the weighted value when the gate is set, the prior value otherwise.
 inline double gatedAverage(double product, double count, bool gate, double prior) {
     if (count == 0.0) {

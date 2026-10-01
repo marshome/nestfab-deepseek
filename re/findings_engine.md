@@ -2697,3 +2697,25 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 **`0x62FD90` = 用它包装的 (−0.5, 0.5] 归一化**（入口已读，round 138 已看全身）：`round(x)`、`round(x)−x`、若 `> 0.5` 则 `−1.0`。
 
 **两者均已落进 `lcns/geom.hpp`**（`wrapToHalf` / `halfFraction`），并加测试（含 `x=0.3/0.6/−0.6/0.5/−0.5` 与一个循环验证 `[−0.5, 0.5)`）。
+
+### 附 62 `0x1A9060` **全读**：一个完整可判定的聚合/比值算法（goal round 141）
+
+```
+1A908B  rbx=[rcx] ; 1A908E rsi=[rcx+8]     ; 容器 [begin,end)
+1A9092  edi=edx                            ; 整数计数
+1A9094  xmm8=xmm2                          ; 阈值参数
+循环（add rbx,0xF0）：
+   1A90B3 call 0x1785C0 ; 1A90C2 maxsd xmm7,xmm0
+   1A90C6 call 0x178590 ; 1A90CE maxsd xmm6,xmm0
+1A90E4  cvtsi2sd xmm0,edi ; 1A90ED divsd xmm6,xmm0   ; 两个峰值之和 / 计数 = 平均
+1A90E8  ucomisd xmm8,0 ; jbe <直接返回平均>
+1A90F8  xmm0 = 阈值/平均 ; 1A90FC call 0x62FD90   ; 取最近整数
+1A9112  eax=(int)xmm0 ; 1A911B cmp eax,200 ; 1A9120 cmovl eax,200   ; 下限 200
+1A910A  xmm6=[0.9999] ; 1A9116 mulsd xmm6,xmm8 ; 1A9127 divsd xmm6,xmm1
+```
+
+⇒ **已恢复**：步长 `0xF0`（240 字节）、两个逐元素峰值的平均、阈值为正时的
+`0.9999 × 阈值 / max(round(阈值/平均), 200)`、以及两个常量 `0.9999`、`200`。
+**这也把 round 137 发现的那个孤立 `0.9999` 接上了**。
+
+**对 round 137–138 的再次更正**：种子 = `(int)(本函数结果 × 1e6)`，而本函数算的是**质量比值**，**与计时器无关**。计时器字符串仍是事实，但**不在这条链上**。

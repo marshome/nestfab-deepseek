@@ -497,6 +497,22 @@ int main() {
         }
     }
 
+    // --- the aggregate/ratio tail (RE 0x1a9060, read whole) ----------------------------------------
+    {
+        CHECK(kAggregateStride == 240);
+        CHECK(kRatioWeight == 0.9999);
+        CHECK(kRatioFloor == 200);
+        // a non-positive threshold leaves the average alone
+        CHECK(ratioFromAverage(5.0, 0.0) == 5.0);
+        CHECK(ratioFromAverage(5.0, -1.0) == 5.0);
+        // threshold / average = 200, so the floor does not bind
+        CHECK(std::fabs(ratioFromAverage(5.0, 1000.0) - 4.9995) < 1e-12);
+        // ratio 20 is below the floor, so 200 is used
+        CHECK(std::fabs(ratioFromAverage(5.0, 100.0) - 0.49995) < 1e-12);
+        // a large ratio is used as it is
+        CHECK(std::fabs(ratioFromAverage(5.0, 100000.0) - 4.9995) < 1e-12);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
