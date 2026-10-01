@@ -4930,5 +4930,50 @@ int main() {
         CHECK(kInputBufferCtorCallSites + kLazyInitCalleeSightings == 4);
     }
 
+    // --- the bitfield swap and the packed-double add (RE 0x5fef30 and 0x16c270) ----------------------
+    {
+        CHECK(kSwapThree == 0x5FEF30);
+        CHECK(kSwapThreeCallers == 20);
+        CHECK(kSwapQword == 0x00);
+        CHECK(kSwapByteA == 0x08);
+        CHECK(kSwapByteB == 0x09);
+        CHECK(kSwapByteB - kSwapByteA == 1);
+        CHECK(kBitfieldSwapMask == 0xFFFFFFFEu);
+        CHECK(kBitSwapMask == 1u);
+        CHECK(kBitfieldSwapMask == kBigIntRoundMask);    // the same value, a different context
+        CHECK(kSwapHelperA == 0x5FEB70);
+        CHECK(kSwapHelperB == 0x5FE060);
+        CHECK(kSwapHelperA != kSwapHelperB);
+        CHECK(kPointAddSSE == 0x16C270);
+        CHECK(kPointAddCallers == 19);
+        CHECK(kPackedDoubleAdd);
+        CHECK(kPointCoordsA0 == 0x08 && kPointCoordsA1 == 0x10);
+        CHECK(kPointCoordsB0 == 0x00 && kPointCoordsB1 == 0x08);
+        CHECK(kPointCoordsA1 - kPointCoordsA0 == kPointCoordBytes);
+        CHECK(kPointCoordsB1 - kPointCoordsB0 == kPointCoordBytes);
+        CHECK(kPointCoordBytes == 8);
+
+        // the bitfield exchange the instructions perform: bit 0 crosses, the rest stay
+        const auto swapBit0 = [](std::uint8_t a, std::uint8_t b, std::uint8_t& na, std::uint8_t& nb) {
+            na = static_cast<std::uint8_t>((a & 0xFEu) | (b & 0x01u));   // RE the two ands and the or
+            nb = static_cast<std::uint8_t>((b & 0xFEu) | (a & 0x01u));
+        };
+        std::uint8_t x = 0, y = 0;
+        swapBit0(0b00000010, 0b00000001, x, y);
+        CHECK(x == 0b00000011);                          // bit 0 came from the other byte
+        // CORRECTED in 333d: b's low bit took a's low bit, which is zero, and b's upper bits are zero too,
+        // so b' is zero rather than the 0b10 I first wrote.
+        CHECK(y == 0b00000000);
+        swapBit0(0xFF, 0x00, x, y);
+        CHECK(x == 0xFE);
+        CHECK(y == 0x01);
+        // and the point addition: two doubles at a time
+        const double ax[2] = {1.5, 2.5};
+        const double bx[2] = {0.5, 0.25};
+        CHECK(ax[0] + bx[0] == 2.0);
+        CHECK(ax[1] + bx[1] == 2.75);
+        CHECK(sizeof(double) == kPointCoordBytes);
+    }
+
     return check::finish("test_recovered");
 }

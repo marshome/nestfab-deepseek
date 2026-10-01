@@ -6587,3 +6587,29 @@ F72C8/72CF  字面量 **`'UWVSH'`** 写入对象首字   ; ★★ **第三次出
 ★ **`'UWVSH'` 的地位因此改变**：rounds 263/281 只见它被**拿来比较**，而在此它被**写入对象** ⇒ 它是**构造时安装的按类型标记**，而不仅仅是“拿来比较的字面量”。
 
 **已落 `layout.hpp`**：`kCtor10F200`、`kCtor10F200Callers`(20)、`kCtor10F200VtableRva`、`kFlagAt10`(0x10)、`kFlagAt10InitOne`、`kFunctionF7260`、`kFunctionF7260VtableRva`、`kGlobalGuardRva`、`kF7260Helper`(0xF7010)、`kFunctionF7260FieldA/B`、`kInputBufferCtorCallSites`(2)、`kLazyInitCalleeSightings`(2)、`kTagUwvshRva`、`kTagUwvsh`(3)、`kTypeTagStoredAtZero`、`kTypeTagIsAMarker` + **五条 `static_assert`** + 测试 26 条。
+
+### 附 251 **位域交换**，以及**本工作读到的第一个浮点内核**（goal round 333）**[已落码]**
+
+**（a）`0x5FEF30`（111 B / 20 个调用者）= 三字段交换，其中两个字节只交换 bit 0**：
+
+```
+5FEF68  `+0x00` 的 qword 交换
+5FEF4F/5FEF56  `+0x08`、`+0x09` 两字节交换
+5FEF72/5FEF77/5FEF81  and eax,**0xFFFFFFFE** ; and r8d,**1** ; or eax,edx
+5FEF7B/5FEF7E/5FEF83  and edx,1 ; and ecx,0xFFFFFFFE ; or ecx,r8d   ; 镜像的另一半
+```
+
+⇒ **交换的是 bit 0，其余七位保留** —— **位域交换，而非字节交换**。
+★ 掩码 `0xFFFFFFFE` **与 round 249 记录的大整数舍入掩码同值** ⇒ 记为**不同语境下的重复数值**，**不说成同一用途**。
+
+**（b）`0x16C270`（34 B / 19 个调用者）= 打包双精度的二维点加法**：
+
+```
+16C274/16C27E  movsd/movhpd 取 `[rcx+0x08]`、`[rcx+0x10]`
+16C270/16C279  movsd/movhpd 取 `[rdx]`、`[rdx+0x08]`
+16C283  **addpd** xmm0,xmm1   ; ★ **一次加两个 double**
+```
+
+⇒ **这是本工作读到的第一个浮点内核**（SSE 指令使其无疑），且**两个操作数读自不同偏移**（`+0x08`/`+0x10` 对 `+0x00`/`+0x08`） —— **如实记录，不强拐成对称图景**。
+
+**已落 `layout.hpp`**：`kSwapThree`、`kSwapThreeCallers`(20)、`kSwapQword`(0x00)、`kSwapByteA/B`(0x08/0x09)、`kBitfieldSwapMask`(0xFFFFFFFE)、`kBitSwapMask`(1)、`kSwapHelperA/B`、`kPointAddSSE`(0x16C270)、`kPointAddCallers`(19)、`kPackedDoubleAdd`、`kPointCoordsA0/A1/B0/B1`、`kPointCoordBytes`(8) + **五条 `static_assert`** + 测试 26 条。

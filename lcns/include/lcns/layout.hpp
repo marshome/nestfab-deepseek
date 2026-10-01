@@ -3105,6 +3105,36 @@ static_assert(kInputBufferCtorCallSites == 2, "the InputBuffer constructor has t
 static_assert(kLazyInitCalleeSightings == 2 && kTagUwvsh == 3, "two more sightings of older findings");
 static_assert(kTypeTagStoredAtZero && kTypeTagIsAMarker, "the tag is installed, not just compared");
 
+
+// --- a bitfield swap, and a packed-double point addition (round 333) ------------------------------------
+//     0x5FEF68 the qword at +0x00 exchanged ; 0x5FEF4F/0x5FEF56 the bytes at +0x08 and +0x09
+//     0x5FEF72/0x5FEF77/0x5FEF81  and eax,0xFFFFFFFE ; and r8d,1 ; or eax,edx   ; bit 0 moved, the rest kept
+//     0x5FEF90 call 0x5FE060       ; and a helper at the end
+//     0x16C270..0x16C283 movsd/movhpd from two objects and `addpd`   ; two doubles added at once
+inline constexpr std::uintptr_t kSwapThree = 0x5FEF30;       // RE the whole routine
+inline constexpr int kSwapThreeCallers = 20;
+inline constexpr std::size_t kSwapQword = 0x00;              // RE 0x5FEF68
+inline constexpr std::size_t kSwapByteA = 0x08;              // RE 0x5FEF4F
+inline constexpr std::size_t kSwapByteB = 0x09;              // RE 0x5FEF63
+inline constexpr std::uint32_t kBitfieldSwapMask = 0xFFFFFFFE;  // RE 0x5FEF72
+inline constexpr std::uint32_t kBitSwapMask = 1;             // RE 0x5FEF77
+inline constexpr std::uintptr_t kSwapHelperA = 0x5FEB70;     // RE 0x5FEF41
+inline constexpr std::uintptr_t kSwapHelperB = 0x5FE060;     // RE 0x5FEF90
+inline constexpr std::uintptr_t kPointAddSSE = 0x16C270;     // RE the second routine
+inline constexpr int kPointAddCallers = 19;
+inline constexpr bool kPackedDoubleAdd = true;               // RE 0x16C283 (addpd)
+inline constexpr std::size_t kPointCoordsA0 = 0x08;          // RE 0x16C274
+inline constexpr std::size_t kPointCoordsA1 = 0x10;          // RE 0x16C27E
+inline constexpr std::size_t kPointCoordsB0 = 0x00;          // RE 0x16C270
+inline constexpr std::size_t kPointCoordsB1 = 0x08;          // RE 0x16C279
+inline constexpr int kPointCoordBytes = 8;                    // a double
+static_assert(kBitfieldSwapMask == kBigIntRoundMask,
+              "the same mask value as round 249, in a different context -- a repeated value, not a shared use");
+static_assert((kBitfieldSwapMask & kBitSwapMask) == 0, "the kept mask excludes the moved bit");
+static_assert(kPointCoordsA1 - kPointCoordsA0 == kPointCoordBytes, "the coordinates are one double apart");
+static_assert(kPointCoordsB1 - kPointCoordsB0 == kPointCoordBytes, "in both operands");
+static_assert(kPackedDoubleAdd, "the addition is packed");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
