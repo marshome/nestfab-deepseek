@@ -5901,3 +5901,20 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 测试里四个例子**均为手算**：`(4,10)→20`、`(50,10)→102`、`(4,4)→8`、`(8,4)→18`（后者与请求无关，正是“优先翻倍容量”的体现）。
 
 **已落 `layout.hpp`**：`kGrowthHelper`、`kMaxSizeShared`、`kCapacitySentinel`、`kGrowthHelperCallers`(48)、`kGrowthRulePlusOneDouble`、`kGrowthPrefersDoublingCapacity`、`kOverflowHelper`(0x979E70)、`kGrowthAllocator`、`kAllocatorSightings2`(6) + **四条 `static_assert`** + 测试 24 条。
+
+### 附 214 **长度错误抛出器**（形状判定，676 个调用者）（goal round 296）**[已落码]**
+
+`0x979E70`（51 B / **676 个调用者**）：
+
+```
+979E74/979E79  ecx = 8，调 `0x9988C0`     ; ★ **8 字节对象（一个指针：指向类型）**
+979E8C/979E93  全局的 `+0x10` 装入该对象   ; 虚表
+979E85  lea r8,[rip-0x34B5C]                ; 类型描述符
+979E9D  call 0x999030                       ; ★ 共享抛出助手（**第五次目击**）
+```
+
+⇒ 这是 **libstdc++ 的 `__throw_length_error` 形状**：构造一个只携带一个指针（指向类型）的异常、装上类型、直接抛出。
+
+★ **证据强度已如实标注**：此判定**依靠形状与“类型来自全局”**，**没有任何字符串支持** —— **比 round 289 的 CryptoPP 案例弱**（那个有自己的文本）。`kLengthErrorShapeOnly` 与 `covlib.py` 条目里的理由都写明了这一点。
+
+**已落**：`layout.hpp` 的 `kThrowLengthError`、`kLengthError*`（五个）、`kThrowHelperSightings`(5)、`kAllocatorSightings3`(4)、`kLengthErrorShapeOnly` + **三条 `static_assert`** + 测试 21 条；`re/covlib.py` 新增**一条带证据强度说明**的工具链条目。

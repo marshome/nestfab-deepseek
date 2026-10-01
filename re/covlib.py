@@ -982,3 +982,7 @@ LIBRARY_EVIDENCED[0x75DDB0] = ("toolchain", "a single jmp to 0x9984B0, the globa
 LIBRARY_EVIDENCED[0x681F80] = ("toolchain", "a single jmp to 0x9984B0, the global deallocator: 5 bytes, a compiler-generated deleting thunk rather than written code")
 LIBRARY_EVIDENCED[0x895F90] = ("toolchain", "a single jmp to 0x63F718, an import dispatch stub: 5 bytes, a compiler-generated deleting thunk rather than written code")
 LIBRARY_EVIDENCED[0x630FD0] = ("toolchain", "a single jmp to 0x63F3B0, an import dispatch stub: 5 bytes, a compiler-generated deleting thunk rather than written code")
+# Round 296, SHAPE-BASED and weaker than the string-backed entries: the body allocates an eight byte object,
+# installs a type taken from a global with `lea`, and throws through 0x999030, which is libstdc++'s
+# __throw_length_error shape. No string supports it, so the reason says so.
+LIBRARY_EVIDENCED[0x979E70] = ("toolchain", "the length-error thrower: an eight byte exception whose one word is a pointer to its type, with the type taken from a global, and a bare throw -- the __throw_length_error shape, identified by shape rather than by text; 51 bytes, 676 callers")

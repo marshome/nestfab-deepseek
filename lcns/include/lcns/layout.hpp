@@ -2206,6 +2206,28 @@ static_assert(kMaxSizeShared == kMaxSizeVec64, "and as the four-byte vector");
 static_assert(kGrowthRulePlusOneDouble, "the rule adds one and doubles");
 static_assert(kGrowthHelperCallers == 48, "forty-eight callers");
 
+
+// --- the length-error thrower 0x979E70, six hundred and seventy-six callers (round 296) -----------------
+//     0x979E74 mov ecx,8 ; 0x979E79 call 0x9988C0   ; an eight byte object: ONE POINTER to the type
+//     0x979E8C/0x979E93  the global's +0x10 installed on it as a vtable
+//     0x979E85 lea r8,[rip-0x34B5C]                 ; a type descriptor
+//     0x979E9D call 0x999030                        ; the shared throw helper
+inline constexpr std::uintptr_t kThrowLengthError = 0x979E70;      // RE the whole routine
+inline constexpr std::size_t kLengthErrorObjectBytes = 8;          // RE 0x979E74
+inline constexpr std::uintptr_t kLengthErrorTypeRva = 0x8EF3B;     // RE 0x979E7E, the global holding the type
+inline constexpr std::size_t kLengthErrorTypeOffset = 0x10;        // RE 0x979E8C
+inline constexpr std::uintptr_t kLengthErrorArgumentRva = 0xA7003; // RE 0x979E96
+inline constexpr std::uintptr_t kLengthErrorDescriptor = 0x979E85; // RE the lea at that address
+inline constexpr int kThrowLengthErrorCallers = 676;               // RE the profile
+inline constexpr int kThrowHelperSightings = 5;                    // rounds 271, 280, 286, 287 and this
+inline constexpr int kAllocatorSightings3 = 4;                     // 0x9988C0 through this path as well
+// The identification above rests on the SHAPE (one size_t carried, a type out of a global, a bare throw) and not on
+// any string. That is weaker than the CryptoPP case of round 289, which had its own text, and the flag says so.
+inline constexpr bool kLengthErrorShapeOnly = true;
+static_assert(kLengthErrorObjectBytes == sizeof(void*), "the object holds one pointer, the type");
+static_assert(kThrowHelperSightings == 5, "the shared throw helper again");
+static_assert(kLengthErrorShapeOnly, "the identification is shape-based, and recorded as such");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

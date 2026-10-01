@@ -3584,5 +3584,40 @@ int main() {
         CHECK(newCapacity(kMaxSizeShared, 0) == 2 * (kMaxSizeShared + 1));   // wraps, as the arithmetic does
     }
 
+    // --- the length-error thrower (RE 0x979e70) ------------------------------------------------------
+    {
+        CHECK(kThrowLengthError == 0x979E70);
+        CHECK(kLengthErrorObjectBytes == 8);
+        CHECK(kLengthErrorTypeRva == 0x8EF3B);
+        CHECK(kLengthErrorTypeOffset == 0x10);
+        CHECK(kLengthErrorArgumentRva == 0xA7003);
+        CHECK(kLengthErrorDescriptor == 0x979E85);
+        CHECK(kThrowLengthErrorCallers == 676);
+        CHECK(kThrowHelperSightings == 5);
+        CHECK(kAllocatorSightings3 == 4);
+        CHECK(kLengthErrorShapeOnly);                    // shape-based, said so
+        CHECK(kThrowSite == 0x999030);                   // the same throw helper round 286 found
+        CHECK(kThrowLengthError != kGrowthHelper);
+        CHECK(kThrowLengthError > kGrowthHelper);
+        CHECK(kThrowLengthErrorCallers > kDeallocAliasCount);
+        CHECK(kThrowLengthErrorCallers > kSelfTestCallers);
+
+        // CORRECTED in round 296c: the one word the thrower stores is a POINTER to the type, because the
+        // instruction is `mov qword [rax], rdx` and rdx came from the global's +0x10. It is not a length field,
+        // and the two addresses loaded afterwards are ARGUMENTS to the throw helper, not fields of the object.
+        struct ExceptionHeader { void* type; };
+        CHECK(sizeof(ExceptionHeader) == kLengthErrorObjectBytes);
+        CHECK(kLengthErrorObjectBytes == sizeof(void*));
+        CHECK(kLengthErrorTypeOffset == 0x10);
+        ExceptionHeader h{nullptr};
+        h.type = &h;
+        CHECK(h.type == &h);
+        CHECK(kLengthErrorObjectBytes != sizeof(std::size_t) * 2);
+
+        // the growth helper reaches this path only past the max_size, which round 295 asserted
+        CHECK(kMaxSizeShared == 0x3FFFFFFFFFFFFFFFULL);
+        CHECK(kGrowthHelper == 0x913690);
+    }
+
     return check::finish("test_recovered");
 }
