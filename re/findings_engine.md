@@ -6238,3 +6238,19 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ 且它给 round 312 的“第四个驱动器”**补上了身份**：`0x112740` 就是 **INTEGER 读取器**。
 
 **已落 `layout.hpp`**：`kIntegerReader`(0x112740)、`kRequiredTagInteger`(2)、`kTagSlot2`(0x34)、`kSecondSlot2`(0x35)、`kTypeReaderFamily`(2)、`kTypeReadersShareShape`、`kContinuationTestSites`(3)、`kIntegerHelper`(0x118470) + **六条 `static_assert`** + 测试 24 条。
+
+### 附 232 **族内分两类：两个类型读取器、两个标志驱动的驱动器**（goal round 314）**[已落码]**
+
+扫描列出了族内每个成员对**栈槽**的小立即数存/比较。它到达的两个（`0x10FD40`、`0x110B00`）**没有固定 tag 的 `cmp`**，只有：
+
+```
+10FD94/10FDB9/10FFB9  标志字节 `+0x78`、`+0x88`、`+0x89`、`+0xF0` 置 0 或 1
+10FEC2/110137/110180  两个 **16 位**字段 `+0x4C`、`+0x4E` 与零相比
+10FFAB/11003F/110061  `rsp+0x20` 处的 dword 1 —— **与 rounds 283/284 同常量、同偏移**
+```
+
+而 `0x111E90` 要求 tag **6**、`0x112740` 要求 tag **2** ⇒ **四者是两类，不是四个同类**。
+
+★ **扫描未到达第三个成员 `0x112150` 的清单** ⇒ 对它**不作任何声称**；“无 tag”这一断言**仅针对实际打印出的两个函数**（`kThirdMemberListUnread`）。
+
+**已落 `layout.hpp`**：`kFirstTwoDriversTagless`、`kDriverFamilySplits`、`kDriverFlagA/B/C`(0x88/0x89/0xF0)、`kDriverWordA/B`(0x4C/0x4E)、`kDriverGateConstantOffset`(0x20)、`kThirdMemberListUnread` + **四条 `static_assert`** + 测试 22 条。

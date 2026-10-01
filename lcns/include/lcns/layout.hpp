@@ -2612,6 +2612,27 @@ static_assert(kSecondSlot2 - kTagSlot2 == kSecondSlot - kTagSlot, "the same adja
 static_assert(kTypeReadersShareShape && kTypeReaderFamily == 2, "two readers, one shape");
 static_assert(kContinuationTestSites == 3, "a third site for the continuation test");
 
+
+// --- the family splits by evidence: two type readers, two flag-driven drivers (round 314) ---------------
+// In 0x10FD40 and 0x110B00 the sweep found no fixed-tag comparison, only:
+//     0x10FD94/0x10FDB9/0x10FFB9  flag bytes at +0x78, +0x88, +0x89 and +0xF0 set to 0 or 1
+//     0x10FEC2/0x110137/0x110180  two SIXTEEN-bit fields at +0x4C and +0x4E compared against zero
+//     0x10FFAB/0x11003F/0x110061  a dword 1 at rsp+0x20 -- the constant and offset of rounds 283/284
+// while 0x111E90 demands tag 6 and 0x112740 demands tag 2. So the four are two kinds, not four of one.
+inline constexpr bool kFirstTwoDriversTagless = true;        // asserted for the two the sweep printed
+inline constexpr bool kDriverFamilySplits = true;            // type readers against flag-driven drivers
+inline constexpr std::size_t kDriverFlagA = 0x88;            // RE 0x10FDB9
+inline constexpr std::size_t kDriverFlagB = 0x89;            // RE 0x10FE0F
+inline constexpr std::size_t kDriverFlagC = 0xF0;            // RE 0x10FE6A
+inline constexpr std::size_t kDriverWordA = 0x4C;            // RE 0x10FEC2, sixteen bits
+inline constexpr std::size_t kDriverWordB = 0x4E;            // RE 0x110137, sixteen bits
+inline constexpr std::uintptr_t kDriverGateConstantOffset = 0x20;  // RE 0x10FFAB, as in round 283
+inline constexpr bool kThirdMemberListUnread = true;         // the sweep did not reach 0x112150
+static_assert(kDriverWordB - kDriverWordA == 2, "the two words are adjacent");
+static_assert(kDriverGateConstantOffset == 0x20, "the gate constant sits where round 283 found it");
+static_assert(kFirstTwoDriversTagless && kDriverFamilySplits, "the split is asserted, not assumed");
+static_assert(kThirdMemberListUnread, "and the third member is left unread rather than guessed");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

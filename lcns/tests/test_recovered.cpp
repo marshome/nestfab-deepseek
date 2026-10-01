@@ -4195,5 +4195,38 @@ int main() {
         CHECK(kAssemblerSites == 2);
     }
 
+    // --- the family's split and the flag-driven drivers (RE 0x10fd40 and 0x110b00) -----------------
+    {
+        CHECK(kFirstTwoDriversTagless);
+        CHECK(kDriverFamilySplits);
+        CHECK(kDriverFlagA == 0x88);
+        CHECK(kDriverFlagB == 0x89);
+        CHECK(kDriverFlagC == 0xF0);
+        CHECK(kDriverFlagB - kDriverFlagA == 1);
+        CHECK(kDriverWordA == 0x4C);
+        CHECK(kDriverWordB == 0x4E);
+        CHECK(kDriverWordB - kDriverWordA == 2);
+        CHECK(kDriverGateConstantOffset == 0x20);
+        CHECK(kGateConstant == 1);                       // the same constant round 283 recorded
+        CHECK(kThirdMemberListUnread);                   // left unread on purpose
+        CHECK(kTypeReaderFamily == 2);                   // two of the four demand a tag
+        CHECK(kDriverFamily == 4);
+        CHECK(kRequiredTag == 6 && kRequiredTagInteger == 2);
+
+        // the split, stated: two members demand a tag, two do not
+        const int demandingATag = kTypeReaderFamily;
+        const int notDemanding = kDriverFamily - kTypeReaderFamily;
+        CHECK(demandingATag == 2);
+        CHECK(notDemanding == 2);
+        CHECK(demandingATag + notDemanding == kDriverFamily);
+        // and the two tagless ones share their flag offsets with each other, not with the readers
+        CHECK(kDriverFlagA != kTagSlot);
+        CHECK(kDriverWordA != kTagSlot2);
+        CHECK(kDriverFlagA > kTagSlot2);
+        // the sixteen-bit fields are half the size of the four-byte parser elements
+        CHECK(kParserElementBytes == 4);
+        CHECK(kDriverWordB - kDriverWordA == kParserElementBytes / 2);
+    }
+
     return check::finish("test_recovered");
 }
