@@ -4475,5 +4475,47 @@ int main() {
         CHECK(kTwoFieldB < kTwoFieldA);
     }
 
+    // --- the third nested layout and the forwarding constructor (RE 0x8f7dd0 and 0x888ff0) ---------
+    {
+        CHECK(kNested3Begin == 0x00);
+        CHECK(kNested3End == 0x08);
+        CHECK(kNested3Begin == kNestedOuterBegin);       // round 254's outer pair, again
+        CHECK(kNested3End == kNestedOuterEnd);
+        CHECK(kNested3InnerStride == 0x10);
+        CHECK(kNested3InnerStride != kNested2InnerStride);
+        CHECK(kNested3InnerStride != kInnerStride24);
+        CHECK(kNested3InnerField == 0x08);
+        CHECK(kNested3InnerField != kNested2Buffer);     // a different field of the inner element
+        CHECK(kNested3Callers == 22);
+        CHECK(kNested3Releaser == kTwoFieldHelper);      // round 321's helper, second sighting
+        CHECK(kReleaseHelperSightings == 2);
+        CHECK(kNestedLayouts == 3);
+        CHECK(kSharedDeallocSightings7 == 8);
+        CHECK(kSharedDeallocSightings7 == kSharedDeallocSightings5 + 1);
+        CHECK(kSharedDealloc == 0x9984B0);
+        CHECK(kCtorForward == 0x888FF0);
+        CHECK(kCtorForwardTarget == 0x86B750);
+        CHECK(kDescriptorRva2 == 0x17FB39);
+        CHECK(kDescriptorOffset2 == 0x10);
+        CHECK(kCtorForwardCallers == 21);
+        CHECK(kDescriptorOffsetRepeats);
+
+        // the three layouts side by side: same shape, different numbers, never merged
+        struct Layout { std::size_t begin, end, stride, field; };
+        const Layout layouts[3] = {{kNestedOuterBegin, kNestedOuterEnd, kInnerStride24, kNested2Buffer},
+                                   {kNested2Begin, kNested2End, kNested2InnerStride, kNested2Buffer},
+                                   {kNested3Begin, kNested3End, kNested3InnerStride, kNested3InnerField}};
+        for (int i = 0; i < kNestedLayouts; ++i) {
+            CHECK(layouts[i].end - layouts[i].begin == 8);
+        }
+        CHECK(layouts[0].stride == 0x18);
+        CHECK(layouts[1].stride == 0x18);
+        CHECK(layouts[2].stride == 0x10);
+        CHECK(layouts[2].field == 0x08);
+        CHECK(layouts[0].field == layouts[1].field);     // the first two release the same field
+        CHECK(layouts[2].field != layouts[0].field);     // the third does not
+        CHECK(kDescriptorOffset2 == kLengthErrorTypeOffset);   // the idiom repeats
+    }
+
     return check::finish("test_recovered");
 }

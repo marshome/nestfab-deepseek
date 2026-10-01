@@ -6380,3 +6380,22 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ⇒ **两个字段、一个助手**；**“先调用后尾调”的形状存在，正因为第一个字段之后还有第二个** —— 这是一条可复用的读法：**出现 `call` 而不是 `jmp`，往往意味着后面还有工作**。
 
 **已落 `layout.hpp`**：`kDtorSmall`、`kDtorSmallVtableRva`(0x585231)、`kDtorSmallField`(0x18)、`kDtorSmallCallers`(23)、`kTwoFieldDtor`、`kTwoFieldA/B`(0x58/0x10)、`kTwoFieldHelper`(0x891B40)、`kTwoFieldSites`(2)、`kTwoFieldCallers`(22)、`kTwoFieldRelease`、`kCallThenTailCall` + **四条 `static_assert`** + 测试 22 条。
+
+### 附 240 **第三种嵌套布局**；且它串起了 round 321 的助手（goal round 322）**[已落码]**
+
+`0x8F7DD0`（88 B / 22 个调用者）：
+
+```
+8F7DD7/8F7DDB  end `+0x08`、begin `+0x00`   ; 与 round 254 的**外层对**相同
+8F7DF0/8F7DF9  逐元素取 `[rbx+8]`，调 **0x891B40**   ; ★ **round 321 的助手**
+8F7DFE  add rbx,**0x10**                        ; ★ **内层步长 16**（rounds 254/279 是 0x18）
+8F7E19  jmp **0x9984B0**                        ; 外层缓冲区（共享释放器，**第八次目击**）
+```
+
+⇒ 本二进制第三个嵌套容器析构，与另两个的差异在**内层步长**（这里 0x10）与**释放内层元素的哪个字段**（这里 `+0x8`，另两个是 `+0x00`）。**分开记录正是重点：三套布局、三组数字、一个不合并**。
+
+★ 助手 `0x891B40` 是 round 321 发现的那个 ⇒ **第二次目击**，支持把它读作**通用的“释放此子对象”助手**，而非某一类型专属。
+
+**另：`0x888FF0`**（27 B / 21 个调用者）以“全局描述符 + 0x10”装虚表（与 round 288 同习语），两个指针各加 8，再尾调 `0x86B750` ⇒ **转发到基类/子对象构造**；习语重现**记为重现**，**不声称两个描述符是同一对象**。
+
+**已落 `layout.hpp`**：`kNested3*`（四个）、`kReleaseHelperSightings`(2)、`kNestedLayouts`(3)、`kSharedDeallocSightings7`(8)、`kCtorForward*`、`kDescriptorRva2/Offset2`、`kDescriptorOffsetRepeats` + **五条 `static_assert`** + 测试 26 条。

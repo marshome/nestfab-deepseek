@@ -2798,6 +2798,35 @@ static_assert(kDtorSmallField == kSsoField18, "the sub-object sits where the str
 static_assert(kTwoFieldSites == 2, "two release sites in the second routine");
 static_assert(kTwoFieldA != kTwoFieldB, "and they release different fields");
 
+
+// --- a third nested-container layout, and a constructor that forwards (round 322) ------------------------
+//     0x8F7DD7/0x8F7DDB begin at +0x00, end at +0x08   ; round 254's outer pair
+//     0x8F7DF9 call 0x891B40 for each element's +0x8   ; the helper round 321 found, second sighting
+//     0x8F7DFE add rbx,0x10                            ; an inner stride of sixteen
+//     0x8F7E19 jmp 0x9984B0                            ; the outer buffer, tail called
+//     0x888FF7 lea-style descriptor plus 0x10 ; 0x888FFB [rcx] = rax
+//     0x889002/0x889006  both pointers advance by eight, then a tail call to 0x86B750
+inline constexpr std::size_t kNested3Begin = 0x00;            // RE 0x8F7DDB
+inline constexpr std::size_t kNested3End = 0x08;              // RE 0x8F7DD7
+inline constexpr std::size_t kNested3InnerStride = 0x10;      // RE 0x8F7DFE
+inline constexpr std::size_t kNested3InnerField = 0x08;       // RE 0x8F7DF0
+inline constexpr int kNested3Callers = 22;
+inline constexpr std::uintptr_t kNested3Releaser = 0x891B40;  // RE 0x8F7DF9
+inline constexpr int kReleaseHelperSightings = 2;             // rounds 321 and 322
+inline constexpr int kNestedLayouts = 3;                      // rounds 254, 279 and this
+inline constexpr int kSharedDeallocSightings7 = 8;            // rounds 248, 252, 254, 256, 261, 275, 293 and this
+inline constexpr std::uintptr_t kCtorForward = 0x888FF0;      // RE the second routine
+inline constexpr std::uintptr_t kCtorForwardTarget = 0x86B750;  // RE 0x889006
+inline constexpr std::uintptr_t kDescriptorRva2 = 0x17FB39;   // RE 0x888FF0
+inline constexpr std::size_t kDescriptorOffset2 = 0x10;       // RE 0x888FF7
+inline constexpr int kCtorForwardCallers = 21;
+inline constexpr bool kDescriptorOffsetRepeats = true;        // observed repetition, not identity
+static_assert(kNested3InnerStride == 0x10, "the third layout's inner stride");
+static_assert(kNested3InnerStride != kNested2InnerStride, "and it differs from the second layout's");
+static_assert(kNestedLayouts == 3, "three nested layouts are now recorded separately");
+static_assert(kSharedDeallocSightings7 == kSharedDeallocSightings5 + 1, "the deallocator again");
+static_assert(kCtorForwardTarget == 0x86B750, "the constructor it forwards to");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
