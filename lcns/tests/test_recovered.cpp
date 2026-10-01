@@ -4406,5 +4406,38 @@ int main() {
         CHECK(!accepted(0));
     }
 
+    // --- the narrow string's constructor and the two capacities (RE 0x9a0480) ----------------------
+    {
+        CHECK(kNarrowStringCtor == 0x9A0480);
+        CHECK(kNarrowStringCallers == 34);
+        CHECK(kNarrowSsoCapacity == 15);
+        CHECK(kNarrowSsoCapacity == 0xF);
+        CHECK(kWideSsoChars == 7);                       // round 294's number, for the other type
+        CHECK(kSsoRelationHolds);
+        CHECK(kWideSsoChars * 2 + kScasbElementBytes == kNarrowSsoCapacity);
+        CHECK(kSmallCapacity == 7);                      // the same round-294 constant, unchanged
+        CHECK(kStrlenViaScasb);
+        CHECK(kScasbElementBytes == 1);
+        CHECK(kEmptyCase == 0x9A050B);
+        CHECK(kInlineCase == 0x9A04D4);
+        CHECK(kInlineCase != kEmptyCase);                // the two targets are different places
+        CHECK(kStringAllocHelper == 0x910BA0);
+        CHECK(kStringAllocHelperSightings == 2);
+        CHECK(kStringAllocHelper != kStringAssign);
+        // the inline buffer offset is the same in both string types
+        CHECK(kStringAssignCapacity == 0x10);
+        CHECK(kSsoInline == 0x10);
+        CHECK(kNarrowStringCtor != kStringAssign);
+
+        // the decision the instructions make: fifteen characters fit, sixteen do not
+        const auto staysInline = [](std::size_t chars) { return chars <= kNarrowSsoCapacity; };
+        CHECK(staysInline(0));
+        CHECK(staysInline(15));
+        CHECK(!staysInline(16));
+        CHECK(staysInline(kWideSsoChars));               // seven is well inside
+        CHECK(!staysInline(kNarrowSsoCapacity + 1));
+        CHECK(kNarrowSsoCapacity + 1 == 16);
+    }
+
     return check::finish("test_recovered");
 }

@@ -6338,3 +6338,22 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 传入的对象在 `[rsp+0xC0]`、`[rsp+0x100]`；因就地对象的链接字段在 `+0x20`，可推出本地基址 `0xA0`（已记录）与 **`0xE0`**（以 `kLocalBase4Inferred` **标明为推出**）。
 
 **已落 `layout.hpp`**：`kWordFieldsAreLengths`、`kLengthReaderSites2`(2)、`kLengthDestA/B`(0x38/0x3C)、`kStatusAcceptanceSites`(4)、`kObjectLinkA/B`(0xC0/0x100)、`kLocalBase4`(0xE0)、`kLocalBase4Inferred`、`kIntegerIsALengthCaller` + **五条 `static_assert`** + 测试 22 条。
+
+### 附 238 ★ **窄字符串的 SSO 容量是 15，而它解释了 round 294 的 7**（goal round 320）**[已落码]**
+
+按**调用者计数降序**选中 `0x9A0480`（152 B / **34 个调用者**，是 400 字节内调用最多的未读领域函数）：
+
+```
+9A0488  lea rax,[rcx+**0x10**]      ; 内联缓冲区（与 rounds 262/293/294 同位）
+9A0498  je 0x9A050B                 ; 空 C 串走空例
+9A04A3  **repne scasb** al,[rdi]    ; ★ 经典 strlen（扫零后取反）
+9A04AC  cmp rbx,**0xF** ; jbe 0x9A04D4   ; ★★ **十五个字符以内保留内联**
+9A04C2  call 0x910BA0               ; 超出则用 round 275 的分配助手
+```
+
+★ 该类型的内联容量是 **15 个字符**，而 round 294 为 `0x9135D0` 处理的类型读到的是 **7**。两者**并不矛盾**：**两字节元素的七个字符占四十四…**不，是 **`7×2 = 14` 字节，而 `7×2+1 = 15`**。
+★ 但这个关系**记为两个独立读出的数字之间的观测等式**，**不声称为我找到的设计规则**（`kSsoRelationHolds`）—— 两者是不同类型，只知道**数字对得上**。
+
+★ 分配助手 `0x910BA0` 是**第二次目击**（round 275 认定）。
+
+**已落 `layout.hpp`**：`kNarrowStringCtor`(0x9A0480)、`kNarrowStringCallers`(34)、`kNarrowSsoCapacity`(15)、`kWideSsoChars`(7)、`kStrlenViaScasb`、`kEmptyCase`、`kInlineCase`、`kStringAllocHelperSightings`(2)、`kSsoRelationHolds`、`kScasbElementBytes` + **四条 `static_assert`** + 测试 24 条。

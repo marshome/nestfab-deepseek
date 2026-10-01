@@ -2750,6 +2750,29 @@ static_assert(kObjectLinkB - 0x20 == kLocalBase4, "the second implies a local at
 static_assert(kStatusAcceptanceSites == 4, "four sites accept status two");
 static_assert(kLocalBase4Inferred, "and that base is marked as inferred");
 
+
+// --- the narrow string's constructor, and its inline capacity (round 320) --------------------------------
+//     0x9A0488 lea rax,[rcx+0x10]      ; the inline buffer at +0x10, as in rounds 262, 293 and 294
+//     0x9A0498 je 0x9A050B             ; a null C string takes the empty case
+//     0x9A04A3 repne scasb al,[rdi]    ; strlen, by scanning for the zero and complementing
+//     0x9A04AC cmp rbx,0xF ; 0x9A04B5 jbe 0x9A04D4   ; FIFTEEN or fewer stay inline
+//     0x9A04C2 call 0x910BA0           ; otherwise the allocation helper of round 275
+inline constexpr std::uintptr_t kNarrowStringCtor = 0x9A0480;  // RE the whole routine
+inline constexpr int kNarrowStringCallers = 34;              // RE the profile
+inline constexpr std::size_t kNarrowSsoCapacity = 15;        // RE 0x9A04AC (0xF)
+inline constexpr std::size_t kWideSsoChars = 7;              // round 294, for the other type
+inline constexpr bool kStrlenViaScasb = true;                // RE 0x9A04A3
+inline constexpr std::uintptr_t kEmptyCase = 0x9A050B;       // RE 0x9A0498
+inline constexpr std::uintptr_t kInlineCase = 0x9A04D4;      // RE 0x9A04B5 -- the target when it fits
+inline constexpr int kStringAllocHelperSightings = 2;        // rounds 275 and this
+inline constexpr bool kSsoRelationHolds = true;              // 7*2+1 == 15, an OBSERVED equality
+inline constexpr std::size_t kScasbElementBytes = 1;         // RE the byte scan
+static_assert(kNarrowSsoCapacity == 15, "the narrow capacity is fifteen");
+static_assert(kWideSsoChars * 2 + kScasbElementBytes == kNarrowSsoCapacity,
+              "and seven wide characters plus one byte is fifteen -- observed, not designed");
+static_assert(kStringAllocHelperSightings == 2, "the allocation helper has a second sighting");
+static_assert(kStrlenViaScasb, "the length comes from a scasb scan");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
