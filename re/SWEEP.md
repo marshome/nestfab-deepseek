@@ -1765,3 +1765,19 @@ round 97 一轮移动 928 KB 且深度 5 仍未收敛 —— 这是**逃逸的�
 * 新口径：**224**（因只有标记而被剔除：**16**）
 
 被视为标记的例子：`AUATUWVSH`、`AUATUWVSH`、`AUATUWVSH`、`ATUWVSH`、`AUATUWVSH`、`ATUWVSH`
+
+## 桶位移的彻查：机制成立，但**两个工具对“已引用”的定义不一致**（goal round 121）
+
+**机制（成立）**：`g_coverage.py` 第 20 行从 `covlib` 导入 `classify_identity`，第 182 行用它对**未引用**函数分桶。因此把函数地址写进 `covlib.py`（作为证据）**本身就是一次引用**，它们随即离开未引用集，于是**每个桶都会变小**。
+
+**数字（对不上）**：
+
+| 口径 | 工具结果 |
+|---|---|
+| `covlib.classify_identity` 对**未引用集**：toolchain | **216** |
+| `g_coverage.py` 打印的 toolchain 桶 | **10** |
+| `covlib` 全可达集分类 | third_party 456 / domain 5332 / toolchain 393 |
+
+⇒ **两个工具用的是不同的“已引用”定义**（`g_coverage` 自己扫文件得到 cited，`covlib` 的 `cited_set()` 排除清单不同），所以**它们报的桶不可直接比较**。这是**我自己工具链的缺陷**，不是数据的问题。
+
+**处置**：下一步**统一定义**（让 `g_coverage` 直接用 `covlib.cited_set()`，或让两边的排除清单一致），并在统一后**重报一次基线数字**。在统一之前，我**只引用 `g_coverage` 的数字**（它是判据的口径），并明记 covlib 的分类只用于内部排序。
