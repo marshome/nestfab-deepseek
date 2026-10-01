@@ -1795,6 +1795,17 @@ int main() {
         CHECK(kCtorFamilyUnitRva == 0x9C1BF0);
         CHECK(kCtorFamilyCallee == 0x1FD6C0);
         CHECK(kCtorFamilyMembers == 4);
+        // round 237: the identity quad laid down twice
+        CHECK(kIdentityQuadPattern[0] == 0.0);
+        CHECK(kIdentityQuadPattern[1] == 1.0);
+        CHECK(kIdentityQuadPattern[2] == 0.0);
+        CHECK(kIdentityQuadPattern[3] == 0.0);
+        CHECK(kIdentityQuadPattern[1] == kCtorDoubleDefault);   // the shared unit literal
+        CHECK(kIdentityQuadCount == 2);
+        CHECK(kSentinelQwordUses == 5);
+        CHECK(kSentinelQwordUses > 0);
+        CHECK(kIdentityQuadStride == 0x98);
+        CHECK(kIdentityQuadStride == kCtor098Bytes);            // the same shape as round 226's object
         // round 236: a wrapper that allocates twice
         CHECK(kAlloc0x50 == 0x50);
         CHECK(kAlloc0x1B8 == 0x1B8);

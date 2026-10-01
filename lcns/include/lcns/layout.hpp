@@ -646,6 +646,20 @@ inline constexpr std::size_t kWrapperBody = 0x48;        // RE 0x21C812
 inline constexpr int kWrapperZeroedQwords = 7;           // RE the seven stores from 0x21C7AA
 static_assert(kAlloc0x50 == 80 && kAlloc0x1B8 == 440, "the two allocation sizes of 0x21C770");
 
+// --- the identity quad and the sentinel's fourth sighting, from 0x72E120 (round 237) ------------------
+//     72E13E movsd xmm1,[1.0] (rva 0x9DFBC8)     ; the shared unit literal of round 226
+//     72E174/72E17D/72E186  a four-double group on the stack: zero at +0xC8, ONE at +0xD0, zeros at +0xD8/+0xE0
+//     72E198/72E1A1/72E1AA  the same pattern again at +0x160 (one at +0x168)
+//     72E1BE and 72E1E9/72E1F1/72E1F9/72E221  five qwords of 0xFFFFFFFFFFFFFFFF (rbp = -1)
+//     72E201 byte 1 at +0x100
+// so this initialiser lays down (0, 1, 0, 0) twice -- the identity for a four-component quantity -- and uses the
+// -1 sentinel of rounds 178/180/219 five more times, this time for stack slots rather than object fields.
+inline constexpr double kIdentityQuadPattern[4] = {0.0, 1.0, 0.0, 0.0};   // RE 0x72E174..0x72E186
+inline constexpr int kIdentityQuadCount = 2;              // RE 0x72E174 and 0x72E198
+inline constexpr int kSentinelQwordUses = 5;              // RE 0x72E1BE, 0x72E1E9, 0x72E1F1, 0x72E1F9, 0x72E221
+inline constexpr std::size_t kIdentityQuadStride = 0x98;  // the two groups are 0x98 apart on the stack
+static_assert(kIdentityQuadPattern[1] == 1.0, "the second component carries the unit");
+
 // --- the constructor family of 0x21F9F0 / 0x220730 / 0x220230 (round 228) ---------------------------
 // Shared by all three:
 //     the unit literal at rva 0x9C1BF0: 21FA15 in round 215, 220780 (0x220730) and 22026A (0x220230)

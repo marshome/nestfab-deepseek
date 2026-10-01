@@ -4850,3 +4850,19 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 ⇒ 它**分配两次**（头 80 字节 + 体 440 字节）；**两个尺寸此前未记录**。
 
 **已落 `layout.hpp`**：`kAlloc0x50`、`kAlloc0x1B8`、`kWrapper*`（四个偏移）、`kWrapperZeroedQwords`+ `static_assert` + 测试 14 条。
+
+### 附 159 **单位四元组 `(0,1,0,0)` 与哨兵的第四次出现**（goal round 237）**[已落码]
+
+`0x72E120`（1089 B）在栈上铺开初始值，其中两处是**同一个四 double 组**：
+
+```
+72E13E  xmm1=[1.0]（rva 0x9DFBC8，round 226 的共享单位字面量）
+72E174/72E17D/72E186  +0xC8=0、**+0xD0=1**、+0xD8=0、+0xE0=0
+72E198/72E1A1/72E1AA  同样形状在 +0x160（**+0x168=1**）
+72E1BE/72E1E9/72E1F1/72E1F9/72E221  **五个 `0xFFFFFFFFFFFFFFFF`**（rbp = −1）
+72E201  +0x100 = 1（字节）
+```
+
+⇒ **单位四元组 `(0,1,0,0)`**（四分量量的单位值）出现**两次**；且 **−1 哨兵第四次出现**（rounds 178/180/219、本轮），这一次用在**栈位**而非对象字段。
+
+**已落 `layout.hpp`**：`kIdentityQuadPattern`、`kIdentityQuadCount`、`kSentinelQwordUses`、`kIdentityQuadStride`+ `static_assert` + 测试 11 条。
