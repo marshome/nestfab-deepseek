@@ -1293,5 +1293,20 @@ int main() {
         }
     }
 
+    // --- the tree lookup (RE 0x924ecc/0x924ede/0x924f04) and the 16-byte push_back (0x8c370d) ----------
+    {
+        CHECK(kTreeLookupOutNode == 0x00);
+        CHECK(kTreeLookupOutFlag == 0x08);
+        // the layout this lookup walks is the one round 178 recorded, so the two agree
+        CHECK(kTreeNodeLeft == 0x10);
+        CHECK(kTreeNodeRight == 0x18);
+        CHECK(kTreeNodeKey == 0x20);
+        CHECK(kTreeLookupOutFlag == kTreeNodeFirstDouble - 0x38);   // 0x40 - 0x38 = 8, the flag word
+        CHECK(kPushBackElementBytes == 0x10);
+        CHECK(kPushBackElementBytes == kPoint2dSize);
+        CHECK(kPushBackElementBytes == kBoxPointStride);
+        CHECK(kPushBackElementBytes == kBoxCornerBytes);
+    }
+
     return check::finish("test_recovered");
 }

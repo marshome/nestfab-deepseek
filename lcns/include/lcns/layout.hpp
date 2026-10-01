@@ -248,4 +248,19 @@ static_assert(kBlockElements * kBlockElementStride == kContainerBlockBytes,
               "21 elements of 24 bytes is the 504-byte block measured in round 200");
 static_assert(kBlockFastPathLimit + 1 == kBlockElements, "the fast path covers the first block");
 
+
+// --- the tree lookup of 0x924EA0 (round 212): a second sighting of the node layout ----------------
+//     924ECC mov r9,[rcx+0x20] ; 924ED0 cmp r9,r11 ; 924ED5 setg ; 924EDE mov rax,[rcx+0x18]
+//     924EC0 mov rax,[rcx+0x10]                       ; the other child
+//     924F01 mov [rsi],rdi ; 924F04 mov [rsi+8],0      ; node at +0x00, flag at +0x08
+// The offsets 0x10/0x18/0x20 are the same ones round 178 read out of 0x89D2F0, so the node layout now rests on two
+// independent functions, and the two-word out parameter is the pair<iterator,bool> a find returns.
+inline constexpr std::size_t kTreeLookupOutNode = 0x00;   // RE 0x924F01
+inline constexpr std::size_t kTreeLookupOutFlag = 0x08;   // RE 0x924F04
+
+// --- the push_back of 0x8C36F0 (round 212) -----------------------------------------------------------
+//     8C36FF/8C3702/8C3706/8C3709 copy sixteen bytes; 8C370D advances the end by 0x10.
+inline constexpr std::size_t kPushBackElementBytes = 0x10;   // RE 0x8C370D
+// cross-checked at run time in tests/test_recovered.cpp, which sees compare.hpp as well
+
 }  // namespace lcns
