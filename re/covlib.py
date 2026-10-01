@@ -840,3 +840,6 @@ LIBRARY_EVIDENCED[0x8A8020] = ("toolchain", "deque::: libstdc++ deque")
 LIBRARY_EVIDENCED[0x118260] = ("third_party", "CryptoPP: power-up self test message")
 # --- round 197: libstdc++ stream insertion for a C string ---
 LIBRARY_EVIDENCED[0x9920C0] = ("toolchain", "libstdc++ operator<<(const char*): measure then insert, setstate fallback via `or edx,1`")
+
+# Round 254: toolchain evidence.
+LIBRARY_EVIDENCED[0x9984B0] = ("libstdc++", "the shared deallocator called by the release of round 248, the formatter of round 252 and the nested-container destructor of round 254")

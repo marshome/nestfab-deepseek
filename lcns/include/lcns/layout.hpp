@@ -1002,7 +1002,9 @@ inline constexpr int kSearchCallers = 37;
 // --- the error formatter of 0x77F2D0, forty-three callers (round 252) ---------------------------------
 //     0x77F2D7 mov ecx,0x30 ; 0x77F2DC call 0x9988C0     ; a forty-eight byte buffer
 //     0x77F2F7 lea rdx,[rip+0x233C92]                    ; the literal 'BER decode error'
-//     0x77F303 and 0x77F332 call 0xC71D0                 ; the text building helper, twice
+//     0x77F303 and 0x77F332 call 0xC71D0                 ; CORRECTED (round 254): this is std::string's
+//                                                          _M_construct, so the formatter builds a
+//                                                          std::string rather than using its own helper
 //     0x77F30D/0x77F340/0x77F354 three vtable pointers: rip+0x2D39DC, rip+0x2C2F49, rip+0x2BFA55
 //     0x77F34F/0x77F3A0 call 0x9984B0                    ; release, the same deallocator as round 248's
 inline constexpr std::size_t kFormatterAlloc = 0x30;         // RE 0x77F2D7 (48)
@@ -1057,6 +1059,33 @@ inline constexpr std::uintptr_t kExceptionHelper = 0x63F6A8;   // RE 0x998CE7, t
 inline constexpr std::size_t kExceptionAlloc = 8;              // RE 0x998D45
 inline constexpr int kExceptionCallers = 36;
 static_assert(kExceptionHelper == kOnceCallee, "one helper serves both the once guard and this plumbing");
+
+
+// --- the nested-container destructor 0x8CE510, thirty-six callers (round 254) --------------------------
+//     0x8CE51E/0x8CE51A  the outer begin at +0x00 and end at +0x08
+//     0x8CE534/0x8CE530  each outer element holds an inner begin at +0x18 and end at +0x20
+//     0x8CE54D add rbx,0x18   ; inner elements are twenty-four bytes
+//     0x8CE574 add rdi,0x30   ; outer elements are forty-eight bytes
+//     0x8CE548/0x8CE562/0x8CE56F/0x8CE593 call 0x9984B0 -- the shared deallocator, third sighting
+inline constexpr std::size_t kNestedOuterBegin = 0x00;       // RE 0x8CE51E
+inline constexpr std::size_t kNestedOuterEnd = 0x08;         // RE 0x8CE51A
+inline constexpr std::size_t kNestedInnerBegin = 0x18;       // RE 0x8CE534
+inline constexpr std::size_t kNestedInnerEnd = 0x20;         // RE 0x8CE530
+inline constexpr std::size_t kInnerStride24 = 0x18;          // RE 0x8CE54D
+inline constexpr std::size_t kOuterStride48 = 0x30;          // RE 0x8CE574
+inline constexpr std::uintptr_t kSharedDealloc = 0x9984B0;   // RE 0x8CE548, also rounds 248 and 252
+inline constexpr int kNestedDestructorCallers = 36;
+inline constexpr int kSharedDeallocSightings = 3;            // rounds 248, 252 and this one
+static_assert(kOuterStride48 == 48 && kInnerStride24 == 24, "forty-eight outer, twenty-four inner");
+static_assert(kNestedInnerEnd - kNestedInnerBegin == 8, "the inner pair is eight bytes apart");
+
+// --- TOOLCHAIN, not domain: 0xC71D0 is std::string's _M_construct (round 254) --------------------------
+// RE 0xC71E7: the assertion text at rva 0x8EBA82 is 'basic_string::_M_construct n', which is libstdc++'s own.
+// The objective excludes libstdc++/MinGW, so this routine is registered as library evidence (see
+// re/covlib.py) rather than counted as domain code. Its size and caller count are recorded for the audit:
+// 177 bytes and eleven callers.
+inline constexpr std::uintptr_t kStdStringConstruct = 0xC71D0;   // RE 0xC71E7, toolchain
+inline constexpr int kStdStringConstructCallers = 11;
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

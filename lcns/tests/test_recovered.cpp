@@ -2214,5 +2214,33 @@ int main() {
         CHECK(kExceptionCallers == 36);
     }
 
+    // --- the nested-container destructor and the toolchain exclusion (RE 0x8ce510 and 0xc71d0) ------
+    {
+        CHECK(kNestedOuterBegin == 0x00);
+        CHECK(kNestedOuterEnd == 0x08);
+        CHECK(kNestedInnerBegin == 0x18);
+        CHECK(kNestedInnerEnd == 0x20);
+        CHECK(kInnerStride24 == 0x18);
+        CHECK(kOuterStride48 == 0x30);
+        CHECK(kInnerStride24 == 24);
+        CHECK(kOuterStride48 == 48);
+        CHECK(kNestedInnerEnd - kNestedInnerBegin == 8);
+        CHECK(kNestedInnerBegin < kOuterStride48);            // the inner pair sits inside the outer element
+        CHECK(kNestedOuterEnd - kNestedOuterBegin == 8);
+        CHECK(kSharedDealloc == 0x9984B0);
+        CHECK(kSharedDealloc == kFormatterRelease);           // rounds 248/252/254 all use it
+        CHECK(kSharedDealloc == kReleaseDealloc);
+        CHECK(kNestedDestructorCallers == 36);
+        CHECK(kSharedDeallocSightings == 3);
+
+        // the toolchain routine carries libstdc++'s own assertion text, so it is not domain code
+        CHECK(kStdStringConstruct == 0xC71D0);
+        CHECK(kStdStringConstructCallers == 11);
+        // CORRECTED in round 254: round 252 called this helper "the text building helper", but the two
+        // addresses are the SAME -- the formatter builds a std::string, so its helper IS _M_construct.
+        CHECK(kStdStringConstruct == kFormatterTextHelper);
+        CHECK(kStdStringConstruct == 0xC71D0);
+    }
+
     return check::finish("test_recovered");
 }

@@ -5099,3 +5099,20 @@ F15AE  test eax,eax ; sete al                 ; 剩余字数为 0 即为零
 `0x998CD0`（201 B / 36 个调用者）是异常路径：调 **`0x63F6A8`**（与 round 248 的一次性守卫**同一个被调**）、`0x63F6C0`/`0x63F720`/`0x63F6B8`，以 `0x9988C0` 分配 8 字节，并用 `0x7C4AB0`/`0x7C4A80`/`0x9A0700`。
 
 **已落 `layout.hpp`**：`kBigIntIsZero`、`kBigIntFamilyMembers`、`kBigInt*`、`kTagSecondSighting`、`kException*` + **三条 `static_assert`** + 测试 27 条。
+
+### 附 174 **嵌套容器的两个步长**与**一个 libstdc++ 例程的工具链排除**（goal round 254）**[已落码]
+
+**（a）`0x8CE510`（147 B / **36 个调用者**）= 嵌套容器的析构**：外层 `+0x00`/`+0x08`，每个外层元素内部又有 `+0x18`/`+0x20` 的内层 begin/end；
+
+```
+8CE54D  add rbx,0x18   ; 内层元素 **24 字节**
+8CE574  add rdi,0x30   ; 外层元素 **48 字节**
+```
+
+它四次调用 **`0x9984B0`** —— 与 rounds 248（原子释放）、252（错误文本构造器）**同一个共享释放器**（**第三次目击**）。
+
+**（b）`0xC71D0`（177 B / 11 个调用者）是 `std::string::_M_construct`**：它在 `0xC71E7` 引用了 **libstdc++ 自己的断言串 `'basic_string::_M_construct n'`**（rva `0x8EBA82`）。
+目标明文排除 **libstdc++/MinGW** ⇒ 它**以库证据登记**（`re/covlib.py`），**不计入待逆向的领域代码** —— 这是**基于证据的排除**，而非把地址写进文档的取巧。
+★ 同时也是一条**跨层连接事实**：round 252 那个构造器正是**调用**它来拼字符串的。
+
+**已落 `layout.hpp`**：`kNested*`、`kInnerStride24`、`kOuterStride48`、`kSharedDealloc`、`kSharedDeallocSightings`、`kStdStringConstruct*` + **三条 `static_assert`** + 测试 19 条。
