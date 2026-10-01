@@ -81,6 +81,7 @@ std::shared_ptr<Nester> makeStrategy(int mode) {
     }
 }
 
+LCNS_STRUCTURAL(tu.nesting_context);
 LCNS_STRUCTURAL(tu.bucket_manager);
 LCNS_NOT_REVERSED(engine.beam_tree);
 std::vector<std::shared_ptr<Nester>> makeDefaultStrategies() {
@@ -153,6 +154,13 @@ EngineResult Engine::run(const Order& order, const EngineParams& params, Observe
 
     // working copy: parts are inflated by half the interpart gap (with self-intersection
     // removal), which is what the recovered AddInflatedToolPathToPart pipeline does
+    //
+    // Why the gap is applied HERE and not as a per-part gap: the nesting context TU
+    // (..\multi\nesting_context.cpp, re/findings_nesting_context.md) asserts
+    //     (problem.part_gap() == 0.0) && "part gap not supported"        [RE 0x69AA40]
+    // i.e. the original's engine refuses a per-part gap outright and carries the spacing through
+    // shape inflation instead. lcns does the same thing for the same reason, so this is now a
+    // recovered behaviour rather than a coincidence.
     Order prepared = order;
     if (order.interpartGap != 0.0) {
         prepareInflatedShapes(prepared, order.interpartGap * 0.5);

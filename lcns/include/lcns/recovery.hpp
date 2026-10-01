@@ -241,6 +241,20 @@ inline constexpr Gap kGaps[] = {
      "'Packer Cache max threads: ' / 'Thread <'. Cross confirmation: '!shear' appears here, "
      "independently of the shear/tooling route found in 0x2CE00. NOT transcribed: the pattern "
      "generation rules themselves, the cache key/eviction policy and the thread pool merge"},
+    {"tu.nesting_context", Status::Structural, "0x41920 FillNestingAux, 0x69AA40 mapping, 0x40070 ComputeGroups",
+     "the nesting context (the bridge between model and engine) is identified: 135 DIRECT functions "
+     "/ 114,670 bytes. API surface on record: ComputeRealNestingWindow 0x3b2f0, GetTypicalLength "
+     "0x3b5f0, NestedQuantities 0x3bcc0, SetCommonCutParameters 0x3c3f0, ComputeSheetLayers 0x3c9e0, "
+     "ToNesting 0x3dbe0, GetNestingPart 0x3f070, SetMultiTorchParameters 0x3e740, ComputeGroups / "
+     "FromNesting 0x40070, RenestInHoles 0x40720, FillNestingAux 0x41920, FillNesting 0x434d0, "
+     "GetCluster 0x69a720, NestingPartModuleMapping 0x69aa40, GetStructureModule 0x7d3e50, "
+     "IsCluster 0x7d4050. Its assertion texts give hard facts: clusters live at the TAIL of m_parts "
+     "(index >= m_parts.size() - m_clusters.size()), the engine does NOT support a part gap "
+     "(problem.part_gap() == 0.0), FillNestingAux only handles unit multiplicity, ComputeGroups "
+     "keeps matrix_indices and group_indices the same length, boxes are non negative to 1e-6 and the "
+     "first result point must sit at the origin under Utils::eps_equals. Option keys here: biggest, "
+     "packer_cache, sheet, y_valid, _mod. NOT transcribed: the 12.8 KB checker 0x193420, the "
+     "FillNesting/ComputeGroups bodies, the module authorization logic and the cluster construction"},
     {"module.engine", Status::Structural, "0x827F0 / 0x2DF60 / 0x2CCF0",
      "the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are "
      "recovered; the per-strategy budget bookkeeping here is a re-implementation"},

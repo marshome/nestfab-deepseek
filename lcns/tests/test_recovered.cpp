@@ -164,9 +164,9 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 64);
+        CHECK(kGapCount == 65);
         CHECK(countOf(Status::Recovered) == 8);
-        CHECK(countOf(Status::Structural) == 17);
+        CHECK(countOf(Status::Structural) == 18);
         CHECK(countOf(Status::Substituted) == 27);
         CHECK(countOf(Status::NotReversed) == 11);
         CHECK(countOf(Status::NotInBinary) == 1);
