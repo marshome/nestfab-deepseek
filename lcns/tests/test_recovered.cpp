@@ -1722,6 +1722,12 @@ int main() {
         CHECK(kRatioFamilyNumB == 0x78);
         CHECK(kRatioFamilyDenB == 0x48);
         CHECK(kRatioFamilyTag == 6);
+        // round 243: the field-identical group splits by tag, so "twins" was an overstatement
+        CHECK(kRatioFamilyTagA == 6);
+        CHECK(kRatioFamilyTagB == 5);
+        CHECK(kRatioFamilyTagCount == 2);
+        CHECK(kRatioFamilyTagA != kRatioFamilyTagB);
+        CHECK(kRatioFamilyTag == kRatioFamilyTagA);
         CHECK(kRatioFamilyMembers == 3);
         // the fields of this member are distinct from the round-216 member's, which is why it is a second member
         CHECK(kRatioFamilyPrimaryA != kRatioPrimaryOffset);

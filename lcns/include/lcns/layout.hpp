@@ -581,7 +581,15 @@ inline constexpr std::size_t kRatioFamilyNumA = 0x40;      // RE 0x724E8F
 inline constexpr std::size_t kRatioFamilyDenA = 0x80;      // RE 0x724E8F
 inline constexpr std::size_t kRatioFamilyNumB = 0x78;      // RE 0x724E94
 inline constexpr std::size_t kRatioFamilyDenB = 0x48;      // RE 0x724E94
-inline constexpr int kRatioFamilyTag = 6;                  // RE 0x724EB4
+inline constexpr int kRatioFamilyTag = 6;                  // RE 0x724EB4 (the 0x724E40/0x725140 variant)
+// RE 0x72D638 (round 243): 0x72D5B0 writes FIVE where the other two write six, and yet its constant, its
+// primary pair (+0x50/+0x88), its ratio pair (+0x40/+0x78/+0x80/+0x48), its rule and its 56-byte stride are
+// all identical to theirs. So the group of three is NOT three copies of one template: it is one field layout
+// with TWO TAGS, i.e. two variants. Rounds 231/232 called them "twins", which overstated it, and that wording
+// is corrected here: field-identical variants distinguished by the tag they write.
+inline constexpr int kRatioFamilyTagA = 6;                  // RE 0x724EB4 and 0x7251B4
+inline constexpr int kRatioFamilyTagB = 5;                  // RE 0x72D638
+inline constexpr int kRatioFamilyTagCount = 2;              // the two variants the group splits into
 inline constexpr int kRatioFamilyMembers = 3;              // 0x7DB6E0, 0x724E40 and 0x725140
 // RE 0x725140 (round 231) is a NEAR TWIN of 0x724E40: the same 50.0 slot, the same field offsets (+0x50 and
 // +0x88 for the margin, +0x40/+0x80 and +0x78/+0x48 for the ratio), the same `dword [rbx+0x10] = 6` tag and

@@ -4948,3 +4948,21 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 **九倍**只落它本身为“寻址的中间步”，**19 已是 round 240 的常量**。
 
 **已落 `layout.hpp`**：`kPairwiseCallee`、`kPairwiseElementStride`、`kPairwiseCallsPerStep`、`kSentinelSightings`、`kNineMultiplier` + `static_assert` + 测试 10 条（含 `kNineMultiplier*2+1 == kStride152Words`）。
+
+### 附 165 **是“同字段的两个变体”，而不是“孪生”**（`0x72D5B0`，goal round 243）**[已更正并落码]
+
+`0x72D5B0`（546 B）与 `0x724E40`/`0x725140` 逐项对比：
+
+```
+72D5BE  xmm3=[50.0]                       ; 同一常量
+72D5E6/72D5F1  +0x50、+0x88                 ; 同一主字段对
+72D613/72D618/72D61D/72D625  +0x40、+0x78、+0x80、+0x48   ; 同一比值对
+72D62E  seta dl                            ; 同一规则
+72D638  dword [rbx+0x10] = **5**             ; ★ **标签是 5**（另两个写 6）
+72D650/72D658/72D65B  … rdx×8 再 ×8             ; 同一 56 字节步长
+```
+
+⇒ **三个函数共享常量、字段、规则与步长，但标签不同** ⇒ 它们**不是同一模板的三份拷贝**，而是**一套字段布局配两个标签**（两个变体）。
+**rounds 231/232 称之为“孪生”是过头的说法，在此更正**：**字段相同、标签不同的变体**。
+
+**已落 `layout.hpp`**：`kRatioFamilyTagA`(6)、`kRatioFamilyTagB`(5)、`kRatioFamilyTagCount`(2) + 测试 6 条。
