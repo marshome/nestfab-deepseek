@@ -3506,5 +3506,42 @@ int main() {
         CHECK(kArrayStride * 3 == 24);
     }
 
+    // --- the inline capacity and the release rule (RE 0x9135d0) -------------------------------------
+    {
+        CHECK(kSmallCapacity == 7);
+        CHECK(kSmallCapacity == kStringInlineCapacity);
+        CHECK(kSmallCapacity < kSsoInline);
+        CHECK(kStringRealloc == 0x913640);
+        CHECK(kStringAllocBySize == 0x913690);
+        CHECK(kFreeOnlyIfHeap);
+        CHECK(kGrowthDoubling);
+        CHECK(kStringAssignDouble == 2);
+        CHECK(kSharedDeallocSightings6 == 8);
+        CHECK(kSharedDeallocSightings6 == kSharedDeallocSightings5 + 1);
+        CHECK(kSharedDealloc == 0x9984B0);
+        CHECK(kStringRealloc != kStringAssign);
+        CHECK(kStringRealloc > kStringAssign);
+
+        // the release rule the instructions implement: free only when the data is not inline
+        const auto release = [](const char* data, const char* inlineBuf, int& frees) {
+            if (data != inlineBuf) { ++frees; return true; }   // RE 0x913658/0x91365B
+            return false;
+        };
+        char obj[64] = {};
+        int frees = 0;
+        CHECK(!release(obj + kSsoInline, obj + kSsoInline, frees));
+        CHECK(frees == 0);
+        CHECK(release(obj, obj + kSsoInline, frees));
+        CHECK(frees == 1);
+
+        // the capacity comparison that decides whether to reallocate
+        const auto needsGrowth = [](std::size_t capacity, std::size_t size) { return capacity < size; };
+        CHECK(!needsGrowth(kSmallCapacity, 7));
+        CHECK(needsGrowth(kSmallCapacity, 8));
+        CHECK(needsGrowth(16, 32));
+        CHECK(!needsGrowth(32, 32));
+        CHECK(kSmallCapacity * 2 == 14);
+    }
+
     return check::finish("test_recovered");
 }

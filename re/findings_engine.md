@@ -5856,3 +5856,28 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ⇒ 与 round 262 为两字节字符串记录的三元组**完全相同**（`+0x00` 数据、`+0x08` 尺寸、`+0x10` 容量） ⇒ 在**另一个例程里得到独立印证**。
 
 **已落 `layout.hpp`**：`kArrayStride`(8)、`kArrayElementsFreed`、`kArrayFreeCallee`、`kSharedDeallocSightings5`(7)、`kStringAssign*`（六个） + **五条 `static_assert`** + 测试 22 条。
+
+### 附 212 **该类型的内联容量是 7**；且**释放规则得到明确**（goal round 294）**[已落码]**
+
+**（a）**SSO 分支只有两条指令**：
+
+```
+913684  mov r8d,7 ; 91368A jmp 0x9135FD
+```
+
+⇒ 源为内联时，拿来比较的容量是 **7**（该类型的**小容量**），它正是 `0x913600` 那个 `jb` 据以判断是否需要重分配的数。
+
+**（b）重分配分支 `0x913640`：**
+
+```
+913648/91364D  以尺寸为参调 `0x913690`（按尺寸分配的助手）
+913658  旧数据指针与内联地址 `r12` 相比
+91365B  je → 跳过释放                ; ★ **若原本就在内联缓冲区内，不释放**
+91365D  call 0x9984B0                     ; 否则释放（**第八次目击**）
+913667/91366A  存入新指针与新容量
+913670  lea r12,[rsi+rsi]                 ; ★ **增长策略是翻倍**
+```
+
+★ **释放规则在此变得明确**：round 260/275 只是暗示；本轮它以 `cmp`/`je` 的形式出现，因此**作为规则**落码（`kFreeOnlyIfHeap`）而不只是布局事实。
+
+**已落 `layout.hpp`**：`kSmallCapacity`(7)、`kStringInlineCapacity`、`kStringRealloc`、`kStringAllocBySize`(0x913690)、`kFreeOnlyIfHeap`、`kGrowthDoubling`、`kStringAssignDouble`、`kSharedDeallocSightings6`(8) + **五条 `static_assert`** + 测试 22 条。

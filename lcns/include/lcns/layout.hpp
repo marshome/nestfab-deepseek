@@ -2161,6 +2161,27 @@ static_assert(kStringAssignData == kWideData && kStringAssignSize == kWideSize &
               kStringAssignCapacity == kWideCapacity, "the trio round 262 recorded");
 static_assert(kStringAssignSsoCheck, "the assignment compares the inline address with the data pointer");
 
+
+// --- the small capacity of the string type, and the release rule (round 294) ---------------------------
+//     0x913684 mov r8d,7 ; 0x91368A jmp   ; the capacity used when the source is inline
+//     0x913600 jb                          ; capacity < size therefore reallocate
+//     0x913658/0x91365B  the old data pointer against the inline address, and `je` skips the free
+//     0x91365D call 0x9984B0               ; freed only when it is NOT the inline buffer
+//     0x913670 lea r12,[rsi+rsi]           ; growth doubles
+inline constexpr std::size_t kSmallCapacity = 7;             // RE 0x913684
+inline constexpr std::uintptr_t kStringRealloc = 0x913640;   // RE the reallocation branch
+inline constexpr std::uintptr_t kStringAllocBySize = 0x913690;  // RE 0x91364D
+inline constexpr bool kFreeOnlyIfHeap = true;                // RE 0x913658/0x91365B
+inline constexpr bool kGrowthDoubling = true;                // RE 0x913670
+inline constexpr std::size_t kStringInlineCapacity = 7;      // the same number, named for the rule
+inline constexpr int kSharedDeallocSightings6 = 8;           // rounds 248, 252, 254, 256, 261, 275, 293 and this
+inline constexpr int kStringAssignDouble = 2;                // the factor from `lea r12,[rsi+rsi]`
+static_assert(kSmallCapacity == kStringInlineCapacity, "one capacity, one name for the rule");
+static_assert(kSmallCapacity == 7, "seven bytes inline");
+static_assert(kStringAssignDouble == 2, "the growth factor is two");
+static_assert(kSharedDeallocSightings6 == kSharedDeallocSightings5 + 1, "one more sighting");
+static_assert(kSmallCapacity < kSsoInline, "the capacity is smaller than the inline buffer offset");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
