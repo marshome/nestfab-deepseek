@@ -5604,3 +5604,22 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ⇒ 这是 **round 252 那个 BER 文本的第一条领域连接**：**该对象通过它报告 BER 解码错误** —— 项目**确实在解 BER**，这是说出这件事的站点之一。
 
 **已落 `layout.hpp`**：`kGetOrCreate*`（九个）、`kVtableSlotD`、`kFinalise*`（七个）、`kBerErrorFormatter`、`kBerDecoderSite`、`kStatusCall`、`kRetriesOnNonZeroWord` + **三条 `static_assert`** + 测试 26 条。
+
+### 附 199 **BER 长度读取器**（大端 16 位）与**第三个向量元素尺寸**（goal round 281）**[已落码]**
+
+**（a）`0x11A780`（886 B / 9 个调用者）**，正是 round 280 那个报告 `'BER decode error'` 的收尾例程所调：
+
+```
+11A78C/11A792  虚表与 **从 `+0xC0` 读出**的槽
+11A7B7  call qword [rax+0xB8]（r8d = 2）   ; 虚调用，槽 `0xB8`
+11A7C9/11A7CE  `[rsp+0x41] << 8`            ; ★ **第二个字节向上移**
+11A7D3/11A7D8  `| [rsp+0x40]`               ; ★ 与第一个字节相或
+11A7DA  word [r12] = ax                     ; ★ **写成 16 位大端值**
+```
+
+⇒ **这就是大端 16 位读取，正是 ASN.1/BER 的长度形式** ⇒ **BER 假设如今靠算术本身支撑**，而不只靠一个字符串。它同时把**虚表槽扩到六个**：`+0x08`、`+0x18`、`+0x30`、`+0x68`、**`+0xB8`**、**`+0xC0`**。另：`0x11A7DF` 处的字面量比较，与 round 263 在 `0xF1325` 看到的**是同一个**。
+
+**（b）`0x90D6B0`（209 B / 23 个调用者）= 4 字节元素的向量扩容**：`sar rax,2`（÷4）、翻倍+溢出检查、**max_size `0x3FFFFFFFFFFFFFFF`**、失败值 **−4**、最小 4、调 `0x998500`。
+⇒ **向量族现有三个元素尺寸**：32 字节（`0x8F1E20`）、**4 字节（本轮）**，以及宽字符串的 2 字节。其 max_size **与两字节字符串相同**（值相等，**仅记录相等而不合并**）。
+
+**已落 `layout.hpp`**：`kBer*`（六个）、`kBigEndian16`、`kTypeLiteralSite`、`kVtableSlotsKnown`、`kVector4*`（六个）、`kMaxSizeVec64` + **五条 `static_assert`** + 测试 30 条。

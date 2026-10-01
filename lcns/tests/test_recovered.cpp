@@ -3011,5 +3011,42 @@ int main() {
         CHECK(kBerErrorFormatter != kGetOrCreate);
     }
 
+    // --- the BER length reader and the four-byte vector (RE 0x11a780 and 0x90d6b0) ------------------
+    {
+        CHECK(kBerLengthReader == 0x11A780);
+        CHECK(kBerVtableSlotA == 0xB8);
+        CHECK(kBerVtableSlotB == 0xC0);
+        CHECK(kBerVtableSlotB - kBerVtableSlotA == 8);
+        CHECK(kBerLengthCallers == 9);
+        CHECK(kBigEndian16);
+        CHECK(kBerSlotKindArgument == 2);
+        CHECK(kTypeLiteralSite == 0x11A7DF);
+        CHECK(kVtableSlotsKnown == 6);
+        // the six slots now known, in ascending order
+        CHECK(kVtableSlotD == 0x08 && kVtableSlotA == 0x18 && kVtableSlotB == 0x30);
+        CHECK(kVtableSlotC == 0x68 && kBerVtableSlotA == 0xB8 && kBerVtableSlotB == 0xC0);
+        // the big-endian assembly the instructions perform
+        const auto bigEndian16 = [](std::uint8_t low, std::uint8_t high) {
+            return static_cast<std::uint16_t>((static_cast<std::uint16_t>(high) << 8) |
+                                              static_cast<std::uint16_t>(low));
+        };
+        CHECK(bigEndian16(0x34, 0x12) == 0x1234);
+        CHECK(bigEndian16(0x00, 0x01) == 0x0100);
+        CHECK(bigEndian16(0xFF, 0x00) == 0x00FF);
+        CHECK(bigEndian16(0x34, 0x12) != 0x3412);      // it is big-endian, not little
+
+        CHECK(kVector4 == 0x90D6B0);
+        CHECK(kVector4 != kVector32);
+        CHECK(kElement4Shift == 2);
+        CHECK(kElement4 == 4);
+        CHECK((1u << kElement4Shift) == kElement4);
+        CHECK(kMaxSizeVec64 == 0x3FFFFFFFFFFFFFFFULL);
+        CHECK(kMaxSizeVec64 == kMaxSizeWide);          // the same constant the two-byte string uses
+        CHECK(kVector4Failure == static_cast<std::uint64_t>(-4));
+        CHECK(static_cast<std::int64_t>(kVector4Failure) == -4);
+        CHECK(kVector4MinCapacity == 4);
+        CHECK(kVector4Callers == 23);
+    }
+
     return check::finish("test_recovered");
 }

@@ -1765,6 +1765,45 @@ inline constexpr bool kRetriesOnNonZeroWord = true;                // RE 0x10F7E
 static_assert(kBerErrorFormatter == 0x77F2D0, "the formatter address");
 static_assert(kBerDecoderSite == kFinaliseWithRetry, "the BER site is this routine");
 
+
+// --- the BER length reader 0x11A780, nine callers (round 281) ------------------------------------------
+//     0x11A78C/0x11A792  the object's vtable and the slot LOADED from +0xC0
+//     0x11A7B7 call qword [rax+0xB8] with r8d = 2   ; a virtual call, slot 0xB8
+//     0x11A7C9/0x11A7CE/0x11A7D3/0x11A7D8  (second byte << 8) | first byte
+//     0x11A7DA word [r12] = ax                      ; a BIG-ENDIAN sixteen-bit value
+//     0x11A7DF/0x11A7E6  the loaded slot compared with the literal at 0x11A7DF, which round 263 also saw
+inline constexpr std::uintptr_t kBerLengthReader = 0x11A780;        // RE the whole routine
+inline constexpr std::size_t kBerVtableSlotA = 0xB8;                // RE 0x11A7B7
+inline constexpr std::size_t kBerVtableSlotB = 0xC0;                // RE 0x11A792
+inline constexpr int kBerLengthCallers = 9;
+inline constexpr bool kBigEndian16 = true;                          // RE 0x11A7C9..0x11A7D8
+inline constexpr int kBerSlotKindArgument = 2;                      // RE 0x11A7A9
+inline constexpr std::uintptr_t kTypeLiteralSite = 0x11A7DF;        // RE the comparison, also 0xF1325
+inline constexpr int kVtableSlotsKnown = 6;                         // 0x08, 0x18, 0x30, 0x68, 0xB8, 0xC0
+static_assert(kBerVtableSlotB - kBerVtableSlotA == 8, "the two slots are adjacent");
+static_assert(kBigEndian16, "the sixteen-bit read is big-endian");
+static_assert(kVtableSlotsKnown == 6, "six virtual slots are now recorded");
+
+// --- the four-byte vector growth 0x90D6B0, twenty-three callers (round 281) ---------------------------
+//     0x90D6C0/0x90D6C9  (end - begin) then `sar rax,2`   ; FOUR-byte elements
+//     0x90D6D2 add rax,rax ; 0x90D6D4 jb                  ; doubling, overflow checked
+//     0x90D6D7 movabs rdx,0x3FFFFFFFFFFFFFFF ; 0x90D6E4 jbe ; the max_size guard
+//     0x90D6EA mov r12,0xFFFFFFFFFFFFFFFC                 ; the failure value, i.e. -4
+//     0x90D6F3 mov r12d,4                                 ; the minimum capacity
+//     0x90D6FC call 0x998500                              ; the shared allocator
+inline constexpr std::uintptr_t kVector4 = 0x90D6B0;                // RE the whole routine
+inline constexpr int kElement4Shift = 2;                            // RE 0x90D6C9
+inline constexpr std::size_t kElement4 = 4;                         // RE 0x90D6C9
+inline constexpr std::uint64_t kMaxSizeVec64 = 0x3FFFFFFFFFFFFFFFULL;  // RE 0x90D6D7
+inline constexpr std::uint64_t kVector4Failure = 0xFFFFFFFFFFFFFFFCULL;  // RE 0x90D6EA
+inline constexpr std::size_t kVector4MinCapacity = 4;               // RE 0x90D6F3
+inline constexpr int kVector4Callers = 23;
+static_assert((1u << kElement4Shift) == kElement4, "the shift is the element size");
+static_assert(kVector4Failure == static_cast<std::uint64_t>(-4), "the failure value is minus the element size");
+// The max_size here equals the two-byte string's guard. Equal VALUES, recorded as equal rather than merged.
+static_assert(kMaxSizeVec64 == kMaxSizeWide, "the same max_size constant as the two-byte string");
+static_assert(kVector4 != kVector32, "two distinct vector growth routines");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
