@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <cmath>
 
+LCNS_STRUCTURAL(tu.marker);
+LCNS_STRUCTURAL(model.new_launching_order);
 LCNS_STRUCTURAL(tu.problem);
 LCNS_RECOVERED(module.model);
 namespace lcns {

@@ -212,7 +212,7 @@ CLP_INTERNAL_PAT = re.compile(
     r"(Presolve|CoinPresolve|presolve|bad fscanf|scalingFlag|maxDelta|Objective offset is|"
     r"Time to decompose|dual infeasible|saying infeasible|small drop|lastobj|fixing %d|"
     r"empty rows and|CoinLpIO|CoinMpsIO|CoinPackedMatrix|row_%d|theta %g|"
-    r"xsize   =|CoinMessageHandler|OsiSolverInterface|number of rows|ClpSimplex|ClpModel)",
+    r"xsize   =|CoinMessageHandler|OsiSolverInterface|number of rows|ClpSimplex|ClpModel|NAME          |OBJROW|COLUMNS|RANGES|BOUNDS|ENDATA|exmip1|p0033|flugpl|enigma|mod011|probing|mas76)",
     re.I)
 
 
@@ -275,3 +275,100 @@ def hint_of(f):
     if f.get("data_refs"):
         return "data@0x%x" % f["data_refs"][0]
     return ""
+
+# --- methodology helpers (goal round 36) -------------------------------------------------------
+# Four mistakes I made in a row all had the same shape: a filter condition was written too
+# loosely, so the result was systematically biased. They are encoded here so that the correct
+# method is also the easy one.
+#   1. field-offset scans must PIN THE BASE REGISTER -- otherwise [rsp+0x58] stack locals are
+#      counted as object fields (this produced a wrong "writers of +0x58" list of 103 entries
+#      where the true answer is 46).
+#   2. candidate lists must be filtered by REACHABILITY first (otherwise unreachable COIN-OR code
+#      looks like work in the domain bucket).
+#   3. generated artefacts must never count as citations (see SKIP_NAMES).
+#   4. an "owner" in an ownership table must itself HAVE identity.
+_STACK_BASES = ("rsp", "rbp")
+
+def field_writes_scan(disp, addrs=None, width=None, is_float=None):
+    """Functions that write to [reg+disp] on a NON-stack base. Returns {addr: [(site, base)]}.
+
+    ALWAYS state the query, because the same offset gives very different answers:
+      width=None, is_float=None  -> anything writes there           (+0x58: 810 functions)
+      width=8,    is_float=True  -> a double is written there       (+0x58:  46 functions)
+    Not saying which question you asked is exactly how the wrong "writers of +0x58" list of 103
+    entries was produced earlier (that one also lacked the base-register pin).
+    """
+    from capstone.x86 import X86_OP_MEM, X86_REG_RIP
+    out = {}
+    for a in (addrs if addrs is not None else PROF):
+        f = PROF.get(a) or {}
+        try:
+            for ins in disasm(a):
+                if not ins.mnemonic.startswith("mov") or ", " not in ins.op_str:
+                    continue
+                for o in ins.operands:
+                    if o.type == X86_OP_MEM and o.mem.base != X86_REG_RIP and o.mem.disp == disp:
+                        nm = ins.reg_name(o.mem.base)
+                        if nm in _STACK_BASES:
+                            continue
+                        if width is not None or is_float is not None:
+                            src = ins.op_str.split(", ", 1)[1] if ", " in ins.op_str else ""
+                            fl = src.startswith("xmm")
+                            if is_float is not None and fl != is_float:
+                                continue
+                            if width is not None:
+                                w = 8 if ("qword" in ins.op_str or fl) else (
+                                    4 if "dword" in ins.op_str else (
+                                    2 if "word" in ins.op_str else 1))
+                                if w != width:
+                                    continue
+                        out.setdefault(a, []).append((ins.address, nm))
+        except Exception:
+            pass
+    return out
+
+
+def reachable_uncited_domain():
+    """(reachable, uncited, domain) address sets, computed the only correct way."""
+    import json as _json
+    vts = _json.load(io.open(os.path.join(RE, "vtables.json"), encoding="utf-8"))
+    slots = {}
+    for _n, v in vts.items():
+        rva = v.get("vtable_rva")
+        s = [x for x in (v.get("slots") or []) if x in PROF]
+        if rva is None or not s:
+            continue
+        slots.setdefault(rva, []).extend(s)
+        slots.setdefault(rva + 16, []).extend(s)
+
+    def ea(e):
+        if isinstance(e, dict):
+            for k in ("address", "rva", "addr", "func", "entry"):
+                if k in e and e[k]:
+                    return int(e[k])
+            return None
+        if isinstance(e, (list, tuple)):
+            for v in e:
+                if isinstance(v, int) and v > 0x1000:
+                    return v
+            return None
+        return int(e) if isinstance(e, int) else None
+
+    from collections import deque as _dq
+    seen, q = set(), _dq()
+    for a in sorted({a for a in (ea(e) for e in EXPORTS) if a}):
+        if a in PROF and a not in seen:
+            seen.add(a); q.append(a)
+    while q:
+        a = q.popleft()
+        f = PROF.get(a, {})
+        nxt = list(f.get("callees") or [])
+        for d in (f.get("data_refs") or []):
+            nxt.extend(slots.get(d, ()))
+        for c in nxt:
+            if c in PROF and c not in seen:
+                seen.add(c); q.append(c)
+    cit = set(cited_set())
+    unc = seen - cit
+    dom = {a for a in unc if classify_identity(a) == "domain"}
+    return seen, unc, dom

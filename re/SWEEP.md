@@ -996,3 +996,325 @@
 ⇒ 结论：**该模式无实际影响**（保留它无害，因为它只作用于可达函数，且证据是真实字符串），
 但**"数 MB"那句必须撤回**。教训：候选列表必须先按可达集过滤再看数字 —— 这正是 `g_coverage.py`
 一直在做的事，而我这次绕过了它。
+
+## 匿名辅助的**归属聚类**（按具名调用者）
+
+无名字、无字符串的未引用领域函数共 **3571 个 / 1930331 字节**。按「谁调用它」聚类后：
+
+* **只被同一个具名函数调用**（⇒ 可视为该函数的私有机制）：**318 个组 / 448661 字节**
+* 调用者混合（多个具名调用者）：262512 字节
+* **完全没有任何具名调用者**：**1914 个 / 1219158 字节** ← 这批连来源都没有，是最难的一档
+
+| 归属（具名调用者） | 函数数 | 字节 |
+|---|---:|---:|
+| `[mixed callers]` | 810 | 262512 |
+| `0x770d10 (has strings)` | 16 | 21416 |
+| `0x4bdb70 (has strings)` | 22 | 19506 |
+| `0x1e76c0 (has strings)` | 3 | 18244 |
+| `0x17c790 (has strings)` | 10 | 11014 |
+| `0x24a1c0 (has strings)` | 4 | 10551 |
+| `0x1ee50 (has strings)` | 27 | 9542 |
+| `0x516380 (has strings)` | 14 | 9460 |
+| `0x7eedb0 (has strings)` | 4 | 9000 |
+| `0x1b33b0 (has strings)` | 20 | 8065 |
+| `0x53f910 (has strings)` | 11 | 7813 |
+| `0x23b420 (has strings)` | 12 | 7131 |
+| `0x21d040 (has strings)` | 5 | 7003 |
+| `0x243820 (has strings)` | 13 | 6835 |
+| `0x69aa40 (has strings)` | 11 | 6812 |
+| `0x149b40 (has strings)` | 5 | 5652 |
+| `0x170bb0 (has strings)` | 2 | 5410 |
+| `0x76a130 (has strings)` | 12 | 5223 |
+| `0x462d0 (has strings)` | 4 | 5140 |
+| `0x164980 (has strings)` | 4 | 4915 |
+| `0x96970 (has strings)` | 4 | 4733 |
+| `0x8ff70 (has strings)` | 6 | 4551 |
+| `0x5563c0 (has strings)` | 9 | 4444 |
+| `0x53cc30 (has strings)` | 4 | 4071 |
+| `0x2344e0 (has strings)` | 8 | 3896 |
+| `0x827bf0 (has strings)` | 6 | 3858 |
+| `0x500a90 (has strings)` | 4 | 3829 |
+| `0x99ad0 (has strings)` | 5 | 3597 |
+| `0x173760 (has strings)` | 5 | 3583 |
+| `0x8ba70 (has strings)` | 3 | 3493 |
+| `0x14c8c0 (has strings)` | 1 | 3418 |
+| `0x1a7c00 (has strings)` | 9 | 3402 |
+| `0x3c9e0 (has strings)` | 3 | 3373 |
+| `0x142690 (has strings)` | 5 | 3277 |
+| `0x584120 (has strings)` | 5 | 3263 |
+| `0x1d53a0 (has strings)` | 9 | 3196 |
+| `0x20a430 (has strings)` | 1 | 3137 |
+| `0x827240 (has strings)` | 6 | 3090 |
+| `0x545cf0 (has strings)` | 3 | 2939 |
+| `0x8b280 (has strings)` | 2 | 2914 |
+
+**口径**：这是「来源证据」，不是身份 —— 归属只说明它属于某函数的私有机制，**不说明它做什么**。故本表仍属 tier C（`SWEEP.md` 被排除在引用扫描之外）。
+
+### 口径澄清（重要，修正上表的读法）
+
+上表"只被同一个具名函数调用"一列，**不是**"它只有那一个调用者"。实现是：先只看**有身份证据**的调用者
+（有名字或有字符串），这些里面若只出现**一个不同**的调用者，就归到它名下；而那些**无名字无字符串**的
+调用者被忽略了。所以：
+
+* 严格版（要求**全部**调用者都等于该具名函数）下，`Packer::Run 0x770D10` 名下只剩 **3 个 / 487 B**
+  （`0x1505E0` 177 B 直线型、`0x15EA80` 158 B 含向后分支、`0x6845D0` 152 B 含向后分支）。
+* 宽松版（忽略匿名调用者）下是 **16 个 / 21,416 B**。
+
+⇒ 上表应当读作"**在有身份的调用者里只依赖某一个**"，即**弱归属**。这仍然是可用线索（说明这批辅助
+属于该入口的机制），但**不能**说成"私有辅助"。真正严格的私有关系要用严格版重算 —— 这已记入本文件。
+
+## 严格归属：真正的「私有机制」（每个调用者都等于同一个具名函数）
+
+上文的宽松表（忽略匿名调用者）**不能**当作私有关系；这一节是严格版：
+**93 个具名入口共拥有 162 个这样的匿名辅助 / 22913 字节**。
+
+| 入口 | 私有辅助 | 字节 |
+|---|---:|---:|
+| `0x14620 「NewLaunchingOrder」` | 3 | 1935 |
+| `0x8a9510 「.,-+xX0123456789abcdef012345」` | 5 | 1811 |
+| `0x8ba70 「..\multi\marker.cpp」` | 2 | 1654 |
+| `0x462d0 「basic_string::_M_construct n」` | 1 | 1423 |
+| `0x4bdb70 「..\verify\equivalent.cpp」` | 6 | 933 |
+| `0x759b70 「AWAVAUATUWVSH」` | 2 | 897 |
+| `0x3e740 「..\multi\nesting_context.cpp」` | 2 | 805 |
+| `0x1ee50 「quality >= 0 && quality < 9」` | 5 | 623 |
+| `0x500a90 「..\structure\problem.cpp」` | 1 | 541 |
+| `0x1da0c0 「vector::_M_range_check: __n 」` | 3 | 534 |
+| `0x1a7c00 「vector::reserve」` | 3 | 532 |
+| `0x1b33b0 「vector::_M_range_check: __n 」` | 4 | 527 |
+| `0x8b9d10 「vector::_M_default_append」` | 1 | 506 |
+| `0x511080 「&nbsp;&nbsp;&nbsp;&nbsp;」` | 4 | 500 |
+| `0x69aa40 「..\multi\nesting_context.cpp」` | 4 | 487 |
+| `0x40070 「..\multi\nesting_context.cpp」` | 1 | 347 |
+| `0x2ec50 「Generating c:\Temp\internal_」` | 3 | 302 |
+| `0x516380 「basic_string::append」` | 3 | 300 |
+| `0x22e40 「internal.cpp」` | 1 | 292 |
+| `0x1e70 「AWAVAUATUWVSH」` | 3 | 284 |
+| `0x177ea0 「vector::_M_range_check: __n 」` | 1 | 271 |
+| `0x17520 「AddRotatedPartVariantToPart」` | 1 | 260 |
+| `0x1b0f70 「vector::_M_range_check: __n 」` | 2 | 259 |
+| `0x4cc640 「false」` | 2 | 245 |
+| `0x4bc9e0 「..\verify\equivalent.cpp」` | 2 | 242 |
+| `0x60b510 「 ]\」` | 1 | 242 |
+| `0x6a7800 「..\multi\database.cpp」` | 1 | 237 |
+| `0x5f030 「basic_string::append」` | 1 | 234 |
+| `0x1f0b80 「/home/nicolas/tmp/bug」` | 1 | 225 |
+| `0x76a130 「Packer Cache max threads: 」` | 2 | 218 |
+| `0x25c20 「nb_max_threads」` | 1 | 209 |
+| `0x7ccdf0 「<svg width="」` | 2 | 201 |
+| `0x5070e0 「geometry」` | 3 | 198 |
+| `0x52e7e0 「basic_string::_M_construct n」` | 2 | 192 |
+| `0x60d380 「no COFF symbols」` | 5 | 173 |
+| `0x1ae990 「vector::_M_range_check: __n 」` | 1 | 168 |
+| `0x6f3500 「mutex」` | 1 | 168 |
+| `0x4efc80 「basic_string::_M_construct n」` | 1 | 168 |
+| `0x688fa0 「%lld」` | 12 | 164 |
+| `0x770d10 「prices.size() == m_problem.G」` | 1 | 158 |
+| `0x1c4350 「VSH」` | 3 | 156 |
+| `0x6352f0 「pow」` | 1 | 155 |
+| `0x5563c0 「..\structure\automatic_clust」` | 1 | 155 |
+| `0x6cc9d0 「basic_string::_M_construct n」` | 1 | 153 |
+| `0x26a60 「basic_string::_M_construct n」` | 1 | 153 |
+| `0x64c7b0 「-> 」` | 1 | 147 |
+| `0x60a620 「*** INTERNAL ERROR: please c」` | 1 | 137 |
+| `0x4f1bc0 「vector::_M_range_check: __n 」` | 1 | 135 |
+| `0x8ec0a0 「vector::_M_range_insert」` | 1 | 123 |
+| `0x68a1a0 「raw_evaluation_ratio_100」` | 1 | 120 |
+| `0x3b5f0 「..\multi\nesting_context.cpp」` | 1 | 118 |
+| `0x10ce0 「AddPartSpecificAuthorization」` | 1 | 116 |
+| `0x1c2640 「..\nesting\algos\tree_db.hpp」` | 1 | 114 |
+| `0x8c1c20 「vector::_M_default_append」` | 1 | 112 |
+| `0x69be80 「m_base && "call SetActiveNes」` | 1 | 112 |
+| `0x65dd20 「Visited Nodes=」` | 1 | 107 |
+| `0x769410 「part_number < m_common_cut_t」` | 1 | 94 |
+| `0x53f910 「vector::_M_range_check: __n 」` | 1 | 88 |
+| `0x506780 「border_property」` | 1 | 84 |
+| `0xbf70 「GenerateDxfNesting」` | 1 | 76 |
+
+**读法**：这些函数**只**被该入口调用（调用者集合恰好是它一个，且该入口有身份证据）。这仍然只是**来源**而不是**身份**（不说明函数做什么），故留在 tier C 文件里，不计入引用。
+
+## 严格归属：真正的「私有机制」（每个调用者都等于同一个具名函数）
+
+上文的宽松表（忽略匿名调用者）**不能**当作私有关系；这一节是严格版：
+**93 个具名入口共拥有 162 个这样的匿名辅助 / 22913 字节**。
+
+| 入口 | 私有辅助 | 字节 |
+|---|---:|---:|
+| `0x14620 「NewLaunchingOrder」` | 3 | 1935 |
+| `0x8a9510 「.,-+xX0123456789abcdef012345」` | 5 | 1811 |
+| `0x8ba70 「..\multi\marker.cpp」` | 2 | 1654 |
+| `0x462d0 「basic_string::_M_construct n」` | 1 | 1423 |
+| `0x4bdb70 「..\verify\equivalent.cpp」` | 6 | 933 |
+| `0x759b70 「AWAVAUATUWVSH」` | 2 | 897 |
+| `0x3e740 「..\multi\nesting_context.cpp」` | 2 | 805 |
+| `0x1ee50 「quality >= 0 && quality < 9」` | 5 | 623 |
+| `0x500a90 「..\structure\problem.cpp」` | 1 | 541 |
+| `0x1da0c0 「vector::_M_range_check: __n 」` | 3 | 534 |
+| `0x1a7c00 「vector::reserve」` | 3 | 532 |
+| `0x1b33b0 「vector::_M_range_check: __n 」` | 4 | 527 |
+| `0x8b9d10 「vector::_M_default_append」` | 1 | 506 |
+| `0x511080 「&nbsp;&nbsp;&nbsp;&nbsp;」` | 4 | 500 |
+| `0x69aa40 「..\multi\nesting_context.cpp」` | 4 | 487 |
+| `0x40070 「..\multi\nesting_context.cpp」` | 1 | 347 |
+| `0x2ec50 「Generating c:\Temp\internal_」` | 3 | 302 |
+| `0x516380 「basic_string::append」` | 3 | 300 |
+| `0x22e40 「internal.cpp」` | 1 | 292 |
+| `0x1e70 「AWAVAUATUWVSH」` | 3 | 284 |
+| `0x177ea0 「vector::_M_range_check: __n 」` | 1 | 271 |
+| `0x17520 「AddRotatedPartVariantToPart」` | 1 | 260 |
+| `0x1b0f70 「vector::_M_range_check: __n 」` | 2 | 259 |
+| `0x4cc640 「false」` | 2 | 245 |
+| `0x4bc9e0 「..\verify\equivalent.cpp」` | 2 | 242 |
+| `0x60b510 「 ]\」` | 1 | 242 |
+| `0x6a7800 「..\multi\database.cpp」` | 1 | 237 |
+| `0x5f030 「basic_string::append」` | 1 | 234 |
+| `0x1f0b80 「/home/nicolas/tmp/bug」` | 1 | 225 |
+| `0x76a130 「Packer Cache max threads: 」` | 2 | 218 |
+| `0x25c20 「nb_max_threads」` | 1 | 209 |
+| `0x7ccdf0 「<svg width="」` | 2 | 201 |
+| `0x5070e0 「geometry」` | 3 | 198 |
+| `0x52e7e0 「basic_string::_M_construct n」` | 2 | 192 |
+| `0x60d380 「no COFF symbols」` | 5 | 173 |
+| `0x1ae990 「vector::_M_range_check: __n 」` | 1 | 168 |
+| `0x6f3500 「mutex」` | 1 | 168 |
+| `0x4efc80 「basic_string::_M_construct n」` | 1 | 168 |
+| `0x688fa0 「%lld」` | 12 | 164 |
+| `0x770d10 「prices.size() == m_problem.G」` | 1 | 158 |
+| `0x1c4350 「VSH」` | 3 | 156 |
+| `0x6352f0 「pow」` | 1 | 155 |
+| `0x5563c0 「..\structure\automatic_clust」` | 1 | 155 |
+| `0x6cc9d0 「basic_string::_M_construct n」` | 1 | 153 |
+| `0x26a60 「basic_string::_M_construct n」` | 1 | 153 |
+| `0x64c7b0 「-> 」` | 1 | 147 |
+| `0x60a620 「*** INTERNAL ERROR: please c」` | 1 | 137 |
+| `0x4f1bc0 「vector::_M_range_check: __n 」` | 1 | 135 |
+| `0x8ec0a0 「vector::_M_range_insert」` | 1 | 123 |
+| `0x68a1a0 「raw_evaluation_ratio_100」` | 1 | 120 |
+| `0x3b5f0 「..\multi\nesting_context.cpp」` | 1 | 118 |
+| `0x10ce0 「AddPartSpecificAuthorization」` | 1 | 116 |
+| `0x1c2640 「..\nesting\algos\tree_db.hpp」` | 1 | 114 |
+| `0x8c1c20 「vector::_M_default_append」` | 1 | 112 |
+| `0x69be80 「m_base && "call SetActiveNes」` | 1 | 112 |
+| `0x65dd20 「Visited Nodes=」` | 1 | 107 |
+| `0x769410 「part_number < m_common_cut_t」` | 1 | 94 |
+| `0x53f910 「vector::_M_range_check: __n 」` | 1 | 88 |
+| `0x506780 「border_property」` | 1 | 84 |
+| `0xbf70 「GenerateDxfNesting」` | 1 | 76 |
+
+**读法**：这些函数**只**被该入口调用（调用者集合恰好是它一个，且该入口有身份证据）。这仍然只是**来源**而不是**身份**（不说明函数做什么），故留在 tier C 文件里，不计入引用。
+
+## 严格私有辅助的逐个形态（供下一步逐条读）
+
+### 入口 `0x7a2ad0`（1 个 / 4614 B）
+* `0xcca70` 4614 B / 1360 ins / **straight** / 0 调用
+
+### 入口 `0x14620「NewLaunchingOrder」`（3 个 / 1935 B）
+* `0x8f97e0` 1164 B / 316 ins / **loop-ish** / 8 调用（`0x5007c0`…）
+* `0x8fb530` 721 B / 213 ins / **loop-ish** / 2 调用（`0x93e7b0`…）
+* `0x1bc20` 50 B / 13 ins / **straight** / 1 调用（`0xb5b50`…）
+
+### 入口 `0x8a9510「.,-+xX0123456789abcdef01234567」`（5 个 / 1811 B）
+* `0x8a82f0` 1517 B / 282 ins / **straight** / 12 调用（`0x62f280`…）
+* `0x875240` 81 B / 27 ins / **straight** / 4 调用（`0x62f280`…）
+* `0x875ab0` 81 B / 27 ins / **straight** / 4 调用（`0x62f280`…）
+* `0x921970` 66 B / 22 ins / **straight** / 3 调用（`0x62f280`…）
+* `0x921b40` 66 B / 22 ins / **straight** / 3 调用（`0x62f280`…）
+
+### 入口 `0x8ba70「..\multi\marker.cpp」`（2 个 / 1654 B）
+* `0x871b20` 1649 B / 457 ins / **loop-ish** / 5 调用（`0x452f0`…）
+* `0x51d0e0` 5 B / 2 ins / **accessor** / 0 调用
+
+### 入口 `0x562790`（1 个 / 1599 B）
+* `0x872cc0` 1599 B / 397 ins / **straight** / 2 调用（`0x6c6300`…）
+
+### 入口 `0x462d0「basic_string::_M_construct nul」`（1 个 / 1423 B）
+* `0x8721a0` 1423 B / 398 ins / **straight** / 2 调用（`0x6bc540`…）
+
+### 入口 `0x762900`（1 个 / 1423 B）
+* `0x872730` 1423 B / 398 ins / **straight** / 2 调用（`0x6be760`…）
+
+### 入口 `0x4b8ae0`（1 个 / 1407 B）
+* `0x6b75e0` 1407 B / 389 ins / **straight** / 2 调用（`0x6bfc20`…）
+
+### 入口 `0x5a3aa0`（1 个 / 1407 B）
+* `0x6af890` 1407 B / 389 ins / **straight** / 2 调用（`0x6bb500`…）
+
+### 入口 `0x7d2ed0`（1 个 / 1299 B）
+* `0x7d2ed0` 1299 B / 355 ins / **loop-ish** / 9 调用（`0x4fc930`…）
+
+### 入口 `0x7eb5e0`（1 个 / 939 B）
+* `0x7eb5e0` 939 B / 190 ins / **loop-ish** / 15 调用（`0x4dc390`…）
+
+### 入口 `0x4bdb70「..\verify\equivalent.cpp」`（6 个 / 933 B）
+* `0x4bac30` 345 B / 94 ins / **loop-ish** / 7 调用（`0x4baba0`…）
+* `0x874270` 291 B / 80 ins / **loop-ish** / 6 调用（`0x62f280`…）
+* `0x4ba3e0` 136 B / 38 ins / **straight** / 2 调用（`0x4fc210`…）
+* `0x8743a0` 75 B / 29 ins / **loop-ish** / 1 调用（`0x9984b0`…）
+* `0x679f40` 43 B / 11 ins / **straight** / 1 调用（`0x726550`…）
+* `0x67d680` 43 B / 11 ins / **straight** / 1 调用（`0x7257e0`…）
+
+### 修正：严格表里混进了「无身份的单一调用者」（口径缺陷）
+
+严格聚类的条件是「调用者集合只有一个」，但我把 owner 是否**有身份**（名字或字符串）写成了可选的附加判断，于是 `0x7a2ad0`、`0x562790` 这类**同样没有身份**的函数也被列成「入口」，让人误以为它们是具名入口。修正后：
+
+| 口径 | 入口数 | 私有辅助 | 字节 |
+|---|---:|---:|---:|
+| 修正前（单一调用者即可） | 282 | 399 | 68310 |
+| **修正后（owner 必须有身份）** | **93** | **162** | **22913** |
+
+差额 237 个 / 45397 字节属于「一个匿名函数只被另一个匿名函数调用」——**既没身份也没具名主人**，是最难的一档，不应出现在「有主人的私有机制」表里。
+
+## 有主人的私有辅助：按「它调用了什么」推断角色（证据=被调用者身份）
+
+### `0x8a9510「.,-+xX0123456789abcdef01234567」`（5 个 / 1811 B）
+* `0x8a82f0` 1517 B / 282 ins / **混合** / 调用 12 个：未定性基建
+* `0x875240` 81 B / 27 ins / **混合** / 调用 4 个：未定性基建
+* `0x875ab0` 81 B / 27 ins / **混合** / 调用 4 个：未定性基建
+* `0x921970` 66 B / 22 ins / **混合** / 调用 3 个：未定性基建
+* `0x921b40` 66 B / 22 ins / **混合** / 调用 3 个：未定性基建
+
+### `0x4bdb70「..\verify\equivalent.cpp」`（6 个 / 933 B）
+* `0x4bac30` 345 B / 94 ins / **混合** / 调用 7 个：未定性基建, 删除器包装, operator delete, operator new
+* `0x874270` 291 B / 80 ins / **混合** / 调用 6 个：未定性基建, operator delete, operator new
+* `0x4ba3e0` 136 B / 38 ins / **容器/数据操作** / 调用 2 个：—
+* `0x8743a0` 75 B / 29 ins / **仅分配/字符串操作** / 调用 1 个：operator delete
+* `0x679f40` 43 B / 11 ins / **容器/数据操作** / 调用 1 个：—
+* `0x67d680` 43 B / 11 ins / **容器/数据操作** / 调用 1 个：—
+
+### `0x3e740「..\multi\nesting_context.cpp」`（2 个 / 805 B）
+* `0x669e60` 749 B / 136 ins / **混合** / 调用 2 个：operator delete
+* `0x4f0c60` 56 B / 9 ins / **容器/数据操作** / 调用 0 个：—
+
+### `0x1ee50「quality >= 0 && quality < 9」`（5 个 / 623 B）
+* `0x677af0` 350 B / 106 ins / **混合** / 调用 4 个：operator delete
+* `0x1bb10` 150 B / 35 ins / **容器/数据操作** / 调用 0 个：—
+* `0x4f7a50` 66 B / 19 ins / **容器/数据操作** / 调用 1 个：—
+* `0x899690` 44 B / 13 ins / **容器/数据操作** / 调用 1 个：—
+* `0x549ab0` 13 B / 4 ins / **容器/数据操作** / 调用 0 个：—
+
+### `0x69aa40「..\multi\nesting_context.cpp」`（4 个 / 487 B）
+* `0x17b740` 352 B / 109 ins / **混合** / 调用 5 个：未定性基建, operator delete
+* `0x3b590` 84 B / 27 ins / **容器/数据操作** / 调用 2 个：—
+* `0x54e1c0` 26 B / 9 ins / **容器/数据操作** / 调用 1 个：—
+* `0x54e1a0` 25 B / 9 ins / **容器/数据操作** / 调用 1 个：—
+
+### `0x8ba70「..\multi\marker.cpp」`（2 个 / 1654 B）
+* `0x871b20` 1649 B / 457 ins / **混合** / 调用 5 个：operator delete
+* `0x51d0e0` 5 B / 2 ins / **容器/数据操作** / 调用 0 个：—
+
+### `0x14620「NewLaunchingOrder」`（3 个 / 1935 B）
+* `0x8f97e0` 1164 B / 316 ins / **混合** / 调用 8 个：operator delete
+* `0x8fb530` 721 B / 213 ins / **混合** / 调用 2 个：operator delete
+* `0x1bc20` 50 B / 13 ins / **容器/数据操作** / 调用 1 个：—
+
+## 「混用基建」的私有辅助：结构细读（这些才含内部逻辑）
+
+* `0x8a82f0` 1517 B / 282 ins / 调用 12 个 / 字符串 0 条 / 常量 无 / 字段 5 个（最远 +0x28）/ 立即数 1×32, 16×14, 40×2
+
+* `0x669e60` 749 B / 136 ins / 调用 2 个 / 字符串 0 条 / 常量 无 / 字段 41 个（最远 +0x118）/ 立即数 40×2
+
+* `0x677af0` 350 B / 106 ins / 调用 4 个 / 字符串 0 条 / 常量 无 / 字段 6 个（最远 +0x40）/ 立即数 24×2, 56×2
+
+* `0x17b740` 352 B / 109 ins / 调用 5 个 / 字符串 0 条 / 常量 无 / 字段 5 个（最远 +0xd8）/ 立即数 24×2, 48×2, 64×1, 72×2
+
+* `0x4bac30` 345 B / 94 ins / 调用 7 个 / 字符串 0 条 / 常量 [0.2] / 字段 4 个（最远 +0x20）/ 立即数 3×2, 24×3, 64×3

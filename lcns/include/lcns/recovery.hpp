@@ -230,6 +230,10 @@ inline constexpr Gap kGaps[] = {
      "0x1A89D0, NG3 0x16E140 -- plus one recovered numeric constant, the surface slack 1.05 in "
      "'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'. NOT transcribed: the bodies (0x215720 11.9 KB, "
      "the two InsertAllNext instantiations, 0x23B420 16.4 KB) and the four Equiv* comparison rules"},
+    {"tu.marker", Status::Structural, "0x8BA70 ..\\multi\\marker.cpp",
+     "the marker TU, identified by the inlined path ..\\multi\\marker.cpp in 0x8ba70, which owns two anonymous helpers (1654 bytes total) that are called only by it. marker is the sheet-marking subsystem (Order::markMode / markSize / markInterDistance are already modelled in lcns). NOT transcribed: the body"},
+    {"model.new_launching_order", Status::Structural, "0x14620 NewLaunchingOrder",
+     "the LaunchingOrder constructor entry, identified by its own inlined name NewLaunchingOrder at 0x14620; it owns three anonymous helpers (1935 bytes) whose every caller is this function, so they are the private steps of building a launching order. lcns models Order and builds it in model.cpp, so the structure is represented while the body is a re-implementation"},
     {"tu.structure_interface", Status::Structural, "0x1F5C20 (9576 B)",
      "the structure-interface TU, identified through 0x1f5c20 (9,576 bytes / 1,850 instructions) whose own inlined strings are NestProblem together with ..\\nesting\\structure_interface_private.hpp and three assertions: plates.size() > 0, params.m_initial_solution->Bindable(spb) and !res.m_nestings.empty(). So the structure layer builds a NestProblem from plates, takes an initial solution that must be BINDABLE to the search problem (spb) and returns nestings. Constants 0.95, 0.05, 0.5, 0.1 and 3 -- again the near-one tolerance family. This is the private half of the structure module that module.cloud and the engine talk to. NOT transcribed: the body"},
     {"tu.problem", Status::Structural, "0x501B60 (13199 B), ..\\structure\\problem.cpp",
