@@ -2889,3 +2889,21 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 **关键拼接**：round 147 读到 `1B4B95 cvtsi2sd xmm0,r12d ; 1B4B9E addsd xmm1,xmm0`，即 **`0.5×(0.7×base) + trunc(0.25×base − 30×count/1000)`** —— 两段属于**同一表达式**。
 
 **边界说明**：这里的两处除法用的是**常量 1000**（`divsd`），与 round 148 的**魔数乘法（1e6）**不同 ⇒ 这里的计数单位与那里不同，因此参数**仍按位置命名**（不猜单位）。已落 `lcns`：四个常量 + `limitFromPair`/`countBudgetLimit`/`decayedBudget`/`extraWeightedBudget` + 12 条测试。
+
+### 附 72 算出的限额去向：**报告器**与 `Expected_time`（goal round 152）
+
+```
+1B5197  ucomisd xmm6,xmm1 ; 1B519B ja <skip> ; 1B519D cvttsd2si r12d,xmm1   ; 限额（条件截断）
+1B51BF  mov r8d,0x148(328) ; 1B51D6 call 0x1A8DB0                            ; 格式化器
+1B51FD  call 0x92D500                                                        ; 容器插入（round 133/134）
+1B5220  mov dword [rsp+0x20],r12d                                            ; 限额写进下一条消息
+1B5258  call 0x92D620                                                        ; 第二种插入
+1B537F  movsd [rsp+0x28],xmm7   ; 1B5385 call 0x1AC390 ; 1B538D call 0x65C320
+        （`0x65C320` 自带文本 **'Expected_time …'**）
+```
+
+⇒ **确认报告路径**：`0x1AC390` 就是 round 131–134 描述的**报告输出例程**，算出的限额被**格式化后插入同一容器**；`0.9 衷减后的预算` 则交给**`Expected_time`** 路径。
+
+**新领域串**：`0x65C320` 自带 **`Expected_time …`** —— 这是字符串层面的事实。
+
+**另读到一个逐元素循环**：步长 **`0x158`（344 字节）**，调 `0x1D0D70`，带 `r9d=1`、`[rsp+0x28]=0x2D(45)`、`[rsp+0x20]=0`（常量 45 已记录，**含义未定**）。
