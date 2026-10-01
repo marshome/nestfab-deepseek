@@ -836,3 +836,5 @@ LIBRARY_EVIDENCED[0x8A5750] = ("toolchain", "deque::: libstdc++ deque")
 LIBRARY_EVIDENCED[0x8A5860] = ("toolchain", "deque::: libstdc++ deque")
 LIBRARY_EVIDENCED[0x8A7F10] = ("toolchain", "deque::: libstdc++ deque")
 LIBRARY_EVIDENCED[0x8A8020] = ("toolchain", "deque::: libstdc++ deque")
+# --- round 186: a CryptoPP self-test message carries the marker ---
+LIBRARY_EVIDENCED[0x118260] = ("third_party", "CryptoPP: power-up self test message")
