@@ -3509,3 +3509,23 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 | `0x37A6F4DE9BD37A7` | 1 | no divisor (not a division) |
 
 ⇒ 这就是**剩余代码里的除法常量清单**，每个除数都由实验而非记忆得出。
+
+**更正（round 182b）**：上一次运行打印的 `shifts=[0]` 说明**我的移位捕获写错了**：编译器写 `imul rdx`（目标寄存器持魔数），**随后对另一个寄存器移位**（`mov rax,rdx ; sar rax,N`）。因此**“无除数”那一列是我的 bug 造成的，不是那些常量的事实**。
+
+**常量清单本身不受影响**（这是要保留的部分）：**40 个不同的宽常量**被 `imul` 消费，最大的几个：`0xAAAAAAAAAAAAAAAB`（**172** 个函数）、`0xCCCCCCCCCCCCCCCD`（56）、`0x6DB6DB6DB6DB6DB7`（40）。修正后重提的除数列如下：
+
+| 魔数 | 函数数 | 实验结果 |
+|---|---:|---|
+| `0xAAAAAAAAAAAAAAAB` | 173 | no shift captured |
+| `0xCCCCCCCCCCCCCCCD` | 56 | no shift captured |
+| `0x6DB6DB6DB6DB6DB7` | 40 | no shift captured |
+| `0xEEEEEEEEEEEEEEEF` | 26 | no shift captured |
+| `0xDB6DB6DB6DB6DB7` | 23 | no shift captured |
+| `0x86BCA1AF286BCA1B` | 19 | no shift captured |
+| `0xAAAAAAAAAAAAAAB` | 18 | no shift captured |
+| `0xEC4EC4EC4EC4EC5` | 18 | no shift captured |
+| `0x8E38E38E38E38E39` | 15 | no shift captured |
+| `0xE38E38E38E38E39` | 13 | no shift captured |
+| `0x6F96F96F96F96F97` | 9 | no shift captured |
+| `0x82FA0BE82FA0BE83` | 8 | no shift captured |
+
