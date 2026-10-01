@@ -75,8 +75,7 @@ int main() {
         CHECK(v < geom::kFullTurnFixedDegrees);
     }
 
-    // --- the AdvancedStrategist mode dispatcher (0x2DF60) -------------------------------------
-    // The route is chosen by these three bytes of the Pb block; the pipe/common-cut gates are the
+    // --- the AdvancedStrategist mode dispatcher (0x2DF60) -------------------------------------    // The route is chosen by these three bytes of the Pb block; the pipe/common-cut gates are the
     // same ones Step 15/16 already recovered from SetPipeMode / SetCommonCutParameters.
     CHECK(kPbModeByte == 0xC8);                              // RE 0x4FC260
     CHECK(kPbPipeByte == 0x170);                             // RE 0x4FC2F0
@@ -101,6 +100,36 @@ int main() {
     CHECK(kCascadeEarlyOut == 2);                            // RE 0x2CD0B
     CHECK(kCascadeMidThreshold == 4);                        // RE 0x2CD5B
 
+    // --- StrategyAdder::Add 0x2C4D0: the mode -> nester table and the allocation sizes ---------
+    // The binary dispatches on descriptor[+0] and allocates a fixed size per class; both are
+    // fingerprints of the mapping (see re/findings_engine.md appendix 4).
+    {
+        CHECK(kTilingNesterBytes == 0x20);
+        CHECK(kNestingNesterBytes == 0xA40);
+        CHECK(kRectangleNesterBytes == 0x20);
+        CHECK(kRowNesterBytes == 0x20);
+        CHECK(kFlipNesterBytes == 0x28);
+        CHECK(kMultiTorchNesterBytes == 0x28);
+        CHECK(kLimitedNesterBytes == 0x48);
+        CHECK(kNoFillNesterBytes == 0x60);
+        CHECK(kCompactNesterBytes == 0x9F8);
+        CHECK(kFilterNesterBytes == 0x9E8);
+        CHECK(kStrategyModeCount == 5);
+
+        CHECK(dynamic_cast<TilingNester*>(makeStrategy(0).get()) != nullptr);      // RE 0x2C520
+        CHECK(dynamic_cast<NestingNester*>(makeStrategy(1).get()) != nullptr);     // RE 0x2CB1C
+        CHECK(dynamic_cast<RectangleNester*>(makeStrategy(2).get()) != nullptr);   // RE 0x2CB50
+        CHECK(dynamic_cast<RowNester*>(makeStrategy(3).get()) != nullptr);         // RE 0x2CB70
+        CHECK(dynamic_cast<RowNester*>(makeStrategy(4).get()) != nullptr);         // RE 0x2CB91
+        CHECK(makeStrategy(5) == nullptr);    // RE: mode >= 5 hits an assertion, it is not a class
+        CHECK(makeStrategy(9) == nullptr);    // the modes 5..12 of an earlier revision were invented
+        CHECK(makeStrategy(12) == nullptr);
+
+        const std::vector<std::shared_ptr<Nester>> def = makeDefaultStrategies();
+        CHECK(!def.empty());
+        for (const std::shared_ptr<Nester>& s : def) CHECK(s != nullptr);
+    }
+
     // --- third party versions are bound to the evidence in the dump ---------------------------
     // The dump names the exact boost tree it was built against, so the vendored headers are pinned:
     //   0x9AE7A0  'C:\Users\renaud\nest\external\boost_1_63_0/boost/uuid/sha1.hpp'
@@ -118,8 +147,8 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 60);
-        CHECK(countOf(Status::Recovered) == 7);
+        CHECK(kGapCount == 61);
+        CHECK(countOf(Status::Recovered) == 8);
         CHECK(countOf(Status::Structural) == 14);
         CHECK(countOf(Status::Substituted) == 27);
         CHECK(countOf(Status::NotReversed) == 11);

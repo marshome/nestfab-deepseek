@@ -221,11 +221,23 @@ inline constexpr Gap kGaps[] = {
     {"module.engine", Status::Structural, "0x827F0 / 0x2DF60 / 0x2CCF0",
      "the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are "
      "recovered; the per-strategy budget bookkeeping here is a re-implementation"},
+    {"engine.strategy_adder", Status::Recovered, "0x2C4D0 (Multi::StrategyAdder::Add, 2072 B)",
+     "the mode -> nester table and the flag driven chain, read off the dispatch AND off what each "
+     "branch allocates (operator new 0x998500, size in ecx) and constructs (named through "
+     "re/vtables.json): mode 0 TilingNester (0x20), 1 NestingNester (0xA40), 2 RectangleNester "
+     "(0x20), 3/4 RowNester with the pipe flag false/true (0x20), >= 5 asserts; the flags append "
+     "CompactNester (0x9F8) then FilterNester (0x9E8) at +0x05, FlipNester (0x28) at +0x04, "
+     "MultiTorchNester (0x28) at +0x0C (the count is the torch count), LimitedNester (0x48) at "
+     "+0x18/+0x1C, NoFillNester (0x60) at +0x20 == 1.0 with Pb[+0x120] > 1; and the sheet selector "
+     "family Largest/Random/NoMixSheetSelector (0xB0000/0xB0040/0xAFD60) is documented for the "
+     "first time here. lcns::makeStrategy/makeDefaultStrategies follow this table; test_nester and "
+     "test_recovered assert it (the earlier invented modes 5..12 are gone)"},
     {"engine.advanced_strategist", Status::NotReversed, "0x2DF60",
      "the DISPATCHER and the 40 B descriptor layout are fully decoded, and 0x2D330's default "
      "schedule (8 mode-1 steps differing in the six enable flags, gated by the options object) is "
-     "tabulated. NOT transcribed: StrategyAdder::Add 0x2C4D0 (the mode/flags -> Nester table) and "
-     "the gate bodies 0x2DA00/0x2DA20/0x2DA32/0x2DAC1/0x2DC60/0x2D7E1/0x2D650"},
+     "tabulated. NOT transcribed: the mode-2 body 0x2CE00 (1055 B) and the gate bodies "
+     "0x2DA00/0x2DA20/0x2DA32/0x2DAC1/0x2DC60/0x2D7E1/0x2D650 -- the mode/flags -> nester table "
+     "itself is recovered in engine.strategy_adder"},
     {"engine.beam_tree", Status::NotReversed, "0x22CCA0 / 0x1C1650 / 0x974F0",
      "tree_db preparation and node scoring (leaf value at +0x48, internal at +0x50) are located; "
      "the beam tree is not reconstructed here"},

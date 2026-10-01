@@ -37,30 +37,61 @@ std::vector<int> StrategyDescriber::cascade() const {
 }
 
 // ---------------------------------------------------------------------------
-// RE Multi::StrategyAdder::Add 0x2C4D0
+// RE Multi::StrategyAdder::Add 0x2C4D0 (2072 B) -- the mode/flags -> nester table, read from the
+// dispatch and from what each branch allocates (operator new 0x998500, size in ecx) and constructs
+// (named through re/vtables.json):
+//
+//   descriptor[+0x00] == 0   -> TilingNester      (new 0x20 = 32 B)
+//                    == 1   -> NestingNester     (new 0xA40 = 2624 B)   <- the base packer
+//                    == 2   -> RectangleNester   (new 0x20 = 32 B)
+//                    == 3   -> RowNester(false)  (new 0x20; r8d = 0)
+//                    == 4   -> RowNester(true)   (new 0x20; r8d = 1  = the pipe flag)
+//                    >= 5   -> assertion `descriptor.algorithm == ...` (the function aborts)
+//
+// and the six enable flags append further nesters to the same list, in this order:
+//   [+0x05] != 0 -> CompactNester (new 0x9F8 = 2552 B), then FilterNester (new 0x9E8 = 2536 B)
+//                   when options[+0x168] != 0
+//   [+0x04] != 0 -> FlipNester    (new 0x28 = 40 B)
+//   [+0x0C]  > 0 -> MultiTorchNester (new 0x28), with the count passed as r9d, i.e. the descriptor's
+//                   +0x0C is the torch/thread count, not just a schedule width
+//   [+0x18] != 0 -> LimitedNester (new 0x48 = 72 B)
+//   [+0x1C] != 0 -> LimitedNester (new 0x48)
+//   [+0x20] == 1.0 and Pb[+0x120] > 1 (0x4FC2E0) -> NoFillNester (new 0x60 = 96 B)
+//   then the sheet selector: options[+0x2C4] and options[+0x2C0] plus 0x4FC250(Pb) choose among
+//   Multi::RandomSheetSelector (0xB0040), Multi::NoMixSheetSelector (0xAFD60) and
+//   Multi::LargestSheetSelector (0xB0000) -- a family the earlier notes did not have at all.
+//
+// NOTE: modes 5..12 in the previous revision of this file were an invention of this reconstruction
+// (the binary has no such modes); they are gone. What the flags append is listed above instead.
 // ---------------------------------------------------------------------------
+LCNS_RECOVERED(engine.strategy_adder);
 std::shared_ptr<Nester> makeStrategy(int mode) {
     switch (mode) {
-        case 2:  return std::make_shared<RectangleNester>();
-        case 3:  return std::make_shared<RowNester>(false);
-        case 4:  return std::make_shared<RowNester>(true);
-        case 5:  return std::make_shared<CompactNester>();
-        case 6:  return std::make_shared<FilterNester>();
-        case 7:  return std::make_shared<NoFillNester>();
-        case 8:  return std::make_shared<LimitedNester>(64, 8);
-        case 9:  return std::make_shared<TilingNester>();
-        case 10: return std::make_shared<MultiTorchNester>();
-        case 11: return std::make_shared<DatabaseNester>();
-        case 12: return std::make_shared<FlipNester>();
-        case 1:
-        default: return std::make_shared<NestingNester>();
+        case 0:  return std::make_shared<TilingNester>();      // RE 0x2C520..0x2C55C
+        case 1:  return std::make_shared<NestingNester>();     // RE 0x2CB1C..0x2CB33
+        case 2:  return std::make_shared<RectangleNester>();   // RE 0x2CB50..0x2CB64
+        case 3:  return std::make_shared<RowNester>(false);    // RE 0x2CB70..0x2CB87
+        case 4:  return std::make_shared<RowNester>(true);     // RE 0x2CB91..0x2CBAB (pipe)
+        default: return nullptr;                               // RE: >= 5 hits an assertion
     }
 }
 
 LCNS_NOT_REVERSED(engine.beam_tree);
 std::vector<std::shared_ptr<Nester>> makeDefaultStrategies() {
-    return {makeStrategy(1), makeStrategy(12), makeStrategy(9),
-            makeStrategy(2), makeStrategy(3), makeStrategy(6)};
+    // RE 0x2D330: eight steps, ALL with mode 1, differing only in the six enable flags; 0x2C4D0
+    // turns each flag set into the nesters listed in the comment above. This list is that flattened
+    // set -- the flag -> nester mapping is recovered, the per-step flag patterns are tabulated in
+    // re/findings_engine.md appendix 3, and the budget bookkeeping is the part still approximated.
+    return {makeStrategy(1),                                 // NestingNester, the base packer
+            std::make_shared<FlipNester>(),                  // flag +0x04
+            std::make_shared<TilingNester>(),                // mode 0 route
+            std::make_shared<CompactNester>(),               // flag +0x05
+            std::make_shared<FilterNester>(),                // flag +0x05 with options[+0x168]
+            std::make_shared<LimitedNester>(64, 8),          // flags +0x18 / +0x1C
+            std::make_shared<MultiTorchNester>(),             // flag +0x0C > 0
+            std::make_shared<NoFillNester>(),                // +0x20 == 1.0 and Pb[+0x120] > 1
+            makeStrategy(2),                                 // RectangleNester
+            makeStrategy(3), makeStrategy(4)};               // RowNester, pipe off / on
 }
 
 // ---------------------------------------------------------------------------

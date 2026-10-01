@@ -31,6 +31,25 @@
 
 namespace lcns {
 
+// RE 0x2C4D0 Multi::StrategyAdder::Add -- the object sizes it allocates (operator new 0x998500,
+// size passed in ecx) and the mode -> class table. The sizes are a second, independent fingerprint
+// of the recovered mapping: 2624 B for the base packer, 2552/2536 for compact/filter, 96 for no-fill.
+inline constexpr int kTilingNesterBytes = 0x20;         // RE 0x2C525 ecx = 0x20
+inline constexpr int kNestingNesterBytes = 0xA40;       // RE 0x2CB1C ecx = 0xA40
+inline constexpr int kRectangleNesterBytes = 0x20;      // RE 0x2CB50
+inline constexpr int kRowNesterBytes = 0x20;            // RE 0x2CB70 / 0x2CB91
+inline constexpr int kFlipNesterBytes = 0x28;           // RE 0x2C953
+inline constexpr int kMultiTorchNesterBytes = 0x28;     // RE 0x2C591
+inline constexpr int kLimitedNesterBytes = 0x48;        // RE 0x2C9F0 / 0x2C9A0
+inline constexpr int kNoFillNesterBytes = 0x60;         // RE 0x2C604
+inline constexpr int kCompactNesterBytes = 0x9F8;       // RE 0x2CA30
+inline constexpr int kFilterNesterBytes = 0x9E8;        // RE 0x2CA77
+inline constexpr int kStrategyModeCount = 5;            // modes 0..4; >= 5 asserts in the binary
+
+// The sheet selector family Add chooses from (not present in the earlier notes):
+//   Multi::LargestSheetSelector 0xB0000, Multi::RandomSheetSelector 0xB0040,
+//   Multi::NoMixSheetSelector   0xAFD60, driven by options[+0x2C0] / options[+0x2C4] and 0x4FC250.
+
 struct EngineParams {
     int threads = 1;                    // RE: Problem::nb_max_threads
     std::uint32_t seed = 0;             // RE: Problem::seed (read at 0x24A80)

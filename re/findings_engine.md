@@ -573,3 +573,74 @@ if (n > 4)  { cfg.n = (n+1)/2;    call 0x2C4D0       ; 第三遍
 以及各闸体 `0x2DA00`/`0x2DA20`/`0x2DA32`/`0x2DAC1`/`0x2DC60`/`0x2D7E1`/`0x2D650`。
 登记项 `engine.advanced_strategist` 因此保持 `NotReversed`，但注记升级为
 "**分派器 + 描述符布局 + 默认调度表已解出，未译的是 Add 的映射表与各闸体**"。
+
+---
+
+## 附 4：`Multi::StrategyAdder::Add`（`0x2C4D0`，2072 B）**完全解出** **[本轮，已证实]**
+
+这是引擎调度层最后一块空白：`0x2DF60` 的四个 mode、`0x2D330` 的八步调度，
+最终都要经它变成具体策略对象。**两条独立证据同时给出映射**，互为交叉验证：
+① 对描述符 `mode` 的 `cmp/je` 分派链；② 每个分支 `operator new` 的**尺寸**与随后**构造的类**
+（类名由 `re/vtables.json` 的虚表地址点确定）。
+
+### 附 4.1 mode → 类（`descriptor[+0x00]`）**[已证实]**
+
+| mode | 构造的类 | `operator new` 尺寸 | 证据 |
+|---:|---|---:|---|
+| **0** | `Multi::TilingNester` | 0x20 = 32 B | `2C525 mov ecx,0x20` → `2C55C call 0x45AF0` |
+| **1** | `Multi::NestingNester` | **0xA40 = 2624 B** | `2CB1C mov ecx,0xA40` → `2CB33 call 0x342E0` |
+| **2** | `Multi::RectangleNester` | 0x20 | `2CB50` → `2CB64 call 0x77440` |
+| **3** | `Multi::RowNester`（`r8d = 0`） | 0x20 | `2CB70` → `2CB87 call 0x8F210` |
+| **4** | `Multi::RowNester`（**`r8d = 1` = pipe**） | 0x20 | `2CB91` → `2CBAB call 0x8F210` |
+| **≥5** | —（**断言**） | — | `2C51A jne 0x2C7A0` → 断言串 `descriptor.algorithm == ...` |
+
+> **口径更正**：本工程早期版本的 `makeStrategy()` 里 modes 5..12（Compact/Filter/NoFill/
+> Limited/Tiling/MultiTorch/Database/Flip）**是自创的**，二进制没有这些 mode。
+> 现在它们改为由**标志**驱动（见附 4.2），`makeStrategy(≥5)` 返回 `nullptr` 并注明"原库在此断言"。
+> 是 `test_nester` 里那 8 条旧断言把这个自创暴露出来的（改后会空指针崩溃）。
+
+### 附 4.2 标志 → 追加的策略（同一次 Add 内按此顺序）**[已证实]**
+
+| 判据 | 追加的类 | `new` 尺寸 | 证据 |
+|---|---|---:|---|
+| `[+0x05] != 0` | `Multi::CompactNester` | 0x9F8 = 2552 B | `2CA30` → `2CA4C call 0xB0270` |
+| 且 `options[+0x168] != 0` | `Multi::FilterNester` | 0x9E8 = 2536 B | `2CA6A` → `2CA8E call 0xB3A70` |
+| `[+0x04] != 0` | `Multi::FlipNester` | 0x28 = 40 B | `2C584 jne 0x2C953` → `2C96C call 0x4B570` |
+| `[+0x0C] > 0` | `Multi::MultiTorchNester` | 0x28 | `2C58A/2C58F` → `2C5AA call 0x780E0`，**`r9d = [+0x0C]`** |
+| `[+0x18] != 0` | `Multi::LimitedNester` | 0x48 = 72 B | `2C5C8` → `2C9E0`：先 `call 0x4AA50` 再 `2CA0C call 0x4AAD0` |
+| `[+0x1C] != 0` | `Multi::LimitedNester` | 0x48 | `2C5D3` → `2C990`：先 `call 0x4AA90` 再 `2C9BC call 0x4AAD0` |
+| `[+0x20] == 1.0` 且 `Pb[+0x120] > 1` | `Multi::NoFillNester` | 0x60 = 96 B | `2C5E3 ucomisd` → `2C5FB call 0x4FC2E0` → `2C61D call 0x7EE50` |
+
+⇒ 顺带确定了一件事：**描述符 `+0x0C` 不只是"调度宽度"，它就是 `MultiTorchNester` 的火焰/线程数**
+（以 `r9d` 传入）。这与 `0x2DF60` 分派器里把 `+0xC` 留给级联读 `n` 是同一字段的两种用法。
+
+### 附 4.3 **新发现的族**：板材选择器（`SheetSelector`）**[已证实]**
+
+Add 的尾部按 `options[+0x2C4]`、`options[+0x2C0]` 与 `0x4FC250(Pb)` 的结果构造其中之一：
+
+| 类 | 构造点 | 说明 |
+|---|---|---|
+| `Multi::RandomSheetSelector` | `0xB0040`，Add 在 `2C673` 调用 | 随机选板 |
+| `Multi::NoMixSheetSelector` | `0xAFD60`，Add 在 `2C686` 调用 | 不混板 |
+| `Multi::LargestSheetSelector` | `0xB0000`（49 B 的构造器） | 选最大板 |
+
+此前的报告**完全没有**这一族（`SheetSelector` 在 vtable 名单里出现过，但没被归到任何算法路径）。
+
+### 附 4.4 TU 与断言串
+
+`Add` 内联拼出的串（`movabs`）给出源文件与断言内容：
+`'AddStrat'` + `'egyR'`（`"AddStrategyR..."`）、`'..\multi'` + `'\multi.c'`（**`..\multi\multi.cpp`**）、
+以及 `'descript'`/`'ion.algo'`/`'rithm =='`/`' Algorit'`/`'hm::Tili'`
+（一条把 `descriptor.algorithm` 与某个 `...::Tili...` 相比的断言）。
+
+### 附 4.5 落到工程
+
+* `lcns::makeStrategy(mode)` 改为**实证表**（0..4，≥5 → `nullptr`）；
+* `lcns::makeDefaultStrategies()` 改为按附 4.2 的**标志结果**构造列表（并注明哪几条来自标志、
+  预算记账仍是近似）；
+* `engine.hpp` 新增 10 个**分配尺寸常量**（`kTilingNesterBytes` … `kFilterNesterBytes`）与
+  `kStrategyModeCount = 5`，并在注释里记下选择器三兄弟；
+* `test_recovered.cpp` 断言这些常量 + `makeStrategy(0..4)` 的 `dynamic_cast` 类型 + `≥5` 为 `nullptr`；
+  `test_nester.cpp` 的 8 条旧断言改为实证表；
+* 登记表新增 **`engine.strategy_adder`（已恢复）**，并把 `engine.advanced_strategist` 的
+  "未译"清单缩小为 **`0x2CE00`(1055 B) + 7 个闸体**。

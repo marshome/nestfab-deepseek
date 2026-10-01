@@ -124,16 +124,18 @@ int main() {
         CHECK(c8[1] == 2);
     }
 
-    // --- StrategyAdder mapping (RE 0x2C4D0) ---
+    // --- StrategyAdder mapping (RE 0x2C4D0), read from the binary's dispatch on descriptor[+0] ---
     {
-        CHECK(std::string(makeStrategy(1)->name()) == "NestingNester");
-        CHECK(std::string(makeStrategy(2)->name()) == "RectangleNester");
-        CHECK(std::string(makeStrategy(3)->name()) == "RowNester");
-        CHECK(std::string(makeStrategy(4)->name()) == "RowNester(pipe)");
-        CHECK(std::string(makeStrategy(5)->name()) == "CompactNester");
-        CHECK(std::string(makeStrategy(6)->name()) == "FilterNester");
-        CHECK(std::string(makeStrategy(7)->name()) == "NoFillNester");
-        CHECK(std::string(makeStrategy(12)->name()) == "FlipNester");
+        CHECK(std::string(makeStrategy(0)->name()) == "TilingNester");      // RE 0x2C520
+        CHECK(std::string(makeStrategy(1)->name()) == "NestingNester");     // RE 0x2CB1C
+        CHECK(std::string(makeStrategy(2)->name()) == "RectangleNester");   // RE 0x2CB50
+        CHECK(std::string(makeStrategy(3)->name()) == "RowNester");         // RE 0x2CB70
+        CHECK(std::string(makeStrategy(4)->name()) == "RowNester(pipe)");   // RE 0x2CB91
+        // modes >= 5 are NOT classes: the binary asserts, so there is nothing to return.
+        // (An earlier revision of this reconstruction invented modes 5..12 here; the recovered
+        //  flag -> nester mapping replaced them -- see engine.cpp's comment on 0x2C4D0.)
+        CHECK(makeStrategy(5) == nullptr);
+        CHECK(makeStrategy(12) == nullptr);
         CHECK(makeDefaultStrategies().size() >= 4);
         CHECK(std::string(pack::BestNester().name()) == "Pack::BestNester");
         CHECK(std::string(pack::KnapsackNester().name()) == "Pack::KnapsackNester");
