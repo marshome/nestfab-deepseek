@@ -1533,3 +1533,18 @@ round 80 从 vtable 出发解出 0 个，且脚本没把“跳过”计数分开
 **新身份例子**：`10CoinSosSet`、`10OsiAuxInfo`、`10OsiLotsize`、`10OsiObject2`、`10OsiRowCut2`、`11ClpPresolve`、`11NestingView`、`11PartPolygon`、`11PosComputer`、`11RealPolygon`、`12ClpHashValue`、`12ClpNodeStuff`、`12ClpObjective`、`12CoinRelFltEq`、`12NestablePart`、`12OsiBabSolver`、`12PolygonProxy`、`13BLeftComputerI7MapViewE`、`13BLeftComputerI9SheetViewE`、`13ClpMatrixBase`、`13ClusterToPart`、`13CoinBaseModel`、`13CoinFileInput`、`13CoinWarmStart`、`13MaxXEvaluator`、`13dupcol_action`、`13duprow_action`、`13gubrow_action`、`14CoinFileIOBase`、`14CoinFileOutput`
 
 **口径**：三个计数各自独立；「无 vtable 的类」是由“没有 vtable 槽指向它”推出的。
+
+## `vtables.json` 校验（修正间接层后，goal round 85）**[已证实]**
+
+round 84 的走链少了一次解引用（`type_info[+8]` **存的是指针**，不是字符串），所以那一组数字作废。本轮修正后：
+
+| 项 | 数量 |
+|---|---:|
+| JSON 条目 | 443 |
+| type_info 名字**与 JSON 键一致** | 428 |
+| **不一致** | 0 |
+| 无法解出 | 15 |
+
+其余：type_info 形状对象 **901** 个；被已录 vtable 槽引用 **428**；**未被任何 vtable 槽引用**（无虚函数的类）**473**；后者中**不在 JSON 键里**的（**新身份**）**473**。
+
+**新身份前 40**：`10CoinSosSet`、`10OsiAuxInfo`、`10OsiLotsize`、`10OsiObject2`、`10OsiRowCut2`、`11ClpPresolve`、`11NestingView`、`11PartPolygon`、`11PosComputer`、`11RealPolygon`、`12ClpHashValue`、`12ClpNodeStuff`、`12ClpObjective`、`12CoinRelFltEq`、`12NestablePart`、`12OsiBabSolver`、`12PolygonProxy`、`13BLeftComputerI7MapViewE`、`13BLeftComputerI9SheetViewE`、`13ClpMatrixBase`、`13ClusterToPart`、`13CoinBaseModel`、`13CoinFileInput`、`13CoinWarmStart`、`13MaxXEvaluator`、`13dupcol_action`、`13duprow_action`、`13gubrow_action`、`14CoinFileIOBase`、`14CoinFileOutput`、`14SheetOptimizer`、`14TilingComputer`、`14twoxtwo_action`、`15ClpCholeskyBase`、`15ClpDualRowPivot`、`15ClpEventHandler`、`15ClpPackedMatrix`、`15MyClusterToPart`、`15OffsetEvaluator`、`16ClpCholeskyDense`
