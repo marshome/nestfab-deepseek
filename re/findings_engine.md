@@ -3939,3 +3939,21 @@ round 198 找到的标签表是**领域文本**（非库标记），因此**引�
 **落码边界：只落了偏移与它们之间的算术** —— 这批函数**没有任何常量**，因此**不声称任何公式**。
 
 **已落 `layout.hpp`**：五个对象偏移、`kLargeObjectSpacing`、`kLargeObjectMinBytes`、`kContainerLastField`、`kContainerFieldStep` + 测试 12 条。
+
+### 附 123 `0x72DBD0` **全读** = **点集的轴对齐包围盒**；且**确证四个 double 的身份**（goal round 202）**[已落码]
+
+```
+72DBEE  xmm1=[0x7FEFFFFFFFFFFFFF]      ; +DBL_MAX
+72DBF9  xmm0=[0xFFEFFFFFFFFFFFFF]      ; −DBL_MAX
+72DC01  [rbx]=xmm1、[rbx+8]=xmm1        ; min x、min y
+72DC0A  [rbx+0x10]=xmm0、[rbx+0x18]=xmm0 ; max x、max y
+逐点：72DC68 降 min x、72DC72 升 max x、72DC82 降 min y、72DC8D 升 max y、 72DC96 add rax,0x10
+```
+
+⇒ **轴对齐包围盒**，结果布局 **`(xmin, ymin, xmax, ymax)`**。
+
+**这正是 rounds 177/200 在 `+8`/`+0x10`/`+0x18`/`+0x20` 记录的那四个 double** ⇒ **那个对象就是“两个对角点表示的矩形/包围盒”**，round 200 的读法由此**确证**。
+
+**另记**：`0x5E7790`（154 B）**按标签分支**（`cmp rax,1`、`cmp rax,2`、`test rax,rax`，满足 3 种），返回 `eax == 1` ⇒ **类型分派谓词**；各分支调 `0x72B6A0`/`0x704400`/`0x700E80`。**本轮不声称哪个数字对应哪种几何类型**。
+
+**已落 `compare.hpp`**：`Box2d`、`kBoundingMaxBits`/`kBoundingMinBits`、四个偏移常量、`boundingBox()`、`kGeometryDispatchCases` + 测试 18 条（含空列表保留初值、单点退化）。

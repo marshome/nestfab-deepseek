@@ -1230,5 +1230,33 @@ int main() {
         CHECK((kContainerLastField - kContainerFieldLow) / kContainerFieldStep == 6);   // seven fields
     }
 
+    // --- the bounding box of 0x72dbd0 (RE 0x72dbee/0x72dbf9 seeds and the four comparisons) ----------
+    {
+        CHECK(kBoundingMaxBits == 0x7FEFFFFFFFFFFFFFULL);
+        CHECK(kBoundingMinBits == 0xFFEFFFFFFFFFFFFFULL);
+        CHECK(kBoxMinXOffset == 0x00);
+        CHECK(kBoxMinYOffset == 0x08);
+        CHECK(kBoxMaxXOffset == 0x10);
+        CHECK(kBoxMaxYOffset == 0x18);
+        CHECK(kBoxStride == 4 * sizeof(double));
+        CHECK(kBoxPointStride == kPoint2dSize);
+        CHECK(sizeof(Box2d) == kBoxStride);
+        const Point2dLike pts[4] = {{1.0, 2.0}, {-3.0, 4.0}, {5.0, -6.0}, {0.0, 0.0}};
+        const Box2d b = boundingBox(pts, 4);
+        CHECK(b.minX == -3.0);
+        CHECK(b.minY == -6.0);
+        CHECK(b.maxX == 5.0);
+        CHECK(b.maxY == 4.0);
+        // an empty list keeps the seeds, which is what the function does when it returns early
+        const Box2d empty = boundingBox(nullptr, 0);
+        CHECK(empty.minX > empty.maxX);
+        CHECK(empty.minY > empty.maxY);
+        // a single point collapses the box onto itself
+        const Box2d one = boundingBox(pts, 1);
+        CHECK(one.minX == one.maxX);
+        CHECK(one.minY == one.maxY);
+        CHECK(kGeometryDispatchCases == 3);
+    }
+
     return check::finish("test_recovered");
 }

@@ -243,4 +243,50 @@ inline bool pointsDiffer(const Point2dLike& a, const Point2dLike& b) {
     return !pointAlmostEqual(a, b);                          // RE 0x72DAC0's own polarity
 }
 
+
+// --- the bounding box of 0x72DBD0 (round 202) ------------------------------------------------------
+//     72DBEE movsd xmm1,[0x7FEFFFFFFFFFFFFF]   ; +DBL_MAX     72DBF9 movsd xmm0,[0xFFEFFFFFFFFFFFFF]
+//     72DC01 [rbx]=xmm1 (min x)  72DC05 [rbx+8]=xmm1 (min y)  72DC0A [rbx+0x10]=xmm0 (max x)
+//     72DC12 [rbx+0x18]=xmm0 (max y)
+//     per point: 72DC68 lowers min x, 72DC72 raises max x, 72DC82 lowers min y, 72DC8D raises max y
+// so this computes the axis-aligned bounding box of a point list. Its result layout is the same four doubles that
+// rounds 177/200 found at +8/+0x10/+0x18/+0x20, which settles that object as a box in two opposite corners.
+inline constexpr std::uint64_t kBoundingMaxBits = 0x7FEFFFFFFFFFFFFFULL;   // RE 0x72DBEE
+inline constexpr std::uint64_t kBoundingMinBits = 0xFFEFFFFFFFFFFFFFULL;   // RE 0x72DBF9
+
+struct Box2d {
+    double minX;    // RE +0x00
+    double minY;    // RE +0x08
+    double maxX;    // RE +0x10
+    double maxY;    // RE +0x18
+};
+
+inline constexpr std::size_t kBoxMinXOffset = 0x00;   // RE 0x72DC01
+inline constexpr std::size_t kBoxMinYOffset = 0x08;   // RE 0x72DC05
+inline constexpr std::size_t kBoxMaxXOffset = 0x10;   // RE 0x72DC0A
+inline constexpr std::size_t kBoxMaxYOffset = 0x18;   // RE 0x72DC12
+inline constexpr std::size_t kBoxStride = 0x20;       // the four doubles
+inline constexpr std::size_t kBoxPointStride = 0x10;  // RE 0x72DC96: the walk steps one point
+
+inline Box2d boundingBox(const Point2dLike* points, std::size_t count) {
+    Box2d b{1.7976931348623157e308, 1.7976931348623157e308,
+            -1.7976931348623157e308, -1.7976931348623157e308};   // RE 0x72DC01..0x72DC12
+    if (points == nullptr) {
+        return b;
+    }
+    for (std::size_t i = 0; i < count; ++i) {
+        const Point2dLike& p = points[i];
+        if (b.minX > p.x) { b.minX = p.x; }     // RE 0x72DC62/0x72DC68
+        if (p.x > b.maxX) { b.maxX = p.x; }     // RE 0x72DC6C/0x72DC72
+        if (b.minY > p.y) { b.minY = p.y; }     // RE 0x72DC7C/0x72DC82
+        if (p.y > b.maxY) { b.maxY = p.y; }     // RE 0x72DC87/0x72DC8D
+    }
+    return b;
+}
+
+// --- the tag dispatch of 0x5E7790 (round 202) ------------------------------------------------------
+//     5E7798 cmp rax,1 ; 5E77A4 cmp rax,2 ; 5E77AA test rax,rax   on [rdx]   -- three cases
+//     5E77D9 cmp eax,1 ; 5E77DC sete al                            -- the result is `eax == 1`
+inline constexpr int kGeometryDispatchCases = 3;
+
 }  // namespace lcns
