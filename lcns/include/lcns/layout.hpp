@@ -2182,6 +2182,30 @@ static_assert(kStringAssignDouble == 2, "the growth factor is two");
 static_assert(kSharedDeallocSightings6 == kSharedDeallocSightings5 + 1, "one more sighting");
 static_assert(kSmallCapacity < kSsoInline, "the capacity is smaller than the inline buffer offset");
 
+
+// --- the growth-policy helper 0x913690, forty-eight callers (round 295) ---------------------------------
+//     0x913694 movabs rax,0x3FFFFFFFFFFFFFFF   ; the max_size, the same 2**62 - 1 as rounds 262 and 281
+//     0x91369E rcx = [rdx]                     ; the capacity is passed in AND out through the pointer
+//     0x9136AB/0x9136AF  add rcx,1 then a sign check
+//     0x9136B1 add rcx,rcx                     ; the new capacity is 2 * (capacity + 1)
+//     0x9136C0/0x9136C3  or twice the REQUEST when the capacity is at or below it
+//     0x9136CD movabs rcx,0x8000000000000000   ; the clamp sentinel
+//     0x9136B8/0x9136DE jmp 0x998500           ; the shared allocator performs the allocation
+//     0x9136EB call 0x979E70                   ; the overflow path
+inline constexpr std::uintptr_t kGrowthHelper = 0x913690;    // RE the whole routine
+inline constexpr std::uint64_t kMaxSizeShared = 0x3FFFFFFFFFFFFFFFULL;  // RE 0x913694
+inline constexpr std::uint64_t kCapacitySentinel = 0x8000000000000000ULL;  // RE 0x9136CD
+inline constexpr int kGrowthHelperCallers = 48;
+inline constexpr bool kGrowthRulePlusOneDouble = true;       // RE 0x9136AB/0x9136B1
+inline constexpr bool kGrowthPrefersDoublingCapacity = true; // RE the branch order
+inline constexpr std::uintptr_t kOverflowHelper = 0x979E70;  // RE 0x9136EB
+inline constexpr std::uintptr_t kGrowthAllocator = 0x998500; // RE 0x9136B8
+inline constexpr int kAllocatorSightings2 = 6;               // rounds 252, 256, 271, 287 and the two here
+static_assert(kMaxSizeShared == kMaxSizeWide, "the same max_size as the two-byte string");
+static_assert(kMaxSizeShared == kMaxSizeVec64, "and as the four-byte vector");
+static_assert(kGrowthRulePlusOneDouble, "the rule adds one and doubles");
+static_assert(kGrowthHelperCallers == 48, "forty-eight callers");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

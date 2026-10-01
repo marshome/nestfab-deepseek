@@ -3543,5 +3543,46 @@ int main() {
         CHECK(kSmallCapacity * 2 == 14);
     }
 
+    // --- the growth policy and its clamp (RE 0x913690) -----------------------------------------------
+    {
+        CHECK(kGrowthHelper == 0x913690);
+        CHECK(kMaxSizeShared == 0x3FFFFFFFFFFFFFFFULL);
+        CHECK(kMaxSizeShared == (1ULL << 62) - 1);
+        CHECK(kMaxSizeShared == kMaxSizeWide);
+        CHECK(kMaxSizeShared == kMaxSizeVec64);
+        CHECK(kCapacitySentinel == 0x8000000000000000ULL);
+        CHECK(kCapacitySentinel == (static_cast<std::uint64_t>(1) << 63));
+        CHECK(kGrowthHelperCallers == 48);
+        CHECK(kGrowthRulePlusOneDouble);
+        CHECK(kGrowthPrefersDoublingCapacity);
+        CHECK(kOverflowHelper == 0x979E70);
+        CHECK(kGrowthAllocator == 0x998500);
+        CHECK(kAllocatorSightings2 == 6);
+
+        // the policy, in the order of the branches the instructions take
+        const auto newCapacity = [](std::uint64_t capacity, std::uint64_t requested) -> std::uint64_t {
+            if (capacity > kMaxSizeShared) return kCapacitySentinel;             // RE 0x9136A4
+            if (capacity > requested) return 2 * (capacity + 1);                 // RE 0x9136A9/0x9136B1
+            const std::uint64_t doubled = 2 * requested;                         // RE 0x9136C0
+            if (capacity >= doubled) return 2 * (capacity + 1);                  // RE 0x9136C3
+            if (doubled <= kMaxSizeShared) return doubled;                       // RE 0x9136CB/0x9136E3
+            return kMaxSizeShared;                                               // RE 0x9136CD
+        };
+        // the four hand-computed cases
+        CHECK(newCapacity(4, 10) == 20);      // capacity below the request: twice the request
+        CHECK(newCapacity(50, 10) == 102);    // capacity above it: 2 * (50 + 1)
+        CHECK(newCapacity(4, 4) == 8);        // at it: twice the request
+        CHECK(newCapacity(8, 4) == 18);       // capacity already past twice the request: 2 * (8 + 1)
+        // CORRECTED in round 295c: 0 is not ABOVE 0, so twice-the-request (0) is taken and the capacity does
+        // reach it, so the 2*(capacity+1) rule applies.
+        CHECK(newCapacity(0, 0) == 2);
+        // CORRECTED in round 295c: twice the request is 2 and the capacity 1 does not reach it.
+        CHECK(newCapacity(1, 1) == 2);
+        CHECK(newCapacity(2, 1) == 6);        // here the capacity DOES exceed the request: 2 * (2 + 1)
+        // the clamp is reached only past the max_size
+        CHECK(newCapacity(kMaxSizeShared + 1, 1) == kCapacitySentinel);
+        CHECK(newCapacity(kMaxSizeShared, 0) == 2 * (kMaxSizeShared + 1));   // wraps, as the arithmetic does
+    }
+
     return check::finish("test_recovered");
 }

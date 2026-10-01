@@ -5881,3 +5881,23 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ **释放规则在此变得明确**：round 260/275 只是暗示；本轮它以 `cmp`/`je` 的形式出现，因此**作为规则**落码（`kFreeOnlyIfHeap`）而不只是布局事实。
 
 **已落 `layout.hpp`**：`kSmallCapacity`(7)、`kStringInlineCapacity`、`kStringRealloc`、`kStringAllocBySize`(0x913690)、`kFreeOnlyIfHeap`、`kGrowthDoubling`、`kStringAssignDouble`、`kSharedDeallocSightings6`(8) + **五条 `static_assert`** + 测试 22 条。
+
+### 附 213 **增长策略助手：`2×(容量+1)` 与 2**62 − 1 上限**（goal round 295）**[已落码]**
+
+`0x913690`（109 B / **48 个调用者**）：
+
+```
+913694  movabs rax,0x3FFFFFFFFFFFFFFF   ; ★ max_size（**第三次出现**的 2**62 − 1）
+91369E  rcx = [rdx]                     ; 容量经指针**双向传递**
+9136A4  超上限 → 调 `0x979E70`（溢出路径）
+9136AB/9136AF  加 1（带符号检查）
+9136B1  add rcx,rcx                     ; ★ **新容量 = 2 × (容量 + 1)**
+9136C0/9136C3  否则取**请求的两倍**（若容量已达则回到前一规则）
+9136CD  movabs rcx,0x8000000000000000   ; ★ 钳位哨兵
+9136B8/9136DE  jmp 0x998500             ; ★ 共享分配器（**第六次目击**）
+```
+
+⇒ 策略为：**请求能容纳时用 `2×(容量+1)`；否则用 `2×请求`；再否则钳到 max_size**。
+测试里四个例子**均为手算**：`(4,10)→20`、`(50,10)→102`、`(4,4)→8`、`(8,4)→18`（后者与请求无关，正是“优先翻倍容量”的体现）。
+
+**已落 `layout.hpp`**：`kGrowthHelper`、`kMaxSizeShared`、`kCapacitySentinel`、`kGrowthHelperCallers`(48)、`kGrowthRulePlusOneDouble`、`kGrowthPrefersDoublingCapacity`、`kOverflowHelper`(0x979E70)、`kGrowthAllocator`、`kAllocatorSightings2`(6) + **四条 `static_assert`** + 测试 24 条。
