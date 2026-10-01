@@ -165,3 +165,53 @@ if problems:
     sys.exit(1)
 print("\nOK: code marks == registry, and every NotReversed/Substituted RVA is documented in re/")
 
+
+# ---------------------------------------------------------------------------------------------------
+# Gate added in goal round 92: a class declared in a public header must be named somewhere under
+# tests/, unless it is listed below WITH A REASON. This exists because an untested header was once
+# committed (round 89) and the old gate could not see it.
+# ---------------------------------------------------------------------------------------------------
+UNTESTED_OK = {
+    "Impl": "internal detail of the export table in api.hpp, exercised through every api test",
+    "Api": "the wrapper object itself; the api_typed tests construct and call it",
+    "Library": "dlopen handle wrapper; only reachable with a real shared library present",
+    "ExportInfo": "plain description record produced by the table, asserted field by field",
+    "Diagnostic": "plain description record, same as ExportInfo",
+    "HttpResponse": "network type; offline tests cannot exercise it",
+    "SocketHttpClient": "network type; offline tests cannot exercise it",
+    "Supervisor": "the engine supervisor, covered indirectly by the nester and engine tests",
+    "ConvEdge": "geometry half edge inside boolean.cpp, covered by the boolean tests",
+    "Triplet": "LP triplet helper, covered through the linear program tests",
+    "CommonCutSegment": "plain segment record asserted through the common cut tests",
+    "MultitorchInfo": "plain info record, exercised via the nester tests",
+    "BestObserver": "observer implementation used by the beam search tests",
+}
+
+
+def untested_classes():
+    import glob
+
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    tests_text = ""
+    for pat in ("*.cpp", "*.hpp"):
+        for p in glob.glob(os.path.join(root, "tests", pat)):
+            tests_text += io.open(p, encoding="utf-8", errors="replace").read()
+    missing = []
+    for p in sorted(glob.glob(os.path.join(root, "include", "lcns", "*.hpp"))):
+        body = io.open(p, encoding="utf-8", errors="replace").read()
+        for name in re.findall(r"^\s*(?:class|struct)\s+([A-Za-z_][A-Za-z0-9_]*)", body, flags=re.M):
+            if name in UNTESTED_OK or name in tests_text:
+                continue
+            missing.append((os.path.basename(p), name))
+    return missing
+
+
+_untested = untested_classes()
+if _untested:
+    print("")
+    print("UNTESTED CLASSES (%d) -- declared in include/lcns but named in no test:" % len(_untested))
+    for _f, _n in _untested[:25]:
+        print("   %s: %s" % (_f, _n))
+    print("   either add a test, or add the name to UNTESTED_OK with a reason")
+    sys.exit(4)
+print("OK: every class in include/lcns is named by a test, or excepted with a reason")

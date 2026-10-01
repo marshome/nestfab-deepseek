@@ -299,6 +299,78 @@ int main() {
         CHECK(d.probeCancel());
     }
 
+    // --- the seven classes the untested-class gate flagged (round 92) --------------------------
+    {
+        // BeamStats: counters start at zero and seconds is a double
+        BeamStats st;
+        CHECK(st.iterations == 0 && st.expanded == 0 && st.pruned == 0 && st.placed == 0);
+        CHECK(st.seconds == 0.0);
+        st.expanded = 7;
+        CHECK(st.expanded == 7);
+
+        // PlacementCheck::ok() is a conjunction; each term must be able to veto it
+        PlacementCheck pc;
+        CHECK(!pc.ok());                       // insideSheet is false by default
+        pc.insideSheet = true;
+        CHECK(pc.ok());                        // the other four are satisfied by default
+        pc.overlapsPlaced = true;
+        CHECK(!pc.ok());
+        pc.overlapsPlaced = false;
+        pc.inRestrictedZone = true;
+        CHECK(!pc.ok());
+        pc.inRestrictedZone = false;
+        pc.torchOk = false;
+        CHECK(!pc.ok());
+        pc.torchOk = true;
+        pc.insideHoleOnly = false;
+        CHECK(!pc.ok());
+
+        // DatabaseNester exposes its name and a deterministic hash
+        DatabaseNester db;
+        CHECK(std::strcmp(db.name(), "DatabaseNester") == 0);
+        Nesting n1;
+        Nesting n2;
+        CHECK(DatabaseNester::hashNesting(n1) == DatabaseNester::hashNesting(n2));
+
+        // CompositeNester reports its name and accepts children
+        CompositeNester comp;
+        CHECK(std::strcmp(comp.name(), "CompositeNester") == 0);
+        comp.add(std::make_shared<DatabaseNester>());
+
+        // NFPKey equality and the FNV-1a hash it uses
+        NFPKey k1{1, 2, 3, 0};
+        NFPKey k2{1, 2, 3, 0};
+        NFPKey k3{1, 2, 4, 0};
+        CHECK(k1 == k2);
+        CHECK(!(k1 == k3));
+        const NFPKeyHash h;
+        CHECK(h(k1) == h(k2));                       // determinism
+        CHECK(h(k1) != h(k3));                       // and different keys differ
+        CHECK(h(k1) == h(k1));                       // stable across calls
+
+        // IntervalList is the thin wrapper the recovered object at +0xA8/+0xC0 reads
+        row::IntervalList il;
+        CHECK(il.empty());
+        CHECK(il.size() == 0);
+        il.items.push_back(row::Interval{});
+        CHECK(!il.empty());
+        CHECK(il.size() == 1);
+    }
+
+    // --- the two beam types, asserted against their own declared defaults ---------------
+    {
+        BeamParams b_beamparams;
+        CHECK(b_beamparams.width == 8);
+        CHECK(b_beamparams.distinctAngle == true);
+        CHECK(b_beamparams.frequencyRatio == 1.0);
+        CHECK(b_beamparams.maxAngleSteps == 24);
+        BeamNode b_beamnode;
+        CHECK(b_beamnode.value48 == 0.0);
+        CHECK(b_beamnode.value50 == 0.0);
+        CHECK(b_beamnode.depth == 0);
+        CHECK(b_beamnode.sheetIndex == 0);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
