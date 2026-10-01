@@ -442,6 +442,23 @@ inline double lengthSquared2d(const Vec2d& v) {
     return v.y * v.y + v.x * v.x;
 }
 
+// RE the same kernel, one step on (goal round 58):
+//     5ED4B1  movsd xmm8, [1.0]      ; the factor starts at 1.0 -- the DEGENERATE case
+//     5ED7DB  divsd xmm8, xmm14      ; ... and is replaced by 1/length when the edge is usable
+//     5ED7E0  mulsd xmm6,  xmm8      ; each edge component is scaled by that one factor
+//     5ED7E5  mulsd xmm13, xmm8      ; (and the other edge by the same factor, 5ED802/5ED807)
+// So the routine normalises an edge by dividing by its length, and a zero length does not divide:
+// the factor stays 1.0, which leaves the vector as it was. The 1.0 load is the evidence for the
+// guard; that it exists to avoid dividing by zero is the reading of it.
+inline Vec2d normaliseEdge2d(const Vec2d& v) {
+    const double len2 = lengthSquared2d(v);
+    if (len2 == 0.0) {
+        return v;                       // RE 0x5ED4B1: the factor is 1.0, nothing is divided
+    }
+    const double f = 1.0 / std::sqrt(len2);   // RE 0x5ED7DB: divsd by the length
+    return Vec2d{v.x * f, v.y * f};           // RE 0x5ED7E0 / 0x5ED7E5
+}
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 

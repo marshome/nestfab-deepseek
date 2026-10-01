@@ -250,6 +250,17 @@ int main() {
             CHECK(v.y == 4.0);
             CHECK(geom::lengthSquared2d(v) == 25.0);          // 3-4-5, and no square root at this site
             CHECK(geom::lengthSquared2d(geom::Vec2d{0.0, 0.0}) == 0.0);
+            CHECK(geom::lengthSquared2d(geom::Vec2d{0.0, 0.0}) == 0.0);
+            // RE 0x5ed4b1 / 0x5ed7db: normalise, but never divide by a zero length
+            {
+                const geom::Vec2d u = geom::normaliseEdge2d(geom::Vec2d{3.0, 4.0});
+                CHECK(std::fabs(u.x - 0.6) < 1e-12);
+                CHECK(std::fabs(u.y - 0.8) < 1e-12);
+                CHECK(std::fabs(geom::lengthSquared2d(u) - 1.0) < 1e-12);
+                // the degenerate edge comes back unchanged, because the factor stays 1.0
+                const geom::Vec2d z = geom::normaliseEdge2d(geom::Vec2d{0.0, 0.0});
+                CHECK(z.x == 0.0 && z.y == 0.0);
+            }
         }
     }
 
