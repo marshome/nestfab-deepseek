@@ -18,6 +18,7 @@ from collections import Counter, deque
 sys.path.insert(0, r"D:\Nesting\nestfab\re")
 from lib import *  # noqa: E402
 from covlib import classify, classify_identity, has_identity_evidence  # noqa: E402
+from covlib import cited_set as covlib_cited_set  # unified definition (round 122)
 
 RE = r"D:\Nesting\nestfab\re"
 LC = r"D:\Nesting\nestfab\lcns"
@@ -288,3 +289,10 @@ io.open(os.path.join(RE, "UNCOVERED_RANKED.md"), "w", encoding="utf-8",
         newline="\n").write("\n".join(out) + "\n")
 print()
 print("wrote re/UNCOVERED_RANKED.md")
+
+# --- unified reporting (round 122): state covlib's cited-set size next to the buckets above ---------
+try:
+    _cv_cited = len(covlib_cited_set())
+    print("   [unified] covlib.cited_set() size: %d (g_coverage's own cited count is printed above)" % _cv_cited)
+except Exception as _exc:                     # pragma: no cover
+    print("   [unified] covlib.cited_set() unavailable: %r" % _exc)
