@@ -2102,6 +2102,33 @@ static_assert(kRecordCounterB - kRecordCounterA == 4, "the counters are adjacent
 static_assert(kVtableSlotsKnown6 == kVtableSlotsKnown5 + 1, "one more slot than round 288");
 static_assert(kRecordCountedTwice, "the record is counted twice over");
 
+
+// --- the deep copy of a pointer array 0x418BD0, and the 408-byte record (round 292) ---------------------
+//     0x418CB9 movabs rax,0xFFFFFFFFFFFFFFF ; 0x418CC6 ja   ; the max_size guard, 2**60 - 1
+//     0x418CCC lea rcx,[r10*8]      ; the count times EIGHT: an array of POINTERS
+//     0x418CD4 call 0x9984E0        ; allocated, and stored at +0x18 (where round 291 found the buffer)
+//     0x418CF3 mov ecx,0x198        ; each pointed-to record is 408 bytes
+//     0x418D19 [rdi] = [r12]        ; the dword at +0x00
+//     0x418D1B call 0x63F258 from +6 ; the payload
+//     0x418D26/0x418D29             ; the bytes at +0x05 and +0x04
+inline constexpr std::size_t kElementBytes198 = 0x198;       // RE 0x418CF3 (408)
+inline constexpr std::uint64_t kPointerMaxCount = 0xFFFFFFFFFFFFFFFULL;  // RE 0x418CB9, 2**60 - 1
+inline constexpr bool kVectorOfPointers = true;              // RE the `*8` scaling
+inline constexpr std::size_t kRecordHeaderBytes = 6;         // RE the payload offset used by 0x63F258
+inline constexpr std::size_t kRecordDword = 0x00;            // RE 0x418D19
+inline constexpr std::size_t kRecordByteA = 0x04;            // RE 0x418D29
+inline constexpr std::size_t kRecordByteB = 0x05;            // RE 0x418D26
+inline constexpr std::size_t kRecordPayload = 0x06;          // RE 0x418D1B
+inline constexpr std::uintptr_t kPayloadCopier = 0x63F258;   // RE 0x418D1B, also round 290
+inline constexpr int kPayloadCopierSightings = 2;            // rounds 290 and this one
+inline constexpr std::size_t kOuterCount = 0x00;             // RE 0x418CDD
+inline constexpr std::size_t kOuterArray = 0x18;             // RE 0x418CD9
+static_assert(kPointerMaxCount == (1ULL << 60) - 1, "the max count is 2**60 - 1");
+static_assert(kRecordByteB - kRecordByteA == 1, "the two header bytes are adjacent");
+static_assert(kRecordPayload == kRecordByteB + 1, "the payload starts right after the header");
+static_assert(kElementBytes198 == 408, "four hundred and eight bytes per record");
+static_assert(kPayloadCopierSightings == 2, "the payload copier has two sightings");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

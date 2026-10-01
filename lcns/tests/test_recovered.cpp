@@ -3426,5 +3426,41 @@ int main() {
         CHECK(strong2 == 1 && weak2 == 2);
     }
 
+    // --- the pointer-array deep copy and the 408-byte record (RE 0x418bd0) --------------------------
+    {
+        CHECK(kElementBytes198 == 0x198);
+        CHECK(kElementBytes198 == 408);
+        CHECK(kPointerMaxCount == 0xFFFFFFFFFFFFFFFULL);
+        CHECK(kPointerMaxCount == (1ULL << 60) - 1);
+        // one past the limit is exactly two to the sixtieth, which is what the guard encodes
+        CHECK(kPointerMaxCount + 1 == (static_cast<std::uint64_t>(1) << 60));
+        CHECK(kVectorOfPointers);
+        CHECK(kRecordHeaderBytes == 6);
+        CHECK(kRecordDword == 0x00);
+        CHECK(kRecordByteA == 0x04);
+        CHECK(kRecordByteB == 0x05);
+        CHECK(kRecordByteB - kRecordByteA == 1);
+        CHECK(kRecordPayload == 0x06);
+        CHECK(kRecordPayload == kRecordByteB + 1);
+        CHECK(kRecordHeaderBytes == kRecordPayload);
+        CHECK(kPayloadCopier == 0x63F258);
+        CHECK(kPayloadCopierSightings == 2);
+        CHECK(kPayloadCopier == kCopyHelper);            // the helper round 290 found
+        CHECK(kOuterCount == 0x00);
+        CHECK(kOuterArray == 0x18);
+        CHECK(kOuterArray == kSsoField18);               // the same buffer the assignment frees
+        CHECK(kElementBytes198 > kRecordBytes);          // larger than the 0x60 record
+
+        // the scaling and the guard the instructions use
+        const auto bytesFor = [](std::uint64_t count) { return count * 8; };   // RE 0x418CCC
+        CHECK(bytesFor(0) == 0);
+        CHECK(bytesFor(1) == 8);
+        CHECK(bytesFor(100) == 800);
+        const auto withinLimit = [](std::uint64_t count) { return count <= kPointerMaxCount; };
+        CHECK(withinLimit(0));
+        CHECK(withinLimit(kPointerMaxCount));
+        CHECK(!withinLimit(kPointerMaxCount + 1));
+    }
+
     return check::finish("test_recovered");
 }

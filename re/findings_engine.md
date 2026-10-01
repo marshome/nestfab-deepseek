@@ -5811,3 +5811,21 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ⇒ **记录有两个计数器**（与 round 290 的 `1/1` 对一致），虚表槽**十一个**。
 
 **已落 `layout.hpp`**：`kSsoField*`（五个）、`kSsoAlloc`(0x9984E0)、`kSsoConfirmed`、`kReleaserAltSightings`(2)、`kRecordCounter*`、`kRecordLink*`、`kVtableSlotH`(0x10)、`kVtableSlotsKnown6`(11)、`kRecordFinalCall`、`kRecordCountedTwice` + **六条 `static_assert`** + 测试 30 条。
+
+### 附 210 **指针数组的深拷贝**：408 字节记录与 6 字节头（goal round 292）**[已落码]**
+
+```
+418CB9  movabs rax,0xFFFFFFFFFFFFFFF ; ja   ; ★ max_size（**2**60 − 1**）
+418CCC  lea rcx,[r10*8]                     ; ★ **乘以 8 ⇒ 指针数组**
+418CD4/418CD9  分配后存入 `+0x18`（即 round 291 释放的那个缓冲区）
+418CF3  ecx = **0x198**                      ; ★ **每条记录 408 字节**（新尺寸）
+418D19  [rdi] = [r12]                       ; `+0x00` 的 dword
+418D1B  call 0x63F258（rcx = rdi+6、rdx = r12+6）   ; ★ **从偏移 6 处拷贝载荷**
+418D26/418D29  字节 `+0x05`、`+0x04`
+```
+
+⇒ 记录有 **6 字节头**（dword `+0x00`、两个字节 `+0x04`/`+0x05`），负荷在 `+0x06` 处由 **`0x63F258`** 拷贝 —— **该助手第二次目击**，因此它是**负荷拷贝器**而非通用 memmove。
+
+另：`0xFFFFFFFFFFFFFFF` = **2**60 − 1**，与“指针×8”的算术一致（可复算，测试已断言）；外层对象的计数在 `+0x00`、数组在 `+0x18`。
+
+**已落 `layout.hpp`**：`kElementBytes198`(0x198)、`kPointerMaxCount`、`kVectorOfPointers`、`kRecordHeader*`（五个）、`kPayloadCopier`、`kPayloadCopierSightings`(2)、`kOuterCount`、`kOuterArray` + **五条 `static_assert`** + 测试 26 条。
