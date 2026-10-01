@@ -1871,3 +1871,20 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 === top 35 NOT-cited reachable functions (the concrete work list) ===
    not-cited reachable: 4140 functions, 2202241 bytes (47.2% of reachable)
 ```n
+
+**口径声明（归类前 / 后）**：两个数字都在这里，而且这次排除只动了 4 个**逐条读过**的库例程（共 1,343 字节）。
+
+```
+[BEFORE]
+   reachable from the exports: 6181 functions, 4670042 bytes (47.0% of all code)
+      cited reachable     :   2041  (2467801 bytes)  -> 52.8% of reachable bytes
+      third party to LINK:   379 fns,    55875 B (1.2% of reachable)
+      toolchain libstdc++/MinGW :   225 fns,   230975 B (4.9%)
+      libcns DOMAIN code STILL TO REVERSE:  3536 fns,  1915391 B (41.0%)
+
+[AFTER]
+﻿reachable from the exports: 6181 functions, 4670042 bytes (47.0% of all code)
+   cited reachable     :   2041  (2467801 bytes)  -> 52.8% of reachable bytes
+=== top 35 NOT-cited reachable functions (the concrete work list) ===
+   not-cited reachable: 4140 functions, 2202241 bytes (47.2% of reachable)
+```
