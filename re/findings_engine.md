@@ -6490,3 +6490,21 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ 这也**定下了 `0x888FF0` 是什么**：它装虚表后调本取引用例程 ⇒ **持有引用的构造器**（以其指令支持的读法如此陈述）。
 
 **已落 `layout.hpp`**：`kAtomicIncrement`(0x862050)、`kAtomicReleaseTarget`(0x9984B0)、`kRefcountTrio`(3)、`kRefcountPayloadOffset`(0x18)、`kSharedDeallocSightings8`(9)、`kObtainRef`(0x86B750)、`kObtainRefCallers`(12)、`kBorrowFlagOffset`(−8)、`kRefcountBaseDelta`(−0x18)、`kBorrowSentinelNegative`、`kBorrowPath`(0x86B780)、`kCounterOffsetSites`(4)、`k888FF0IsRefHolder` + **五条 `static_assert`** + 测试 28 条。
+
+### 附 246 **四层拆解（目前最深），且第三层复用了 round 254 的内层对**（goal round 328）**[已落码]**
+
+`0x67DB10`（227 B / 21 个调用者）：
+
+```
+67DB20/67DB24  r12 = [rcx+**0x28**]；r14 = rcx+**0x18**   ; 外层是**指针**而非对
+67DB3C  call **0x939E00**（传 `rcx+0x18`）
+67DB41/67DB46/67DB4B  第二层的 `+0x10`、`+0x28`、`+0x30`
+67DB53  `+0x28`/`+0x30` 对
+67DB59  第三层的 `+0x18`/`+0x20` 对   ; ★ **正是 round 254 的内层对**
+67DB6A  逐元素释放（`0x9984B0`，**第十次目击**）
+```
+
+⇒ 比 rounds 254/279/322 的三套布局**多一层**：外层是指针、第二层有四个字段、第三层的 `+0x18`/`+0x20` 对**与 round 254 的内层对完全相同**。
+★ 后者记为**两次读数之间的一致**，**不说成同一个对象** —— 同样的偏移出现在**不同类型的不同深度**上。
+
+**已落 `layout.hpp`**：`kNested4`、`kNested4Callers`(21)、`kNested4Outer`(0x28)、`kNested4Address`(0x18)、`kNested4FieldA/B`、`kNested4PairA..D`、`kNested4Helper`(0x939E00)、`kNested4Levels`(4)、`kNestedLayouts2`(4)、`kSharedDeallocSightings9`(10)、`kNested4ReusesRound254Pair` + **六条 `static_assert`** + 测试 26 条；`kNestedLayouts` 由 3 **更新为 4**（旧断言同步修正）。

@@ -2813,7 +2813,8 @@ inline constexpr std::size_t kNested3InnerField = 0x08;       // RE 0x8F7DF0
 inline constexpr int kNested3Callers = 22;
 inline constexpr std::uintptr_t kNested3Releaser = 0x891B40;  // RE 0x8F7DF9
 inline constexpr int kReleaseHelperSightings = 2;             // rounds 321 and 322
-inline constexpr int kNestedLayouts = 3;                      // rounds 254, 279 and this
+inline constexpr int kNestedLayouts = 4;                      // UPDATED in round 328: rounds 254, 279, 322
+// and the four-level teardown at 0x67DB10, whose third level reuses round 254's inner pair
 inline constexpr int kSharedDeallocSightings7 = 8;            // rounds 248, 252, 254, 256, 261, 275, 293 and this
 inline constexpr std::uintptr_t kCtorForward = 0x888FF0;      // RE the second routine
 inline constexpr std::uintptr_t kCtorForwardTarget = 0x86B750;  // RE 0x889006
@@ -2823,7 +2824,7 @@ inline constexpr int kCtorForwardCallers = 21;
 inline constexpr bool kDescriptorOffsetRepeats = true;        // observed repetition, not identity
 static_assert(kNested3InnerStride == 0x10, "the third layout's inner stride");
 static_assert(kNested3InnerStride != kNested2InnerStride, "and it differs from the second layout's");
-static_assert(kNestedLayouts == 3, "three nested layouts are now recorded separately");
+static_assert(kNestedLayouts == 4, "four nested layouts are recorded separately, updated in round 328");
 static_assert(kSharedDeallocSightings7 == kSharedDeallocSightings5 + 1, "the deallocator again");
 static_assert(kCtorForwardTarget == 0x86B750, "the constructor it forwards to");
 
@@ -2968,6 +2969,37 @@ static_assert(kRefcountTrio == 3, "three operations over one counter");
 static_assert(kRefcountPayloadOffset == 0x18, "the payload sits at +0x18");
 static_assert(kBorrowFlagOffset == -8 && kRefcountBaseDelta == -0x18, "the base and flag offsets");
 static_assert(kCounterOffsetSites == 4, "the counter offset appears in four places");
+
+
+// --- a four-level teardown, the deepest recorded (round 328) ---------------------------------------------
+//     0x67DB20/0x67DB24  r12 = [rcx+0x28] ; r14 = rcx+0x18
+//     0x67DB3C call 0x939E00 with the address at +0x18
+//     0x67DB41/0x67DB46/0x67DB4B  the second level's +0x10, +0x28, +0x30
+//     0x67DB53 the pair at +0x28 and +0x30
+//     0x67DB59 the third level's pair at +0x18 and +0x20 -- round 254's inner pair
+//     0x67DB6A each element freed with 0x9984B0
+inline constexpr std::uintptr_t kNested4 = 0x67DB10;         // RE the whole routine
+inline constexpr int kNested4Callers = 21;
+inline constexpr std::size_t kNested4Outer = 0x28;           // RE 0x67DB20
+inline constexpr std::size_t kNested4Address = 0x18;         // RE 0x67DB24
+inline constexpr std::size_t kNested4FieldA = 0x10;          // RE 0x67DB4B
+inline constexpr std::size_t kNested4FieldB = 0x18;          // RE 0x67DB34
+inline constexpr std::size_t kNested4PairA = 0x28;           // RE 0x67DB46
+inline constexpr std::size_t kNested4PairB = 0x30;           // RE 0x67DB41
+inline constexpr std::size_t kNested4PairC = 0x18;           // RE 0x67DB59
+inline constexpr std::size_t kNested4PairD = 0x20;           // RE 0x67DB55
+inline constexpr std::uintptr_t kNested4Helper = 0x939E00;   // RE 0x67DB3C
+inline constexpr int kNested4Levels = 4;                     // the depth this walk reaches
+inline constexpr int kNestedLayouts2 = 4;                    // and the number of layouts now recorded
+inline constexpr int kSharedDeallocSightings9 = 10;          // rounds 248 to 327 and this
+inline constexpr bool kNested4ReusesRound254Pair = true;     // an agreement between readings, not an identity
+static_assert(kNested4Levels == 4, "four levels");
+static_assert(kNested4PairD - kNested4PairC == 8, "the third level's pair is eight bytes apart");
+static_assert(kNested4PairB - kNested4PairA == 8, "as is the second level's");
+static_assert(kNested4PairC == kNestedInnerBegin && kNested4PairD == kNestedInnerEnd,
+              "the third level's pair matches round 254's inner pair");
+static_assert(kNestedLayouts2 == kNestedLayouts, "one count, updated once");
+static_assert(kSharedDeallocSightings9 == kSharedDeallocSightings5 + 3, "the deallocator again");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

@@ -4489,7 +4489,7 @@ int main() {
         CHECK(kNested3Callers == 22);
         CHECK(kNested3Releaser == kTwoFieldHelper);      // round 321's helper, second sighting
         CHECK(kReleaseHelperSightings == 2);
-        CHECK(kNestedLayouts == 3);
+        CHECK(kNestedLayouts == 4);                      // updated in round 328: four layouts
         CHECK(kSharedDeallocSightings7 == 8);
         CHECK(kSharedDeallocSightings7 == kSharedDeallocSightings5 + 1);
         CHECK(kSharedDealloc == 0x9984B0);
@@ -4502,9 +4502,13 @@ int main() {
 
         // the three layouts side by side: same shape, different numbers, never merged
         struct Layout { std::size_t begin, end, stride, field; };
-        const Layout layouts[3] = {{kNestedOuterBegin, kNestedOuterEnd, kInnerStride24, kNested2Buffer},
+        // EXTENDED in round 328e: this array is bounded by kNestedLayouts, so when that count went from three to
+        // four the array had to grow with it -- the loop below was reading a fourth element that did not exist.
+        const Layout layouts[4] = {{kNestedOuterBegin, kNestedOuterEnd, kInnerStride24, kNested2Buffer},
                                    {kNested2Begin, kNested2End, kNested2InnerStride, kNested2Buffer},
-                                   {kNested3Begin, kNested3End, kNested3InnerStride, kNested3InnerField}};
+                                   {kNested3Begin, kNested3End, kNested3InnerStride, kNested3InnerField},
+                                   {kNested4PairC, kNested4PairD, kNested4FieldA, kNested4FieldB}};
+        static_assert(kNestedLayouts == 4, "the array and the count have to agree");
         for (int i = 0; i < kNestedLayouts; ++i) {
             CHECK(layouts[i].end - layouts[i].begin == 8);
         }
@@ -4732,6 +4736,44 @@ int main() {
         CHECK(countsThis(1));
         CHECK(!countsThis(-1));
         CHECK(kCounterOffsetSites * 4 == 16);
+    }
+
+    // --- the four-level teardown (RE 0x67db10) ------------------------------------------------------
+    {
+        CHECK(kNested4 == 0x67DB10);
+        CHECK(kNested4Callers == 21);
+        CHECK(kNested4Outer == 0x28);
+        CHECK(kNested4Address == 0x18);
+        CHECK(kNested4FieldA == 0x10);
+        CHECK(kNested4FieldB == 0x18);
+        CHECK(kNested4PairA == 0x28 && kNested4PairB == 0x30);
+        CHECK(kNested4PairC == 0x18 && kNested4PairD == 0x20);
+        CHECK(kNested4PairB - kNested4PairA == 8);
+        CHECK(kNested4PairD - kNested4PairC == 8);
+        CHECK(kNested4PairC == kNestedInnerBegin);       // round 254's inner pair, at a third level here
+        CHECK(kNested4PairD == kNestedInnerEnd);
+        CHECK(kNested4Helper == 0x939E00);
+        CHECK(kNested4Levels == 4);
+        CHECK(kNestedLayouts2 == 4);
+        CHECK(kNestedLayouts == 4);
+        CHECK(kSharedDeallocSightings9 == 10);
+        CHECK(kSharedDeallocSightings9 == kSharedDeallocSightings5 + 3);
+        CHECK(kNested4ReusesRound254Pair);
+        CHECK(kSharedDealloc == 0x9984B0);
+        CHECK(kNested4 != kNested3Begin);            // a distinct address from the other layouts
+
+        // the four layouts' innermost strides and pairs, side by side
+        struct Depth { std::size_t pairA, pairB; };
+        const Depth depths[4] = {{kNestedOuterBegin, kNestedOuterEnd},
+                                 {kNested2Begin, kNested2End},
+                                 {kNested3Begin, kNested3End},
+                                 {kNested4PairC, kNested4PairD}};
+        for (int i = 0; i < 4; ++i) {
+            CHECK(depths[i].pairB - depths[i].pairA == 8);
+        }
+        CHECK(depths[3].pairA == 0x18);              // the deepest level's pair starts at +0x18
+        CHECK(kNestedLayouts == 4);
+        CHECK(kNested4Levels > kNestedLayouts - 1);
     }
 
     return check::finish("test_recovered");
