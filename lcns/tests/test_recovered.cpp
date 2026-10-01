@@ -468,6 +468,16 @@ int main() {
         CHECK(static_cast<long long>(1.9999999 * kSeedScale) == 1999999);
     }
 
+    // --- the timer behind the seed (RE 0x1b33b0 -> 0x1a9060 -> 0x178590/0x1785c0) -------------------
+    {
+        CHECK(std::strstr(kTimerQpcFailure, "QueryPerformanceCounter failed") != nullptr);
+        CHECK(std::strstr(kTimerQpfFailure, "QueryPerformanceFrequency failed") != nullptr);
+        // the seed is that duration expressed in microseconds
+        CHECK(kSeedScale == 1000000.0);
+        const double duration = 0.001234;                       // a sample second count
+        CHECK(static_cast<long long>(duration * kSeedScale) == 1234);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720

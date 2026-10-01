@@ -175,6 +175,22 @@ inline constexpr double kAverageFinalWeight = 0.33;   // RE 0x1AC753
 // being traced, so no seed function is implemented here.
 inline constexpr double kSeedScale = 1000000.0;   // RE 0x1B342C -> rva 0x9BF530
 
+// RE the application's own timer, which is where the seed's multiplicand comes from. The image carries
+// two failure messages verbatim:
+//     'Timer: QueryPerformanceCounter failed with error '     (0x9B6790)
+//     'Timer: QueryPerformanceFrequency failed with error '   (0x9B67C8)
+// and two 38-byte accessors read a struct filled by 0x5CD800 and return the difference of two double
+// fields, i.e. an elapsed duration:
+//     0x178590:  call 0x5CD800 ; movsd xmm0,[rsp+0x38] ; subsd xmm0,[rsp+0x28]
+//     0x1785C0:  call 0x5CD800 ; movsd xmm0,[rsp+0x40] ; subsd xmm0,[rsp+0x30]
+// Together with kSeedScale = 1e6 this says the seed is a duration in microseconds.
+// RECOVERED: the timer's messages, the two duration accessors and the microsecond scaling.
+// NOT RECOVERED: the timer's own field layout beyond the four offsets used here.
+inline constexpr const char* kTimerQpcFailure =
+    "Timer: QueryPerformanceCounter failed with error ";        // RE 0x9B6790
+inline constexpr const char* kTimerQpfFailure =
+    "Timer: QueryPerformanceFrequency failed with error ";      // RE 0x9B67C8
+
 // RE the exact branch structure above: the weighted value when the gate is set, the prior value otherwise.
 inline double gatedAverage(double product, double count, bool gate, double prior) {
     if (count == 0.0) {
