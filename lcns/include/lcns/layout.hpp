@@ -2851,6 +2851,38 @@ static_assert(kWideData == 0x00 && kWideSize == 0x08 && kWideCapacity == 0x10,
 static_assert(kTerminatorBytes == kElementBytesWide, "the terminator is one element");
 static_assert(kWideSsoChecks == 3, "a third SSO check site");
 
+
+// --- a move assignment, and the first ROLE for slot +0x8 (round 324) ------------------------------------
+//     0x10F23F/0x10F246  rsi = [rdx+8] ; qword [rdx+8] = 0   ; the source is nulled: this is a move
+//     0x10F24E/0x10F25A  the old destination pointer released by `call qword [rax+8]`
+//     0x10F25D [rbx+8] = rsi                                  ; and the source's pointer taken
+inline constexpr std::uintptr_t kMoveAssignment = 0x10F220;  // RE the whole routine
+inline constexpr int kMoveAssignmentCallers = 21;
+inline constexpr std::size_t kMovePointer = 0x08;            // RE 0x10F23F
+inline constexpr std::size_t kMoveByte = 0x10;               // RE 0x10F230
+inline constexpr bool kMoveNullsSource = true;               // RE 0x10F246
+inline constexpr bool kSlotDRole = true;                     // the slot is used to release here
+inline constexpr const char* kSlotDRoleName = "release";     // RE 0x10F25A
+// Two things this round settled rather than suggested: the null store identifies a move, and slot +0x8 has a ROLE --
+// releasing an object -- where rounds 280 and 298 could only record it as an address that a tail jump used.
+inline constexpr bool kMoveIdentifiedByNullStore = true;
+
+// --- a lazy initialiser behind a byte flag at +0x50 (round 324) ------------------------------------------
+//     0x10FBB6/0x10FBC4/0x10FBCE  two vtables installed
+//     0x10FBBD/0x10FBD4  the byte at +0x50 tested and then set to one
+//     0x10FBD8 call 0xC3A40        ; an initialisation helper, a different address from round 299's
+inline constexpr std::uintptr_t kLazyInit50 = 0x10FBB0;      // RE the whole routine
+inline constexpr int kLazyInit50Callers = 23;
+inline constexpr std::size_t kLazyInitFlag = 0x50;           // RE 0x10FBBD
+inline constexpr std::size_t kLazyInitField = 0x48;          // RE 0x10FBEA
+inline constexpr std::uintptr_t kLocalConstruct2 = 0xC3A40;  // RE 0x10FBD8
+inline constexpr int kLocalConstructFamily = 2;              // rounds 299 and 324, two different addresses
+static_assert(kMoveNullsSource && kMoveIdentifiedByNullStore, "the move is identified by the null store");
+static_assert(kSlotDRole && kMovePointer == 0x08, "the slot releases the pointer at +0x8");
+static_assert(kLocalConstruct2 - kLocalConstruct == 0x650, "the two helpers are 0x650 apart");
+static_assert(kLocalConstructFamily == 2, "two members, recorded separately");
+static_assert(kLazyInitFlag == 0x50, "the flag sits at +0x50");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

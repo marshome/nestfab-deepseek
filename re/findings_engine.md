@@ -6419,3 +6419,20 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ **本轮打印在第二个函数前截断** ⇒ **只对这一个下声明**，第二个（`0x10F220`）**留给后续轮次**。
 
 **已落 `layout.hpp`**：`kWideAppend`(0x913540)、`kWideAppendCallers`(23)、`kElementBytesWide`(2)、`kWideSsoChecks`(3)、`kTerminatorBytes`(2)、`kTerminatorValue`、`kWideAppendGrow`(0x913710)、`kSingleElementPath`、`kMemcpySightingsAtAppend` + **四条 `static_assert`** + 测试 24 条。
+
+### 附 242 **移动赋值，以及虚表槽 `+0x8` 的首个语义**（goal round 324）**[已落码]**
+
+**（a）`0x10F220`（99 B / 21 个调用者）**：
+
+```
+10F23F/10F246  rsi = [rdx+8] ; **qword [rdx+8] = 0**   ; ★ **源被置空 ⇒ 这是移动**
+10F24A/10F25A  旧指针经 **`call qword [rax+8]`** 释放   ; ★ 槽 `+0x8` 首次获得**语义**
+10F25D  [rbx+8] = rsi                              ; 接收源的指针
+```
+
+⇒ 两件事由此**定下而非提出**：**(1)** “把源指针置空”这个存入动作**可用于识别移动而非拷贝**；**(2)** 虚表槽 `+0x8`（rounds 280/298 只能记为“尾跳用过的地址”）在此**用于释放对象** ⇒ **首个可说出的角色**。
+
+**（b）`0x10FBB0`（183 B / 23 个调用者）= 以 `+0x50` 为标志的惰性初始化**：装两个虚表、检查并置位 `+0x50`、调 **`0xC3A40`**（与 round 299 的 `0xC33F0` **相差 `0x650`**，**同邻域但不同地址**）。
+两个助手**分开记录**，不合并。
+
+**已落 `layout.hpp`**：`kMoveAssignment`、`kMoveAssignmentCallers`(21)、`kMovePointer/Byte`(0x08/0x10)、`kMoveNullsSource`、`kSlotDRole`、`kSlotDRoleName`、`kMoveIdentifiedByNullStore`、`kLazyInit50`、`kLazyInitFlag`(0x50)、`kLazyInitField`(0x48)、`kLocalConstruct2`(0xC3A40)、`kLocalConstructFamily`(2) + **五条 `static_assert`** + 测试 26 条。

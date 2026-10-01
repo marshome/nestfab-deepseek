@@ -4556,5 +4556,49 @@ int main() {
         CHECK(kSmallCapacity == 7);
     }
 
+    // --- the move assignment and the slot's first role (RE 0x10f220 and 0x10fbb0) -------------------
+    {
+        CHECK(kMoveAssignment == 0x10F220);
+        CHECK(kMoveAssignmentCallers == 21);
+        CHECK(kMovePointer == 0x08);
+        CHECK(kMoveByte == 0x10);
+        CHECK(kMoveNullsSource);
+        CHECK(kMoveIdentifiedByNullStore);
+        CHECK(kSlotDRole);
+        CHECK(std::string(kSlotDRoleName) == "release");
+        CHECK(kVtableSlotD == 0x08);                     // the slot this role belongs to
+        CHECK(kVtableSlotD == kMovePointer);
+        CHECK(kLazyInit50 == 0x10FBB0);
+        CHECK(kLazyInit50Callers == 23);
+        CHECK(kLazyInitFlag == 0x50);
+        CHECK(kLazyInitField == 0x48);
+        CHECK(kLocalConstruct2 == 0xC3A40);
+        CHECK(kLocalConstruct == 0xC33F0);
+        CHECK(kLocalConstruct2 != kLocalConstruct);      // different addresses, not merged
+        CHECK(kLocalConstruct2 - kLocalConstruct == 0x650);
+        CHECK(kLocalConstructFamily == 2);
+        CHECK(kLazyInitFlag > kLazyInitField);
+
+        // the move the instructions perform, and the order they do it in
+        struct Owner { void* p; unsigned char flag; };
+        const auto moveAssign = [](Owner& dst, Owner& src, int& releases) {
+            if (dst.p != nullptr) ++releases;            // RE 0x10F25A, the virtual release
+            dst.flag = src.flag;                         // RE 0x10F243
+            dst.p = src.p;                               // RE 0x10F25D
+            src.p = nullptr;                             // RE 0x10F246, the null store
+        };
+        Owner a{reinterpret_cast<void*>(1), 3}, b{reinterpret_cast<void*>(2), 9};
+        int releases = 0;
+        moveAssign(a, b, releases);
+        CHECK(releases == 1);                            // the old destination was released
+        CHECK(a.p == reinterpret_cast<void*>(2));        // and took the source's
+        CHECK(b.p == nullptr);                           // while the source is left empty
+        CHECK(a.flag == 9);
+        // the lazy flag: only the first call initialises
+        const auto needsInit = [](unsigned char flag) { return flag == 0; };
+        CHECK(needsInit(0));
+        CHECK(!needsInit(1));
+    }
+
     return check::finish("test_recovered");
 }
