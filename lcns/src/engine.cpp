@@ -12,6 +12,13 @@ LCNS_STRUCTURAL(tu.structure_interface);
 // RE 0x754ED / 0x75EF3: the candidate area is compared against 0.99 * the reference area, and the
 // caller skips when 0.99*reference <= candidate. Expressed as a predicate on the surviving side.
 namespace lcns {
+bool withinSurfaceSlack(double evalC, double maxSurface) {
+    // The assertion text, split at its && so each half is visible.
+    const bool nonNegative = evalC >= 0.0;
+    const bool insideSlackedSurface = evalC <= maxSurface * kEvalSurfaceSlack;
+    return nonNegative && insideSlackedSurface;
+}
+
 bool coversReference(double candidateArea, double referenceArea) {
     return candidateArea >= kAreaCoverageSlack * referenceArea;
 }

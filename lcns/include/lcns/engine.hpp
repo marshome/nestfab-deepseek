@@ -74,6 +74,13 @@ inline constexpr int kModeShearTooling = 2;                 // RE 0x2CE00 is tha
 // surface step, and the pricer exposes a per-part price array.
 inline constexpr double kEvalSurfaceSlack = 1.05;           // RE 0x81C690 assertion text
 
+// RE the assertion repeated at the three ComputeNodeIndex instantiations (0x81C370 / 0x81C690 /
+// 0x81C9B0), quoted verbatim in re/findings_bucket_manager.md:
+//     'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'
+// Both halves belong to the check, so the predicate carries both: a negative evaluation is as
+// invalid as one above the slacked surface. The 1.05 is not a tuning choice, it is in the text.
+bool withinSurfaceSlack(double evalC, double maxSurface);
+
 // RE 0x9B15E0 -- the double 0.99, referenced twice inside 0x73280 (at 0x754ED and 0x75EF3) in
 // the same shape: two pairs of doubles are differenced and multiplied (an AREA), one branch
 // doubles it, the result is scaled by this constant and compared with `ucomisd` against the

@@ -180,6 +180,17 @@ int main() {
         equivalent::zeroTriple(nullptr);   // the port guards; the original does not
     }
 
+    // --- the surface-slack assertion as a predicate (RE 0x81c370 / 0x81c690 / 0x81c9b0) --------
+    {
+        // 'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'
+        CHECK(withinSurfaceSlack(0.0, 100.0));       // exactly zero is valid
+        CHECK(withinSurfaceSlack(105.0, 100.0));     // exactly 1.05x is valid (<=)
+        CHECK(!withinSurfaceSlack(105.0001, 100.0)); // just past the slack fails
+        CHECK(!withinSurfaceSlack(-0.0001, 100.0));  // the first half matters too
+        CHECK(withinSurfaceSlack(100.0, 100.0));
+        CHECK(kEvalSurfaceSlack == 1.05);            // the constant the predicate is built on
+    }
+
     // --- the recovered 0.99 coverage predicate (RE 0x754ed / 0x75ef3) --------------------------
     {
         // exactly 99% of the reference passes (>=, not >)
