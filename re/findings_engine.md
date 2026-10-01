@@ -5318,3 +5318,30 @@ F4A61  dword [rsi+0x20] = 1        ; 结果自己的标签
 另：它调的是 **`0x8774E0`** —— round 248 那个跳板的**兄弟**（差一字节），不得当作同一个地址。
 
 **已落 `layout.hpp`**：`kTagDispatch*`、`kBigIntFamilyMembers3`、`kTagSightings`、`kObjectCtor*`、`kByteQuartet*`、`kInitialCapacity` + **三条 `static_assert`** + 测试 27 条。
+
+### 附 184 **容量阶梯的第二个成员**与**132 个调用者的引用计数初始化**（goal round 264）**[已落码]
+
+**（a）`0xF17C0`（470 B / 17 个调用者）= 阶梯的第二个成员**：
+
+```
+F17E5  cmp r8,8 ; jbe 0xF1940       ; ★ **同一个“≤8”分支**，如今知道它的地址
+F17F2  cmp r8,0x10 ; mov ecx,0x10   ; 与 `0xF3460` 相同的 16 阈值
+F1806  shl rcx,3 ; F180A call 0xFE1F0   ; 分配 `capacity*8` —— **round 249 用过的同一个分配器**
+F180F  dword [rbx+0x20] = 0        ; rounds 249/253/263 的标签
+F1835  call 0x63F2E8               ; 零填充，**与拷贝 `0x63F2F8` 是兄弟**
+F185E  ud2                         ; ★ **不可能情形的故意陷阱**
+```
+
+⇒ **阶梯由两个成员共享**；下层分支位于 `0xF1940`（**仍未转储出来**，只记录**地址**，**不猜它的容量**）。
+
+**（b）`0x8AAB00`（181 B / **132 个调用者**）= 引用计数/注册表初始化**：
+
+```
+8AAB16/8AAB1D  两个全局指针；8AAB2A 拿第一个与第二个相比（哨兵测试）
+8AAB3A/8AAB53  一次性检查对 **`0x63F6C0`/`0x63F6B8`**（round 253 异常路径用过同一对）
+8AAB46/8AAB64  `lock add dword [rax],1` —— **两条路径都原子加一**
+```
+
+⇒ 这是目前读到的**第二高调用者**（仅次于 `0xF3460` 的 162）。
+
+**已落 `layout.hpp`**：`kLadderSecondMember`、`kLadderLowerBranch`、`kWordAllocator`、`kZeroFillHelper`、`kImpossibleCaseTraps`、`kRefcount*` + **三条 `static_assert`** + 测试 24 条。

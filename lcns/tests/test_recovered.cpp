@@ -2517,5 +2517,36 @@ int main() {
         CHECK(kObjectCtorThunk != 0x8774F0);          // and it is a DIFFERENT thunk from round 248's
     }
 
+    // --- the ladder's second member and the refcount initialiser (RE 0xf17c0 and 0x8aab00) ----------
+    {
+        CHECK(kLadderSecondMember == 0xF17C0);
+        CHECK(kLadderLowerBranch == 0xF1940);
+        CHECK(kLadderLowerBranch != kBigIntCapSixteen);   // an address, not the capacity 16
+        CHECK(kWordAllocator == 0xFE1F0);
+        CHECK(kZeroFillHelper == 0x63F2E8);
+        CHECK(kZeroFillHelper != kMemcpyHelper);          // a fill is not the copier
+        CHECK(kImpossibleCaseTraps);
+        CHECK(kLadderSecondCallers == 17);
+        // both members use the same sixteen threshold, and the allocator is round 249's
+        CHECK(kBigIntCapSixteen == 0x10);
+        CHECK(kWordAllocator == kPayloadAlloc);
+        // the allocation is capacity words, eight bytes each
+        CHECK(kBigIntCapSixteen * 8 == 128);
+
+        CHECK(kRefcountInit == 0x8AAB00);
+        CHECK(kRefcountInitHelper == 0x8A81C0);
+        CHECK(kRefcountOnceA == 0x63F6C0);
+        CHECK(kRefcountOnceB == 0x63F6B8);
+        CHECK(kRefcountOnceA != kRefcountOnceB);
+        CHECK(kRefcountClock == 0x65C4C0);
+        CHECK(kRefcountInitCallers == 132);
+        CHECK(kRefcountInitAtomic);
+        // the once-check pair is the one round 253's exception plumbing used
+        CHECK(kRefcountOnceA == 0x63F6C0);
+        // and this is the second most called function read so far
+        CHECK(kRefcountInitCallers < kBigIntAssignCallers);
+        CHECK(kRefcountInitCallers > kAccessorCallers);
+    }
+
     return check::finish("test_recovered");
 }

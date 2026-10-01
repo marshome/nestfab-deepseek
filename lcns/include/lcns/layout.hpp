@@ -1335,6 +1335,36 @@ static_assert(kByteQuartetD - kByteQuartetA == 3, "four adjacent bytes");
 static_assert(kByteQuartetA == kByteTrioA, "the quartet starts where round 260's trio did");
 static_assert(kInitialCapacity == 512, "the initial capacity is 512");
 
+
+// --- the second member of the capacity ladder, 0xF17C0 (round 264) ------------------------------------
+//     0xF17E5 cmp r8,8 ; jbe 0xF1940      ; the SAME lower branch, whose ADDRESS is now known
+//     0xF17F2 cmp r8,0x10 ; mov ecx,0x10  ; the same sixteen threshold as 0xF3460
+//     0xF1806 shl rcx,3 ; 0xF180A call 0xFE1F0   ; capacity*8 bytes from the allocator round 249 also used
+//     0xF180F dword [rbx+0x20] = 0        ; the tag of rounds 249, 253 and 263
+//     0xF1835 call 0x63F2E8               ; a zero fill, the sibling of the memcpy 0x63F2F8
+//     0xF185E ud2                         ; an intentional trap for the impossible allocation
+inline constexpr std::uintptr_t kLadderSecondMember = 0xF17C0;   // RE the whole routine
+inline constexpr std::uintptr_t kLadderLowerBranch = 0xF1940;    // RE 0xF17E5 -- an ADDRESS, not a capacity
+inline constexpr std::uintptr_t kWordAllocator = 0xFE1F0;        // RE 0xF180A, also round 249's payload alloc
+inline constexpr std::uintptr_t kZeroFillHelper = 0x63F2E8;      // RE 0xF1835, sibling of 0x63F2F8
+inline constexpr bool kImpossibleCaseTraps = true;               // RE 0xF185E (`ud2`)
+inline constexpr int kLadderSecondCallers = 17;
+static_assert(kLadderLowerBranch != kBigIntCapSixteen, "the branch is an address, not the sixteen capacity");
+static_assert(kWordAllocator == kPayloadAlloc, "one allocator serves the payload and the words");
+
+// --- the refcount/registry initialiser 0x8AAB00, ONE HUNDRED AND THIRTY-TWO callers (round 264) --------
+//     0x8AAB16/0x8AAB1D  two global pointers; 0x8AAB2A compares one against the other, a sentinel test
+//     0x8AAB3A/0x8AAB53  the once-check pair 0x63F6C0 and 0x63F6B8, which round 253 also used
+//     0x8AAB46/0x8AAB64  `lock add dword [rax],1` on both the ordinary and the sentinel path
+inline constexpr std::uintptr_t kRefcountInit = 0x8AAB00;      // RE the whole routine
+inline constexpr std::uintptr_t kRefcountInitHelper = 0x8A81C0; // RE 0x8AAB11
+inline constexpr std::uintptr_t kRefcountOnceA = 0x63F6C0;     // RE 0x8AAB3A, shared with round 253
+inline constexpr std::uintptr_t kRefcountOnceB = 0x63F6B8;     // RE 0x8AAB53
+inline constexpr std::uintptr_t kRefcountClock = 0x65C4C0;     // RE 0x8AAB2F
+inline constexpr int kRefcountInitCallers = 132;
+inline constexpr bool kRefcountInitAtomic = true;              // RE the two lock add forms
+static_assert(kRefcountOnceA != kRefcountOnceB, "the once check uses two distinct helpers");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
