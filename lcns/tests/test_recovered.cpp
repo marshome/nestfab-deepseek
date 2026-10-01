@@ -167,6 +167,15 @@ int main() {
         CHECK(composite == 4);
     }
 
+    // --- the recovered log prefixes are wired into the classes that print them ------------------
+    {
+        CHECK(std::strcmp(FlipNester().tracePrefix(), kTraceFlip) == 0);        // RE 0x4b870
+        CHECK(std::strcmp(FilterNester().tracePrefix(), kTraceFilter) == 0);    // RE 0xb3ae0
+        CHECK(std::strcmp(NoFillNester().tracePrefix(), kTraceNoFill) == 0);    // RE 0x7f240
+        CHECK(std::strcmp(NestingNester().tracePrefix(), "") == 0);             // never observed
+        CHECK(std::strcmp(TilingNester().tracePrefix(), "") == 0);              // never observed
+    }
+
     // --- the recovered defect reduction (RE 0x4bc9e0, ..\\verify\\equivalent.cpp) --------------
     {
         CHECK(equivalent::kDefectWeight == 0.5);
