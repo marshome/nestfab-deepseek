@@ -263,4 +263,27 @@ inline constexpr std::size_t kTreeLookupOutFlag = 0x08;   // RE 0x924F04
 inline constexpr std::size_t kPushBackElementBytes = 0x10;   // RE 0x8C370D
 // cross-checked at run time in tests/test_recovered.cpp, which sees compare.hpp as well
 
+
+// --- the default state of the 48-byte record (round 214) --------------------------------------------
+// RE 0x5CE310, which writes six consecutive doubles:
+//     5CE327 [rcx+0x00] = -1.0    5CE32B [rcx+0x08] = -1.0    5CE330 [rcx+0x10] = 0.0
+//     5CE335 [rcx+0x18] = -1.0    5CE33A [rcx+0x20] = 0.0     5CE33F [rcx+0x28] = 0.0
+// Six doubles is 48 bytes, the indexed record stride measured in round 159, so this is that record's default
+// state: -1 where an index or flag belongs, 0 where a value does.
+inline constexpr int kRecord48Doubles = 6;
+inline constexpr double kRecord48Defaults[kRecord48Doubles] = {-1.0, -1.0, 0.0, -1.0, 0.0, 0.0};
+
+// --- the translate-and-invalidate of 0x136C50 (round 214) -------------------------------------------
+// RE 0x136C60/0x136C65/0x136C69/0x136C6D: each 16-byte element's second double gets xmm1 added.
+inline constexpr std::size_t kTranslateFieldOffset = 0x08;   // RE 0x136C60
+inline constexpr std::size_t kTranslateStride = 0x10;        // RE 0x136C65
+// RE 0x136C77/0x136C7F: -1.0 written at +0x50 after the walk, i.e. the result marked invalid.
+inline constexpr std::size_t kTranslateInvalidate = 0x50;
+inline constexpr double kTranslateInvalidValue = -1.0;
+
+// --- the ninety degree literal of 0x5C3D30 (round 214) -----------------------------------------------
+// RE 0x5C3D35: movsd xmm2,[90.0] at rva 0x9DE7C0, passed to 0x5C3820. The literal is landed; the callee's meaning
+// is not claimed here.
+inline constexpr double kDefaultAngleDegrees = 90.0;
+
 }  // namespace lcns

@@ -1308,5 +1308,30 @@ int main() {
         CHECK(kPushBackElementBytes == kBoxCornerBytes);
     }
 
+    // --- the 48-byte record's defaults (RE 0x5ce310) and the translate helper (RE 0x136c50) -----------
+    {
+        CHECK(kRecord48Doubles == 6);
+        CHECK(kRecord48Doubles * static_cast<int>(sizeof(double)) == static_cast<int>(kIndexedRecordStride));
+        CHECK(kRecord48Defaults[0] == -1.0);
+        CHECK(kRecord48Defaults[1] == -1.0);
+        CHECK(kRecord48Defaults[2] == 0.0);
+        CHECK(kRecord48Defaults[3] == -1.0);
+        CHECK(kRecord48Defaults[4] == 0.0);
+        CHECK(kRecord48Defaults[5] == 0.0);
+        // the pattern is: -1 at the even slots, 0 at the third and the last two
+        CHECK(kRecord48Defaults[1] == kRecord48Defaults[0]);
+        CHECK(kRecord48Defaults[3] == kRecord48Defaults[0]);
+        CHECK(kRecord48Defaults[2] == kRecord48Defaults[4]);
+        CHECK(kRecord48Defaults[4] == kRecord48Defaults[5]);
+
+        CHECK(kTranslateFieldOffset == 0x08);
+        CHECK(kTranslateStride == 0x10);
+        CHECK(kTranslateStride == kPoint2dSize);          // one point per step
+        CHECK(kTranslateInvalidate == 0x50);
+        CHECK(kTranslateInvalidValue == -1.0);
+        CHECK(kTranslateInvalidValue == kInvalidDoubleSentinel);   // the same sentinel as rounds 178/180
+        CHECK(kDefaultAngleDegrees == 90.0);
+    }
+
     return check::finish("test_recovered");
 }
