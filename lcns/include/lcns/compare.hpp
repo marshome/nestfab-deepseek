@@ -190,4 +190,20 @@ inline double polygonArea(const Point2dLike* points, std::size_t count) {
     return kAreaHalf * sum;                     // RE 0x70C8EE
 }
 
+
+// --- the equal-or-sign test 0x5E78D0 applies three times (round 192) ------------------------------
+//     5E79A7 call 0x5E6060                     ; almostEqual
+//     5E79B7 ucomisd xmm6,xmm7 ; seta r14b ; lea r14d,[r14+r14-1]     ; equal -> 0, else +/-1
+// and the same pair of instructions is repeated at 5E79F2, 5E7A26 and 5E7A57, with the results compared at
+// 5E7A62. So the predicate's atom is "almost equal, otherwise sign", applied to a pair of coordinates.
+inline int signCompare(double a, double b) {
+    if (almostEqual(a, b)) {          // RE 0x5E79A7/0x5E79AC
+        return 0;
+    }
+    return signOf(a - b);             // RE 0x5E79B7/0x5E79E2: seta then the {-1,+1} mapping
+}
+
+// RE the body applies that atom three times before combining the results (0x5E7A62).
+inline constexpr int kPredicateSignCount = 3;
+
 }  // namespace lcns

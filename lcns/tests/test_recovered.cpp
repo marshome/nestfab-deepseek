@@ -1081,5 +1081,22 @@ int main() {
         CHECK(kGetterFieldOffset != kCounterOffset);         // but not the thread state field at 0x4C
     }
 
+    // --- the equal-or-sign atom of 0x5e78d0 (RE 0x5e79a7 + 0x5e79b7/0x5e79e2) ----------------------
+    {
+        CHECK(kPredicateSignCount == 3);
+        CHECK(signCompare(1.0, 1.0) == 0);                 // almost equal gives zero
+        CHECK(signCompare(1.0, 0.0) == 1);
+        CHECK(signCompare(0.0, 1.0) == -1);
+        // the atom's zero branch uses almostEqual, not exact equality
+        CHECK(signCompare(1.0, 1.0 + 0.5 * std::numeric_limits<double>::epsilon()) == 0);
+        // and it composes with the orientation comparator's own vocabulary
+        const Point2dLike o{0.0, 0.0};
+        const Point2dLike x{1.0, 0.0};
+        const Point2dLike up{0.0, 1.0};
+        const Point2dLike down{0.0, -1.0};
+        CHECK(signCompare(crossProduct2d(o, x, up), crossProduct2d(o, x, down)) == 1);
+        CHECK(signCompare(crossProduct2d(o, x, up), crossProduct2d(o, x, up)) == 0);
+    }
+
     return check::finish("test_recovered");
 }

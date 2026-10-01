@@ -3724,3 +3724,23 @@ round 179 把它命名为“一个 48 字节记录”只是**同一阈值的另�
 
 **字段事实**：`+0x18` 有一个 **81 个调用者**的专用 getter ⇒ 是一个广泛使用的成员。
 与早前轮次的巧合（round 177 的四字段对象、round 178 的树节点右孩）**已在代码注释中标明是不同对象**，本轮只证实“这个 getter 返回 `this+0x18`”。
+
+### 附 112 `0x5E78D0` 体内 = **符号语义的组合**；已读通（goal round 192）**[已落码]
+
+（本轮应用 round 191 的规则：**把恒等访问器调用当空操作**，体内骨架随即清晰。）
+
+```
+5E7983  call 0x74B700            ; ★ round 174 的方向比较器
+5E7988  test eax,eax ; jne 0x5E793F
+5E79A7  call 0x5E6060            ; ★ round 185 的 almostEqual
+5E79B7  ucomisd xmm6,xmm7 ; seta r14b ; lea r14d,[r14+r14-1]   ; {0,1} → {−1,+1}
+5E79F2/5E79FB … r15d；5E7A26/5E7A2E … ebx；5E7A57/5E7A5E … edx      ; 共三次
+5E7A62  cmp ebx,r14d ; jne ; 5E7A67 cmp edx,r15d ; je 0x5E793F    ; 组合符号
+5E7A87  sub rbx,[rax] ; 5E7A96 sar rbx,4 ; 5E7A9A sub ebx,2      ; 点数 − 2
+```
+
+⇒ 它是**点序列的方向/序比较谓词**，而它的**原子**正是“**近似相等否则取符号**”，应用三次后组合。
+
+**已落 `compare.hpp`**：`signCompare`（= `almostEqual` 分支 + `signOf`）、`kPredicateSignCount = 3` + 测试 7 条，其中一条**与 `crossProduct2d` 组合**验证该原子能直接用于方向量。
+
+⇒ 至此，**rounds 174–192 读出的几何核心已互相调用**：叉积 → 尺度 → 符号比较器 → `almostEqual` → `signCompare` → 搜索树/累加器 → `polygonArea`。
