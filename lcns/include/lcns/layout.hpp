@@ -1887,6 +1887,38 @@ static_assert(kStatusOutOffset == 0x2E, "the out buffer is a sixteen-bit word");
 static_assert(kFinaliseFlagA == 0x28 && kFinaliseFlagB == 0x29 && kFinalisePointer == 0x30,
               "round 280's offsets for the same object");
 
+
+// --- the third status reader, which is also the destructor, 0x10F810 (round 286) -----------------------
+//     0x10F81C cmp byte [rcx+0x28],0 ; je        ; the family's flag
+//     0x10F836 call 0x9984B0                     ; SET: the object is deallocated here
+//     0x10F846 byte [rcx+0x28] = 1 ; 0x10F842 cmp byte [rcx+0x29],0
+//     0x10F84C/0x10F853  the +0x30 pointer and the BER formatter
+//     0x10F860/0x10F869/0x10F86F  +0x20, rsp+0x2E, r8d = 1 and the call to the BER reader
+inline constexpr std::uintptr_t kStatusReaderC = 0x10F810;   // RE the whole routine
+inline constexpr int kStatusReaderCbytes = 153;              // RE the function size
+inline constexpr int kStatusReaderFamily2 = 3;               // 0x10F770, 0x111A50 and this
+inline constexpr bool kFinalisedFlagFrees = true;            // RE 0x10F81C/0x10F836
+inline constexpr bool kReaderIsDestructor = true;            // RE the two vtables at 0x10F820/0x10F82D
+inline constexpr int kStatusReaderCDirectCallers = 0;        // reached through a vtable
+static_assert(kStatusReaderFamily2 == 3, "three members share the four offsets");
+static_assert(kFinalisedFlagFrees, "a set flag means the object is freed");
+
+// --- the bit-to-byte conversion 0xF7B90 (round 286) -----------------------------------------------------
+//     0xF7BAA call 0x11A780 with the out word at rsp+0x2E
+//     0xF7BEC movzx r8d,word [rsp+0x2E] ; 0xF7BF2 add r8,7 ; 0xF7BF6 shr r8,3
+//     `(v + 7) >> 3` is ceil(v / 8): the bits of the BER value expressed in bytes.
+inline constexpr std::uintptr_t kBerByteCount = 0xF7B90;     // RE the whole routine
+inline constexpr int kBitToByteAddend = 7;                   // RE 0xF7BF2
+inline constexpr int kBitToByteShift = 3;                    // RE 0xF7BF6
+inline constexpr std::uintptr_t kBitToByteCtor = 0x7B0160;   // RE 0xF7BC5
+inline constexpr std::size_t kBitToByteAlloc = 0x30;         // RE 0xF7BB5
+inline constexpr std::size_t kVtableSlotF = 0x90;            // RE 0xF7BE6 -- a NINTH slot
+inline constexpr int kVtableSlotsKnown4 = 9;                 // with 0x90 added to the eight of round 284
+inline constexpr std::uintptr_t kThrowSite = 0x999030;       // RE 0xF7BDB, the shared throw helper
+static_assert((1 << kBitToByteShift) == 8, "the shift is the byte size");
+static_assert(kVtableSlotsKnown4 == kVtableSlotsKnown3 + 1, "one more slot than round 284");
+static_assert(kBitToByteAddend == 7, "ceil is add-seven");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

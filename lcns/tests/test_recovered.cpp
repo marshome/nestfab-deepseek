@@ -3182,5 +3182,51 @@ int main() {
         CHECK(none == 0);                                // nothing to report
     }
 
+    // --- the destructor-reader and the bit-to-byte conversion (RE 0x10f810 and 0xf7b90) -------------
+    {
+        CHECK(kStatusReaderC == 0x10F810);
+        CHECK(kStatusReaderCbytes == 153);
+        CHECK(kStatusReaderFamily2 == 3);
+        CHECK(kStatusReaderFamily == 2);                // round 285 counted two; the third joins here
+        CHECK(kFinalisedFlagFrees);
+        CHECK(kReaderIsDestructor);
+        CHECK(kStatusReaderCDirectCallers == 0);        // reached through a vtable, as a destructor is
+        CHECK(kFinaliseFlagA == 0x28 && kFinaliseFlagB == 0x29 && kFinalisePointer == 0x30);
+        CHECK(kStatusReaderC != kStatusReaderB);
+        CHECK(kStatusReaderC != kFinaliseWithRetry);
+
+        CHECK(kBerByteCount == 0xF7B90);
+        CHECK(kBitToByteAddend == 7);
+        CHECK(kBitToByteShift == 3);
+        CHECK((1 << kBitToByteShift) == 8);
+        CHECK(kBitToByteCtor == 0x7B0160);
+        CHECK(kBitToByteAlloc == 0x30);
+        CHECK(kBitToByteAlloc == kGetOrCreateBytes);
+        CHECK(kVtableSlotF == 0x90);
+        CHECK(kVtableSlotsKnown4 == 9);
+        CHECK(kVtableSlotsKnown4 == kVtableSlotsKnown3 + 1);
+        CHECK(kThrowSite == 0x999030);
+
+        // the conversion the instructions perform
+        const auto bitsToBytes = [](std::uint32_t bits) {
+            return (bits + kBitToByteAddend) >> kBitToByteShift;
+        };
+        CHECK(bitsToBytes(0) == 0);
+        CHECK(bitsToBytes(1) == 1);
+        CHECK(bitsToBytes(8) == 1);
+        CHECK(bitsToBytes(9) == 2);
+        CHECK(bitsToBytes(16) == 2);
+        CHECK(bitsToBytes(17) == 3);
+        CHECK(bitsToBytes(0x100) == 32);
+        // it is a CEILING, not a truncation
+        CHECK(bitsToBytes(7) == 1);
+        CHECK(bitsToBytes(7) != 7 / 8);
+
+        // the lifecycle rule: a set flag frees, a clear one reads the status
+        const auto actsAs = [](bool finalised) { return finalised ? "free" : "read"; };
+        CHECK(std::string(actsAs(true)) == "free");
+        CHECK(std::string(actsAs(false)) == "read");
+    }
+
     return check::finish("test_recovered");
 }

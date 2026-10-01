@@ -5686,3 +5686,27 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ⇒ 携带 `+0x20`、`+0x28`、`+0x29`、`+0x30` 的对象**至少有两个同形的状态读取方法**，且两者**都调 BER 长度读取器、都通过构造 `'BER decode error'` 的格式化器报告** ⇒ **BER 读数是该对象的性质，而不是某一个例程的性质**。
 
 **已落 `layout.hpp`**：`kStatusReaderB`(0x111A50)、`kStatusReaderBbytes`(74)、`kStatusReaderFamily`(2)、`kStatusOutOffset`(0x2E)、`kStatusExpected2`、`kBerReaderCaller`、`kBerReaderCallers`(9)、`kStatusReadersAmongCallers`(2) + **四条 `static_assert`** + 测试 18 条。
+
+### 附 204 **第三个状态读取器兼析构器**，与**位→字节取整**（goal round 286）**[已落码]**
+
+**（a）`0x10F810`（153 B，**无直接调用者**（经虚表到达，正如析构器应该）**）：先装两个虚表，然后
+
+```
+10F81C  cmp byte [rcx+0x28],0 ; je 0x10F842   ; 族的标志
+10F836  call 0x9984B0                          ; ★ **已置位 ⇒ 释放对象**（析构路径）
+10F846/10F842  置位 `+0x28`、检查 `+0x29`
+10F84C/10F853  `+0x30` 指针与 BER 格式化器
+10F860/10F869/10F86F  `+0x20`、`rsp+0x2E`、`r8d = 1`，调 BER 读取器
+```
+
+⇒ **同一组偏移同时支撑析构与状态读取**：`+0x28` 已置位则释放，未置位则读 BER 状态完成收尾 ⇒ 这是**对象生命周期规则**，不只是布局；族成员升至 **3**。
+
+**（b）`0xF7B90`（153 B，同样无直接调用者）= 位→字节**：
+
+```
+F7BEC  movzx r8d,word [rsp+0x2E] ; F7BF2 add r8,7 ; F7BF6 shr r8,3
+```
+
+⇒ `(v + 7) >> 3` 即 **ceil(v/8)** —— **将 BER 值的位数换算成字节数**。失败路径以 `0x9988C0` 分配 `0x30`、经 **`0x999030`**（第四次目击）抛出；并调虚表槽 **`+0x90`** ⇒ **第九个槽**。
+
+**已落 `layout.hpp`**：`kStatusReaderC*`、`kFinalisedFlagFrees`、`kReaderIsDestructor`、`kStatusReaderFamily2`(3)、`kBerByteCount`、`kBitToByteAddend/Shift`、`kBitToByteCtor/Alloc`、`kVtableSlotF`(0x90)、`kVtableSlotsKnown4`(9)、`kThrowSite` + **三条 `static_assert`** + 测试 30 条（含位→字节的八个手算取值）。
