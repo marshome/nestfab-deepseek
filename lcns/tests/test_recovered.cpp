@@ -310,6 +310,28 @@ int main() {
         CHECK(coversReference(0.0, 0.0));
     }
 
+    // --- the corner kernel assembled from its three proven pieces (RE 0x5ed45d..0x5ed58f) -------
+    {
+        const double prev[2] = {0.0, 0.0};
+        const double corner[2] = {1.0, 0.0};
+        const double next[2] = {1.0, 1.0};
+        const geom::CornerEdges e = geom::cornerEdges(prev, corner, next);
+        CHECK(std::fabs(e.incoming.x - 1.0) < 1e-12);
+        CHECK(std::fabs(e.incoming.y) < 1e-12);
+        // DIRECTION CONVENTION, straight from the disassembly: each edge is `corner - neighbour`
+        // (5ED45D subsd xmm11,[rsi] and 5ED58A subsd xmm13,xmm3 with [rbx] the corner), so with
+        // next = (1,1) the outgoing edge is (0,-1) -- my first expectation had the sign wrong and
+        // this assertion is what caught it.
+        CHECK(std::fabs(e.outgoing.x) < 1e-12);
+        CHECK(std::fabs(e.outgoing.y + 1.0) < 1e-12);
+        // both edges are unit vectors, which is what normaliseEdge2d guarantees
+        CHECK(std::fabs(geom::lengthSquared2d(e.incoming) - 1.0) < 1e-12);
+        CHECK(std::fabs(geom::lengthSquared2d(e.outgoing) - 1.0) < 1e-12);
+        // a degenerate corner (coincident points) must not divide by zero
+        const geom::CornerEdges d = geom::cornerEdges(corner, corner, next);
+        CHECK(d.incoming.x == 0.0 && d.incoming.y == 0.0);
+    }
+
     // --- the recovered log prefixes are wired into the classes that print them ------------------
     {
         CHECK(std::strcmp(FlipNester().tracePrefix(), kTraceFlip) == 0);        // RE 0x4b870

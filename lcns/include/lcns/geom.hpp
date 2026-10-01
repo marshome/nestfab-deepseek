@@ -459,6 +459,27 @@ inline Vec2d normaliseEdge2d(const Vec2d& v) {
     return Vec2d{v.x * f, v.y * f};           // RE 0x5ED7E0 / 0x5ED7E5
 }
 
+// RE the three points of a corner, resolved in round 59 from the data-flow trace:
+//     5ED45D  subsd xmm11, [rsi]      ; [rbx]     - [rsi]        -> one edge
+//     5ED462  subsd xmm6,  [rsi + 8]  ; [rbx + 8] - [rsi + 8]
+//     5ED58A  subsd xmm13, xmm3       ; [rbx]     - xmm3         -> the other edge
+//     5ED58F  subsd xmm6,  xmm2       ; [rbx + 8] - xmm2
+// [rbx] is the corner itself, [rsi] is one neighbour and (xmm2, xmm3) is the other, so the routine
+// holds the two ADJACENT EDGES of a corner -- which is why it also normalises angles and wraps by
+// +-2pi (round 55) and why the corner offset 1 - 1/sqrt(2) shows up (round 49).
+struct CornerEdges {
+    Vec2d incoming;   // corner - previous, unit length
+    Vec2d outgoing;   // corner - next, unit length
+};
+
+// NOT RECOVERED: how the corner is then distributed between those edges. The proportional split at
+// 0x5ED7DB..0x5ED807 has its inputs' meaning unread (findings_border_property.md rounds 56/58), so
+// only the two unit edges are reproduced -- the part the instructions state plainly.
+inline CornerEdges cornerEdges(const double* previous, const double* corner, const double* next) {
+    return CornerEdges{normaliseEdge2d(subtractPoints2d(corner, previous)),
+                       normaliseEdge2d(subtractPoints2d(corner, next))};
+}
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 
