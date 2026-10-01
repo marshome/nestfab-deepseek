@@ -379,6 +379,17 @@ inline constexpr const char* kAssertSetActiveNestingFirst =
 // RE the assert's own condition: the pointer must be non-null before the parts are available.
 inline bool activeNestingReady(const void* mBase) { return mBase != nullptr; }
 
+// RE 0x1CC0 and 0x5D90 (427 bytes each, two callers each). Neither carries any other text; each carries
+// a comment the binary stores verbatim, and that comment states what the function waits for:
+//     0x1CC0  '// LocalCancel waiting for threads termination'
+//     0x5D90  '// LocalTerminate waiting for threads termination'
+// So the pair is the local shutdown path: one for cancellation, one for termination, both waiting until
+// the worker threads have stopped. The comments are kept verbatim because they are the evidence; the
+// waiting mechanism itself was not read far enough to be reimplemented.
+inline constexpr const char* kCommentLocalCancel = "// LocalCancel waiting for threads termination";
+inline constexpr const char* kCommentLocalTerminate = "// LocalTerminate waiting for threads termination";
+
+
 
 
 class RectangleNester : public Nester {        // RE 0xA3B800, Run = 0x75FB0

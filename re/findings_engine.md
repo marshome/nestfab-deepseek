@@ -2365,3 +2365,15 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 * 自带文本：`GetOd`、`_GetOd@4`
 * 浮点常量：无
 * 调用序（前 10）：`0x12a990` `0x12a710` `0x7c30c0` `0x9984b0` `0x910af0` `0x9984b0` `0x62f280`
+
+### 附 46 线程生命周期对：`0x1CC0` / `0x5D90`（goal round 120）**[全读]**
+
+#### `0x1cc0`（427 B / 116 条，LocalCancel）
+
+* 自带文本：`// LocalCancel waiting for threads termination`
+* 调用者 2、被调用者 9：`0x62f280` `0x63f6b8` `0x63f6c0` `0x64aea0` `0x8761b0` `0x8ab100` `0x97abf0` `0x990e80` `0x9984b0`
+
+#### `0x5d90`（427 B / 117 条，LocalTerminate）
+
+* 自带文本：`// LocalTerminate waiting for threads termination`
+* 调用者 2、被调用者 10：`0x53c0` `0x62f280` `0x63f6b8` `0x63f6c0` `0x64aea0` `0x8761b0` `0x8ab100` `0x97abf0` `0x990e80` `0x9984b0`

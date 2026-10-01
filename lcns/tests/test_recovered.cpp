@@ -406,6 +406,14 @@ int main() {
         CHECK(activeNestingReady(&dummy));
     }
 
+    // --- the local shutdown pair and the comments the binary stores (RE 0x1cc0 / 0x5d90) ---------
+    {
+        CHECK(std::strstr(kCommentLocalCancel, "LocalCancel waiting for threads termination") != nullptr);
+        CHECK(std::strstr(kCommentLocalTerminate, "LocalTerminate waiting for threads termination") != nullptr);
+        // the two are a pair: cancel and terminate, both waiting for the workers to stop
+        CHECK(std::strcmp(kCommentLocalCancel, kCommentLocalTerminate) != 0);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
