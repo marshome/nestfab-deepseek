@@ -2543,6 +2543,28 @@ static_assert(kOidShift == kAccumulatorShift, "the shift is the same eight");
 static_assert(kOidOverflowShift == kAccumulatorTopShift, "the overflow test is the same 0x38");
 static_assert(kAssemblerSites == 2 && kAssemblerShapeShared, "two sites, one shape");
 
+
+// --- the parser's four error entries, its minimum of two elements, and a compare helper (round 311) ------
+//     0x11212E/0x112133/0x112138/0x11213D  call 0x77F2D0, five bytes apart: the whole error surface
+//     0x1120DE/0x1120E3/0x1120E6  edx = 2, rdx = 2 - count, call 0x90D560 -- grow to at least two
+//     0x112102 call 0x63F300, eight bytes past the copy helper of round 251
+inline constexpr int kParserErrorSites = 4;                  // RE the four adjacent calls
+inline constexpr std::size_t kErrorSiteStride = 5;           // RE 0x112133 - 0x11212E
+inline constexpr std::uintptr_t kParserErrorFirst = 0x11212E;  // RE the first of them
+inline constexpr std::uintptr_t kParserErrorLast = 0x11213D;   // RE the last
+inline constexpr std::size_t kParserMinElements = 2;         // RE 0x1120DE
+inline constexpr std::uintptr_t kParserGrow = 0x90D560;      // RE 0x1120E6
+inline constexpr bool kGrowArgumentIsDifference = true;      // RE 0x1120E3 (2 - count)
+inline constexpr std::uintptr_t kCompareHelper = 0x63F300;   // RE 0x112102
+inline constexpr std::size_t kCompareHelperDelta = 8;        // RE 0x63F300 - 0x63F2F8
+inline constexpr int kHelperClusterMembers = 5;              // 0x63F238, 0x63F258, 0x63F2E8, 0x63F2F8, 0x63F300
+inline constexpr std::uintptr_t kReadNullBranch = 0x112138;  // RE the null branch of round 309
+static_assert(kParserErrorSites == 4, "four error entries");
+static_assert(kErrorSiteStride == 5, "and they are five bytes apart");
+static_assert(kParserErrorLast - kParserErrorFirst == 3 * kErrorSiteStride, "the four are consecutive");
+static_assert(kCompareHelper == kMemcpyHelper + kCompareHelperDelta, "the compare helper follows the copy helper");
+static_assert(kHelperClusterMembers == 5, "five members of the cluster are now known");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

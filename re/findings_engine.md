@@ -6178,3 +6178,26 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 对每一个常量而言，这是**第二个独立站点** —— 正是本工作一直使用的确认方式：**掩码、移位、溢出测试三者都重现了**，而不是只断言一次。
 
 **已落 `layout.hpp`**：`kOidMask`(0x7F)、`kOidShift`(8)、`kOidOverflowShift`(0x38)、`kOidDoneBranch`(0x11212E)、`kOidOverflowBranch`(0x11213D)、`kAssemblerSites`(2)、`kAssemblerShapeShared`、`kAccumulatorRegisters`(2) + **四条 `static_assert`**（三条即为三个等式）+ 测试 22 条。
+
+### 附 229 **四处错误入口、最少两个元素、一个比较助手**（goal round 311）**[已落码]**
+
+**（a）解析器的全部错误面**：末尾四个相邻的调用（**每条 5 字节**）全部进入格式化器：
+
+```
+0x11212E、0x112133、0x112138、0x11213D   call 0x77F2D0
+```
+
+⇒ 与 rounds 280/299 一致，且这是**解析器的整个错误面**，而不是其中一条路径。
+
+**（b）增长分支**：
+
+```
+1120D9  lea rcx,[rsp+0x30] ; 1120DE edx = **2** ; 1120E3 sub rdx,rax ; 1120E6 call **0x90D560**
+1120EB  rbx = [rsp+0x30]  ; 1120F0 jmp 回主循环
+```
+
+参数是 **2 减去元素数** ⇒ 该调用**把容器至少拉到两个元素** —— 这**正好解释了 round 309 的 `cmp rax,1 ; jbe 0x1120D9`**：一个元素或更少时长到两个。
+
+**（c）`0x112102` 以 `rdx = rbx` 调 `0x63F300`**（比拷贝助手 `0x63F2F8` **后移 8 字节**）⇒ **助手簇已知五名成员**：`0x63F238`、`0x63F258`、`0x63F2E8`、`0x63F2F8`、**`0x63F300`**。
+
+**已落 `layout.hpp`**：`kParserErrorSites`(4)、`kErrorSiteStride`(5)、`kParserErrorFirst/Last`、`kParserMinElements`(2)、`kParserGrow`(0x90D560)、`kGrowArgumentIsDifference`、`kCompareHelper`(0x63F300)、`kCompareHelperDelta`(8)、`kHelperClusterMembers`(5)、`kReadNullBranch` + **五条 `static_assert`** + 测试 22 条。

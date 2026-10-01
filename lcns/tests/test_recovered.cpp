@@ -4097,5 +4097,35 @@ int main() {
         CHECK((assemble(seven, 7) >> kOidOverflowShift) == 0);
     }
 
+    // --- the parser's error surface and its minimum of two (RE 0x111e90) ---------------------------
+    {
+        CHECK(kParserErrorSites == 4);
+        CHECK(kErrorSiteStride == 5);
+        CHECK(kParserErrorFirst == 0x11212E);
+        CHECK(kParserErrorLast == 0x11213D);
+        CHECK(kParserErrorLast - kParserErrorFirst == 3 * kErrorSiteStride);
+        CHECK(kParserMinElements == 2);
+        CHECK(kParserGrow == 0x90D560);
+        CHECK(kGrowArgumentIsDifference);
+        CHECK(kCompareHelper == 0x63F300);
+        CHECK(kCompareHelperDelta == 8);
+        CHECK(kCompareHelper == kMemcpyHelper + kCompareHelperDelta);
+        CHECK(kHelperClusterMembers == 5);
+        CHECK(kParserErrorFirst == kOidDoneBranch);      // the done branch is the first error entry
+        CHECK(kReadNullBranch == 0x112138);
+        CHECK(kBerErrorFormatter == 0x77F2D0);
+        CHECK(kDriverReportsVia == kBerErrorFormatter);
+
+        // the argument the growth call receives, for the two cases round 309 singled out
+        const auto growBy = [](std::size_t count) { return kParserMinElements - count; };
+        CHECK(growBy(0) == 2);
+        CHECK(growBy(1) == 1);
+        CHECK(growBy(2) == 0);
+        CHECK(kParserElementShift == 2 && kParserElementBytes == 4);
+        // and the four entries are consecutive instructions, each five bytes long
+        CHECK(2 * kErrorSiteStride == 10);
+        CHECK(kParserErrorSites * kErrorSiteStride == 20);   // the error surface occupies twenty bytes
+    }
+
     return check::finish("test_recovered");
 }
