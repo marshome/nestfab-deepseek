@@ -1603,3 +1603,10 @@
 | `0x3b5f0` | 367 | `sheet`、`GetTypicalLength` |
 | `0x7d4050` | 356 | `index >= 0 && index < m_parts.size()`、`IsCluster` |
 | `0x7d3d10` | 318 | `nesting_part_index < m_parts.size()`、`GetNestingPart` |
+
+# 逐 TU 档案：按“断言路径字符串”归属的**未引用**函数（goal round 161）
+
+**方法**：函数自带 `..\<dir>\<file>.cpp` 断言路径 ⇒ 归属该 TU（**身份级证据**）；本文件只列**当前仍未被引用**的函数，**每行带它自己的文本**。
+
+
+**合计**：**0** 个未引用函数 / **0** 字节 ⇒ 归属到 0 个 TU。
