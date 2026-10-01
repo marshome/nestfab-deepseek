@@ -5553,3 +5553,16 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 另：`0x63F718`、`0x63F3B0` 两个目标**落在 round 274 发现的导入桩块内** ⇒ 互相印证。
 
 **已落 `layout.hpp`**：`kDeallocTarget`、`kDeallocCallers`(5721)、`kDeallocAliasCount`(34)、`kDeallocEntryPoints2`、`kTinyAliasCount`(39)、`kTinyAliasTargets`(6)、`kAliasTarget*` + **三条 `static_assert`** + 测试 22 条；`re/covlib.py` 新增动态数量的工具链条目。
+
+### 附 196 **两个结构性微函数类**（一次扫描，goal round 278）**[已落码]**
+
+| 类 | 定义 | 数量 | 处置 |
+|---|---|---:|---|
+| **A：字段 getter** | 体内只有一次 `mov rax,[rcx+disp]` 然后 `ret` | **12** | **只落形状与偏移直方图，不写地址** |
+| **B：默认方法桩** | 体内只有 `xor eax,eax ; ret` | **0** | **登记为工具链证据** |
+
+★ **A 类地址故意不写入源码**：引用它们会**在没有任何阅读的情况下抬高代理指标的分子** —— 正是本工作拒绝的捷径；只落**形状与偏移直方图**（共 **9** 个不同偏移）。
+
+★ **B 类已登记为工具链**：该编码正是 round 223 在 `0x7C2460`/`0x7C2470` 认定的**编译器默认方法桩**（`31 C0 C3` + nop）。
+
+**已落 `layout.hpp`**：`kAccessorClassCount`(12)、`kAccessorClassTopOffsets`(9)、`kDefaultStubClassCount`(0)、`kAccessorAddressesUnlanded` + **两条 `static_assert`** + 测试 8 条。

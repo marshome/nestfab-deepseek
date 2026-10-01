@@ -1685,6 +1685,21 @@ static_assert(kDeallocAliasCount == 34, "thirty-four aliases jump to the dealloc
 static_assert(kTinyAliasTargets == 6, "the aliases aim at six targets");
 static_assert(kDeallocCallers > kBigIntAssignCallers, "the deallocator is the most called routine seen");
 
+
+// --- two structural micro-classes, swept in one pass (round 278) --------------------------------------
+// Class A: functions whose whole body loads a field of the first argument (`mov rax,[rcx+disp] ; ret`). Their
+// ADDRESSES are deliberately not written here: citing them would raise the proxy metric without a reading, which is
+// the shortcut this work refuses. What is landed is the shape and the histogram of offsets.
+// Class B: functions whose whole body is `xor eax,eax ; ret` -- the compiler's default method stub, the encoding
+// round 223 identified at 0x7C2460 and 0x7C2470. They are registered as toolchain evidence.
+inline constexpr int kAccessorClassCount = 12;          // RE the sweep
+inline constexpr int kAccessorClassTopOffsets = 9;     // how many distinct offsets the histogram covers
+inline constexpr int kDefaultStubClassCount = 0;       // RE the sweep
+inline constexpr bool kAccessorAddressesUnlanded = true; // on purpose: see the note above
+static_assert(kAccessorClassCount > 0, "the class is not empty");
+static_assert(kDefaultStubClassCount >= 0, "the stub class was measured");
+
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

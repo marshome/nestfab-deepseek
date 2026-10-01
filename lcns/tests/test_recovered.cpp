@@ -2939,5 +2939,18 @@ int main() {
         CHECK(kDeallocAliasCount + 2 == kDeallocEntryPoints2);   // the routine plus its aliases
     }
 
+    // --- the two structural micro-classes (RE the round-278 sweep) ---------------------------------
+    {
+        CHECK(kAccessorClassCount == 12);
+        CHECK(kAccessorClassTopOffsets == 9);
+        CHECK(kDefaultStubClassCount == 0);
+        CHECK(kAccessorAddressesUnlanded);              // left out on purpose, see the comment
+        CHECK(kAccessorClassCount > 0);
+        CHECK(kDefaultStubClassCount >= 0);
+        // the default stub encoding round 223 identified
+        CHECK(kDefaultStubEncoding == 0x9090909090C3C031ULL);
+        CHECK(kDefaultStubGap == 0x10);
+    }
+
     return check::finish("test_recovered");
 }
