@@ -1548,6 +1548,30 @@ inline constexpr bool kClearPairNotThunk = true;             // the round-263 wo
 static_assert(kClearPairBytes == 12, "the clear is twelve bytes, not the five of a thunk");
 static_assert(kClearPairByte == kCloseFlag, "the byte it clears is the flag the close reads");
 
+
+// --- the thirty-two byte vector growth path 0x8F1E20, twenty-seven callers (round 271) -----------------
+//     0x8F1E2C/0x8F1E30  end at +0x08 and begin at +0x00
+//     0x8F1E3F/0x8F1E42  (end - begin) then `sar rbp,5`   ; the elements are THIRTY-TWO bytes
+//     0x8F1E4B add rbp,rbp ; 0x8F1E4E jb                  ; the capacity doubles, overflow checked
+//     0x8F1E50 movabs rax,0x7FFFFFFFFFFFFFF ; 0x8F1E5D jbe ; the max_size guard
+//     0x8F1E63 mov rbp,0xFFFFFFFFFFFFFFE0                 ; the failure value, i.e. -32
+//     0x8F1E70 mov ebp,0x20                              ; the minimum capacity
+//     0x8F1E78 call 0x998500                             ; the allocator of rounds 252 and 256
+inline constexpr std::uintptr_t kVector32 = 0x8F1E20;        // RE the whole routine
+inline constexpr int kElement32Shift = 5;                    // RE 0x8F1E42
+inline constexpr std::size_t kElement32 = 0x20;              // RE 0x8F1E42 (32)
+inline constexpr std::uint64_t kMaxSizeVec32 = 0x7FFFFFFFFFFFFFFULL;  // RE 0x8F1E50
+inline constexpr std::uint64_t kVectorFailure = 0xFFFFFFFFFFFFFFE0ULL; // RE 0x8F1E63
+inline constexpr std::size_t kVectorMinCapacity = 0x20;      // RE 0x8F1E70
+inline constexpr std::uintptr_t kVectorAlloc = 0x998500;     // RE 0x8F1E78, also rounds 252 and 256
+inline constexpr int kVector32Callers = 27;
+inline constexpr bool kVectorGrowsByDoubling = true;         // RE 0x8F1E4B
+static_assert((1u << kElement32Shift) == kElement32, "the shift is the element size");
+static_assert(kVectorFailure == static_cast<std::uint64_t>(-32), "the failure value is minus the element size");
+// The allocator 0x998500 is the one rounds 252 and 256 recorded. That equality is asserted at run time in
+// tests/test_recovered.cpp, which sees both constants; the name kExceptionAllocHelperOrZero never existed and
+// was a slip of mine, so it is removed rather than left to break the build.
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

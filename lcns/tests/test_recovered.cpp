@@ -2786,5 +2786,37 @@ int main() {
         CHECK(!shouldRetry(5));
     }
 
+    // --- the thirty-two byte vector growth (RE 0x8f1e20) -------------------------------------------
+    {
+        CHECK(kVector32 == 0x8F1E20);
+        CHECK(kElement32Shift == 5);
+        CHECK(kElement32 == 0x20);
+        CHECK(kElement32 == 32);
+        CHECK((1u << kElement32Shift) == kElement32);
+        CHECK(kMaxSizeVec32 == 0x7FFFFFFFFFFFFFFULL);
+        CHECK(kVectorFailure == static_cast<std::uint64_t>(-32));
+        CHECK(kVectorMinCapacity == 0x20);
+        CHECK(kVectorAlloc == 0x998500);
+        CHECK(kVector32Callers == 27);
+        CHECK(kVectorGrowsByDoubling);
+
+        // the capacity the routine computes: double, with the minimum and the guard applied
+        const auto grow = [](std::uint64_t bytes) -> std::uint64_t {
+            std::uint64_t capacity = bytes >> kElement32Shift;   // RE 0x8F1E42
+            if (capacity == 0) return kVectorMinCapacity;        // RE 0x8F1E70
+            capacity += capacity;                                // RE 0x8F1E4B
+            if (capacity > kMaxSizeVec32) return kVectorFailure; // RE 0x8F1E5D
+            return capacity;
+        };
+        CHECK(grow(0) == 32);
+        CHECK(grow(32) == 2);            // one element becomes two
+        CHECK(grow(64) == 4);
+        CHECK(grow(96) == 6);
+        CHECK(grow(1) == 32);            // less than one element falls back to the minimum
+        CHECK(grow(kMaxSizeVec32 * kElement32) == kVectorFailure);
+        // the failure value is minus the element size, as the movabs shows
+        CHECK(static_cast<std::int64_t>(kVectorFailure) == -32);
+    }
+
     return check::finish("test_recovered");
 }

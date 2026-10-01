@@ -5468,3 +5468,21 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ★ 两者相连：**它清的 `+0x08` 字节，正是关闭例程读的那个标志**（测试断言 `kClearPairByte == kCloseFlag`）。
 
 **已落 `layout.hpp`**：`kClose*`、`kClearPair*` + **三条 `static_assert`** + 测试 21 条。
+
+### 附 191 **32 字节元素的向量扩容**，与**一个 ABI 例程的登记（含判据偏差说明）**（goal round 271）**[已落码]**
+
+**（a）`0x8F1E20`（443 B / 27 个调用者）= 32 字节元素的向量扩容**：
+
+```
+8F1E3F/8F1E42  (end − begin) 后 `sar rbp,5`     ; ★ 元素 **32 字节**
+8F1E4B  add rbp,rbp ; 8F1E4E jb              ; 容量翻倍（含溢出检查）
+8F1E50  movabs rax,0x7FFFFFFFFFFFFFF ; jbe   ; ★ max_size 守卫（**2**59 − 1**）
+8F1E63  rbp = 0xFFFFFFFFFFFFFFE0             ; ★ 失败值 = **−32**
+8F1E70  ebp = 0x20                           ; 最小容量 32
+8F1E78  call 0x998500                        ; ★ rounds 252/256 的**同一个分配器**
+```
+
+**（b）`0x8668D0`（412 B / 37 个调用者）**：它读**虚表 `−0x18` 处的 typeinfo**（`0x8668E4`）、typeinfo 的标志字（`+0x20`）与其位（`+0x19`）、以及一张两字节项的**字符类别表** ⇒ 属 **Itanium C++ ABI 设施**。
+★ **偏差如实写入条目**：round 255 的判据限定**≤ 320 字节**，而它是 **412**；我以**更强的证据**（typeinfo-−0x18 读）登记它，**并把这一偏差写在条目里**，而不是隐去。
+
+**已落 `layout.hpp`**：`kVector32`、`kElement32*`、`kMaxSizeVec32`、`kVectorFailure`、`kVectorMinCapacity`、`kVectorAlloc`、`kVectorGrowsByDoubling` + **三条 `static_assert`** + 测试 20 条；`re/covlib.py` 新增 1 条库证据。

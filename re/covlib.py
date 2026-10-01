@@ -843,3 +843,9 @@ LIBRARY_EVIDENCED[0x9920C0] = ("toolchain", "libstdc++ operator<<(const char*): 
 
 # Round 254: toolchain evidence.
 LIBRARY_EVIDENCED[0x9984B0] = ("libstdc++", "the shared deallocator called by the release of round 248, the formatter of round 252 and the nested-container destructor of round 254")
+
+# Round 271: ABI-level evidence. This entry deviates from the round-255 criterion, which capped the
+# size at 320 bytes; it is 412. It is registered on STRONGER evidence instead: the routine reads the
+# typeinfo pointer at vtable offset -0x18 (0x8668E4), its flag word at +0x20, a bit in its flags at
+# +0x19 and a two-byte character class table, which is the Itanium C++ ABI rather than domain code.
+LIBRARY_EVIDENCED[0x8668D0] = ("libstdc++/ABI", "reads typeinfo at vtable-0x18, typeinfo flags and a character class table: 412 bytes, deviating from the 320-byte cap on stronger evidence")
