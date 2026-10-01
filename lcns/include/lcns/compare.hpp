@@ -86,4 +86,30 @@ inline double relativeScale(double v0, double v1, double v2, double v3) {
     return (std::fabs(v3) > m) ? std::fabs(v3) : m;    // RE 0x7043E3/0x7043F3
 }
 
+
+// --- the four-field formulas of 0x5E6360 (round 177) ----------------------------------------------
+// The object it works on has doubles at +8, +0x10, +0x18 and +0x20; read from the loads at
+// 0x5E637F, 0x5E6385, 0x5E637A and 0x5E638F, and stored back through rax (0x5E63E1).
+inline constexpr std::size_t kObjectFieldA = 0x08;    // RE 0x5E637F
+inline constexpr std::size_t kObjectFieldB = 0x10;    // RE 0x5E6385
+inline constexpr std::size_t kObjectFieldC = 0x18;    // RE 0x5E637A
+inline constexpr std::size_t kObjectFieldD = 0x20;    // RE 0x5E638F
+
+// RE 0x5E6394/0x5E639C/0x5E63A0: the product of the two differences.
+inline double differenceProduct(double a, double b, double c, double d) {
+    return (c - a) * (d - b);
+}
+
+// RE 0x5E63BD/0x5E63DD: the mean of two fields, computed as (x + y) * 0.5 with the 0.5 from the shared block
+// at rva 0x9DFBD0.
+inline double midpointOf(double x, double y) {
+    return (x + y) * kSharedHalf;
+}
+
+// RE 0x5E63AA/0x5E63D5: doubling then halving, i.e. the value itself.
+inline double doubledThenHalved(double x) { return (x + x) * kSharedHalf; }
+
+// RE 0x5E63B6: the all-ones word stored at +0x28, which is -1 read as a signed integer.
+inline constexpr std::int64_t kSentinelMinusOne = -1;
+
 }  // namespace lcns

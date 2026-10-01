@@ -949,5 +949,22 @@ int main() {
                                               Point2dLike{0.0, 100.0}), 100.0));
     }
 
+    // --- 0x5e6360's field formulas (RE 0x5e6394/0x5e639c/0x5e63a0 and 0x5e63bd/0x5e63dd) -------------
+    {
+        CHECK(kObjectFieldA == 0x08);
+        CHECK(kObjectFieldB == 0x10);
+        CHECK(kObjectFieldC == 0x18);
+        CHECK(kObjectFieldD == 0x20);
+        CHECK(differenceProduct(1.0, 2.0, 4.0, 6.0) == 12.0);      // (4-1)*(6-2)
+        CHECK(differenceProduct(0.0, 0.0, 0.0, 0.0) == 0.0);
+        CHECK(differenceProduct(1.0, 2.0, 1.0, 6.0) == 0.0);       // one difference is zero
+        CHECK(midpointOf(2.0, 4.0) == 3.0);
+        CHECK(midpointOf(-1.0, 1.0) == 0.0);
+        CHECK(midpointOf(0.0, 0.0) == 0.0);
+        CHECK(doubledThenHalved(7.0) == 7.0);                      // the instruction pair is the identity
+        CHECK(kSentinelMinusOne == -1);
+        CHECK(static_cast<std::uint64_t>(kSentinelMinusOne) == 0xFFFFFFFFFFFFFFFFULL);   // RE 0x5E63B6
+    }
+
     return check::finish("test_recovered");
 }

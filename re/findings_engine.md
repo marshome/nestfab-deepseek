@@ -3361,3 +3361,19 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 
 ⇒ 返回**四个分量绝对值的最大者，下限为 1.0**。两个助手把它存在 `r9` 指向的位置，孪生随后用“常量 × 该尺度”作为**相对容差** ⇒ **这就是它们的比较为何具有尺度不变性**。
 全部读自指令，非推断。
+
+### 附 97 `0x5E6360` 的四字段公式，与比较器的 **27 个调用者**（goal round 177）**[已落码]
+
+```
+5E637A  xmm7=[rcx+0x18]  5E637F xmm9=[rcx+8]  5E6385 xmm6=[rcx+0x10]  5E638F xmm0=[rcx+0x20]
+5E6394  xmm8 = (+0x18) − (+8)     5E639C xmm0 = (+0x20) − (+0x10)
+5E63A0  mulsd xmm8,xmm0               ; ★ 两个差之积
+5E63AA  addsd xmm6,xmm6 ; 5E63D5 mulsd xmm6,[0.5]
+5E63BD  addsd xmm7,xmm9 ; 5E63DD mulsd xmm7,[0.5]   ; ★ +0x18 与 +8 的中点
+5E63B6  mov rdx,0xFFFFFFFFFFFFFFFF ; 5E63EA mov [rax+0x28],rdx   ; ★ −1 哨兵
+5E63E1  movsd [rax+0x18],xmm8
+```
+
+其中 **`0.5` 与 `−1` 取自** rounds 172–173 识别的**共享块**（rva `0x9DFBD0` / `0x9DFBD8`）。
+
+**另一条结构事实**：孪生比较器有 **27 个调用者**（244–3850 字节、**全部无文本**）⇒ 它是一个**被广泛使用的几何内核原语**。已落 `compare.hpp`：四个字段偏移、`differenceProduct`、`midpointOf`、`doubledThenHalved`、`kSentinelMinusOne` + 测试 11 条。
