@@ -51,6 +51,21 @@ struct Point2dLike {
     double y;
 };
 
+// --- the 16-byte record IS this point (round 189) --------------------------------------------------
+// Three independent facts agree:
+//   (a) 0x6DE940 returns span >> 4 (round 180), the count for 16-byte records;
+//   (b) 0x707FD0 calls that same accessor and then copies the element's `[rax]` and `[rax+8]` out as two
+//       doubles (0x708020 and 0x70802A), so an element of that container IS two consecutive doubles;
+//   (c) 0x70C810 also computes a 16-byte count (`sar r11,4`, 0x70C85D) and ALSO applies the 47-byte gate
+//       (0x70C832, round 179) -- but that gate means "at least one 48-byte record", and for a 16-byte record it
+//       would mean "at least three". So (c) does NOT show the same container as (a) and (b); that part of the
+//       round-189 reading was withdrawn, and only (a) and (b) carry the point conclusion.
+// The layout constants are therefore tied to this type rather than merely described next to it.
+inline constexpr std::size_t kPoint2dSize = 2 * sizeof(double);   // 16
+static_assert(sizeof(Point2dLike) == kPoint2dSize, "the 16-byte record is a 2D point");
+static_assert(kPoint2dSize == 16, "0x6DE940 shifts the byte span by four");
+static_assert(kPoint2dSize != 48, "the points are not the 48-byte records of the 47-byte gate");
+
 inline double crossProduct2d(const Point2dLike& a, const Point2dLike& b, const Point2dLike& c) {
     const double acx = c.x - a.x;      // RE 0x74B3AD
     const double acy = c.y - a.y;      // RE 0x74B3BE

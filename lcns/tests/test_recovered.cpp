@@ -1039,5 +1039,20 @@ int main() {
         CHECK(kSharedEpsilon == std::numeric_limits<double>::epsilon());
     }
 
+    // --- the 16-byte record is a 2D point (RE 0x708020/0x70802a with 0x6de940) ----------------------
+    {
+        CHECK(kPoint2dSize == 16);
+        CHECK(sizeof(Point2dLike) == kPoint2dSize);          // the static assertion, also checked at run time
+        CHECK(kPoint2dSize == kSizeRecordStride);            // the stride 0x6DE940 shifts by four for
+        CHECK(kPoint2dSize == 2 * sizeof(double));           // two doubles per element
+        // the 47-byte gate belongs to the 48-byte records, NOT to these points: for a 16-byte record it
+        // would mean 'at least three points'. The two are different types, so the assertion says so.
+        CHECK(kPoint2dSize != kIndexedRecordStride);         // 16 is not 48
+        CHECK(kMinSpanForOneRecord + 1 == kIndexedRecordStride);
+        Point2dLike p{1.5, -2.5};
+        CHECK(p.x == 1.5);
+        CHECK(p.y == -2.5);
+    }
+
     return check::finish("test_recovered");
 }
