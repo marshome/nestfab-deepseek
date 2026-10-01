@@ -221,4 +221,26 @@ inline Point2dLike midpoint2d(const Point2dLike& a, const Point2dLike& b) {
 // call it too (0x74B430/0x74B700) -- so it is the next thing worth reading.
 inline constexpr unsigned long kMidpointWalkPredicate = 0x72DAC0;
 
+
+// --- the point comparison of 0x72DAC0, polarity settled in round 195 ---------------------------------
+// Twelve callers, including the twins of round 174 and the midpoint walk of round 193. Read whole,
+// INCLUDING the tail that round 194 had not reached:
+//     72DAC8  ucomisd b.x,a.x ; jp <general> ; je 0x72DB39      ; x nearly equal -> go and look at y
+//     72DB2F  ucomisd m*eps,|dx| ; jb 0x72DBCA                  ; dx EXCEEDS eps -> 72DBCA
+//     72DBCA  mov eax,1 ; ret                                   ; -> TRUE
+//     72DB49  y nearly equal -> mov eax,0 ; je 0x72DBB0          ; -> FALSE
+//     72DBA7  setb al                                            ; dy EXCEEDS eps -> TRUE
+// So the result is `!(x nearly equal) || !(y nearly equal)` -- the negation of "both coordinates nearly equal".
+// The same machinery as almostEqual is applied to each coordinate (sign mask, DBL_MAX guard, the 1.0 switch and
+// 2.22045e-16), which is why this composes with the rest of the chain.
+inline constexpr unsigned long kPointComparePredicate = 0x72DAC0;   // RE the address itself
+
+inline bool pointAlmostEqual(const Point2dLike& a, const Point2dLike& b) {
+    return almostEqual(a.x, b.x) && almostEqual(a.y, b.y);   // RE the branches above
+}
+
+inline bool pointsDiffer(const Point2dLike& a, const Point2dLike& b) {
+    return !pointAlmostEqual(a, b);                          // RE 0x72DAC0's own polarity
+}
+
 }  // namespace lcns

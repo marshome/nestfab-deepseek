@@ -1115,5 +1115,23 @@ int main() {
         CHECK(kMidpointWalkPredicate == 0x72DAC0);
     }
 
+    // --- 0x72dac0: the points differ unless BOTH coordinates are almost equal (RE 0x72dbca/0x72db49) -----
+    {
+        const double eps = std::numeric_limits<double>::epsilon();
+        const Point2dLike a{1.0, 1.0};
+        CHECK(kPointComparePredicate == 0x72DAC0);
+        CHECK(!pointsDiffer(a, a));                            // both equal -> no difference
+        CHECK(!pointsDiffer(a, Point2dLike{1.0 + 0.5 * eps, 1.0}));   // x within eps
+        CHECK(!pointsDiffer(a, Point2dLike{1.0, 1.0 + 0.5 * eps}));   // y within eps
+        CHECK(pointsDiffer(a, Point2dLike{1.0 + 1e-9, 1.0}));         // x beyond eps -> true regardless of y
+        CHECK(pointsDiffer(a, Point2dLike{1.0, 1.0 + 1e-9}));         // y beyond eps
+        CHECK(pointsDiffer(a, Point2dLike{1.0 + 1e-9, 1.0 + 1e-9}));
+        CHECK(pointAlmostEqual(a, a));
+        CHECK(pointsDiffer(a, a) == !pointAlmostEqual(a, a));
+        // and it composes with the midpoint routine of round 193
+        const Point2dLike m = midpoint2d(a, Point2dLike{3.0, 3.0});
+        CHECK(pointAlmostEqual(m, Point2dLike{2.0, 2.0}));
+    }
+
     return check::finish("test_recovered");
 }

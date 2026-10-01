@@ -3786,3 +3786,27 @@ round 179 把它命名为“一个 48 字节记录”只是**同一阈值的另�
 
 **下一步（已明确）**：读 `0x72DBC0`–`0x72DBF0` 以及调用者 `0x5E3760`/`0x70CAF0` 对它返回值的**使用方式**（`test al,al ; je/jne`），
 从而确定极性 —— 这是**从使用方向反推**，而不是猜分支。
+
+### 附 115 `0x72DAC0` **极性已定**：“两点**不**近似相等”（goal round 195）**[已落码]
+
+round 194 未读到的**尾部**：
+
+```
+72DBB0  ret                        ; y 近似相等的路径（eax 在 72DB49 置 0）
+72DBC0  movsd xmm1,[eps] ; jmp 0x72DBA3    ; y 的小量分支
+72DBCA  mov eax,1 ; ret            ; ★ 返回真
+```
+
+带着它重读分支：
+
+| 位置 | 指令 | 含义 |
+|---|---|---|
+| `72DB2F` | `ucomisd m·ε,|dx| ; jb 0x72DBCA` | **dx 超出 ε → 真** |
+| `72DB49` | y 近似相等 → `mov eax,0 ; je 0x72DBB0` | **→ 假** |
+| `72DBA7` | `setb al` | **dy 超出 ε → 真** |
+
+⇒ 返回值 = **`!(x近似) || !(y近似)`**，即 **“两坐标不同时近似相等”**。
+round 194 觉得“形状奇怪”的 `je`+`eax=0`，**正是“否定的 AND”的短路**。
+**调用者一致**：round 174 的孪生作 `call 0x72DAC0 ; test al,al ; je <继续>` ⇒ 当作**守卫**。
+
+**已落 `compare.hpp`**：`pointAlmostEqual`、`pointsDiffer`、`kPointComparePredicate` + 测试 10 条（含与 `midpoint2d` 的组合）。
