@@ -3106,5 +3106,41 @@ int main() {
         CHECK(kChainBranchArgs == 2 && kChainUnroll == 3);
     }
 
+    // --- the guarded call pattern at four sites (RE 0x11a8e5..0x11a9cc) -----------------------------
+    {
+        CHECK(kGateCallSlot == 0x110);
+        CHECK(kGateCallSlot == kVtableSlotE);
+        CHECK(kGateSites == 4);
+        CHECK(kGateBytesRead == 3);
+        CHECK(kGateBytesRead < kGateSites);             // the fourth is deliberately unread
+        CHECK(kGateByteA == 0xA06744);
+        CHECK(kGateByteB == 0xA066F7);
+        CHECK(kGateByteC == 0xA066A9);
+        CHECK(kGateByteA != kGateByteB);
+        CHECK(kGateByteB != kGateByteC);
+        CHECK(kGateByteA != kGateByteC);
+        CHECK(kGateInitAddress == 0xA06664);
+        CHECK(kGateInit == 0x998DA0);
+        CHECK(kGateArgsPerSite == 2);
+        CHECK(kGateConstant2 == 1);
+        CHECK(kGateConstant2 == kGateConstant);
+        CHECK(kFourthGateByteUnread);                   // unread, not guessed
+        CHECK(kGlobalGateRva == kGateByteA);            // round 283's byte is the first of the three
+
+        // the pattern the instructions implement: call only when the byte is set, otherwise initialise and retry
+        const auto guarded = [](bool& gate, int& calls, int& inits) {
+            if (!gate) { ++inits; gate = true; }        // RE 0x11A9CC then back to the call
+            ++calls;                                    // RE the call through slot +0x110
+        };
+        bool gate = false; int calls = 0, inits = 0;
+        guarded(gate, calls, inits);
+        CHECK(gate);
+        CHECK(calls == 1);
+        CHECK(inits == 1);
+        guarded(gate, calls, inits);
+        CHECK(calls == 2);
+        CHECK(inits == 1);                              // initialised once
+    }
+
     return check::finish("test_recovered");
 }

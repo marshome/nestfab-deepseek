@@ -5652,3 +5652,21 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ⇒ **虚表槽达八个**：`+0x08`、`+0x18`、`+0x30`、`+0x68`、`+0xB8`、`+0xC0`、**`+0x110`**、`+0x158`；两个分支都是**带两个参数的尾调**（对象 + 值）。
 
 **已落 `layout.hpp`**：`kSlotIsCalled`、`kChainBranchArgs`、`kVtableSlotE`(0x110)、`kVtableSlotsKnown3`(8)、`kGlobalGateRva`、`kGateArgA/B`、`kGateConstant`、`kSlotBothComparedAndCalled` + **两条 `static_assert`** + 测试 18 条。
+
+### 附 202 **受守卫的调用模式（四个站点）**（goal round 284）**[已落码]**
+
+`0x11A780` 在**四个站点**调用虚表槽 `+0x110`，每个站点各由**一个独立的全局字节**守卫：
+
+```
+11A8E5  movzx eax,byte [rip+0xA06744] ; je …      ; （round 283）
+11A932  movzx eax,byte [rip+0xA066F7] ; je 0x11A9C5
+11A980  movzx eax,byte [rip+0xA066A9] ; je 0x11AA20
+11A9C5/11A9CC  `lea rcx,[rip+0xA06664]` ; call **0x998DA0** ; test eax,eax ; je 回到受守卫的调用
+```
+
+每个受守卫的调用传：**值、一个寄存器或栈上输出参数、常量 1、以及两个数据地址**。
+守卫未置位时先调 `0x998DA0`（**惰性初始化**）再回到受守卫的调用 ⇒ 典型的**每站点一次性标志**。
+
+★ **明确未读**：第四个守卫字节的地址**不记录**，因为它的分支（`0x11AA20`、`0x11AA80`）**未转储出来** —— 记为**未读**（`kFourthGateByteUnread`）而不是猜一个值。
+
+**已落 `layout.hpp`**：`kGateCallSlot`(0x110)、`kGateSites`(4)、`kGateBytesRead`(3)、`kGateByteA/B/C`、`kGateInitAddress`、`kGateInit`(0x998DA0)、`kGateArgsPerSite`、`kGateConstant2`、`kFourthGateByteUnread` + **三条 `static_assert`** + 测试 21 条。

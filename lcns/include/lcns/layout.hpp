@@ -1842,6 +1842,29 @@ inline constexpr bool kSlotBothComparedAndCalled = true;
 static_assert(kVtableSlotsKnown3 == kVtableSlotsKnown2 + 1, "one more slot than round 282");
 static_assert(kChainBranchArgs == 2, "two arguments precede the tail call");
 
+
+// --- the guarded call pattern inside 0x11A780, at FOUR sites (round 284) --------------------------------
+//     0x11A8E5/0x11A932/0x11A980  each site reads its OWN global byte and skips the call when it is clear
+//     0x11A91A/0x11A965/0x11A9B5  call qword [rax+0x110], the same slot from every site
+//     0x11A9CC call 0x998DA0 with an address, then re-enters the guarded call when it succeeds
+// Each guarded call passes the value, a register or stack out-parameter, the constant 1, and TWO data addresses.
+inline constexpr std::size_t kGateCallSlot = 0x110;          // RE the four call sites
+inline constexpr int kGateSites = 4;                         // RE the four guards
+inline constexpr int kGateBytesRead = 3;                     // the fourth branch was not dumped
+inline constexpr std::uintptr_t kGateByteA = 0xA06744;       // RE 0x11A8E5
+inline constexpr std::uintptr_t kGateByteB = 0xA066F7;       // RE 0x11A932
+inline constexpr std::uintptr_t kGateByteC = 0xA066A9;       // RE 0x11A980
+inline constexpr std::uintptr_t kGateInitAddress = 0xA06664;  // RE 0x11A9C5
+inline constexpr std::uintptr_t kGateInit = 0x998DA0;        // RE 0x11A9CC
+inline constexpr int kGateArgsPerSite = 2;                   // RE the r9/rdx pair at every site
+inline constexpr int kGateConstant2 = 1;                     // RE the dword 1 pushed at every site
+// The FOURTH gate byte's address is NOT recorded: its branch (0x11AA20 and 0x11AA80) was not dumped, so it stays
+// unread rather than guessed. That is why kGateBytesRead is three and not four.
+inline constexpr bool kFourthGateByteUnread = true;
+static_assert(kGateBytesRead == 3 && kGateSites == 4, "three of four gate bytes are read");
+static_assert(kGateCallSlot == kVtableSlotE, "the guarded slot is the eighth one");
+static_assert(kGateConstant2 == kGateConstant, "the same constant at every site");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
