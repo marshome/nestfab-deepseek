@@ -12,6 +12,55 @@ LCNS_STRUCTURAL(tu.structure_interface);
 // RE 0x754ED / 0x75EF3: the candidate area is compared against 0.99 * the reference area, and the
 // caller skips when 0.99*reference <= candidate. Expressed as a predicate on the surviving side.
 namespace lcns {
+// RE the 0x6CA720 family, read one by one in round 66 (handler address -> stored name).
+const char* const kParamNames[12] = {
+    "10BeamValues",
+    "10Off2Weight",
+    "10PartRatios",
+    "11RepeatSheet",
+    "11TilingLimit",
+    "13ODescriptions",
+    "13PosDirections",
+    "14ODescriptions2",
+    "6UseMap",
+    "7OPricer",
+    "7ZfSizes",
+    "8DegSteps",
+};
+
+// RE the encoding: <decimal length><name>, with the length always truthful in the twelve samples.
+std::string encodeParamName(const std::string& name) {
+    return std::to_string(name.size()) + name;
+}
+
+bool decodeParamName(const std::string& encoded, std::string* name) {
+    std::size_t i = 0;
+    while (i < encoded.size() && encoded[i] >= '0' && encoded[i] <= '9') {
+        ++i;
+    }
+    if (i == 0 || i == encoded.size()) {
+        return false;
+    }
+    const std::size_t claimed = static_cast<std::size_t>(std::stoul(encoded.substr(0, i)));
+    if (claimed != encoded.size() - i) {
+        return false;
+    }
+    if (name != nullptr) {
+        *name = encoded.substr(i);
+    }
+    return true;
+}
+
+// One handler per name, so an encoded name identifies the handler.
+int paramNameIndex(const std::string& encoded) {
+    for (int i = 0; i < 12; ++i) {
+        if (encoded == kParamNames[i]) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 bool withinSurfaceSlack(double evalC, double maxSurface) {
     // The assertion text, split at its && so each half is visible.
     const bool nonNegative = evalC >= 0.0;

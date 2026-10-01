@@ -1762,3 +1762,23 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 * **`0x6ca840`**（next member of the same family, to see the difference）279 B / 78 条指令；字符串 `10Off2Weight`；被调用者 `0x1a2ab0`, `0x608e40`, `0x62f280`, `0x6d5980`, `0x82b7b0`, `0x8f17b0`, `0x91fd80`, `0x978010`, `0x9984b0`；
 * **`0x92ce40`**（0x92CE40 family (11 members)）284 B / 86 条指令；字符串 `无`；被调用者 `0x1a8d70`, `0x62f280`, `0x89e0d0`, `0x92c7b0`, `0x92dbf0`, `0x9984b0`, `0x998500`, `0x9989a0`, `0x998bc0`, `0x998fe0`；
 * **`0x1acf30`**（0x1ACF30 family (19 shared callees)）1121 B / 267 条指令；字符串 `..\nesting\algos\multinesting_optimizer.cpp、nestings.size() == before_size、RecordAndReplaceIfBetter`；被调用者 `0x183f50`, `0x1a8d70`, `0x1a9350`, `0x1aaba0`, `0x1baf20`, `0x1bb490`, `0x1bbd90`, `0x1bc4a0`, `0x1c09b0`, `0x1c0a00`；
+
+### 附 15 十二个参数名（goal round 66）**[已证实]**
+
+`0x6CA720` 一族 12 个成员（279 B / 78 指令，间距恰为 `0x120`）各自携带一个**长度前缀**名，下列为二进制里实际存的字符串：
+
+* `0x6ca720` → `10BeamValues`
+* `0x6ca840` → `10Off2Weight`
+* `0x6ca960` → `10PartRatios`
+* `0x6caa80` → `11RepeatSheet`
+* `0x6caba0` → `11TilingLimit`
+* `0x6cacc0` → `13ODescriptions`
+* `0x6cade0` → `13PosDirections`
+* `0x6caf00` → `14ODescriptions2`
+* `0x6cb020` → `6UseMap`
+* `0x6cb140` → `7OPricer`
+* `0x6cb260` → `7ZfSizes`
+* `0x6cb380` → `8DegSteps`
+
+**前缀的十进制数等于名字长度（12/12）**⇒ 编码为 `<len><name>`。
+**其中两个名字含数字**（`Off2Weight`、`ODescriptions2`），所以判定时**不能要求纯字母** —— 我第一版校验器就是这么错的，它拒绝写入（没把半成品写进 C++）。同时 12 个处理器因此有了**真实名字**。

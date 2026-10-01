@@ -81,6 +81,17 @@ inline constexpr double kEvalSurfaceSlack = 1.05;           // RE 0x81C690 asser
 // invalid as one above the slacked surface. The 1.05 is not a tuning choice, it is in the text.
 bool withinSurfaceSlack(double evalC, double maxSurface);
 
+// RE the 0x6CA720 family: twelve handlers, 279 bytes / 78 instructions each, laid out exactly 0x120
+// bytes apart from 0x6CA720 to 0x6CB380, all calling the same nine routines -- one handler per named
+// parameter. Each carries its parameter name as a LENGTH PREFIXED ascii string; all twelve were read
+// in round 66 and the leading decimal equals the length of the name that follows in every case, so
+// the encoding is <decimal length><name>. The names are real identities taken from the binary, and
+// NOTE two of them contain a digit ('Off2Weight', 'ODescriptions2'), so the body is alphanumeric.
+extern const char* const kParamNames[12];
+std::string encodeParamName(const std::string& name);                  // "UseMap" -> "6UseMap"
+bool decodeParamName(const std::string& encoded, std::string* name);   // validates the prefix
+int paramNameIndex(const std::string& encoded);                        // -1 when unknown
+
 // RE 0x9B15E0 -- the double 0.99, referenced twice inside 0x73280 (at 0x754ED and 0x75EF3) in
 // the same shape: two pairs of doubles are differenced and multiplied (an AREA), one branch
 // doubles it, the result is scaled by this constant and compared with `ucomisd` against the
