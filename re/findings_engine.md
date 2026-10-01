@@ -2735,3 +2735,23 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 **且种子不只是记录**：`0x1B33B0` 在 `1B3469` 又 **重新读取**该槽位（`lea rax,[rsp+0xE0] ; mov rdx,rax ; mov [rsp+0x58],rax`）并**传给后续调用** ⇒ 种子**确实被使用**。
 
 **已落 `lcns`**：`seedFromRatio(double)`（含两处证据注释）+ 测试（含截断而非四舍五入、负数、与 `ratioFromAverage` 的组合）。
+
+### 附 64 种子的传入点（goal round 143）**[事实 + 一条标注的假设]
+
+`0x1B33B0` 中种子的传入点（逐条）：
+
+```
+1B3469  lea rax,[rsp+0xE0]        ; &seed
+1B3478  cvtsi2sd xmm3,[rsi]       ; 对象里的一个 double
+1B347C  mov rdx,rax               ; ★ 种子作为第 2 个参数
+1B3491  mov eax,[rsi+0x24] ; 1B3494 mov [rsp+0x20],eax
+1B3498  movsd xmm2,[rsi+0x10]
+1B349D  call 0x1A3560             ; 接收种子的那个调用
+1B34A2  lea rax,['never'] ; 1B34AC mov edx,0x1E(30) ; 1B350F call 0x6D6940
+```
+
+**事实**：种子以**第二个参数**传给 `0x1A3560`，同时带两个来自对象的 double（`[rsi]`、`[rsi+0x10]`）与一个 int（`[rsi+0x24]`）；紧接着出现字符串 `'never'` 与常量 **30**。
+
+**假设（未证实，不进结论）**：`'never'` + `30` 像是某种**“不设限”模式与一个计数/阈值**。
+
+**本轮不对 `0x1A3560` 做任何定性** —— 它的入口尚未读（遵守 round 139 的规矩）。
