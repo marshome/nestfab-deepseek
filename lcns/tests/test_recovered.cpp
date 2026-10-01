@@ -1098,5 +1098,22 @@ int main() {
         CHECK(signCompare(crossProduct2d(o, x, up), crossProduct2d(o, x, up)) == 0);
     }
 
+    // --- the 2D midpoint of 0x707fd0 (RE 0x708083..0x7080ae) ----------------------------------------
+    {
+        const Point2dLike a{0.0, 0.0};
+        const Point2dLike b{4.0, 6.0};
+        const Point2dLike m = midpoint2d(a, b);
+        CHECK(m.x == 2.0);
+        CHECK(m.y == 3.0);
+        CHECK(midpoint2d(a, a).x == 0.0);
+        // order does not matter
+        CHECK(midpoint2d(b, a).x == m.x);
+        CHECK(midpoint2d(b, a).y == m.y);
+        // and it agrees with the scalar helper the same 0.5 feeds
+        CHECK(midpoint2d(a, b).x == midpointOf(a.x, b.x));
+        CHECK(midpoint2d(a, b).y == midpointOf(a.y, b.y));
+        CHECK(kMidpointWalkPredicate == 0x72DAC0);
+    }
+
     return check::finish("test_recovered");
 }

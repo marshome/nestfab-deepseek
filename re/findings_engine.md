@@ -3744,3 +3744,19 @@ round 179 把它命名为“一个 48 字节记录”只是**同一阈值的另�
 **已落 `compare.hpp`**：`signCompare`（= `almostEqual` 分支 + `signOf`）、`kPredicateSignCount = 3` + 测试 7 条，其中一条**与 `crossProduct2d` 组合**验证该原子能直接用于方向量。
 
 ⇒ 至此，**rounds 174–192 读出的几何核心已互相调用**：叉积 → 尺度 → 符号比较器 → `almostEqual` → `signCompare` → 搜索树/累加器 → `polygonArea`。
+
+### 附 113 `0x707FD0` 余下部分 = **中点**；并曝出共享谓词 `0x72DAC0`（goal round 193）**[已落码]
+
+```
+70804B  rbx=[rax]                            ; 首元素
+708053  add rbx,0x10 ; 70805C lea rdi,[rbx−0x10]     ; 步长 16（点）
+70806C  call 0x72DAC0 ; test al,al ; je 循环       ; ★ 谓词驱动前进
+708083  xmm0=[rbx−0x10] ; 70808A addsd xmm0,[rbx]     ; 前一点.x + 当前.x
+70808E  xmm1=[0.5] ; 708096 mulsd xmm0,xmm1          ; × 0.5 ⇒ 中点.x
+7080A0  … [rbx−8] + [rbx+8] ; 7080AA mulsd …       ; 同法得中点.y
+```
+
+⇒ 它选一对**相邻点**（由 `0x72DAC0` 决定走多远）并写出**中点**；`0.5` 取自共享块。
+**新线索**：`0x72DAC0`（12 个调用者）**也被 round 174 的孪生调用** ⇒ 它是**共享谓词**，已列为下一个目标。
+
+**已落 `compare.hpp`**：`midpoint2d`、`kMidpointWalkPredicate` + 测试 8 条（含与标量 `midpointOf` 的**一致性**）。

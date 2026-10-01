@@ -206,4 +206,19 @@ inline int signCompare(double a, double b) {
 // RE the body applies that atom three times before combining the results (0x5E7A62).
 inline constexpr int kPredicateSignCount = 3;
 
+
+// --- the 2D midpoint of 0x707FD0 (round 193) -------------------------------------------------------
+//     708083  movsd xmm0,[rbx-0x10] ; 70808A addsd xmm0,[rbx]     ; prev.x + cur.x
+//     70808E  movsd xmm1,[0.5]      ; 708096 mulsd xmm0,xmm1      ; * 0.5
+//     70809A  movsd [r12],xmm0
+//     7080A0  movsd xmm0,[rbx-8] ; 7080A5 addsd xmm0,[rbx+8] ; 7080AA mulsd xmm0,xmm1 ; 7080AE [r12+8]
+// So the routine picks a consecutive pair of points and writes the midpoint of that pair.
+inline Point2dLike midpoint2d(const Point2dLike& a, const Point2dLike& b) {
+    return Point2dLike{(a.x + b.x) * kSharedHalf, (a.y + b.y) * kSharedHalf};   // RE 708096/7080AA
+}
+
+// RE 0x70806C: the predicate that decides how far the walk advances. It is shared -- the twins of round 174
+// call it too (0x74B430/0x74B700) -- so it is the next thing worth reading.
+inline constexpr unsigned long kMidpointWalkPredicate = 0x72DAC0;
+
 }  // namespace lcns
