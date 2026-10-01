@@ -282,24 +282,30 @@ cmake --build ../third_party/build-cmake
 本工程混着四种不同性质的代码，光看源码分不出来，所以每处都打上**可 grep 的 C++ 标记**，
 并与一张机器可读的登记表 [`include/lcns/recovery.hpp`](include/lcns/recovery.hpp) 逐条对应：
 
-| 状态宏 | 含义 |
-|---|---|
-| `LCNS_RECOVERED(id)` | **逐指令忠实**：每个常量/字段偏移都能追到 RVA，且被 `test_recovered` 与 `re/g_acceptance.py` 检查 |
-| `LCNS_STRUCTURAL(id)` | **结构已恢复**：类、调用图、算法骨架与关键常量都逆出来了，但这里的实现是**重写** |
-| `LCNS_SUBSTITUTED(id)` | **替代实现**：原库用的东西在本环境不可用（如 COIN-OR Clp），或启发式的**常数没有逆出来** |
-| `LCNS_NOT_REVERSED(id)` | **未逆向**：DLL 里确实有这个功能，但我们**没有译出**；这里要么是壳、要么缺失 |
-| `LCNS_NOT_IN_BINARY(id)` | **非原库**：本工程自己的扩展（如列生成机具） |
+| 状态宏 | 中文含义 | 说明 |
+|---|---|---|
+| `LCNS_RECOVERED(id)` | **已恢复** | 逐指令忠实：每个常量/字段偏移都能追到 RVA，且被 `test_recovered` 与 `re/g_acceptance.py` 检查 |
+| `LCNS_STRUCTURAL(id)` | **结构已恢复** | 类、调用图、算法骨架与关键常量都逆出来了，但这里的实现是**重写**（这一档**不算"没逆向"**） |
+| `LCNS_SUBSTITUTED(id)` | **替代实现** | 原库用的东西在本环境不可用、或启发式的**常数没有逆出来** ⇒ 这里跑的是**我们写的**算法，不是原库的 |
+| `LCNS_NOT_REVERSED(id)` | **尚未逆向** | ★ **严格意义上的"未逆向"只有这一个宏**：DLL 里确实有这个功能，但我们**没有译出**；这里要么是壳、要么缺失 |
+| `LCNS_NOT_IN_BINARY(id)` | **非原库** | 本工程自己的扩展（如列生成机具、Simplex 兜底），不属于逆向缺口 |
 
-宏展开为 `static_assert(true, "...")`：**零开销**、在文件作用域/类体/函数体内都合法、
-`grep -rn "LCNS_NOT_REVERSED" src include` 可枚举，也在编译器诊断里可见。
+宏展开为 `static_assert(true, "已恢复 / recovered: " #id)` 这类恒真断言：**零开销**、在文件作用域/类体/函数体内都合法，
+消息里带着**中文含义**，所以标记既能按英文枚举、也能按中文直接找：
+
+```powershell
+grep -rn "LCNS_NOT_REVERSED" src include   # 按宏名枚举
+grep -rn "尚未逆向"          src include   # 直接按中文找所有未逆向的标记
+```
 
 ```powershell
 python tools\check_recovery.py     # 强制：代码标记集合 == 登记表集合；且带具体 RVA 的缺口必须在 re/ 文档中出现
-python tools\check_recovery.py     # 同时生成 docs/RECOVERY_STATUS.md
+                                   # 同时重新生成 docs/RECOVERY_STATUS.md
 ```
 
-**当前盘点（58 条）**：已恢复 6、结构已恢复 13、**替代实现 26**、**未逆向 12**、非原库 1。
-登记表的条数被 `test_recovered.cpp` 断言住 —— 删掉一条缺口（= 悄悄假装它已恢复）会让测试失败。
+**当前盘点（60 条）**：已恢复 **7**、结构已恢复 **14**、替代实现 **27**、**尚未逆向 11**、非原库 1。
+中文词表（宏注释、枚举、`recovery::toChinese()`、生成表、`check_recovery.py`）由 `test_recovered.cpp` 逐条断言，
+登记表条数也被断言住 —— 删掉一条缺口（= 悄悄假装它已恢复）会让测试失败。
 
 ## 已知限制（诚实说明）
 

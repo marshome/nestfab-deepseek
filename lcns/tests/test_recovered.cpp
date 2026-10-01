@@ -136,6 +136,12 @@ int main() {
         }
         CHECK(std::strcmp(toString(Status::NotReversed), "not-reversed") == 0);
         CHECK(std::strcmp(marker(Status::Substituted), "LCNS_SUBSTITUTED") == 0);
+        // the Chinese word table is bound too, so it cannot drift from the code marks
+        CHECK(std::strcmp(toChinese(Status::Recovered), "已恢复") == 0);
+        CHECK(std::strcmp(toChinese(Status::Structural), "结构已恢复") == 0);
+        CHECK(std::strcmp(toChinese(Status::Substituted), "替代实现") == 0);
+        CHECK(std::strcmp(toChinese(Status::NotReversed), "尚未逆向") == 0);
+        CHECK(std::strcmp(toChinese(Status::NotInBinary), "非原库") == 0);
     }
 
     return check::finish("test_recovered");

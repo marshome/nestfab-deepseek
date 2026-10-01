@@ -1,26 +1,29 @@
 // lcns/recovery.hpp -- machine readable inventory of what IS and IS NOT recovered.
+//                      逆向状态登记表：哪些已恢复、哪些没有。
 //
-// Why this exists
-// ---------------
-// The reconstruction mixes four very different kinds of code, and reading the source alone does
-// not tell them apart:
+// Why this exists / 为什么需要它
+// -----------------------------
+// The reconstruction mixes five very different kinds of code, and reading the source alone does
+// not tell them apart (中文权威词表见下方 "marking macros / 标记宏" 一节):
 //
-//   Recovered    instruction-level faithful: every constant and field offset cites an RVA that is
-//                checked by tests/test_recovered.cpp and re/g_acceptance.py
-//   Structural   the STRUCTURE (classes, call graph, algorithm skeleton, key constants) was
-//                recovered, but the body here is a re-implementation of it
-//   Substituted  the original uses something we cannot use in this environment (e.g. COIN-OR Clp),
-//                or a heuristic whose constants were NOT recovered -> documented substitute
-//   NotReversed  the feature demonstrably exists in liblcns.dll but has NOT been reverse
-//                engineered; the code here is a stub, an empty shell, or simply absent
-//   NotInBinary  our own extension; explicitly NOT part of the DLL
+//   Recovered    已恢复       instruction-level faithful: every constant and field offset cites an
+//                            RVA that is checked by tests/test_recovered.cpp and re/g_acceptance.py
+//   Structural   结构已恢复   the STRUCTURE (classes, call graph, algorithm skeleton, key constants)
+//                            was recovered, but the body here is a re-implementation of it
+//   Substituted  替代实现     the original uses something we cannot use in this environment, or a
+//                            heuristic whose constants were NOT recovered -> our algorithm, not the DLL's
+//   NotReversed  尚未逆向     the feature demonstrably exists in liblcns.dll but has NOT been reverse
+//                            engineered; the code here is a stub, an empty shell, or simply absent
+//   NotInBinary  非原库       our own extension; explicitly NOT part of the DLL
 //
-// How to mark code
-// ----------------
-// Put one of the macros below on its own line (they expand to nothing, so they cost nothing and
-// cannot change behaviour), e.g.
+// How to mark code / 怎么打标记
+// -----------------------------
+// Put one of the macros below on its own line, e.g.
 //
 //     LCNS_SUBSTITUTED(strategy.tiling)   // before TilingNester::run
+//
+// They expand to a trivially true static_assert (zero cost) whose message carries the Chinese
+// meaning, so `grep -rn "尚未逆向" src include` finds every un-reversed site directly.
 //
 // tools/check_recovery.py enforces the invariant that the set of ids marked in the code is
 // EXACTLY the set of ids registered in kGaps below, and that every non-Recovered id is also
@@ -30,28 +33,52 @@
 
 #include <cstddef>
 
-// --- marking macros -------------------------------------------------------------------------
-// They expand to a trivially true static_assert, which is legal at file scope, inside a class body
-// AND inside a function body (an empty declaration would trip -Wpedantic inside a class). The id is
-// stringified, so the mark also shows up in compiler diagnostics, and it stays greppable:
+// --- marking macros / 标记宏 -----------------------------------------------------------------
+// 五个宏的中文含义（这就是本工程的"诚实性词表"，每条代码标记都必须用其中之一）：
+//
+//   LCNS_RECOVERED(id)      【已恢复】
+//       逐指令忠实：每一个常量、字段偏移、算法细节都能追到二进制里的 RVA，
+//       并由 tests/test_recovered.cpp 与 re/g_acceptance.py 机械核对。
+//
+//   LCNS_STRUCTURAL(id)     【结构已恢复】
+//       类、调用图、算法骨架与关键常量都逆出来了，但这里的实现是**重写**，不是逐指令转写。
+//       注意：这一档**不算"没逆向"**，只是保真度低于"已恢复"。
+//
+//   LCNS_SUBSTITUTED(id)    【替代实现】
+//       原库用的东西在本环境不可用、或启发式的常数没有逆出来，因此此处跑的是**我们写的**替代算法，
+//       行为不是原库的。当前最大的一块欠账就在这里（12 个策略的 Run 体、主放置器、tiling 评分公式）。
+//
+//   LCNS_NOT_REVERSED(id)   【尚未逆向】★ 严格意义上的"未逆向"只有这一个宏
+//       这个功能在二进制里**确实存在**，但我们**没有译出来**：此处要么是壳、要么缺失。
+//       凡声明为此类的，都在 kGaps 里给了地址或写明"-"以及可复核的原因。
+//
+//   LCNS_NOT_IN_BINARY(id)  【非原库】
+//       本工程自己的扩展，不属于逆向缺口（例如自研的列生成机具、Simplex 兜底）。
+//
+// 实现：都展开为恒真的 static_assert —— 零开销；在文件作用域、类体内、函数体内都合法
+// （展开为空语句会在类体内触发 -Wpedantic）。id 会被字符串化，所以标记既能在 grep 里枚举，
+// 也会出现在编译器诊断里，连中文含义一起：
+//     grep -rn "尚未逆向" src include        # 直接按中文找到所有未逆向的标记
 //     grep -rn "LCNS_NOT_REVERSED" src include
-#define LCNS_RECOVERED(id) static_assert(true, "recovered: " #id)
-#define LCNS_STRUCTURAL(id) static_assert(true, "structural: " #id)
-#define LCNS_SUBSTITUTED(id) static_assert(true, "substituted: " #id)
-#define LCNS_NOT_REVERSED(id) static_assert(true, "NOT REVERSED: " #id)
-#define LCNS_NOT_IN_BINARY(id) static_assert(true, "not in binary: " #id)
+#define LCNS_RECOVERED(id) static_assert(true, "已恢复 / recovered: " #id)
+#define LCNS_STRUCTURAL(id) static_assert(true, "结构已恢复 / structural: " #id)
+#define LCNS_SUBSTITUTED(id) static_assert(true, "替代实现 / substituted: " #id)
+#define LCNS_NOT_REVERSED(id) static_assert(true, "尚未逆向 / NOT REVERSED: " #id)
+#define LCNS_NOT_IN_BINARY(id) static_assert(true, "非原库 / not in binary: " #id)
 
 namespace lcns {
 namespace recovery {
 
+// 状态枚举：与上面五个宏一一对应
 enum class Status {
-    Recovered = 0,
-    Structural = 1,
-    Substituted = 2,
-    NotReversed = 3,
-    NotInBinary = 4,
+    Recovered = 0,     // 已恢复     —— 逐指令忠实
+    Structural = 1,    // 结构已恢复 —— 骨架已逆、实现为重写
+    Substituted = 2,   // 替代实现   —— 跑的不是原库算法
+    NotReversed = 3,   // 尚未逆向   —— 二进制里有，我们没译出来
+    NotInBinary = 4,   // 非原库     —— 本工程自己的扩展
 };
 
+// 英文标识（供脚本/生成物使用）
 inline const char* toString(Status s) {
     switch (s) {
         case Status::Recovered: return "recovered";
@@ -59,6 +86,18 @@ inline const char* toString(Status s) {
         case Status::Substituted: return "substituted";
         case Status::NotReversed: return "not-reversed";
         case Status::NotInBinary: return "not-in-binary";
+    }
+    return "?";
+}
+
+// 中文含义（供人读；docs/RECOVERY_STATUS.md 与 tools/check_recovery.py 的输出同源）
+inline const char* toChinese(Status s) {
+    switch (s) {
+        case Status::Recovered: return "已恢复";
+        case Status::Structural: return "结构已恢复";
+        case Status::Substituted: return "替代实现";
+        case Status::NotReversed: return "尚未逆向";
+        case Status::NotInBinary: return "非原库";
     }
     return "?";
 }

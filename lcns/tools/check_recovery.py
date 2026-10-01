@@ -24,11 +24,13 @@ HEADER = os.path.join(LCNS, "include", "lcns", "recovery.hpp")
 DOCS = os.path.join(LCNS, "docs", "RECOVERY_STATUS.md")
 
 STATUS_ORDER = ["Recovered", "Structural", "Substituted", "NotReversed", "NotInBinary"]
+# The Chinese words here MUST match lcns/include/lcns/recovery.hpp's macro block and toChinese();
+# tests/test_recovered.cpp asserts that table, so a drift breaks the build.
 STATUS_LABEL = {
     "Recovered": ("已恢复", "instruction-level faithful; constants cite RVAs checked by tests"),
     "Structural": ("结构已恢复", "structure/algorithm skeleton recovered; body re-implemented"),
-    "Substituted": ("替代实现", "original uses something unavailable here, or heuristic constants were NOT recovered"),
-    "NotReversed": ("**未逆向**", "feature exists in the DLL but has NOT been reverse engineered"),
+    "Substituted": ("替代实现", "the original uses something unavailable here, or heuristic constants were NOT recovered"),
+    "NotReversed": ("**尚未逆向**", "feature exists in the DLL but has NOT been reverse engineered (the only macro that means this)"),
     "NotInBinary": ("非原库", "our own extension"),
 }
 

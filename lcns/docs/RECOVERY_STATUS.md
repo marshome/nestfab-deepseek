@@ -7,8 +7,8 @@
 |---|---|---:|
 | `Recovered`（已恢复） | instruction-level faithful; constants cite RVAs checked by tests | 7 |
 | `Structural`（结构已恢复） | structure/algorithm skeleton recovered; body re-implemented | 14 |
-| `Substituted`（替代实现） | original uses something unavailable here, or heuristic constants were NOT recovered | 27 |
-| `NotReversed`（**未逆向**） | feature exists in the DLL but has NOT been reverse engineered | 11 |
+| `Substituted`（替代实现） | the original uses something unavailable here, or heuristic constants were NOT recovered | 27 |
+| `NotReversed`（**尚未逆向**） | feature exists in the DLL but has NOT been reverse engineered (the only macro that means this) | 11 |
 | `NotInBinary`（非原库） | our own extension | 1 |
 
 > 未逆向 ≠ 未知：凡是标为 `NotReversed` 的，都给出了它在二进制中的地址（或明确写了"-"），说明它**存在**但我们**没有译出**；凡是 `Substituted` 的，说明这里跑的是**替代实现**，不是原库算法。
@@ -77,7 +77,7 @@
 | `tiling.eval.multitorch` | `-` | scoring formula NOT recovered | src/tiling.cpp:188 |
 | `lp.simplex_fallback` | `not in the binary (lcns only)` | the zero dependency Simplex stays as a fallback for builds configured without the COIN-OR archives (-DLCNS_WITH_CLP=OFF, or archives absent). It is NOT what the original runs, so any build using it must be described as using a substitute backend | src/lp.cpp:272 |
 
-## NotReversed（**未逆向**）
+## NotReversed（**尚未逆向**）
 
 | id | DLL 地址 | 说明 | 标记位置 |
 |---|---|---|---|
