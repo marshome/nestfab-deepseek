@@ -1145,6 +1145,39 @@ inline constexpr bool kBigIntSmallBranchUnknown = true;      // RE 0xF34A5: the 
 static_assert(kBigIntCapSixteen * 2 == kBigIntCapThirtyTwo, "the ladder doubles");
 static_assert(kBigIntCapThirtyTwo * 2 == kBigIntCapSixtyFour, "the ladder doubles");
 
+
+// --- the reset routine of the large object, 0x87D8E0, fifty-three callers (round 258) -----------------
+//     0x87D8F1 call 0x822590      ; the eight-byte function: a predicate, its answer gates the reset
+//     0x87D90D xor eax,1          ; a flag inverted before use
+//     0x87D917 dword [rcx+0x58] = 0   ; round 226's first flag on the 0x98-byte object
+//     0x87D91E byte  [rcx+0x90] = 0   ; and its second -- so this routine operates on THAT object
+//     0x87D94E/0x87D952/0x87D956  +0x08, +0x10 and +0x18 all take the same value
+//     0x87D93E/0x87D946/0x87D95D  +0x28, +0x20 and +0x30 are zeroed
+//     0x87D95A/0x87D965/0x87D968  the dword at +0x5C is copied to both +0x60 and +0x64
+//     0x87D936/0x87D93A           the bytes at +0x79 and +0x7A are cleared
+//     0x87D96B call 0x8771C0      ; the target of round 248's five-byte thunk, called directly here
+inline constexpr std::uintptr_t kResetEntry = 0x87D8E0;      // RE the whole routine
+inline constexpr int kResetCallers = 53;
+inline constexpr std::uintptr_t kResetPredicate = 0x822590;  // RE 0x87D8F1, the 8-byte predicate
+inline constexpr std::uintptr_t kResetSubCall = 0x87D270;    // RE 0x87D908
+inline constexpr std::uintptr_t kResetSubCallB = 0x87D4E0;   // RE 0x87D925
+inline constexpr std::size_t kResetEmbedded = 0x48;          // RE 0x87D8E7, passed to the predicate
+inline constexpr std::size_t kResetTripleA = 0x08;           // RE 0x87D94E
+inline constexpr std::size_t kResetTripleB = 0x10;           // RE 0x87D952
+inline constexpr std::size_t kResetTripleC = 0x18;           // RE 0x87D956
+inline constexpr std::size_t kResetZeroA = 0x20;             // RE 0x87D946
+inline constexpr std::size_t kResetZeroB = 0x28;             // RE 0x87D93E
+inline constexpr std::size_t kResetZeroC = 0x30;             // RE 0x87D95D
+inline constexpr std::size_t kResetSource = 0x5C;            // RE 0x87D95A
+inline constexpr std::size_t kResetCopyA = 0x60;             // RE 0x87D965
+inline constexpr std::size_t kResetCopyB = 0x64;             // RE 0x87D968
+inline constexpr std::size_t kResetByteA = 0x79;             // RE 0x87D936
+inline constexpr std::size_t kResetByteB = 0x7A;             // RE 0x87D93A
+static_assert(kResetCopyB - kResetCopyA == 4, "the two copies are four bytes apart");
+static_assert(kResetTripleB - kResetTripleA == 8, "the three pointers are eight bytes apart");
+static_assert(kResetTripleC - kResetTripleB == 8, "the three pointers are eight bytes apart");
+static_assert(kResetByteB - kResetByteA == 1, "the two bytes are adjacent");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

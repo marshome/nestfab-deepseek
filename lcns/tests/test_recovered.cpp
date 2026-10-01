@@ -2305,5 +2305,37 @@ int main() {
         CHECK(kBigIntAssignCallers > kAccessorCallers);
     }
 
+    // --- the reset routine and the two cross-links it settles (RE 0x87d8e0) -------------------------
+    {
+        CHECK(kResetEntry == 0x87D8E0);
+        CHECK(kResetCallers == 53);
+        CHECK(kResetPredicate == 0x822590);
+        CHECK(kResetSubCall == 0x87D270);
+        CHECK(kResetSubCallB == 0x87D4E0);
+        CHECK(kResetEmbedded == 0x48);
+        CHECK(kResetTripleA == 0x08);
+        CHECK(kResetTripleB == 0x10);
+        CHECK(kResetTripleC == 0x18);
+        CHECK(kResetTripleB - kResetTripleA == 8);
+        CHECK(kResetTripleC - kResetTripleB == 8);
+        CHECK(kResetZeroA == 0x20);
+        CHECK(kResetZeroB == 0x28);
+        CHECK(kResetZeroC == 0x30);
+        CHECK(kResetSource == 0x5C);
+        CHECK(kResetCopyA == 0x60);
+        CHECK(kResetCopyB == 0x64);
+        CHECK(kResetCopyB - kResetCopyA == 4);
+        CHECK(kResetByteA == 0x79);
+        CHECK(kResetByteB == 0x7A);
+        CHECK(kResetByteB - kResetByteA == 1);
+
+        // cross-link 1: this routine clears the very flags round 226 recorded on the 0x98-byte object
+        CHECK(kCtor098FlagA == 0x58);
+        CHECK(kCtor098FlagB == 0x90);
+        // cross-link 2: it calls the target of round 248's five-byte thunk directly
+        CHECK(kThunkTarget == 0x8771C0);
+        CHECK(kResetEntry != kThunkTarget);
+    }
+
     return check::finish("test_recovered");
 }
