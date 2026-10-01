@@ -3737,5 +3737,53 @@ int main() {
         CHECK(matches(0, 0));
     }
 
+    // --- the decoding loop and the continuation bit (RE 0x10ff07..0x10ff74) -------------------------
+    {
+        CHECK(kContinuationBit == 0x80);
+        CHECK(kContinuationMask == 0x7F);
+        CHECK(kContinuationMask == static_cast<std::uint8_t>(~kContinuationBit));
+        CHECK(kContinuationMask == 127);
+        CHECK(kAccumulatorOffset == 0x90);
+        CHECK(kAccumulatorShift == 8);
+        CHECK(kAccumulatorMaxBytes == 8);
+        CHECK(kAccumulatorTopShift == 0x38);
+        CHECK(kAccumulatorTopShift == kAccumulatorMaxBytes * 8 - 8);
+        CHECK(kAccumulatorDone == 0x110105);
+        CHECK(kBigEndianAccumulate);
+        CHECK(kContinuationBitIsSignBit);
+        CHECK(kAccumulatorSource == 0xA0);
+        CHECK(kAccumulatorSource == kResultObject);      // the bytes come from the object at +0xA0
+        CHECK(kAccumulatorSource == kVtableSlotI);       // and the slot of the same name fetches them
+
+        // the counter the leading byte yields, and the assembly the loop performs
+        const auto furtherBytes = [](std::uint8_t lead) {
+            return static_cast<unsigned>(lead & kContinuationMask);
+        };
+        CHECK(furtherBytes(0x81) == 1);
+        CHECK(furtherBytes(0x82) == 2);
+        CHECK(furtherBytes(0x01) == 1);
+        CHECK(furtherBytes(0xFF) == 127);
+        CHECK(((0x81 & kContinuationBit) != 0));          // the bit says "more follows"
+
+        const auto assemble = [](const std::uint8_t* bytes, std::size_t n) {
+            std::uint64_t acc = 0;
+            for (std::size_t i = 0; i < n; ++i) {
+                acc = (acc << kAccumulatorShift) | bytes[i];   // RE 0x10FF40/0x10FF44
+            }
+            return acc;
+        };
+        const std::uint8_t two[2] = {0x01, 0x02};
+        CHECK(assemble(two, 2) == 0x0102);
+        const std::uint8_t three[3] = {0x01, 0x00, 0x00};
+        CHECK(assemble(three, 3) == 0x010000);
+        CHECK(assemble(three, 3) == 65536);
+        const std::uint8_t one[1] = {0x7F};
+        CHECK(assemble(one, 1) == 127);
+        // and the overflow the guard catches: nine bytes cannot fit
+        const std::uint8_t nine[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        CHECK(assemble(nine, 9) != 0);
+        CHECK((assemble(nine, 8) >> kAccumulatorTopShift) != 0);   // the top byte is set: the check fires
+    }
+
     return check::finish("test_recovered");
 }

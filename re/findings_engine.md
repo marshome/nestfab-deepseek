@@ -5974,3 +5974,25 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ 与 round 291 的关联：当时已证实首字段是**有符号**（`+0x00`）；本轮在另一个对象上看到同样的符号处理（`movzx` + `js`），两处互相印证。
 
 **已落 `layout.hpp`**：`kVtableSlotA0CallSites`(2)、`kSlotA0ReturnsPointer`、`kStatusByteSignTest`、`kNegativeStatusBranch`(0x10FF07)、`kStatusComparedField`(0x58)、`kDriverFailureSites`(3)、`kDriverReportsVia`、`kLocalConstruct`(0xC33F0)、`kResultObject`(0xA0) + **四条 `static_assert`** + 测试 22 条（含符号测试的六个手算取值）。
+
+### 附 218 ★ **解码循环本体：续接位、大端装配、八字节上限**（goal round 300）**[已落码]**
+
+`0x10FD40` 的负状态分支就是**逐字节的大端装配循环**：
+
+```
+10FF07  and r15d,0x7F        ; ★★ 首字节掩掉0x80，得到**字节数**
+10FF1D  qword [rsp+0x90] = 0 ; 累加器置零
+10FF38  movzx edx, byte [rsp+0xA0]   ; 取下一字节（本地对象）
+10FF40  shl rax,8
+10FF44  or rax,rdx          ; ★★ **大端装配**
+10FF47/10FF53  最后一字节则结束（→ 0x110105）
+10FF59  shr rax,0x38 ; 10FF64 jne 0x10FDD3   ; ★ **超过八字节即错误**
+10FF74  call qword [rax+0xA0]                ; 后续字节逐个取自该槽
+```
+
+⇒ 被掩掉的首字节**计数**，循环把后续字节**大端**装入八字节累加器并带溢出保护 ⇒ **ASN.1/BER 的多字节长度或整数解码**。
+
+★★ **它同时让 round 299 那个 `js` 从“观察”变成“含义”**：符号位 `0x80` **就是 ASN.1 的**续接位**：首字节为负 ⇒ “还有字节”；与 `0x7F` 相与得到**还有几个**。
+因此本轮把那个符号测试**从观察提升为语义**（`kContinuationBitIsSignBit`）。
+
+**已落 `layout.hpp`**：`kContinuationBit`(0x80)、`kContinuationMask`(0x7F)、`kAccumulator*`（五个）、`kBigEndianAccumulate`、`kContinuationBitIsSignBit` + **四条 `static_assert`** + 测试 30 条（含装配的四个手算取值与溢出保护的验证）。

@@ -2295,6 +2295,32 @@ static_assert(kStatusByteSignTest, "the first byte is treated as signed");
 static_assert(kDriverFailureSites == 3, "three ways this driver fails");
 static_assert(kDriverReportsVia == 0x77F2D0, "and all of them report through the BER formatter");
 
+
+// --- the decoding loop of 0x10FD40, and the MEANING of round 299's sign test (round 300) ----------------
+//     0x10FF07 and r15d,0x7F        ; the first byte's 0x80 bit is dropped, leaving a byte COUNT
+//     0x10FF1D qword [rsp+0x90] = 0 ; the accumulator
+//     0x10FF40 shl rax,8            ; shifted up
+//     0x10FF44 or rax,rdx           ; and the next byte OR-ed in: BIG-ENDIAN
+//     0x10FF47/0x10FF53  the last byte ends the loop
+//     0x10FF59 shr rax,0x38 ; 0x10FF64 jne 0x10FDD3   ; more than eight bytes is an error
+//     0x10FF74 call qword [rax+0xA0] ; each further byte comes from slot +0xA0
+inline constexpr std::uint8_t kContinuationBit = 0x80;       // RE 0x10FE09, the 0x80 bit of the first byte
+inline constexpr std::uint8_t kContinuationMask = 0x7F;      // RE 0x10FF07
+inline constexpr std::size_t kAccumulatorOffset = 0x90;      // RE 0x10FF1D
+inline constexpr std::size_t kAccumulatorShift = 8;          // RE 0x10FF40
+inline constexpr std::size_t kAccumulatorMaxBytes = 8;       // RE 0x10FF59 (the top byte at 0x38 = 56)
+inline constexpr std::size_t kAccumulatorTopShift = 0x38;    // RE 0x10FF59
+inline constexpr std::uintptr_t kAccumulatorDone = 0x110105; // RE 0x10FF53
+inline constexpr bool kBigEndianAccumulate = true;           // RE 0x10FF40/0x10FF44
+inline constexpr bool kContinuationBitIsSignBit = true;      // what round 299's sign test was for
+inline constexpr std::size_t kAccumulatorSource = 0xA0;      // RE 0x10FF38, the local object's byte
+// the cast matters: ~promotes a std::uint8_t to int, so the complement would be 0xFFFFFF7F without it
+static_assert(kContinuationMask == static_cast<std::uint8_t>(~kContinuationBit),
+              "the mask is the complement of the bit");
+static_assert(kAccumulatorTopShift == kAccumulatorMaxBytes * 8 - 8, "the top byte of an eight-byte value");
+static_assert(kBigEndianAccumulate, "the bytes are assembled big-endian");
+static_assert(kContinuationBitIsSignBit, "the sign test of round 299 is the continuation test");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
