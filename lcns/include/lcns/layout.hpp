@@ -2368,6 +2368,28 @@ static_assert(kSiblingSharedAt - kFirstDriverSharedAt == kPrologueDelta, "the pr
 static_assert(kSiblingNegativeBranch - kDriverSibling == kDriverTwinOffset, "and the branch is at the same place");
 static_assert(kDriversStructurallySame && !kDriversByteIdentical, "the weaker claim only");
 
+
+// --- where the two drivers actually differ, now localised (round 303) -----------------------------------
+// Fourteen instructions of the negative branch were compared and every relative offset agrees:
+//     0x1C7 (and r15d,0x7f), 0x1CB (je), 0x1D1, 0x1D5, 0x1DD, 0x1E9, 0x1F0, 0x1F8, 0x200 (shl), 0x204 (or),
+//     0x207 (cmp), 0x20B, 0x213 (je) -- identical in both functions.
+// Round 302 measured the FIRST shared instruction at 0x85 in the sibling against 0x81 in the first driver. So the
+// compensating four bytes lie between relative 0x85 and 0x1C7, and from 0x1C7 on the bodies agree instruction for
+// instruction. The difference is localised rather than spread over the routine.
+inline constexpr std::size_t kDifferenceRegionStart = 0x85;   // RE 0x110B85 against 0x10FDC1
+inline constexpr std::size_t kDifferenceRegionEnd = 0x1C7;    // RE the first offset that agrees again
+inline constexpr bool kDifferenceLocalized = true;            // the four bytes sit inside that window
+inline constexpr bool kBranchOffsetsIdentical = true;         // RE the fourteen comparisons
+inline constexpr int kOffsetsCompared = 14;                   // RE the list above
+inline constexpr std::size_t kBranchOffset0 = 0x1C7;          // RE and r15d,0x7f
+inline constexpr std::size_t kBranchOffset1 = 0x1CB;          // RE the je after it
+inline constexpr std::size_t kBranchOffset2 = 0x200;          // RE shl rax,8
+inline constexpr std::size_t kBranchOffset3 = 0x213;          // RE the je that ends the loop
+static_assert(kDifferenceRegionStart < kDifferenceRegionEnd, "the window is not empty");
+static_assert(kDifferenceLocalized && kBranchOffsetsIdentical, "both findings hold together");
+static_assert(kBranchOffset0 == kDriverTwinOffset, "the first is the offset round 302 measured");
+static_assert(kOffsetsCompared == 14, "fourteen offsets were compared");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -3844,5 +3844,35 @@ int main() {
         CHECK(delta != 0);                                // if it were zero the prologues would match
     }
 
+    // --- the difference localised, from fourteen measured offsets (RE 0x110b00) ---------------------
+    {
+        CHECK(kDifferenceRegionStart == 0x85);
+        CHECK(kDifferenceRegionEnd == 0x1C7);
+        CHECK(kDifferenceRegionStart < kDifferenceRegionEnd);
+        CHECK(kDifferenceLocalized);
+        CHECK(kBranchOffsetsIdentical);
+        CHECK(kOffsetsCompared == 14);
+        CHECK(kBranchOffset0 == kDriverTwinOffset);
+        CHECK(kBranchOffset1 == 0x1CB);
+        CHECK(kBranchOffset2 == 0x200);
+        CHECK(kBranchOffset3 == 0x213);
+        CHECK(kBranchOffset0 < kBranchOffset1 && kBranchOffset1 < kBranchOffset2);
+        CHECK(kBranchOffset2 < kBranchOffset3);
+
+        // the four hand-computed relative offsets, for both functions
+        const std::uintptr_t sibling = kDriverSibling;
+        const std::uintptr_t first = 0x10FD40;
+        CHECK(0x110CC7 - sibling == kBranchOffset0);
+        CHECK(0x110CCB - sibling == kBranchOffset1);        // 0x1CB, four bytes past the first
+        CHECK(0x10FF40 - first == kBranchOffset2);
+        CHECK(0x10FF53 - first == kBranchOffset3);
+        CHECK(0x10FF07 - first == kBranchOffset0);
+        // so the branch offsets agree, and the earlier four-byte difference lies before them
+        CHECK(0x110B85 - sibling == kDifferenceRegionStart);
+        CHECK(0x10FDC1 - first == kFirstDriverSharedAt);
+        CHECK(kDifferenceRegionStart - kFirstDriverSharedAt == kPrologueDelta);
+        CHECK(!kDriversByteIdentical);                       // still not identical overall
+    }
+
     return check::finish("test_recovered");
 }

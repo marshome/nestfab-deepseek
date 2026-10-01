@@ -6037,3 +6037,29 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ **因此只能下“结构相同、带补偿性差异”的结论**，不能下“逐字节相同”（`kDriversByteIdentical = false`）—— **两个数据点不支持更强的说法，就不说**。
 
 **已落 `layout.hpp`**：`kDriverTwinOffset`(0x1C7)、`kSiblingNegativeBranch`(0x110CC7)、`kSiblingSharedAt`(0x85)、`kFirstDriverSharedAt`(0x81)、`kPrologueDelta`(4)、`kDriversStructurallySame`、`kDriversByteIdentical`(false)、`kDriversShareBody` + **四条 `static_assert`** + 测试 20 条。
+
+### 附 221 **差异被定位了**：14 个相对偏移全部相等（goal round 303）**[已落码]**
+
+逐指令对比两个负状态分支，**14 个相对偏移完全相等**：
+
+| 相对偏移 | 指令 |
+|---|---|
+| `0x1C7` | `and r15d,0x7f` |
+| `0x1CB` | `je` |
+| `0x1D1` | `movzx r15d,r15b` |
+| `0x1D5` | `byte [rsp+0x89] = 1` |
+| `0x1DD` | `qword [rsp+0x90] = 0` |
+| `0x1E9` | `jmp` |
+| `0x1F0` | `mov rax,[rsp+0x90]` |
+| `0x1F8` | `movzx edx,byte [rsp+0xA0]` |
+| `0x200` | `shl rax,8` |
+| `0x204` | `or rax,rdx` |
+| `0x207` | `cmp r15d,1` |
+| `0x20B` | `[rsp+0x90] = rax` |
+| `0x213` | `je` |
+
+★ **与 round 302 的第一个量对照**：首个共享指令在前者是 `0x85`、后者是 `0x81`（差 4），而本分支却落在**同一偏移** ⇒ **那 4 字节的差异就在相对 `0x85` 与 `0x1C7` 之间**，而**从 `0x1C7` 起两者逐指令一致**。
+
+⇒ 这是比 round 302 **更精确的陈述**（差异被**局域化**），也依然**不声称逐字节相同**。
+
+**已落 `layout.hpp`**：`kDifferenceRegionStart`(0x85)、`kDifferenceRegionEnd`(0x1C7)、`kDifferenceLocalized`、`kBranchOffsetsIdentical`、`kOffsetsCompared`(14)、`kBranchOffset0..3` + **四条 `static_assert`** + 测试 20 条。
