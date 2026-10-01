@@ -1357,3 +1357,19 @@
 弱归属当成了身份。这条已在 `SWEEP.md` 里重复记录过（弱归属 ≠ 私有 ≠ 身份），这次是它的又一次显形。
 **处置**：不给 `0x8A82F0` 编名字；把"原子计数 + 索引写全局数组 ⇒ 注册/初始化"这一**形态判据**记下来，
 以后遇到同类形态可直接归类，不必再逐条读。
+
+## 待办（goal round 59）：`cornerEdges` 的测试插入弄坏了括号结构，已回退
+
+现象：`test_recovered.cpp:283/292/305/316/329/338: error: expected unqualified-id before '{' token`
+（16 个编译错误）。原因：我的锚点正则匹配到的那个 `}` **是外层测试函数的收尾括号**，于是新块被插到了函数**外面**。
+
+**门禁表现**：五条件中 `errors==0` 不满足 ⇒ 输出 `NOT committed`，**没有把坏状态提交**。
+但同一轮里 `ctest` 仍打印 `100% tests passed` —— 那是**上一版二进制**的结果。
+⇒ **守卫说明必须补一条**：`ctest_ok` 只在**构建成功之后**才有意义；构建失败时 ctest 的绿色是假象。
+
+**回退**：`git checkout -- lcns/include/lcns/geom.hpp lcns/tests/test_recovered.cpp`，已恢复绿灯
+（0 error / 0 warning / 15-15）。
+
+**下轮正解**：插测试块**不要**用"某个 `}` 之后"当锚点，改用**函数级唯一文本**（例如
+`CHECK(kGapCount ==` 那一组之前），或先读回插入点上下文再插。
+`cornerEdges` / `CornerEdges` 的 **hpp 部分本身是对的**（三个已证实原语的组装），只需把测试接对。
