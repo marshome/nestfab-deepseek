@@ -3462,5 +3462,49 @@ int main() {
         CHECK(!withinLimit(kPointerMaxCount + 1));
     }
 
+    // --- the array teardown and the string assignment (RE 0x418bd0 and 0x9135d0) --------------------
+    {
+        CHECK(kArrayStride == 8);
+        CHECK(kArrayElementsFreed);
+        CHECK(kArrayFreeCallee == 0x9984B0);
+        CHECK(kArrayFreeCallee == kSharedDealloc);
+        CHECK(kSharedDeallocSightings5 == 7);
+        CHECK(kSharedDeallocSightings5 == kSharedDeallocSightings4 + 1);
+        CHECK(kArrayFreeLoopCallers == 25);
+        // the stride matches the pointer scaling of round 292: both say eight
+        CHECK(kArrayStride == 8 && kVectorOfPointers);
+        CHECK(kArrayStride < kElementBytes198);
+
+        CHECK(kStringAssign == 0x9135D0);
+        CHECK(kStringAssignData == 0x00);
+        CHECK(kStringAssignSize == 0x08);
+        CHECK(kStringAssignCapacity == 0x10);
+        CHECK(kStringAssignData == kWideData);
+        CHECK(kStringAssignSize == kWideSize);
+        CHECK(kStringAssignCapacity == kWideCapacity);
+        CHECK(kStringAssignCallers == 32);
+        CHECK(kStringAssignSsoCheck);
+        CHECK(kStringAssignInlineBranch == 0x913684);
+        CHECK(kStringAssignInlineBranch > kStringAssign);
+        CHECK(kStringAssignCapacity == kSsoInline);      // the inline buffer sits where the capacity does
+
+        // the SSO decision the instructions make: inline when the data pointer still points into the object
+        const auto usesInline = [](const void* data, const void* self) {
+            return data == static_cast<const char*>(self) + kStringAssignCapacity;
+        };
+        char obj[64] = {};
+        CHECK(usesInline(obj + kStringAssignCapacity, obj));
+        CHECK(!usesInline(obj, obj));
+
+        // the teardown loop: free every non-null element, eight bytes apart
+        int freed = 0;
+        void* elements[3] = {reinterpret_cast<void*>(1), nullptr, reinterpret_cast<void*>(2)};
+        for (std::size_t i = 0; i < 3; ++i) {
+            if (elements[i] != nullptr) ++freed;         // RE 0x418D86/0x418D8B
+        }
+        CHECK(freed == 2);
+        CHECK(kArrayStride * 3 == 24);
+    }
+
     return check::finish("test_recovered");
 }

@@ -2129,6 +2129,38 @@ static_assert(kRecordPayload == kRecordByteB + 1, "the payload starts right afte
 static_assert(kElementBytes198 == 408, "four hundred and eight bytes per record");
 static_assert(kPayloadCopierSightings == 2, "the payload copier has two sightings");
 
+
+// --- the array teardown inside 0x418BD0, which confirms the pointer array (round 293) ------------------
+//     0x418D7A rax = [rbx+0x18]                     ; the array
+//     0x418D8B call 0x9984B0                        ; each non-null element is freed
+//     0x418D99 add rdi,8                            ; EIGHT-byte stride
+//     0x418DA1 jmp 0x418C15                         ; then the assignment carries on
+inline constexpr std::size_t kArrayStride = 8;               // RE 0x418D99
+inline constexpr bool kArrayElementsFreed = true;            // RE 0x418D8B
+inline constexpr std::uintptr_t kArrayFreeCallee = 0x9984B0; // RE 0x418D8B, the shared deallocator
+inline constexpr int kSharedDeallocSightings5 = 7;           // rounds 248, 252, 254, 256, 261, 275 and this
+inline constexpr int kArrayFreeLoopCallers = 25;
+static_assert(kArrayStride == 8, "the pointers are eight bytes");
+static_assert(kArrayFreeCallee == kSharedDealloc, "the widely shared deallocator");
+static_assert(kSharedDeallocSightings5 == kSharedDeallocSightings4 + 1, "one more sighting");
+
+// --- the string assignment 0x9135D0, thirty-two callers (round 293) -------------------------------------
+//     0x9135DA cmp rcx,rdx ; je       ; a self-check
+//     0x9135E5 rdi = [rcx]            ; the data pointer
+//     0x9135E8 r12 = rcx+0x10         ; the inline buffer
+//     0x9135F0 cmp r12,rdi ; je       ; THE SSO CHECK
+//     0x9135F9 r8 = [rcx+0x10]        ; the capacity
+inline constexpr std::uintptr_t kStringAssign = 0x9135D0;    // RE the whole routine
+inline constexpr std::size_t kStringAssignData = 0x00;       // RE 0x9135E5
+inline constexpr std::size_t kStringAssignSize = 0x08;       // RE 0x9135EC
+inline constexpr std::size_t kStringAssignCapacity = 0x10;   // RE 0x9135F9
+inline constexpr int kStringAssignCallers = 32;
+inline constexpr bool kStringAssignSsoCheck = true;          // RE 0x9135F0
+inline constexpr std::uintptr_t kStringAssignInlineBranch = 0x913684;  // RE 0x9135F3
+static_assert(kStringAssignData == kWideData && kStringAssignSize == kWideSize &&
+              kStringAssignCapacity == kWideCapacity, "the trio round 262 recorded");
+static_assert(kStringAssignSsoCheck, "the assignment compares the inline address with the data pointer");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

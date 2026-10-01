@@ -5829,3 +5829,30 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 另：`0xFFFFFFFFFFFFFFF` = **2**60 − 1**，与“指针×8”的算术一致（可复算，测试已断言）；外层对象的计数在 `+0x00`、数组在 `+0x18`。
 
 **已落 `layout.hpp`**：`kElementBytes198`(0x198)、`kPointerMaxCount`、`kVectorOfPointers`、`kRecordHeader*`（五个）、`kPayloadCopier`、`kPayloadCopierSightings`(2)、`kOuterCount`、`kOuterArray` + **五条 `static_assert`** + 测试 26 条。
+
+### 附 211 **数组拆解循环独立印证“指针数组”**；且字符串赋值印证三元组（goal round 293）**[已落码]**
+
+**（a）`0x418D70`（赋值的另一分支）= 旧数组拆解**：
+
+```
+418D7A  rax = [rbx+0x18]          ; round 292 确认的数组
+418D82/418D8B  逐元素：非空则释放（`0x9984B0`）
+418D99  add rdi,8                 ; ★ **步长 8**
+418DA1  jmp 0x418C15              ; 然后赋值继续
+```
+
+⇒ round 292 的“指针数组”**不是从一处 `*8` 猜来的**：释放循环**以 8 字节步长**遍历它，并用广泛共用的释放器逐个释放（**第七次目击**）。
+
+**（b）`0x9135D0`（191 B / **32 个调用者**）= 带 SSO 判定的字符串赋值**：
+
+```
+9135DA  cmp rcx,rdx ; je       ; 自检
+9135E5  rdi = [rcx]            ; 数据指针 `+0x00`
+9135E8  r12 = rcx+0x10         ; 内联缓冲区
+9135F0  cmp r12,rdi ; je       ; ★ **SSO 判定**
+9135F9  r8 = [rcx+0x10]        ; 容量 `+0x10`
+```
+
+⇒ 与 round 262 为两字节字符串记录的三元组**完全相同**（`+0x00` 数据、`+0x08` 尺寸、`+0x10` 容量） ⇒ 在**另一个例程里得到独立印证**。
+
+**已落 `layout.hpp`**：`kArrayStride`(8)、`kArrayElementsFreed`、`kArrayFreeCallee`、`kSharedDeallocSightings5`(7)、`kStringAssign*`（六个） + **五条 `static_assert`** + 测试 22 条。
