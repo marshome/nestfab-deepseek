@@ -2279,3 +2279,42 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 
 * `0x69BE80` 的断言原文给出两个**真实方法名**：`SetActiveNesting`、`GetActiveParts`，并说明后者的**前置条件**（先 Set 才能 Get）；断言的条件本身是 `m_base` 非空。
 * 桶 A 按**库标记串**（`PSSR_MEM`、`thread.entry_event`、`decltype(auto)`、`map::at` 等）重算：库代码 **8** 个，**剩余领域文本函数 187 个**。
+
+### 附 42 桶 A 第 3 批（名字类文本优先，goal round 116）
+
+#### `0x6e82a0`（144 B / 32 条，调用者 3）
+
+* 自带文本：`C:\Users\renaud\nest\external\boost_1_63_0/boost/multiprecis`、`Subtraction resulted in a negative value, but the type is un`、`void boost::multiprecision::backends::detail::raise_subtract`
+* 其中**工程里尚无**的标识符：`cpp_int`
+* 浮点常量：无
+
+#### `0x60d380`（1536 B / 376 条，调用者 2）
+
+* 自带文本：`no COFF symbols`、`magic number in optional header not recognized`、`size of optional header did not match expectation`、`invalid size in COFF string table`
+* 其中**工程里尚无**的标识符：无
+* 被调用者中带文本者：`0x60c2f0`(`bad stream cursor position specified`)、`0x60c430`(`bad stream cursor position specified`)、`0x60c5c0`(`failed to read from file`)
+* 浮点常量：无
+
+#### `0x874dd0`（1130 B / 154 条，调用者 7）
+
+* 自带文本：`%m/%d/%y`、`%H:%M:%S`、`Sunday`、`Monday`
+* 其中**工程里尚无**的标识符：`anuary`、`aturday`、`ctober`、`ebruary`、`ecember`
+* 浮点常量：无
+
+#### `0x12ba20`（354 B / 102 条，调用者 2）
+
+* 自带文本：`sntl_admin_context_new`、`sntl_admin_get`、`sntl_admin_free`、`sntl_admin_context_delete`
+* 其中**工程里尚无**的标识符：无
+* 浮点常量：无
+
+#### `0x6e8110`（215 B / 51 条，调用者 4）
+
+* 自带文本：`overflow in `、`C:\Users\renaud\nest\external\boost_1_63_0/boost/multiprecis`、`void boost::multiprecision::backends::detail::raise_overflow`
+* 其中**工程里尚无**的标识符：`cpp_int`
+* 浮点常量：无
+
+#### `0x8268e0`（316 B / 65 条，调用者 1）
+
+* 自带文本：`space`、`print`、`cntrl`、`upper`
+* 其中**工程里尚无**的标识符：`alnum`、`blank`、`cntrl`
+* 浮点常量：无
