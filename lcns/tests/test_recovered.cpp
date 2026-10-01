@@ -15,6 +15,7 @@
 #include "lcns/model.hpp"
 #include "lcns/boolean.hpp"
 #include "lcns/engine.hpp"
+#include "lcns/budget.hpp"
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
@@ -745,6 +746,31 @@ int main() {
         CHECK(std::strcmp(toChinese(Status::Substituted), "替代实现") == 0);
         CHECK(std::strcmp(toChinese(Status::NotReversed), "尚未逆向") == 0);
         CHECK(std::strcmp(toChinese(Status::NotInBinary), "非原库") == 0);
+    }
+
+    // --- 0x1b33b0's further formulas (RE 0x1b4feb, 0x1b5182.., 0x1b536a..) -------------------------
+    {
+        CHECK(kPairLimitWeight == 1.5);
+        CHECK(limitFromPair(2.0, 3.0) == 9.0);                 // 1.5 * (a * b)
+        CHECK(kCountWeight == 30.0);
+        CHECK(kBudgetWeightQuarter == 0.25);
+        CHECK(kBudgetWeightNine == 0.9);
+        CHECK(kBudgetWeightExtra == 0.03);
+        CHECK(extraWeightedBudget(kBudgetBase) == 0.03e8);
+        // 0.25 * base - 30 * (count / 1000)
+        CHECK(countBudgetLimit(kBudgetBase, 0) == 0.25e8);
+        CHECK(countBudgetLimit(kBudgetBase, 1000) == 0.25e8 - 30.0);
+        // 0.9 * (0.7 * base - count / 1000)
+        CHECK(decayedBudget(kBudgetBase, 0) == 0.9 * 7e7);
+        CHECK(decayedBudget(kBudgetBase, 1000) == 0.9 * (7e7 - 1.0));
+        // the link round 147 established: 0.5*(0.7*base) plus the truncated count limit
+        const std::int64_t truncated = static_cast<std::int64_t>(countBudgetLimit(kBudgetBase, 1000));
+        CHECK(truncated == static_cast<std::int64_t>(0.25e8 - 30.0));
+        // the binary ADDS the truncated count limit to half the weighted budget, so the result is a
+        // sum, not an adjustment: 3.5e7 + (0.25e8 - 30) for base 1e8 and count 1000
+        CHECK(halfOfWeightedBudget(kBudgetBase) == 3.5e7);
+        CHECK(halfOfWeightedBudget(kBudgetBase) + static_cast<double>(truncated) == 3.5e7 + (0.25e8 - 30.0));
+        CHECK(halfOfWeightedBudget(kBudgetBase) + static_cast<double>(truncated) == 5.999997e7);
     }
 
     return check::finish("test_recovered");

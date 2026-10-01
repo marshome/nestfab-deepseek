@@ -2871,3 +2871,21 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 **完整链条（现已闭合）**：`0x8A8190` 取纳秒 → 两次读数相减 → `/1e9` 得历时秒数 → 从 **`0.7×1e8`** 的预算里减掉。
 
 **已落 `lcns`**：`kNanosecondsPerSecond = 1000000000`、`nanosecondsFromPair`、`nanosecondsToSeconds`，并加一条**跨函数一致性测试**（预算减去的正是 `nanosecondsToSeconds(1e9) = 1`）。
+
+### 附 71 `0x1B33B0` 剩余常量的三段算式，且两段与 round 147 的预算**拼合**（goal round 151）
+
+```
+1B4FE5  xmm1=[r13] ; 1B4FEB mulsd xmm1,[r13+8] ; 1B4FF1 mulsd xmm1,[1.5] ; 1B4FF9 ucomisd
+        ⇒ 阈值 = 1.5 × (a × b)
+1B5113  xmm0=[0.03] ; 1B511B mulsd xmm0,[rsi+0x18]              ⇒ 0.03 × base
+1B5153  xmm2=[30] ; 1B515B xmm1=[0.25] ; 1B5169 mulsd xmm1,[rsi+0x18]
+1B5182  cvtsi2sd xmm0,rax ; 1B5187 divsd xmm0,[1000] ; 1B518F mulsd xmm2,xmm0
+1B5193  subsd xmm1,xmm2 ; 1B519D cvttsd2si r12d,xmm1
+        ⇒ 0.25×base − 30×(count/1000)，截断入 r12d
+1B535D  cvtsi2sd xmm0,rax ; 1B536A divsd xmm0,xmm6 ; 1B5373 subsd xmm7,xmm0 ; 1B5377 mulsd xmm7,[0.9]
+        ⇒ 0.9 × (0.7×base − count/1000)
+```
+
+**关键拼接**：round 147 读到 `1B4B95 cvtsi2sd xmm0,r12d ; 1B4B9E addsd xmm1,xmm0`，即 **`0.5×(0.7×base) + trunc(0.25×base − 30×count/1000)`** —— 两段属于**同一表达式**。
+
+**边界说明**：这里的两处除法用的是**常量 1000**（`divsd`），与 round 148 的**魔数乘法（1e6）**不同 ⇒ 这里的计数单位与那里不同，因此参数**仍按位置命名**（不猜单位）。已落 `lcns`：四个常量 + `limitFromPair`/`countBudgetLimit`/`decayedBudget`/`extraWeightedBudget` + 12 条测试。
