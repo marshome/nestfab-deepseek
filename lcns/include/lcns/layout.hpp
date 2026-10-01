@@ -1700,6 +1700,31 @@ static_assert(kAccessorClassCount > 0, "the class is not empty");
 static_assert(kDefaultStubClassCount >= 0, "the stub class was measured");
 
 
+
+// --- the second nested-container teardown 0x687480, twenty-five callers (round 279) --------------------
+//     0x68748B/0x687487  the OUTER begin at +0x18 and end at +0x20
+//     0x6874A0/0x6874A8  per element: the pointer at [rbx], freed when non-null
+//     0x6874AD add rbx,0x18   ; the INNER elements are twenty-four bytes
+//     0x6874C2 call 0x9984B0  ; the inner buffer
+//     0x6874D6 jmp 0x9984B0   ; and the outer buffer at +0x00, tail-called
+inline constexpr std::size_t kNested2Buffer = 0x00;          // RE 0x6874C7
+inline constexpr std::size_t kNested2Begin = 0x18;           // RE 0x68748B
+inline constexpr std::size_t kNested2End = 0x20;             // RE 0x687487
+inline constexpr std::size_t kNested2InnerStride = 0x18;     // RE 0x6874AD
+inline constexpr int kNested2Callers = 25;                   // RE the caller count
+inline constexpr int kNested2FreeSites = 3;                  // RE 0x6874A8, 0x6874C2 and 0x6874D6
+static_assert(kNested2End - kNested2Begin == 8, "the outer pair is eight bytes apart");
+static_assert(kNested2InnerStride == kInnerStride24, "the same inner stride as round 254's destructor");
+// NUMERICALLY equal but NOT the same level: round 254's object keeps its inner pair at +0x18/+0x20 while this one
+// keeps its OUTER pair there. The equality is real; treating one as the other would not be.
+static_assert(kNested2Begin == kNestedInnerBegin, "the offsets coincide, the levels do not");
+
+// --- two more class sweeps, reported as they came out (round 279) ---------------------------------------
+inline constexpr int kSetterClassCount = 0;                  // RE the sweep: none in this size range
+inline constexpr int kMultiGetterCount = 11;                 // RE the sweep: loads of two or more fields
+inline constexpr int kMultiGetterOffsets = 8;                // the distinct offsets in their histogram
+inline constexpr bool kSetterClassEmpty = true;              // reported as zero rather than dressed up
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

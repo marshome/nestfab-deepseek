@@ -5566,3 +5566,22 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ★ **B 类已登记为工具链**：该编码正是 round 223 在 `0x7C2460`/`0x7C2470` 认定的**编译器默认方法桩**（`31 C0 C3` + nop）。
 
 **已落 `layout.hpp`**：`kAccessorClassCount`(12)、`kAccessorClassTopOffsets`(9)、`kDefaultStubClassCount`(0)、`kAccessorAddressesUnlanded` + **两条 `static_assert`** + 测试 8 条。
+
+### 附 197 **第二套嵌套容器析构**；两类扫描的如实结果（goal round 279）**[已落码]**
+
+**（a）`0x687480`（104 B / 25 个调用者）**：
+
+```
+68748B/687487  **外层** begin `+0x18`、end `+0x20`
+6874A0/6874A8  逐元素：取 `[rbx]`，非空则释放（`0x9984B0`）
+6874AD  add rbx,0x18          ; 内层元素 24 字节
+6874C2  call 0x9984B0         ; 内层缓冲区
+6874D6  jmp 0x9984B0          ; 最后尾调释放 `+0x00` 的外层缓冲区
+```
+
+★ **与 round 254 的关系必须说清**：round 254 那个对象的**外层**在 `+0x00`/`+0x08`、**内层**在 `+0x18`/`+0x20`；而**本对象的外层就在 `+0x18`/`+0x20`** —— **偏移相同，层级不同**。测试同时断言“相等”与“与 round 254 的外层不等”，并在注释里写明区别。
+
+**（b）两类扫描的如实结果**：**setter 类 0 个**（该尺寸区间内确实没有，**照实报 0**）；**多字段 getter 11 个**（偏移直方图以 `0x14`×3、`0x00`×2 为主，共 8 个不同偏移）。
+同 round 278：**这些类的地址一律不写入源码**，只落形状与直方图。
+
+**已落 `layout.hpp`**：`kNested2*`（五个）、`kSetterClassCount`(0)、`kMultiGetter*`、`kSetterClassEmpty` + **三条 `static_assert`** + 测试 21 条。

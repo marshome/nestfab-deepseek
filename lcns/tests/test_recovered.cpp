@@ -2952,5 +2952,31 @@ int main() {
         CHECK(kDefaultStubGap == 0x10);
     }
 
+    // --- the second nested teardown and the two sweeps (RE 0x687480) --------------------------------
+    {
+        CHECK(kNested2Buffer == 0x00);
+        CHECK(kNested2Begin == 0x18);
+        CHECK(kNested2End == 0x20);
+        CHECK(kNested2End - kNested2Begin == 8);
+        CHECK(kNested2InnerStride == 0x18);
+        CHECK(kNested2InnerStride == kInnerStride24);       // the same inner stride as round 254
+        CHECK(kNested2Callers == 25);
+        CHECK(kNested2FreeSites == 3);
+        CHECK(kNested2FreeSites == 3 && kSharedDealloc == 0x9984B0);
+        // the offsets coincide with round 254's INNER pair, which is a different level of the shape
+        CHECK(kNested2Begin == kNestedInnerBegin);
+        CHECK(kNested2End == kNestedInnerEnd);
+        // but round 254's OUTER pair is elsewhere, so the two layouts are not the same
+        CHECK(kNestedOuterBegin != kNested2Begin);
+        CHECK(kNestedOuterEnd != kNested2End);
+
+        CHECK(kSetterClassCount == 0);
+        CHECK(kSetterClassEmpty);                           // zero, reported as zero
+        CHECK(kMultiGetterCount == 11);
+        CHECK(kMultiGetterOffsets == 8);
+        CHECK(kMultiGetterCount < kAccessorClassCount + 11);  // consistent with the round-278 sweep
+        CHECK(kAccessorAddressesUnlanded);                  // these stay unlanded too
+    }
+
     return check::finish("test_recovered");
 }
