@@ -1,0 +1,50 @@
+### fn 0xb540 name=None end=0xb5f1 size=177
+STRINGS: 0x12740:'WVSH', 0x9aca20:'AsyncCancelAllComputationsAndDeleteLaunchingOrder'
+CALLERS: 
+CALLEES: 0x62f280:None, 0x64aea0:None, 0x8ab0a0:None, 0x8ab160:None, 0x990e80:None, 0x998500:None
+
+  0000b540  53                   push    rbx
+  0000b541  4883ec40             sub     rsp, 0x40
+  0000b545  4889cb               mov     rbx, rcx
+  0000b548  488d0dd1149a00       lea     rcx, [rip + 0x9a14d1]  ; "AsyncCancelAllComputationsAndDeleteLaunchingOrder"
+  0000b54f  e84cf96300           call    0x64aea0  ; -> 0x64aea0 None
+  0000b554  b918000000           mov     ecx, 0x18
+  0000b559  48c744242000000000   mov     qword ptr [rsp + 0x20], 0
+  0000b562  e899cf9800           call    0x998500  ; -> 0x998500 None
+  0000b567  488d15328da400       lea     rdx, [rip + 0xa48d32]  ; DATA 0xa542a0
+  0000b56e  4531c0               xor     r8d, r8d
+  0000b571  488910               mov     qword ptr [rax], rdx
+  0000b574  488d15c5710000       lea     rdx, [rip + 0x71c5]  ; "WVSH"
+  0000b57b  48895808             mov     qword ptr [rax + 8], rbx
+  0000b57f  488d5c2420           lea     rbx, [rsp + 0x20]
+  0000b584  48895010             mov     qword ptr [rax + 0x10], rdx
+  0000b588  488d542430           lea     rdx, [rsp + 0x30]
+  0000b58d  4889d9               mov     rcx, rbx
+  0000b590  4889442430           mov     qword ptr [rsp + 0x30], rax
+  0000b595  e806fb8900           call    0x8ab0a0  ; -> 0x8ab0a0 None
+  0000b59a  488b4c2430           mov     rcx, qword ptr [rsp + 0x30]
+  0000b59f  4885c9               test    rcx, rcx
+  0000b5a2  7406                 je      0xb5aa
+  0000b5a4  488b01               mov     rax, qword ptr [rcx]
+  0000b5a7  ff5008               call    qword ptr [rax + 8]
+  0000b5aa  4889d9               mov     rcx, rbx
+  0000b5ad  e8aefb8900           call    0x8ab160  ; -> 0x8ab160 None
+  0000b5b2  48837c242000         cmp     qword ptr [rsp + 0x20], 0
+  0000b5b8  7506                 jne     0xb5c0
+  0000b5ba  4883c440             add     rsp, 0x40
+  0000b5be  5b                   pop     rbx
+  0000b5bf  c3                   ret     
+  0000b5c0  e8bb589800           call    0x990e80  ; -> 0x990e80 None
+  0000b5c5  48837c242000         cmp     qword ptr [rsp + 0x20], 0
+  0000b5cb  75f3                 jne     0xb5c0
+  0000b5cd  4889c1               mov     rcx, rax
+  0000b5d0  e8ab3c6200           call    0x62f280  ; -> 0x62f280 None
+  0000b5d5  488b4c2430           mov     rcx, qword ptr [rsp + 0x30]
+  0000b5da  4889c3               mov     rbx, rax
+  0000b5dd  4885c9               test    rcx, rcx
+  0000b5e0  7406                 je      0xb5e8
+  0000b5e2  488b01               mov     rax, qword ptr [rcx]
+  0000b5e5  ff5008               call    qword ptr [rax + 8]
+  0000b5e8  4889d9               mov     rcx, rbx
+  0000b5eb  e8903c6200           call    0x62f280  ; -> 0x62f280 None
+  0000b5f0  90                   nop     

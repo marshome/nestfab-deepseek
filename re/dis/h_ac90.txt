@@ -1,0 +1,32 @@
+### fn 0xac90 name=None end=0xace4 size=84
+STRINGS: 0x9ac88a:'%ld'
+CALLERS: 0xc010:None
+CALLEES: 0xab90:None, 0x634be0:None
+
+  0000ac90  55                   push    rbp
+  0000ac91  56                   push    rsi
+  0000ac92  53                   push    rbx
+  0000ac93  4889e5               mov     rbp, rsp
+  0000ac96  4883ec30             sub     rsp, 0x30
+  0000ac9a  4c8d05e91b9a00       lea     r8, [rip + 0x9a1be9]  ; "%ld"
+  0000aca1  ba10000000           mov     edx, 0x10
+  0000aca6  4c8d4d40             lea     r9, [rbp + 0x40]
+  0000acaa  4883ec20             sub     rsp, 0x20
+  0000acae  4889cb               mov     rbx, rcx
+  0000acb1  488d742420           lea     rsi, [rsp + 0x20]
+  0000acb6  4c894df8             mov     qword ptr [rbp - 8], r9
+  0000acba  4889f1               mov     rcx, rsi
+  0000acbd  e81e9f6200           call    0x634be0  ; -> 0x634be0 None
+  0000acc2  488d5310             lea     rdx, [rbx + 0x10]
+  0000acc6  4889d9               mov     rcx, rbx
+  0000acc9  4c63c0               movsxd  r8, eax
+  0000accc  488913               mov     qword ptr [rbx], rdx
+  0000accf  4889f2               mov     rdx, rsi
+  0000acd2  4901f0               add     r8, rsi
+  0000acd5  e8b6feffff           call    0xab90  ; -> 0xab90 None
+  0000acda  4889d8               mov     rax, rbx
+  0000acdd  4889ec               mov     rsp, rbp
+  0000ace0  5b                   pop     rbx
+  0000ace1  5e                   pop     rsi
+  0000ace2  5d                   pop     rbp
+  0000ace3  c3                   ret     

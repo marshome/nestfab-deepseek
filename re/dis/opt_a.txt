@@ -1,0 +1,14 @@
+### fn 0xb5a40 name=None end=0xb5a60 size=32
+STRINGS: 
+CALLERS: 0x1780:None, 0x1e70:None
+CALLEES: 0xb81f0:None
+
+  000b5a40  4883ec28             sub     rsp, 0x28
+  000b5a44  e8a7270000           call    0xb81f0  ; -> 0xb81f0 None
+  000b5a49  3d2c010000           cmp     eax, 0x12c
+  000b5a4e  0f94c2               sete    dl
+  000b5a51  3d4c040000           cmp     eax, 0x44c
+  000b5a56  0f94c0               sete    al
+  000b5a59  09d0                 or      eax, edx
+  000b5a5b  4883c428             add     rsp, 0x28
+  000b5a5f  c3                   ret     

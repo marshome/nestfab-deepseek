@@ -1,0 +1,150 @@
+--- common_cut_allowed   @508418
+    50841F  mov rcx, r15                               .
+    508422  call 0x600680                              CALL sub_600680.
+    508427  mov rdx, rsi                               .
+    50842A  mov rcx, rax                               .
+    50842D  call 0x5fef30                              CALL sub_5FEF30.
+    508432  mov rcx, rsi                               .
+    508435  call 0x5fe060                              CALL sub_5FE060.
+    50843A  movsd xmm2, qword ptr [rbx + 8]            .
+    508446  mov rcx, r15                               .
+--- common_cut_gap   @50843F
+    508446  mov rcx, r15                               .
+    508449  call 0x5051a0                              CALL sub_5051A0.
+    50844E  movsd xmm2, qword ptr [rbx + 0x10]         .
+    50845A  mov rcx, r15                               .
+    50845D  call 0x5051a0                              CALL sub_5051A0.
+    508462  movsd xmm2, qword ptr [rbx + 0x18]         .
+    50846E  mov rcx, r15                               .
+    508471  call 0x5051a0                              CALL sub_5051A0.
+--- common_cut_original_part_gap   @508453
+    50845A  mov rcx, r15                               .
+    50845D  call 0x5051a0                              CALL sub_5051A0.
+    508462  movsd xmm2, qword ptr [rbx + 0x18]         .
+    50846E  mov rcx, r15                               .
+    508471  call 0x5051a0                              CALL sub_5051A0.
+    508476  movsd xmm2, qword ptr [rbx + 0x20]         .
+    508482  mov rcx, r15                               .
+    508485  call 0x5051a0                              CALL sub_5051A0.
+--- common_cut_cutting_cost_per_unit   @508467
+    50846E  mov rcx, r15                               .
+    508471  call 0x5051a0                              CALL sub_5051A0.
+    508476  movsd xmm2, qword ptr [rbx + 0x20]         .
+    508482  mov rcx, r15                               .
+    508485  call 0x5051a0                              CALL sub_5051A0.
+    50848A  movsd xmm2, qword ptr [rbx + 0x28]         .
+    508496  mov rcx, r15                               .
+    508499  call 0x5051a0                              CALL sub_5051A0.
+--- common_cut_min_length   @50847B
+    508482  mov rcx, r15                               .
+    508485  call 0x5051a0                              CALL sub_5051A0.
+    50848A  movsd xmm2, qword ptr [rbx + 0x28]         .
+    508496  mov rcx, r15                               .
+    508499  call 0x5051a0                              CALL sub_5051A0.
+    50849E  mov edx, dword ptr [rbx + 0x30]            .
+--- common_cut_max_regarding_ratio   @50848F
+    508496  mov rcx, r15                               .
+    508499  call 0x5051a0                              CALL sub_5051A0.
+    50849E  mov edx, dword ptr [rbx + 0x30]            .
+    5084AD  mov rcx, rsi                               .
+    5084B0  call 0x5fb910                              CALL sub_5FB910.
+    5084BC  mov rcx, r15                               .
+--- common_cut_leadin_type   @5084B5
+    5084BC  mov rcx, r15                               .
+    5084BF  call 0x600680                              CALL sub_600680.
+    5084C4  mov rdx, rsi                               .
+    5084C7  mov rcx, rax                               .
+    5084CA  call 0x5fef30                              CALL sub_5FEF30.
+    5084CF  mov rcx, rsi                               .
+    5084D2  call 0x5fe060                              CALL sub_5FE060.
+    5084D7  movzx edx, byte ptr [rbx + 0x34]           .
+    5084E3  mov rcx, rsi                               .
+--- common_cut_no_holes   @5084EB
+    5084F2  mov rcx, r15                               .
+    5084F5  call 0x600680                              CALL sub_600680.
+    5084FA  mov rdx, rsi                               .
+    5084FD  mov rcx, rax                               .
+    508500  call 0x5fef30                              CALL sub_5FEF30.
+    508505  mov rcx, rsi                               .
+    508508  call 0x5fe060                              CALL sub_5FE060.
+    50850D  movzx edx, byte ptr [rbx + 0x35]           .
+    508519  mov rcx, rsi                               .
+--- common_cut_only_bi_modules   @508521
+    508528  mov rcx, r15                               .
+    50852B  call 0x600680                              CALL sub_600680.
+    508530  mov rdx, rsi                               .
+    508533  mov rcx, rax                               .
+    508536  call 0x5fef30                              CALL sub_5FEF30.
+    50853B  mov rcx, rsi                               .
+    50853E  call 0x5fe060                              CALL sub_5FE060.
+    508543  mov rcx, qword ptr [rsp + 0x918]           .
+    50854B  call 0x4fc390                              CALL sub_4FC390.
+--- multitorch_allowed   @5088C8
+    5088CF  mov rcx, r15                               .
+    5088D2  call 0x600680                              CALL sub_600680.
+    5088D7  mov rdx, rsi                               .
+    5088DA  mov rcx, rax                               .
+    5088DD  call 0x5fef30                              CALL sub_5FEF30.
+    5088E2  mov rcx, rsi                               .
+    5088E5  call 0x5fe060                              CALL sub_5FE060.
+    5088EA  mov edx, dword ptr [rbx]                   .
+    5088F4  mov rcx, rsi                               .
+--- multitorch_nb_torches   @5088FC
+    508903  mov rcx, r15                               .
+    508906  call 0x600680                              CALL sub_600680.
+    50890B  mov rdx, rsi                               .
+    50890E  mov rcx, rax                               .
+    508911  call 0x5fef30                              CALL sub_5FEF30.
+    508916  mov rcx, rsi                               .
+    508919  call 0x5fe060                              CALL sub_5FE060.
+    50891E  movsd xmm2, qword ptr [rbx + 0x18]         .
+    50892A  mov rcx, r15                               .
+--- multitorch_min_torch_distance   @508923
+    50892A  mov rcx, r15                               .
+    50892D  call 0x5051a0                              CALL sub_5051A0.
+    508932  movsd xmm2, qword ptr [rbx + 0x20]         .
+    50893E  mov rcx, r15                               .
+    508941  call 0x5051a0                              CALL sub_5051A0.
+    508946  movsd xmm2, qword ptr [rbx + 8]            .
+    508952  mov rcx, r15                               .
+    508955  call 0x5051a0                              CALL sub_5051A0.
+--- multitorch_max_torch_distance   @508937
+    50893E  mov rcx, r15                               .
+    508941  call 0x5051a0                              CALL sub_5051A0.
+    508946  movsd xmm2, qword ptr [rbx + 8]            .
+    508952  mov rcx, r15                               .
+    508955  call 0x5051a0                              CALL sub_5051A0.
+    50895A  movsd xmm2, qword ptr [rbx + 0x30]         .
+    508966  mov rcx, r15                               .
+    508969  call 0x5051a0                              CALL sub_5051A0.
+--- multitorch_cutting_cost_per_unit   @50894B
+    508952  mov rcx, r15                               .
+    508955  call 0x5051a0                              CALL sub_5051A0.
+    50895A  movsd xmm2, qword ptr [rbx + 0x30]         .
+    508966  mov rcx, r15                               .
+    508969  call 0x5051a0                              CALL sub_5051A0.
+    50896E  movsd xmm2, qword ptr [rbx + 0x10]         .
+    50897A  mov rcx, r15                               .
+    50897D  call 0x5051a0                              CALL sub_5051A0.
+--- multitorch_user_real_material_cost_per_unit   @50895F
+    508966  mov rcx, r15                               .
+    508969  call 0x5051a0                              CALL sub_5051A0.
+    50896E  movsd xmm2, qword ptr [rbx + 0x10]         .
+    50897A  mov rcx, r15                               .
+    50897D  call 0x5051a0                              CALL sub_5051A0.
+--- multitorch_reconfiguration_cost   @508973
+    50897A  mov rcx, r15                               .
+    50897D  call 0x5051a0                              CALL sub_5051A0.
+    508992  mov rcx, rsi                               .
+    508995  call 0x5fb910                              CALL sub_5FB910.
+    5089A1  mov rcx, r15                               .
+--- multitorch_vertical_torches   @50899A
+    5089A1  mov rcx, r15                               .
+    5089A4  call 0x600680                              CALL sub_600680.
+    5089A9  mov rdx, rsi                               .
+    5089AC  mov rcx, rax                               .
+    5089AF  call 0x5fef30                              CALL sub_5FEF30.
+    5089B4  mov rcx, rsi                               .
+    5089B7  call 0x5fe060                              CALL sub_5FE060.
+    5089BC  mov rcx, qword ptr [rsp + 0x918]           .
+    5089C4  call 0x4fc320                              CALL sub_4FC320.

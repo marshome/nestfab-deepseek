@@ -1,0 +1,300 @@
+'../exact/geom_conversion.inl'                     4f5450(2179,) 762900(4061,)
+'../pack/instance.inl'                             13c8d0(3096,) 148e00(3379,) 76fa20(3013,) 770d10(8230,Run)
+'../utils/continuous_index_map.hpp'                1bb490(2297,) 1bbd90(1130,) 1d53a0(7403,all_same) 221360(3740,) 222200(8173,) 2241f0(879,) 224560(880,) 224aa0(2082,) 226a60(943,) 226e10(6607,) 2403a0(7543,) 65a8c0(3926,map::at)
+'..\\common_cut\\element.cpp'                      55b090(985,) 55c150(1471,)
+'..\\common_cut\\matrix.cpp'                       570050(424,) 5702e0(808,) 570ee0(2365,) 571820(3130,) 572500(2132,) 572d60(1880,) 573cd0(2000,) 576470(2141,) 577310(3568,) 578100(9462,) 7b71a0(1889,)
+'..\\common_cut\\repair.cpp'                       1668e0(910,) 166d80(2757,) 168250(3715,) 16a1b0(6066,) 16b970(418,) 16bb20(670,) 16be10(519,)
+'..\\common_cut\\squeezer.c'                       7b6260(3610,)
+'..\\compact\\compacter.cpp'                       773eb0(4081,)
+'..\\compact\\nesting.c'                           258b80(901,) 258f10(872,) 25b040(4303,) 25ca30(3040,) 25e020(2878,) 25eb60(1653,) 25f1e0(755,) 2605f0(1378,)
+'..\\exact\\boolean.cpp'                           597bd0(570,)
+'..\\exact\\convolution.cpp'                       596f20(924,)
+'..\\exact\\geom.cpp'                              582c00(2206,) 583830(2279,) 584120(2080,) 5867c0(3089,) 5873e0(2784,) 588a60(2683,) 58b520(563,)
+'..\\exact\\geom_conversion.inl'                   584cc0(2031,) 5854b0(2031,) 685cd0(1769,) 6863c0(3262,)
+'..\\exact\\nofit_map.c'                           59b3b0(1408,) 59c560(1961,) 59cd10(7356,) 59e9d0(10198,) 5a2690(2286,)
+'..\\exact\\path.cpp'                              57fda0(2005,vector::reserve)
+'..\\geom\\arcs_approximation.c'                   5ec670(1813,) 5ecd90(742,)
+'..\\geom\\authorization.cpp'                      5c3820(1295,)
+'..\\geom\\element_path.cpp'                       5efea0(1502,vector::reserve)
+'..\\geom\\layered_multi_polygon.cpp'              5c73b0(540,) 5c75d0(540,) 5c77f0(540,) 5c7a10(553,)
+'..\\geom\\properties.c'                           5cd360(552,) 5cd5c0(528,) 5cd800(610,)
+'..\\geom\\ring.cpp'                               5c5280(665,) 5c5520(1098,)
+'..\\geom\\svg_io.c'                               5dff90(643,)
+'..\\multi\\compacter.c'                           60d90(1250,) 61280(632,) 61500(600,) 61760(453,) 61930(1025,) 61d40(492,) 61f30(507,) 62130(1009,)
+'..\\multi\\database_nester.cpp'                   5b250(4495,basic_string::append)
+'..\\multi\\evaluated_nesting.c'                   503b0(717,) 50c60(5785,)
+'..\\multi\\filter_nester.c'                       b3ae0(2254,)
+'..\\multi\\flip_nester.cpp'                       4b870(3496,)
+'..\\multi\\float_filler.cpp'                      abec0(4882,_reduced) 68ab50(13071,ReducedPartNumber) 68ebc0(2953,) 68f750(15812,GetCandidates)
+'..\\multi\\mono_optimize.c'                       a35f0(693,) a3900(1288,) aa250(1913,)
+'..\\multi\\multi.c'                               2be50(512,) 2c4d0(2072,) 2ce00(1055,) 2d330(3118,)
+'..\\multi\\multiplicity_improver.c'               9e660(1724,) 9ed20(13360,) 697270(4602,) 698470(2705,)
+'..\\multi\\multitorch_nester.c'                   79da0(4611,) 7afb0(3334,) 7bcc0(12232,test2)
+'..\\multi\\nofill_nester.c'                       7f240(8440,basic_string::append)
+'..\\multi\\objective.c'                           ad630(478,) ad810(510,) adad0(579,) addf0(577,) ae040(767,) ae340(666,) ae6b0(477,)
+'..\\multi\\rectangle_nester.cpp'                  6d470(11478,NestAllPartsAux) 722a0(2528,) 73280(11567,) 75fb0(5261,basic_string::append)
+'..\\multi\\repulser.cpp'                          99360(1449,) 99ad0(2938,AUATUWVSH) 9de40(904,) 9e1d0(786,)
+'..\\multi\\splitter.cpp'                          96970(2929,)
+'..\\nesting\\algos\\../strips/strip_position.hpp' 2306c0(12553,)
+'..\\nesting\\algos\\algo_helpers.cpp'             1be6a0(1241,) 1bec00(683,) 1beed0(658,) 1bff90(1981,)
+'..\\nesting\\algos\\algo_helpers.hpp'             22da70(1373,)
+'..\\nesting\\algos\\evaluator.c'                  21f210(965,) 21f5e0(1001,) 21faf0(916,) 21fe90(916,)
+'..\\nesting\\algos\\greedy_optimizer.cpp'         7b8dc0(2253,SetNesting)
+'..\\nesting\\algos\\hole_renester.c'              1d0d70(719,)
+'..\\nesting\\algos\\part_filterer.c'              225d30(3047,vector::reserve)
+'..\\nesting\\algos\\partial_compact.cpp'          1ec0b0(5758,)
+'..\\nesting\\algos\\pos_computer.cpp'             218a80(526,) 218c90(526,) 218ea0(964,) 219270(964,) 219710(544,) 219930(1025,) 219d90(568,) 21a6f0(1502,) 21b090(1298,) 7c6b50(686,) 7c6e00(686,)
+'..\\nesting\\algos\\postop_half.cpp'              1e3aa0(15380,) 1e76c0(12889,) 656a60(1961,)
+'..\\nesting\\algos\\swap_postop.cpp'              1d7960(10072,) 1da0c0(14251,CompactAux)
+'..\\nesting\\multilayer.cpp'                      191e80(5521,) 193420(12805,)
+'..\\nesting\\nesting.c'                           16c4c0(544,) 16ccf0(693,) 16cfb0(3981,) 16e140(3645,NG3) 16f350(3829,) 170290(814,)
+'..\\nesting\\part_group.cpp'                      196c30(1111,) 197090(1418,)
+'..\\nesting\\strips\\../strips/strips.h'          1fd820(1443,) 1fddd0(1793,) 86d9e0(3624,)
+'..\\nesting\\strips\\nesting_view.c'              1fbf00(785,) 1fc4c0(3258,) 200d10(1059,) 201140(1543,AVAUATUWVSH) 201750(1018,AVAUATUWVSH)
+'..\\nesting\\strips\\sheet_zone.cpp'              2072f0(1446,) 208770(2347,)
+'..\\nesting\\strips\\strip_block.cpp'             1a1e80(2334,vector::reserve)
+'..\\nesting\\strips\\strip_block.hpp'             6605f0(1864,)
+'..\\nesting\\strips\\strip_position.hpp'          1fc4c0(3258,)
+'..\\nesting\\strips\\strips.cpp'                  2030c0(2343,) 206690(3137,)
+'..\\nesting\\strips\\zone_frame.cpp'              1a1810(1545,nb_int_steps)
+'..\\nesting\\tiled_multipart.c'                   189ee0(4218,) 18af60(5088,)
+'..\\nesting\\user_params.c'                       184030(2775,)
+'..\\pack\\group.inl'                              15f100(2837,)
+'..\\pack\\instance.cpp'                           15f100(2837,)
+'..\\pack\\instance.inl'                           15ed50(944,)
+'..\\pack\\module_set.c'                           15a5d0(561,) 15a810(464,) 15ae70(2429,)
+'..\\pack\\production.c'                           15b8c0(594,) 15bc50(844,) 15bfa0(958,) 15c560(849,) 15c900(1113,) 15cd60(1118,)
+'..\\pack\\recursive_nester.cpp'                   162280(996,) 162670(572,) 1628b0(578,) 162b00(477,) 1642e0(1687,)
+'..\\pricer\\price_computer.cpp'                   4d97b0(798,) 7c9d90(822,) 7ca370(578,)
+'..\\pricer\\prices.cpp'                           4d3f00(3365,basic_string::append) 4d5060(1732,) 4d5730(2505,)
+'..\\pricer\\prices_generator.c'                   4d64c0(2257,)
+'..\\rcompact\\nested_helpers.c'                   24c6a0(4172,)
+'..\\rcompact\\proto_compact_lp.cpp'               24df20(929,)
+'..\\rcompact\\structure_compact.cpp'              243820(15524,)
+'..\\rectangle\\refiner.cpp'                       14fd00(2211,)
+'..\\row\\decomposer.cpp'                          13be60(1312,) 13c5d0(753,) 13d4f0(726,) 13f430(1276,) 13faa0(2705,) 140540(5671,) 141f90(1313,) 145960(1979,)
+'..\\row\\oriented_part.cpp'                       135040(1396,) 135780(1250,) 135c70(1748,) 136350(1920,)
+'..\\row\\packer.cpp'                              148e00(3379,) 149b40(2328,) 14abc0(591,)
+'..\\row\\prices.cpp'                              14ae20(570,)
+'..\\structure\\border_property.cpp'               54cc00(552,) 54cea0(552,)
+'..\\structure\\cluster.cpp'                       5483d0(607,)
+'..\\structure\\indexes.cpp'                       52fae0(622,)
+'..\\structure\\multitorch_eval.cpp'               53bf10(933,) 53c2c0(2414,) 53d0f0(2046,) 53eca0(3178,) 53f910(11110,)
+'..\\structure\\multitorch_properties.c'           5433f0(627,) 5448c0(1350,)
+'..\\structure\\multitorch_properties.h'           543730(3573,) 81e330(1261,) 81e820(1261,)
+'..\\structure\\nested_part.cpp'                   520440(479,)
+'..\\structure\\nesting.cpp'                       51d0f0(498,) 51d8f0(1139,) 51e250(1042,) 51e7e0(1294,) 51ecf0(893,) 51f070(1021,)
+'..\\structure\\part.cpp'                          4f7070(488,) 4f73e0(530,)
+'..\\structure\\quality_zone_properties.cpp'       54f5d0(1516,)
+'..\\structure\\representative_part.cpp'           5328a0(3363,) 533bc0(728,) 5387c0(1876,)
+'..\\structure\\row_interval.cpp'                  54c640(1370,)
+'..\\structure\\sheet.c'                           4f8390(420,) 4f8550(449,) 4f8720(857,) 4f8a80(449,) 4f8d70(513,) 4f8fe0(534,) 4f9200(434,) 4f9c60(540,)
+'..\\structure\\solution.cpp'                      51c030(530,) 51c260(496,)
+'..\\structure\\stats.c'                           5215d0(2485,) 521f90(589,) 522580(849,) 522b30(555,) 522d60(528,) 5232e0(669,) 523a40(1044,) 524890(669,) 524b30(735,) 524ee0(1054,) 5253e0(775,) 5257d0(776,) 525be0(781,) 526160(757,) 526460(555,) 5266a0(759,) 5269a0(555,) 526bd0(1485,) 5271a0(1102,) 5275f0(636,) 527bf0(1072,) 528020(2621,UsedSurfaceAux) 528d10(2493,UsedSurfaceAux) 5297c0(881,) 52b3d0(2198,) 52be50(1505,)
+'..\\tiling\\composite_part.cpp'                   4dbcf0(1581,)
+'..\\tiling\\dual_nested_part.c'                   4ee860(866,) 4eed70(725,)
+'..\\tiling\\intersecter.cpp'                      760d90(7023,)
+'..\\tiling\\mono_optimizer.cpp'                   76b450(5244,) 76c8d0(4669,)
+'..\\tiling\\multi_tiler.cpp'                      4f4850(883,) 4f4bd0(740,) 76e440(2741,) 7e9580(7580,)
+'..\\tiling\\nofit_mapper.c'                       7e6010(7777,)
+'..\\tiling\\packer.cpp'                           154bc0(554,) 154df0(3045,) 155bb0(2294,) 156670(1392,) 156be0(1979,) 1573a0(1574,) 76fa20(3013,) 772d40(2622,)
+'..\\tiling\\packer_cache.c'                       158160(1706,)
+'..\\tiling\\part.c'                               4daca0(489,)
+'..\\tiling\\pattern.cpp'                          4f2a30(1944,) 7eb5e0(939,)
+'..\\tiling\\tiling.cpp'                           4dd300(1385,) 4df310(1335,) 4df850(1576,) 4e3950(1397,) 4e4600(1106,) 4e4a60(1687,) 4e5100(970,) 4e5d30(5147,)
+'..\\tiling\\torch_tools.cpp'                      4efc80(3996,) 4f0d00(713,) 4f1020(1380,) 4f1740(989,) 4f1f60(2299,)
+'..\\utils\\pcid_win.cpp'                          24290(1073,)
+'..\\utils\\timing_info.cpp'                       5f3d50(1471,)
+'..\\verify\\equivalent.cpp'                       4c0a50(5334,)
+'..\\verify\\hole_equivalent.cpp'                  4c5450(12535,_fakeoptional)
+'..\\verify\\overlapper.cpp'                       4b83e0(1788,) 7f3090(4122,)
+'..\\verify\\rot_equivalent.cpp'                   4cc640(10685,false)
+'cns_part_variant.cpp'                             16e60(1727,GetNestedPartPartVariant)
+
+
+==== identifiers per function (probable __func__) ====
+16e60 GetNestedPartPartVariant :: CNS_GetNestedPartPartVariant
+18af0 GetNumberOfMarks :: CNS_GetNumberOfMarks
+2be50  :: AddAndBoostTorchModu
+2ce00  :: AddShearStrategi
+2d330  :: IsMinimizeYProbl
+305b0  :: NewSolutionFound
+33a70  :: GuessNumberOfPartsInSheet
+344d0  :: NestWithPrioritiesAndInterpenetration
+4b870  :: temporaray_fliped
+4ec00 adaptative_price_max_random :: DefaultParameters
+50c60  :: EvaluatedNesting
+5b250 basic_string::append :: FloatFillNestingAndInsertInDatab
+5c5c0  :: DoExpandFloatingExpandOnIntermediateNest
+60d90  :: DefaultCompacter
+64720  :: MakeSurfaceLimitedNestingWin
+65170  :: MakeXLimitedNestingWindow
+654e0  :: MakeYLimitedNestingWindow
+65830  :: MakeLastNestingWindow
+67460  :: IsCompatibleWithPost
+69790  :: IsCompatibleWithPost | IsCompatibleWithPostOpLa
+6c470  :: multitorch_prices | use_old_cutting_evaluati
+6d470 NestAllPartsAux :: operator
+722a0  :: IsRectangleAllowedZo
+7afb0  :: DivideBy2AroundCenter
+8ded0  :: GetRightMostDefe
+8e1f0  :: AddPositionnedRo
+96970  :: PostOptimizeYSplitte
+9de40  :: RepulseFromBorde
+9e660  :: LimitToQuantities
+9ed20  :: improved_multiplicity
+a2480  :: GetMaxMultiplici | InPlaceDivide
+a35f0  :: GetNestingOptions
+aa250  :: OptimizeLastNestingR
+abec0 _reduced :: MakeReducedProbl | new_part
+adad0  :: GetUsedSurfaceEvaluation
+ae040  :: UsedMaterialAndCuttingCo
+af7d0  :: GetMainSheetQuantiti
+afd60  :: NoMixSheetSelect
+b44d0  :: iteration_number
+b46f0 AUATUWVSH :: iteration_number
+b4a70 AUATUWVSH :: iteration_number
+b61f0 acam :: nestingserviceapp
+135040  :: HaveSingleRightSegme
+135780  :: VerticalXSegments
+135c70  :: GetRightSideArea
+136df0  :: GetPartQuantities
+1380d0  :: HaveCommonCutDistance
+139800  :: ComputeDistanceR
+13be60  :: FilterObliqueQuantit
+13f430  :: GeneratePackItemsAux
+140540  :: MakeNextRows
+141f90  :: GeneratePackItemsAux
+142510  :: RandomUniquePack
+148e00  :: GeneratePackInstance
+14abc0  :: MakePositionnedR
+154df0  :: LimitPartQuantit
+155bb0  :: operator
+156be0  :: UpdatePartTilings | m_biggest_sh
+1573a0  :: UpdatePartTilings | m_biggest_sh
+15b8c0  :: NumberOfPartsAvailab
+15bfa0  :: NumberOfPartsAvailab
+15f100  :: RemoveDominatedModul
+162280  :: m_evaluation_nes
+168250  :: ComputePossibleRepai
+16ccf0  :: SetGroupsFromIds
+16f350  :: GetFilteredGroupsInd
+170290  :: SynchronizeGroupsAndMatrixIn
+170bb0 VSH :: SetMainToSecondaryLe
+178c00 vector::reserve :: GetTiledMultiNestabl
+189ee0  :: BuildFromInteresting
+191e80  :: ComputeSingleSheetLayers
+193420  :: ComputeLayerTranslat | ComputeUnboundedSheetsAndSetLayerTranslations
+196c30  :: open_add
+197090  :: RemoveOpenedGroup
+1a1810 nb_int_steps :: to_floor_offseted_zo
+1beed0  :: ComputeQuadrantSignature
+1d53a0 all_same :: GetValidMultiCandida
+1fbf00  :: SpecialUniqueDirecti
+2030c0  :: MakeBlockForTests
+208770  :: AllowedPosAtXNoCheck
+21a6f0  :: SynchronizeNesti
+222200  :: NormalizePriceSum
+236bc0  :: CleanDeadNodm_nesting
+24c6a0  :: ComputeNestedOut
+251c00  :: FindRenaudContac
+255390  :: ComputeNeighborhoods
+25ca30  :: GetCornerOrientation | MakeSelectiveFloatNesting
+25eb60  :: AddGroupConstrai
+25f1e0  :: AddMultiFlameConstraints
+371680  :: ClpSolve::automa | ClpSolve::notImplemented | ClpSolve::presolveNumber | ClpSolve::presolveNumberCost | ClpSolve::presolveOff | ClpSolve::presolveOn | ClpSolve::useBarrier | ClpSolve::useBarrierNoCr | ClpSolve::useDual | ClpSolve::usePri | ClpSolve::usePrimalorSpr
+374130 Barrier :: Primaldnppedible
+3f9b00 CoinIndexedVector :: CoinIndexedVector
+3fa2e0 CoinIndexedVector :: CoinIndexedVector
+47a810  :: CoinPackedVectorBase
+4c0a50  :: GetOriginalNesti
+4c5450 _fakeoptional :: NoHolesEquivalent
+4cc640 false :: RotationEquivale
+4d5060  :: PerturbatePrices
+4d5730  :: BoostSelectedPri
+4daca0  :: tooling_geometry
+4dbcf0  :: MakeCompositePart
+4df310  :: MakeOrthogonalSubTil
+4df850  :: MakeLimitedTiling
+4e3950  :: FilterGoodValues
+4e4a60  :: MakeLimitedTiling
+4e81b0  :: QuantityEvaluator
+4e8e50  :: GetContinuousBiModul
+4e93c0  :: GetContinuousBiModul
+4ea310  :: AddMultiOrientedPartPatt
+4efc80  :: ComputeMaxYNumberOfParts
+4f0d00  :: ComputeTorchBoost
+4f1020  :: ComputeTorchBonus
+4f1f60  :: ExtractPositivePricesAndSetBonus
+4f2a30  :: MakeMultiOrientedPartPattern
+51c030  :: Bindable
+51e250  :: TranslateToNestingOrigin
+5215d0  :: GetEvaluationBox
+522580  :: GetClusterPartQuantities
+522b30  :: GetLastUsedSurfa
+522d60  :: GetLastNestingOrigin
+5232e0  :: HavePartPrioriti
+524b30  :: GetPartsPerimeter
+5253e0  :: GetUsedInformati
+5275f0  :: GetUsedStairsArea
+527bf0  :: GetIntermediateSheetArea
+5297c0  :: GetLastUsedSurfa
+52aad0 sheet :: GetSecondaryOffcutBox
+52b3d0  :: GetMainOffcutBox
+5387c0  :: FindAndRemoveEquivalents
+53d0f0  :: GenerateMultitorchIn
+53f910  :: ComputeBestConstantDistances | ComputeConfigSequence
+5448c0  :: MultitorchQuantities
+544ec0  :: GetCuttingUnitCo
+5455a0  :: ComputeAprroximateRectangleCC
+545e50  :: ComputeCuttingEquivalentSurf
+5461b0  :: ComputeSolutionCuttingCo
+546d50  :: GetQuantitiesAux
+5471a0  :: GetQuantitiesAux
+547f80  :: SetExtraGeometry
+54ac00  :: GetRawStairsFrontLine
+54ba40  :: GetStairsCorners
+54bfe0  :: GetStairsFrontLi
+54c640  :: FindRowIntervals
+560380  :: IsCommonCutPossi
+573cd0  :: GetOffsetedGeome
+576470  :: GetIntersectingIndex
+57fda0 vector::reserve :: RemoveAlignedClo
+584cc0  :: ToExactPemht
+5854b0  :: ToExactPemht
+5867c0  :: GetConvolutionLo
+5873e0  :: GetNoFitConvolutions
+58b520  :: NewExternalOffset
+59b3b0  :: NoFitMapWithoutHolesChec
+59e9d0  :: NoFitMapWithoutHoles
+5c3820  :: AuthorizationsByStep
+5c5280  :: SignedAngleInRad
+5cb430  :: MakeBarycenterPo
+5ec670  :: GetExternalParameters
+5ecd90  :: GetInternalParameters
+60a020  :: RandomFinalizeDistributi
+6605f0  :: GetMonotonicUnion
+685cd0  :: ToExactPemht
+6863c0  :: ToExactPemht
+688fa0 cc_cost :: cut_compute_time
+68a1a0 raw_evaluation_ratio_10 :: raw_evaluation_ratio
+68ab50 ReducedPartNumber :: SelectNestedParts | SelectOrginalNesting
+68ebc0  :: SelectOrginalNesting
+68f750 GetCandidates :: SelectNestedParts | SelectOrginalNesting
+6a3c80 RunOnce :: cc_repai
+75ebb0  :: ALIGN_BEAM_RESIZE | BEAM_CLOSE_EQUIVALEN | BEAM_NEW_DOMINAT | FORCE_TILING_PAR | POSTOP_PHASE_LIM | ROTATE_COMPACT_POSTOP | ROTATE_COMPACT_TEST_ONLY | SHORTEN_LAST_PLA | USE_MONO_SPECIAL
+762900  :: ToExactPemht
+76e440  :: MakeSqueezeTransformation
+76f340  :: GetContinuousBiModul
+76fa20  :: GenerateModuleSetsFromCluste
+77fba0  :: BufferedTransfor
+77ff40  :: BufferedTransfor
+79a580  :: EqualityComparis
+7f0f00  :: GetBestTilingFromPattern
+86d9e0  :: m_aleoca
+93fd50  :: m_convexifier_points
+940ae0  :: m_convexifier_points
+99d000  :: Rcompact::RotateComp
+99eac0  :: Verify::DetectOverlap
+99f1f0  :: Structure::UsedInformati
+99f560  :: Multi::SavedLengthComput

@@ -1,0 +1,90 @@
+### fn 0x104d0 name=WaitComputationTermination end=0x10642 size=370
+STRINGS: 0x9ad293:'Local', 0x9ad299:'Cloud', 0x9ad29f:'WaitComputationTermination', 0x9ad2ba:'// WaitComputationTermination', 0x9ad2d8:'c:\\Temp\\computation_solution.html'
+CALLERS: 0x104d0:WaitComputationTermination
+CALLEES: 0xac50:None, 0x1062d:WaitComputationTermination, 0x1be50:None, 0x1bf40:None, 0x51bd10:None, 0x62f280:None, 0x64ace0:None, 0x64b040:None, 0x8774f0:None, 0x87d8e0:None, 0x88b6f0:None, 0x88be60:None, 0x8aabc0:None, 0x9445e0:None, 0x9984b0:None
+
+  000104d0  57                   push    rdi
+  000104d1  56                   push    rsi
+  000104d2  53                   push    rbx
+  000104d3  4881ecf0010000       sub     rsp, 0x1f0
+  000104da  488d05b8cd9900       lea     rax, [rip + 0x99cdb8]  ; "Cloud"
+  000104e1  488d15abcd9900       lea     rdx, [rip + 0x99cdab]  ; "Local"
+  000104e8  80794800             cmp     byte ptr [rcx + 0x48], 0
+  000104ec  488d5c2420           lea     rbx, [rsp + 0x20]
+  000104f1  4889ce               mov     rsi, rcx
+  000104f4  480f44d0             cmove   rdx, rax
+  000104f8  4889d9               mov     rcx, rbx
+  000104fb  e850a7ffff           call    0xac50  ; -> 0xac50 None
+  00010500  488d0d98cd9900       lea     rcx, [rip + 0x99cd98]  ; "WaitComputationTermination"
+  00010507  4889da               mov     rdx, rbx
+  0001050a  e831ab6300           call    0x64b040  ; -> 0x64b040 None
+  0001050f  488b4c2420           mov     rcx, qword ptr [rsp + 0x20]
+  00010514  488d4310             lea     rax, [rbx + 0x10]
+  00010518  4839c1               cmp     rcx, rax
+  0001051b  7405                 je      0x10522
+  0001051d  e88e7f9800           call    0x9984b0  ; -> 0x9984b0 None
+  00010522  4889f1               mov     rcx, rsi
+  00010525  e826b90000           call    0x1be50  ; -> 0x1be50 None
+  0001052a  488d0d89cd9900       lea     rcx, [rip + 0x99cd89]  ; "// WaitComputationTermination"
+  00010531  89c2                 mov     edx, eax
+  00010533  89c7                 mov     edi, eax
+  00010535  e8a6a76300           call    0x64ace0  ; -> 0x64ace0 None
+  0001053a  e801ba0000           call    0x1bf40  ; -> 0x1bf40 None
+  0001053f  4885c0               test    rax, rax
+  00010542  0f84c2000000         je      0x1060a
+  00010548  85ff                 test    edi, edi
+  0001054a  0f85ba000000         jne     0x1060a
+  00010550  41b830000000         mov     r8d, 0x30
+  00010556  4889d9               mov     rcx, rbx
+  00010559  488d1578cd9900       lea     rdx, [rip + 0x99cd78]  ; "c:\Temp\computation_solution.html"
+  00010560  e88bb18700           call    0x88b6f0  ; -> 0x88b6f0 None
+  00010565  488d5650             lea     rdx, [rsi + 0x50]
+  00010569  41b801000000         mov     r8d, 1
+  0001056f  4889d9               mov     rcx, rbx
+  00010572  e899b75000           call    0x51bd10  ; -> 0x51bd10 None
+  00010577  488b05d2859f00       mov     rax, qword ptr [rip + 0x9f85d2]  ; DATA 0xa08b50
+  0001057e  488d4b08             lea     rcx, [rbx + 8]
+  00010582  488d5018             lea     rdx, [rax + 0x18]
+  00010586  4883c040             add     rax, 0x40
+  0001058a  48898424e8000000     mov     qword ptr [rsp + 0xe8], rax
+  00010592  488b0557859f00       mov     rax, qword ptr [rip + 0x9f8557]  ; DATA 0xa08af0
+  00010599  4889542420           mov     qword ptr [rsp + 0x20], rdx
+  0001059e  4883c010             add     rax, 0x10
+  000105a2  4889442428           mov     qword ptr [rsp + 0x28], rax
+  000105a7  e834d38600           call    0x87d8e0  ; -> 0x87d8e0 None
+  000105ac  488d4b50             lea     rcx, [rbx + 0x50]
+  000105b0  e83b6f8600           call    0x8774f0  ; -> 0x8774f0 None
+  000105b5  488b05d4859f00       mov     rax, qword ptr [rip + 0x9f85d4]  ; DATA 0xa08b90
+  000105bc  488d4b40             lea     rcx, [rbx + 0x40]
+  000105c0  4883c010             add     rax, 0x10
+  000105c4  4889442428           mov     qword ptr [rsp + 0x28], rax
+  000105c9  e8f2a58900           call    0x8aabc0  ; -> 0x8aabc0 None
+  000105ce  488b05cb7c9f00       mov     rax, qword ptr [rip + 0x9f7ccb]  ; DATA 0xa082a0
+  000105d5  488d8bc8000000       lea     rcx, [rbx + 0xc8]
+  000105dc  488b5008             mov     rdx, qword ptr [rax + 8]
+  000105e0  488b4010             mov     rax, qword ptr [rax + 0x10]
+  000105e4  4889542420           mov     qword ptr [rsp + 0x20], rdx
+  000105e9  488b52e8             mov     rdx, qword ptr [rdx - 0x18]
+  000105ed  4889441420           mov     qword ptr [rsp + rdx + 0x20], rax
+  000105f2  488b05d7879f00       mov     rax, qword ptr [rip + 0x9f87d7]  ; DATA 0xa08dd0
+  000105f9  4883c010             add     rax, 0x10
+  000105fd  48898424e8000000     mov     qword ptr [rsp + 0xe8], rax
+  00010605  e8d63f9300           call    0x9445e0  ; -> 0x9445e0 None
+  0001060a  89f8                 mov     eax, edi
+  0001060c  4881c4f0010000       add     rsp, 0x1f0
+  00010613  5b                   pop     rbx
+  00010614  5e                   pop     rsi
+  00010615  5f                   pop     rdi
+  00010616  c3                   ret     
+  00010617  488b4c2420           mov     rcx, qword ptr [rsp + 0x20]
+  0001061c  4883c310             add     rbx, 0x10
+  00010620  4889c6               mov     rsi, rax
+  00010623  4839d9               cmp     rcx, rbx
+  00010626  7405                 je      0x1062d
+  00010628  e8837e9800           call    0x9984b0  ; -> 0x9984b0 None
+  0001062d  4889f1               mov     rcx, rsi
+  00010630  e84bec6100           call    0x62f280  ; -> 0x62f280 None
+  00010635  4889d9               mov     rcx, rbx
+  00010638  4889c6               mov     rsi, rax
+  0001063b  e820b88700           call    0x88be60  ; -> 0x88be60 None
+  00010640  ebeb                 jmp     0x1062d  ; -> 0x1062d WaitComputationTermination

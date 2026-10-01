@@ -1,0 +1,6 @@
+BadPartGeometry                                0001C7C0  size=444    callers=2
+CNS_AddExternalToolPathBoundaryToSheet         00010380  size=178    callers=1
+CNS_AddToolPathDefectToSheet                   000102C0  size=190    callers=1
+ForcePartOutsideHole                           0000C640  size=43     callers=0
+NewIntermediateSolutionFound                   000033A0  size=4411   callers=1
+RenestInHoles                                  00040720  size=1220   callers=3

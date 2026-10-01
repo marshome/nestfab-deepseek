@@ -1,0 +1,169 @@
+﻿ordinals,ordinal_first,rva,size,name,c_alias,recovered,family,src,label,args_regs,args_xmm,args_stack,arity_est,ret_xmm,calls,evidence
+1-2,1,0x016420,490,AddPolygonHoleToPart,,yes,4-add (problem building),,// AddPolygonHoleToPart,3,2,6,11,True,11,// AddPolygonHoleToPart
+3-4,3,0x0162B0,353,AddPolygonPart,,yes,4-add (problem building),,// AddPolygonPart,4,1,2,7,True,8,// AddPolygonPart
+5-6,5,0x015BF0,1717,AddSheet,,yes,4-add (problem building),,,4,2,5,11,False,35,
+7-8,7,0x0118F0,3660,DeleteLaunchingOrder,,yes,0-lifecycle,,DeleteLaunchingOrder,2,0,0,2,False,22,*** ERROR unterminated/cancelled computation *** | ERROR unterminated/cancelled computation
+9-10,9,0x00B1D0,370,GenerateHtmlLaunchingOrderReport,,yes,6-computation control,,GenerateHtmlLaunchingOrderReport,2,0,0,2,False,16,<h1> Problem contains invalid parts. </h1> | <h1> Problem contains invalid sheets. </h1>
+11-12,11,0x00B350,247,GenerateHtmlSolutionReport,,yes,8-report/export,,GenerateHtmlSolutionReport,2,0,0,2,False,9,
+13-14,13,0x00B8D0,378,GenerateLaunchingOrderProblem,,yes,6-computation control,,GenerateLaunchingOrderProblem,2,0,2,4,False,16,source_version
+15-16,15,0x0107E0,155,GetComputationStatus,,yes,3-getters,,GetComputationStatus,2,0,0,2,False,6,// GetComputationStatus
+17-18,17,0x00B100,34,GetMultiplicity,,yes,3-getters,,GetMultiplicity,1,0,0,1,False,2,
+19-20,19,0x00D460,688,GetNestedPart,CNS_GetNestedPart,yes,3-getters,cns.cpp,GetNestedPart,4,1,10,15,True,17,cns.cpp | nested_part_number <= nested_parts.size() | part_number <= order->parts.size()
+21-22,21,0x010F30,490,GetNesting,CNS_GetNesting,yes,3-getters,cns.cpp,GetNesting,2,0,8,10,False,12,cns.cpp | nesting_number < solution_aux.size()
+23-24,23,0x00B190,63,GetNumberOfNestedParts,,yes,3-getters,,GetNumberOfNestedParts,2,0,0,2,False,2,
+25-26,25,0x00B0C0,52,GetNumberOfNestings,,yes,3-getters,,GetNumberOfNestings,2,0,0,2,False,1,
+27-28,27,0x00C5E0,36,GetPartUserString,,yes,3-getters,,GetPartUserString,1,0,0,1,False,1,
+29-30,29,0x00B510,43,GetPartWithBadGeometry,,yes,3-getters,,GetPartWithBadGeometry,2,0,0,2,False,1,
+31-32,31,0x00B600,332,GetSheet,CNS_GetSheet,yes,3-getters,cns.cpp,GetSheet,2,0,29,31,False,9,number <= order->sheets.size() | cns.cpp
+33-34,33,0x00B0A0,29,GetSolution,,yes,3-getters,,GetSolution,1,0,0,1,False,1,
+35-36,35,0x006100,3894,LaunchComputation,,yes,6-computation control,,LaunchComputation,4,3,28,35,True,71,c:\Temp\cns.pb.json | // LaunchComputation
+37-38,37,0x014620,1081,NewLaunchingOrder,,yes,0-lifecycle,,NewLaunchingOrder,1,2,0,3,True,10,
+39-40,39,0x00CF20,303,SetInterpartGap,CNS_SetInterpartGap,yes,2-setters,cns.cpp,SetInterpartGap,1,1,8,10,False,8,"cns.cpp | (gap >= 0.0) && ""Negative part gap unsupported"""
+41-42,41,0x00C1A0,241,SetPartAuthorizations,,yes,2-setters,,SetPartAuthorizations,3,2,0,5,True,6,
+43-44,43,0x00C420,446,SetPartUserString,,yes,2-setters,,,2,0,3,5,False,19,
+45-46,45,0x00CCB0,527,SetSheetGaps,,yes,2-setters,,,1,3,9,13,False,12,
+47-48,47,0x0104D0,370,WaitComputationTermination,,yes,6-computation control,,WaitComputationTermination,2,0,0,2,False,15,// WaitComputationTermination | c:\Temp\computation_solution.html
+49-50,49,0x010650,386,WaitNextSolution,,yes,6-computation control,,WaitNextSolution,2,0,65,67,False,15,c:\Temp\computation_solution.html | // WaitNextSolution
+51-52,51,0x002AB0,2134,LaunchLocalComputation,,yes,6-computation control,,// LaunchLocalComputation,2,2,3,7,True,56,cns_force_cloud | cns1.optalog.com;cns2.optalog.com | c:\Temp\cns.pb.json | // LaunchLocalComputation
+53-54,53,0x010880,155,CancelComputation,,yes,6-computation control,,// CancelComputation,2,0,0,2,False,6,CancelComputation  | // CancelComputation
+55-56,55,0x00B020,52,GetPartUserStringEx,,yes,3-getters,,GetPartUserStringEx,3,0,0,3,False,2,
+57-58,57,0x00C670,446,SetSheetUserString,,yes,2-setters,,,2,0,3,5,False,19,
+59-60,59,0x00C830,353,GetSheetUserString,,yes,3-getters,,,1,0,10,11,False,14,
+61-62,61,0x00B060,52,GetSheetUserStringEx,,yes,3-getters,,GetSheetUserStringEx,3,0,0,3,False,2,
+65-66,65,0x011120,868,SetExtraParameters,,yes,2-setters,,,3,0,15,18,False,19,
+67-68,67,0x013C90,411,SetSheetPriority,,yes,2-setters,,,2,0,12,14,False,18,
+69-70,69,0x016B20,353,AddNonRectangularPolygonSheet,,yes,4-add (problem building),,// AddNonRectangularPolygonSheet,4,1,2,7,True,8,// AddNonRectangularPolygonSheet
+71-72,71,0x016970,426,AddPolygonDefectToSheet,,yes,4-add (problem building),,// AddPolygonDefectToSheet,3,2,6,11,True,10,// AddPolygonDefectToSheet
+73-74,73,0x00D370,61,SetLocalEngine,,yes,2-setters,,SetLocalEngine,2,0,0,2,False,1,
+76-77,76,0x00D430,36,UnLockLaunchingOrder,,yes,6-computation control,,UnLockLaunchingOrder,2,0,0,2,False,1,
+78-79,78,0x00CEC0,45,SetObjective,,yes,2-setters,,SetObjective,2,1,0,3,False,1,
+80-81,80,0x0109C0,388,SetDefectGap,,yes,2-setters,,,1,1,3,5,False,16,
+82-83,82,0x00D3B0,68,SetLocalMaximumThreads,,yes,2-setters,,SetLocalMaximumThreads,2,0,0,2,False,3,
+84-85,84,0x00D400,36,SetLocalMaximumIterations,,yes,2-setters,,SetLocalMaximumIterations,2,0,0,2,False,1,
+86-87,86,0x00D050,334,SetOrigin,,yes,2-setters,,,2,0,12,14,False,14,
+88-89,88,0x00B490,31,GetBuildVersion,,yes,3-getters,,GetBuildVersion,0,0,0,0,False,1,
+90-91,90,0x00B470,31,GetBuildDate,,yes,3-getters,,GetBuildDate,0,0,0,0,False,1,
+92-93,92,0x00B450,31,GetMajorVersion,,yes,3-getters,,GetMajorVersion,0,0,0,0,False,1,
+94-95,94,0x010CE0,584,AddPartSpecificAuthorizations,,yes,4-add (problem building),,AddPartSpecificAuthorizations,2,3,6,11,True,12,
+96-97,96,0x00B130,36,GetLength,,yes,3-getters,,GetLength,2,0,0,2,False,2,
+98-99,98,0x00C9A0,372,SetSheetGrainDirection,,yes,2-setters,,,2,0,1,3,False,16,
+100-101,100,0x00B160,36,GetHeight,,yes,3-getters,,GetHeight,2,0,0,2,False,2,
+102-103,102,0x016610,419,AddExternalPolygonBoundaryToSheet,,yes,4-add (problem building),,// AddExternalPolygonBoundaryToSheet,3,2,6,11,True,10,// AddExternalPolygonBoundaryToSheet
+104-105,104,0x0167C0,426,AddExternalPolygonBoundaryToPart,,yes,4-add (problem building),,// AddExternalPolygonBoundaryToPart,3,2,6,11,True,10,// AddExternalPolygonBoundaryToPart
+110-111,110,0x014D10,1891,AddPart,,yes,4-add (problem building),,,4,3,7,14,False,34,
+112-113,112,0x0132E0,176,AddHoleToPart,,yes,4-add (problem building),,AddHoleToPart,3,2,0,5,True,4,
+114-115,114,0x013390,124,AddExternalBoundaryToPart,,yes,4-add (problem building),,AddExternalBoundaryToPart,3,2,0,5,False,3,
+116-117,116,0x0157A0,1098,AddNonRectangularSheet,,yes,4-add (problem building),,,4,2,6,12,True,11,
+118-119,118,0x014190,124,AddDefectToSheet,,yes,4-add (problem building),,AddDefectToSheet,3,2,0,5,False,3,
+120-121,120,0x014210,117,AddExternalBoundaryToSheet,,yes,4-add (problem building),,AddExternalBoundaryToSheet,3,2,0,5,False,3,
+122-123,122,0x010920,155,TerminateComputation,,yes,6-computation control,,// TerminateComputation,2,0,0,2,False,6,TerminateComputation  | // TerminateComputation
+124-125,124,0x014A60,678,AddOpenCuttingPathToPart,,yes,4-add (problem building),,AddOpenCuttingPathToPart,4,1,28,33,True,13,
+126-127,126,0x00C2A0,382,SetPartPriority,,yes,2-setters,,,2,0,12,14,False,15,
+128-129,128,0x00D1A0,353,CNS_SetMultiplicityPreference,,yes,2-setters,,,2,1,28,31,True,11,
+130-131,130,0x015480,404,AddCircularPart,,yes,4-add (problem building),,// AddCircularPart,2,4,1,7,True,5,// AddCircularPart
+132-133,132,0x013800,581,AddCircularHoleToPart,,yes,4-add (problem building),,// AddCircularHoleToPart,2,4,10,16,True,8,// AddCircularHoleToPart
+134-135,134,0x015620,374,AddRectanglePart,,yes,4-add (problem building),,// AddRectanglePart,2,3,2,7,True,5,// AddRectanglePart
+136-137,136,0x013A50,569,AddRectangularHoleToPart,,yes,4-add (problem building),,// AddRectangularHoleToPart,2,3,14,19,False,8,// AddRectangularHoleToPart
+138-139,138,0x014290,440,AddOptionalQuantityToPart,,yes,4-add (problem building),,,2,0,12,14,False,19,
+140-141,140,0x00E010,353,SetAutomaticStop,,yes,2-setters,,,2,0,12,14,False,14,
+142-143,142,0x00E2D0,399,SetOffcutEvaluation,,yes,2-setters,,,1,3,7,11,False,11,
+144-145,144,0x00DD90,36,SetFillLastNestingStrategy,,yes,2-setters,,SetFillLastNestingStrategy,2,0,0,2,False,1,
+146-147,146,0x00DDC0,33,SetShearMode,,yes,2-setters,,SetShearMode,2,0,0,2,False,1,
+148-149,148,0x00E460,404,SetCommonCutMode,,yes,2-setters,,,2,1,3,6,False,16,
+150-151,150,0x00E940,354,SetCommonCutSafetyPreference,,yes,2-setters,,,2,0,12,14,False,14,
+152-153,152,0x00EAB0,468,SetCommonCutAuthorizations,,yes,2-setters,,,2,2,5,9,False,12,
+154-155,154,0x00EC90,340,SetCommonCutCuttingPreference,,yes,2-setters,,,2,0,1,3,False,15,
+156-157,156,0x00EDF0,337,SetCommonCutObjective,,yes,2-setters,,,1,2,5,8,False,11,
+158-159,158,0x00D710,346,GetNumberOfCommonCuts,CNS_GetNumberOfCommonCuts,yes,3-getters,cns.cpp,GetNumberOfCommonCuts,2,0,8,10,False,10,cns.cpp | cns_nesting->nesting | // GetNumberOfCommonCuts 
+160-161,160,0x00BA50,825,GetCommonCut,CNS_GetCommonCut,yes,3-getters,cns.cpp,GetCommonCut,4,4,17,25,True,14,cns.cpp | nesting->nesting | common_cut_number < evaluation.common_cut_segments.size()
+162-163,162,0x00E180,111,UnLockLaunchingOrderSntl,,yes,6-computation control,,UnLockLaunchingOrderSntl,3,0,0,3,False,3,
+164-165,164,0x003310,66,LaunchLimitedLocalComputation,,yes,6-computation control,,LaunchLimitedLocalComputation,1,0,0,1,False,2,
+166-167,166,0x00DE50,36,SetPartCommonCutMode,,yes,2-setters,,SetPartCommonCutMode,2,0,0,2,False,1,
+168-169,168,0x00B4B0,34,GetFillRatio,,yes,3-getters,,GetFillRatio,1,0,0,1,False,2,
+170-171,170,0x00BD90,470,GetNestingDimensions,CNS_GetNestingDimensions,yes,3-getters,cns.cpp,GetNestingDimensions,3,1,8,12,False,14,cns.cpp
+172-173,172,0x00CB20,388,SetSheetPrice,,yes,2-setters,,,1,1,3,5,False,16,
+174-175,174,0x00EF50,479,SetMultiTorchMode,,yes,2-setters,,,3,1,5,9,False,12,
+176-177,176,0x00F130,388,SetMultiTorchCuttingPreference,,yes,2-setters,,,3,0,1,4,False,15,
+178-179,178,0x00F2C0,633,SetMultiTorchObjective,,yes,2-setters,,,2,4,7,13,True,14,
+180-181,180,0x014450,449,SetExtraGapOnPart,,yes,2-setters,,,2,1,3,6,False,20,
+182-183,182,0x00DD30,36,CNS_SetFloatingMode,,yes,2-setters,,CNS_SetFloatingMode,2,0,0,2,False,1,
+184-185,184,0x00D870,826,GetPartTorchInfos,CNS_GetPartTorchInfos,yes,3-getters,cns.cpp,GetPartTorchInfos,4,1,31,36,True,14,cns.cpp | nesting->nesting | part_index < nesting->nesting->nested_parts().size() | part_index < nesting->nesting->multitorch_infos().m_infos.size()
+186-187,186,0x00F540,629,SetDetailedMultiTorchObjective,,yes,2-setters,,,1,3,13,17,False,11,
+188-189,188,0x00D310,33,CNS_SetNoMixPreference,,yes,2-setters,,CNS_SetNoMixPreference,2,0,0,2,False,1,
+190-191,190,0x00DBB0,382,CNS_SetNoOrientationMixOnPart,,yes,2-setters,,,2,0,12,14,False,15,
+192-193,192,0x00B4E0,38,GetNestingFillRatio,,yes,3-getters,,GetNestingFillRatio,1,0,0,1,False,2,
+194-195,194,0x018100,1955,AddPartVariantToPart,,yes,4-add (problem building),,AddPartVariantToPart,3,3,8,14,False,15,
+196-197,196,0x016D00,49,AddHoleToPartVariant,,yes,4-add (problem building),,// AddHoleToPartVariant,3,0,0,3,False,2,// AddHoleToPartVariant
+198-199,198,0x016D40,49,CNS_AddExternalBoundaryToPartVariant,,yes,5-CNS_ API extensions,,// CNS_AddExternalBoundaryToPartVariant,3,0,0,3,False,2,// CNS_AddExternalBoundaryToPartVariant
+200-201,200,0x016D80,96,CNS_AddOpenCuttingPathToPartVariant,,yes,5-CNS_ API extensions,,// CNS_AddOpenCuttingPathToPartVariant,4,1,1,6,True,2,// CNS_AddOpenCuttingPathToPartVariant
+202-203,202,0x016DE0,61,CNS_SetPartVariantAuthorizations,,yes,2-setters,,// CNS_SetPartVariantAuthorizations,3,1,0,4,False,2,// CNS_SetPartVariantAuthorizations
+204-205,204,0x016E20,63,CNS_AddPartVariantSpecificAuthorizations,,yes,5-CNS_ API extensions,,// CNS_AddPartVariantSpecificAuthorizations,2,2,0,4,False,2,// CNS_AddPartVariantSpecificAuthorizations
+206-207,206,0x016E60,1727,GetNestedPartPartVariant,,yes,3-getters,,GetNestedPartPartVariant,3,0,35,38,False,15,
+208-209,208,0x016CB0,57,AddPartVariantUserString? (unnamed; assigns a C string to the std::string at Part+0x1B8),,no,Z-unnamed,,,2,0,0,2,False,2,
+210-211,210,0x016CF0,8,GetPartVariantUserString? (unnamed; returns the std::string data ptr at Part+0x1B8),,no,Z-unnamed,,,1,0,0,1,False,0,
+212-213,212,0x00CEF0,45,SetShearGap,,yes,2-setters,,SetShearGap,1,1,0,2,False,1,
+214-215,214,0x011490,423,SetIncompatibleSheet,,yes,2-setters,,,2,0,1,3,False,17,
+216-217,216,0x003360,52,LaunchEstimateLocalComputation,,yes,6-computation control,,// LaunchEstimateLocalComputation,1,1,0,2,False,2,// LaunchEstimateLocalComputation
+218-219,218,0x011640,483,AddSuggestedPartsGrouping,CNS_AddSuggestedPartsGrouping,yes,4-add (problem building),cns.cpp,AddSuggestedPartsGrouping,1,0,8,9,False,12,cns.cpp
+220-221,220,0x00F7C0,1072,AddPartToSuggestedPartsGrouping,CNS_AddPartToSuggestedPartsGrouping,yes,4-add (problem building),cns.cpp,,4,2,15,21,False,22,cns.cpp
+222-223,222,0x00D340,33,CNS_SetNoSheetMixPreference,,yes,2-setters,,CNS_SetNoSheetMixPreference,2,0,0,2,False,1,
+224-225,224,0x00BF70,148,GenerateDxfNesting,,yes,8-report/export,,GenerateDxfNesting,2,0,0,2,False,6,
+226-227,226,0x00C010,386,GetPCId,,yes,3-getters,,GetPCId,2,1,16,19,True,11,
+228-229,228,0x00E260,111,UnLockLaunchingOrderPCId,,yes,6-computation control,,UnLockLaunchingOrderPCId,3,0,0,3,False,3,
+230-231,230,0x009AF0,452,NewNoFitContext,,yes,9-misc,,// NewNoFitContext,2,0,1,3,False,23,// NewNoFitContext
+232-233,232,0x009CC0,568,DeleteNoFitContext,,yes,9-misc,,DeleteNoFitContext,1,0,0,1,False,7,
+234-235,234,0x008AC0,939,GetNoFitMap,,yes,3-getters,,GetNoFitMap,3,2,30,35,True,19,//GetNoFitMap
+236-237,236,0x008A10,171,DeleteNoFitGeometry,,yes,9-misc,,DeleteNoFitGeometry,1,0,0,1,False,2,
+238-239,238,0x0089D0,54,NoFitGetNumberOfExternalPolygons,,yes,1-NoFit (NFP/geometry),,NoFitGetNumberOfExternalPolygons,2,0,0,2,False,1,
+240-241,240,0x008E70,335,NoFitGetNumberOfInternalHoles,CNS_NoFitGetNumberOfHoles,yes,1-NoFit (NFP/geometry),cns_no_fit.cpp,NoFitGetNumberOfInternalHoles,2,0,8,10,False,9,cns_no_fit.cpp | external_number < n
+242-243,242,0x008FC0,497,NoFitGetNumberOfPoints,,yes,1-NoFit (NFP/geometry),,,3,0,1,4,False,21,
+244-245,244,0x0091C0,366,NoFitGetPoint,CNS_NoFitGetPoint,yes,1-NoFit (NFP/geometry),cns_no_fit.cpp,NoFitGetPoint,4,1,10,15,True,9,cns_no_fit.cpp | point_number < ring.size()
+246-247,246,0x0188D0,529,SetMarkMode,,yes,2-setters,,,2,2,1,5,False,20,
+248-249,248,0x018AF0,889,GetNumberOfMarks,,yes,3-getters,,,3,0,9,12,False,25,
+250-251,250,0x018E70,1312,GetMark,,yes,3-getters,,,4,1,9,14,True,27,
+252-253,252,0x00B540,177,AsyncCancelAllComputationsAndDeleteLaunchingOrder,,yes,6-computation control,,AsyncCancelAllComputationsAndDeleteLaunchingOrder,3,0,2,5,False,6,
+254-255,254,0x017520,3027,AddRotatedPartVariantToPart,,yes,4-add (problem building),,AddRotatedPartVariantToPart,4,3,20,27,True,27,
+256-257,256,0x00FBF0,244,SetRowMode,,yes,2-setters,,SetRowMode,2,2,3,7,False,2,
+258-259,258,0x00FCF0,568,SetPipeMode,,yes,2-setters,,,2,2,9,13,False,11,
+260-261,260,0x013410,512,AddCircularExternalBoundaryToPart,,yes,4-add (problem building),,// AddCircularExternalBoundaryToPart,1,4,0,5,True,7,// AddCircularExternalBoundaryToPart
+262-263,262,0x013610,486,AddRectangularExternalBoundaryToPart,,yes,4-add (problem building),,// AddRectangularExternalBoundaryToPart,1,4,1,6,True,7,// AddRectangularExternalBoundaryToPart
+264-265,264,0x00FF30,271,GetNumberOfRows,,yes,3-getters,,,1,0,1,2,False,13,
+266-267,266,0x010040,384,GetRow,CNS_GetRow,yes,3-getters,cns.cpp,GetRow,4,1,12,17,True,10,cns.cpp | row_number < row_intervals.size()
+268-269,268,0x00DE80,388,SetLocalEngineThreads,,yes,2-setters,,,3,0,1,4,False,15,
+270-271,270,0x00AFE0,13,SetXXX(int) (unnamed; normalises arg to bool and stores global flag @0xB23350),,no,Z-unnamed,,,1,0,0,1,False,1,
+272-273,272,0x019C40,411,SetLeatherMode,,yes,2-setters,,,2,0,12,14,False,18,
+274-275,274,0x019DE0,350,AddLeatherQualityZoneInPart,,yes,4-add (problem building),,AddLeatherQualityZoneInPart,4,2,0,6,True,8,
+276-277,276,0x01A0A0,331,AddLeatherQualityZoneInSheet,,yes,4-add (problem building),,AddLeatherQualityZoneInSheet,4,2,0,6,True,8,
+278-279,278,0x01AA90,944,CreateRestrictedZoneConstraint,,yes,5-CNS_ API extensions,,,2,0,1,3,False,26,
+280-281,280,0x01AE40,507,CNS_SetZoneRestrictedPart,,yes,2-setters,,,2,0,7,9,False,21,
+282-283,282,0x01A7D0,286,"CNS_SheetAddRectangularRestrictedZone (unnamed; builds a 4-corner rect from 2 points, allocates 0x60 B = 12 doubles, forwards to CNS_SheetAddRestrictedZone)",,no,Z-unnamed,,,4,4,0,8,True,4,
+284-285,284,0x01A210,1468,CNS_SheetAddRestrictedZone,,yes,9-misc,,,4,1,9,14,False,45,
+286-287,286,0x00B000,18,"SetXXX(Order*, int, double) (unnamed; Order+0x100 = double, Order+0xF9 = flag)",,no,Z-unnamed,,,1,1,0,2,False,0,
+288-289,288,0x00AFF0,10,"SetXXX(Order*, int) (unnamed; Order+0xF8 = flag)",,no,Z-unnamed,,,1,0,0,1,False,0,
+290-291,290,0x0101C0,127,AddToolPathToPart,,yes,4-add (problem building),,AddToolPathToPart,3,2,0,5,False,3,
+292-293,292,0x019F40,342,AddLeatherQualityZoneInPart,,yes,4-add (problem building),,AddLeatherQualityZoneInPart,4,2,0,6,True,8,
+294-295,294,0x012C60,169,AddInflatedToolPathToPart,,yes,4-add (problem building),,AddInflatedToolPathToPart,1,1,0,2,False,2,
+296-297,296,0x010240,124,AddHoleInToolPath,,yes,4-add (problem building),,AddHoleInToolPath,3,2,0,5,False,3,
+298-299,298,0x013E30,417,SetSpecificSheetOrigin,,yes,2-setters,,,2,0,1,3,False,19,
+300-301,300,0x013FE0,417,SetSpecificSheetObjective,,yes,2-setters,,,2,0,1,3,False,19,
+302-303,302,0x01A8F0,411,CNS_ForcePartOnBottomBorder,,yes,9-misc,,,2,0,10,12,False,18,
+304-305,304,0x00DE20,33,SetShearRepulseFromBorders,,yes,2-setters,,SetShearRepulseFromBorders,2,0,0,2,False,1,
+306-307,306,0x012F40,894,CNS_AddDefectFromNestedPart,,yes,5-CNS_ API extensions,,CNS_AddDefectFromNestedPart,2,3,2,7,True,15,
+308-309,308,0x010B50,395,CNS_CreateAssemblyGroup,,yes,5-CNS_ API extensions,,CNS_CreateAssemblyGroup,2,0,1,3,False,13,
+310-311,310,0x011830,180,CNS_AddAssemblyGroupPart,,yes,5-CNS_ API extensions,,CNS_AddAssemblyGroupPart,4,0,5,9,False,6,
+312-313,312,0x00DD60,36,CNS_SetOriginPackingMode,,yes,2-setters,,CNS_SetOriginPackingMode,2,0,0,2,False,1,
+314-315,314,0x012D10,552,CNS_AddOpenToolPathToPart,,yes,5-CNS_ API extensions,,CNS_AddOpenToolPathToPart,4,2,18,24,False,14,
+316-317,316,0x010440,42,CNS_SetEvaluateIntermediateNestingsAsLast,,yes,2-setters,,CNS_SetEvaluateIntermediateNestingsAsLast,2,0,0,2,False,1,
+318-319,318,0x009330,449,NewNoFitNesting,,yes,9-misc,,// NewNoFitNesting,2,0,1,3,False,21,// NewNoFitNesting
+320-321,320,0x00A9D0,240,NoFitAddNestedPart,,yes,1-NoFit (NFP/geometry),,NoFitAddNestedPart,3,1,6,10,False,3,
+322-323,322,0x009500,70,DeleteNoFitNesting,,yes,9-misc,,DeleteNoFitNesting,1,0,0,1,False,2,
+324-325,324,0x00A620,934,GetNoFitPlacementMap,,yes,3-getters,,,4,1,7,12,True,30,
+326-327,326,0x009550,573,NoFitGenerateSvgNesting,,yes,1-NoFit (NFP/geometry),,NoFitGenerateSvgNesting,3,0,2,5,False,17,
+328-329,328,0x009790,403,NoFitGenerateSvgGeometry,,yes,1-NoFit (NFP/geometry),,NoFitGenerateSvgGeometry,3,0,2,5,False,13,
+330-331,330,0x00DDF0,36,SetPartialShearMode,,yes,2-setters,,SetPartialShearMode,2,0,0,2,False,1,
+332-333,332,0x00B750,384,GetNestingBoundingBox,CNS_GetNestingBoundingBox,yes,3-getters,cns.cpp,GetNestingBoundingBox,4,1,8,13,True,9,cns.cpp | min_x && min_y && max_x && max_y
+334-335,334,0x00C610,43,ForcePartInsideHole,,yes,9-misc,,ForcePartInsideHole,1,0,0,1,False,1,
+336-337,336,0x010470,42,SetReorganizeBiggestPartNearOrigin,,yes,2-setters,,SetReorganizeBiggestPartNearOrigin,2,0,0,2,False,1,
+338-339,338,0x0104A0,42,SetReorganizeLongestPartNearOrigin,,yes,2-setters,,SetReorganizeLongestPartNearOrigin,2,0,0,2,False,1,
+340-341,340,0x009930,443,NoFitSetMaximumComplexity,,yes,1-NoFit (NFP/geometry),,,2,0,12,14,False,19,
+342-343,342,0x00E1F0,111,UnLockLaunchingOrderOxy,,yes,6-computation control,,UnLockLaunchingOrderOxy,3,0,0,3,False,3,

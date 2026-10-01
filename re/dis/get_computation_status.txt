@@ -1,0 +1,47 @@
+### fn 0x107e0 name=GetComputationStatus end=0x1087b size=155
+STRINGS: 0x9ad293:'Local', 0x9ad299:'Cloud', 0x9ad31f:'GetComputationStatus', 0x9ad334:'// GetComputationStatus'
+CALLERS: 
+CALLEES: 0xab90:None, 0x1be20:None, 0x62f280:None, 0x64ace0:None, 0x64b040:None, 0x9984b0:None
+
+  000107e0  56                   push    rsi
+  000107e1  53                   push    rbx
+  000107e2  4883ec48             sub     rsp, 0x48
+  000107e6  488d05acca9900       lea     rax, [rip + 0x99caac]  ; "Cloud"
+  000107ed  488d159fca9900       lea     rdx, [rip + 0x99ca9f]  ; "Local"
+  000107f4  80794800             cmp     byte ptr [rcx + 0x48], 0
+  000107f8  480f44d0             cmove   rdx, rax
+  000107fc  4889ce               mov     rsi, rcx
+  000107ff  488d5c2420           lea     rbx, [rsp + 0x20]
+  00010804  488d4310             lea     rax, [rbx + 0x10]
+  00010808  4889d9               mov     rcx, rbx
+  0001080b  4c8d4205             lea     r8, [rdx + 5]
+  0001080f  4889442420           mov     qword ptr [rsp + 0x20], rax
+  00010814  e877a3ffff           call    0xab90  ; -> 0xab90 None
+  00010819  488d0dffca9900       lea     rcx, [rip + 0x99caff]  ; "GetComputationStatus"
+  00010820  4889da               mov     rdx, rbx
+  00010823  e818a86300           call    0x64b040  ; -> 0x64b040 None
+  00010828  488b4c2420           mov     rcx, qword ptr [rsp + 0x20]
+  0001082d  4883c310             add     rbx, 0x10
+  00010831  4839d9               cmp     rcx, rbx
+  00010834  7405                 je      0x1083b
+  00010836  e8757c9800           call    0x9984b0  ; -> 0x9984b0 None
+  0001083b  4889f1               mov     rcx, rsi
+  0001083e  e8ddb50000           call    0x1be20  ; -> 0x1be20 None
+  00010843  488d0deaca9900       lea     rcx, [rip + 0x99caea]  ; "// GetComputationStatus"
+  0001084a  89c3                 mov     ebx, eax
+  0001084c  89c2                 mov     edx, eax
+  0001084e  e88da46300           call    0x64ace0  ; -> 0x64ace0 None
+  00010853  89d8                 mov     eax, ebx
+  00010855  4883c448             add     rsp, 0x48
+  00010859  5b                   pop     rbx
+  0001085a  5e                   pop     rsi
+  0001085b  c3                   ret     
+  0001085c  488b4c2420           mov     rcx, qword ptr [rsp + 0x20]
+  00010861  4883c310             add     rbx, 0x10
+  00010865  4889c6               mov     rsi, rax
+  00010868  4839d9               cmp     rcx, rbx
+  0001086b  7405                 je      0x10872
+  0001086d  e83e7c9800           call    0x9984b0  ; -> 0x9984b0 None
+  00010872  4889f1               mov     rcx, rsi
+  00010875  e806ea6100           call    0x62f280  ; -> 0x62f280 None
+  0001087a  90                   nop     

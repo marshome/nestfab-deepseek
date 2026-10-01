@@ -1,0 +1,21 @@
+### fn 0x3310 name=None end=0x3352 size=66
+STRINGS: 0x9ac1b7:'LaunchLimitedLocalComputation'
+CALLERS: 
+CALLEES: 0x2ab0:LaunchLocalComputation, 0x64aea0:None
+
+  00003310  56                   push    rsi
+  00003311  53                   push    rbx
+  00003312  4883ec28             sub     rsp, 0x28
+  00003316  4889cb               mov     rbx, rcx
+  00003319  488d0d978e9a00       lea     rcx, [rip + 0x9a8e97]  ; "LaunchLimitedLocalComputation"
+  00003320  e87b7b6400           call    0x64aea0  ; -> 0x64aea0 None
+  00003325  8bb3f8010000         mov     esi, dword ptr [rbx + 0x1f8]
+  0000332b  4889d9               mov     rcx, rbx
+  0000332e  c783f801000001000000 mov     dword ptr [rbx + 0x1f8], 1
+  00003338  f20f100d10909a00     movsd   xmm1, qword ptr [rip + 0x9a9010]  ; DATA 0x9ac350
+  00003340  e86bf7ffff           call    0x2ab0  ; -> 0x2ab0 LaunchLocalComputation
+  00003345  89b3f8010000         mov     dword ptr [rbx + 0x1f8], esi
+  0000334b  4883c428             add     rsp, 0x28
+  0000334f  5b                   pop     rbx
+  00003350  5e                   pop     rsi
+  00003351  c3                   ret     

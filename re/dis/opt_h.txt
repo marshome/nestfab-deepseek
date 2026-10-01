@@ -1,0 +1,16 @@
+### fn 0xb5d70 name=None end=0xb5d99 size=41
+STRINGS: 
+CALLERS: 0x1880:None, 0x1e70:None
+CALLEES: 0xb81f0:None
+
+  000b5d70  4883ec28             sub     rsp, 0x28
+  000b5d74  e877240000           call    0xb81f0  ; -> 0xb81f0 None
+  000b5d79  ba01000000           mov     edx, 1
+  000b5d7e  3d58020000           cmp     eax, 0x258
+  000b5d83  740d                 je      0xb5d92
+  000b5d85  e866240000           call    0xb81f0  ; -> 0xb81f0 None
+  000b5d8a  3d78050000           cmp     eax, 0x578
+  000b5d8f  0f94c2               sete    dl
+  000b5d92  89d0                 mov     eax, edx
+  000b5d94  4883c428             add     rsp, 0x28
+  000b5d98  c3                   ret     

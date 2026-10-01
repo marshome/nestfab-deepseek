@@ -1,0 +1,7 @@
+### fn 0xb5b90 name=None end=0xb5b96 size=6
+STRINGS: 
+CALLERS: 0x1e70:None
+CALLEES: 
+
+  000b5b90  b801000000           mov     eax, 1
+  000b5b95  c3                   ret     

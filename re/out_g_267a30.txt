@@ -1,0 +1,152 @@
+#### 0x267A30 Clp load routine  size=532 nins=151
+267a30   push r13                                    
+267a32   push r12                                    
+267a34   push rbp                                    
+267a35   push rdi                                    
+267a36   push rsi                                    
+267a37   push rbx                                    
+267a38   sub rsp, 0x48                               
+267a3c   mov rax, rdx                                
+267a3f   mov rbp, rcx                                
+267a42   mov rbx, r8                                 
+267a45   sub rax, rcx                                
+267a48   mov r12, rdx                                
+267a4b   mov r13, rdx                                
+267a4e   cmp rax, 0x10f                              
+267a54   jle 0x267c37                                
+267a5a   lea rdi, [rcx + 0x10]                       
+267a5e   test r8, r8                                 
+267a61   lea rsi, [rcx + 0x20]                       
+267a65   je 0x267b74                                 
+267a6b   sub r13, rbp                                
+267a6e   mov rcx, rbp                                
+267a71   mov byte ptr [rsp + 0x20], 0                
+267a76   mov rdx, rdi                                
+267a79   lea r9, [r12 - 0x10]                        
+267a7e   sar r13, 4                                  
+267a82   sub rbx, 1                                  
+267a86   mov rax, r13                                
+267a89   shr rax, 0x3f                               
+267a8d   add r13, rax                                
+267a90   sar r13, 1                                  
+267a93   shl r13, 4                                  
+267a97   lea r8, [rbp + r13]                         
+267a9c   call 0x97eec0                                  ; (0x97eec0)
+267aa1   mov ecx, dword ptr [rbp + 0xc]              
+267aa4   mov r8, rsi                                 
+267aa7   mov r9, r12                                 
+267aaa   jmp 0x267af8                                
+267aac   nop dword ptr [rax]                         
+267ab0   jl 0x267abe                                 
+267ab2   mov r11d, dword ptr [rax + 8]               
+267ab6   cmp dword ptr [rbp + 8], r11d               
+267aba   jl 0x267b2e                                 
+267abc   jle 0x267b34                                
+267abe   cmp r13, rax                                
+267ac1   jae 0x267b48                                
+267ac7   mov dword ptr [r8 - 4], edx                 
+267acb   mov ecx, dword ptr [rax + 8]                
+267ace   mov dword ptr [rax + 0xc], r10d             
+267ad2   mov edx, dword ptr [r8 - 8]                 
+267ad6   movsd xmm0, qword ptr [r8 - 0x10]           
+267adc   movsd xmm1, qword ptr [rax]                 
+267ae0   mov dword ptr [r8 - 8], ecx                 
+267ae4   mov dword ptr [rax + 8], edx                
+267ae7   mov ecx, dword ptr [rbp + 0xc]              
+267aea   movsd qword ptr [r8 - 0x10], xmm1           
+267af0   movsd qword ptr [rax], xmm0                 
+267af4   add r8, 0x10                                
+267af8   mov r10d, dword ptr [r8 - 4]                
+267afc   lea r13, [r8 - 0x10]                        
+267b00   cmp r10d, ecx                               
+267b03   jl 0x267af4                                 
+267b05   jg 0x267b20                                 
+267b07   mov eax, dword ptr [rbp + 8]                
+267b0a   cmp dword ptr [r8 - 8], eax                 
+267b0e   jl 0x267af4                                 
+267b10   jg 0x267b20                                 
+267b12   movsd xmm0, qword ptr [rbp]                 
+267b17   ucomisd xmm0, qword ptr [r8 - 0x10]         
+267b1d   ja 0x267af4                                 
+267b1f   nop                                         
+267b20   lea rax, [r9 - 0x10]                        
+267b24   mov edx, dword ptr [rax + 0xc]              
+267b27   mov r9, rax                                 
+267b2a   cmp edx, ecx                                
+267b2c   jle 0x267ab0                                
+267b2e   sub rax, 0x10                               
+267b32   jmp 0x267b24                                
+267b34   movsd xmm0, qword ptr [rax]                 
+267b38   ucomisd xmm0, qword ptr [rbp]               
+267b3d   ja 0x267b2e                                 
+267b3f   cmp r13, rax                                
+267b42   jb 0x267ac7                                 
+267b48   mov r8, rbx                                 
+267b4b   mov rdx, r12                                
+267b4e   mov rcx, r13                                
+267b51   call 0x267a30                                  ; (0x267a30)
+267b56   mov rax, r13                                
+267b59   sub rax, rbp                                
+267b5c   cmp rax, 0x10f                              
+267b62   jle 0x267c37                                
+267b68   test rbx, rbx                               
+267b6b   mov r12, r13                                
+267b6e   jne 0x267a6b                                
+267b74   lea r13, [rsp + 0x30]                       
+267b79   sar rax, 4                                  
+267b7d   lea rdi, [rax - 2]                          
+267b81   mov rbx, rax                                
+267b84   sar rdi, 1                                  
+267b87   mov rsi, rdi                                
+267b8a   shl rsi, 4                                  
+267b8e   add rsi, rbp                                
+267b91   jmp 0x267b97                                
+267b93   sub rdi, 1                                  
+267b97   mov edx, dword ptr [rsi + 8]                
+267b9a   mov r9, r13                                 
+267b9d   mov r8, rbx                                 
+267ba0   mov rcx, rbp                                
+267ba3   mov eax, dword ptr [rsi + 0xc]              
+267ba6   sub rsi, 0x10                               
+267baa   movsd xmm0, qword ptr [rsi + 0x10]          
+267baf   mov byte ptr [rsp + 0x20], 0                
+267bb4   mov dword ptr [rsp + 0x38], edx             
+267bb8   mov rdx, rdi                                
+267bbb   movsd qword ptr [rsp + 0x30], xmm0          
+267bc1   mov dword ptr [rsp + 0x3c], eax             
+267bc5   call 0x95a5f0                                  ; (0x95a5f0)
+267bca   test rdi, rdi                               
+267bcd   jne 0x267b93                                
+267bcf   sub r12, 0x10                               
+267bd3   mov ecx, dword ptr [rbp + 0xc]              
+267bd6   mov rbx, r12                                
+267bd9   mov r9, r13                                 
+267bdc   sub r12, 0x10                               
+267be0   mov edx, dword ptr [r12 + 0x18]             
+267be5   sub rbx, rbp                                
+267be8   mov eax, dword ptr [r12 + 0x1c]             
+267bed   mov r8, rbx                                 
+267bf0   movsd xmm1, qword ptr [rbp]                 
+267bf5   sar r8, 4                                   
+267bf9   mov dword ptr [r12 + 0x1c], ecx             
+267bfe   mov ecx, dword ptr [rbp + 8]                
+267c01   movsd xmm0, qword ptr [r12 + 0x10]          
+267c08   mov dword ptr [rsp + 0x38], edx             
+267c0c   xor edx, edx                                
+267c0e   movsd qword ptr [r12 + 0x10], xmm1          
+267c15   movsd qword ptr [rsp + 0x30], xmm0          
+267c1b   mov dword ptr [r12 + 0x18], ecx             
+267c20   mov rcx, rbp                                
+267c23   mov byte ptr [rsp + 0x20], 0                
+267c28   mov dword ptr [rsp + 0x3c], eax             
+267c2c   call 0x95a5f0                                  ; (0x95a5f0)
+267c31   cmp rbx, 0x1f                               
+267c35   jg 0x267bd3                                 
+267c37   add rsp, 0x48                               
+267c3b   pop rbx                                     
+267c3c   pop rsi                                     
+267c3d   pop rdi                                     
+267c3e   pop rbp                                     
+267c3f   pop r12                                     
+267c41   pop r13                                     
+267c43   ret                                         

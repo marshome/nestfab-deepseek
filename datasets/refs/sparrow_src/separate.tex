@@ -1,0 +1,34 @@
+\begin{algorithm}[htbp]
+    \caption{\texttt{separate}($k_\text{max}, n_\text{max}$)}
+    \begin{algorithmic}[1]
+        \State $s^* \gets$ current solution
+        \SemiCol $z^* \gets \text{Expr. \ref{eq:solution_loss}}$
+        \SemiCol $k \gets 0$
+        \State $w_{ab} \gets 1$ for all item pairs $a,b \in I$ \Comment{GLS weights}
+        \While{$k < k_\text{max}$ \textbf{and} $z^* > 0$}
+            \State restore to ${s^*}$ 
+            \SemiCol $s_\text{init} \gets s^*$
+            \SemiCol $n \gets 0$ 
+            \While{$n < n_\text{max}$ \textbf{and} $z^* > 0$}
+            \Comment{an attempt}
+                \State \nameref{alg:move_items_multi}
+                \Comment{Alg. \ref{alg:move_items_multi}}
+                \State \nameref{alg:iterate_weights}
+                \Comment{Alg. \ref{alg:iterate_weights}}
+                \State $z \gets \text{Expr. \ref{eq:solution_loss}}$
+                \SemiCol $n \gets n + 1$
+                \If{$z < z^*$} \Comment{improvement found}
+                    \State $s^* \gets$ current solution
+                    \SemiCol $z^* \gets z$
+                    \State $n \gets 0$                    
+                \EndIf
+            \EndWhile
+            \State $k \gets k + 1$ \Comment{add a strike}
+            \If{$s^* \neq s_\text{init}$}
+            \State $k \gets 0$ \Comment{reset strikes}
+            \EndIf
+        \EndWhile
+        \State \Return $s^*$
+    \end{algorithmic}
+    \label{alg:separate}
+\end{algorithm}

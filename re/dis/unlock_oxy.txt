@@ -1,0 +1,36 @@
+### fn 0xe1f0 name=None end=0xe25f size=111
+STRINGS: 0x9acfd9:'UnLockLaunchingOrderOxy'
+CALLERS: 
+CALLEES: 0x63f238:None, 0x64d9c0:None, 0x90ecb0:None
+
+  0000e1f0  57                   push    rdi
+  0000e1f1  56                   push    rsi
+  0000e1f2  53                   push    rbx
+  0000e1f3  4883ec30             sub     rsp, 0x30
+  0000e1f7  4889cb               mov     rbx, rcx
+  0000e1fa  4889d7               mov     rdi, rdx
+  0000e1fd  4c89c6               mov     rsi, r8
+  0000e200  488d0dd2ed9900       lea     rcx, [rip + 0x99edd2]  ; "UnLockLaunchingOrderOxy"
+  0000e207  e8b4f76300           call    0x64d9c0  ; -> 0x64d9c0 None
+  0000e20c  4889f9               mov     rcx, rdi
+  0000e20f  e824106300           call    0x63f238  ; -> 0x63f238 
+  0000e214  4c8b8350020000       mov     r8, qword ptr [rbx + 0x250]
+  0000e21b  4989f9               mov     r9, rdi
+  0000e21e  31d2                 xor     edx, edx
+  0000e220  488d8b48020000       lea     rcx, [rbx + 0x248]
+  0000e227  4889442420           mov     qword ptr [rsp + 0x20], rax
+  0000e22c  e87f0a9000           call    0x90ecb0  ; -> 0x90ecb0 None
+  0000e231  4889f1               mov     rcx, rsi
+  0000e234  e8ff0f6300           call    0x63f238  ; -> 0x63f238 
+  0000e239  4c8b8370020000       mov     r8, qword ptr [rbx + 0x270]
+  0000e240  488d8b68020000       lea     rcx, [rbx + 0x268]
+  0000e247  31d2                 xor     edx, edx
+  0000e249  4889442420           mov     qword ptr [rsp + 0x20], rax
+  0000e24e  4989f1               mov     r9, rsi
+  0000e251  e85a0a9000           call    0x90ecb0  ; -> 0x90ecb0 None
+  0000e256  90                   nop     
+  0000e257  4883c430             add     rsp, 0x30
+  0000e25b  5b                   pop     rbx
+  0000e25c  5e                   pop     rsi
+  0000e25d  5f                   pop     rdi
+  0000e25e  c3                   ret     

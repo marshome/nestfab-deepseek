@@ -1,0 +1,13 @@
+### fn 0x1bf20 name=None end=0x1bf3b size=27
+STRINGS: 
+CALLERS: 0x6100:LaunchComputation
+CALLEES: 0x1be70:None, 0xb5d60:None
+
+  0001bf20  4883ec28             sub     rsp, 0x28
+  0001bf24  e8379e0900           call    0xb5d60  ; -> 0xb5d60 None
+  0001bf29  84c0                 test    al, al
+  0001bf2b  7509                 jne     0x1bf36
+  0001bf2d  e83effffff           call    0x1be70  ; -> 0x1be70 None
+  0001bf32  0fb64002             movzx   eax, byte ptr [rax + 2]
+  0001bf36  4883c428             add     rsp, 0x28
+  0001bf3a  c3                   ret     

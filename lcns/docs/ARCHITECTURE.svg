@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1274" viewBox="0 0 1500 1274">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8899aa"/></marker><marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b45309"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="40" y="42" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" font-weight="700" fill="#10202f">liblcns.dll 逆向架构  ×  lcns 等价重建工程</text>
+<text x="40" y="70" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="13" fill="#55636f">左侧＝后端恢复出的真实类型与地址（RVA，ImageBase 0x6B4C0000）；右侧＝lcns 工程中的对应实现</text>
+<text x="300" y="92" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="14" font-weight="700" fill="#1f3a5f">DLL（已恢复）</text>
+<text x="900" y="92" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="14" font-weight="700" fill="#1f4d3a">lcns（重建）</text>
+<text x="40" y="159" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">导出 / API 层</text>
+<rect x="300" y="100" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="118" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="133" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="148" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="100" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="118" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="133" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="148" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="163" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="159" x2="894" y2="159" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="234" x2="580" y2="224" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="234" x2="1180" y2="224" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="293" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">引擎 / 调度层</text>
+<rect x="300" y="234" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="252" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="267" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="282" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="297" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="234" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="252" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="267" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="282" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="297" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="293" x2="894" y2="293" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="368" x2="580" y2="358" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="368" x2="1180" y2="358" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="427" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">策略层（12 个 Nester）</text>
+<rect x="300" y="368" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="386" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="401" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="416" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="431" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="446" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="461" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="368" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="386" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="401" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="416" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="431" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="427" x2="894" y2="427" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="502" x2="580" y2="492" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="502" x2="1180" y2="492" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="561" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">行排样核心（逐零件路径）</text>
+<rect x="300" y="502" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="520" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="535" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="550" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="565" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="580" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="595" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="502" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="520" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="535" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="550" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="565" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="580" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="561" x2="894" y2="561" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="636" x2="580" y2="626" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="636" x2="1180" y2="626" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="695" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">几何内核（全自研）</text>
+<rect x="300" y="636" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="654" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="669" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="684" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="699" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="714" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="636" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="654" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="669" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="684" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="699" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="714" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="695" x2="894" y2="695" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="770" x2="580" y2="760" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="770" x2="1180" y2="760" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="829" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">LP / 定价层</text>
+<rect x="300" y="770" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="788" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="803" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="818" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="833" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="848" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="770" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="788" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="803" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="818" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="833" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="829" x2="894" y2="829" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="904" x2="580" y2="894" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="904" x2="1180" y2="894" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="963" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">切割工艺特性</text>
+<rect x="300" y="904" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="922" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="937" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="952" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="967" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="982" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="904" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="922" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="937" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="952" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="967" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="963" x2="894" y2="963" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<line x1="580" y1="1038" x2="580" y2="1028" stroke="#1f3a5f" stroke-width="1.0" marker-end="url(#arrow)"/>
+<line x1="1180" y1="1038" x2="1180" y2="1028" stroke="#1f4d3a" stroke-width="1.0" marker-end="url(#arrow)"/>
+<text x="40" y="1097" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#33404d">云端 / 许可</text>
+<rect x="300" y="1038" width="560" height="118" rx="6" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.2"/>
+<text x="310" y="1056" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">t</text>
+<text x="310" y="1071" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="1086" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<text x="310" y="1101" font-family="Cascadia Mono, Consolas, monospace" font-size="11" fill="#33404d">b</text>
+<rect x="900" y="1038" width="560" height="118" rx="6" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.2"/>
+<text x="910" y="1056" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">t</text>
+<text x="910" y="1071" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="1086" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<text x="910" y="1101" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d">b</text>
+<line x1="864" y1="1097" x2="894" y2="1097" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+<rect x="300" y="1178" width="1160" height="72" rx="6" fill="#fff8ec" stroke="#b45309" stroke-width="1.2" stroke-dasharray="6,4"/>
+<text x="312" y="1198" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="13" font-weight="600" fill="#b45309">可追溯性闭环</text>
+<text x="312" y="1218" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#33404d">每个常量/函数在代码注释里带 RVA  →  re/g_acceptance.py 校验「文档 ↔ 代码 ↔ 地址」三方一致（108/108）</text>
+<text x="312" y="1236" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#33404d">re/g_final_check.py 复核 22 个逆出原语均在工程中；零警告构建 32 TU；ctest 15/15</text>
+</svg>

@@ -1,0 +1,610 @@
+0x9AC000  libgcj-16.dll
+0x9AC00E  _Jv_RegisterClasses
+0x9AC042  %ld
+0x9AC047  basic_string::append
+0x9AC060  basic_string::_M_construct null not valid
+0x9AC091  -> 
+0x9AC098  // LocalCancel waiting for threads termination
+0x9AC0C7  Order valid
+0x9AC0D3  Launching local engines 
+0x9AC0EC   threads for multi,
+0x9AC100   threads for nesting, 
+0x9AC117   max iterations.
+0x9AC128   - 
+0x9AC12C  Keys: 
+0x9AC133  Start
+0x9AC139  cns_force_cloud
+0x9AC150  cns1.optalog.com;cns2.optalog.com
+0x9AC172  LaunchLocalComputation
+0x9AC189  c:\Temp\cns.pb.json
+0x9AC19D  // LaunchLocalComputation
+0x9AC1B7  LaunchLimitedLocalComputation
+0x9AC1D8  // LaunchEstimateLocalComputation
+0x9AC1FA   parts and 
+0x9AC206  NewIntermediateSolutionFound 
+0x9AC224   sheets.
+0x9AC22D  Improving best
+0x9AC23C  Engine finished.
+0x9AC24D   in 
+0x9AC252   sec.
+0x9AC258  *** EXCEPTION ***: 
+0x9AC26C  unknown_type
+0x9AC280  // LocalTerminate waiting for threads termination
+0x9AC2E0  *N12_GLOBAL__N_119ComputationObserverE
+0x9AC339  3Lk
+0x9AC360  -> 
+0x9AC368  basic_string::_M_construct null not valid
+0x9AC392  LaunchComputation
+0x9AC3A4  c:\Temp\cns.pb.json
+0x9AC3B9  basic_string::append
+0x9AC3D0  // LaunchComputation
+0x9AC400  basic_string::_M_construct null not valid
+0x9AC430  external_number < map->result.size()
+0x9AC455  cns_no_fit.cpp
+0x9AC468  (internal_number - 1) < inners.size()
+0x9AC48E  it != m_part_number.end()
+0x9AC4A8  n <= m_equivalent_problem->GetNumberOfParts()
+0x9AC4D6  it != m_sheet_number.end()
+0x9AC4F8  n <= m_equivalent_problem->GetNumberOfSheets()
+0x9AC527  s.is_rectangular()
+0x9AC53A  geometry
+0x9AC544  -> 
+0x9AC550  NoFitGetNumberOfExternalPolygons
+0x9AC571  DeleteNoFitGeometry
+0x9AC585  GetNoFitMap
+0x9AC591  //GetNoFitMap
+0x9AC59F  NoFitGetNumberOfInternalHoles
+0x9AC5BD  external_number < n
+0x9AC5D1  NoFitGetNumberOfPoints
+0x9AC5E8  NoFitGetPoint
+0x9AC5F6  point_number < ring.size()
+0x9AC611  NewNoFitNesting
+0x9AC621  // NewNoFitNesting
+0x9AC634  DeleteNoFitNesting
+0x9AC647  NoFitGenerateSvgNesting
+0x9AC65F  NoFitGenerateSvgGeometry
+0x9AC678  NoFitSetMaximumComplexity
+0x9AC698  m_equivalent_problem->GetNumberOfParts() == order->parts.size()
+0x9AC6D8  m_equivalent_problem->GetNumberOfSheets() == order->sheets.size()
+0x9AC71A  NewNoFitContext
+0x9AC72A  // NewNoFitContext
+0x9AC73D  DeleteNoFitContext
+0x9AC750  GetNoFitPlacementMap
+0x9AC765  NoFitAddNestedPart
+0x9AC780  ComputeNoFitSheetMap
+0x9AC7A0  CNS_NoFitGetPoint
+0x9AC7B8  GetRing
+0x9AC7C0  CNS_NoFitGetNumberOfHoles
+0x9AC7E0  CNS_NoFitContext
+0x9AC7F8  DrawSVG
+0x9AC800  GetSheet
+0x9AC810  GetPart
+0x9AC860  basic_string::_M_construct null not valid
+0x9AC88A  %ld
+0x9AC88E  -> 
+0x9AC892  GetPartUserStringEx
+0x9AC8A6  GetSheetUserStringEx
+0x9AC8BB  GetSolution
+0x9AC8C7  GetNumberOfNestings
+0x9AC8DB  GetMultiplicity
+0x9AC8EB  GetLength
+0x9AC8F5  GetHeight
+0x9AC8FF  GetNumberOfNestedParts
+0x9AC918  GenerateHtmlLaunchingOrderReport
+0x9AC940  <h1> Problem contains invalid parts. </h1>
+0x9AC970  <h1> Problem contains invalid sheets. </h1>
+0x9AC99C  GenerateHtmlSolutionReport
+0x9AC9B7  GetMajorVersion
+0x9AC9C7  GetBuildDate
+0x9AC9D4  GetBuildVersion
+0x9AC9E4  GetFillRatio
+0x9AC9F1  GetNestingFillRatio
+0x9ACA05  GetPartWithBadGeometry
+0x9ACA20  AsyncCancelAllComputationsAndDeleteLaunchingOrder
+0x9ACA52  GetSheet
+0x9ACA60  number <= order->sheets.size()
+0x9ACA7F  cns.cpp
+0x9ACA87  GetNestingBoundingBox
+0x9ACAA0  min_x && min_y && max_x && max_y
+0x9ACAC1  GenerateLaunchingOrderProblem
+0x9ACADF  source_version
+0x9ACAEE  GetCommonCut
+0x9ACAFB  nesting->nesting
+0x9ACB10  common_cut_number < evaluation.common_cut_segments.size()
+0x9ACB4A  GetNestingDimensions
+0x9ACB63  GenerateDxfNesting
+0x9ACB76  GetPCId
+0x9ACB80  SetPartAuthorizations
+0x9ACB96  SetPartPriority
+0x9ACBA6  SetPartUserString
+0x9ACBB8  GetPartUserString
+0x9ACBCA  ForcePartInsideHole
+0x9ACBDE  ForcePartOutsideHole
+0x9ACBF3  SetSheetUserString
+0x9ACC06  GetSheetUserString
+0x9ACC19  SetSheetGrainDirection
+0x9ACC30  SetSheetPrice
+0x9ACC3E  SetSheetGaps
+0x9ACC4B  SetObjective
+0x9ACC58  SetShearGap
+0x9ACC64  SetInterpartGap
+0x9ACC78  (gap >= 0.0) && "Negative part gap unsupported"
+0x9ACCA8  SetOrigin
+0x9ACCB2  CNS_SetMultiplicityPreference
+0x9ACCD0  CNS_SetNoMixPreference
+0x9ACCE7  CNS_SetNoSheetMixPreference
+0x9ACD03  SetLocalEngine
+0x9ACD12  SetLocalMaximumThreads
+0x9ACD29  SetLocalMaximumIterations
+0x9ACD43  UnLockLaunchingOrder
+0x9ACD58  GetNestedPart
+0x9ACD68  nested_part_number <= nested_parts.size()
+0x9ACD98  part_number <= order->parts.size()
+0x9ACDBB  GetNumberOfCommonCuts
+0x9ACDD1  cns_nesting->nesting
+0x9ACDE6  // GetNumberOfCommonCuts 
+0x9ACE00  GetPartTorchInfos
+0x9ACE18  part_index < nesting->nesting->nested_parts().size()
+0x9ACE50  part_index < nesting->nesting->multitorch_infos().m_infos.size()
+0x9ACE98  vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+0x9ACEE2  CNS_SetNoOrientationMixOnPart
+0x9ACF00  CNS_SetFloatingMode
+0x9ACF14  CNS_SetOriginPackingMode
+0x9ACF2D  SetFillLastNestingStrategy
+0x9ACF48  SetShearMode
+0x9ACF55  SetPartialShearMode
+0x9ACF69  SetShearRepulseFromBorders
+0x9ACF84  SetPartCommonCutMode
+0x9ACF99  SetLocalEngineThreads
+0x9ACFAF  SetAutomaticStop
+0x9ACFC0  UnLockLaunchingOrderSntl
+0x9ACFD9  UnLockLaunchingOrderOxy
+0x9ACFF1  UnLockLaunchingOrderPCId
+0x9AD00A  SetOffcutEvaluation
+0x9AD01E  SetCommonCutMode
+0x9AD02F  SetPartSpecificCommonCut
+0x9AD048  Bad pattern: 
+0x9AD056  SetCommonCutSafetyPreference
+0x9AD073  SetCommonCutAuthorizations
+0x9AD08E  SetCommonCutCuttingPreference
+0x9AD0AC  SetCommonCutObjective
+0x9AD0C2  SetMultiTorchMode
+0x9AD0D8  SetMultiTorchCuttingPreference
+0x9AD0F7  SetMultiTorchObjective
+0x9AD110  SetDetailedMultiTorchObjective
+0x9AD130  AddPartToSuggestedPartsGrouping
+0x9AD150  group
+0x9AD156  SetRowMode
+0x9AD161  SetPipeMode
+0x9AD16D  GetNumberOfRows
+0x9AD17D  GetRow
+0x9AD188  row_number < row_intervals.size()
+0x9AD1AA  AddToolPathToPart
+0x9AD1BC  AddHoleInToolPath
+0x9AD1CE  CNS_AddToolPathDefectToSheet
+0x9AD1F0  CNS_AddExternalToolPathBoundaryToSheet
+0x9AD218  CNS_SetEvaluateIntermediateNestingsAsLast
+0x9AD248  SetReorganizeBiggestPartNearOrigin
+0x9AD270  SetReorganizeLongestPartNearOrigin
+0x9AD293  Local
+0x9AD299  Cloud
+0x9AD29F  WaitComputationTermination
+0x9AD2BA  // WaitComputationTermination
+0x9AD2D8  c:\Temp\computation_solution.html
+0x9AD2FA  WaitNextSolution
+0x9AD30B  // WaitNextSolution
+0x9AD31F  GetComputationStatus
+0x9AD334  // GetComputationStatus
+0x9AD34C  CancelComputation 
+0x9AD35F  // CancelComputation
+0x9AD374  TerminateComputation 
+0x9AD38A  // TerminateComputation
+0x9AD3A2  SetDefectGap
+0x9AD3AF  CNS_CreateAssemblyGroup
+0x9AD3C7  // 
+0x9AD3CB  vector::_M_range_insert
+0x9AD3E3  AddPartSpecificAuthorizations
+0x9AD401  GetNesting
+0x9AD410  nesting_number < solution_aux.size()
+0x9AD435  SetExtraParameters
+0x9AD448  SetIncompatibleSheet
+0x9AD45D  AddSuggestedPartsGrouping
+0x9AD477  order
+0x9AD47D  CNS_AddAssemblyGroupPart
+0x9AD496  DeleteLaunchingOrder
+0x9AD4B0  *** ERROR unterminated/cancelled computation ***
+0x9AD4E8  ERROR unterminated/cancelled computation
+0x9AD511  AddInflatedToolPathToPart
+0x9AD52B  CNS_AddOpenToolPathToPart
+0x9AD545  CNS_AddDefectFromNestedPart
+0x9AD568  CNS_GetRow
+0x9AD580  CNS_AddPartToSuggestedPartsGrouping
+0x9AD5B0  CNS_AddSuggestedPartsGrouping
+0x9AD5D0  CNS_GetPartTorchInfos
+0x9AD5F0  CNS_GetNestingDimensions
+0x9AD610  CNS_GetCommonCut
+0x9AD630  CNS_GetNumberOfCommonCuts
+0x9AD650  CNS_GetNestedPart
+0x9AD670  CNS_GetNestingBoundingBox
+0x9AD690  CNS_GetSheet
+0x9AD6A0  CNS_GetNesting
+0x9AD6B0  CNS_SetInterpartGap
+0x9AD6EC  MbP?
+0x9AD717  @-C
+0x9AD71F  ?Tt$
+0x9AD73F  ?-> 
+0x9AD746  AddHoleToPart
+0x9AD754  AddExternalBoundaryToPart
+0x9AD770  // AddCircularExternalBoundaryToPart
+0x9AD798  // AddRectangularExternalBoundaryToPart
+0x9AD7C0  // AddCircularHoleToPart
+0x9AD7D9  // AddRectangularHoleToPart
+0x9AD7F5  SetSheetPriority
+0x9AD806  SetSpecificSheetOrigin
+0x9AD81D  SetSpecificSheetObjective
+0x9AD837  AddDefectToSheet
+0x9AD848  AddExternalBoundaryToSheet
+0x9AD863  AddOptionalQuantityToPart
+0x9AD87D  SetExtraGapOnPart
+0x9AD88F  NewLaunchingOrder
+0x9AD8A1  AddOpenCuttingPathToPart
+0x9AD8BA  AddPart
+0x9AD8C2  // 
+0x9AD8C6  // AddCircularPart
+0x9AD8D9  // AddRectanglePart
+0x9AD8ED  AddNonRectangularSheet
+0x9AD904  AddSheet
+0x9AD90D  // AddPolygonPart
+0x9AD91F  // AddPolygonHoleToPart
+0x9AD938  // AddExternalPolygonBoundaryToSheet
+0x9AD960  // AddExternalPolygonBoundaryToPart
+0x9AD984  // AddPolygonDefectToSheet
+0x9AD9A0  // AddNonRectangularPolygonSheet
+0x9ADA00  -> 
+0x9ADA06  // AddHoleToPartVariant
+0x9ADA20  // CNS_AddExternalBoundaryToPartVariant
+0x9ADA48  // CNS_AddOpenCuttingPathToPartVariant
+0x9ADA70  // CNS_SetPartVariantAuthorizations
+0x9ADA98  // CNS_AddPartVariantSpecificAuthorizations
+0x9ADAC4  GetNestedPartPartVariant
+0x9ADADD  AddRotatedPartVariantToPart
+0x9ADAF9  // 
+0x9ADAFD  AddPartVariantToPart
+0x9ADB37  ?-C
+0x9ADB3F  ?-> 
+0x9ADB44  SetMarkMode
+0x9ADB52  GetNumberOfMarks
+0x9ADB63  GetMark
+0x9ADB80  -> 
+0x9ADB84  SetLeatherMode
+0x9ADB95  AddLeatherQualityZoneInPart
+0x9ADBB1  AddLeatherQualityZoneInSheet
+0x9ADBE0  -> 
+0x9ADBE4  CNS_SheetAddRestrictedZone
+0x9ADC01  CNS_ForcePartOnBottomBorder
+0x9ADC20  CreateRestrictedZoneConstraint
+0x9ADC3F  // 
+0x9ADC43  CNS_SetZoneRestrictedPart
+0x9ADC80  basic_string::_M_construct null not valid
+0x9ADCAA  quality >= 0 && quality < 9
+0x9ADCC8  ../structure/border_property.hpp
+0x9ADCE9  c:\Temp\log_nest.txt
+0x9ADCFE  c:\Temp\cloud_nest.txt
+0x9ADD15  c:\Temp\local_nest.txt
+0x9ADD2C  CNS informations
+0x9ADD42  c:\Temp\debug_nest.txt
+0x9ADD59  it != part_maping.end()
+0x9ADD71  internal.cpp
+0x9ADD7E  solution.Bindable(problem)
+0x9ADD99  -> 
+0x9ADD9D  // BadPartGeometry
+0x9ADDB0  // BadSheetGeometry
+0x9ADDC4  // BadSheetPrices
+0x9ADDD6  // BadCommonCutGaps
+0x9ADDEA  quality >= 0 && quality < 100
+0x9ADE08  vector::_M_range_insert
+0x9ADE20  vector::reserve
+0x9ADE30  element_points.size() >= 2u
+0x9ADE4C  poly.inners().empty()
+0x9ADE62  external_rings.size() == 1u
+0x9ADE83  structure_sheet
+0x9ADE98  all_settings.find(order.common_cut_safety_preference) != all_settings.end()
+0x9ADEE8  boost.find(order.multitorch_cutting_preference) != boost.end()
+0x9ADF28  vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+0x9ADF73  !elements.empty()
+0x9ADF85  CheckAddElements invalid 
+0x9ADFA0  GetMultitorchProperties
+0x9ADFC0  GetCommonCutProperties
+0x9ADFE0  ComputeNoHoleRings
+0x9AE000  ComputeSheetGeometryRowMode
+0x9AE020  CreateProblem
+0x9AE040  MakeClusterFromSuggestedPartsGrouping
+0x9AE070  GetLayerRestrictedZonePart
+0x9AE090  GetLayerRestrictedZoneSheet
+0x9AE0B0  GetLayerLeatherPart
+0x9AE0D0  GetLayerLeatherSheet
+0x9AE0E8  ArcToPoints
+0x9AE100  ElementsToPoints
+0x9AE120  UnSerializeSolution
+0x9AE22F  >-C
+0x9AE260  basic_string::_M_construct null not valid
+0x9AE28A  5.0
+0x9AE28E  Jun 28 2019
+0x9AE29A  14:03:08
+0x9AE2A3  68e2d90e72b4 5449 default
+0x9AE2C0  basic_string::_M_construct null not valid
+0x9AE2F0  c:\
+0x9AE300  basic_string::_M_construct null not valid
+0x9AE32A  Status(
+0x9AE334  ..\engine\engine.cpp
+0x9AE350  engine && problem && observer && result
+0x9AE378  m_state && m_problem && m_observer
+0x9AE39B  nb_max_threads
+0x9AE3AB  !original.empty()
+0x9AE3C0  RunThreadLocalComputation
+0x9AE3E0  CompositeObserver
+0x9AE400  NewNestingFound
+0x9AE440  *ZN6Engine17MakeMaxTimeEngineERKSt10shared_ptrINS_6EngineEEdE9AuxEngine
+0x9AE4A0  *ZN6Engine23MakeSkipSmallTimeEngineERKSt10shared_ptrINS_6EngineEEdE9AuxEngine
+0x9AE520  *St15_Sp_counted_ptrIPZN6Engine17MakeMaxTimeEngineERKSt10shared_ptrINS0_6EngineEEdE9AuxEngineLN9__gnu_cxx12_Lock_policyE2EE
+0x9AE5C0  *St15_Sp_counted_ptrIPZN6Engine23MakeSkipSmallTimeEngineERKSt10shared_ptrINS0_6EngineEEdE9AuxEngineLN9__gnu_cxx12_Lock_policyE2EE
+0x9AE658  `HNk
+0x9AE661  INk
+0x9AE669  FNk
+0x9AE681  HNk
+0x9AE688  PINk
+0x9AE690  @eNk
+0x9AE6A8   GNk
+0x9AE6B0  0GNk
+0x9AE6B9  INk
+0x9AE6C0  @GNk
+0x9AE6C8  PHNk
+0x9AE6E1  GNk
+0x9AE6E8  PGNk
+0x9AE6F1  JNk
+0x9AE6F8  `GNk
+0x9AE700  @HNk
+0x9AE73D  ^*A
+0x9AE760  basic_string::_M_construct null not valid
+0x9AE78A  sha1 too many bytes
+0x9AE7A0  C:\Users\renaud\nest\external\boost_1_63_0/boost/uuid/sha1.hpp
+0x9AE7DF  /sol/
+0x9AE7E5  /best_sol/
+0x9AE7F0  final
+0x9AE7F6  intermediate
+0x9AE803  Launching cloud engine 
+0x9AE81B  sec.
+0x9AE820  basic_string::append
+0x9AE837  /pb/
+0x9AE83C  PUT on 
+0x9AE844   problem of size 
+0x9AE856  PUT done in 
+0x9AE863   sec.
+0x9AE86A  GET done (response size = 
+0x9AE885  ) in 
+0x9AE88D  ERROR: 
+0x9AE895  end
+0x9AE899  Found solution 
+0x9AE8A9  solution.Bindable(problem)
+0x9AE8C4  ..\engine\cloud_engine.cpp
+0x9AE8DF  CloudEngine::Run 
+0x9AE8F1   vs 
+0x9AE900  UnSerializeSolution
+0x9AE920  void boost::uuids::detail::sha1::process_byte(unsigned char)
+0x9AE9BE  >@timeout error
+0x9AE9CE  can not resolve
+0x9AE9DE  can not connect
+0x9AE9EE  response failure
+0x9AE9FF  asio.misc
+0x9AEA09  basic_string::append
+0x9AEA28  basic_string::_M_construct null not valid
+0x9AEA55  Already open
+0x9AEA62  End of file
+0x9AEA6E  Element not found
+0x9AEA80  The descriptor does not fit into the select call's fd_set
+0x9AEABA  asio.misc error
+0x9AEACA  mutex
+0x9AEAD0  socket_select_interrupter
+0x9AEAEA  pqcs
+0x9AEAEF  tss
+0x9AEAF3  timer
+0x9AEAF9  thread.entry_event
+0x9AEB0C  thread.exit_event
+0x9AEB1E  thread
+0x9AEB26  winsock
+0x9AEB2E  iocp
+0x9AEB33  KERNEL32
+0x9AEB3C  CancelIoEx
+0x9AEB47  cancel
+0x9AEB4E  close
+0x9AEB54  vector::_M_default_append
+0x9AEB70  boost::asio::streambuf too long
+0x9AEB93  HTTP/
+0x9AEBA0  GET 
+0x9AEBA5   HTTP/1.1
+0x9AEBB1  Host: 
+0x9AEBB8  Accept: */*
+0x9AEBC6  Connection: close
+0x9AEBDC  PUT 
+0x9AEBE1  Content-Length: 
+0x9AEBF2  Content-Type: text/plain
+0x9AEC0D  Connection: close
+0x9AEC40  Sheets
+0x9AEC47  X;Y;quantity
+0x9AEC56  Parts
+0x9AEC60  Generating c:\Temp\internal_output.dxf
+0x9AECAF  ?basic_string::_M_construct null not valid
+0x9AECDA  m_supervisor
+0x9AECE7  ..\multi\supervisor.cpp
+0x9AECFF  Compact cancelled !
+0x9AED14  raw_evaluation_ratio_100
+0x9AED2D  raw_evaluation_ratio_10
+0x9AED48  m_implementation->m_strategist
+0x9AED67  nesting.Bindable(m_problem)
+0x9AED86  %lld
+0x9AED8B  cc_cost
+0x9AED93  cc_ratio
+0x9AED9C  Time: 
+0x9AEDA3   sec
+0x9AEDA8  Memory: 
+0x9AEDB1   mbytes
+0x9AEDB9  supervisor
+0x9AEDC8  deque::_M_new_elements_at_front
+0x9AEDE8  deque::_M_new_elements_at_back
+0x9AEE08  ProbeCancel
+0x9AEE18  Compact
+0x9AEE20  strategist
+0x9AEE30  ProbeCancel
+0x9AEE40  ProbeCancel
+0x9AEE9F  @basic_string::_M_construct null not valid
+0x9AEECD  basic_string::append
+0x9AEEE6  vector::_M_default_append
+0x9AEF00  vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+0x9AEF50  parameters().nesting_pow_boost >= 1.0
+0x9AEF76  ..\multi\nesting_nester.cpp
+0x9AEF92  sheet
+0x9AEF98  deg_steps.size() == try_parts_ratio.size()
+0x9AEFC3  packer_cache
+0x9AEFD0  biggest
+0x9AEFDE  strategy
+0x9AEFE7  Run
+0x9AF177  >ffffff
+0x9AF1A0  basic_string::_M_construct null not valid
+0x9AF1CA  y_valid
+0x9AF1D2  ..\multi\nesting_context.cpp
+0x9AF1F2  sheet
+0x9AF1F8  index >= 0 && index < m_parts.size()
+0x9AF21D  !IsCluster(p)
+0x9AF230  nesting_part_index < m_parts.size()
+0x9AF254  false
+0x9AF260  vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+0x9AF2B0  index >= (m_parts.size() - m_clusters.size()) && index < m_parts.size()
+0x9AF2F8  index <= quantities.size()
+0x9AF313  basic_string::append
+0x9AF328  enlarged_
+0x9AF332  biggest
+0x9AF33A  context.GetPackerCache()
+0x9AF353  !layers.front().empty()
+0x9AF36C  vector::reserve
+0x9AF37C  packer_cache
+0x9AF390  matrix_indices.size() == group_indices.size()
+0x9AF3C0  part_and_module.part()->module(part_and_module.module_index()).authorizations().IsCompatible(popos.m_o)
+0x9AF428  !box.empty()
+0x9AF435  Renested 
+0x9AF43F   parts.
+0x9AF447  vector::_M_default_append
+0x9AF461  value_and_in.first
+0x9AF478  ../utils/continuous_index_map.hpp
+0x9AF49A  map::at
+0x9AF4A2  nesting.multiplicity() == 1u
+0x9AF4BF  nesting.sheet()
+0x9AF4D0  count++ <= initial_multiplicity
+0x9AF4F0  vector::_M_range_insert
+0x9AF508  nb_modules > 0
+0x9AF517  _mod
+0x9AF51C  m_parts.size() >= nb_parts
+0x9AF538  (problem.part_gap() == 0.0) && "part gap not supported"
+0x9AF570  Default
+0x9AF580  FillNestingAndSplit
+0x9AF598  RenestInHoles
+0x9AF5B0  DirectionalFillNesting
+0x9AF5C8  FillNesting
+0x9AF5E0  DirectionalFillNesting
+0x9AF600  GetNestingAngle
+0x9AF610  SetMultiTorchParameters
+0x9AF630  SetCommonCutParameters
+0x9AF648  FillNestingAux
+0x9AF660  NestedQuantities
+0x9AF678  ComputeGroups
+0x9AF688  FromNesting
+0x9AF698  ToNesting
+0x9AF6A8  GetCluster
+0x9AF6B3  get
+0x9AF6C0  GetStructureModule
+0x9AF6D8  IsCluster
+0x9AF6E8  GetNestingPart
+0x9AF700  NestingPartModuleMapping
+0x9AF720  Implementation
+0x9AF730  ComputeSheetLayers
+0x9AF750  ComputeRealNestingWindow
+0x9AF770  GetTypicalLength
+0x9AF7F6  .A{
+0x9AF840  basic_string::_M_construct null not valid
+0x9AF86A  Tiling time cancelled !
+0x9AF886  m_packer
+0x9AF88F  ..\multi\tiling_nester.cpp
+0x9AF8AA  sheet
+0x9AF8B0  Tiling
+0x9AF8B7  basic_string::append
+0x9AF8D1  strategy
+0x9AF8E0  GetPackerParameters
+0x9AF8F4  RawRun
+0x9AF900  RemoveNestedPartsOverlapingDefects
+0x9AF92F  ?333333
+0x9AF9C0  basic_string::append
+0x9AF9D5  LimitedNester 
+0x9AFA00  basic_string::append
+0x9AFA15  Flip 
+0x9AFA20  basic_string::_M_construct null not valid
+0x9AFA4A  basic_string::append
+0x9AFA5F   quantity normalized
+0x9AFA74  Prices: 
+0x9AFA8F  ?nb_strips_default
+0x9AFAA2  nb_strips_first
+0x9AFAB2  nb_strips_filling_advanced
+0x9AFACD  enable_database
+0x9AFADD  database_relax_every
+0x9AFAF2  enable_beautifier
+0x9AFB04  nb_iterations_before_tiling
+0x9AFB20  nb_iterations_before_tiling_evaluated
+0x9AFB46  adaptative_price_max_random
+0x9AFB62  enable_beam
+0x9AFB6E  beam_frequency_ratio
+0x9AFB83  beam_flip_frequency_ratio
+0x9AFB9D  beam_width
+0x9AFBA8  beam_buckets_per_part
+0x9AFBBE  enable_filter
+0x9AFBCC  seed
+0x9AFBD1  enable_tiling
+0x9AFBDF  nesting_offset_ratio
+0x9AFBF4  enable_flip
+0x9AFC00  trace_nesting
+0x9AFC0E  trace_solution
+0x9AFC1D  trace_best_solution
+0x9AFC31  boost_price_max_random
+0x9AFC48  combined_price_frequency
+0x9AFC61  linear_price_frequency
+0x9AFC78  boost_price_frequency
+0x9AFC8E  random_price_frequency
+0x9AFCA5  enable_multi_sheet
+0x9AFCB8  enable_multi_thread
+0x9AFCCC  nb_max_threads
+0x9AFCDB  verbose
+0x9AFCE3  nb_iterations_first
+0x9AFCF7  nb_iterations_before_enlarge
+0x9AFD18  nb_iterations_before_enlarge_tiling
+0x9AFD3C  linear_fill_frequency
+0x9AFD52  enable_last_compaction
+0x9AFD69  enable_database_float_filler
+0x9AFD86  enable_best_float_filler
+0x9AFDA0  nb_max_nested_parts_float_filler
+0x9AFDC8  nb_iterations_before_float_filler
+0x9AFDEA  float_filler_reduction_ratio
+0x9AFE07  beam_advanced_width
+0x9AFE1B  beam_expert_width
+0x9AFE2D  beam_distinct_angle
+0x9AFE48  nb_iterations_before_advanced_nesting
+0x9AFE70  nb_iterations_before_small_rotation_nesting
+0x9AFEA0  nb_iterations_before_beam_advanced
+0x9AFEC8  nb_iterations_before_beam_expert
+0x9AFEE9  enable_beautifier_optimizer
+0x9AFF05  enable_nesting_boost
+0x9AFF1A  nesting_pow_boost
+0x9AFF2C  nesting_max_context_size
+0x9AFF48  enable_beautifier_intermediate
+0x9AFF67  simple_fill_frequency
+0x9AFF7D  enable_last_postop
+0x9AFF90  enable_enlarge_and_postop
+0x9AFFB0  enable_beautifier_multiplicity
+0x9AFFCF  enable_beautifier_reorganizer
+0x9AFFF0  nb_iterations_before_beautifier_advanced

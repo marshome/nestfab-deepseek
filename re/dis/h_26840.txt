@@ -1,0 +1,31 @@
+### fn 0x26840 name=None end=0x26897 size=87
+STRINGS: 
+CALLERS: 0x26a60:None
+CALLEES: 0x8264e0:None, 0x978750:None
+
+  00026840  53                   push    rbx
+  00026841  4883ec20             sub     rsp, 0x20
+  00026845  488b99f0000000       mov     rbx, qword ptr [rcx + 0xf0]
+  0002684c  4885db               test    rbx, rbx
+  0002684f  7440                 je      0x26891
+  00026851  807b3800             cmp     byte ptr [rbx + 0x38], 0
+  00026855  740a                 je      0x26861
+  00026857  0fb64343             movzx   eax, byte ptr [rbx + 0x43]
+  0002685b  4883c420             add     rsp, 0x20
+  0002685f  5b                   pop     rbx
+  00026860  c3                   ret     
+  00026861  4889d9               mov     rcx, rbx
+  00026864  e877fc7f00           call    0x8264e0  ; -> 0x8264e0 None
+  00026869  488b03               mov     rax, qword ptr [rbx]
+  0002686c  488d15adfe7f00       lea     rdx, [rip + 0x7ffead]  ; DATA 0x826720
+  00026873  4c8b4030             mov     r8, qword ptr [rax + 0x30]
+  00026877  b80a000000           mov     eax, 0xa
+  0002687c  4939d0               cmp     r8, rdx
+  0002687f  74da                 je      0x2685b
+  00026881  ba0a000000           mov     edx, 0xa
+  00026886  4889d9               mov     rcx, rbx
+  00026889  4883c420             add     rsp, 0x20
+  0002688d  5b                   pop     rbx
+  0002688e  49ffe0               jmp     r8
+  00026891  e8ba1e9500           call    0x978750  ; -> 0x978750 None
+  00026896  90                   nop     

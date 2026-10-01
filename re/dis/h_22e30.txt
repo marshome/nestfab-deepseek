@@ -1,0 +1,7 @@
+### fn 0x22e30 name=None end=0x22e39 size=9
+STRINGS: 
+CALLERS: 0x2ab0:LaunchLocalComputation, 0x6100:LaunchComputation
+CALLEES: 0x22a20:None
+
+  00022e30  450fb6c9             movzx   r9d, r9b
+  00022e34  e9e7fbffff           jmp     0x22a20  ; -> 0x22a20 None

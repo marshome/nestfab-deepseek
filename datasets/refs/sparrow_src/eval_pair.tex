@@ -1,0 +1,12 @@
+\begin{algorithm}[ht]
+    \caption{\texttt{evaluate\_item\_pair}$(a,b)$}
+    \begin{algorithmic}[1]
+        \If{$a \in \Call{jagua-rs::collisions}{S_b}$}
+        \State \Return $\Call{quantify\_collision}{S_a,S_b}$
+        \Comment{Alg. \ref{alg:quantify_collision}}
+        \Else
+        \State \Return 0
+        \EndIf
+    \end{algorithmic}
+    \label{alg:eval_pair}
+\end{algorithm}

@@ -1,0 +1,2143 @@
+[
+ {
+  "ords": [
+   51,
+   52
+  ],
+  "rva": 10928,
+  "size": 2134,
+  "name": "LaunchLocalComputation",
+  "strings": [
+   "-> ",
+   "cns_force_cloud",
+   "cns1.optalog.com;cns2.optalog.com",
+   "LaunchLocalComputation",
+   "c:\\Temp\\cns.pb.json",
+   "// LaunchLocalComputation"
+  ]
+ },
+ {
+  "ords": [
+   164,
+   165
+  ],
+  "rva": 13072,
+  "size": 66,
+  "name": "LaunchLimitedLocalComputation?",
+  "strings": [
+   "LaunchLimitedLocalComputation"
+  ]
+ },
+ {
+  "ords": [
+   216,
+   217
+  ],
+  "rva": 13152,
+  "size": 52,
+  "name": null,
+  "strings": [
+   "// LaunchEstimateLocalComputation"
+  ]
+ },
+ {
+  "ords": [
+   35,
+   36
+  ],
+  "rva": 24832,
+  "size": 3894,
+  "name": "LaunchComputation",
+  "strings": [
+   "LaunchComputation",
+   "c:\\Temp\\cns.pb.json",
+   "basic_string::append",
+   "// LaunchComputation"
+  ]
+ },
+ {
+  "ords": [
+   238,
+   239
+  ],
+  "rva": 35280,
+  "size": 54,
+  "name": "NoFitGetNumberOfExternalPolygons?",
+  "strings": [
+   "NoFitGetNumberOfExternalPolygons"
+  ]
+ },
+ {
+  "ords": [
+   236,
+   237
+  ],
+  "rva": 35344,
+  "size": 171,
+  "name": "DeleteNoFitGeometry?",
+  "strings": [
+   "DeleteNoFitGeometry"
+  ]
+ },
+ {
+  "ords": [
+   234,
+   235
+  ],
+  "rva": 35520,
+  "size": 939,
+  "name": "GetNoFitMap",
+  "strings": [
+   "GetNoFitMap",
+   "//GetNoFitMap"
+  ]
+ },
+ {
+  "ords": [
+   240,
+   241
+  ],
+  "rva": 36464,
+  "size": 335,
+  "name": null,
+  "strings": [
+   "cns_no_fit.cpp",
+   "NoFitGetNumberOfInternalHoles",
+   "external_number < n",
+   "CNS_NoFitGetNumberOfHoles"
+  ]
+ },
+ {
+  "ords": [
+   242,
+   243
+  ],
+  "rva": 36800,
+  "size": 497,
+  "name": "NoFitGetNumberOfPoints?",
+  "strings": [
+   "-> ",
+   "NoFitGetNumberOfPoints"
+  ]
+ },
+ {
+  "ords": [
+   244,
+   245
+  ],
+  "rva": 37312,
+  "size": 366,
+  "name": null,
+  "strings": [
+   "cns_no_fit.cpp",
+   "NoFitGetPoint",
+   "point_number < ring.size()",
+   "CNS_NoFitGetPoint"
+  ]
+ },
+ {
+  "ords": [
+   318,
+   319
+  ],
+  "rva": 37680,
+  "size": 449,
+  "name": "NewNoFitNesting",
+  "strings": [
+   "-> ",
+   "NewNoFitNesting",
+   "// NewNoFitNesting"
+  ]
+ },
+ {
+  "ords": [
+   322,
+   323
+  ],
+  "rva": 38144,
+  "size": 70,
+  "name": "DeleteNoFitNesting?",
+  "strings": [
+   "DeleteNoFitNesting"
+  ]
+ },
+ {
+  "ords": [
+   326,
+   327
+  ],
+  "rva": 38224,
+  "size": 573,
+  "name": "NoFitGenerateSvgNesting?",
+  "strings": [
+   "basic_string::_M_construct null not valid",
+   "NoFitGenerateSvgNesting"
+  ]
+ },
+ {
+  "ords": [
+   328,
+   329
+  ],
+  "rva": 38800,
+  "size": 403,
+  "name": "NoFitGenerateSvgGeometry?",
+  "strings": [
+   "basic_string::_M_construct null not valid",
+   "NoFitGenerateSvgGeometry"
+  ]
+ },
+ {
+  "ords": [
+   340,
+   341
+  ],
+  "rva": 39216,
+  "size": 443,
+  "name": "NoFitSetMaximumComplexity?",
+  "strings": [
+   "-> ",
+   "NoFitSetMaximumComplexity"
+  ]
+ },
+ {
+  "ords": [
+   230,
+   231
+  ],
+  "rva": 39664,
+  "size": 452,
+  "name": "NewNoFitContext",
+  "strings": [
+   "-> ",
+   "NewNoFitContext",
+   "// NewNoFitContext"
+  ]
+ },
+ {
+  "ords": [
+   232,
+   233
+  ],
+  "rva": 40128,
+  "size": 568,
+  "name": "DeleteNoFitContext?",
+  "strings": [
+   "DeleteNoFitContext"
+  ]
+ },
+ {
+  "ords": [
+   324,
+   325
+  ],
+  "rva": 42528,
+  "size": 934,
+  "name": "GetNoFitPlacementMap?",
+  "strings": [
+   "-> ",
+   "GetNoFitPlacementMap"
+  ]
+ },
+ {
+  "ords": [
+   320,
+   321
+  ],
+  "rva": 43472,
+  "size": 240,
+  "name": "NoFitAddNestedPart?",
+  "strings": [
+   "NoFitAddNestedPart"
+  ]
+ },
+ {
+  "ords": [
+   270,
+   271
+  ],
+  "rva": 45024,
+  "size": 13,
+  "name": null,
+  "strings": []
+ },
+ {
+  "ords": [
+   288,
+   289
+  ],
+  "rva": 45040,
+  "size": 10,
+  "name": null,
+  "strings": []
+ },
+ {
+  "ords": [
+   286,
+   287
+  ],
+  "rva": 45056,
+  "size": 18,
+  "name": null,
+  "strings": []
+ },
+ {
+  "ords": [
+   55,
+   56
+  ],
+  "rva": 45088,
+  "size": 52,
+  "name": "GetPartUserStringEx?",
+  "strings": [
+   "GetPartUserStringEx"
+  ]
+ },
+ {
+  "ords": [
+   61,
+   62
+  ],
+  "rva": 45152,
+  "size": 52,
+  "name": "GetSheetUserStringEx?",
+  "strings": [
+   "GetSheetUserStringEx"
+  ]
+ },
+ {
+  "ords": [
+   33,
+   34
+  ],
+  "rva": 45216,
+  "size": 29,
+  "name": "GetSolution?",
+  "strings": [
+   "GetSolution"
+  ]
+ },
+ {
+  "ords": [
+   25,
+   26
+  ],
+  "rva": 45248,
+  "size": 52,
+  "name": "GetNumberOfNestings?",
+  "strings": [
+   "GetNumberOfNestings"
+  ]
+ },
+ {
+  "ords": [
+   17,
+   18
+  ],
+  "rva": 45312,
+  "size": 34,
+  "name": "GetMultiplicity?",
+  "strings": [
+   "GetMultiplicity"
+  ]
+ },
+ {
+  "ords": [
+   96,
+   97
+  ],
+  "rva": 45360,
+  "size": 36,
+  "name": "GetLength?",
+  "strings": [
+   "GetLength"
+  ]
+ },
+ {
+  "ords": [
+   100,
+   101
+  ],
+  "rva": 45408,
+  "size": 36,
+  "name": "GetHeight?",
+  "strings": [
+   "GetHeight"
+  ]
+ },
+ {
+  "ords": [
+   23,
+   24
+  ],
+  "rva": 45456,
+  "size": 63,
+  "name": "GetNumberOfNestedParts?",
+  "strings": [
+   "GetNumberOfNestedParts"
+  ]
+ },
+ {
+  "ords": [
+   9,
+   10
+  ],
+  "rva": 45520,
+  "size": 370,
+  "name": "GenerateHtmlLaunchingOrderReport?",
+  "strings": [
+   "GenerateHtmlLaunchingOrderReport",
+   "<h1> Problem contains invalid parts. </h1>",
+   "<h1> Problem contains invalid sheets. </h1>"
+  ]
+ },
+ {
+  "ords": [
+   11,
+   12
+  ],
+  "rva": 45904,
+  "size": 247,
+  "name": "GenerateHtmlSolutionReport?",
+  "strings": [
+   "GenerateHtmlSolutionReport"
+  ]
+ },
+ {
+  "ords": [
+   92,
+   93
+  ],
+  "rva": 46160,
+  "size": 31,
+  "name": "GetMajorVersion?",
+  "strings": [
+   "GetMajorVersion"
+  ]
+ },
+ {
+  "ords": [
+   90,
+   91
+  ],
+  "rva": 46192,
+  "size": 31,
+  "name": "GetBuildDate?",
+  "strings": [
+   "GetBuildDate"
+  ]
+ },
+ {
+  "ords": [
+   88,
+   89
+  ],
+  "rva": 46224,
+  "size": 31,
+  "name": "GetBuildVersion?",
+  "strings": [
+   "GetBuildVersion"
+  ]
+ },
+ {
+  "ords": [
+   168,
+   169
+  ],
+  "rva": 46256,
+  "size": 34,
+  "name": "GetFillRatio?",
+  "strings": [
+   "GetFillRatio"
+  ]
+ },
+ {
+  "ords": [
+   192,
+   193
+  ],
+  "rva": 46304,
+  "size": 38,
+  "name": "GetNestingFillRatio?",
+  "strings": [
+   "GetNestingFillRatio"
+  ]
+ },
+ {
+  "ords": [
+   29,
+   30
+  ],
+  "rva": 46352,
+  "size": 43,
+  "name": "GetPartWithBadGeometry?",
+  "strings": [
+   "GetPartWithBadGeometry"
+  ]
+ },
+ {
+  "ords": [
+   252,
+   253
+  ],
+  "rva": 46400,
+  "size": 177,
+  "name": null,
+  "strings": [
+   "WVSH",
+   "AsyncCancelAllComputationsAndDeleteLaunchingOrder"
+  ]
+ },
+ {
+  "ords": [
+   31,
+   32
+  ],
+  "rva": 46592,
+  "size": 332,
+  "name": null,
+  "strings": [
+   "GetSheet",
+   "number <= order->sheets.size()",
+   "cns.cpp",
+   "CNS_GetSheet"
+  ]
+ },
+ {
+  "ords": [
+   332,
+   333
+  ],
+  "rva": 46928,
+  "size": 384,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "GetNestingBoundingBox",
+   "min_x && min_y && max_x && max_y",
+   "CNS_GetNestingBoundingBox"
+  ]
+ },
+ {
+  "ords": [
+   13,
+   14
+  ],
+  "rva": 47312,
+  "size": 378,
+  "name": null,
+  "strings": [
+   "GenerateLaunchingOrderProblem",
+   "source_version"
+  ]
+ },
+ {
+  "ords": [
+   160,
+   161
+  ],
+  "rva": 47696,
+  "size": 825,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "GetCommonCut",
+   "nesting->nesting",
+   "common_cut_number < evaluation.common_cut_segments.size()",
+   "CNS_GetCommonCut"
+  ]
+ },
+ {
+  "ords": [
+   170,
+   171
+  ],
+  "rva": 48528,
+  "size": 470,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "GetNestingDimensions",
+   "CNS_GetNestingDimensions"
+  ]
+ },
+ {
+  "ords": [
+   224,
+   225
+  ],
+  "rva": 49008,
+  "size": 148,
+  "name": "GenerateDxfNesting?",
+  "strings": [
+   "GenerateDxfNesting"
+  ]
+ },
+ {
+  "ords": [
+   226,
+   227
+  ],
+  "rva": 49168,
+  "size": 386,
+  "name": "GetPCId?",
+  "strings": [
+   "%ld",
+   "GetPCId"
+  ]
+ },
+ {
+  "ords": [
+   41,
+   42
+  ],
+  "rva": 49568,
+  "size": 241,
+  "name": "SetPartAuthorizations?",
+  "strings": [
+   "SetPartAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   126,
+   127
+  ],
+  "rva": 49824,
+  "size": 382,
+  "name": "SetPartPriority?",
+  "strings": [
+   "-> ",
+   "SetPartPriority"
+  ]
+ },
+ {
+  "ords": [
+   43,
+   44
+  ],
+  "rva": 50208,
+  "size": 446,
+  "name": "SetPartUserString?",
+  "strings": [
+   "-> ",
+   "SetPartUserString"
+  ]
+ },
+ {
+  "ords": [
+   27,
+   28
+  ],
+  "rva": 50656,
+  "size": 36,
+  "name": "GetPartUserString?",
+  "strings": [
+   "GetPartUserString"
+  ]
+ },
+ {
+  "ords": [
+   334,
+   335
+  ],
+  "rva": 50704,
+  "size": 43,
+  "name": "ForcePartInsideHole?",
+  "strings": [
+   "ForcePartInsideHole"
+  ]
+ },
+ {
+  "ords": [
+   57,
+   58
+  ],
+  "rva": 50800,
+  "size": 446,
+  "name": "SetSheetUserString?",
+  "strings": [
+   "-> ",
+   "SetSheetUserString"
+  ]
+ },
+ {
+  "ords": [
+   59,
+   60
+  ],
+  "rva": 51248,
+  "size": 353,
+  "name": "GetSheetUserString?",
+  "strings": [
+   "-> ",
+   "GetSheetUserString"
+  ]
+ },
+ {
+  "ords": [
+   98,
+   99
+  ],
+  "rva": 51616,
+  "size": 372,
+  "name": "SetSheetGrainDirection?",
+  "strings": [
+   "-> ",
+   "SetSheetGrainDirection"
+  ]
+ },
+ {
+  "ords": [
+   172,
+   173
+  ],
+  "rva": 52000,
+  "size": 388,
+  "name": "SetSheetPrice?",
+  "strings": [
+   "-> ",
+   "SetSheetPrice"
+  ]
+ },
+ {
+  "ords": [
+   45,
+   46
+  ],
+  "rva": 52400,
+  "size": 527,
+  "name": "SetSheetGaps?",
+  "strings": [
+   "-> ",
+   "SetSheetGaps"
+  ]
+ },
+ {
+  "ords": [
+   78,
+   79
+  ],
+  "rva": 52928,
+  "size": 45,
+  "name": "SetObjective?",
+  "strings": [
+   "SetObjective"
+  ]
+ },
+ {
+  "ords": [
+   212,
+   213
+  ],
+  "rva": 52976,
+  "size": 45,
+  "name": "SetShearGap?",
+  "strings": [
+   "SetShearGap"
+  ]
+ },
+ {
+  "ords": [
+   39,
+   40
+  ],
+  "rva": 53024,
+  "size": 303,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "SetInterpartGap",
+   "(gap >= 0.0) && \"Negative part gap unsupported\"",
+   "CNS_SetInterpartGap"
+  ]
+ },
+ {
+  "ords": [
+   86,
+   87
+  ],
+  "rva": 53328,
+  "size": 334,
+  "name": "SetOrigin?",
+  "strings": [
+   "-> ",
+   "SetOrigin"
+  ]
+ },
+ {
+  "ords": [
+   128,
+   129
+  ],
+  "rva": 53664,
+  "size": 353,
+  "name": "CNS_SetMultiplicityPreference?",
+  "strings": [
+   "-> ",
+   "CNS_SetMultiplicityPreference"
+  ]
+ },
+ {
+  "ords": [
+   188,
+   189
+  ],
+  "rva": 54032,
+  "size": 33,
+  "name": "CNS_SetNoMixPreference?",
+  "strings": [
+   "CNS_SetNoMixPreference"
+  ]
+ },
+ {
+  "ords": [
+   222,
+   223
+  ],
+  "rva": 54080,
+  "size": 33,
+  "name": "CNS_SetNoSheetMixPreference?",
+  "strings": [
+   "CNS_SetNoSheetMixPreference"
+  ]
+ },
+ {
+  "ords": [
+   73,
+   74
+  ],
+  "rva": 54128,
+  "size": 61,
+  "name": "SetLocalEngine?",
+  "strings": [
+   "SetLocalEngine"
+  ]
+ },
+ {
+  "ords": [
+   82,
+   83
+  ],
+  "rva": 54192,
+  "size": 68,
+  "name": "SetLocalMaximumThreads?",
+  "strings": [
+   "SetLocalMaximumThreads"
+  ]
+ },
+ {
+  "ords": [
+   84,
+   85
+  ],
+  "rva": 54272,
+  "size": 36,
+  "name": "SetLocalMaximumIterations?",
+  "strings": [
+   "SetLocalMaximumIterations"
+  ]
+ },
+ {
+  "ords": [
+   76,
+   77
+  ],
+  "rva": 54320,
+  "size": 36,
+  "name": "UnLockLaunchingOrder?",
+  "strings": [
+   "UnLockLaunchingOrder"
+  ]
+ },
+ {
+  "ords": [
+   19,
+   20
+  ],
+  "rva": 54368,
+  "size": 688,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "GetNestedPart",
+   "nested_part_number <= nested_parts.size()",
+   "part_number <= order->parts.size()",
+   "CNS_GetNestedPart"
+  ]
+ },
+ {
+  "ords": [
+   158,
+   159
+  ],
+  "rva": 55056,
+  "size": 346,
+  "name": "GetNumberOfCommonCuts",
+  "strings": [
+   "cns.cpp",
+   "GetNumberOfCommonCuts",
+   "cns_nesting->nesting",
+   "// GetNumberOfCommonCuts ",
+   "CNS_GetNumberOfCommonCuts"
+  ]
+ },
+ {
+  "ords": [
+   184,
+   185
+  ],
+  "rva": 55408,
+  "size": 826,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "nesting->nesting",
+   "GetPartTorchInfos",
+   "part_index < nesting->nesting->nested_parts().size()",
+   "part_index < nesting->nesting->multitorch_infos().m_infos.size()",
+   "vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)",
+   "CNS_GetPartTorchInfos"
+  ]
+ },
+ {
+  "ords": [
+   190,
+   191
+  ],
+  "rva": 56240,
+  "size": 382,
+  "name": "CNS_SetNoOrientationMixOnPart?",
+  "strings": [
+   "-> ",
+   "CNS_SetNoOrientationMixOnPart"
+  ]
+ },
+ {
+  "ords": [
+   182,
+   183
+  ],
+  "rva": 56624,
+  "size": 36,
+  "name": "CNS_SetFloatingMode?",
+  "strings": [
+   "CNS_SetFloatingMode"
+  ]
+ },
+ {
+  "ords": [
+   312,
+   313
+  ],
+  "rva": 56672,
+  "size": 36,
+  "name": "CNS_SetOriginPackingMode?",
+  "strings": [
+   "CNS_SetOriginPackingMode"
+  ]
+ },
+ {
+  "ords": [
+   144,
+   145
+  ],
+  "rva": 56720,
+  "size": 36,
+  "name": "SetFillLastNestingStrategy?",
+  "strings": [
+   "SetFillLastNestingStrategy"
+  ]
+ },
+ {
+  "ords": [
+   146,
+   147
+  ],
+  "rva": 56768,
+  "size": 33,
+  "name": "SetShearMode?",
+  "strings": [
+   "SetShearMode"
+  ]
+ },
+ {
+  "ords": [
+   330,
+   331
+  ],
+  "rva": 56816,
+  "size": 36,
+  "name": "SetPartialShearMode?",
+  "strings": [
+   "SetPartialShearMode"
+  ]
+ },
+ {
+  "ords": [
+   304,
+   305
+  ],
+  "rva": 56864,
+  "size": 33,
+  "name": "SetShearRepulseFromBorders?",
+  "strings": [
+   "SetShearRepulseFromBorders"
+  ]
+ },
+ {
+  "ords": [
+   166,
+   167
+  ],
+  "rva": 56912,
+  "size": 36,
+  "name": "SetPartCommonCutMode?",
+  "strings": [
+   "SetPartCommonCutMode"
+  ]
+ },
+ {
+  "ords": [
+   268,
+   269
+  ],
+  "rva": 56960,
+  "size": 388,
+  "name": "SetLocalEngineThreads?",
+  "strings": [
+   "-> ",
+   "SetLocalEngineThreads"
+  ]
+ },
+ {
+  "ords": [
+   140,
+   141
+  ],
+  "rva": 57360,
+  "size": 353,
+  "name": "SetAutomaticStop?",
+  "strings": [
+   "-> ",
+   "SetAutomaticStop"
+  ]
+ },
+ {
+  "ords": [
+   162,
+   163
+  ],
+  "rva": 57728,
+  "size": 111,
+  "name": "UnLockLaunchingOrderSntl?",
+  "strings": [
+   "UnLockLaunchingOrderSntl"
+  ]
+ },
+ {
+  "ords": [
+   342,
+   343
+  ],
+  "rva": 57840,
+  "size": 111,
+  "name": "UnLockLaunchingOrderOxy?",
+  "strings": [
+   "UnLockLaunchingOrderOxy"
+  ]
+ },
+ {
+  "ords": [
+   228,
+   229
+  ],
+  "rva": 57952,
+  "size": 111,
+  "name": "UnLockLaunchingOrderPCId?",
+  "strings": [
+   "UnLockLaunchingOrderPCId"
+  ]
+ },
+ {
+  "ords": [
+   142,
+   143
+  ],
+  "rva": 58064,
+  "size": 399,
+  "name": "SetOffcutEvaluation?",
+  "strings": [
+   "-> ",
+   "SetOffcutEvaluation"
+  ]
+ },
+ {
+  "ords": [
+   148,
+   149
+  ],
+  "rva": 58464,
+  "size": 404,
+  "name": "SetCommonCutMode?",
+  "strings": [
+   "-> ",
+   "SetCommonCutMode"
+  ]
+ },
+ {
+  "ords": [
+   150,
+   151
+  ],
+  "rva": 59712,
+  "size": 354,
+  "name": "SetCommonCutSafetyPreference?",
+  "strings": [
+   "-> ",
+   "SetCommonCutSafetyPreference"
+  ]
+ },
+ {
+  "ords": [
+   152,
+   153
+  ],
+  "rva": 60080,
+  "size": 468,
+  "name": "SetCommonCutAuthorizations?",
+  "strings": [
+   "-> ",
+   "SetCommonCutAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   154,
+   155
+  ],
+  "rva": 60560,
+  "size": 340,
+  "name": "SetCommonCutCuttingPreference?",
+  "strings": [
+   "-> ",
+   "SetCommonCutCuttingPreference"
+  ]
+ },
+ {
+  "ords": [
+   156,
+   157
+  ],
+  "rva": 60912,
+  "size": 337,
+  "name": "SetCommonCutObjective?",
+  "strings": [
+   "-> ",
+   "SetCommonCutObjective"
+  ]
+ },
+ {
+  "ords": [
+   174,
+   175
+  ],
+  "rva": 61264,
+  "size": 479,
+  "name": "SetMultiTorchMode?",
+  "strings": [
+   "-> ",
+   "SetMultiTorchMode"
+  ]
+ },
+ {
+  "ords": [
+   176,
+   177
+  ],
+  "rva": 61744,
+  "size": 388,
+  "name": "SetMultiTorchCuttingPreference?",
+  "strings": [
+   "-> ",
+   "SetMultiTorchCuttingPreference"
+  ]
+ },
+ {
+  "ords": [
+   178,
+   179
+  ],
+  "rva": 62144,
+  "size": 633,
+  "name": "SetMultiTorchObjective?",
+  "strings": [
+   "-> ",
+   "SetMultiTorchObjective"
+  ]
+ },
+ {
+  "ords": [
+   186,
+   187
+  ],
+  "rva": 62784,
+  "size": 629,
+  "name": "SetDetailedMultiTorchObjective?",
+  "strings": [
+   "-> ",
+   "SetDetailedMultiTorchObjective"
+  ]
+ },
+ {
+  "ords": [
+   220,
+   221
+  ],
+  "rva": 63424,
+  "size": 1072,
+  "name": null,
+  "strings": [
+   "-> ",
+   "cns.cpp",
+   "AddPartToSuggestedPartsGrouping",
+   "group",
+   "CNS_AddPartToSuggestedPartsGrouping"
+  ]
+ },
+ {
+  "ords": [
+   256,
+   257
+  ],
+  "rva": 64496,
+  "size": 244,
+  "name": "SetRowMode?",
+  "strings": [
+   "SetRowMode"
+  ]
+ },
+ {
+  "ords": [
+   258,
+   259
+  ],
+  "rva": 64752,
+  "size": 568,
+  "name": "SetPipeMode?",
+  "strings": [
+   "-> ",
+   "SetPipeMode"
+  ]
+ },
+ {
+  "ords": [
+   264,
+   265
+  ],
+  "rva": 65328,
+  "size": 271,
+  "name": "GetNumberOfRows?",
+  "strings": [
+   "-> ",
+   "GetNumberOfRows"
+  ]
+ },
+ {
+  "ords": [
+   266,
+   267
+  ],
+  "rva": 65600,
+  "size": 384,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "GetRow",
+   "row_number < row_intervals.size()",
+   "CNS_GetRow"
+  ]
+ },
+ {
+  "ords": [
+   290,
+   291
+  ],
+  "rva": 65984,
+  "size": 127,
+  "name": "AddToolPathToPart?",
+  "strings": [
+   "AddToolPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   296,
+   297
+  ],
+  "rva": 66112,
+  "size": 124,
+  "name": "AddHoleInToolPath?",
+  "strings": [
+   "AddHoleInToolPath"
+  ]
+ },
+ {
+  "ords": [
+   316,
+   317
+  ],
+  "rva": 66624,
+  "size": 42,
+  "name": "CNS_SetEvaluateIntermediateNestingsAsLast?",
+  "strings": [
+   "CNS_SetEvaluateIntermediateNestingsAsLast"
+  ]
+ },
+ {
+  "ords": [
+   336,
+   337
+  ],
+  "rva": 66672,
+  "size": 42,
+  "name": "SetReorganizeBiggestPartNearOrigin?",
+  "strings": [
+   "SetReorganizeBiggestPartNearOrigin"
+  ]
+ },
+ {
+  "ords": [
+   338,
+   339
+  ],
+  "rva": 66720,
+  "size": 42,
+  "name": "SetReorganizeLongestPartNearOrigin?",
+  "strings": [
+   "SetReorganizeLongestPartNearOrigin"
+  ]
+ },
+ {
+  "ords": [
+   47,
+   48
+  ],
+  "rva": 66768,
+  "size": 370,
+  "name": "WaitComputationTermination",
+  "strings": [
+   "Local",
+   "Cloud",
+   "WaitComputationTermination",
+   "// WaitComputationTermination",
+   "c:\\Temp\\computation_solution.html"
+  ]
+ },
+ {
+  "ords": [
+   49,
+   50
+  ],
+  "rva": 67152,
+  "size": 386,
+  "name": "WaitNextSolution",
+  "strings": [
+   "Local",
+   "Cloud",
+   "c:\\Temp\\computation_solution.html",
+   "WaitNextSolution",
+   "// WaitNextSolution"
+  ]
+ },
+ {
+  "ords": [
+   15,
+   16
+  ],
+  "rva": 67552,
+  "size": 155,
+  "name": "GetComputationStatus",
+  "strings": [
+   "Local",
+   "Cloud",
+   "GetComputationStatus",
+   "// GetComputationStatus"
+  ]
+ },
+ {
+  "ords": [
+   53,
+   54
+  ],
+  "rva": 67712,
+  "size": 155,
+  "name": null,
+  "strings": [
+   "Local",
+   "Cloud",
+   "CancelComputation ",
+   "// CancelComputation"
+  ]
+ },
+ {
+  "ords": [
+   122,
+   123
+  ],
+  "rva": 67872,
+  "size": 155,
+  "name": null,
+  "strings": [
+   "Local",
+   "Cloud",
+   "TerminateComputation ",
+   "// TerminateComputation"
+  ]
+ },
+ {
+  "ords": [
+   80,
+   81
+  ],
+  "rva": 68032,
+  "size": 388,
+  "name": "SetDefectGap?",
+  "strings": [
+   "-> ",
+   "SetDefectGap"
+  ]
+ },
+ {
+  "ords": [
+   308,
+   309
+  ],
+  "rva": 68432,
+  "size": 395,
+  "name": "CNS_CreateAssemblyGroup?",
+  "strings": [
+   "-> ",
+   "CNS_CreateAssemblyGroup",
+   "// "
+  ]
+ },
+ {
+  "ords": [
+   94,
+   95
+  ],
+  "rva": 68832,
+  "size": 584,
+  "name": "AddPartSpecificAuthorizations?",
+  "strings": [
+   "AddPartSpecificAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   21,
+   22
+  ],
+  "rva": 69424,
+  "size": 490,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "GetNesting",
+   "nesting_number < solution_aux.size()",
+   "CNS_GetNesting"
+  ]
+ },
+ {
+  "ords": [
+   65,
+   66
+  ],
+  "rva": 69920,
+  "size": 868,
+  "name": "SetExtraParameters?",
+  "strings": [
+   "-> ",
+   "SetExtraParameters"
+  ]
+ },
+ {
+  "ords": [
+   214,
+   215
+  ],
+  "rva": 70800,
+  "size": 423,
+  "name": "SetIncompatibleSheet?",
+  "strings": [
+   "-> ",
+   "SetIncompatibleSheet"
+  ]
+ },
+ {
+  "ords": [
+   218,
+   219
+  ],
+  "rva": 71232,
+  "size": 483,
+  "name": null,
+  "strings": [
+   "cns.cpp",
+   "AddSuggestedPartsGrouping",
+   "order",
+   "CNS_AddSuggestedPartsGrouping"
+  ]
+ },
+ {
+  "ords": [
+   310,
+   311
+  ],
+  "rva": 71728,
+  "size": 180,
+  "name": "CNS_AddAssemblyGroupPart?",
+  "strings": [
+   "CNS_AddAssemblyGroupPart"
+  ]
+ },
+ {
+  "ords": [
+   7,
+   8
+  ],
+  "rva": 71920,
+  "size": 3660,
+  "name": "DeleteLaunchingOrder?",
+  "strings": [
+   "DeleteLaunchingOrder",
+   "*** ERROR unterminated/cancelled computation ***",
+   "ERROR unterminated/cancelled computation"
+  ]
+ },
+ {
+  "ords": [
+   294,
+   295
+  ],
+  "rva": 76896,
+  "size": 169,
+  "name": "AddInflatedToolPathToPart?",
+  "strings": [
+   "AddInflatedToolPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   314,
+   315
+  ],
+  "rva": 77072,
+  "size": 552,
+  "name": "CNS_AddOpenToolPathToPart?",
+  "strings": [
+   "CNS_AddOpenToolPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   306,
+   307
+  ],
+  "rva": 77632,
+  "size": 894,
+  "name": "CNS_AddDefectFromNestedPart?",
+  "strings": [
+   "CNS_AddDefectFromNestedPart"
+  ]
+ },
+ {
+  "ords": [
+   112,
+   113
+  ],
+  "rva": 78560,
+  "size": 176,
+  "name": "AddHoleToPart?",
+  "strings": [
+   "AddHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   114,
+   115
+  ],
+  "rva": 78736,
+  "size": 124,
+  "name": "AddExternalBoundaryToPart?",
+  "strings": [
+   "AddExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   260,
+   261
+  ],
+  "rva": 78864,
+  "size": 512,
+  "name": "AddExternalBoundaryToPart?",
+  "strings": [
+   "AddExternalBoundaryToPart",
+   "// AddCircularExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   262,
+   263
+  ],
+  "rva": 79376,
+  "size": 486,
+  "name": "AddExternalBoundaryToPart?",
+  "strings": [
+   "AddExternalBoundaryToPart",
+   "// AddRectangularExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   132,
+   133
+  ],
+  "rva": 79872,
+  "size": 581,
+  "name": "AddHoleToPart?",
+  "strings": [
+   "AddHoleToPart",
+   "// AddCircularHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   136,
+   137
+  ],
+  "rva": 80464,
+  "size": 569,
+  "name": "AddHoleToPart?",
+  "strings": [
+   "AddHoleToPart",
+   "// AddRectangularHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   67,
+   68
+  ],
+  "rva": 81040,
+  "size": 411,
+  "name": "SetSheetPriority?",
+  "strings": [
+   "SetSheetPriority"
+  ]
+ },
+ {
+  "ords": [
+   298,
+   299
+  ],
+  "rva": 81456,
+  "size": 417,
+  "name": "SetSpecificSheetOrigin?",
+  "strings": [
+   "SetSpecificSheetOrigin"
+  ]
+ },
+ {
+  "ords": [
+   300,
+   301
+  ],
+  "rva": 81888,
+  "size": 417,
+  "name": "SetSpecificSheetObjective?",
+  "strings": [
+   "SetSpecificSheetObjective"
+  ]
+ },
+ {
+  "ords": [
+   118,
+   119
+  ],
+  "rva": 82320,
+  "size": 124,
+  "name": "AddDefectToSheet?",
+  "strings": [
+   "AddDefectToSheet"
+  ]
+ },
+ {
+  "ords": [
+   120,
+   121
+  ],
+  "rva": 82448,
+  "size": 117,
+  "name": "AddExternalBoundaryToSheet?",
+  "strings": [
+   "AddExternalBoundaryToSheet"
+  ]
+ },
+ {
+  "ords": [
+   138,
+   139
+  ],
+  "rva": 82576,
+  "size": 440,
+  "name": "AddOptionalQuantityToPart?",
+  "strings": [
+   "AddOptionalQuantityToPart"
+  ]
+ },
+ {
+  "ords": [
+   180,
+   181
+  ],
+  "rva": 83024,
+  "size": 449,
+  "name": "SetExtraGapOnPart?",
+  "strings": [
+   "SetExtraGapOnPart"
+  ]
+ },
+ {
+  "ords": [
+   37,
+   38
+  ],
+  "rva": 83488,
+  "size": 1081,
+  "name": "NewLaunchingOrder?",
+  "strings": [
+   "NewLaunchingOrder"
+  ]
+ },
+ {
+  "ords": [
+   124,
+   125
+  ],
+  "rva": 84576,
+  "size": 678,
+  "name": "AddOpenCuttingPathToPart?",
+  "strings": [
+   "AddOpenCuttingPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   110,
+   111
+  ],
+  "rva": 85264,
+  "size": 1891,
+  "name": "AddPart?",
+  "strings": [
+   "AddPart",
+   "// "
+  ]
+ },
+ {
+  "ords": [
+   130,
+   131
+  ],
+  "rva": 87168,
+  "size": 404,
+  "name": null,
+  "strings": [
+   "// AddCircularPart"
+  ]
+ },
+ {
+  "ords": [
+   134,
+   135
+  ],
+  "rva": 87584,
+  "size": 374,
+  "name": null,
+  "strings": [
+   "// AddRectanglePart"
+  ]
+ },
+ {
+  "ords": [
+   116,
+   117
+  ],
+  "rva": 87968,
+  "size": 1098,
+  "name": "AddNonRectangularSheet?",
+  "strings": [
+   "AddNonRectangularSheet"
+  ]
+ },
+ {
+  "ords": [
+   5,
+   6
+  ],
+  "rva": 89072,
+  "size": 1717,
+  "name": "AddSheet?",
+  "strings": [
+   "// ",
+   "AddSheet"
+  ]
+ },
+ {
+  "ords": [
+   3,
+   4
+  ],
+  "rva": 90800,
+  "size": 353,
+  "name": null,
+  "strings": [
+   "// AddPolygonPart"
+  ]
+ },
+ {
+  "ords": [
+   1,
+   2
+  ],
+  "rva": 91168,
+  "size": 490,
+  "name": "AddHoleToPart?",
+  "strings": [
+   "AddHoleToPart",
+   "// AddPolygonHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   102,
+   103
+  ],
+  "rva": 91664,
+  "size": 419,
+  "name": "AddExternalBoundaryToSheet?",
+  "strings": [
+   "AddExternalBoundaryToSheet",
+   "// AddExternalPolygonBoundaryToSheet"
+  ]
+ },
+ {
+  "ords": [
+   104,
+   105
+  ],
+  "rva": 92096,
+  "size": 426,
+  "name": "AddExternalBoundaryToPart?",
+  "strings": [
+   "AddExternalBoundaryToPart",
+   "// AddExternalPolygonBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   71,
+   72
+  ],
+  "rva": 92528,
+  "size": 426,
+  "name": "AddDefectToSheet?",
+  "strings": [
+   "AddDefectToSheet",
+   "// AddPolygonDefectToSheet"
+  ]
+ },
+ {
+  "ords": [
+   69,
+   70
+  ],
+  "rva": 92960,
+  "size": 353,
+  "name": null,
+  "strings": [
+   "// AddNonRectangularPolygonSheet"
+  ]
+ },
+ {
+  "ords": [
+   208,
+   209
+  ],
+  "rva": 93360,
+  "size": 57,
+  "name": null,
+  "strings": []
+ },
+ {
+  "ords": [
+   210,
+   211
+  ],
+  "rva": 93424,
+  "size": 8,
+  "name": null,
+  "strings": []
+ },
+ {
+  "ords": [
+   196,
+   197
+  ],
+  "rva": 93440,
+  "size": 49,
+  "name": null,
+  "strings": [
+   "// AddHoleToPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   198,
+   199
+  ],
+  "rva": 93504,
+  "size": 49,
+  "name": null,
+  "strings": [
+   "// CNS_AddExternalBoundaryToPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   200,
+   201
+  ],
+  "rva": 93568,
+  "size": 96,
+  "name": null,
+  "strings": [
+   "// CNS_AddOpenCuttingPathToPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   202,
+   203
+  ],
+  "rva": 93664,
+  "size": 61,
+  "name": null,
+  "strings": [
+   "// CNS_SetPartVariantAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   204,
+   205
+  ],
+  "rva": 93728,
+  "size": 63,
+  "name": null,
+  "strings": [
+   "// CNS_AddPartVariantSpecificAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   206,
+   207
+  ],
+  "rva": 93792,
+  "size": 1727,
+  "name": "GetNestedPartPartVariant?",
+  "strings": [
+   "GetNestedPartPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   254,
+   255
+  ],
+  "rva": 95520,
+  "size": 3027,
+  "name": "AddRotatedPartVariantToPart?",
+  "strings": [
+   "AddRotatedPartVariantToPart",
+   "// "
+  ]
+ },
+ {
+  "ords": [
+   194,
+   195
+  ],
+  "rva": 98560,
+  "size": 1955,
+  "name": "AddPartVariantToPart?",
+  "strings": [
+   "// ",
+   "AddPartVariantToPart"
+  ]
+ },
+ {
+  "ords": [
+   246,
+   247
+  ],
+  "rva": 100560,
+  "size": 529,
+  "name": "SetMarkMode?",
+  "strings": [
+   "SetMarkMode"
+  ]
+ },
+ {
+  "ords": [
+   248,
+   249
+  ],
+  "rva": 101104,
+  "size": 889,
+  "name": "GetNumberOfMarks?",
+  "strings": [
+   "GetNumberOfMarks"
+  ]
+ },
+ {
+  "ords": [
+   250,
+   251
+  ],
+  "rva": 102000,
+  "size": 1312,
+  "name": "GetMark?",
+  "strings": [
+   "GetMark"
+  ]
+ },
+ {
+  "ords": [
+   272,
+   273
+  ],
+  "rva": 105536,
+  "size": 411,
+  "name": "SetLeatherMode?",
+  "strings": [
+   "-> ",
+   "SetLeatherMode"
+  ]
+ },
+ {
+  "ords": [
+   274,
+   275
+  ],
+  "rva": 105952,
+  "size": 350,
+  "name": "AddLeatherQualityZoneInPart?",
+  "strings": [
+   "AddLeatherQualityZoneInPart"
+  ]
+ },
+ {
+  "ords": [
+   292,
+   293
+  ],
+  "rva": 106304,
+  "size": 342,
+  "name": "AddLeatherQualityZoneInPart?",
+  "strings": [
+   "AddLeatherQualityZoneInPart"
+  ]
+ },
+ {
+  "ords": [
+   276,
+   277
+  ],
+  "rva": 106656,
+  "size": 331,
+  "name": "AddLeatherQualityZoneInSheet?",
+  "strings": [
+   "AddLeatherQualityZoneInSheet"
+  ]
+ },
+ {
+  "ords": [
+   284,
+   285
+  ],
+  "rva": 107024,
+  "size": 1468,
+  "name": "CNS_SheetAddRestrictedZone?",
+  "strings": [
+   "-> ",
+   "CNS_SheetAddRestrictedZone"
+  ]
+ },
+ {
+  "ords": [
+   282,
+   283
+  ],
+  "rva": 108496,
+  "size": 286,
+  "name": null,
+  "strings": []
+ },
+ {
+  "ords": [
+   302,
+   303
+  ],
+  "rva": 108784,
+  "size": 411,
+  "name": "CNS_ForcePartOnBottomBorder?",
+  "strings": [
+   "-> ",
+   "CNS_ForcePartOnBottomBorder"
+  ]
+ },
+ {
+  "ords": [
+   278,
+   279
+  ],
+  "rva": 109200,
+  "size": 944,
+  "name": "CreateRestrictedZoneConstraint?",
+  "strings": [
+   "-> ",
+   "CreateRestrictedZoneConstraint",
+   "// "
+  ]
+ },
+ {
+  "ords": [
+   280,
+   281
+  ],
+  "rva": 110144,
+  "size": 507,
+  "name": "CNS_SetZoneRestrictedPart?",
+  "strings": [
+   "-> ",
+   "CNS_SetZoneRestrictedPart"
+  ]
+ }
+]

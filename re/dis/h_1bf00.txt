@@ -1,0 +1,10 @@
+### fn 0x1bf00 name=None end=0x1bf12 size=18
+STRINGS: 
+CALLERS: 0x2ab0:LaunchLocalComputation
+CALLEES: 0x1be70:None
+
+  0001bf00  4883ec28             sub     rsp, 0x28
+  0001bf04  e867ffffff           call    0x1be70  ; -> 0x1be70 None
+  0001bf09  0fb64001             movzx   eax, byte ptr [rax + 1]
+  0001bf0d  4883c428             add     rsp, 0x28
+  0001bf11  c3                   ret     

@@ -1,0 +1,13 @@
+\begin{algorithm}
+    \caption{\texttt{overlap\_proxy}($S_a,S_b$)}
+    \begin{algorithmic}[1]
+        \For{$(p_a, p_b) \in P(S_a) \times P(S_b)$} \Comment{all pairs of poles}
+            \State $\delta \gets \textsl{penetration depth}(p_a,p_b)$
+            \If{$\delta > 0$}
+                \State $\alpha \gets \alpha + \delta \cdot \text{min}\{\diameter(p_a),\diameter(p_b)\}$ \Comment{$\diameter$: diameter}
+            \EndIf
+        \EndFor
+        \State \Return $\alpha$
+    \end{algorithmic}
+    \label{alg:overlap_area_proxy}
+\end{algorithm}

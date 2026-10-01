@@ -1,0 +1,17 @@
+\begin{algorithm}[h]
+    \caption{\texttt{overlap\_proxy\_decay}($S_a,S_b$)}
+    \begin{algorithmic}[1]
+        \State $\varepsilon \gets \texttt{R}_{\varepsilon} \cdot \text{max}\{\diameter({S_a}), \diameter({S_b})\}$ \Comment{$\diameter$: diameter}
+        \For{$(p_a, p_b) \in P(S_a) \times P(S_b)$}
+            \State $\delta \gets \textsl{penetration depth}(p_a,p_b)$
+            \If{$\delta > \varepsilon$}
+                 \State $\delta' \gets \delta$
+            \Else
+                \State $\delta' \gets \varepsilon^2 / (-\delta + 2\varepsilon)$
+            \EndIf
+            \State $\alpha \gets \alpha + \delta' \cdot \text{min}\{\diameter(p_a),\diameter(p_b)\}$
+        \EndFor
+        \State \Return $\alpha$
+    \end{algorithmic}
+    \label{alg:overlap_area_proxy_decay}
+\end{algorithm}

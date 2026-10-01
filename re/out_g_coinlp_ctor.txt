@@ -1,0 +1,151 @@
+#### 0x267730   size=22 nins=8 ext=['0x267730', '0x267746']
+267730   push rbx                                
+267731   sub rsp, 0x20                           
+267735   mov rbx, rcx                            
+267738   call 0x267760                              ; (0x267760)
+26773d   mov rax, rbx                            
+267740   add rsp, 0x20                           
+267744   pop rbx                                 
+267745   ret                                     
+
+#### 0x267760   size=719 nins=139 ext=['0x267760', '0x267a2f']
+267760   push rdi                                
+267761   push rsi                                
+267762   push rbx                                
+267763   sub rsp, 0x20                           
+267767   mov rdi, rcx                            
+26776a   mov ecx, 0xf0                           
+26776f   call 0x998500                              ; (0x998500)
+267774   mov ecx, 0x418                          
+267779   mov rbx, rax                            
+26777c   lea rax, [rip + 0x7d3afd]                  ; data@a3b280
+267783   mov qword ptr [rbx], rax                
+267786   call 0x998500                              ; (0x998500)
+26778b   mov rcx, rax                            
+26778e   mov rsi, rax                            
+267791   call 0x281ba0                              ; (0x281ba0)
+267796   mov rax, qword ptr [rsi]                
+267799   xor edx, edx                            
+26779b   mov qword ptr [rbx + 8], rsi            
+26779f   mov qword ptr [rbx + 0x18], 0           
+2677a7   mov qword ptr [rbx + 0x20], 0           
+2677af   mov qword ptr [rbx + 0x28], 0           
+2677b7   mov rax, qword ptr [rax - 0x18]         
+2677bb   mov qword ptr [rbx + 0x30], 0           
+2677c3   mov qword ptr [rbx + 0x38], 0           
+2677cb   mov qword ptr [rbx + 0x40], 0           
+2677d3   mov qword ptr [rbx + 0x48], 0           
+2677db   mov rcx, qword ptr [rsi + rax + 0x10]   
+2677e0   mov qword ptr [rbx + 0x50], 0           
+2677e8   mov qword ptr [rbx + 0x58], 0           
+2677f0   mov qword ptr [rbx + 0x60], 0           
+2677f8   mov qword ptr [rbx + 0x68], 0           
+267800   mov qword ptr [rbx + 0x70], 0           
+267808   mov qword ptr [rbx + 0x78], 0           
+267810   mov qword ptr [rbx + 0x80], 0           
+26781b   mov qword ptr [rbx + 0x88], 0           
+267826   mov qword ptr [rbx + 0x90], 0           
+267831   mov qword ptr [rbx + 0x98], 0           
+26783c   mov qword ptr [rbx + 0xa0], 0           
+267847   mov qword ptr [rbx + 0xa8], 0           
+267852   mov qword ptr [rbx + 0xb0], 0           
+26785d   mov qword ptr [rbx + 0xb8], 0           
+267868   mov qword ptr [rbx + 0xc0], 0           
+267873   mov qword ptr [rbx + 0xc8], 0           
+26787e   mov qword ptr [rbx + 0xd0], 0           
+267889   mov qword ptr [rbx + 0xd8], 0           
+267894   mov qword ptr [rbx + 0xe0], 0           
+26789f   mov qword ptr [rbx + 0xe8], 0           
+2678aa   call 0x419610                              ; (0x419610)
+2678af   mov rcx, qword ptr [rbx + 8]            
+2678b3   mov r8d, 0x2710                         
+2678b9   xor edx, edx                            
+2678bb   mov rax, qword ptr [rcx]                
+2678be   call qword ptr [rax + 0xc0]             
+2678c4   mov rcx, qword ptr [rbx + 8]            
+2678c8   call 0x2713d0                              ; (0x2713d0)
+2678cd   movsd xmm1, qword ptr [rip + 0x75b543]     ; data@9c2e18
+2678d5   mov rcx, rax                            
+2678d8   call 0x2b1720                              ; (0x2b1720)
+2678dd   mov rcx, qword ptr [rbx + 8]            
+2678e1   call 0x2713d0                              ; (0x2713d0)
+2678e6   mov dword ptr [rax + 0x2e8], 3          
+2678f0   mov rax, qword ptr [rbx + 0x18]         
+2678f4   mov qword ptr [rdi], rbx                
+2678f7   mov qword ptr [rbx + 0x20], rax         
+2678fb   mov rax, qword ptr [rbx + 0x30]         
+2678ff   mov qword ptr [rbx + 0x38], rax         
+267903   mov rax, qword ptr [rbx + 0x48]         
+267907   mov qword ptr [rbx + 0x50], rax         
+26790b   mov rax, qword ptr [rbx + 0x60]         
+26790f   mov qword ptr [rbx + 0x68], rax         
+267913   mov rax, qword ptr [rbx + 0x78]         
+267917   mov qword ptr [rbx + 0x80], rax         
+26791e   mov rax, qword ptr [rbx + 0x90]         
+267925   mov qword ptr [rbx + 0x98], rax         
+26792c   mov rax, qword ptr [rbx + 0xa8]         
+267933   mov qword ptr [rbx + 0xb0], rax         
+26793a   mov rax, qword ptr [rbx + 0xc0]         
+267941   mov qword ptr [rbx + 0xc8], rax         
+267948   mov rax, qword ptr [rbx + 0xd8]         
+26794f   mov qword ptr [rbx + 0xe0], rax         
+267956   mov rax, rdi                            
+267959   add rsp, 0x20                           
+26795d   pop rbx                                 
+26795e   pop rsi                                 
+26795f   pop rdi                                 
+267960   ret                                     
+267961   mov rsi, rax                            
+267964   mov rcx, rbx                            
+267967   call 0x9984b0                              ; (0x9984b0)
+26796c   mov rcx, rsi                            
+26796f   call 0x62f280                              ; (0x62f280)
+267974   mov rcx, qword ptr [rbx + 0xd8]         
+26797b   mov rsi, rax                            
+26797e   test rcx, rcx                           
+267981   je 0x267988                             
+267983   call 0x9984b0                              ; (0x9984b0)
+267988   mov rcx, qword ptr [rbx + 0xc0]         
+26798f   test rcx, rcx                           
+267992   je 0x267999                             
+267994   call 0x9984b0                              ; (0x9984b0)
+267999   mov rcx, qword ptr [rbx + 0xa8]         
+2679a0   test rcx, rcx                           
+2679a3   je 0x2679aa                             
+2679a5   call 0x9984b0                              ; (0x9984b0)
+2679aa   mov rcx, qword ptr [rbx + 0x90]         
+2679b1   test rcx, rcx                           
+2679b4   je 0x2679bb                             
+2679b6   call 0x9984b0                              ; (0x9984b0)
+2679bb   mov rcx, qword ptr [rbx + 0x78]         
+2679bf   test rcx, rcx                           
+2679c2   je 0x2679c9                             
+2679c4   call 0x9984b0                              ; (0x9984b0)
+2679c9   mov rcx, qword ptr [rbx + 0x60]         
+2679cd   test rcx, rcx                           
+2679d0   je 0x2679d7                             
+2679d2   call 0x9984b0                              ; (0x9984b0)
+2679d7   mov rcx, qword ptr [rbx + 0x48]         
+2679db   test rcx, rcx                           
+2679de   je 0x2679e5                             
+2679e0   call 0x9984b0                              ; (0x9984b0)
+2679e5   mov rcx, qword ptr [rbx + 0x30]         
+2679e9   test rcx, rcx                           
+2679ec   je 0x2679f3                             
+2679ee   call 0x9984b0                              ; (0x9984b0)
+2679f3   mov rcx, qword ptr [rbx + 0x18]         
+2679f7   test rcx, rcx                           
+2679fa   je 0x267a01                             
+2679fc   call 0x9984b0                              ; (0x9984b0)
+267a01   mov rcx, qword ptr [rbx + 8]            
+267a05   test rcx, rcx                           
+267a08   je 0x267964                             
+267a0e   mov rax, qword ptr [rcx]                
+267a11   call qword ptr [rax + 0x490]            
+267a17   jmp 0x267964                            
+267a1c   mov rdi, rax                            
+267a1f   mov rcx, rsi                            
+267a22   call 0x9984b0                              ; (0x9984b0)
+267a27   mov rsi, rdi                            
+267a2a   jmp 0x267964                            
+

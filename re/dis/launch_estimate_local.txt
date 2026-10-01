@@ -1,0 +1,17 @@
+### fn 0x3360 name=None end=0x3394 size=52
+STRINGS: 0x9ac1d8:'// LaunchEstimateLocalComputation'
+CALLERS: 
+CALLEES: 0x2ab0:LaunchLocalComputation, 0x64aea0:None
+
+  00003360  53                   push    rbx
+  00003361  4883ec30             sub     rsp, 0x30
+  00003365  4889cb               mov     rbx, rcx
+  00003368  f20f114c2428         movsd   qword ptr [rsp + 0x28], xmm1
+  0000336e  488d0d638e9a00       lea     rcx, [rip + 0x9a8e63]  ; "// LaunchEstimateLocalComputation"
+  00003375  e8267b6400           call    0x64aea0  ; -> 0x64aea0 None
+  0000337a  f20f104c2428         movsd   xmm1, qword ptr [rsp + 0x28]
+  00003380  4889d9               mov     rcx, rbx
+  00003383  c6838802000001       mov     byte ptr [rbx + 0x288], 1
+  0000338a  4883c430             add     rsp, 0x30
+  0000338e  5b                   pop     rbx
+  0000338f  e91cf7ffff           jmp     0x2ab0  ; -> 0x2ab0 LaunchLocalComputation

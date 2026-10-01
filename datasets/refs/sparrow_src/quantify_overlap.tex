@@ -1,0 +1,11 @@
+\begin{algorithm}
+    \caption{\texttt{quantify\_collision}($S_a,S_b$)}
+    \begin{algorithmic}[1]
+        % \State $e \gets \lambda_{ab} \cdot \sqrt{\Call{overlap\_proxy\_decay}{S_a,S_b}}$ \Comment{Eq. \ref{eq:lambda_ab}, A.\ref{alg:overlap_area_proxy_decay}}
+        \State $\alpha \gets \text{\nameref{alg:overlap_area_proxy_decay}}$ \Comment{Alg. \ref{alg:overlap_area_proxy_decay}}
+        \State $\lambda_{ab} \gets \sqrt{\lambda_a \cdot \lambda_b}$    \Comment{Eq. \ref{eq:lambda_ab}}
+        \State \Return $\sqrt{\alpha} \cdot \lambda_{ab}$
+    \end{algorithmic}
+    \label{alg:quantify_collision}
+\end{algorithm}
+

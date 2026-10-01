@@ -1,0 +1,5612 @@
+[
+ {
+  "ords": [
+   1,
+   2
+  ],
+  "rva": 91168,
+  "name": "AddPolygonHoleToPart",
+  "size": 490,
+  "src": null,
+  "lits": [
+   "// AddPolygonHoleToPart",
+   "AddHoleToPart"
+  ],
+  "alias": [],
+  "nins": 117,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 11,
+  "ret_xmm": true,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [
+   "// AddPolygonHoleToPart"
+  ],
+  "label": "// AddPolygonHoleToPart",
+  "tracer": 91204,
+  "labels": [
+   "// AddPolygonHoleToPart",
+   "AddHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   3,
+   4
+  ],
+  "rva": 90800,
+  "name": "AddPolygonPart",
+  "size": 353,
+  "src": null,
+  "lits": [
+   "// AddPolygonPart"
+  ],
+  "alias": [],
+  "nins": 94,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 2,
+  "arity": 7,
+  "ret_xmm": true,
+  "calls": 8,
+  "callees_exp": [
+   85264
+  ],
+  "sem": [
+   "// AddPolygonPart"
+  ],
+  "label": "// AddPolygonPart",
+  "tracer": 90840,
+  "labels": [
+   "// AddPolygonPart"
+  ]
+ },
+ {
+  "ords": [
+   5,
+   6
+  ],
+  "rva": 89072,
+  "name": "AddSheet",
+  "size": 1717,
+  "src": null,
+  "lits": [
+   "AddSheet",
+   "// "
+  ],
+  "alias": [],
+  "nins": 381,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 5,
+  "arity": 11,
+  "ret_xmm": false,
+  "calls": 35,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   7,
+   8
+  ],
+  "rva": 71920,
+  "name": "DeleteLaunchingOrder",
+  "size": 3660,
+  "src": null,
+  "lits": [
+   "DeleteLaunchingOrder",
+   "*** ERROR unterminated/cancelled computation ***",
+   "ERROR unterminated/cancelled computation"
+  ],
+  "alias": [],
+  "nins": 943,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 22,
+  "callees_exp": [],
+  "sem": [
+   "*** ERROR unterminated/cancelled computation ***",
+   "ERROR unterminated/cancelled computation"
+  ],
+  "label": "DeleteLaunchingOrder",
+  "tracer": 71946,
+  "labels": [
+   "DeleteLaunchingOrder",
+   "DeleteLaunchingOrder"
+  ]
+ },
+ {
+  "ords": [
+   9,
+   10
+  ],
+  "rva": 45520,
+  "name": "GenerateHtmlLaunchingOrderReport",
+  "size": 370,
+  "src": null,
+  "lits": [
+   "GenerateHtmlLaunchingOrderReport",
+   "<h1> Problem contains invalid parts. </h1>",
+   "<h1> Problem contains invalid sheets. </h1>"
+  ],
+  "alias": [],
+  "nins": 89,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 16,
+  "callees_exp": [],
+  "sem": [
+   "<h1> Problem contains invalid parts. </h1>",
+   "<h1> Problem contains invalid sheets. </h1>"
+  ],
+  "label": "GenerateHtmlLaunchingOrderReport",
+  "tracer": 45549,
+  "labels": [
+   "GenerateHtmlLaunchingOrderReport"
+  ]
+ },
+ {
+  "ords": [
+   11,
+   12
+  ],
+  "rva": 45904,
+  "name": "GenerateHtmlSolutionReport",
+  "size": 247,
+  "src": null,
+  "lits": [
+   "GenerateHtmlSolutionReport"
+  ],
+  "alias": [],
+  "nins": 57,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 9,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GenerateHtmlSolutionReport",
+  "tracer": 45932,
+  "labels": [
+   "GenerateHtmlSolutionReport"
+  ]
+ },
+ {
+  "ords": [
+   13,
+   14
+  ],
+  "rva": 47312,
+  "name": "GenerateLaunchingOrderProblem",
+  "size": 378,
+  "src": null,
+  "lits": [
+   "GenerateLaunchingOrderProblem",
+   "source_version"
+  ],
+  "alias": [],
+  "nins": 91,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 2,
+  "arity": 4,
+  "ret_xmm": false,
+  "calls": 16,
+  "callees_exp": [],
+  "sem": [
+   "source_version"
+  ],
+  "label": "GenerateLaunchingOrderProblem",
+  "tracer": 47341,
+  "labels": [
+   "GenerateLaunchingOrderProblem"
+  ]
+ },
+ {
+  "ords": [
+   15,
+   16
+  ],
+  "rva": 67552,
+  "name": "GetComputationStatus",
+  "size": 155,
+  "src": null,
+  "lits": [
+   "Cloud",
+   "Local",
+   "GetComputationStatus",
+   "// GetComputationStatus"
+  ],
+  "alias": [],
+  "nins": 42,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 6,
+  "callees_exp": [],
+  "sem": [
+   "// GetComputationStatus"
+  ],
+  "label": "GetComputationStatus",
+  "tracer": 67619,
+  "labels": [
+   "GetComputationStatus",
+   "// GetComputationStatus"
+  ]
+ },
+ {
+  "ords": [
+   17,
+   18
+  ],
+  "rva": 45312,
+  "name": "GetMultiplicity",
+  "size": 34,
+  "src": null,
+  "lits": [
+   "GetMultiplicity"
+  ],
+  "alias": [],
+  "nins": 9,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetMultiplicity",
+  "tracer": 45327,
+  "labels": [
+   "GetMultiplicity"
+  ]
+ },
+ {
+  "ords": [
+   19,
+   20
+  ],
+  "rva": 54368,
+  "name": "GetNestedPart",
+  "size": 688,
+  "src": "cns.cpp",
+  "lits": [
+   "GetNestedPart",
+   "nested_part_number <= nested_parts.size()",
+   "CNS_GetNestedPart",
+   "cns.cpp",
+   "part_number <= order->parts.size()"
+  ],
+  "alias": [
+   "CNS_GetNestedPart"
+  ],
+  "nins": 176,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 10,
+  "arity": 15,
+  "ret_xmm": true,
+  "calls": 17,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "nested_part_number <= nested_parts.size()",
+   "part_number <= order->parts.size()"
+  ],
+  "label": "GetNestedPart",
+  "tracer": 54407,
+  "labels": [
+   "GetNestedPart"
+  ]
+ },
+ {
+  "ords": [
+   21,
+   22
+  ],
+  "rva": 69424,
+  "name": "GetNesting",
+  "size": 490,
+  "src": "cns.cpp",
+  "lits": [
+   "GetNesting",
+   "nesting_number < solution_aux.size()",
+   "CNS_GetNesting",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_GetNesting"
+  ],
+  "nins": 130,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 8,
+  "arity": 10,
+  "ret_xmm": false,
+  "calls": 12,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "nesting_number < solution_aux.size()"
+  ],
+  "label": "GetNesting",
+  "tracer": 69453,
+  "labels": [
+   "GetNesting"
+  ]
+ },
+ {
+  "ords": [
+   23,
+   24
+  ],
+  "rva": 45456,
+  "name": "GetNumberOfNestedParts",
+  "size": 63,
+  "src": null,
+  "lits": [
+   "GetNumberOfNestedParts"
+  ],
+  "alias": [],
+  "nins": 16,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetNumberOfNestedParts",
+  "tracer": 45471,
+  "labels": [
+   "GetNumberOfNestedParts"
+  ]
+ },
+ {
+  "ords": [
+   25,
+   26
+  ],
+  "rva": 45248,
+  "name": "GetNumberOfNestings",
+  "size": 52,
+  "src": null,
+  "lits": [
+   "GetNumberOfNestings"
+  ],
+  "alias": [],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetNumberOfNestings",
+  "tracer": 45263,
+  "labels": [
+   "GetNumberOfNestings"
+  ]
+ },
+ {
+  "ords": [
+   27,
+   28
+  ],
+  "rva": 50656,
+  "name": "GetPartUserString",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "GetPartUserString"
+  ],
+  "alias": [],
+  "nins": 10,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetPartUserString",
+  "tracer": 50674,
+  "labels": [
+   "GetPartUserString"
+  ]
+ },
+ {
+  "ords": [
+   29,
+   30
+  ],
+  "rva": 46352,
+  "name": "GetPartWithBadGeometry",
+  "size": 43,
+  "src": null,
+  "lits": [
+   "GetPartWithBadGeometry"
+  ],
+  "alias": [],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetPartWithBadGeometry",
+  "tracer": 46367,
+  "labels": [
+   "GetPartWithBadGeometry"
+  ]
+ },
+ {
+  "ords": [
+   31,
+   32
+  ],
+  "rva": 46592,
+  "name": "GetSheet",
+  "size": 332,
+  "src": "cns.cpp",
+  "lits": [
+   "GetSheet",
+   "number <= order->sheets.size()",
+   "CNS_GetSheet",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_GetSheet"
+  ],
+  "nins": 93,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 29,
+  "arity": 31,
+  "ret_xmm": false,
+  "calls": 9,
+  "callees_exp": [],
+  "sem": [
+   "number <= order->sheets.size()",
+   "cns.cpp"
+  ],
+  "label": "GetSheet",
+  "tracer": 46612,
+  "labels": [
+   "GetSheet"
+  ]
+ },
+ {
+  "ords": [
+   33,
+   34
+  ],
+  "rva": 45216,
+  "name": "GetSolution",
+  "size": 29,
+  "src": null,
+  "lits": [
+   "GetSolution"
+  ],
+  "alias": [],
+  "nins": 9,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetSolution",
+  "tracer": 45231,
+  "labels": [
+   "GetSolution"
+  ]
+ },
+ {
+  "ords": [
+   35,
+   36
+  ],
+  "rva": 24832,
+  "name": "LaunchComputation",
+  "size": 3894,
+  "src": null,
+  "lits": [
+   "LaunchComputation",
+   "c:\\Temp\\cns.pb.json",
+   "// LaunchComputation",
+   "basic_string::append"
+  ],
+  "alias": [],
+  "nins": 831,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 28,
+  "arity": 35,
+  "ret_xmm": true,
+  "calls": 71,
+  "callees_exp": [
+   10928
+  ],
+  "sem": [
+   "c:\\Temp\\cns.pb.json",
+   "// LaunchComputation"
+  ],
+  "label": "LaunchComputation",
+  "tracer": 24930,
+  "labels": [
+   "LaunchComputation",
+   "// LaunchComputation"
+  ]
+ },
+ {
+  "ords": [
+   37,
+   38
+  ],
+  "rva": 83488,
+  "name": "NewLaunchingOrder",
+  "size": 1081,
+  "src": null,
+  "lits": [
+   "NewLaunchingOrder"
+  ],
+  "alias": [],
+  "nins": 172,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1"
+  ],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": true,
+  "calls": 10,
+  "callees_exp": [],
+  "sem": [],
+  "label": "NewLaunchingOrder",
+  "tracer": 83505,
+  "labels": [
+   "NewLaunchingOrder"
+  ]
+ },
+ {
+  "ords": [
+   39,
+   40
+  ],
+  "rva": 53024,
+  "name": "SetInterpartGap",
+  "size": 303,
+  "src": "cns.cpp",
+  "lits": [
+   "SetInterpartGap",
+   "(gap >= 0.0) && \"Negative part gap unsupported\"",
+   "CNS_SetInterpartGap",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_SetInterpartGap"
+  ],
+  "nins": 76,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 8,
+  "arity": 10,
+  "ret_xmm": false,
+  "calls": 8,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "(gap >= 0.0) && \"Negative part gap unsupported\""
+  ],
+  "label": "SetInterpartGap",
+  "tracer": 53057,
+  "labels": [
+   "SetInterpartGap"
+  ]
+ },
+ {
+  "ords": [
+   41,
+   42
+  ],
+  "rva": 49568,
+  "name": "SetPartAuthorizations",
+  "size": 241,
+  "src": null,
+  "lits": [
+   "SetPartAuthorizations"
+  ],
+  "alias": [],
+  "nins": 63,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": true,
+  "calls": 6,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetPartAuthorizations",
+  "tracer": 49611,
+  "labels": [
+   "SetPartAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   43,
+   44
+  ],
+  "rva": 50208,
+  "name": "SetPartUserString",
+  "size": 446,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetPartUserString"
+  ],
+  "alias": [],
+  "nins": 115,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 3,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   45,
+   46
+  ],
+  "rva": 52400,
+  "name": "SetSheetGaps",
+  "size": 527,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetSheetGaps"
+  ],
+  "alias": [],
+  "nins": 107,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 9,
+  "arity": 13,
+  "ret_xmm": false,
+  "calls": 12,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   47,
+   48
+  ],
+  "rva": 66768,
+  "name": "WaitComputationTermination",
+  "size": 370,
+  "src": null,
+  "lits": [
+   "Cloud",
+   "Local",
+   "WaitComputationTermination",
+   "// WaitComputationTermination",
+   "c:\\Temp\\computation_solution.html"
+  ],
+  "alias": [],
+  "nins": 85,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [
+   "// WaitComputationTermination",
+   "c:\\Temp\\computation_solution.html"
+  ],
+  "label": "WaitComputationTermination",
+  "tracer": 66826,
+  "labels": [
+   "WaitComputationTermination",
+   "// WaitComputationTermination"
+  ]
+ },
+ {
+  "ords": [
+   49,
+   50
+  ],
+  "rva": 67152,
+  "name": "WaitNextSolution",
+  "size": 386,
+  "src": null,
+  "lits": [
+   "Cloud",
+   "Local",
+   "WaitNextSolution",
+   "// WaitNextSolution",
+   "c:\\Temp\\computation_solution.html"
+  ],
+  "alias": [],
+  "nins": 94,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 65,
+  "arity": 67,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [
+   "c:\\Temp\\computation_solution.html",
+   "// WaitNextSolution"
+  ],
+  "label": "WaitNextSolution",
+  "tracer": 67210,
+  "labels": [
+   "WaitNextSolution",
+   "// WaitNextSolution"
+  ]
+ },
+ {
+  "ords": [
+   51,
+   52
+  ],
+  "rva": 10928,
+  "name": "LaunchLocalComputation",
+  "size": 2134,
+  "src": null,
+  "lits": [
+   "-> ",
+   "LaunchLocalComputation",
+   "c:\\Temp\\cns.pb.json",
+   "// LaunchLocalComputation",
+   "cns_force_cloud",
+   "cns1.optalog.com;cns2.optalog.com"
+  ],
+  "alias": [],
+  "nins": 491,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1"
+  ],
+  "stack_args": 3,
+  "arity": 7,
+  "ret_xmm": true,
+  "calls": 56,
+  "callees_exp": [
+   24832
+  ],
+  "sem": [
+   "cns_force_cloud",
+   "cns1.optalog.com;cns2.optalog.com",
+   "c:\\Temp\\cns.pb.json",
+   "// LaunchLocalComputation"
+  ],
+  "label": "// LaunchLocalComputation",
+  "tracer": 12630,
+  "labels": [
+   "// LaunchLocalComputation"
+  ]
+ },
+ {
+  "ords": [
+   53,
+   54
+  ],
+  "rva": 67712,
+  "name": "CancelComputation",
+  "size": 155,
+  "src": null,
+  "lits": [
+   "Cloud",
+   "Local",
+   "CancelComputation ",
+   "// CancelComputation"
+  ],
+  "alias": [],
+  "nins": 42,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 6,
+  "callees_exp": [],
+  "sem": [
+   "CancelComputation ",
+   "// CancelComputation"
+  ],
+  "label": "Local",
+  "tracer": 67779,
+  "labels": [
+   "// CancelComputation"
+  ]
+ },
+ {
+  "ords": [
+   55,
+   56
+  ],
+  "rva": 45088,
+  "name": "GetPartUserStringEx",
+  "size": 52,
+  "src": null,
+  "lits": [
+   "GetPartUserStringEx"
+  ],
+  "alias": [],
+  "nins": 17,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetPartUserStringEx",
+  "tracer": 45110,
+  "labels": [
+   "GetPartUserStringEx"
+  ]
+ },
+ {
+  "ords": [
+   57,
+   58
+  ],
+  "rva": 50800,
+  "name": "SetSheetUserString",
+  "size": 446,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetSheetUserString"
+  ],
+  "alias": [],
+  "nins": 115,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 3,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   59,
+   60
+  ],
+  "rva": 51248,
+  "name": "GetSheetUserString",
+  "size": 353,
+  "src": null,
+  "lits": [
+   "-> ",
+   "GetSheetUserString"
+  ],
+  "alias": [],
+  "nins": 91,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 10,
+  "arity": 11,
+  "ret_xmm": false,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   61,
+   62
+  ],
+  "rva": 45152,
+  "name": "GetSheetUserStringEx",
+  "size": 52,
+  "src": null,
+  "lits": [
+   "GetSheetUserStringEx"
+  ],
+  "alias": [],
+  "nins": 17,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetSheetUserStringEx",
+  "tracer": 45174,
+  "labels": [
+   "GetSheetUserStringEx"
+  ]
+ },
+ {
+  "ords": [
+   65,
+   66
+  ],
+  "rva": 69920,
+  "name": "SetExtraParameters",
+  "size": 868,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetExtraParameters"
+  ],
+  "alias": [],
+  "nins": 180,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 15,
+  "arity": 18,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   67,
+   68
+  ],
+  "rva": 81040,
+  "name": "SetSheetPriority",
+  "size": 411,
+  "src": null,
+  "lits": [
+   "SetSheetPriority"
+  ],
+  "alias": [],
+  "nins": 105,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 18,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   69,
+   70
+  ],
+  "rva": 92960,
+  "name": "AddNonRectangularPolygonSheet",
+  "size": 353,
+  "src": null,
+  "lits": [
+   "// AddNonRectangularPolygonSheet"
+  ],
+  "alias": [],
+  "nins": 94,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 2,
+  "arity": 7,
+  "ret_xmm": true,
+  "calls": 8,
+  "callees_exp": [
+   87968
+  ],
+  "sem": [
+   "// AddNonRectangularPolygonSheet"
+  ],
+  "label": "// AddNonRectangularPolygonSheet",
+  "tracer": 93000,
+  "labels": [
+   "// AddNonRectangularPolygonSheet"
+  ]
+ },
+ {
+  "ords": [
+   71,
+   72
+  ],
+  "rva": 92528,
+  "name": "AddPolygonDefectToSheet",
+  "size": 426,
+  "src": null,
+  "lits": [
+   "// AddPolygonDefectToSheet",
+   "AddDefectToSheet"
+  ],
+  "alias": [],
+  "nins": 105,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 11,
+  "ret_xmm": true,
+  "calls": 10,
+  "callees_exp": [],
+  "sem": [
+   "// AddPolygonDefectToSheet"
+  ],
+  "label": "// AddPolygonDefectToSheet",
+  "tracer": 92564,
+  "labels": [
+   "// AddPolygonDefectToSheet",
+   "AddDefectToSheet"
+  ]
+ },
+ {
+  "ords": [
+   73,
+   74
+  ],
+  "rva": 54128,
+  "name": "SetLocalEngine",
+  "size": 61,
+  "src": null,
+  "lits": [
+   "SetLocalEngine"
+  ],
+  "alias": [],
+  "nins": 19,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetLocalEngine",
+  "tracer": 54146,
+  "labels": [
+   "SetLocalEngine"
+  ]
+ },
+ {
+  "ords": [
+   76,
+   77
+  ],
+  "rva": 54320,
+  "name": "UnLockLaunchingOrder",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "UnLockLaunchingOrder"
+  ],
+  "alias": [],
+  "nins": 12,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "UnLockLaunchingOrder",
+  "tracer": 54338,
+  "labels": [
+   "UnLockLaunchingOrder"
+  ]
+ },
+ {
+  "ords": [
+   78,
+   79
+  ],
+  "rva": 52928,
+  "name": "SetObjective",
+  "size": 45,
+  "src": null,
+  "lits": [
+   "SetObjective"
+  ],
+  "alias": [],
+  "nins": 15,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetObjective",
+  "tracer": 52958,
+  "labels": [
+   "SetObjective"
+  ]
+ },
+ {
+  "ords": [
+   80,
+   81
+  ],
+  "rva": 68032,
+  "name": "SetDefectGap",
+  "size": 388,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetDefectGap"
+  ],
+  "alias": [],
+  "nins": 96,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 3,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 16,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   82,
+   83
+  ],
+  "rva": 54192,
+  "name": "SetLocalMaximumThreads",
+  "size": 68,
+  "src": null,
+  "lits": [
+   "SetLocalMaximumThreads"
+  ],
+  "alias": [],
+  "nins": 23,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetLocalMaximumThreads",
+  "tracer": 54210,
+  "labels": [
+   "SetLocalMaximumThreads"
+  ]
+ },
+ {
+  "ords": [
+   84,
+   85
+  ],
+  "rva": 54272,
+  "name": "SetLocalMaximumIterations",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "SetLocalMaximumIterations"
+  ],
+  "alias": [],
+  "nins": 12,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetLocalMaximumIterations",
+  "tracer": 54290,
+  "labels": [
+   "SetLocalMaximumIterations"
+  ]
+ },
+ {
+  "ords": [
+   86,
+   87
+  ],
+  "rva": 53328,
+  "name": "SetOrigin",
+  "size": 334,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetOrigin"
+  ],
+  "alias": [],
+  "nins": 94,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   88,
+   89
+  ],
+  "rva": 46224,
+  "name": "GetBuildVersion",
+  "size": 31,
+  "src": null,
+  "lits": [
+   "GetBuildVersion"
+  ],
+  "alias": [],
+  "nins": 7,
+  "int_regs": [],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 0,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetBuildVersion",
+  "tracer": 46235,
+  "labels": [
+   "GetBuildVersion"
+  ]
+ },
+ {
+  "ords": [
+   90,
+   91
+  ],
+  "rva": 46192,
+  "name": "GetBuildDate",
+  "size": 31,
+  "src": null,
+  "lits": [
+   "GetBuildDate"
+  ],
+  "alias": [],
+  "nins": 7,
+  "int_regs": [],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 0,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetBuildDate",
+  "tracer": 46203,
+  "labels": [
+   "GetBuildDate"
+  ]
+ },
+ {
+  "ords": [
+   92,
+   93
+  ],
+  "rva": 46160,
+  "name": "GetMajorVersion",
+  "size": 31,
+  "src": null,
+  "lits": [
+   "GetMajorVersion"
+  ],
+  "alias": [],
+  "nins": 7,
+  "int_regs": [],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 0,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetMajorVersion",
+  "tracer": 46171,
+  "labels": [
+   "GetMajorVersion"
+  ]
+ },
+ {
+  "ords": [
+   94,
+   95
+  ],
+  "rva": 68832,
+  "name": "AddPartSpecificAuthorizations",
+  "size": 584,
+  "src": null,
+  "lits": [
+   "AddPartSpecificAuthorizations"
+  ],
+  "alias": [],
+  "nins": 125,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 11,
+  "ret_xmm": true,
+  "calls": 12,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddPartSpecificAuthorizations",
+  "tracer": 68908,
+  "labels": [
+   "AddPartSpecificAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   96,
+   97
+  ],
+  "rva": 45360,
+  "name": "GetLength",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "GetLength"
+  ],
+  "alias": [],
+  "nins": 10,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetLength",
+  "tracer": 45375,
+  "labels": [
+   "GetLength"
+  ]
+ },
+ {
+  "ords": [
+   98,
+   99
+  ],
+  "rva": 51616,
+  "name": "SetSheetGrainDirection",
+  "size": 372,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetSheetGrainDirection"
+  ],
+  "alias": [],
+  "nins": 96,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 16,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   100,
+   101
+  ],
+  "rva": 45408,
+  "name": "GetHeight",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "GetHeight"
+  ],
+  "alias": [],
+  "nins": 10,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetHeight",
+  "tracer": 45423,
+  "labels": [
+   "GetHeight"
+  ]
+ },
+ {
+  "ords": [
+   102,
+   103
+  ],
+  "rva": 91664,
+  "name": "AddExternalPolygonBoundaryToSheet",
+  "size": 419,
+  "src": null,
+  "lits": [
+   "// AddExternalPolygonBoundaryToSheet",
+   "AddExternalBoundaryToSheet"
+  ],
+  "alias": [],
+  "nins": 104,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 11,
+  "ret_xmm": true,
+  "calls": 10,
+  "callees_exp": [],
+  "sem": [
+   "// AddExternalPolygonBoundaryToSheet"
+  ],
+  "label": "// AddExternalPolygonBoundaryToSheet",
+  "tracer": 91700,
+  "labels": [
+   "// AddExternalPolygonBoundaryToSheet",
+   "AddExternalBoundaryToSheet"
+  ]
+ },
+ {
+  "ords": [
+   104,
+   105
+  ],
+  "rva": 92096,
+  "name": "AddExternalPolygonBoundaryToPart",
+  "size": 426,
+  "src": null,
+  "lits": [
+   "// AddExternalPolygonBoundaryToPart",
+   "AddExternalBoundaryToPart"
+  ],
+  "alias": [],
+  "nins": 105,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 11,
+  "ret_xmm": true,
+  "calls": 10,
+  "callees_exp": [],
+  "sem": [
+   "// AddExternalPolygonBoundaryToPart"
+  ],
+  "label": "// AddExternalPolygonBoundaryToPart",
+  "tracer": 92132,
+  "labels": [
+   "// AddExternalPolygonBoundaryToPart",
+   "AddExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   110,
+   111
+  ],
+  "rva": 85264,
+  "name": "AddPart",
+  "size": 1891,
+  "src": null,
+  "lits": [
+   "AddPart",
+   "// "
+  ],
+  "alias": [],
+  "nins": 379,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm3"
+  ],
+  "stack_args": 7,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 34,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   112,
+   113
+  ],
+  "rva": 78560,
+  "name": "AddHoleToPart",
+  "size": 176,
+  "src": null,
+  "lits": [
+   "AddHoleToPart"
+  ],
+  "alias": [],
+  "nins": 45,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": true,
+  "calls": 4,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddHoleToPart",
+  "tracer": 78603,
+  "labels": [
+   "AddHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   114,
+   115
+  ],
+  "rva": 78736,
+  "name": "AddExternalBoundaryToPart",
+  "size": 124,
+  "src": null,
+  "lits": [
+   "AddExternalBoundaryToPart"
+  ],
+  "alias": [],
+  "nins": 34,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddExternalBoundaryToPart",
+  "tracer": 78779,
+  "labels": [
+   "AddExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   116,
+   117
+  ],
+  "rva": 87968,
+  "name": "AddNonRectangularSheet",
+  "size": 1098,
+  "src": null,
+  "lits": [
+   "AddNonRectangularSheet"
+  ],
+  "alias": [],
+  "nins": 232,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 12,
+  "ret_xmm": true,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   118,
+   119
+  ],
+  "rva": 82320,
+  "name": "AddDefectToSheet",
+  "size": 124,
+  "src": null,
+  "lits": [
+   "AddDefectToSheet"
+  ],
+  "alias": [],
+  "nins": 34,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddDefectToSheet",
+  "tracer": 82363,
+  "labels": [
+   "AddDefectToSheet"
+  ]
+ },
+ {
+  "ords": [
+   120,
+   121
+  ],
+  "rva": 82448,
+  "name": "AddExternalBoundaryToSheet",
+  "size": 117,
+  "src": null,
+  "lits": [
+   "AddExternalBoundaryToSheet"
+  ],
+  "alias": [],
+  "nins": 33,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddExternalBoundaryToSheet",
+  "tracer": 82491,
+  "labels": [
+   "AddExternalBoundaryToSheet"
+  ]
+ },
+ {
+  "ords": [
+   122,
+   123
+  ],
+  "rva": 67872,
+  "name": "TerminateComputation",
+  "size": 155,
+  "src": null,
+  "lits": [
+   "Cloud",
+   "Local",
+   "TerminateComputation ",
+   "// TerminateComputation"
+  ],
+  "alias": [],
+  "nins": 42,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 6,
+  "callees_exp": [],
+  "sem": [
+   "TerminateComputation ",
+   "// TerminateComputation"
+  ],
+  "label": "Local",
+  "tracer": 67939,
+  "labels": [
+   "// TerminateComputation"
+  ]
+ },
+ {
+  "ords": [
+   124,
+   125
+  ],
+  "rva": 84576,
+  "name": "AddOpenCuttingPathToPart",
+  "size": 678,
+  "src": null,
+  "lits": [
+   "AddOpenCuttingPathToPart"
+  ],
+  "alias": [],
+  "nins": 150,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 28,
+  "arity": 33,
+  "ret_xmm": true,
+  "calls": 13,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddOpenCuttingPathToPart",
+  "tracer": 84668,
+  "labels": [
+   "AddOpenCuttingPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   126,
+   127
+  ],
+  "rva": 49824,
+  "name": "SetPartPriority",
+  "size": 382,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetPartPriority"
+  ],
+  "alias": [],
+  "nins": 102,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   128,
+   129
+  ],
+  "rva": 53664,
+  "name": "CNS_SetMultiplicityPreference",
+  "size": 353,
+  "src": null,
+  "lits": [
+   "-> ",
+   "CNS_SetMultiplicityPreference"
+  ],
+  "alias": [
+   "CNS_SetMultiplicityPreference"
+  ],
+  "nins": 97,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 28,
+  "arity": 31,
+  "ret_xmm": true,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   130,
+   131
+  ],
+  "rva": 87168,
+  "name": "AddCircularPart",
+  "size": 404,
+  "src": null,
+  "lits": [
+   "// AddCircularPart"
+  ],
+  "alias": [],
+  "nins": 87,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 1,
+  "arity": 7,
+  "ret_xmm": true,
+  "calls": 5,
+  "callees_exp": [
+   85264
+  ],
+  "sem": [
+   "// AddCircularPart"
+  ],
+  "label": "// AddCircularPart",
+  "tracer": 87233,
+  "labels": [
+   "// AddCircularPart"
+  ]
+ },
+ {
+  "ords": [
+   132,
+   133
+  ],
+  "rva": 79872,
+  "name": "AddCircularHoleToPart",
+  "size": 581,
+  "src": null,
+  "lits": [
+   "// AddCircularHoleToPart",
+   "AddHoleToPart"
+  ],
+  "alias": [],
+  "nins": 110,
+  "int_regs": [
+   "r8",
+   "rcx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 10,
+  "arity": 16,
+  "ret_xmm": true,
+  "calls": 8,
+  "callees_exp": [],
+  "sem": [
+   "// AddCircularHoleToPart"
+  ],
+  "label": "// AddCircularHoleToPart",
+  "tracer": 79929,
+  "labels": [
+   "// AddCircularHoleToPart",
+   "AddHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   134,
+   135
+  ],
+  "rva": 87584,
+  "name": "AddRectanglePart",
+  "size": 374,
+  "src": null,
+  "lits": [
+   "// AddRectanglePart"
+  ],
+  "alias": [],
+  "nins": 79,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 2,
+  "arity": 7,
+  "ret_xmm": true,
+  "calls": 5,
+  "callees_exp": [
+   85264
+  ],
+  "sem": [
+   "// AddRectanglePart"
+  ],
+  "label": "// AddRectanglePart",
+  "tracer": 87652,
+  "labels": [
+   "// AddRectanglePart"
+  ]
+ },
+ {
+  "ords": [
+   136,
+   137
+  ],
+  "rva": 80464,
+  "name": "AddRectangularHoleToPart",
+  "size": 569,
+  "src": null,
+  "lits": [
+   "// AddRectangularHoleToPart",
+   "AddHoleToPart"
+  ],
+  "alias": [],
+  "nins": 102,
+  "int_regs": [
+   "r8",
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 14,
+  "arity": 19,
+  "ret_xmm": false,
+  "calls": 8,
+  "callees_exp": [],
+  "sem": [
+   "// AddRectangularHoleToPart"
+  ],
+  "label": "// AddRectangularHoleToPart",
+  "tracer": 80530,
+  "labels": [
+   "// AddRectangularHoleToPart",
+   "AddHoleToPart"
+  ]
+ },
+ {
+  "ords": [
+   138,
+   139
+  ],
+  "rva": 82576,
+  "name": "AddOptionalQuantityToPart",
+  "size": 440,
+  "src": null,
+  "lits": [
+   "AddOptionalQuantityToPart"
+  ],
+  "alias": [],
+  "nins": 113,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   140,
+   141
+  ],
+  "rva": 57360,
+  "name": "SetAutomaticStop",
+  "size": 353,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetAutomaticStop"
+  ],
+  "alias": [],
+  "nins": 95,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   142,
+   143
+  ],
+  "rva": 58064,
+  "name": "SetOffcutEvaluation",
+  "size": 399,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetOffcutEvaluation"
+  ],
+  "alias": [],
+  "nins": 88,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 7,
+  "arity": 11,
+  "ret_xmm": false,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   144,
+   145
+  ],
+  "rva": 56720,
+  "name": "SetFillLastNestingStrategy",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "SetFillLastNestingStrategy"
+  ],
+  "alias": [],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetFillLastNestingStrategy",
+  "tracer": 56738,
+  "labels": [
+   "SetFillLastNestingStrategy"
+  ]
+ },
+ {
+  "ords": [
+   146,
+   147
+  ],
+  "rva": 56768,
+  "name": "SetShearMode",
+  "size": 33,
+  "src": null,
+  "lits": [
+   "SetShearMode"
+  ],
+  "alias": [],
+  "nins": 12,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetShearMode",
+  "tracer": 56786,
+  "labels": [
+   "SetShearMode"
+  ]
+ },
+ {
+  "ords": [
+   148,
+   149
+  ],
+  "rva": 58464,
+  "name": "SetCommonCutMode",
+  "size": 404,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetCommonCutMode"
+  ],
+  "alias": [],
+  "nins": 102,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2"
+  ],
+  "stack_args": 3,
+  "arity": 6,
+  "ret_xmm": false,
+  "calls": 16,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   150,
+   151
+  ],
+  "rva": 59712,
+  "name": "SetCommonCutSafetyPreference",
+  "size": 354,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetCommonCutSafetyPreference"
+  ],
+  "alias": [],
+  "nins": 97,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   152,
+   153
+  ],
+  "rva": 60080,
+  "name": "SetCommonCutAuthorizations",
+  "size": 468,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetCommonCutAuthorizations"
+  ],
+  "alias": [],
+  "nins": 111,
+  "int_regs": [
+   "r9",
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1",
+   "xmm2"
+  ],
+  "stack_args": 5,
+  "arity": 9,
+  "ret_xmm": false,
+  "calls": 12,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   154,
+   155
+  ],
+  "rva": 60560,
+  "name": "SetCommonCutCuttingPreference",
+  "size": 340,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetCommonCutCuttingPreference"
+  ],
+  "alias": [],
+  "nins": 90,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   156,
+   157
+  ],
+  "rva": 60912,
+  "name": "SetCommonCutObjective",
+  "size": 337,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetCommonCutObjective"
+  ],
+  "alias": [],
+  "nins": 79,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1",
+   "xmm2"
+  ],
+  "stack_args": 5,
+  "arity": 8,
+  "ret_xmm": false,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   158,
+   159
+  ],
+  "rva": 55056,
+  "name": "GetNumberOfCommonCuts",
+  "size": 346,
+  "src": "cns.cpp",
+  "lits": [
+   "GetNumberOfCommonCuts",
+   "// GetNumberOfCommonCuts ",
+   "cns_nesting->nesting",
+   "CNS_GetNumberOfCommonCuts",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_GetNumberOfCommonCuts"
+  ],
+  "nins": 89,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 8,
+  "arity": 10,
+  "ret_xmm": false,
+  "calls": 10,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "cns_nesting->nesting",
+   "// GetNumberOfCommonCuts "
+  ],
+  "label": "GetNumberOfCommonCuts",
+  "tracer": 55082,
+  "labels": [
+   "GetNumberOfCommonCuts",
+   "GetNumberOfCommonCuts"
+  ]
+ },
+ {
+  "ords": [
+   160,
+   161
+  ],
+  "rva": 47696,
+  "name": "GetCommonCut",
+  "size": 825,
+  "src": "cns.cpp",
+  "lits": [
+   "GetCommonCut",
+   "common_cut_number < evaluation.common_cut_segments.size()",
+   "CNS_GetCommonCut",
+   "cns.cpp",
+   "nesting->nesting"
+  ],
+  "alias": [
+   "CNS_GetCommonCut"
+  ],
+  "nins": 200,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 17,
+  "arity": 25,
+  "ret_xmm": true,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "nesting->nesting",
+   "common_cut_number < evaluation.common_cut_segments.size()"
+  ],
+  "label": "GetCommonCut",
+  "tracer": 47749,
+  "labels": [
+   "GetCommonCut"
+  ]
+ },
+ {
+  "ords": [
+   162,
+   163
+  ],
+  "rva": 57728,
+  "name": "UnLockLaunchingOrderSntl",
+  "size": 111,
+  "src": null,
+  "lits": [
+   "UnLockLaunchingOrderSntl"
+  ],
+  "alias": [],
+  "nins": 31,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "UnLockLaunchingOrderSntl",
+  "tracer": 57751,
+  "labels": [
+   "UnLockLaunchingOrderSntl"
+  ]
+ },
+ {
+  "ords": [
+   164,
+   165
+  ],
+  "rva": 13072,
+  "name": "LaunchLimitedLocalComputation",
+  "size": 66,
+  "src": null,
+  "lits": [
+   "LaunchLimitedLocalComputation"
+  ],
+  "alias": [],
+  "nins": 16,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [
+   10928
+  ],
+  "sem": [],
+  "label": "LaunchLimitedLocalComputation",
+  "tracer": 13088,
+  "labels": [
+   "LaunchLimitedLocalComputation",
+   "LaunchLimitedLocalComputation"
+  ]
+ },
+ {
+  "ords": [
+   166,
+   167
+  ],
+  "rva": 56912,
+  "name": "SetPartCommonCutMode",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "SetPartCommonCutMode"
+  ],
+  "alias": [],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetPartCommonCutMode",
+  "tracer": 56930,
+  "labels": [
+   "SetPartCommonCutMode"
+  ]
+ },
+ {
+  "ords": [
+   168,
+   169
+  ],
+  "rva": 46256,
+  "name": "GetFillRatio",
+  "size": 34,
+  "src": null,
+  "lits": [
+   "GetFillRatio"
+  ],
+  "alias": [],
+  "nins": 9,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetFillRatio",
+  "tracer": 46271,
+  "labels": [
+   "GetFillRatio"
+  ]
+ },
+ {
+  "ords": [
+   170,
+   171
+  ],
+  "rva": 48528,
+  "name": "GetNestingDimensions",
+  "size": 470,
+  "src": "cns.cpp",
+  "lits": [
+   "GetNestingDimensions",
+   "CNS_GetNestingDimensions",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_GetNestingDimensions"
+  ],
+  "nins": 122,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 8,
+  "arity": 12,
+  "ret_xmm": false,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp"
+  ],
+  "label": "GetNestingDimensions",
+  "tracer": 48559,
+  "labels": [
+   "GetNestingDimensions"
+  ]
+ },
+ {
+  "ords": [
+   172,
+   173
+  ],
+  "rva": 52000,
+  "name": "SetSheetPrice",
+  "size": 388,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetSheetPrice"
+  ],
+  "alias": [],
+  "nins": 96,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 3,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 16,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   174,
+   175
+  ],
+  "rva": 61264,
+  "name": "SetMultiTorchMode",
+  "size": 479,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetMultiTorchMode"
+  ],
+  "alias": [],
+  "nins": 112,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm3"
+  ],
+  "stack_args": 5,
+  "arity": 9,
+  "ret_xmm": false,
+  "calls": 12,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   176,
+   177
+  ],
+  "rva": 61744,
+  "name": "SetMultiTorchCuttingPreference",
+  "size": 388,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetMultiTorchCuttingPreference"
+  ],
+  "alias": [],
+  "nins": 101,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 4,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   178,
+   179
+  ],
+  "rva": 62144,
+  "name": "SetMultiTorchObjective",
+  "size": 633,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetMultiTorchObjective"
+  ],
+  "alias": [],
+  "nins": 133,
+  "int_regs": [
+   "r9",
+   "rcx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 7,
+  "arity": 13,
+  "ret_xmm": true,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   180,
+   181
+  ],
+  "rva": 83024,
+  "name": "SetExtraGapOnPart",
+  "size": 449,
+  "src": null,
+  "lits": [
+   "SetExtraGapOnPart"
+  ],
+  "alias": [],
+  "nins": 107,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 3,
+  "arity": 6,
+  "ret_xmm": false,
+  "calls": 20,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   182,
+   183
+  ],
+  "rva": 56624,
+  "name": "CNS_SetFloatingMode",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "CNS_SetFloatingMode"
+  ],
+  "alias": [
+   "CNS_SetFloatingMode"
+  ],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_SetFloatingMode",
+  "tracer": 56642,
+  "labels": [
+   "CNS_SetFloatingMode"
+  ]
+ },
+ {
+  "ords": [
+   184,
+   185
+  ],
+  "rva": 55408,
+  "name": "GetPartTorchInfos",
+  "size": 826,
+  "src": "cns.cpp",
+  "lits": [
+   "GetPartTorchInfos",
+   "part_index < nesting->nesting->nested_parts().size()",
+   "CNS_GetPartTorchInfos",
+   "cns.cpp",
+   "part_index < nesting->nesting->multitorch_infos().m_infos.size()",
+   "nesting->nesting"
+  ],
+  "alias": [
+   "CNS_GetPartTorchInfos"
+  ],
+  "nins": 213,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 31,
+  "arity": 36,
+  "ret_xmm": true,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "nesting->nesting",
+   "part_index < nesting->nesting->nested_parts().size()",
+   "part_index < nesting->nesting->multitorch_infos().m_infos.size()",
+   "vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)"
+  ],
+  "label": "GetPartTorchInfos",
+  "tracer": 55442,
+  "labels": [
+   "GetPartTorchInfos"
+  ]
+ },
+ {
+  "ords": [
+   186,
+   187
+  ],
+  "rva": 62784,
+  "name": "SetDetailedMultiTorchObjective",
+  "size": 629,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetDetailedMultiTorchObjective"
+  ],
+  "alias": [],
+  "nins": 126,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 13,
+  "arity": 17,
+  "ret_xmm": false,
+  "calls": 11,
+  "callees_exp": [
+   62144
+  ],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   188,
+   189
+  ],
+  "rva": 54032,
+  "name": "CNS_SetNoMixPreference",
+  "size": 33,
+  "src": null,
+  "lits": [
+   "CNS_SetNoMixPreference"
+  ],
+  "alias": [
+   "CNS_SetNoMixPreference"
+  ],
+  "nins": 12,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_SetNoMixPreference",
+  "tracer": 54050,
+  "labels": [
+   "CNS_SetNoMixPreference"
+  ]
+ },
+ {
+  "ords": [
+   190,
+   191
+  ],
+  "rva": 56240,
+  "name": "CNS_SetNoOrientationMixOnPart",
+  "size": 382,
+  "src": null,
+  "lits": [
+   "-> ",
+   "CNS_SetNoOrientationMixOnPart"
+  ],
+  "alias": [
+   "CNS_SetNoOrientationMixOnPart"
+  ],
+  "nins": 102,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   192,
+   193
+  ],
+  "rva": 46304,
+  "name": "GetNestingFillRatio",
+  "size": 38,
+  "src": null,
+  "lits": [
+   "GetNestingFillRatio"
+  ],
+  "alias": [],
+  "nins": 10,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetNestingFillRatio",
+  "tracer": 46319,
+  "labels": [
+   "GetNestingFillRatio"
+  ]
+ },
+ {
+  "ords": [
+   194,
+   195
+  ],
+  "rva": 98560,
+  "name": "AddPartVariantToPart",
+  "size": 1955,
+  "src": null,
+  "lits": [
+   "AddPartVariantToPart",
+   "// "
+  ],
+  "alias": [],
+  "nins": 414,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm3"
+  ],
+  "stack_args": 8,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddPartVariantToPart",
+  "tracer": 98616,
+  "labels": [
+   "AddPartVariantToPart"
+  ]
+ },
+ {
+  "ords": [
+   196,
+   197
+  ],
+  "rva": 93440,
+  "name": "AddHoleToPartVariant",
+  "size": 49,
+  "src": null,
+  "lits": [
+   "// AddHoleToPartVariant"
+  ],
+  "alias": [],
+  "nins": 15,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [
+   78560
+  ],
+  "sem": [
+   "// AddHoleToPartVariant"
+  ],
+  "label": "// AddHoleToPartVariant",
+  "tracer": 93463,
+  "labels": [
+   "// AddHoleToPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   198,
+   199
+  ],
+  "rva": 93504,
+  "name": "CNS_AddExternalBoundaryToPartVariant",
+  "size": 49,
+  "src": null,
+  "lits": [
+   "// CNS_AddExternalBoundaryToPartVariant"
+  ],
+  "alias": [
+   "CNS_AddExternalBoundaryToPartVariant"
+  ],
+  "nins": 15,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [
+   78560
+  ],
+  "sem": [
+   "// CNS_AddExternalBoundaryToPartVariant"
+  ],
+  "label": "// CNS_AddExternalBoundaryToPartVariant",
+  "tracer": 93527,
+  "labels": [
+   "// CNS_AddExternalBoundaryToPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   200,
+   201
+  ],
+  "rva": 93568,
+  "name": "CNS_AddOpenCuttingPathToPartVariant",
+  "size": 96,
+  "src": null,
+  "lits": [
+   "// CNS_AddOpenCuttingPathToPartVariant"
+  ],
+  "alias": [
+   "CNS_AddOpenCuttingPathToPartVariant"
+  ],
+  "nins": 26,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 1,
+  "arity": 6,
+  "ret_xmm": true,
+  "calls": 2,
+  "callees_exp": [
+   84576
+  ],
+  "sem": [
+   "// CNS_AddOpenCuttingPathToPartVariant"
+  ],
+  "label": "// CNS_AddOpenCuttingPathToPartVariant",
+  "tracer": 93602,
+  "labels": [
+   "// CNS_AddOpenCuttingPathToPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   202,
+   203
+  ],
+  "rva": 93664,
+  "name": "CNS_SetPartVariantAuthorizations",
+  "size": 61,
+  "src": null,
+  "lits": [
+   "// CNS_SetPartVariantAuthorizations"
+  ],
+  "alias": [
+   "CNS_SetPartVariantAuthorizations"
+  ],
+  "nins": 17,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 4,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [
+   49568
+  ],
+  "sem": [
+   "// CNS_SetPartVariantAuthorizations"
+  ],
+  "label": "// CNS_SetPartVariantAuthorizations",
+  "tracer": 93693,
+  "labels": [
+   "// CNS_SetPartVariantAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   204,
+   205
+  ],
+  "rva": 93728,
+  "name": "CNS_AddPartVariantSpecificAuthorizations",
+  "size": 63,
+  "src": null,
+  "lits": [
+   "// CNS_AddPartVariantSpecificAuthorizations"
+  ],
+  "alias": [
+   "CNS_AddPartVariantSpecificAuthorizations"
+  ],
+  "nins": 17,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 4,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [
+   68832
+  ],
+  "sem": [
+   "// CNS_AddPartVariantSpecificAuthorizations"
+  ],
+  "label": "// CNS_AddPartVariantSpecificAuthorizations",
+  "tracer": 93758,
+  "labels": [
+   "// CNS_AddPartVariantSpecificAuthorizations"
+  ]
+ },
+ {
+  "ords": [
+   206,
+   207
+  ],
+  "rva": 93792,
+  "name": "GetNestedPartPartVariant",
+  "size": 1727,
+  "src": null,
+  "lits": [
+   "GetNestedPartPartVariant"
+  ],
+  "alias": [],
+  "nins": 369,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 35,
+  "arity": 38,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetNestedPartPartVariant",
+  "tracer": 93821,
+  "labels": [
+   "GetNestedPartPartVariant"
+  ]
+ },
+ {
+  "ords": [
+   208,
+   209
+  ],
+  "rva": 93360,
+  "name": null,
+  "size": 57,
+  "src": null,
+  "lits": [],
+  "alias": [],
+  "nins": 18,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   210,
+   211
+  ],
+  "rva": 93424,
+  "name": null,
+  "size": 8,
+  "src": null,
+  "lits": [],
+  "alias": [],
+  "nins": 2,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 0,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   212,
+   213
+  ],
+  "rva": 52976,
+  "name": "SetShearGap",
+  "size": 45,
+  "src": null,
+  "lits": [
+   "SetShearGap"
+  ],
+  "alias": [],
+  "nins": 12,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetShearGap",
+  "tracer": 53000,
+  "labels": [
+   "SetShearGap"
+  ]
+ },
+ {
+  "ords": [
+   214,
+   215
+  ],
+  "rva": 70800,
+  "name": "SetIncompatibleSheet",
+  "size": 423,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetIncompatibleSheet"
+  ],
+  "alias": [],
+  "nins": 107,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 17,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   216,
+   217
+  ],
+  "rva": 13152,
+  "name": "LaunchEstimateLocalComputation",
+  "size": 52,
+  "src": null,
+  "lits": [
+   "// LaunchEstimateLocalComputation"
+  ],
+  "alias": [],
+  "nins": 12,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [
+   10928
+  ],
+  "sem": [
+   "// LaunchEstimateLocalComputation"
+  ],
+  "label": "// LaunchEstimateLocalComputation",
+  "tracer": 13173,
+  "labels": [
+   "// LaunchEstimateLocalComputation"
+  ]
+ },
+ {
+  "ords": [
+   218,
+   219
+  ],
+  "rva": 71232,
+  "name": "AddSuggestedPartsGrouping",
+  "size": 483,
+  "src": "cns.cpp",
+  "lits": [
+   "AddSuggestedPartsGrouping",
+   "order",
+   "CNS_AddSuggestedPartsGrouping",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_AddSuggestedPartsGrouping"
+  ],
+  "nins": 120,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 8,
+  "arity": 9,
+  "ret_xmm": false,
+  "calls": 12,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp"
+  ],
+  "label": "AddSuggestedPartsGrouping",
+  "tracer": 71252,
+  "labels": [
+   "AddSuggestedPartsGrouping"
+  ]
+ },
+ {
+  "ords": [
+   220,
+   221
+  ],
+  "rva": 63424,
+  "name": "AddPartToSuggestedPartsGrouping",
+  "size": 1072,
+  "src": "cns.cpp",
+  "lits": [
+   "-> ",
+   "AddPartToSuggestedPartsGrouping",
+   "group",
+   "CNS_AddPartToSuggestedPartsGrouping",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_AddPartToSuggestedPartsGrouping"
+  ],
+  "nins": 248,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 15,
+  "arity": 21,
+  "ret_xmm": false,
+  "calls": 22,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp"
+  ],
+  "labels": []
+ },
+ {
+  "ords": [
+   222,
+   223
+  ],
+  "rva": 54080,
+  "name": "CNS_SetNoSheetMixPreference",
+  "size": 33,
+  "src": null,
+  "lits": [
+   "CNS_SetNoSheetMixPreference"
+  ],
+  "alias": [
+   "CNS_SetNoSheetMixPreference"
+  ],
+  "nins": 12,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_SetNoSheetMixPreference",
+  "tracer": 54098,
+  "labels": [
+   "CNS_SetNoSheetMixPreference"
+  ]
+ },
+ {
+  "ords": [
+   224,
+   225
+  ],
+  "rva": 49008,
+  "name": "GenerateDxfNesting",
+  "size": 148,
+  "src": null,
+  "lits": [
+   "GenerateDxfNesting"
+  ],
+  "alias": [],
+  "nins": 44,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 6,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GenerateDxfNesting",
+  "tracer": 49028,
+  "labels": [
+   "GenerateDxfNesting"
+  ]
+ },
+ {
+  "ords": [
+   226,
+   227
+  ],
+  "rva": 49168,
+  "name": "GetPCId",
+  "size": 386,
+  "src": null,
+  "lits": [
+   "GetPCId",
+   "%ld"
+  ],
+  "alias": [],
+  "nins": 84,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 16,
+  "arity": 19,
+  "ret_xmm": true,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [],
+  "label": "GetPCId",
+  "tracer": 49181,
+  "labels": [
+   "GetPCId"
+  ]
+ },
+ {
+  "ords": [
+   228,
+   229
+  ],
+  "rva": 57952,
+  "name": "UnLockLaunchingOrderPCId",
+  "size": 111,
+  "src": null,
+  "lits": [
+   "UnLockLaunchingOrderPCId"
+  ],
+  "alias": [],
+  "nins": 31,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "UnLockLaunchingOrderPCId",
+  "tracer": 57975,
+  "labels": [
+   "UnLockLaunchingOrderPCId"
+  ]
+ },
+ {
+  "ords": [
+   230,
+   231
+  ],
+  "rva": 39664,
+  "name": "NewNoFitContext",
+  "size": 452,
+  "src": null,
+  "lits": [
+   "-> ",
+   "NewNoFitContext",
+   "// NewNoFitContext"
+  ],
+  "alias": [],
+  "nins": 110,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 23,
+  "callees_exp": [],
+  "sem": [
+   "// NewNoFitContext"
+  ],
+  "label": "// NewNoFitContext",
+  "tracer": 39906,
+  "labels": [
+   "// NewNoFitContext"
+  ]
+ },
+ {
+  "ords": [
+   232,
+   233
+  ],
+  "rva": 40128,
+  "name": "DeleteNoFitContext",
+  "size": 568,
+  "src": null,
+  "lits": [
+   "DeleteNoFitContext"
+  ],
+  "alias": [],
+  "nins": 168,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 7,
+  "callees_exp": [],
+  "sem": [],
+  "label": "DeleteNoFitContext",
+  "tracer": 40157,
+  "labels": [
+   "DeleteNoFitContext"
+  ]
+ },
+ {
+  "ords": [
+   234,
+   235
+  ],
+  "rva": 35520,
+  "name": "GetNoFitMap",
+  "size": 939,
+  "src": null,
+  "lits": [
+   "GetNoFitMap",
+   "//GetNoFitMap"
+  ],
+  "alias": [],
+  "nins": 204,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 30,
+  "arity": 35,
+  "ret_xmm": true,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [
+   "//GetNoFitMap"
+  ],
+  "label": "GetNoFitMap",
+  "tracer": 35653,
+  "labels": [
+   "GetNoFitMap",
+   "//GetNoFitMap"
+  ]
+ },
+ {
+  "ords": [
+   236,
+   237
+  ],
+  "rva": 35344,
+  "name": "DeleteNoFitGeometry",
+  "size": 171,
+  "src": null,
+  "lits": [
+   "DeleteNoFitGeometry"
+  ],
+  "alias": [],
+  "nins": 61,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "DeleteNoFitGeometry",
+  "tracer": 35367,
+  "labels": [
+   "DeleteNoFitGeometry"
+  ]
+ },
+ {
+  "ords": [
+   238,
+   239
+  ],
+  "rva": 35280,
+  "name": "NoFitGetNumberOfExternalPolygons",
+  "size": 54,
+  "src": null,
+  "lits": [
+   "NoFitGetNumberOfExternalPolygons"
+  ],
+  "alias": [],
+  "nins": 14,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "NoFitGetNumberOfExternalPolygons",
+  "tracer": 35298,
+  "labels": [
+   "NoFitGetNumberOfExternalPolygons"
+  ]
+ },
+ {
+  "ords": [
+   240,
+   241
+  ],
+  "rva": 36464,
+  "name": "NoFitGetNumberOfInternalHoles",
+  "size": 335,
+  "src": "cns_no_fit.cpp",
+  "lits": [
+   "NoFitGetNumberOfInternalHoles",
+   "external_number < n",
+   "CNS_NoFitGetNumberOfHoles",
+   "cns_no_fit.cpp"
+  ],
+  "alias": [
+   "CNS_NoFitGetNumberOfHoles"
+  ],
+  "nins": 91,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 8,
+  "arity": 10,
+  "ret_xmm": false,
+  "calls": 9,
+  "callees_exp": [],
+  "sem": [
+   "cns_no_fit.cpp",
+   "external_number < n"
+  ],
+  "label": "NoFitGetNumberOfInternalHoles",
+  "tracer": 36492,
+  "labels": [
+   "NoFitGetNumberOfInternalHoles"
+  ]
+ },
+ {
+  "ords": [
+   242,
+   243
+  ],
+  "rva": 36800,
+  "name": "NoFitGetNumberOfPoints",
+  "size": 497,
+  "src": null,
+  "lits": [
+   "-> ",
+   "NoFitGetNumberOfPoints"
+  ],
+  "alias": [],
+  "nins": 123,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 4,
+  "ret_xmm": false,
+  "calls": 21,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   244,
+   245
+  ],
+  "rva": 37312,
+  "name": "NoFitGetPoint",
+  "size": 366,
+  "src": "cns_no_fit.cpp",
+  "lits": [
+   "NoFitGetPoint",
+   "point_number < ring.size()",
+   "CNS_NoFitGetPoint",
+   "cns_no_fit.cpp"
+  ],
+  "alias": [
+   "CNS_NoFitGetPoint"
+  ],
+  "nins": 99,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 10,
+  "arity": 15,
+  "ret_xmm": true,
+  "calls": 9,
+  "callees_exp": [],
+  "sem": [
+   "cns_no_fit.cpp",
+   "point_number < ring.size()"
+  ],
+  "label": "NoFitGetPoint",
+  "tracer": 37356,
+  "labels": [
+   "NoFitGetPoint"
+  ]
+ },
+ {
+  "ords": [
+   246,
+   247
+  ],
+  "rva": 100560,
+  "name": "SetMarkMode",
+  "size": 529,
+  "src": null,
+  "lits": [
+   "SetMarkMode"
+  ],
+  "alias": [],
+  "nins": 123,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 1,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 20,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   248,
+   249
+  ],
+  "rva": 101104,
+  "name": "GetNumberOfMarks",
+  "size": 889,
+  "src": null,
+  "lits": [
+   "GetNumberOfMarks"
+  ],
+  "alias": [],
+  "nins": 200,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 9,
+  "arity": 12,
+  "ret_xmm": false,
+  "calls": 25,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   250,
+   251
+  ],
+  "rva": 102000,
+  "name": "GetMark",
+  "size": 1312,
+  "src": null,
+  "lits": [
+   "GetMark"
+  ],
+  "alias": [],
+  "nins": 288,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 9,
+  "arity": 14,
+  "ret_xmm": true,
+  "calls": 27,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   252,
+   253
+  ],
+  "rva": 46400,
+  "name": "AsyncCancelAllComputationsAndDeleteLaunchingOrder",
+  "size": 177,
+  "src": null,
+  "lits": [
+   "AsyncCancelAllComputationsAndDeleteLaunchingOrder",
+   "WVSH"
+  ],
+  "alias": [],
+  "nins": 45,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 2,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 6,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AsyncCancelAllComputationsAndDeleteLaunchingOrder",
+  "tracer": 46415,
+  "labels": [
+   "AsyncCancelAllComputationsAndDeleteLaunchingOrder",
+   "WVSH"
+  ]
+ },
+ {
+  "ords": [
+   254,
+   255
+  ],
+  "rva": 95520,
+  "name": "AddRotatedPartVariantToPart",
+  "size": 3027,
+  "src": null,
+  "lits": [
+   "AddRotatedPartVariantToPart",
+   "// "
+  ],
+  "alias": [],
+  "nins": 637,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2"
+  ],
+  "stack_args": 20,
+  "arity": 27,
+  "ret_xmm": true,
+  "calls": 27,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddRotatedPartVariantToPart",
+  "tracer": 95578,
+  "labels": [
+   "AddRotatedPartVariantToPart"
+  ]
+ },
+ {
+  "ords": [
+   256,
+   257
+  ],
+  "rva": 64496,
+  "name": "SetRowMode",
+  "size": 244,
+  "src": null,
+  "lits": [
+   "SetRowMode"
+  ],
+  "alias": [],
+  "nins": 54,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 3,
+  "arity": 7,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetRowMode",
+  "tracer": 64586,
+  "labels": [
+   "SetRowMode"
+  ]
+ },
+ {
+  "ords": [
+   258,
+   259
+  ],
+  "rva": 64752,
+  "name": "SetPipeMode",
+  "size": 568,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetPipeMode"
+  ],
+  "alias": [],
+  "nins": 124,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 9,
+  "arity": 13,
+  "ret_xmm": false,
+  "calls": 11,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   260,
+   261
+  ],
+  "rva": 78864,
+  "name": "AddCircularExternalBoundaryToPart",
+  "size": 512,
+  "src": null,
+  "lits": [
+   "// AddCircularExternalBoundaryToPart",
+   "AddExternalBoundaryToPart"
+  ],
+  "alias": [],
+  "nins": 96,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": true,
+  "calls": 7,
+  "callees_exp": [],
+  "sem": [
+   "// AddCircularExternalBoundaryToPart"
+  ],
+  "label": "// AddCircularExternalBoundaryToPart",
+  "tracer": 78921,
+  "labels": [
+   "// AddCircularExternalBoundaryToPart",
+   "AddExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   262,
+   263
+  ],
+  "rva": 79376,
+  "name": "AddRectangularExternalBoundaryToPart",
+  "size": 486,
+  "src": null,
+  "lits": [
+   "// AddRectangularExternalBoundaryToPart",
+   "AddExternalBoundaryToPart"
+  ],
+  "alias": [],
+  "nins": 87,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 1,
+  "arity": 6,
+  "ret_xmm": true,
+  "calls": 7,
+  "callees_exp": [],
+  "sem": [
+   "// AddRectangularExternalBoundaryToPart"
+  ],
+  "label": "// AddRectangularExternalBoundaryToPart",
+  "tracer": 79430,
+  "labels": [
+   "// AddRectangularExternalBoundaryToPart",
+   "AddExternalBoundaryToPart"
+  ]
+ },
+ {
+  "ords": [
+   264,
+   265
+  ],
+  "rva": 65328,
+  "name": "GetNumberOfRows",
+  "size": 271,
+  "src": null,
+  "lits": [
+   "-> ",
+   "GetNumberOfRows"
+  ],
+  "alias": [],
+  "nins": 70,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 13,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   266,
+   267
+  ],
+  "rva": 65600,
+  "name": "GetRow",
+  "size": 384,
+  "src": "cns.cpp",
+  "lits": [
+   "GetRow",
+   "row_number < row_intervals.size()",
+   "CNS_GetRow",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_GetRow"
+  ],
+  "nins": 104,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 12,
+  "arity": 17,
+  "ret_xmm": true,
+  "calls": 10,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "row_number < row_intervals.size()"
+  ],
+  "label": "GetRow",
+  "tracer": 65639,
+  "labels": [
+   "GetRow"
+  ]
+ },
+ {
+  "ords": [
+   268,
+   269
+  ],
+  "rva": 56960,
+  "name": "SetLocalEngineThreads",
+  "size": 388,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetLocalEngineThreads"
+  ],
+  "alias": [],
+  "nins": 100,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 4,
+  "ret_xmm": false,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   270,
+   271
+  ],
+  "rva": 45024,
+  "name": null,
+  "size": 13,
+  "src": null,
+  "lits": [],
+  "alias": [],
+  "nins": 4,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   272,
+   273
+  ],
+  "rva": 105536,
+  "name": "SetLeatherMode",
+  "size": 411,
+  "src": null,
+  "lits": [
+   "-> ",
+   "SetLeatherMode"
+  ],
+  "alias": [],
+  "nins": 105,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 18,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   274,
+   275
+  ],
+  "rva": 105952,
+  "name": "AddLeatherQualityZoneInPart",
+  "size": 350,
+  "src": null,
+  "lits": [
+   "AddLeatherQualityZoneInPart"
+  ],
+  "alias": [],
+  "nins": 84,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 6,
+  "ret_xmm": true,
+  "calls": 8,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddLeatherQualityZoneInPart",
+  "tracer": 106017,
+  "labels": [
+   "AddLeatherQualityZoneInPart"
+  ]
+ },
+ {
+  "ords": [
+   276,
+   277
+  ],
+  "rva": 106656,
+  "name": "AddLeatherQualityZoneInSheet",
+  "size": 331,
+  "src": null,
+  "lits": [
+   "AddLeatherQualityZoneInSheet"
+  ],
+  "alias": [],
+  "nins": 85,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 6,
+  "ret_xmm": true,
+  "calls": 8,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddLeatherQualityZoneInSheet",
+  "tracer": 106721,
+  "labels": [
+   "AddLeatherQualityZoneInSheet"
+  ]
+ },
+ {
+  "ords": [
+   278,
+   279
+  ],
+  "rva": 109200,
+  "name": "CreateRestrictedZoneConstraint",
+  "size": 944,
+  "src": null,
+  "lits": [
+   "-> ",
+   "CreateRestrictedZoneConstraint",
+   "// "
+  ],
+  "alias": [],
+  "nins": 205,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 26,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   280,
+   281
+  ],
+  "rva": 110144,
+  "name": "CNS_SetZoneRestrictedPart",
+  "size": 507,
+  "src": null,
+  "lits": [
+   "-> ",
+   "CNS_SetZoneRestrictedPart"
+  ],
+  "alias": [
+   "CNS_SetZoneRestrictedPart"
+  ],
+  "nins": 119,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 7,
+  "arity": 9,
+  "ret_xmm": false,
+  "calls": 21,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   282,
+   283
+  ],
+  "rva": 108496,
+  "name": null,
+  "size": 286,
+  "src": null,
+  "lits": [],
+  "alias": [],
+  "nins": 67,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm1",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 8,
+  "ret_xmm": true,
+  "calls": 4,
+  "callees_exp": [
+   107024
+  ],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   284,
+   285
+  ],
+  "rva": 107024,
+  "name": "CNS_SheetAddRestrictedZone",
+  "size": 1468,
+  "src": null,
+  "lits": [
+   "-> ",
+   "CNS_SheetAddRestrictedZone"
+  ],
+  "alias": [
+   "CNS_SheetAddRestrictedZone"
+  ],
+  "nins": 356,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm3"
+  ],
+  "stack_args": 9,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 45,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   286,
+   287
+  ],
+  "rva": 45056,
+  "name": null,
+  "size": 18,
+  "src": null,
+  "lits": [],
+  "alias": [],
+  "nins": 4,
+  "int_regs": [
+   "rdx"
+  ],
+  "xmm": [
+   "xmm2"
+  ],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 0,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   288,
+   289
+  ],
+  "rva": 45040,
+  "name": null,
+  "size": 10,
+  "src": null,
+  "lits": [],
+  "alias": [],
+  "nins": 3,
+  "int_regs": [
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 0,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   290,
+   291
+  ],
+  "rva": 65984,
+  "name": "AddToolPathToPart",
+  "size": 127,
+  "src": null,
+  "lits": [
+   "AddToolPathToPart"
+  ],
+  "alias": [],
+  "nins": 34,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddToolPathToPart",
+  "tracer": 66027,
+  "labels": [
+   "AddToolPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   292,
+   293
+  ],
+  "rva": 106304,
+  "name": "AddLeatherQualityZoneInPart",
+  "size": 342,
+  "src": null,
+  "lits": [
+   "AddLeatherQualityZoneInPart"
+  ],
+  "alias": [],
+  "nins": 84,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 6,
+  "ret_xmm": true,
+  "calls": 8,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddLeatherQualityZoneInPart",
+  "tracer": 106369,
+  "labels": [
+   "AddLeatherQualityZoneInPart"
+  ]
+ },
+ {
+  "ords": [
+   294,
+   295
+  ],
+  "rva": 76896,
+  "name": "AddInflatedToolPathToPart",
+  "size": 169,
+  "src": null,
+  "lits": [
+   "AddInflatedToolPathToPart"
+  ],
+  "alias": [],
+  "nins": 51,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [
+   "xmm1"
+  ],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddInflatedToolPathToPart",
+  "tracer": 76930,
+  "labels": [
+   "AddInflatedToolPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   296,
+   297
+  ],
+  "rva": 66112,
+  "name": "AddHoleInToolPath",
+  "size": 124,
+  "src": null,
+  "lits": [
+   "AddHoleInToolPath"
+  ],
+  "alias": [],
+  "nins": 34,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 0,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "AddHoleInToolPath",
+  "tracer": 66155,
+  "labels": [
+   "AddHoleInToolPath"
+  ]
+ },
+ {
+  "ords": [
+   298,
+   299
+  ],
+  "rva": 81456,
+  "name": "SetSpecificSheetOrigin",
+  "size": 417,
+  "src": null,
+  "lits": [
+   "SetSpecificSheetOrigin"
+  ],
+  "alias": [],
+  "nins": 101,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   300,
+   301
+  ],
+  "rva": 81888,
+  "name": "SetSpecificSheetObjective",
+  "size": 417,
+  "src": null,
+  "lits": [
+   "SetSpecificSheetObjective"
+  ],
+  "alias": [],
+  "nins": 101,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   302,
+   303
+  ],
+  "rva": 108784,
+  "name": "CNS_ForcePartOnBottomBorder",
+  "size": 411,
+  "src": null,
+  "lits": [
+   "-> ",
+   "CNS_ForcePartOnBottomBorder"
+  ],
+  "alias": [
+   "CNS_ForcePartOnBottomBorder"
+  ],
+  "nins": 102,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 10,
+  "arity": 12,
+  "ret_xmm": false,
+  "calls": 18,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   304,
+   305
+  ],
+  "rva": 56864,
+  "name": "SetShearRepulseFromBorders",
+  "size": 33,
+  "src": null,
+  "lits": [
+   "SetShearRepulseFromBorders"
+  ],
+  "alias": [],
+  "nins": 12,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetShearRepulseFromBorders",
+  "tracer": 56882,
+  "labels": [
+   "SetShearRepulseFromBorders"
+  ]
+ },
+ {
+  "ords": [
+   306,
+   307
+  ],
+  "rva": 77632,
+  "name": "CNS_AddDefectFromNestedPart",
+  "size": 894,
+  "src": null,
+  "lits": [
+   "CNS_AddDefectFromNestedPart"
+  ],
+  "alias": [
+   "CNS_AddDefectFromNestedPart"
+  ],
+  "nins": 198,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm2",
+   "xmm3"
+  ],
+  "stack_args": 2,
+  "arity": 7,
+  "ret_xmm": true,
+  "calls": 15,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_AddDefectFromNestedPart",
+  "tracer": 77732,
+  "labels": [
+   "CNS_AddDefectFromNestedPart"
+  ]
+ },
+ {
+  "ords": [
+   308,
+   309
+  ],
+  "rva": 68432,
+  "name": "CNS_CreateAssemblyGroup",
+  "size": 395,
+  "src": null,
+  "lits": [
+   "CNS_CreateAssemblyGroup",
+   "-> ",
+   "// "
+  ],
+  "alias": [
+   "CNS_CreateAssemblyGroup"
+  ],
+  "nins": 90,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 13,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_CreateAssemblyGroup",
+  "tracer": 68457,
+  "labels": [
+   "CNS_CreateAssemblyGroup"
+  ]
+ },
+ {
+  "ords": [
+   310,
+   311
+  ],
+  "rva": 71728,
+  "name": "CNS_AddAssemblyGroupPart",
+  "size": 180,
+  "src": null,
+  "lits": [
+   "CNS_AddAssemblyGroupPart"
+  ],
+  "alias": [
+   "CNS_AddAssemblyGroupPart"
+  ],
+  "nins": 53,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 5,
+  "arity": 9,
+  "ret_xmm": false,
+  "calls": 6,
+  "callees_exp": [
+   85264
+  ],
+  "sem": [],
+  "label": "CNS_AddAssemblyGroupPart",
+  "tracer": 71776,
+  "labels": [
+   "CNS_AddAssemblyGroupPart"
+  ]
+ },
+ {
+  "ords": [
+   312,
+   313
+  ],
+  "rva": 56672,
+  "name": "CNS_SetOriginPackingMode",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "CNS_SetOriginPackingMode"
+  ],
+  "alias": [
+   "CNS_SetOriginPackingMode"
+  ],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_SetOriginPackingMode",
+  "tracer": 56690,
+  "labels": [
+   "CNS_SetOriginPackingMode"
+  ]
+ },
+ {
+  "ords": [
+   314,
+   315
+  ],
+  "rva": 77072,
+  "name": "CNS_AddOpenToolPathToPart",
+  "size": 552,
+  "src": null,
+  "lits": [
+   "CNS_AddOpenToolPathToPart"
+  ],
+  "alias": [
+   "CNS_AddOpenToolPathToPart"
+  ],
+  "nins": 132,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0",
+   "xmm3"
+  ],
+  "stack_args": 18,
+  "arity": 24,
+  "ret_xmm": false,
+  "calls": 14,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_AddOpenToolPathToPart",
+  "tracer": 77172,
+  "labels": [
+   "CNS_AddOpenToolPathToPart"
+  ]
+ },
+ {
+  "ords": [
+   316,
+   317
+  ],
+  "rva": 66624,
+  "name": "CNS_SetEvaluateIntermediateNestingsAsLast",
+  "size": 42,
+  "src": null,
+  "lits": [
+   "CNS_SetEvaluateIntermediateNestingsAsLast"
+  ],
+  "alias": [
+   "CNS_SetEvaluateIntermediateNestingsAsLast"
+  ],
+  "nins": 15,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "CNS_SetEvaluateIntermediateNestingsAsLast",
+  "tracer": 66648,
+  "labels": [
+   "CNS_SetEvaluateIntermediateNestingsAsLast"
+  ]
+ },
+ {
+  "ords": [
+   318,
+   319
+  ],
+  "rva": 37680,
+  "name": "NewNoFitNesting",
+  "size": 449,
+  "src": null,
+  "lits": [
+   "-> ",
+   "NewNoFitNesting",
+   "// NewNoFitNesting"
+  ],
+  "alias": [],
+  "nins": 106,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 1,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 21,
+  "callees_exp": [],
+  "sem": [
+   "// NewNoFitNesting"
+  ],
+  "label": "// NewNoFitNesting",
+  "tracer": 37938,
+  "labels": [
+   "// NewNoFitNesting"
+  ]
+ },
+ {
+  "ords": [
+   320,
+   321
+  ],
+  "rva": 43472,
+  "name": "NoFitAddNestedPart",
+  "size": 240,
+  "src": null,
+  "lits": [
+   "NoFitAddNestedPart"
+  ],
+  "alias": [],
+  "nins": 55,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm3"
+  ],
+  "stack_args": 6,
+  "arity": 10,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "NoFitAddNestedPart",
+  "tracer": 43565,
+  "labels": [
+   "NoFitAddNestedPart"
+  ]
+ },
+ {
+  "ords": [
+   322,
+   323
+  ],
+  "rva": 38144,
+  "name": "DeleteNoFitNesting",
+  "size": 70,
+  "src": null,
+  "lits": [
+   "DeleteNoFitNesting"
+  ],
+  "alias": [],
+  "nins": 20,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 2,
+  "callees_exp": [],
+  "sem": [],
+  "label": "DeleteNoFitNesting",
+  "tracer": 38162,
+  "labels": [
+   "DeleteNoFitNesting"
+  ]
+ },
+ {
+  "ords": [
+   324,
+   325
+  ],
+  "rva": 42528,
+  "name": "GetNoFitPlacementMap",
+  "size": 934,
+  "src": null,
+  "lits": [
+   "-> ",
+   "GetNoFitPlacementMap"
+  ],
+  "alias": [],
+  "nins": 220,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 7,
+  "arity": 12,
+  "ret_xmm": true,
+  "calls": 30,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   326,
+   327
+  ],
+  "rva": 38224,
+  "name": "NoFitGenerateSvgNesting",
+  "size": 573,
+  "src": null,
+  "lits": [
+   "NoFitGenerateSvgNesting",
+   "basic_string::_M_construct null not valid"
+  ],
+  "alias": [],
+  "nins": 149,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 2,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 17,
+  "callees_exp": [],
+  "sem": [],
+  "label": "NoFitGenerateSvgNesting",
+  "tracer": 38274,
+  "labels": [
+   "NoFitGenerateSvgNesting"
+  ]
+ },
+ {
+  "ords": [
+   328,
+   329
+  ],
+  "rva": 38800,
+  "name": "NoFitGenerateSvgGeometry",
+  "size": 403,
+  "src": null,
+  "lits": [
+   "NoFitGenerateSvgGeometry",
+   "basic_string::_M_construct null not valid"
+  ],
+  "alias": [],
+  "nins": 108,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 2,
+  "arity": 5,
+  "ret_xmm": false,
+  "calls": 13,
+  "callees_exp": [],
+  "sem": [],
+  "label": "NoFitGenerateSvgGeometry",
+  "tracer": 38836,
+  "labels": [
+   "NoFitGenerateSvgGeometry"
+  ]
+ },
+ {
+  "ords": [
+   330,
+   331
+  ],
+  "rva": 56816,
+  "name": "SetPartialShearMode",
+  "size": 36,
+  "src": null,
+  "lits": [
+   "SetPartialShearMode"
+  ],
+  "alias": [],
+  "nins": 13,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetPartialShearMode",
+  "tracer": 56834,
+  "labels": [
+   "SetPartialShearMode"
+  ]
+ },
+ {
+  "ords": [
+   332,
+   333
+  ],
+  "rva": 46928,
+  "name": "GetNestingBoundingBox",
+  "size": 384,
+  "src": "cns.cpp",
+  "lits": [
+   "GetNestingBoundingBox",
+   "min_x && min_y && max_x && max_y",
+   "CNS_GetNestingBoundingBox",
+   "cns.cpp"
+  ],
+  "alias": [
+   "CNS_GetNestingBoundingBox"
+  ],
+  "nins": 98,
+  "int_regs": [
+   "r8",
+   "r9",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [
+   "xmm0"
+  ],
+  "stack_args": 8,
+  "arity": 13,
+  "ret_xmm": true,
+  "calls": 9,
+  "callees_exp": [],
+  "sem": [
+   "cns.cpp",
+   "min_x && min_y && max_x && max_y"
+  ],
+  "label": "GetNestingBoundingBox",
+  "tracer": 46972,
+  "labels": [
+   "GetNestingBoundingBox"
+  ]
+ },
+ {
+  "ords": [
+   334,
+   335
+  ],
+  "rva": 50704,
+  "name": "ForcePartInsideHole",
+  "size": 43,
+  "src": null,
+  "lits": [
+   "ForcePartInsideHole"
+  ],
+  "alias": [],
+  "nins": 11,
+  "int_regs": [
+   "rcx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 1,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "ForcePartInsideHole",
+  "tracer": 50722,
+  "labels": [
+   "ForcePartInsideHole"
+  ]
+ },
+ {
+  "ords": [
+   336,
+   337
+  ],
+  "rva": 66672,
+  "name": "SetReorganizeBiggestPartNearOrigin",
+  "size": 42,
+  "src": null,
+  "lits": [
+   "SetReorganizeBiggestPartNearOrigin"
+  ],
+  "alias": [],
+  "nins": 15,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetReorganizeBiggestPartNearOrigin",
+  "tracer": 66696,
+  "labels": [
+   "SetReorganizeBiggestPartNearOrigin"
+  ]
+ },
+ {
+  "ords": [
+   338,
+   339
+  ],
+  "rva": 66720,
+  "name": "SetReorganizeLongestPartNearOrigin",
+  "size": 42,
+  "src": null,
+  "lits": [
+   "SetReorganizeLongestPartNearOrigin"
+  ],
+  "alias": [],
+  "nins": 15,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 2,
+  "ret_xmm": false,
+  "calls": 1,
+  "callees_exp": [],
+  "sem": [],
+  "label": "SetReorganizeLongestPartNearOrigin",
+  "tracer": 66744,
+  "labels": [
+   "SetReorganizeLongestPartNearOrigin"
+  ]
+ },
+ {
+  "ords": [
+   340,
+   341
+  ],
+  "rva": 39216,
+  "name": "NoFitSetMaximumComplexity",
+  "size": 443,
+  "src": null,
+  "lits": [
+   "-> ",
+   "NoFitSetMaximumComplexity"
+  ],
+  "alias": [],
+  "nins": 112,
+  "int_regs": [
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 12,
+  "arity": 14,
+  "ret_xmm": false,
+  "calls": 19,
+  "callees_exp": [],
+  "sem": [],
+  "labels": []
+ },
+ {
+  "ords": [
+   342,
+   343
+  ],
+  "rva": 57840,
+  "name": "UnLockLaunchingOrderOxy",
+  "size": 111,
+  "src": null,
+  "lits": [
+   "UnLockLaunchingOrderOxy"
+  ],
+  "alias": [],
+  "nins": 31,
+  "int_regs": [
+   "r8",
+   "rcx",
+   "rdx"
+  ],
+  "xmm": [],
+  "stack_args": 0,
+  "arity": 3,
+  "ret_xmm": false,
+  "calls": 3,
+  "callees_exp": [],
+  "sem": [],
+  "label": "UnLockLaunchingOrderOxy",
+  "tracer": 57863,
+  "labels": [
+   "UnLockLaunchingOrderOxy"
+  ]
+ }
+]

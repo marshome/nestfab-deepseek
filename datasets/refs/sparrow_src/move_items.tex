@@ -1,0 +1,12 @@
+\begin{algorithm}[ht]
+    \caption{\texttt{move\_items}}
+    \begin{algorithmic}[1]
+        \State $I_c \gets \{i \in I : |\Call{jagua-rs::collisions}{S_i}| > 1 \}$
+        \Comment{colliding items}
+        \For{$i \in {I_c}$ in \textbf{a random order}}
+            \State $t \gets$ \nameref{alg:search_position} \Comment{Alg. \ref{alg:search_position}}
+            \State \Call{jagua-rs::move\_item}{$i,t$}
+        \EndFor
+    \end{algorithmic}
+    \label{alg:move_items}
+\end{algorithm}

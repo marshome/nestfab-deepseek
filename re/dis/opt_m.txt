@@ -1,0 +1,81 @@
+### fn 0xb5930 name=None end=0xb5a40 size=272
+STRINGS: 
+CALLERS: 0x1e70:None
+CALLEES: 0xb81f0:None
+
+  000b5930  4883ec28             sub     rsp, 0x28
+  000b5934  e8b7280000           call    0xb81f0  ; -> 0xb81f0 None
+  000b5939  83f864               cmp     eax, 0x64
+  000b593c  0f94c2               sete    dl
+  000b593f  3dc8000000           cmp     eax, 0xc8
+  000b5944  0f94c1               sete    cl
+  000b5947  08ca                 or      dl, cl
+  000b5949  0f85ea000000         jne     0xb5a39
+  000b594f  3d90010000           cmp     eax, 0x190
+  000b5954  0f94c2               sete    dl
+  000b5957  3df4010000           cmp     eax, 0x1f4
+  000b595c  0f94c1               sete    cl
+  000b595f  08ca                 or      dl, cl
+  000b5961  0f85d2000000         jne     0xb5a39
+  000b5967  3d58020000           cmp     eax, 0x258
+  000b596c  0f94c2               sete    dl
+  000b596f  3dbc020000           cmp     eax, 0x2bc
+  000b5974  0f94c1               sete    cl
+  000b5977  08ca                 or      dl, cl
+  000b5979  0f85ba000000         jne     0xb5a39
+  000b597f  3d20030000           cmp     eax, 0x320
+  000b5984  0f94c2               sete    dl
+  000b5987  3ddc050000           cmp     eax, 0x5dc
+  000b598c  0f94c1               sete    cl
+  000b598f  08ca                 or      dl, cl
+  000b5991  0f85a2000000         jne     0xb5a39
+  000b5997  3d78050000           cmp     eax, 0x578
+  000b599c  0f94c2               sete    dl
+  000b599f  3d40060000           cmp     eax, 0x640
+  000b59a4  0f94c1               sete    cl
+  000b59a7  08ca                 or      dl, cl
+  000b59a9  0f858a000000         jne     0xb5a39
+  000b59af  3da4060000           cmp     eax, 0x6a4
+  000b59b4  0f94c2               sete    dl
+  000b59b7  3d08070000           cmp     eax, 0x708
+  000b59bc  0f94c1               sete    cl
+  000b59bf  08ca                 or      dl, cl
+  000b59c1  7576                 jne     0xb5a39
+  000b59c3  3db0040000           cmp     eax, 0x4b0
+  000b59c8  0f94c2               sete    dl
+  000b59cb  3d6c070000           cmp     eax, 0x76c
+  000b59d0  0f94c1               sete    cl
+  000b59d3  08ca                 or      dl, cl
+  000b59d5  7562                 jne     0xb5a39
+  000b59d7  3d14050000           cmp     eax, 0x514
+  000b59dc  0f94c2               sete    dl
+  000b59df  3d98080000           cmp     eax, 0x898
+  000b59e4  0f94c1               sete    cl
+  000b59e7  08ca                 or      dl, cl
+  000b59e9  754e                 jne     0xb5a39
+  000b59eb  3d60090000           cmp     eax, 0x960
+  000b59f0  0f94c2               sete    dl
+  000b59f3  3d34080000           cmp     eax, 0x834
+  000b59f8  0f94c1               sete    cl
+  000b59fb  08ca                 or      dl, cl
+  000b59fd  753a                 jne     0xb5a39
+  000b59ff  3dc4090000           cmp     eax, 0x9c4
+  000b5a04  0f94c2               sete    dl
+  000b5a07  3de8030000           cmp     eax, 0x3e8
+  000b5a0c  0f94c1               sete    cl
+  000b5a0f  08ca                 or      dl, cl
+  000b5a11  7526                 jne     0xb5a39
+  000b5a13  3dd0070000           cmp     eax, 0x7d0
+  000b5a18  0f94c2               sete    dl
+  000b5a1b  3d540b0000           cmp     eax, 0xb54
+  000b5a20  0f94c1               sete    cl
+  000b5a23  08ca                 or      dl, cl
+  000b5a25  7512                 jne     0xb5a39
+  000b5a27  3d84030000           cmp     eax, 0x384
+  000b5a2c  0f94c2               sete    dl
+  000b5a2f  3d8c0a0000           cmp     eax, 0xa8c
+  000b5a34  0f94c0               sete    al
+  000b5a37  09c2                 or      edx, eax
+  000b5a39  89d0                 mov     eax, edx
+  000b5a3b  4883c428             add     rsp, 0x28
+  000b5a3f  c3                   ret     

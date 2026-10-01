@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\newcommand{\parcomment}[1]{\textcolor{gray}{\triangleright \textit{ #1}}}
+\[
+    \begin{array}{r @{\ } c @{\ } l @{\quad} l}
+        \texttt{R}_\varepsilon & \gets & 1\% & \parcomment{Alg. \ref{alg:overlap_area_proxy_decay} -- diameter ratio to compute \(\varepsilon\)} \\
+        (\texttt{M}_u, \texttt{M}_l, \texttt{M}_d) & \gets & (2.0, 1.2, 0.95) & \parcomment{Alg. \ref{alg:iterate_weights} -- upper, lower and decay weight multipliers} \\
+        \texttt{N\_WORKERS} & \gets & 3 & \parcomment{Alg. \ref{alg:move_items_multi} -- how many times \texttt{move\_items} is executed} \\
+        (\texttt{K}_x, \texttt{N}_x) & \gets & (3, 200) & \parcomment{Alg. \ref{alg:explore} -- separation parameters for exploration} \\
+        (\texttt{K}_c, \texttt{N}_c) & \gets & (5, 100) & \parcomment{Alg. \ref{alg:compress} -- separation parameters for compression} \\
+        \texttt{R}_x & \gets & 0.1\% & \parcomment{Alg. \ref{alg:explore} -- exploration shrink ratio} \\
+        (\texttt{R}_c^s, \texttt{R}_c^e) & \gets & (0.05\%, 0.001\%) & \parcomment{Alg. \ref{alg:compress} -- compression shrink ratio range} \\
+        (\texttt{TL}_x, \texttt{TL}_c) & \gets & (0.8, 0.2) \cdot 20' & \parcomment{Alg. \ref{alg:explore},\ref{alg:compress} -- time limits} \\
+    \end{array}
+\]
+\caption{Configuration of \texttt{sparrow}'s parameters throughout the experiments.
+The right column contains the relevant algorithm(s) and a short description for every entry.}
+\label{tab:params}
+\end{table}

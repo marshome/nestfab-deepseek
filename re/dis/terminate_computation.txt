@@ -1,0 +1,47 @@
+### fn 0x10920 name=None end=0x109bb size=155
+STRINGS: 0x9ad293:'Local', 0x9ad299:'Cloud', 0x9ad374:'TerminateComputation ', 0x9ad38a:'// TerminateComputation'
+CALLERS: 
+CALLEES: 0xab90:None, 0x1be40:None, 0x62f280:None, 0x64ace0:None, 0x64b040:None, 0x9984b0:None
+
+  00010920  56                   push    rsi
+  00010921  53                   push    rbx
+  00010922  4883ec48             sub     rsp, 0x48
+  00010926  488d056cc99900       lea     rax, [rip + 0x99c96c]  ; "Cloud"
+  0001092d  488d155fc99900       lea     rdx, [rip + 0x99c95f]  ; "Local"
+  00010934  80794800             cmp     byte ptr [rcx + 0x48], 0
+  00010938  480f44d0             cmove   rdx, rax
+  0001093c  4889ce               mov     rsi, rcx
+  0001093f  488d5c2420           lea     rbx, [rsp + 0x20]
+  00010944  488d4310             lea     rax, [rbx + 0x10]
+  00010948  4889d9               mov     rcx, rbx
+  0001094b  4c8d4205             lea     r8, [rdx + 5]
+  0001094f  4889442420           mov     qword ptr [rsp + 0x20], rax
+  00010954  e837a2ffff           call    0xab90  ; -> 0xab90 None
+  00010959  488d0d14ca9900       lea     rcx, [rip + 0x99ca14]  ; "TerminateComputation "
+  00010960  4889da               mov     rdx, rbx
+  00010963  e8d8a66300           call    0x64b040  ; -> 0x64b040 None
+  00010968  488b4c2420           mov     rcx, qword ptr [rsp + 0x20]
+  0001096d  4883c310             add     rbx, 0x10
+  00010971  4839d9               cmp     rcx, rbx
+  00010974  7405                 je      0x1097b
+  00010976  e8357b9800           call    0x9984b0  ; -> 0x9984b0 None
+  0001097b  4889f1               mov     rcx, rsi
+  0001097e  e8bdb40000           call    0x1be40  ; -> 0x1be40 None
+  00010983  488d0d00ca9900       lea     rcx, [rip + 0x99ca00]  ; "// TerminateComputation"
+  0001098a  89c3                 mov     ebx, eax
+  0001098c  89c2                 mov     edx, eax
+  0001098e  e84da36300           call    0x64ace0  ; -> 0x64ace0 None
+  00010993  89d8                 mov     eax, ebx
+  00010995  4883c448             add     rsp, 0x48
+  00010999  5b                   pop     rbx
+  0001099a  5e                   pop     rsi
+  0001099b  c3                   ret     
+  0001099c  488b4c2420           mov     rcx, qword ptr [rsp + 0x20]
+  000109a1  4883c310             add     rbx, 0x10
+  000109a5  4889c6               mov     rsi, rax
+  000109a8  4839d9               cmp     rcx, rbx
+  000109ab  7405                 je      0x109b2
+  000109ad  e8fe7a9800           call    0x9984b0  ; -> 0x9984b0 None
+  000109b2  4889f1               mov     rcx, rsi
+  000109b5  e8c6e86100           call    0x62f280  ; -> 0x62f280 None
+  000109ba  90                   nop     

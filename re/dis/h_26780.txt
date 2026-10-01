@@ -1,0 +1,65 @@
+### fn 0x26780 name=None end=0x26831 size=177
+STRINGS: 0x9ae760:'basic_string::_M_construct null not valid'
+CALLERS: 0x26a60:None
+CALLEES: 0x63f2f8:None, 0x910ba0:None, 0x97a830:None
+
+  00026780  57                   push    rdi
+  00026781  56                   push    rsi
+  00026782  53                   push    rbx
+  00026783  4883ec30             sub     rsp, 0x30
+  00026787  4885d2               test    rdx, rdx
+  0002678a  4889ce               mov     rsi, rcx
+  0002678d  4889d7               mov     rdi, rdx
+  00026790  7511                 jne     0x267a3
+  00026792  4d85c0               test    r8, r8
+  00026795  740c                 je      0x267a3
+  00026797  488d0dc27f9800       lea     rcx, [rip + 0x987fc2]  ; "basic_string::_M_construct null not valid"
+  0002679e  e88d409500           call    0x97a830  ; -> 0x97a830 None
+  000267a3  4c89c3               mov     rbx, r8
+  000267a6  4829fb               sub     rbx, rdi
+  000267a9  4883fb0f             cmp     rbx, 0xf
+  000267ad  48895c2428           mov     qword ptr [rsp + 0x28], rbx
+  000267b2  771e                 ja      0x267d2
+  000267b4  4883fb01             cmp     rbx, 1
+  000267b8  488b0e               mov     rcx, qword ptr [rsi]
+  000267bb  7457                 je      0x26814
+  000267bd  4885db               test    rbx, rbx
+  000267c0  752f                 jne     0x267f1
+  000267c2  48895e08             mov     qword ptr [rsi + 8], rbx
+  000267c6  c6041900             mov     byte ptr [rcx + rbx], 0
+  000267ca  4883c430             add     rsp, 0x30
+  000267ce  5b                   pop     rbx
+  000267cf  5e                   pop     rsi
+  000267d0  5f                   pop     rdi
+  000267d1  c3                   ret     
+  000267d2  488d542428           lea     rdx, [rsp + 0x28]
+  000267d7  4889f1               mov     rcx, rsi
+  000267da  4531c0               xor     r8d, r8d
+  000267dd  e8bea38e00           call    0x910ba0  ; -> 0x910ba0 None
+  000267e2  4889c1               mov     rcx, rax
+  000267e5  488906               mov     qword ptr [rsi], rax
+  000267e8  488b442428           mov     rax, qword ptr [rsp + 0x28]
+  000267ed  48894610             mov     qword ptr [rsi + 0x10], rax
+  000267f1  4989d8               mov     r8, rbx
+  000267f4  4889fa               mov     rdx, rdi
+  000267f7  e8fc8a6100           call    0x63f2f8  ; -> 0x63f2f8 
+  000267fc  488b5c2428           mov     rbx, qword ptr [rsp + 0x28]
+  00026801  488b0e               mov     rcx, qword ptr [rsi]
+  00026804  48895e08             mov     qword ptr [rsi + 8], rbx
+  00026808  c6041900             mov     byte ptr [rcx + rbx], 0
+  0002680c  4883c430             add     rsp, 0x30
+  00026810  5b                   pop     rbx
+  00026811  5e                   pop     rsi
+  00026812  5f                   pop     rdi
+  00026813  c3                   ret     
+  00026814  0fb607               movzx   eax, byte ptr [rdi]
+  00026817  8801                 mov     byte ptr [rcx], al
+  00026819  488b5c2428           mov     rbx, qword ptr [rsp + 0x28]
+  0002681e  488b0e               mov     rcx, qword ptr [rsi]
+  00026821  48895e08             mov     qword ptr [rsi + 8], rbx
+  00026825  c6041900             mov     byte ptr [rcx + rbx], 0
+  00026829  4883c430             add     rsp, 0x30
+  0002682d  5b                   pop     rbx
+  0002682e  5e                   pop     rsi
+  0002682f  5f                   pop     rdi
+  00026830  c3                   ret     

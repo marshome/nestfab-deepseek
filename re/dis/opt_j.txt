@@ -1,0 +1,24 @@
+### fn 0xb61a0 name=None end=0xb61eb size=75
+STRINGS: 0x9b2208:'333333$@\\'
+CALLERS: 0x1e70:None
+CALLEES: 0xb81f0:None
+
+  000b61a0  4883ec38             sub     rsp, 0x38
+  000b61a4  0f29742420           movaps  xmmword ptr [rsp + 0x20], xmm6
+  000b61a9  660f28f0             movapd  xmm6, xmm0
+  000b61ad  e83e200000           call    0xb81f0  ; -> 0xb81f0 None
+  000b61b2  31d2                 xor     edx, edx
+  000b61b4  3d4c040000           cmp     eax, 0x44c
+  000b61b9  7415                 je      0xb61d0
+  000b61bb  0f28742420           movaps  xmm6, xmmword ptr [rsp + 0x20]
+  000b61c0  89d0                 mov     eax, edx
+  000b61c2  4883c438             add     rsp, 0x38
+  000b61c6  c3                   ret     
+  000b61c7  660f1f840000000000   nop     word ptr [rax + rax]
+  000b61d0  f20f100530c08f00     movsd   xmm0, qword ptr [rip + 0x8fc030]  ; "333333$@\"
+  000b61d8  660f2ec6             ucomisd xmm0, xmm6
+  000b61dc  0f28742420           movaps  xmm6, xmmword ptr [rsp + 0x20]
+  000b61e1  0f97c2               seta    dl
+  000b61e4  89d0                 mov     eax, edx
+  000b61e6  4883c438             add     rsp, 0x38
+  000b61ea  c3                   ret     

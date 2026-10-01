@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1336" viewBox="0 0 900 1336">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7b8794"/></marker></defs>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<text x="60" y="42" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#10202f">后优化：Compaction + 收尾三连 pass</text>
+<text x="60" y="68" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" fill="#55636f">REPORT §7.2（Compaction 与 0x1B33B0）</text>
+<path d="M 240.0 178.0 L 240.0 220.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 282.0 L 240.0 324.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 386.0 L 240.0 428.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 490.0 L 240.0 532.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 532.0 L 240.0 563.0 L 660.0 563.0 L 660.0 594.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="441.0" y="554.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="450.0" y="567.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">是</text>
+<path d="M 240.0 616.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="231.0" y="617.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="240.0" y="630.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">否</text>
+<path d="M 660.0 594.0 L 660.0 615.0 L 240.0 615.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 698.0 L 240.0 740.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 802.0 L 240.0 844.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 906.0 L 240.0 948.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1010.0 L 240.0 1052.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1114.0 L 240.0 1156.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="60" y="116" width="360" height="62" rx="31" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.3"/>
+<text x="240" y="152.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">得到候选 nesting</text>
+<rect x="60" y="220" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="247.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">Compact::Compacter::Implementation v2 = 0x7F4140</text>
+<text x="240" y="264.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">取几何 → operator new(0x1E8) → 内核 0x252B60（1389 B）</text>
+<rect x="60" y="324" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="351.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">网格步长 = min(宽,高) / 10.0（常量 10.0 @ 0x9C2BB0）</text>
+<text x="240" y="368.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">构造区间 (-f1, 0, f1+f2) 的网格 → 0x5CA780 / 0x5C6BE0</text>
+<rect x="60" y="428" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="464.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x2664F0(obj+0x18, grid, 0, 1) 枚举网格 → 逐个候选 move</text>
+<polygon points="240,532 420,574 240,616 60,574" fill="#fff8ec" stroke="#b45309" stroke-width="1.3"/>
+<text x="240" y="570.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">RotateCompact 0x678230 接受测试</text>
+<text x="240" y="587.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="400" fill="#33404d" text-anchor="middle">1e-6 &gt; param ？（常量 0x9BF5D0）</text>
+<rect x="480" y="532" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="660" y="568.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">直接放弃该次旋转（return 0）</text>
+<rect x="60" y="636" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="672.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">接受/拒绝；RCompact::RotateLogger 0xA533D0 只是日志钩子</text>
+<rect x="60" y="740" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="776.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">核心 0x1B33B0（9910 B）：USE_POSTOP / postop_estimate</text>
+<rect x="60" y="844" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="880.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">① postop.cpp 通用后处理</text>
+<rect x="60" y="948" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="975.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">② RenestInHoles 0x40720（Multi::HoleRenester）</text>
+<text x="240" y="992.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">把零件重新塞进已有 nesting 的孔洞（几何容差 1e-6）</text>
+<rect x="60" y="1052" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="1079.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">③ BL/BLF 稳定化 0x1E1BF0（packed bottom left）</text>
+<text x="240" y="1096.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">不重叠前提下尽量推向左下 → 解规范化、便于去重比较</text>
+<rect x="60" y="1156" width="360" height="62" rx="31" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.3"/>
+<text x="240" y="1192.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">输出规范化后的解</text>
+<text x="60" y="1240" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#667085">参数键：enable_last_compaction / enable_rotate_compact_postop / nb_iterations_before_rotate_compact_postop。</text>
+<text x="60" y="1266" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#667085">字符串证据：compacting ... · before_shake / shaker_ / after_shake（"shake" 抖动）· Swap Postop begin / Swap 180 begin。</text>
+</svg>

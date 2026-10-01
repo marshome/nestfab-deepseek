@@ -1,0 +1,1064 @@
+==============================================================================
+1. constants
+==============================================================================
+  0x9b08b0   BuildAndSolveLp xmm8  (dummy column coefficient?) f64=1.0                      u64=0x3ff0000000000000 
+  0x9c2e18   used by CoinLP ctor and slot 4                 f64=0.5                      u64=0x3fe0000000000000 
+  0x9c2df8   Clp bound constant                             f64=1.7976931348623157e+308  u64=0x7fefffffffffffff 
+  0x9c2e20   Clp bound constant                             f64=-1.7976931348623157e+308 u64=0xffefffffffffffff 
+  0x9c2e30   Clp bound constant                             f64=-0.0                     u64=0x8000000000000000 
+  0x9b0726   string 'linear'                                f64=7.431358233424998e+221   u64=0x6e007261656e696c STR='linear'
+  0x9b0776   assert 'biggest_sheet->price()'                f64=6.694334551579203e+151   u64=0x5f74736567676962 STR='biggest_sheet->price()'
+  0x9b0810   assert 'BuildAndSolveLp'                       f64=5.986471818718371e+175   u64=0x646e41646c697542 STR='BuildAndSolveLp'
+  0x9b0710   assert '..\multi\database.cpp'                 f64=9.770816446555304e+199   u64=0x69746c756d5c2e2e STR='..\\multi\\database.cpp'
+  0xa078f0   rdx constant in BuildAndSolveLp prologue       f64=8.951509197e-315         u64=0x6bfdf5c0 
+
+==============================================================================
+2. CoinLP vtable slot bodies (slots 2..8)
+==============================================================================
+
+--- slot 2 = 0x679c20  size=214 nins=46   calls ClpSimplex vtable +0x498
+    679c20   push rbx                                 
+    679c21   sub rsp, 0x20                            
+    679c25   mov rbx, rcx                             
+    679c28   mov rcx, qword ptr [rcx + 8]             
+    679c2c   mov rax, qword ptr [rcx]                 
+    679c2f   call qword ptr [rax + 0x498]             
+    679c35   mov rax, qword ptr [rbx + 8]             
+    679c39   mov rdx, qword ptr [rax]                 
+    679c3c   mov rdx, qword ptr [rdx - 0x18]          
+    679c40   mov rcx, qword ptr [rax + rdx + 0x10]    
+    679c45   xor edx, edx                             
+    679c47   call 0x419610                            ; (0x419610)
+    679c4c   mov rcx, qword ptr [rbx + 8]             
+    679c50   mov r8d, 0x2710                          
+    679c56   xor edx, edx                             
+    679c58   mov rax, qword ptr [rcx]                 
+    679c5b   call qword ptr [rax + 0xc0]              
+    679c61   mov rcx, qword ptr [rbx + 8]             
+    679c65   call 0x2713d0                            ; (0x2713d0)
+    679c6a   movsd xmm1, qword ptr [rip + 0x3491a6]   ; data@9c2e18
+    679c72   mov rcx, rax                             
+    679c75   call 0x2b1720                            ; (0x2b1720)
+    679c7a   mov rcx, qword ptr [rbx + 8]             
+    679c7e   call 0x2713d0                            ; (0x2713d0)
+    679c83   mov dword ptr [rax + 0x2e8], 3           
+    679c8d   mov rax, qword ptr [rbx + 0x18]          
+    679c91   mov qword ptr [rbx + 0x20], rax          
+    679c95   mov rax, qword ptr [rbx + 0x30]          
+    679c99   mov qword ptr [rbx + 0x38], rax          
+    679c9d   mov rax, qword ptr [rbx + 0x48]          
+    679ca1   mov qword ptr [rbx + 0x50], rax          
+    679ca5   mov rax, qword ptr [rbx + 0x60]          
+    679ca9   mov qword ptr [rbx + 0x68], rax          
+    679cad   mov rax, qword ptr [rbx + 0x78]          
+    679cb1   mov qword ptr [rbx + 0x80], rax          
+    679cb8   mov rax, qword ptr [rbx + 0x90]          
+    679cbf   mov qword ptr [rbx + 0x98], rax          
+    679cc6   mov rax, qword ptr [rbx + 0xa8]          
+    679ccd   mov qword ptr [rbx + 0xb0], rax          
+    679cd4   mov rax, qword ptr [rbx + 0xc0]          
+    679cdb   mov qword ptr [rbx + 0xc8], rax          
+    679ce2   mov rax, qword ptr [rbx + 0xd8]          
+    679ce9   mov qword ptr [rbx + 0xe0], rax          
+    679cf0   add rsp, 0x20                            
+    679cf4   pop rbx                                  
+    679cf5   ret                                      
+    -- callees --
+       -> virtual [qword ptr [rax + 0x498]]
+       -> 0x419610   
+       -> virtual [qword ptr [rax + 0xc0]]
+       -> 0x2713d0   
+       -> 0x2b1720   
+
+--- slot 3 = 0x679660  size=4 nins=2   mov [rcx+0x10], dl
+    679660   mov byte ptr [rcx + 0x10], dl            
+    679663   ret                                      
+    -- callees --
+
+--- slot 4 = 0x6792c0  size=345 nins=78   takes bool + double, uses Clp bounds
+    6792c0   push rbx                                 
+    6792c1   sub rsp, 0x50                            
+    6792c5   movaps xmmword ptr [rsp + 0x40], xmm6    
+    6792ca   movsd xmm6, qword ptr [rsp + 0x80]       
+    6792d3   test dl, dl                              
+    6792d5   mov rbx, rcx                             
+    6792d8   je 0x679390                              
+    6792de   mov rax, qword ptr [rbx + 0x20]          
+    6792e2   movsd qword ptr [rsp + 0x38], xmm2       
+    6792e8   cmp rax, qword ptr [rbx + 0x28]          
+    6792ec   je 0x6793d3                              
+    6792f2   test rax, rax                            
+    6792f5   je 0x6792fb                              
+    6792f7   movsd qword ptr [rax], xmm2              
+    6792fb   add rax, 8                               
+    6792ff   mov qword ptr [rbx + 0x20], rax          
+    679303   test r9b, r9b                            
+    679306   je 0x679360                              
+    679308   mov rax, qword ptr [rbx + 0x38]          
+    67930c   movsd qword ptr [rsp + 0x38], xmm6       
+    679312   cmp rax, qword ptr [rbx + 0x40]          
+    679316   je 0x6793f0                              
+    67931c   test rax, rax                            
+    67931f   je 0x679325                              
+    679321   movsd qword ptr [rax], xmm6              
+    679325   add rax, 8                               
+    679329   mov qword ptr [rbx + 0x38], rax          
+    67932d   mov rax, qword ptr [rbx + 0x50]          
+    679331   cmp rax, qword ptr [rbx + 0x58]          
+    679335   je 0x679403                              
+    67933b   movsd xmm0, qword ptr [rsp + 0x88]       
+    679344   test rax, rax                            
+    679347   je 0x67934d                              
+    679349   movsd qword ptr [rax], xmm0              
+    67934d   add rax, 8                               
+    679351   mov qword ptr [rbx + 0x50], rax          
+    679355   movaps xmm6, xmmword ptr [rsp + 0x40]    
+    67935a   add rsp, 0x50                            
+    67935e   pop rbx                                  
+    67935f   ret                                      
+    679360   mov rcx, qword ptr [rbx + 8]             
+    679364   lea rdx, [rip + 0x1506a5]                ; data@7c9a10
+    67936b   movsd xmm6, qword ptr [rip + 0x349a85]   ; data@9c2df8
+    679373   mov rax, qword ptr [rcx]                 
+    679376   mov rax, qword ptr [rax + 0x220]         
+    67937d   cmp rax, rdx                             
+    679380   je 0x679308                              
+    679382   call rax                                 
+    679384   movapd xmm6, xmm0                        
+    679388   jmp 0x679308                             
+    67938d   nop dword ptr [rax]                      
+    679390   mov rcx, qword ptr [rcx + 8]             
+    679394   lea rdx, [rip + 0x150675]                ; data@7c9a10
+    67939b   movsd xmm2, qword ptr [rip + 0x349a7d]   ; data@9c2e20
+    6793a3   mov rax, qword ptr [rcx]                 
+    6793a6   mov rax, qword ptr [rax + 0x220]         
+    6793ad   cmp rax, rdx                             
+    6793b0   je 0x6792de                              
+    6793b6   mov dword ptr [rsp + 0x2c], r9d          
+    6793bb   call rax                                 
+    6793bd   mov r9d, dword ptr [rsp + 0x2c]          
+    6793c2   xorpd xmm0, xmmword ptr [rip + 0x349a66] ; data@9c2e30
+    6793ca   movapd xmm2, xmm0                        
+    6793ce   jmp 0x6792de                             
+    6793d3   lea rdx, [rsp + 0x38]                    
+    6793d8   mov dword ptr [rsp + 0x2c], r9d          
+    6793dd   lea rcx, [rbx + 0x18]                    
+    6793e1   call 0x90bef0                            ; (0x90bef0)
+    6793e6   mov r9d, dword ptr [rsp + 0x2c]          
+    6793eb   jmp 0x679303                             
+    6793f0   lea rdx, [rsp + 0x38]                    
+    6793f5   lea rcx, [rbx + 0x30]                    
+    6793f9   call 0x90bef0                            ; (0x90bef0)
+    6793fe   jmp 0x67932d                             
+    679403   lea rdx, [rsp + 0x88]                    
+    67940b   lea rcx, [rbx + 0x48]                    
+    67940f   call 0x90bef0                            ; (0x90bef0)
+    679414   jmp 0x679355                             
+    -- callees --
+       -> 0x90bef0   
+
+--- slot 5 = 0x679670  size=715 nins=174   called per PART with (n, idx[], val[], demand)
+    679670   push r15                                 
+    679672   push r14                                 
+    679674   push r13                                 
+    679676   push r12                                 
+    679678   push rbp                                 
+    679679   push rdi                                 
+    67967a   push rsi                                 
+    67967b   push rbx                                 
+    67967c   sub rsp, 0x78                            
+    679680   movaps xmmword ptr [rsp + 0x60], xmm6    
+    679685   lea r10, [rip + 0x150384]                ; data@7c9a10
+    67968c   movsd xmm0, qword ptr [rip + 0x349764]   ; data@9c2df8
+    679694   mov rax, qword ptr [rcx]                 
+    679697   movsd xmm6, qword ptr [rsp + 0xe0]       
+    6796a0   mov r14, rcx                             
+    6796a3   mov rcx, qword ptr [rcx + 8]             
+    6796a7   mov rbx, qword ptr [rax + 0x38]          
+    6796ab   mov rax, qword ptr [rcx]                 
+    6796ae   mov rax, qword ptr [rax + 0x220]         
+    6796b5   cmp rax, r10                             
+    6796b8   jne 0x6798b0                             
+    6796be   lea rax, [rip - 0x2a5]                   ; STR@679420 'AWAVAUATUWVSH'
+    6796c5   cmp rbx, rax                             
+    6796c8   jne 0x6798de                             
+    6796ce   mov rax, qword ptr [r14 + 0x80]          
+    6796d5   movsd qword ptr [rsp + 0x50], xmm6       
+    6796db   movsd qword ptr [rsp + 0x58], xmm0       
+    6796e1   mov r15, rax                             
+    6796e4   sub r15, qword ptr [r14 + 0x78]          
+    6796e8   sar r15, 3                               
+    6796ec   test edx, edx                            
+    6796ee   jle 0x67975e                             
+    6796f0   mov rbx, qword ptr [r14 + 0x98]          
+    6796f7   lea eax, [rdx - 1]                       
+    6796fa   mov rsi, r9                              
+    6796fd   mov rdi, r8                              
+    679700   mov rbp, qword ptr [r14 + 0xa0]          
+    679707   lea r13, [r9 + rax*8 + 8]                
+    67970c   movabs r12, 0xfffffffffffffff            
+    679716   nop word ptr cs:[rax + rax]              
+    679720   cmp rbp, rbx                             
+    679723   je 0x6797c0                              
+    679729   test rbx, rbx                            
+    67972c   je 0x67973f                              
+    67972e   movsd xmm0, qword ptr [rsi]              
+    679732   mov dword ptr [rbx + 8], r15d            
+    679736   mov eax, dword ptr [rdi]                 
+    679738   movsd qword ptr [rbx], xmm0              
+    67973c   mov dword ptr [rbx + 0xc], eax           
+    67973f   add rbx, 0x10                            
+    679743   mov qword ptr [r14 + 0x98], rbx          
+    67974a   add rsi, 8                               
+    67974e   add rdi, 4                               
+    679752   cmp r13, rsi                             
+    679755   jne 0x679720                             
+    679757   mov rax, qword ptr [r14 + 0x80]          
+    67975e   cmp qword ptr [r14 + 0x88], rax          
+    679765   je 0x679907                              
+    67976b   test rax, rax                            
+    67976e   movsd xmm0, qword ptr [rsp + 0x50]       
+    679774   je 0x67977a                              
+    679776   movsd qword ptr [rax], xmm0              
+    67977a   add rax, 8                               
+    67977e   mov qword ptr [r14 + 0x80], rax          
+    679785   mov rax, qword ptr [r14 + 0x68]          
+    679789   cmp rax, qword ptr [r14 + 0x70]          
+    67978d   je 0x6798f4                              
+    679793   test rax, rax                            
+    679796   movsd xmm0, qword ptr [rsp + 0x58]       
+    67979c   je 0x6797a2                              
+    67979e   movsd qword ptr [rax], xmm0              
+    6797a2   add rax, 8                               
+    6797a6   mov qword ptr [r14 + 0x68], rax          
+    6797aa   movaps xmm6, xmmword ptr [rsp + 0x60]    
+    6797af   add rsp, 0x78                            
+    6797b3   pop rbx                                  
+    6797b4   pop rsi                                  
+    6797b5   pop rdi                                  
+    6797b6   pop rbp                                  
+    6797b7   pop r12                                  
+    6797b9   pop r13                                  
+    6797bb   pop r14                                  
+    6797bd   pop r15                                  
+    6797bf   ret                                      
+    6797c0   sub rbp, qword ptr [r14 + 0x90]          
+    6797c7   sar rbp, 4                               
+    6797cb   test rbp, rbp                            
+    6797ce   jne 0x679890                             
+    6797d4   mov ebp, 0x10                            
+    6797d9   mov rcx, rbp                             
+    6797dc   call 0x998500                            ; (0x998500)
+    6797e1   mov r11, qword ptr [r14 + 0x98]          
+    6797e8   mov rcx, qword ptr [r14 + 0x90]          
+    6797ef   mov rdx, r11                             
+    6797f2   sub rdx, rcx                             
+    6797f5   add rdx, rax                             
+    6797f8   je 0x67980d                              
+    6797fa   mov r9d, dword ptr [rdi]                 
+    6797fd   mov dword ptr [rdx + 8], r15d            
+    679801   movsd xmm0, qword ptr [rsi]              
+    679805   movsd qword ptr [rdx], xmm0              
+    679809   mov dword ptr [rdx + 0xc], r9d           
+    67980d   cmp r11, rcx                             
+    679810   je 0x67991a                              
+    679816   mov r9, rax                              
+    679819   mov rdx, rcx                             
+    67981c   nop dword ptr [rax]                      
+    679820   test r9, r9                              
+    679823   je 0x67983e                              
+    679825   mov r10d, dword ptr [rdx + 8]            
+    679829   movsd xmm0, qword ptr [rdx]              
+    67982d   movsd qword ptr [r9], xmm0               
+    679832   mov dword ptr [r9 + 8], r10d             
+    679836   mov r10d, dword ptr [rdx + 0xc]          
+    67983a   mov dword ptr [r9 + 0xc], r10d           
+    67983e   add rdx, 0x10                            
+    679842   add r9, 0x10                             
+    679846   cmp r11, rdx                             
+    679849   jne 0x679820                             
+    67984b   lea rdx, [rcx + 0x10]                    
+    67984f   sub r11, rdx                             
+    679852   and r11, 0xfffffffffffffff0              
+    679856   lea rbx, [rax + r11 + 0x10]              
+    67985b   add rbx, 0x10                            
+    67985f   test rcx, rcx                            
+    679862   je 0x679873                              
+    679864   mov qword ptr [rsp + 0x38], rax          
+    679869   call 0x9984b0                            ; (0x9984b0)
+    67986e   mov rax, qword ptr [rsp + 0x38]          
+    679873   add rbp, rax                             
+    679876   mov qword ptr [r14 + 0x90], rax          
+    67987d   mov qword ptr [r14 + 0x98], rbx          
+    679884   mov qword ptr [r14 + 0xa0], rbp          
+    67988b   jmp 0x67974a                             
+    679890   mov rdx, rbp                             
+    679893   add rdx, rbp                             
+    679896   jb 0x6798a1                              
+    679898   cmp rdx, r12                             
+    67989b   jbe 0x679922                             
+    6798a1   mov rbp, 0xfffffffffffffff0              
+    6798a8   jmp 0x6797d9                             
+    6798ad   nop dword ptr [rax]                      
+    6798b0   mov qword ptr [rsp + 0x48], r9           
+    6798b5   mov qword ptr [rsp + 0x40], r8           
+    6798ba   mov dword ptr [rsp + 0x38], edx          
+    6798be   call rax                                 
+    6798c0   lea rax, [rip - 0x4a7]                   ; STR@679420 'AWAVAUATUWVSH'
+    6798c7   mov r9, qword ptr [rsp + 0x48]           
+    6798cc   cmp rbx, rax                             
+    6798cf   mov r8, qword ptr [rsp + 0x40]           
+    6798d4   mov edx, dword ptr [rsp + 0x38]          
+    6798d8   je 0x6796ce                              
+    6798de   movsd qword ptr [rsp + 0x28], xmm0       
+    6798e4   mov rcx, r14                             
+    6798e7   movsd qword ptr [rsp + 0x20], xmm6       
+    6798ed   call rbx                                 
+    6798ef   jmp 0x6797aa                             
+    6798f4   lea rdx, [rsp + 0x58]                    
+    6798f9   lea rcx, [r14 + 0x60]                    
+    6798fd   call 0x90bef0                            ; (0x90bef0)
+    679902   jmp 0x6797aa                             
+    679907   lea rdx, [rsp + 0x50]                    
+    67990c   lea rcx, [r14 + 0x78]                    
+    679910   call 0x90bef0                            ; (0x90bef0)
+    679915   jmp 0x679785                             
+    67991a   mov rbx, rax                             
+    67991d   jmp 0x67985b                             
+    679922   xor ebp, ebp                             
+    679924   xor eax, eax                             
+    679926   test rdx, rdx                            
+    679929   je 0x6797e1                              
+    67992f   shl rdx, 4                               
+    679933   mov rbp, rdx                             
+    679936   jmp 0x6797d9                             
+    -- callees --
+       -> 0x998500   
+       -> 0x9984b0   
+       -> 0x90bef0   
+
+--- slot 6 = 0x679940  size=723 nins=175   
+    679940   push r15                                 
+    679942   push r14                                 
+    679944   push r13                                 
+    679946   push r12                                 
+    679948   push rbp                                 
+    679949   push rdi                                 
+    67994a   push rsi                                 
+    67994b   push rbx                                 
+    67994c   sub rsp, 0x78                            
+    679950   movaps xmmword ptr [rsp + 0x60], xmm6    
+    679955   lea r10, [rip + 0x1500b4]                ; data@7c9a10
+    67995c   movsd xmm0, qword ptr [rip + 0x3494bc]   ; data@9c2e20
+    679964   mov rax, qword ptr [rcx]                 
+    679967   movsd xmm6, qword ptr [rsp + 0xe0]       
+    679970   mov r14, rcx                             
+    679973   mov rcx, qword ptr [rcx + 8]             
+    679977   mov rbx, qword ptr [rax + 0x38]          
+    67997b   mov rax, qword ptr [rcx]                 
+    67997e   mov rax, qword ptr [rax + 0x220]         
+    679985   cmp rax, r10                             
+    679988   jne 0x679b80                             
+    67998e   lea rax, [rip - 0x575]                   ; STR@679420 'AWAVAUATUWVSH'
+    679995   cmp rbx, rax                             
+    679998   jne 0x679bb6                             
+    67999e   mov rax, qword ptr [r14 + 0x80]          
+    6799a5   movsd qword ptr [rsp + 0x50], xmm0       
+    6799ab   movsd qword ptr [rsp + 0x58], xmm6       
+    6799b1   mov r15, rax                             
+    6799b4   sub r15, qword ptr [r14 + 0x78]          
+    6799b8   sar r15, 3                               
+    6799bc   test edx, edx                            
+    6799be   jle 0x679a2e                             
+    6799c0   mov rbx, qword ptr [r14 + 0x98]          
+    6799c7   lea eax, [rdx - 1]                       
+    6799ca   mov rsi, r9                              
+    6799cd   mov rdi, r8                              
+    6799d0   mov rbp, qword ptr [r14 + 0xa0]          
+    6799d7   lea r13, [r9 + rax*8 + 8]                
+    6799dc   movabs r12, 0xfffffffffffffff            
+    6799e6   nop word ptr cs:[rax + rax]              
+    6799f0   cmp rbp, rbx                             
+    6799f3   je 0x679a90                              
+    6799f9   test rbx, rbx                            
+    6799fc   je 0x679a0f                              
+    6799fe   movsd xmm0, qword ptr [rsi]              
+    679a02   mov dword ptr [rbx + 8], r15d            
+    679a06   mov eax, dword ptr [rdi]                 
+    679a08   movsd qword ptr [rbx], xmm0              
+    679a0c   mov dword ptr [rbx + 0xc], eax           
+    679a0f   add rbx, 0x10                            
+    679a13   mov qword ptr [r14 + 0x98], rbx          
+    679a1a   add rsi, 8                               
+    679a1e   add rdi, 4                               
+    679a22   cmp r13, rsi                             
+    679a25   jne 0x6799f0                             
+    679a27   mov rax, qword ptr [r14 + 0x80]          
+    679a2e   cmp qword ptr [r14 + 0x88], rax          
+    679a35   je 0x679bdf                              
+    679a3b   test rax, rax                            
+    679a3e   movsd xmm0, qword ptr [rsp + 0x50]       
+    679a44   je 0x679a4a                              
+    679a46   movsd qword ptr [rax], xmm0              
+    679a4a   add rax, 8                               
+    679a4e   mov qword ptr [r14 + 0x80], rax          
+    679a55   mov rax, qword ptr [r14 + 0x68]          
+    679a59   cmp rax, qword ptr [r14 + 0x70]          
+    679a5d   je 0x679bcc                              
+    679a63   test rax, rax                            
+    679a66   movsd xmm0, qword ptr [rsp + 0x58]       
+    679a6c   je 0x679a72                              
+    679a6e   movsd qword ptr [rax], xmm0              
+    679a72   add rax, 8                               
+    679a76   mov qword ptr [r14 + 0x68], rax          
+    679a7a   movaps xmm6, xmmword ptr [rsp + 0x60]    
+    679a7f   add rsp, 0x78                            
+    679a83   pop rbx                                  
+    679a84   pop rsi                                  
+    679a85   pop rdi                                  
+    679a86   pop rbp                                  
+    679a87   pop r12                                  
+    679a89   pop r13                                  
+    679a8b   pop r14                                  
+    679a8d   pop r15                                  
+    679a8f   ret                                      
+    679a90   sub rbp, qword ptr [r14 + 0x90]          
+    679a97   sar rbp, 4                               
+    679a9b   test rbp, rbp                            
+    679a9e   jne 0x679b60                             
+    679aa4   mov ebp, 0x10                            
+    679aa9   mov rcx, rbp                             
+    679aac   call 0x998500                            ; (0x998500)
+    679ab1   mov r11, qword ptr [r14 + 0x98]          
+    679ab8   mov rcx, qword ptr [r14 + 0x90]          
+    679abf   mov rdx, r11                             
+    679ac2   sub rdx, rcx                             
+    679ac5   add rdx, rax                             
+    679ac8   je 0x679add                              
+    679aca   mov r9d, dword ptr [rdi]                 
+    679acd   mov dword ptr [rdx + 8], r15d            
+    679ad1   movsd xmm0, qword ptr [rsi]              
+    679ad5   movsd qword ptr [rdx], xmm0              
+    679ad9   mov dword ptr [rdx + 0xc], r9d           
+    679add   cmp r11, rcx                             
+    679ae0   je 0x679bf2                              
+    679ae6   mov r9, rax                              
+    679ae9   mov rdx, rcx                             
+    679aec   nop dword ptr [rax]                      
+    679af0   test r9, r9                              
+    679af3   je 0x679b0e                              
+    679af5   mov r10d, dword ptr [rdx + 8]            
+    679af9   movsd xmm0, qword ptr [rdx]              
+    679afd   movsd qword ptr [r9], xmm0               
+    679b02   mov dword ptr [r9 + 8], r10d             
+    679b06   mov r10d, dword ptr [rdx + 0xc]          
+    679b0a   mov dword ptr [r9 + 0xc], r10d           
+    679b0e   add rdx, 0x10                            
+    679b12   add r9, 0x10                             
+    679b16   cmp r11, rdx                             
+    679b19   jne 0x679af0                             
+    679b1b   lea rdx, [rcx + 0x10]                    
+    679b1f   sub r11, rdx                             
+    679b22   and r11, 0xfffffffffffffff0              
+    679b26   lea rbx, [rax + r11 + 0x10]              
+    679b2b   add rbx, 0x10                            
+    679b2f   test rcx, rcx                            
+    679b32   je 0x679b43                              
+    679b34   mov qword ptr [rsp + 0x38], rax          
+    679b39   call 0x9984b0                            ; (0x9984b0)
+    679b3e   mov rax, qword ptr [rsp + 0x38]          
+    679b43   add rbp, rax                             
+    679b46   mov qword ptr [r14 + 0x90], rax          
+    679b4d   mov qword ptr [r14 + 0x98], rbx          
+    679b54   mov qword ptr [r14 + 0xa0], rbp          
+    679b5b   jmp 0x679a1a                             
+    679b60   mov rdx, rbp                             
+    679b63   add rdx, rbp                             
+    679b66   jb 0x679b71                              
+    679b68   cmp rdx, r12                             
+    679b6b   jbe 0x679bfa                             
+    679b71   mov rbp, 0xfffffffffffffff0              
+    679b78   jmp 0x679aa9                             
+    679b7d   nop dword ptr [rax]                      
+    679b80   mov qword ptr [rsp + 0x48], r9           
+    679b85   mov qword ptr [rsp + 0x40], r8           
+    679b8a   mov dword ptr [rsp + 0x38], edx          
+    679b8e   call rax                                 
+    679b90   lea rax, [rip - 0x777]                   ; STR@679420 'AWAVAUATUWVSH'
+    679b97   mov r9, qword ptr [rsp + 0x48]           
+    679b9c   xorpd xmm0, xmmword ptr [rip + 0x34928c] ; data@9c2e30
+    679ba4   cmp rbx, rax                             
+    679ba7   mov r8, qword ptr [rsp + 0x40]           
+    679bac   mov edx, dword ptr [rsp + 0x38]          
+    679bb0   je 0x67999e                              
+    679bb6   movsd qword ptr [rsp + 0x28], xmm6       
+    679bbc   mov rcx, r14                             
+    679bbf   movsd qword ptr [rsp + 0x20], xmm0       
+    679bc5   call rbx                                 
+    679bc7   jmp 0x679a7a                             
+    679bcc   lea rdx, [rsp + 0x58]                    
+    679bd1   lea rcx, [r14 + 0x60]                    
+    679bd5   call 0x90bef0                            ; (0x90bef0)
+    679bda   jmp 0x679a7a                             
+    679bdf   lea rdx, [rsp + 0x50]                    
+    679be4   lea rcx, [r14 + 0x78]                    
+    679be8   call 0x90bef0                            ; (0x90bef0)
+    679bed   jmp 0x679a55                             
+    679bf2   mov rbx, rax                             
+    679bf5   jmp 0x679b2b                             
+    679bfa   xor ebp, ebp                             
+    679bfc   xor eax, eax                             
+    679bfe   test rdx, rdx                            
+    679c01   je 0x679ab1                              
+    679c07   shl rdx, 4                               
+    679c0b   mov rbp, rdx                             
+    679c0e   jmp 0x679aa9                             
+    -- callees --
+       -> 0x998500   
+       -> 0x9984b0   
+       -> 0x90bef0   
+
+--- slot 7 = 0x679420  size=575 nins=146   
+    679420   push r15                                 
+    679422   push r14                                 
+    679424   push r13                                 
+    679426   push r12                                 
+    679428   push rbp                                 
+    679429   push rdi                                 
+    67942a   push rsi                                 
+    67942b   push rbx                                 
+    67942c   sub rsp, 0x38                            
+    679430   mov rax, qword ptr [rcx + 0x80]          
+    679437   mov r15, rax                             
+    67943a   sub r15, qword ptr [rcx + 0x78]          
+    67943e   mov r13, rcx                             
+    679441   sar r15, 3                               
+    679445   test edx, edx                            
+    679447   jle 0x6794b0                             
+    679449   mov rbx, qword ptr [rcx + 0x98]          
+    679450   lea eax, [rdx - 1]                       
+    679453   mov rsi, r9                              
+    679456   mov r12, r8                              
+    679459   mov r14, qword ptr [rcx + 0xa0]          
+    679460   lea rbp, [r9 + rax*8 + 8]                
+    679465   movabs rdi, 0xfffffffffffffff            
+    67946f   nop                                      
+    679470   cmp rbx, r14                             
+    679473   je 0x679513                              
+    679479   test rbx, rbx                            
+    67947c   je 0x679491                              
+    67947e   movsd xmm0, qword ptr [rsi]              
+    679482   mov dword ptr [rbx + 8], r15d            
+    679486   mov eax, dword ptr [r12]                 
+    67948a   movsd qword ptr [rbx], xmm0              
+    67948e   mov dword ptr [rbx + 0xc], eax           
+    679491   add rbx, 0x10                            
+    679495   mov qword ptr [r13 + 0x98], rbx          
+    67949c   add rsi, 8                               
+    6794a0   add r12, 4                               
+    6794a4   cmp rbp, rsi                             
+    6794a7   jne 0x679470                             
+    6794a9   mov rax, qword ptr [r13 + 0x80]          
+    6794b0   cmp qword ptr [r13 + 0x88], rax          
+    6794b7   je 0x679626                              
+    6794bd   movsd xmm0, qword ptr [rsp + 0xa0]       
+    6794c6   test rax, rax                            
+    6794c9   je 0x6794cf                              
+    6794cb   movsd qword ptr [rax], xmm0              
+    6794cf   add rax, 8                               
+    6794d3   mov qword ptr [r13 + 0x80], rax          
+    6794da   mov rax, qword ptr [r13 + 0x68]          
+    6794de   cmp rax, qword ptr [r13 + 0x70]          
+    6794e2   je 0x679610                              
+    6794e8   movsd xmm0, qword ptr [rsp + 0xa8]       
+    6794f1   test rax, rax                            
+    6794f4   je 0x6794fa                              
+    6794f6   movsd qword ptr [rax], xmm0              
+    6794fa   add rax, 8                               
+    6794fe   mov qword ptr [r13 + 0x68], rax          
+    679502   add rsp, 0x38                            
+    679506   pop rbx                                  
+    679507   pop rsi                                  
+    679508   pop rdi                                  
+    679509   pop rbp                                  
+    67950a   pop r12                                  
+    67950c   pop r13                                  
+    67950e   pop r14                                  
+    679510   pop r15                                  
+    679512   ret                                      
+    679513   mov rcx, qword ptr [r13 + 0x90]          
+    67951a   mov rdx, rbx                             
+    67951d   sub rdx, rcx                             
+    679520   mov rax, rdx                             
+    679523   sar rax, 4                               
+    679527   test rax, rax                            
+    67952a   jne 0x6795f0                             
+    679530   mov r14d, 0x10                           
+    679536   mov rcx, r14                             
+    679539   call 0x998500                            ; (0x998500)
+    67953e   mov r11, qword ptr [r13 + 0x98]          
+    679545   mov rcx, qword ptr [r13 + 0x90]          
+    67954c   lea rbx, [rax + 0x10]                    
+    679550   add r14, rax                             
+    679553   mov rdx, r11                             
+    679556   sub rdx, rcx                             
+    679559   add rdx, rax                             
+    67955c   je 0x679572                              
+    67955e   mov r9d, dword ptr [r12]                 
+    679562   mov dword ptr [rdx + 8], r15d            
+    679566   movsd xmm0, qword ptr [rsi]              
+    67956a   movsd qword ptr [rdx], xmm0              
+    67956e   mov dword ptr [rdx + 0xc], r9d           
+    679572   cmp r11, rcx                             
+    679575   je 0x6795bb                              
+    679577   mov r9, rax                              
+    67957a   mov rdx, rcx                             
+    67957d   nop dword ptr [rax]                      
+    679580   test r9, r9                              
+    679583   je 0x67959e                              
+    679585   mov r10d, dword ptr [rdx + 8]            
+    679589   movsd xmm0, qword ptr [rdx]              
+    67958d   movsd qword ptr [r9], xmm0               
+    679592   mov dword ptr [r9 + 8], r10d             
+    679596   mov r10d, dword ptr [rdx + 0xc]          
+    67959a   mov dword ptr [r9 + 0xc], r10d           
+    67959e   add rdx, 0x10                            
+    6795a2   add r9, 0x10                             
+    6795a6   cmp rdx, r11                             
+    6795a9   jne 0x679580                             
+    6795ab   lea r9, [rcx + 0x10]                     
+    6795af   sub rdx, r9                              
+    6795b2   and rdx, 0xfffffffffffffff0              
+    6795b6   lea rbx, [rax + rdx + 0x20]              
+    6795bb   test rcx, rcx                            
+    6795be   je 0x6795cf                              
+    6795c0   mov qword ptr [rsp + 0x28], rax          
+    6795c5   call 0x9984b0                            ; (0x9984b0)
+    6795ca   mov rax, qword ptr [rsp + 0x28]          
+    6795cf   mov qword ptr [r13 + 0x90], rax          
+    6795d6   mov qword ptr [r13 + 0x98], rbx          
+    6795dd   mov qword ptr [r13 + 0xa0], r14          
+    6795e4   jmp 0x67949c                             
+    6795e9   nop dword ptr [rax]                      
+    6795f0   add rax, rax                             
+    6795f3   jb 0x6795fa                              
+    6795f5   cmp rax, rdi                             
+    6795f8   jbe 0x67963c                             
+    6795fa   mov r14, 0xfffffffffffffff0              
+    679601   jmp 0x679536                             
+    679606   nop word ptr cs:[rax + rax]              
+    679610   lea rdx, [rsp + 0xa8]                    
+    679618   lea rcx, [r13 + 0x60]                    
+    67961c   call 0x90bef0                            ; (0x90bef0)
+    679621   jmp 0x679502                             
+    679626   lea rdx, [rsp + 0xa0]                    
+    67962e   lea rcx, [r13 + 0x78]                    
+    679632   call 0x90bef0                            ; (0x90bef0)
+    679637   jmp 0x6794da                             
+    67963c   test rax, rax                            
+    67963f   jne 0x679653                             
+    679641   mov r11, rbx                             
+    679644   xor r14d, r14d                           
+    679647   mov ebx, 0x10                            
+    67964c   xor eax, eax                             
+    67964e   jmp 0x679559                             
+    679653   shl rax, 4                               
+    679657   mov r14, rax                             
+    67965a   jmp 0x679536                             
+    -- callees --
+       -> 0x998500   
+       -> 0x9984b0   
+       -> 0x90bef0   
+
+--- slot 8 = 0x679d00  size=168 nins=47   called to solve; return tested
+    679d00   push rsi                                 
+    679d01   push rbx                                 
+    679d02   sub rsp, 0x48                            
+    679d06   xor r8d, r8d                             
+    679d09   mov rdx, qword ptr [rcx + 8]             
+    679d0d   lea rbx, [rsp + 0x20]                    
+    679d12   mov rsi, rcx                             
+    679d15   mov byte ptr [rsp + 0x30], 0             
+    679d1a   mov qword ptr [rsp + 0x28], 0            
+    679d23   lea rax, [rbx + 0x10]                    
+    679d27   mov r9, rbx                              
+    679d2a   mov qword ptr [rsp + 0x20], rax          
+    679d2f   call 0x7ca830                            ; (0x7ca830)
+    679d34   mov rcx, qword ptr [rsp + 0x20]          
+    679d39   lea rax, [rbx + 0x10]                    
+    679d3d   cmp rcx, rax                             
+    679d40   je 0x679d47                              
+    679d42   call 0x9984b0                            ; (0x9984b0)
+    679d47   mov rcx, rbx                             
+    679d4a   call 0x5f3900                            ; (0x5f3900)
+    679d4f   mov rcx, qword ptr [rsi + 8]             
+    679d53   mov rax, qword ptr [rcx]                 
+    679d56   call qword ptr [rax]                     
+    679d58   mov rcx, qword ptr [rsi + 8]             
+    679d5c   mov rax, qword ptr [rcx]                 
+    679d5f   call qword ptr [rax + 0x100]             
+    679d65   mov esi, eax                             
+    679d67   mov rcx, rbx                             
+    679d6a   call 0x5f3960                            ; (0x5f3960)
+    679d6f   xor esi, 1                               
+    679d72   movzx eax, sil                           
+    679d76   add rsp, 0x48                            
+    679d7a   pop rbx                                  
+    679d7b   pop rsi                                  
+    679d7c   ret                                      
+    679d7d   mov rcx, qword ptr [rsp + 0x20]          
+    679d82   add rbx, 0x10                            
+    679d86   mov rsi, rax                             
+    679d89   cmp rcx, rbx                             
+    679d8c   je 0x679d93                              
+    679d8e   call 0x9984b0                            ; (0x9984b0)
+    679d93   mov rcx, rsi                             
+    679d96   call 0x62f280                            ; (0x62f280)
+    679d9b   mov rcx, rbx                             
+    679d9e   mov rsi, rax                             
+    679da1   call 0x5f3960                            ; (0x5f3960)
+    679da6   jmp 0x679d93                             
+    -- callees --
+       -> 0x7ca830   
+       -> 0x9984b0   
+       -> 0x5f3900   
+       -> virtual [qword ptr [rax]]
+       -> virtual [qword ptr [rax + 0x100]]
+       -> 0x5f3960   
+       -> 0x62f280   
+
+==============================================================================
+3. 0x7CA830 -- which Clp entry point? (addRows / addColumns / loadProblem)
+==============================================================================
+size=3778 nins=843
+    @0x7cad2d  STR@9c2df2 '   '
+    @0x7cadd5  STR@9c2df2 '   '
+    @0x7cae82  STR@9c2df2 '   '
+    @0x7caf2d  STR@9c2df2 '   '
+    @0x7cafcd  STR@9c2df2 '   '
+    @0x7cb06d  STR@9c2df2 '   '
+    @0x7cb110  STR@9c2df2 '   '
+    @0x7cb1b0  STR@9c2df2 '   '
+   -- callees --
+      -> 0x267a30    size=532
+      -> 0x96d6e0    size=269
+      -> 0x944530    size=133
+      -> 0x9454d0    size=89
+      -> 0x87edf0    size=351
+      -> 0x87d590    size=255
+      -> 0x9456a0   basic_ios::clear size=50
+      -> 0x869d00    size=5
+      -> 0x978010    size=959
+      -> 0x867bf0    size=337
+      -> 0x867df0    size=180
+      -> 0x8693d0    size=545
+      -> 0x8691a0    size=545
+      -> 0x87d8e0    size=248
+      -> 0x8774f0    size=5
+      -> 0x8aabc0    size=41
+      -> 0x9445e0    size=87
+      -> 0x2af090    size=5
+      -> 0x90caf0    size=209
+      -> 0x90bef0    size=220
+      -> 0x8264e0    size=136
+      -> 0x88be60    size=130
+      -> 0x62f280    size=171
+      -> 0x978750    size=51
+      -> 0x87f2a0    size=60
+
+==============================================================================
+4. helpers BuildAndSolveLp uses
+==============================================================================
+
+--- 0x4f8550   size=449 nins=105   returns double (sheet/part price?)
+    4f8550   push rbp                                 
+    4f8551   push rdi                                 
+    4f8552   push rsi                                 
+    4f8553   push rbx                                 
+    4f8554   sub rsp, 0x98                            
+    4f855b   cmp byte ptr [rcx + 0x90], 0             
+    4f8562   mov rbx, rcx                             
+    4f8565   je 0x4f8580                              
+    4f8567   movsd xmm0, qword ptr [rcx + 0x98]       
+    4f856f   add rsp, 0x98                            
+    4f8576   pop rbx                                  
+    4f8577   pop rsi                                  
+    4f8578   pop rdi                                  
+    4f8579   pop rbp                                  
+
+--- 0x51d2f0   size=5 nins=2   
+    51d2f0   mov rax, qword ptr [rcx + 0x60]          
+    51d2f4   ret                                      
+
+--- 0x523050   size=174 nins=50   returns pointer
+    523050   push r12                                 
+    523052   push rbp                                 
+    523053   push rdi                                 
+    523054   push rsi                                 
+    523055   push rbx                                 
+    523056   sub rsp, 0x60                            
+    52305a   mov qword ptr [rsp + 0x20], 0            
+    523063   mov qword ptr [rsp + 0x28], 0            
+    52306c   mov byte ptr [rsp + 0x30], 0             
+    523071   call 0x4fc1d0                            ; (0x4fc1d0)
+    523076   mov rbx, qword ptr [rax + 0x18]          
+    52307a   lea rbp, [rax + 8]                       
+    52307e   cmp rbx, rbp                             
+    523081   je 0x5230fa                              
+
+--- 0x4fc5a0   size=8 nins=3   returns int (number of parts?)
+    4fc5a0   mov rax, qword ptr [rcx]                 
+    4fc5a3   mov rax, qword ptr [rax + 0x58]          
+    4fc5a7   ret                                      
+
+--- 0x4fc5b0 GetPart  size=319 nins=87   GetPart
+    4fc5b0   push r12                                 
+    4fc5b2   push rbp                                 
+    4fc5b3   push rdi                                 
+    4fc5b4   push rsi                                 
+    4fc5b5   push rbx                                 
+    4fc5b6   add rsp, -0x80                           
+    4fc5ba   mov rax, qword ptr [rcx]                 
+    4fc5bd   mov ebx, edx                             
+    4fc5bf   cmp ebx, dword ptr [rax + 0x58]          
+    4fc5c2   mov r12, rcx                             
+    4fc5c5   jae 0x4fc5e0                             
+    4fc5c7   mov rax, qword ptr [rax + 0x60]          
+    4fc5cb   mov rax, qword ptr [rax + rbx*8]         
+    4fc5cf   add rax, 0x40                            
+
+--- 0x4f7050   size=4 nins=2   returns int from a Part (demand?)
+    4f7050   mov eax, dword ptr [rcx + 0x24]          
+    4f7053   ret                                      
+
+--- 0x5f4310   size=35 nins=13   container ctor with 0xA078F0
+    5f4310   push rsi                                 
+    5f4311   push rbx                                 
+    5f4312   sub rsp, 0x28                            
+    5f4316   mov rbx, rcx                             
+    5f4319   mov qword ptr [rcx], rdx                 
+    5f431c   mov esi, r8d                             
+    5f431f   lea rcx, [rcx + 8]                       
+    5f4323   call 0x5f3900                            ; (0x5f3900)
+    5f4328   mov byte ptr [rbx + 0x10], sil           
+    5f432c   add rsp, 0x28                            
+    5f4330   pop rbx                                  
+    5f4331   pop rsi                                  
+    5f4332   ret                                      
+
+--- 0x5f4340   size=140 nins=45   cleanup
+    5f4340   push rdi                                 
+    5f4341   push rsi                                 
+    5f4342   push rbx                                 
+    5f4343   sub rsp, 0x20                            
+    5f4347   cmp byte ptr [rcx + 0x10], 0             
+    5f434b   lea rsi, [rcx + 8]                       
+    5f434f   mov rbx, rcx                             
+    5f4352   je 0x5f4363                              
+    5f4354   mov rcx, rsi                             
+    5f4357   add rsp, 0x20                            
+    5f435b   pop rbx                                  
+    5f435c   pop rsi                                  
+    5f435d   pop rdi                                  
+    5f435e   jmp 0x5f3960                             
+
+--- 0x90bef0   size=220 nins=67   
+    90bef0   push r13                                 
+    90bef2   push r12                                 
+    90bef4   push rbp                                 
+    90bef5   push rdi                                 
+    90bef6   push rsi                                 
+    90bef7   push rbx                                 
+    90bef8   sub rsp, 0x28                            
+    90befc   mov rax, qword ptr [rcx + 8]             
+    90bf00   sub rax, qword ptr [rcx]                 
+    90bf03   mov rsi, rcx                             
+    90bf06   mov r13, rdx                             
+    90bf09   sar rax, 3                               
+    90bf0d   test rax, rax                            
+    90bf10   je 0x90bf33                              
+
+--- 0x90caf0   size=209 nins=66   
+    90caf0   push r13                                 
+    90caf2   push r12                                 
+    90caf4   push rbp                                 
+    90caf5   push rdi                                 
+    90caf6   push rsi                                 
+    90caf7   push rbx                                 
+    90caf8   sub rsp, 0x28                            
+    90cafc   mov rax, qword ptr [rcx + 8]             
+    90cb00   sub rax, qword ptr [rcx]                 
+    90cb03   mov rsi, rcx                             
+    90cb06   mov r13, rdx                             
+    90cb09   sar rax, 2                               
+    90cb0d   test rax, rax                            
+    90cb10   je 0x90cb33                              
+
+==============================================================================
+5. remaining CoinLP construction sites
+==============================================================================
+
+--- owner 0x24e2d0 size=154, construction at 0x24e2db
+    24e2d0   push rbp                                 
+    24e2d1   push rdi                                 
+    24e2d2   push rsi                                 
+    24e2d3   push rbx                                 
+    24e2d4   sub rsp, 0x28                            
+    24e2d8   mov rbx, rcx                             
+    24e2db   call 0x267730                            ; (0x267730)   <<< construct
+    24e2e0   mov rcx, qword ptr [rbx]                 
+    24e2e3   xor edx, edx                             
+    24e2e5   mov dword ptr [rbx + 8], 0xffffffff      
+    24e2ec   mov qword ptr [rbx + 0x10], 0            
+    24e2f4   mov qword ptr [rbx + 0x18], 0            
+    24e2fc   mov qword ptr [rbx + 0x20], 0            
+    24e304   mov rax, qword ptr [rcx]                 
+    24e307   call qword ptr [rax + 0x18]              
+    24e30a   nop                                      
+    24e30b   add rsp, 0x28                            
+    24e30f   pop rbx                                  
+    24e310   pop rsi                                  
+    24e311   pop rdi                                  
+    24e312   pop rbp                                  
+    24e313   ret                                      
+    24e314   mov rbp, qword ptr [rbx + 0x18]          
+    24e318   mov rdi, rax                             
+    24e31b   mov rsi, qword ptr [rbx + 0x10]          
+    24e31f   cmp rbp, rsi                             
+    24e322   je 0x24e345                              
+    24e324   mov rcx, qword ptr [rsi + 0x18]          
+    24e328   test rcx, rcx                            
+    24e32b   je 0x24e332                              
+    24e32d   call 0x9984b0                            ; (0x9984b0)
+    24e332   mov rcx, qword ptr [rsi]                 
+    24e335   test rcx, rcx                            
+    24e338   je 0x24e33f                              
+    24e33a   call 0x9984b0                            ; (0x9984b0)
+    24e33f   add rsi, 0x78                            
+    24e343   jmp 0x24e31f                             
+    24e345   mov rcx, qword ptr [rbx + 0x10]          
+    24e349   test rcx, rcx                            
+
+--- owner 0x25b040 size=4303, construction at 0x25b0ef
+    25b0b2   movsd xmm3, qword ptr [rsp + 0x38]       
+    25b0b8   lea rax, [rbp + 0x40]                    
+    25b0bc   mov byte ptr [rbp + 0x30], 0             
+    25b0c0   minsd xmm7, xmm0                         
+    25b0c4   mov qword ptr [rbp + 0x40], 0            
+    25b0cc   lea rcx, [rbp + 0x58]                    
+    25b0d0   movsd qword ptr [rbp + 0x38], xmm3       
+    25b0d5   mov qword ptr [rbp + 0x48], 0            
+    25b0dd   movsd qword ptr [rbp + 0x28], xmm7       
+    25b0e2   mov qword ptr [rbp + 0x50], 0            
+    25b0ea   mov qword ptr [rsp + 0x58], rax          
+    25b0ef   call 0x267730                            ; (0x267730)   <<< construct
+    25b0f4   pxor xmm0, xmm0                          
+    25b0f8   lea rax, [rsp + 0x160]                   
+    25b100   movups xmmword ptr [rbp + 0x60], xmm0    
+    25b104   xor r9d, r9d                             
+    25b107   lea rdx, [rsp + 0x140]                   
+    25b10f   movsd qword ptr [rbp + 0x70], xmm6       
+    25b114   mov r8, rax                              
+    25b117   lea rcx, [rbp + 0x78]                    
+    25b11b   mov qword ptr [rsp + 0x50], rax          
+    25b120   mov dword ptr [rsp + 0x140], 0           
+    25b12b   mov dword ptr [rsp + 0x160], 0           
+    25b136   mov qword ptr [rsp + 0x48], rdx          
+    25b13b   call 0x266d50                            ; (0x266d50)
+    25b140   lea rax, [rbp + 0xa0]                    
+    25b147   test r12, r12                            
+    25b14a   mov dword ptr [rbp + 0x88], 0xffffffff   
+    25b154   mov dword ptr [rbp + 0x8c], 0xffffffff   
+    25b15e   mov dword ptr [rbp + 0x90], 0xffffffff   
+
+--- owner 0x6a6ad0 size=3369, construction at 0x6a6b73
+    6a6b39   movaps xmm8, xmmword ptr [rsp + 0x370]   
+    6a6b42   add rsp, 0x388                           
+    6a6b49   pop rbx                                  
+    6a6b4a   pop rsi                                  
+    6a6b4b   pop rdi                                  
+    6a6b4c   pop rbp                                  
+    6a6b4d   pop r12                                  
+    6a6b4f   pop r13                                  
+    6a6b51   pop r14                                  
+    6a6b53   pop r15                                  
+    6a6b55   ret                                      
+    6a6b56   mov rcx, qword ptr [r12]                 
+    6a6b5a   call 0x523260                            ; (0x523260)
+    6a6b5f   test al, al                              
+    6a6b61   jne 0x6a6b1f                             
+    6a6b63   lea rax, [rsp + 0x70]                    
+    6a6b68   mov rdi, rax                             
+    6a6b6b   mov rcx, rax                             
+    6a6b6e   mov qword ptr [rsp + 0x68], rax          
+    6a6b73   call 0x267730                            ; (0x267730)   <<< construct
+    6a6b78   mov rdx, rdi                             
+    6a6b7b   mov rcx, r12                             
+    6a6b7e   call 0x7d7200                            ; BuildAndSolveLp(0x7d7200)
+    6a6b83   cmp qword ptr [rsp + 0x3e0], 0           
+    6a6b8c   setne dl                                 
+    6a6b8f   and dl, al                               
+    6a6b91   mov byte ptr [rsp + 0x57], dl            
+    6a6b95   je 0x6a70ed                              
+    6a6b9b   mov rcx, qword ptr [rsp + 0x70]          
+    6a6ba0   mov rax, qword ptr [rcx]                 
+    6a6ba3   call qword ptr [rax + 0x50]              
+    6a6ba6   mov rbx, qword ptr [r12 + 0x18]          
+    6a6bab   mov rdi, rax                             
+    6a6bae   movabs rax, 0x21cfb2b78c13521d           
+    6a6bb8   sub rbx, qword ptr [r12 + 0x10]          
+    6a6bbd   lea rcx, [rsp + 0x80]                    
+    6a6bc5   mov rdx, qword ptr [r12]                 
+    6a6bc9   sar rbx, 3                               
+    6a6bcd   imul rbx, rax                            
+    6a6bd1   call 0x5238b0                            ; (0x5238b0)
+    6a6bd6   lea rax, [rsp + 0x1c0]                   
+    6a6bde   mov rcx, rax                             
+    6a6be1   mov qword ptr [rsp + 0x60], rax          
+
+==============================================================================
+6. leftovers from findings_lp.md section 8
+==============================================================================
+--- Row::Squeezer cost function 0x1380D0 ---
+size=2375 nins=476
+    1380d0   push r14                                 
+    1380d2   push r13                                 
+    1380d4   push r12                                 
+    1380d6   push rbp                                 
+    1380d7   push rdi                                 
+    1380d8   push rsi                                 
+    1380d9   push rbx                                 
+    1380da   sub rsp, 0x150                           
+    1380e1   movaps xmmword ptr [rsp + 0x100], xmm6   
+    1380e9   movaps xmmword ptr [rsp + 0x110], xmm7   
+    1380f1   movaps xmmword ptr [rsp + 0x120], xmm8   
+    1380fa   movaps xmmword ptr [rsp + 0x130], xmm9   
+    138103   movaps xmmword ptr [rsp + 0x140], xmm10  
+    13810c   cmp byte ptr [rdx + 8], 0                
+    138110   mov rbx, rcx                             
+    138113   mov rsi, rdx                             
+    138116   mov rdi, r8                              
+    138119   mov byte ptr [rcx], 0                    
+    13811c   mov rbp, r9                              
+    13811f   jne 0x138161                             
+    138121   movaps xmm6, xmmword ptr [rsp + 0x100]   
+    138129   mov rax, rbx                             
+    13812c   movaps xmm7, xmmword ptr [rsp + 0x110]   
+    138134   movaps xmm8, xmmword ptr [rsp + 0x120]   
+    13813d   movaps xmm9, xmmword ptr [rsp + 0x130]   
+    138146   movaps xmm10, xmmword ptr [rsp + 0x140]  
+    13814f   add rsp, 0x150                           
+    138156   pop rbx                                  
+    138157   pop rsi                                  
+    138158   pop rdi                                  
+
+--- who references the LSQR message block 0x9A74A0 ---
+    0x3b84e0   @0x3ba0a4   -> 0x9a74a0  'The exact solution is x = 0'
+    0x3b84e0   @0x3ba114   -> 0x9a74a0  'The exact solution is x = 0'
+
+--- non polymorphic Prc types: strings that name them ---
+    @0x9c1c96   'AlphaSurfacePricer '
+    @0x9c1cae   'DimPricer '
+    @0xa22260   'N3Prc10BoostAlphaE'
+    @0xa222a0   'N3Prc13SurfaceCoeffsE'
+    @0xa22340   'N3Prc8DimAlphaE'

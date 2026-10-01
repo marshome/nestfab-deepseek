@@ -1,0 +1,16 @@
+\begin{algorithm}[ht]
+    \caption{\texttt{update\_weights}}
+    \begin{algorithmic}[1]
+        \State $e_\text{max} \gets$ max$\{$\nameref{alg:eval_pair}$ : a,b \in I,  a \neq b\}$  \Comment{Alg. \ref{alg:eval_pair}}
+        \For{$a,b \in I: a \neq b$} \Comment{all pairs of items}
+            \State $e \gets$ \nameref{alg:eval_pair} \Comment{Alg. \ref{alg:eval_pair}}
+            \If{$e > 0$}
+                \State $m \gets \texttt{M}_l + (\texttt{M}_u - \texttt{M}_l) \cdot (e / e_\text{max})$ \Comment{Table \ref{tab:params}}
+            \Else
+                \State $m \gets \texttt{M}_d$ \Comment{Table \ref{tab:params}}
+            \EndIf
+            \State $w_{ab} \gets$ max$\{1, w_{ab} \cdot m\}$
+        \EndFor
+    \end{algorithmic}
+    \label{alg:iterate_weights}
+\end{algorithm}

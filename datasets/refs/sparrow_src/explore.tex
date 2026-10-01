@@ -1,0 +1,21 @@
+\begin{algorithm}[ht]
+    \begin{algorithmic}[1]
+        \State $s^* \gets$ construct initial solution and shrink strip by $\texttt{R}_{x}$
+        \While{$\texttt{TL}_{x}$ not reached}
+            \State $s \gets \Call{separate}{\texttt{K}_x,\texttt{N}_x}$ \Comment{Alg. \ref{alg:separate}}
+            \If{$s$ \textbf{is} feasible}
+                \State $s^* \gets s$
+                \State shrink strip by $\texttt{R}_{x}$
+                \State $\mathcal{S} \gets \emptyset $    
+            \Else
+                \State $\mathcal{S} \gets \mathcal{S} \cup \{s\}$ \Comment{pool of infeasible solutions}
+                \State $\hat{s} \gets$ select from $\mathcal{S}$
+                \State $s' \gets$ disrupt $\hat{s}$ by swapping two large items
+                \State restore to $s'$   
+            \EndIf
+        \EndWhile
+        \State \Return $s^*$
+    \end{algorithmic}
+    \caption{\texttt{explore}}
+    \label{alg:explore}
+\end{algorithm}

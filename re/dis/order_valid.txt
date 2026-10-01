@@ -1,0 +1,116 @@
+### fn 0x1c7c0 name=None end=0x1c97c size=444
+STRINGS: 0x9add9d:'// BadPartGeometry', 0x9addb0:'// BadSheetGeometry', 0x9addc4:'// BadSheetPrices', 0x9addd6:'// BadCommonCutGaps'
+CALLERS: 0x1e70:None, 0x1c7c0:None
+CALLEES: 0x1c820:None, 0x1c8a8:None, 0x1c8bf:None, 0x1c8e0:None, 0x1c930:None, 0x1c955:None, 0x64aea0:None
+
+  0001c7c0  53                   push    rbx
+  0001c7c1  4883ec20             sub     rsp, 0x20
+  0001c7c5  488b8180010000       mov     rax, qword ptr [rcx + 0x180]
+  0001c7cc  4c8b8988010000       mov     r9, qword ptr [rcx + 0x188]
+  0001c7d3  4889d3               mov     rbx, rdx
+  0001c7d6  4c39c8               cmp     rax, r9
+  0001c7d9  750a                 jne     0x1c7e5
+  0001c7db  eb43                 jmp     0x1c820  ; -> 0x1c820 None
+  0001c7dd  0f1f00               nop     dword ptr [rax]
+  0001c7e0  4939c1               cmp     r9, rax
+  0001c7e3  743b                 je      0x1c820
+  0001c7e5  4c8b00               mov     r8, qword ptr [rax]
+  0001c7e8  4883c008             add     rax, 8
+  0001c7ec  4180b80802000000     cmp     byte ptr [r8 + 0x208], 0
+  0001c7f4  75ea                 jne     0x1c7e0
+  0001c7f6  4c8983a0000000       mov     qword ptr [rbx + 0xa0], r8
+  0001c7fd  488d0d99159900       lea     rcx, [rip + 0x991599]  ; "// BadPartGeometry"
+  0001c804  e897e66200           call    0x64aea0  ; -> 0x64aea0 None
+  0001c809  31c0                 xor     eax, eax
+  0001c80b  c7434c01000000       mov     dword ptr [rbx + 0x4c], 1
+  0001c812  0faef0               mfence  
+  0001c815  4883c420             add     rsp, 0x20
+  0001c819  5b                   pop     rbx
+  0001c81a  c3                   ret     
+  0001c81b  0f1f440000           nop     dword ptr [rax + rax]
+  0001c820  488b81b0010000       mov     rax, qword ptr [rcx + 0x1b0]
+  0001c827  4c8b91b8010000       mov     r10, qword ptr [rcx + 0x1b8]
+  0001c82e  4c39d0               cmp     rax, r10
+  0001c831  7475                 je      0x1c8a8
+  0001c833  4c8b18               mov     r11, qword ptr [rax]
+  0001c836  4883c008             add     rax, 8
+  0001c83a  4989c0               mov     r8, rax
+  0001c83d  4180bb6001000000     cmp     byte ptr [r11 + 0x160], 0
+  0001c845  4d89d9               mov     r9, r11
+  0001c848  7517                 jne     0x1c861
+  0001c84a  e991000000           jmp     0x1c8e0  ; -> 0x1c8e0 None
+  0001c84f  90                   nop     
+  0001c850  4d8b08               mov     r9, qword ptr [r8]
+  0001c853  4983c008             add     r8, 8
+  0001c857  4180b96001000000     cmp     byte ptr [r9 + 0x160], 0
+  0001c85f  747f                 je      0x1c8e0
+  0001c861  4d39c2               cmp     r10, r8
+  0001c864  75ea                 jne     0x1c850
+  0001c866  f2410f108b38010000   movsd   xmm1, qword ptr [r11 + 0x138]
+  0001c86f  660fefc0             pxor    xmm0, xmm0
+  0001c873  660f2ec8             ucomisd xmm1, xmm0
+  0001c877  0f8ad8000000         jp      0x1c955
+  0001c87d  7421                 je      0x1c8a0
+  0001c87f  e9d1000000           jmp     0x1c955  ; -> 0x1c955 None
+  0001c884  4d8b09               mov     r9, qword ptr [r9]
+  0001c887  4883c008             add     rax, 8
+  0001c88b  66410f2e8138010000   ucomisd xmm0, qword ptr [r9 + 0x138]
+  0001c894  0f8a96000000         jp      0x1c930
+  0001c89a  0f8590000000         jne     0x1c930
+  0001c8a0  4c39c0               cmp     rax, r8
+  0001c8a3  4989c1               mov     r9, rax
+  0001c8a6  75dc                 jne     0x1c884
+  0001c8a8  0fb6415c             movzx   eax, byte ptr [rcx + 0x5c]
+  0001c8ac  84c0                 test    al, al
+  0001c8ae  7455                 je      0x1c905
+  0001c8b0  f20f1001             movsd   xmm0, qword ptr [rcx]
+  0001c8b4  f20f104960           movsd   xmm1, qword ptr [rcx + 0x60]
+  0001c8b9  660f2ec8             ucomisd xmm1, xmm0
+  0001c8bd  7251                 jb      0x1c910
+  0001c8bf  488d0d10159900       lea     rcx, [rip + 0x991510]  ; "// BadCommonCutGaps"
+  0001c8c6  e8d5e56200           call    0x64aea0  ; -> 0x64aea0 None
+  0001c8cb  31c0                 xor     eax, eax
+  0001c8cd  c7434c10000000       mov     dword ptr [rbx + 0x4c], 0x10
+  0001c8d4  0faef0               mfence  
+  0001c8d7  4883c420             add     rsp, 0x20
+  0001c8db  5b                   pop     rbx
+  0001c8dc  c3                   ret     
+  0001c8dd  0f1f00               nop     dword ptr [rax]
+  0001c8e0  4c898ba8000000       mov     qword ptr [rbx + 0xa8], r9
+  0001c8e7  488d0dc2149900       lea     rcx, [rip + 0x9914c2]  ; "// BadSheetGeometry"
+  0001c8ee  e8ade56200           call    0x64aea0  ; -> 0x64aea0 None
+  0001c8f3  31c0                 xor     eax, eax
+  0001c8f5  c7434c0e000000       mov     dword ptr [rbx + 0x4c], 0xe
+  0001c8fc  0faef0               mfence  
+  0001c8ff  4883c420             add     rsp, 0x20
+  0001c903  5b                   pop     rbx
+  0001c904  c3                   ret     
+  0001c905  b801000000           mov     eax, 1
+  0001c90a  4883c420             add     rsp, 0x20
+  0001c90e  5b                   pop     rbx
+  0001c90f  c3                   ret     
+  0001c910  660f2e05a8189900     ucomisd xmm0, qword ptr [rip + 0x9918a8]  ; DATA 0x9ae1c0
+  0001c918  0f8af7feffff         jp      0x1c815
+  0001c91e  0f85f1feffff         jne     0x1c815
+  0001c924  eb99                 jmp     0x1c8bf  ; -> 0x1c8bf None
+  0001c926  662e0f1f840000000000 nop     word ptr cs:[rax + rax]
+  0001c930  4c899ba8000000       mov     qword ptr [rbx + 0xa8], r11
+  0001c937  488d0d86149900       lea     rcx, [rip + 0x991486]  ; "// BadSheetPrices"
+  0001c93e  e85de56200           call    0x64aea0  ; -> 0x64aea0 None
+  0001c943  31c0                 xor     eax, eax
+  0001c945  c7434c0f000000       mov     dword ptr [rbx + 0x4c], 0xf
+  0001c94c  0faef0               mfence  
+  0001c94f  4883c420             add     rsp, 0x20
+  0001c953  5b                   pop     rbx
+  0001c954  c3                   ret     
+  0001c955  660f2ec1             ucomisd xmm0, xmm1
+  0001c959  7217                 jb      0x1c972
+  0001c95b  ebd3                 jmp     0x1c930  ; -> 0x1c930 None
+  0001c95d  0f1f00               nop     dword ptr [rax]
+  0001c960  4c8b18               mov     r11, qword ptr [rax]
+  0001c963  4883c008             add     rax, 8
+  0001c967  66410f2e8338010000   ucomisd xmm0, qword ptr [r11 + 0x138]
+  0001c970  73be                 jae     0x1c930
+  0001c972  4939c0               cmp     r8, rax
+  0001c975  75e9                 jne     0x1c960
+  0001c977  e92cffffff           jmp     0x1c8a8  ; -> 0x1c8a8 None

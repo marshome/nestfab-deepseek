@@ -1,0 +1,479 @@
+#### 0x4D64C0 pricer factory  size=2257 nins=478
+4d64c0   push r15                                    
+4d64c2   push r14                                    
+4d64c4   push r13                                    
+4d64c6   push r12                                    
+4d64c8   push rbp                                    
+4d64c9   push rdi                                    
+4d64ca   push rsi                                    
+4d64cb   push rbx                                    
+4d64cc   sub rsp, 0x158                              
+4d64d3   movaps xmmword ptr [rsp + 0x110], xmm6      
+4d64db   movaps xmmword ptr [rsp + 0x120], xmm7      
+4d64e3   movaps xmmword ptr [rsp + 0x130], xmm8      
+4d64ec   movaps xmmword ptr [rsp + 0x140], xmm9      
+4d64f5   mov rsi, rdx                                
+4d64f8   mov rbx, rcx                                
+4d64fb   mov rdx, qword ptr [rdx + 0x58]             
+4d64ff   mov r13, r8                                 
+4d6502   mov rcx, qword ptr [rsi + 0x50]             
+4d6506   cmp rcx, rdx                                
+4d6509   je 0x4d6890                                 
+4d650f   mov rax, qword ptr [r8 + 8]                 
+4d6513   sub rdx, rcx                                
+4d6516   sub rax, qword ptr [r8]                     
+4d6519   sar rdx, 3                                  
+4d651d   movabs r8, 0x6db6db6db6db6db7               
+4d6527   sar rax, 4                                  
+4d652b   imul rax, r8                                
+4d652f   cmp rax, rdx                                
+4d6532   je 0x4d6725                                 
+4d6538   lea rbp, [rsp + 0xa0]                       
+4d6540   xor r8d, r8d                                
+4d6543   mov qword ptr [rsp + 0xa0], 0x31            
+4d654f   lea rdi, [rsp + 0xd0]                       
+4d6557   mov rdx, rbp                                
+4d655a   lea rax, [rdi + 0x10]                       
+4d655e   mov rcx, rdi                                
+4d6561   mov qword ptr [rsp + 0xd0], rax             
+4d6569   lea r12, [rsp + 0x80]                       
+4d6571   call 0x910ba0                                  ; basic_string::_M_create(0x910ba0)
+4d6576   mov rdx, qword ptr [rsp + 0xa0]             
+4d657e   xor r8d, r8d                                
+4d6581   movabs rcx, 0x69732e7374726170              
+4d658b   mov qword ptr [rsp + 0xd0], rax             
+4d6593   mov qword ptr [rsp + 0xe0], rdx             
+4d659b   movabs rdx, 0x65636972705f6369              
+4d65a5   mov qword ptr [rax], rcx                    
+4d65a8   movabs rcx, 0x203d3d202928657a              
+4d65b2   mov qword ptr [rax + 8], rcx                
+4d65b6   movabs rcx, 0x6669636570735f6d              
+4d65c0   mov qword ptr [rax + 0x10], rcx             
+4d65c4   movabs rcx, 0x636972705f6d2e73              
+4d65ce   mov qword ptr [rax + 0x18], rdx             
+4d65d2   movabs rdx, 0x28657a69732e7365              
+4d65dc   mov qword ptr [rax + 0x20], rcx             
+4d65e0   movabs rcx, 0x65746172656e6547              
+4d65ea   mov qword ptr [rax + 0x28], rdx             
+4d65ee   mov byte ptr [rax + 0x30], 0x29             
+4d65f2   mov rax, qword ptr [rsp + 0xa0]             
+4d65fa   mov rdx, qword ptr [rsp + 0xd0]             
+4d6602   mov qword ptr [rsp + 0xd8], rax             
+4d660a   mov byte ptr [rdx + rax], 0                 
+4d660e   lea rax, [rbp + 0x10]                       
+4d6612   mov qword ptr [rsp + 0xb0], rcx             
+4d661a   mov ecx, 0x7365                             
+4d661f   mov qword ptr [rsp + 0xa0], rax             
+4d6627   lea rdx, [rsp + 0x70]                       
+4d662c   mov word ptr [rbp + 0x1c], cx               
+4d6630   lea rax, [r12 + 0x10]                       
+4d6635   mov rcx, r12                                
+4d6638   mov dword ptr [rbp + 0x18], 0x63697250      
+4d663f   mov qword ptr [rsp + 0x80], rax             
+4d6647   mov qword ptr [rsp + 0xa8], 0xe             
+4d6653   mov byte ptr [rsp + 0xbe], 0                
+4d665b   mov qword ptr [rsp + 0x70], 0x1e            
+4d6664   call 0x910ba0                                  ; basic_string::_M_create(0x910ba0)
+4d6669   mov rdx, qword ptr [rsp + 0x70]             
+4d666e   mov qword ptr [rsp + 0x80], rax             
+4d6676   mov r9, rdi                                 
+4d6679   mov r8, rbp                                 
+4d667c   movabs rcx, 0x7365636972705c72              
+4d6686   mov qword ptr [rsp + 0x90], rdx             
+4d668e   movabs rdx, 0x65636972705c2e2e              
+4d6698   mov qword ptr [rax], rdx                    
+4d669b   movabs rdx, 0x746172656e65675f              
+4d66a5   mov qword ptr [rax + 0x10], rdx             
+4d66a9   mov edx, 0x7070                             
+4d66ae   mov qword ptr [rax + 8], rcx                
+4d66b2   mov rcx, r12                                
+4d66b5   mov dword ptr [rax + 0x18], 0x632e726f      
+4d66bc   mov word ptr [rax + 0x1c], dx               
+4d66c0   mov rax, qword ptr [rsp + 0x70]             
+4d66c5   mov rdx, qword ptr [rsp + 0x80]             
+4d66cd   mov qword ptr [rsp + 0x88], rax             
+4d66d5   mov byte ptr [rdx + rax], 0                 
+4d66d9   mov edx, 0x62                               
+4d66de   call 0x60a620                                  ; (0x60a620)
+4d66e3   mov rcx, qword ptr [rsp + 0x80]             
+4d66eb   add r12, 0x10                               
+4d66ef   cmp rcx, r12                                
+4d66f2   je 0x4d66f9                                 
+4d66f4   call 0x9984b0                                  ; (0x9984b0)
+4d66f9   mov rcx, qword ptr [rsp + 0xa0]             
+4d6701   add rbp, 0x10                               
+4d6705   cmp rcx, rbp                                
+4d6708   je 0x4d670f                                 
+4d670a   call 0x9984b0                                  ; (0x9984b0)
+4d670f   mov rcx, qword ptr [rsp + 0xd0]             
+4d6717   add rdi, 0x10                               
+4d671b   cmp rcx, rdi                                
+4d671e   je 0x4d6725                                 
+4d6720   call 0x9984b0                                  ; (0x9984b0)
+4d6725   lea r12, [rbx + 0x10]                       
+4d6729   mov rdi, qword ptr [rsi + 0x38]             
+4d672d   mov qword ptr [rbx], r12                    
+4d6730   mov rbp, qword ptr [rsi + 0x30]             
+4d6734   mov rax, rbp                                
+4d6737   add rax, rdi                                
+4d673a   je 0x4d6750                                 
+4d673c   test rbp, rbp                               
+4d673f   jne 0x4d6750                                
+4d6741   lea rcx, [rip + 0x5033d8]                      ; STR@9d9b20 'basic_string::_M_construct null not valid'
+4d6748   call 0x97a830                                  ; (0x97a830)
+4d674d   nop dword ptr [rax]                         
+4d6750   cmp rdi, 0xf                                
+4d6754   mov qword ptr [rsp + 0xd0], rdi             
+4d675c   ja 0x4d6841                                 
+4d6762   cmp rdi, 1                                  
+4d6766   je 0x4d6881                                 
+4d676c   test rdi, rdi                               
+4d676f   mov rax, r12                                
+4d6772   jne 0x4d6c20                                
+4d6778   mov qword ptr [rbx + 8], rdi                
+4d677c   xor r9d, r9d                                
+4d677f   mov byte ptr [rax + rdi], 0                 
+4d6783   mov rdi, qword ptr [rsi + 0x58]             
+4d6787   sub rdi, qword ptr [rsi + 0x50]             
+4d678b   mov qword ptr [rbx + 0x20], 0               
+4d6793   mov qword ptr [rbx + 0x28], 0               
+4d679b   mov qword ptr [rbx + 0x30], 0               
+4d67a3   mov rax, rdi                                
+4d67a6   sar rax, 3                                  
+4d67aa   test rax, rax                               
+4d67ad   je 0x4d67cd                                 
+4d67af   movabs rdx, 0x1fffffffffffffff              
+4d67b9   cmp rax, rdx                                
+4d67bc   ja 0x4d6c81                                 
+4d67c2   mov rcx, rdi                                
+4d67c5   call 0x998500                                  ; (0x998500)
+4d67ca   mov r9, rax                                 
+4d67cd   add rdi, r9                                 
+4d67d0   mov qword ptr [rbx + 0x20], r9              
+4d67d4   mov qword ptr [rbx + 0x28], r9              
+4d67d8   mov qword ptr [rbx + 0x30], rdi             
+4d67dc   mov rdx, qword ptr [rsi + 0x50]             
+4d67e0   mov rsi, qword ptr [rsi + 0x58]             
+4d67e4   sub rsi, rdx                                
+4d67e7   mov rax, rsi                                
+4d67ea   sar rax, 3                                  
+4d67ee   test rax, rax                               
+4d67f1   je 0x4d6801                                 
+4d67f3   mov rcx, r9                                 
+4d67f6   mov r8, rsi                                 
+4d67f9   call 0x63f2f0                                  ; (0x63f2f0)
+4d67fe   mov r9, rax                                 
+4d6801   add r9, rsi                                 
+4d6804   mov qword ptr [rbx + 0x28], r9              
+4d6808   movaps xmm6, xmmword ptr [rsp + 0x110]      
+4d6810   mov rax, rbx                                
+4d6813   movaps xmm7, xmmword ptr [rsp + 0x120]      
+4d681b   movaps xmm8, xmmword ptr [rsp + 0x130]      
+4d6824   movaps xmm9, xmmword ptr [rsp + 0x140]      
+4d682d   add rsp, 0x158                              
+4d6834   pop rbx                                     
+4d6835   pop rsi                                     
+4d6836   pop rdi                                     
+4d6837   pop rbp                                     
+4d6838   pop r12                                     
+4d683a   pop r13                                     
+4d683c   pop r14                                     
+4d683e   pop r15                                     
+4d6840   ret                                         
+4d6841   lea rdx, [rsp + 0xd0]                       
+4d6849   mov rcx, rbx                                
+4d684c   xor r8d, r8d                                
+4d684f   call 0x910ba0                                  ; basic_string::_M_create(0x910ba0)
+4d6854   mov rcx, rax                                
+4d6857   mov qword ptr [rbx], rax                    
+4d685a   mov rax, qword ptr [rsp + 0xd0]             
+4d6862   mov qword ptr [rbx + 0x10], rax             
+4d6866   mov r8, rdi                                 
+4d6869   mov rdx, rbp                                
+4d686c   call 0x63f2f8                                  ; (0x63f2f8)
+4d6871   mov rdi, qword ptr [rsp + 0xd0]             
+4d6879   mov rax, qword ptr [rbx]                    
+4d687c   jmp 0x4d6778                                
+4d6881   movzx eax, byte ptr [rbp]                   
+4d6885   mov byte ptr [rbx + 0x10], al               
+4d6888   mov rax, r12                                
+4d688b   jmp 0x4d6778                                
+4d6890   lea rdi, [rsp + 0xd0]                       
+4d6898   movsd xmm9, qword ptr [rsi]                 
+4d689d   lea rbp, [rsp + 0xa0]                       
+4d68a5   mov rcx, rdi                                
+4d68a8   call 0x4d9ad0                                  ; (0x4d9ad0)
+4d68ad   mov rcx, rbp                                
+4d68b0   mov r15, qword ptr [rsp + 0xd0]             
+4d68b8   movsd xmm8, qword ptr [rsi + 8]             
+4d68be   call 0x4d9b00                                  ; (0x4d9b00)
+4d68c3   lea r12, [rsp + 0x80]                       
+4d68cb   mov r14, qword ptr [rsp + 0xa0]             
+4d68d3   movsd xmm1, qword ptr [rip + 0x50332d]         ; virt@9d9c08
+4d68db   mov rcx, r12                                
+4d68de   movsd xmm7, qword ptr [rsi + 0x10]          
+4d68e3   call 0x4d9b30                                  ; (0x4d9b30)
+4d68e8   mov rax, qword ptr [rsp + 0x80]             
+4d68f0   lea rcx, [rsp + 0x70]                       
+4d68f5   movsd xmm1, qword ptr [rip + 0x5032eb]         ; virt@9d9be8
+4d68fd   movsd xmm6, qword ptr [rsi + 0x18]          
+4d6902   mov qword ptr [rsp + 0x58], rax             
+4d6907   call 0x4d9b30                                  ; (0x4d9b30)
+4d690c   mov r9, qword ptr [rsp + 0x58]              
+4d6911   lea rcx, [rsp + 0x60]                       
+4d6916   movsd qword ptr [rsp + 0x40], xmm9          
+4d691d   movapd xmm2, xmm6                           
+4d6921   mov rdx, qword ptr [rsp + 0x70]             
+4d6926   mov qword ptr [rsp + 0x38], r15             
+4d692b   movsd qword ptr [rsp + 0x30], xmm8          
+4d6932   mov qword ptr [rsp + 0x28], r14             
+4d6937   movsd qword ptr [rsp + 0x20], xmm7          
+4d693d   call 0x4d9f80                                  ; (0x4d9f80)
+4d6942   mov rcx, qword ptr [rsp + 0x70]             
+4d6947   test rcx, rcx                               
+4d694a   je 0x4d6952                                 
+4d694c   mov rax, qword ptr [rcx]                    
+4d694f   call qword ptr [rax + 8]                    
+4d6952   mov rcx, qword ptr [rsp + 0x80]             
+4d695a   test rcx, rcx                               
+4d695d   je 0x4d6965                                 
+4d695f   mov rax, qword ptr [rcx]                    
+4d6962   call qword ptr [rax + 8]                    
+4d6965   mov rcx, qword ptr [rsp + 0xa0]             
+4d696d   test rcx, rcx                               
+4d6970   je 0x4d6978                                 
+4d6972   mov rax, qword ptr [rcx]                    
+4d6975   call qword ptr [rax + 8]                    
+4d6978   mov rcx, qword ptr [rsp + 0xd0]             
+4d6980   test rcx, rcx                               
+4d6983   je 0x4d698b                                 
+4d6985   mov rax, qword ptr [rcx]                    
+4d6988   call qword ptr [rax + 8]                    
+4d698b   movsd xmm1, qword ptr [rsi + 0x20]          
+4d6990   mov rcx, rbp                                
+4d6993   call 0x4d9b70                                  ; (0x4d9b70)
+4d6998   mov r8, qword ptr [rsp + 0x60]              
+4d699d   mov r9, rbp                                 
+4d69a0   mov rdx, r13                                
+4d69a3   mov rcx, rdi                                
+4d69a6   call 0x4da720                                  ; (0x4da720)
+4d69ab   mov rdx, qword ptr [rsp + 0xd0]             
+4d69b3   lea rcx, [rdi + 0x10]                       
+4d69b7   lea r13, [rsi + 0x68]                       
+4d69bb   mov rax, qword ptr [rsi + 0x68]             
+4d69bf   lea r8, [rsi + 0x78]                        
+4d69c3   cmp rdx, rcx                                
+4d69c6   je 0x4d6c61                                 
+4d69cc   cmp rax, r8                                 
+4d69cf   je 0x4d6c3f                                 
+4d69d5   movdqu xmm0, xmmword ptr [rsp + 0xd8]       
+4d69de   test rax, rax                               
+4d69e1   mov qword ptr [rsi + 0x68], rdx             
+4d69e5   mov rcx, qword ptr [rsi + 0x78]             
+4d69e9   movups xmmword ptr [rsi + 0x70], xmm0       
+4d69ed   je 0x4d6c50                                 
+4d69f3   mov qword ptr [rsp + 0xd0], rax             
+4d69fb   mov qword ptr [rsp + 0xe0], rcx             
+4d6a03   mov qword ptr [rsp + 0xd8], 0               
+4d6a0f   mov byte ptr [rax], 0                       
+4d6a12   mov rax, qword ptr [rsp + 0xf0]             
+4d6a1a   mov rcx, qword ptr [rsi + 0x88]             
+4d6a21   mov qword ptr [rsp + 0xf0], 0               
+4d6a2d   mov qword ptr [rsi + 0x88], rax             
+4d6a34   mov rax, qword ptr [rsp + 0xf8]             
+4d6a3c   mov qword ptr [rsp + 0xf8], 0               
+4d6a48   test rcx, rcx                               
+4d6a4b   mov qword ptr [rsi + 0x90], rax             
+4d6a52   mov rax, qword ptr [rsp + 0x100]            
+4d6a5a   mov qword ptr [rsp + 0x100], 0              
+4d6a66   mov qword ptr [rsi + 0x98], rax             
+4d6a6d   je 0x4d6a86                                 
+4d6a6f   call 0x9984b0                                  ; (0x9984b0)
+4d6a74   mov rcx, qword ptr [rsp + 0xf0]             
+4d6a7c   test rcx, rcx                               
+4d6a7f   je 0x4d6a86                                 
+4d6a81   call 0x9984b0                                  ; (0x9984b0)
+4d6a86   mov rcx, qword ptr [rsp + 0xd0]             
+4d6a8e   add rdi, 0x10                               
+4d6a92   cmp rcx, rdi                                
+4d6a95   je 0x4d6a9c                                 
+4d6a97   call 0x9984b0                                  ; (0x9984b0)
+4d6a9c   mov rcx, qword ptr [rsp + 0xa0]             
+4d6aa4   add rbp, 0x10                               
+4d6aa8   cmp rcx, rbp                                
+4d6aab   je 0x4d6ab2                                 
+4d6aad   call 0x9984b0                                  ; (0x9984b0)
+4d6ab2   movsd xmm1, qword ptr [rsi + 0x28]          
+4d6ab7   mov rcx, r13                                
+4d6aba   call 0x4d4d30                                  ; (0x4d4d30)
+4d6abf   lea r13, [rbx + 0x10]                       
+4d6ac3   mov rdi, qword ptr [rsi + 0x70]             
+4d6ac7   mov qword ptr [rbx], r13                    
+4d6aca   mov rbp, qword ptr [rsi + 0x68]             
+4d6ace   mov rax, rbp                                
+4d6ad1   add rax, rdi                                
+4d6ad4   je 0x4d6ae7                                 
+4d6ad6   test rbp, rbp                               
+4d6ad9   jne 0x4d6ae7                                
+4d6adb   lea rcx, [rip + 0x50303e]                      ; STR@9d9b20 'basic_string::_M_construct null not valid'
+4d6ae2   call 0x97a830                                  ; (0x97a830)
+4d6ae7   cmp rdi, 0xf                                
+4d6aeb   mov qword ptr [rsp + 0x80], rdi             
+4d6af3   ja 0x4d6bc4                                 
+4d6af9   cmp rdi, 1                                  
+4d6afd   je 0x4d6c30                                 
+4d6b03   test rdi, rdi                               
+4d6b06   mov rax, r13                                
+4d6b09   jne 0x4d6c79                                
+4d6b0f   mov qword ptr [rbx + 8], rdi                
+4d6b13   xor r9d, r9d                                
+4d6b16   mov byte ptr [rax + rdi], 0                 
+4d6b1a   mov rdi, qword ptr [rsi + 0x90]             
+4d6b21   sub rdi, qword ptr [rsi + 0x88]             
+4d6b28   mov qword ptr [rbx + 0x20], 0               
+4d6b30   mov qword ptr [rbx + 0x28], 0               
+4d6b38   mov qword ptr [rbx + 0x30], 0               
+4d6b40   mov rax, rdi                                
+4d6b43   sar rax, 3                                  
+4d6b47   test rax, rax                               
+4d6b4a   je 0x4d6b6a                                 
+4d6b4c   movabs rdx, 0x1fffffffffffffff              
+4d6b56   cmp rax, rdx                                
+4d6b59   ja 0x4d6d75                                 
+4d6b5f   mov rcx, rdi                                
+4d6b62   call 0x998500                                  ; (0x998500)
+4d6b67   mov r9, rax                                 
+4d6b6a   add rdi, r9                                 
+4d6b6d   mov qword ptr [rbx + 0x20], r9              
+4d6b71   mov qword ptr [rbx + 0x28], r9              
+4d6b75   mov qword ptr [rbx + 0x30], rdi             
+4d6b79   mov rdx, qword ptr [rsi + 0x88]             
+4d6b80   mov rsi, qword ptr [rsi + 0x90]             
+4d6b87   sub rsi, rdx                                
+4d6b8a   mov rax, rsi                                
+4d6b8d   sar rax, 3                                  
+4d6b91   test rax, rax                               
+4d6b94   je 0x4d6ba4                                 
+4d6b96   mov rcx, r9                                 
+4d6b99   mov r8, rsi                                 
+4d6b9c   call 0x63f2f0                                  ; (0x63f2f0)
+4d6ba1   mov r9, rax                                 
+4d6ba4   mov rcx, qword ptr [rsp + 0x60]             
+4d6ba9   add r9, rsi                                 
+4d6bac   mov qword ptr [rbx + 0x28], r9              
+4d6bb0   test rcx, rcx                               
+4d6bb3   je 0x4d6808                                 
+4d6bb9   mov rax, qword ptr [rcx]                    
+4d6bbc   call qword ptr [rax + 8]                    
+4d6bbf   jmp 0x4d6808                                
+4d6bc4   xor r8d, r8d                                
+4d6bc7   mov rdx, r12                                
+4d6bca   mov rcx, rbx                                
+4d6bcd   call 0x910ba0                                  ; basic_string::_M_create(0x910ba0)
+4d6bd2   mov rcx, rax                                
+4d6bd5   mov qword ptr [rbx], rax                    
+4d6bd8   mov rax, qword ptr [rsp + 0x80]             
+4d6be0   mov qword ptr [rbx + 0x10], rax             
+4d6be4   mov r8, rdi                                 
+4d6be7   mov rdx, rbp                                
+4d6bea   call 0x63f2f8                                  ; (0x63f2f8)
+4d6bef   mov rdi, qword ptr [rsp + 0x80]             
+4d6bf7   mov rax, qword ptr [rbx]                    
+4d6bfa   jmp 0x4d6b0f                                
+4d6bff   mov rbx, rax                                
+4d6c02   mov rcx, qword ptr [rsp + 0x60]             
+4d6c07   test rcx, rcx                               
+4d6c0a   je 0x4d6c12                                 
+4d6c0c   mov rax, qword ptr [rcx]                    
+4d6c0f   call qword ptr [rax + 8]                    
+4d6c12   mov rcx, rbx                                
+4d6c15   call 0x62f280                                  ; (0x62f280)
+4d6c1a   nop word ptr [rax + rax]                    
+4d6c20   mov rcx, r12                                
+4d6c23   jmp 0x4d6866                                
+4d6c28   nop dword ptr [rax + rax]                   
+4d6c30   movzx eax, byte ptr [rbp]                   
+4d6c34   mov byte ptr [rbx + 0x10], al               
+4d6c37   mov rax, r13                                
+4d6c3a   jmp 0x4d6b0f                                
+4d6c3f   movdqu xmm0, xmmword ptr [rsp + 0xd8]       
+4d6c48   mov qword ptr [rsi + 0x68], rdx             
+4d6c4c   movups xmmword ptr [rsi + 0x70], xmm0       
+4d6c50   lea rax, [rdi + 0x10]                       
+4d6c54   mov qword ptr [rsp + 0xd0], rax             
+4d6c5c   jmp 0x4d6a03                                
+4d6c61   mov rdx, rdi                                
+4d6c64   mov rcx, r13                                
+4d6c67   call 0x910af0                                  ; (0x910af0)
+4d6c6c   mov rax, qword ptr [rsp + 0xd0]             
+4d6c74   jmp 0x4d6a03                                
+4d6c79   mov rcx, r13                                
+4d6c7c   jmp 0x4d6be4                                
+4d6c81   call 0x979e70                                  ; (0x979e70)
+4d6c86   mov rcx, qword ptr [rbx]                    
+4d6c89   mov rsi, rax                                
+4d6c8c   cmp r12, rcx                                
+4d6c8f   je 0x4d6c96                                 
+4d6c91   call 0x9984b0                                  ; (0x9984b0)
+4d6c96   mov rcx, rsi                                
+4d6c99   call 0x62f280                                  ; (0x62f280)
+4d6c9e   mov rcx, qword ptr [rsp + 0x80]             
+4d6ca6   add r12, 0x10                               
+4d6caa   mov rbx, rax                                
+4d6cad   cmp rcx, r12                                
+4d6cb0   je 0x4d6cb7                                 
+4d6cb2   call 0x9984b0                                  ; (0x9984b0)
+4d6cb7   mov rcx, qword ptr [rsp + 0xa0]             
+4d6cbf   add rbp, 0x10                               
+4d6cc3   cmp rcx, rbp                                
+4d6cc6   je 0x4d6ccd                                 
+4d6cc8   call 0x9984b0                                  ; (0x9984b0)
+4d6ccd   mov rcx, qword ptr [rsp + 0xd0]             
+4d6cd5   add rdi, 0x10                               
+4d6cd9   cmp rcx, rdi                                
+4d6cdc   je 0x4d6c12                                 
+4d6ce2   call 0x9984b0                                  ; (0x9984b0)
+4d6ce7   jmp 0x4d6c12                                
+4d6cec   mov rcx, qword ptr [rsp + 0x70]             
+4d6cf1   mov rbx, rax                                
+4d6cf4   test rcx, rcx                               
+4d6cf7   je 0x4d6cff                                 
+4d6cf9   mov rax, qword ptr [rcx]                    
+4d6cfc   call qword ptr [rax + 8]                    
+4d6cff   mov rcx, qword ptr [rsp + 0x80]             
+4d6d07   test rcx, rcx                               
+4d6d0a   je 0x4d6d12                                 
+4d6d0c   mov rax, qword ptr [rcx]                    
+4d6d0f   call qword ptr [rax + 8]                    
+4d6d12   mov rcx, qword ptr [rsp + 0xa0]             
+4d6d1a   test rcx, rcx                               
+4d6d1d   je 0x4d6d25                                 
+4d6d1f   mov rax, qword ptr [rcx]                    
+4d6d22   call qword ptr [rax + 8]                    
+4d6d25   mov rcx, qword ptr [rsp + 0xd0]             
+4d6d2d   test rcx, rcx                               
+4d6d30   jne 0x4d6c0c                                
+4d6d36   jmp 0x4d6c12                                
+4d6d3b   mov rcx, qword ptr [rsp + 0xa0]             
+4d6d43   add rbp, 0x10                               
+4d6d47   mov rbx, rax                                
+4d6d4a   cmp rcx, rbp                                
+4d6d4d   je 0x4d6c02                                 
+4d6d53   call 0x9984b0                                  ; (0x9984b0)
+4d6d58   jmp 0x4d6c02                                
+4d6d5d   mov rcx, qword ptr [rbx]                    
+4d6d60   mov rsi, rax                                
+4d6d63   cmp r13, rcx                                
+4d6d66   je 0x4d6d6d                                 
+4d6d68   call 0x9984b0                                  ; (0x9984b0)
+4d6d6d   mov rbx, rsi                                
+4d6d70   jmp 0x4d6c02                                
+4d6d75   call 0x979e70                                  ; (0x979e70)
+4d6d7a   mov rbx, rax                                
+4d6d7d   jmp 0x4d6cff                                
+4d6d7f   mov rbx, rax                                
+4d6d82   jmp 0x4d6d12                                
+4d6d84   mov rbx, rax                                
+4d6d87   jmp 0x4d6d25                                
+4d6d89   mov rbx, rax                                
+4d6d8c   jmp 0x4d6cb7                                

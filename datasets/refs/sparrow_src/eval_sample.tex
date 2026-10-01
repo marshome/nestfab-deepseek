@@ -1,0 +1,13 @@
+\begin{algorithm}[ht]
+    \caption{\texttt{evaluate\_sample}$(i,t)$}
+    \begin{algorithmic}[1]
+        \State $C \gets \Call{jagua-rs::collisions}{t(S_i)}$ 
+        \For{$c \in C \setminus \{i\}$} \Comment{ignore item $i$ itself}
+            \State $w_{ic} \gets \text{weight of item-pair } (i,c)$
+            \State $e \gets e + w_{ic} \cdot \Call{quantify\_collision}{t(S_i),S_c}$ \Comment{Alg. \ref{alg:quantify_collision}}
+        \EndFor
+        \State \Return $e$
+    \end{algorithmic}
+    \label{alg:eval_sample}
+\end{algorithm}
+

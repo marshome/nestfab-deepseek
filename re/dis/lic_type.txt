@@ -1,0 +1,7 @@
+### fn 0xb81f0 name=None end=0xb81f6 size=6
+STRINGS: 
+CALLERS: 0xb51c0:None, 0xb58a0:None, 0xb5910:None, 0xb5930:None, 0xb5a40:None, 0xb5a60:None, 0xb5a80:None, 0xb5aa0:None, 0xb5ad0:None, 0xb5af0:None, 0xb5b10:None, 0xb5ba0:None, 0xb5d10:None, 0xb5d70:None, 0xb5da0:None, 0xb61a0:None, 0xb61f0:None, 0xb8130:None, 0x7bb430:None
+CALLEES: 
+
+  000b81f0  b864000000           mov     eax, 0x64
+  000b81f5  c3                   ret     

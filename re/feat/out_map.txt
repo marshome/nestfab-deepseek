@@ -1,0 +1,79 @@
+SetCommonCutMode                              rva=  58464 size=   404 ords=[148, 149] | -> ; SetCommonCutMode
+SetPartCommonCutMode                          rva=  56912 size=    36 ords=[166, 167] | SetPartCommonCutMode
+SetCommonCutObjective                         rva=  60912 size=   337 ords=[156, 157] | -> ; SetCommonCutObjective
+SetCommonCutCuttingPreference                 rva=  60560 size=   340 ords=[154, 155] | -> ; SetCommonCutCuttingPreference
+SetCommonCutSafetyPreference                  rva=  59712 size=   354 ords=[150, 151] | -> ; SetCommonCutSafetyPreference
+SetCommonCutAuthorizations                    rva=  60080 size=   468 ords=[152, 153] | -> ; SetCommonCutAuthorizations
+CNS_GetCommonCut                              NOTFOUND
+CNS_GetNumberOfCommonCuts                     NOTFOUND
+SetMultiTorchMode                             rva=  61264 size=   479 ords=[174, 175] | -> ; SetMultiTorchMode
+SetMultiTorchCuttingPreference                rva=  61744 size=   388 ords=[176, 177] | -> ; SetMultiTorchCuttingPreference
+SetMultiTorchObjective                        rva=  62144 size=   633 ords=[178, 179] | -> ; SetMultiTorchObjective
+SetDetailedMultiTorchObjective                rva=  62784 size=   629 ords=[186, 187] | -> ; SetDetailedMultiTorchObjective
+CNS_GetPartTorchInfos                         NOTFOUND
+SetShearMode                                  rva=  56768 size=    33 ords=[146, 147] | SetShearMode
+SetPartialShearMode                           rva=  56816 size=    36 ords=[330, 331] | SetPartialShearMode
+SetShearGap                                   rva=  52976 size=    45 ords=[212, 213] | SetShearGap
+SetShearRepulseFromBorders                    rva=  56864 size=    33 ords=[304, 305] | SetShearRepulseFromBorders
+SetPipeMode                                   rva=  64752 size=   568 ords=[258, 259] | -> ; SetPipeMode
+SetRowMode                                    rva=  64496 size=   244 ords=[256, 257] | SetRowMode
+GetNumberOfRows                               rva=  65328 size=   271 ords=[264, 265] | -> ; GetNumberOfRows
+GetRow                                        NOTFOUND
+CNS_GetRow                                    NOTFOUND
+SetLeatherMode                                rva= 105536 size=   411 ords=[272, 273] | -> ; SetLeatherMode
+AddLeatherQualityZoneInPart                   rva= 105952 size=   350 ords=[274, 275] | AddLeatherQualityZoneInPart
+AddLeatherQualityZoneInPart                   rva= 106304 size=   342 ords=[292, 293] | AddLeatherQualityZoneInPart
+AddLeatherQualityZoneInSheet                  rva= 106656 size=   331 ords=[276, 277] | AddLeatherQualityZoneInSheet
+SetMarkMode                                   rva= 100560 size=   529 ords=[246, 247] | SetMarkMode
+GetNumberOfMarks                              rva= 101104 size=   889 ords=[248, 249] | GetNumberOfMarks
+GetMark                                       rva= 102000 size=  1312 ords=[250, 251] | GetMark
+AddNonRectangularSheet                        rva=  87968 size=  1098 ords=[116, 117] | AddNonRectangularSheet
+AddDefectToSheet                              rva=  82320 size=   124 ords=[118, 119] | AddDefectToSheet
+AddDefectToSheet                              rva=  92528 size=   426 ords=[71, 72] | AddDefectToSheet; // AddPolygonDefectToSheet
+CNS_AddDefectFromNestedPart                   rva=  77632 size=   894 ords=[306, 307] | CNS_AddDefectFromNestedPart
+SetDefectGap                                  rva=  68032 size=   388 ords=[80, 81] | -> ; SetDefectGap
+AddToolPathToPart                             rva=  65984 size=   127 ords=[290, 291] | AddToolPathToPart
+AddHoleInToolPath                             rva=  66112 size=   124 ords=[296, 297] | AddHoleInToolPath
+AddInflatedToolPathToPart                     rva=  76896 size=   169 ords=[294, 295] | AddInflatedToolPathToPart
+CNS_AddOpenToolPathToPart                     rva=  77072 size=   552 ords=[314, 315] | CNS_AddOpenToolPathToPart
+AddOpenCuttingPathToPart                      rva=  84576 size=   678 ords=[124, 125] | AddOpenCuttingPathToPart
+CNS_AddToolPathDefectToSheet                  NOTFOUND
+CNS_AddExternalToolPathBoundaryToSheet        NOTFOUND
+CNS_SheetAddRestrictedZone                    rva= 107024 size=  1468 ords=[284, 285] | -> ; CNS_SheetAddRestrictedZone
+CNS_SetZoneRestrictedPart                     rva= 110144 size=   507 ords=[280, 281] | -> ; CNS_SetZoneRestrictedPart
+CNS_ForcePartOnBottomBorder                   rva= 108784 size=   411 ords=[302, 303] | -> ; CNS_ForcePartOnBottomBorder
+CreateRestrictedZoneConstraint                rva= 109200 size=   944 ords=[278, 279] | -> ; CreateRestrictedZoneConstraint; // 
+CNS_CreateAssemblyGroup                       rva=  68432 size=   395 ords=[308, 309] | -> ; CNS_CreateAssemblyGroup; // 
+CNS_AddAssemblyGroupPart                      rva=  71728 size=   180 ords=[310, 311] | CNS_AddAssemblyGroupPart
+AddSuggestedPartsGrouping                     NOTFOUND
+AddPartToSuggestedPartsGrouping               NOTFOUND
+MakeClusterFromSuggestedPartsGrouping         NOTFOUND
+SetIncompatibleSheet                          rva=  70800 size=   423 ords=[214, 215] | -> ; SetIncompatibleSheet
+ForcePartInsideHole                           rva=  50704 size=    43 ords=[334, 335] | ForcePartInsideHole
+ForcePartOutsideHole                          NOTFOUND
+SetOffcutEvaluation                           rva=  58064 size=   399 ords=[142, 143] | -> ; SetOffcutEvaluation
+SetObjective                                  rva=  52928 size=    45 ords=[78, 79] | SetObjective
+SetSheetPrice                                 rva=  52000 size=   388 ords=[172, 173] | -> ; SetSheetPrice
+SetSheetPriority                              rva=  81040 size=   411 ords=[67, 68] | SetSheetPriority
+GetFillRatio                                  rva=  46256 size=    34 ords=[168, 169] | GetFillRatio
+GetNestingFillRatio                           rva=  46304 size=    38 ords=[192, 193] | GetNestingFillRatio
+SetReorganizeBiggestPartNearOrigin            rva=  66672 size=    42 ords=[336, 337] | SetReorganizeBiggestPartNearOrigin
+SetReorganizeLongestPartNearOrigin            rva=  66720 size=    42 ords=[338, 339] | SetReorganizeLongestPartNearOrigin
+SetSpecificSheetOrigin                        rva=  81456 size=   417 ords=[298, 299] | SetSpecificSheetOrigin
+SetSpecificSheetObjective                     rva=  81888 size=   417 ords=[300, 301] | SetSpecificSheetObjective
+SetAutomaticStop                              rva=  57360 size=   353 ords=[140, 141] | -> ; SetAutomaticStop
+SetFillLastNestingStrategy                    rva=  56720 size=    36 ords=[144, 145] | SetFillLastNestingStrategy
+SetExtraParameters                            rva=  69920 size=   868 ords=[65, 66] | -> ; SetExtraParameters
+GenerateDxfNesting                            rva=  49008 size=   148 ords=[224, 225] | GenerateDxfNesting
+GenerateHtmlSolutionReport                    rva=  45904 size=   247 ords=[11, 12] | GenerateHtmlSolutionReport
+GenerateHtmlLaunchingOrderReport              rva=  45520 size=   370 ords=[9, 10] | GenerateHtmlLaunchingOrderReport; <h1> Problem contains invalid parts. </h1>; <h1> Problem contains invalid sheets. </h1>
+GenerateLaunchingOrderProblem                 NOTFOUND
+GetSolution                                   rva=  45216 size=    29 ords=[33, 34] | GetSolution
+GetNesting                                    NOTFOUND
+GetNestingDimensions                          NOTFOUND
+GetNestingBoundingBox                         NOTFOUND
+GetNestedPart                                 NOTFOUND
+GetNestedPartPartVariant                      rva=  93792 size=  1727 ords=[206, 207] | GetNestedPartPartVariant
+GetPartWithBadGeometry                        rva=  46352 size=    43 ords=[29, 30] | GetPartWithBadGeometry
+NewLaunchingOrder                             rva=  83488 size=  1081 ords=[37, 38] | NewLaunchingOrder
+DeleteLaunchingOrder                          rva=  71920 size=  3660 ords=[7, 8] | DeleteLaunchingOrder; *** ERROR unterminated/cancelled computation ***; ERROR unterminated/cancelled computation

@@ -1,0 +1,73 @@
+### fn 0x64d9c0 name=None end=0x64dabc size=252
+STRINGS: 0x9ac88e:'-> '
+CALLERS: 0xe180:None, 0xe1f0:None, 0xe260:None
+CALLEES: 0xab20:None, 0x1bf40:None, 0x62f280:None, 0x63f6c0:None, 0x8761b0:None, 0x978010:None, 0x97abf0:None, 0x9878c0:None, 0x9920c0:None
+
+  0064d9c0  55                   push    rbp
+  0064d9c1  57                   push    rdi
+  0064d9c2  56                   push    rsi
+  0064d9c3  53                   push    rbx
+  0064d9c4  4883ec38             sub     rsp, 0x38
+  0064d9c8  4889cd               mov     rbp, rcx
+  0064d9cb  4889d7               mov     rdi, rdx
+  0064d9ce  4c89c6               mov     rsi, r8
+  0064d9d1  e84ad19bff           call    0xab20  ; -> 0xab20 None
+  0064d9d6  c644242800           mov     byte ptr [rsp + 0x28], 0
+  0064d9db  4885c0               test    rax, rax
+  0064d9de  4889442420           mov     qword ptr [rsp + 0x20], rax
+  0064d9e3  0f84ac000000         je      0x64da95
+  0064d9e9  4889c1               mov     rcx, rax
+  0064d9ec  e8cf1cffff           call    0x63f6c0  ; -> 0x63f6c0 
+  0064d9f1  85c0                 test    eax, eax
+  0064d9f3  0f8595000000         jne     0x64da8e
+  0064d9f9  c644242801           mov     byte ptr [rsp + 0x28], 1
+  0064d9fe  e83de59cff           call    0x1bf40  ; -> 0x1bf40 None
+  0064da03  4885c0               test    rax, rax
+  0064da06  4889c3               mov     rbx, rax
+  0064da09  7468                 je      0x64da73
+  0064da0b  41b803000000         mov     r8d, 3
+  0064da11  4889c1               mov     rcx, rax
+  0064da14  488d1573ee3500       lea     rdx, [rip + 0x35ee73]  ; "-> "
+  0064da1b  e8f0a53200           call    0x978010  ; -> 0x978010 None
+  0064da20  4889ea               mov     rdx, rbp
+  0064da23  4889d9               mov     rcx, rbx
+  0064da26  e895463400           call    0x9920c0  ; -> 0x9920c0 None
+  0064da2b  41b801000000         mov     r8d, 1
+  0064da31  4889d9               mov     rcx, rbx
+  0064da34  488d1543f13500       lea     rdx, [rip + 0x35f143]  ; DATA 0x9acb7e
+  0064da3b  e8d0a53200           call    0x978010  ; -> 0x978010 None
+  0064da40  4889fa               mov     rdx, rdi
+  0064da43  4889d9               mov     rcx, rbx
+  0064da46  e875463400           call    0x9920c0  ; -> 0x9920c0 None
+  0064da4b  41b801000000         mov     r8d, 1
+  0064da51  4889d9               mov     rcx, rbx
+  0064da54  488d1523f13500       lea     rdx, [rip + 0x35f123]  ; DATA 0x9acb7e
+  0064da5b  e8b0a53200           call    0x978010  ; -> 0x978010 None
+  0064da60  4889f2               mov     rdx, rsi
+  0064da63  4889d9               mov     rcx, rbx
+  0064da66  e855463400           call    0x9920c0  ; -> 0x9920c0 None
+  0064da6b  4889d9               mov     rcx, rbx
+  0064da6e  e84d9e3300           call    0x9878c0  ; -> 0x9878c0 None
+  0064da73  807c242800           cmp     byte ptr [rsp + 0x28], 0
+  0064da78  740b                 je      0x64da85
+  0064da7a  488d4c2420           lea     rcx, [rsp + 0x20]
+  0064da7f  e82c872200           call    0x8761b0  ; -> 0x8761b0 None
+  0064da84  90                   nop     
+  0064da85  4883c438             add     rsp, 0x38
+  0064da89  5b                   pop     rbx
+  0064da8a  5e                   pop     rsi
+  0064da8b  5f                   pop     rdi
+  0064da8c  5d                   pop     rbp
+  0064da8d  c3                   ret     
+  0064da8e  89c1                 mov     ecx, eax
+  0064da90  e85bd13200           call    0x97abf0  ; -> 0x97abf0 None
+  0064da95  b901000000           mov     ecx, 1
+  0064da9a  e851d13200           call    0x97abf0  ; -> 0x97abf0 None
+  0064da9f  807c242800           cmp     byte ptr [rsp + 0x28], 0
+  0064daa4  4889c3               mov     rbx, rax
+  0064daa7  740a                 je      0x64dab3
+  0064daa9  488d4c2420           lea     rcx, [rsp + 0x20]
+  0064daae  e8fd862200           call    0x8761b0  ; -> 0x8761b0 None
+  0064dab3  4889d9               mov     rcx, rbx
+  0064dab6  e8c517feff           call    0x62f280  ; -> 0x62f280 None
+  0064dabb  90                   nop     

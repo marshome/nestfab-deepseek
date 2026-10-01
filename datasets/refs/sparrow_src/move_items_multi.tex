@@ -1,0 +1,17 @@
+\begin{algorithm}[htbp]
+    \caption{\texttt{move\_items\_multi}}
+    \begin{algorithmic}[1]
+        \State $s_i \gets$ current solution \SemiCol $z^* \gets \infty$
+        \For{\texttt{N\_WORKERS} times} \Comment{parallelized}      
+            \State\nameref{alg:move_items} \Comment{Alg. \ref{alg:move_items}}
+            \State $z \gets \text{Expr. {\ref{eq:solution_loss}}}$
+            \If{$z < z^*$}
+                \State $s^* \gets$ current solution
+                \SemiCol $z^* \gets z$
+            \EndIf
+            \State restore to $s_i$
+        \EndFor
+        \State restore to $s^*$
+    \end{algorithmic}
+    \label{alg:move_items_multi}
+\end{algorithm}

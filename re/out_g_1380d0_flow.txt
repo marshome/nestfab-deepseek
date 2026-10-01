@@ -1,0 +1,275 @@
+#### 0x1380D0 compressed flow  size=2375 nins=476
+1380e1   movaps xmmword ptr [rsp + 0x100], xmm6   
+1380e9   movaps xmmword ptr [rsp + 0x110], xmm7   
+1380f1   movaps xmmword ptr [rsp + 0x120], xmm8   
+1380fa   movaps xmmword ptr [rsp + 0x130], xmm9   
+138103   movaps xmmword ptr [rsp + 0x140], xmm10  
+13810c   cmp byte ptr [rdx + 8], 0                
+13811f   jne 0x138161                             
+138121   movaps xmm6, xmmword ptr [rsp + 0x100]   
+13812c   movaps xmm7, xmmword ptr [rsp + 0x110]   
+138134   movaps xmm8, xmmword ptr [rsp + 0x120]   
+13813d   movaps xmm9, xmmword ptr [rsp + 0x130]   
+138146   movaps xmm10, xmmword ptr [rsp + 0x140]  
+138160   ret                                      
+138172   call 0x134fa0                            ; 0x134fa0
+138185   call 0x134fa0                            ; 0x134fa0
+13818a   cmp byte ptr [rsp + 0xa0], 0             
+138192   je 0x1385d0                              
+138198   cmp byte ptr [rsp + 0xd0], 0             
+1381a0   je 0x1385d0                              
+1381a6   movsd xmm0, qword ptr [rsp + 0xb8]       
+1381af   pxor xmm7, xmm7                          
+1381b3   subsd xmm0, qword ptr [rsp + 0xa8]       
+1381bc   movsd xmm1, qword ptr [rsp + 0xc0]       
+1381c5   subsd xmm1, qword ptr [rsp + 0xb0]       
+1381ce   movsd xmm6, qword ptr [rsp + 0xe8]       
+1381d7   movsd qword ptr [rsp + 0x30], xmm0       
+1381dd   mulsd xmm0, xmm0                         
+1381e1   movsd xmm8, qword ptr [rsp + 0xf0]       
+1381eb   subsd xmm6, qword ptr [rsp + 0xd8]       
+1381f4   movsd qword ptr [rsp + 0x38], xmm1       
+1381fa   mulsd xmm1, xmm1                         
+1381fe   subsd xmm8, qword ptr [rsp + 0xe0]       
+138208   addsd xmm0, xmm1                         
+13820c   ucomisd xmm7, xmm0                       
+138210   sqrtsd xmm9, xmm0                        
+138215   jbe 0x13821c                             
+138217   call 0x62fe20                            ; sqrt
+13821c   ucomisd xmm9, xmm7                       
+138221   jp 0x1387ee                              
+138227   jne 0x1387ee                             
+138235   mov qword ptr [rsp + 0x60], 0x23         
+138250   mov qword ptr [rsp + 0x80], rax          
+13825d   call 0x910ba0                            ; basic_string::_M_create
+13827a   mov qword ptr [rsp + 0x80], rax          
+138282   mov qword ptr [rsp + 0x90], rdx          
+138297   mov qword ptr [rax + 8], rcx             
+1382a5   mov qword ptr [rax + 0x10], rcx          
+1382b3   mov qword ptr [rax + 0x18], rcx          
+1382c1   mov word ptr [rax + 0x20], r11w          
+1382c6   mov byte ptr [rax + 0x22], 0x22          
+1382d7   mov qword ptr [rsp + 0x88], rax          
+1382e8   mov qword ptr [rsp + 0x60], rax          
+1382f2   mov qword ptr [rsp + 0x70], rcx          
+1382fe   mov byte ptr [r12 + 0x18], 0x65          
+138304   mov qword ptr [rsp + 0x40], rax          
+138309   mov qword ptr [rsp + 0x68], 9            
+138312   mov byte ptr [rsp + 0x79], 0             
+138317   mov qword ptr [rsp + 0x28], 0x12         
+138320   call 0x910ba0                            ; basic_string::_M_create
+13832a   mov qword ptr [rsp + 0x40], rax          
+138345   mov qword ptr [rsp + 0x50], rdx          
+138357   mov qword ptr [rax + 8], rcx             
+13835e   mov word ptr [rax + 0x10], r10w          
+13836d   mov qword ptr [rsp + 0x48], rax          
+13837b   call 0x60a620                            ; 0x60a620
+138389   cmp rcx, r13                             
+13838c   je 0x138393                              
+13838e   call 0x9984b0                            ; 0x9984b0
+13839c   cmp rcx, r12                             
+13839f   je 0x1383a6                              
+1383a1   call 0x9984b0                            ; 0x9984b0
+1383b2   cmp rcx, r14                             
+1383b5   je 0x1383bc                              
+1383b7   call 0x9984b0                            ; 0x9984b0
+1383bc   movsd xmm0, qword ptr [rip + 0x884bdc]   ; data@9bcfa0=1.0
+1383c4   movaps xmmword ptr [rsp + 0x30], xmm0    
+1383c9   movapd xmm1, xmm8                        
+1383ce   movapd xmm0, xmm6                        
+1383d2   mulsd xmm1, xmm8                         
+1383d7   mulsd xmm0, xmm6                         
+1383db   addsd xmm0, xmm1                         
+1383df   ucomisd xmm7, xmm0                       
+1383e3   sqrtsd xmm10, xmm0                       
+1383e8   jbe 0x1383ef                             
+1383ea   call 0x62fe20                            ; sqrt
+1383ef   ucomisd xmm10, xmm7                      
+1383f4   jp 0x13880f                              
+1383fa   jne 0x13880f                             
+138408   mov qword ptr [rsp + 0x60], 0x23         
+138423   mov qword ptr [rsp + 0x80], rax          
+138430   call 0x910ba0                            ; basic_string::_M_create
+13844d   mov qword ptr [rsp + 0x80], rax          
+138455   mov qword ptr [rsp + 0x90], rdx          
+13846a   mov qword ptr [rax + 8], rcx             
+138478   mov qword ptr [rax + 0x10], rcx          
+138486   mov qword ptr [rax + 0x18], rcx          
+138494   mov word ptr [rax + 0x20], r9w           
+138499   mov byte ptr [rax + 0x22], 0x22          
+1384aa   mov qword ptr [rsp + 0x88], rax          
+1384bb   mov qword ptr [rsp + 0x60], rax          
+1384c5   mov qword ptr [rsp + 0x70], rcx          
+1384d1   mov byte ptr [r12 + 0x18], 0x65          
+1384d7   mov qword ptr [rsp + 0x40], rax          
+1384dc   mov qword ptr [rsp + 0x68], 9            
+1384e5   mov byte ptr [rsp + 0x79], 0             
+1384ea   mov qword ptr [rsp + 0x28], 0x12         
+1384f3   call 0x910ba0                            ; basic_string::_M_create
+1384fd   mov qword ptr [rsp + 0x40], rax          
+138515   mov qword ptr [rsp + 0x50], rdx          
+138527   mov qword ptr [rax + 8], rcx             
+13852e   mov word ptr [rax + 0x10], r8w           
+138540   mov qword ptr [rsp + 0x48], rax          
+13854e   call 0x60a620                            ; 0x60a620
+13855c   cmp rcx, r13                             
+13855f   je 0x138566                              
+138561   call 0x9984b0                            ; 0x9984b0
+13856f   cmp rcx, r12                             
+138572   je 0x138579                              
+138574   call 0x9984b0                            ; 0x9984b0
+138585   cmp rcx, r14                             
+138588   je 0x13858f                              
+13858a   call 0x9984b0                            ; 0x9984b0
+13858f   movsd xmm9, qword ptr [rip + 0x8849f0]   ; data@9bcf88=1.0
+138598   movapd xmm0, xmm7                        
+13859c   movapd xmm6, xmm9                        
+1385a1   mulsd xmm6, qword ptr [rsp + 0x38]       
+1385a7   mulsd xmm0, qword ptr [rsp + 0x30]       
+1385ad   movsd xmm1, qword ptr [rip + 0x884a0b]   ; data@9bcfc0=1e-06
+1385b5   subsd xmm0, xmm6                         
+1385b9   movsd xmm6, qword ptr [rip + 0x8849ef]   ; data@9bcfb0=nan
+1385c1   andpd xmm0, xmm6                         
+1385c5   ucomisd xmm1, xmm0                       
+1385c9   ja 0x1386f3                              
+1385d0   cmp byte ptr [rsi + 8], 0                
+1385d4   je 0x138121                              
+1385da   cmp byte ptr [rbx], 0                    
+1385dd   jne 0x138121                             
+1385eb   call 0x134ff0                            ; 0x134ff0
+1385f8   call 0x134ff0                            ; 0x134ff0
+13861c   cmp rax, r10                             
+138622   cmp rcx, rdx                             
+13862a   test r10, r10                            
+13862d   je 0x1386d0                              
+138633   test al, al                              
+138635   je 0x138121                              
+13863b   movsd xmm0, qword ptr [rcx + 8]          
+138640   subsd xmm0, qword ptr [r8 + 8]           
+138646   movsd xmm6, qword ptr [rip + 0x884962]   ; data@9bcfb0=nan
+13864e   movsd xmm1, qword ptr [rip + 0x884982]   ; data@9bcfd8=0.005
+138656   andpd xmm0, xmm6                         
+13865a   ucomisd xmm1, xmm0                       
+13865e   jb 0x138121                              
+138664   movsd xmm0, qword ptr [rcx + 0x18]       
+138669   subsd xmm0, qword ptr [r8 + 0x18]        
+13866f   andpd xmm0, xmm6                         
+138673   ucomisd xmm1, xmm0                       
+138677   jb 0x138121                              
+138680   jmp 0x13869a                             
+138682   movsd xmm0, qword ptr [rax + 0x18]       
+138687   subsd xmm0, qword ptr [rdx + 0x18]       
+13868c   andpd xmm0, xmm6                         
+138690   ucomisd xmm1, xmm0                       
+138694   jb 0x138121                              
+13869e   cmp r10, rax                             
+1386a4   jbe 0x1386d8                             
+1386b1   movsd xmm0, qword ptr [rax + 8]          
+1386b6   subsd xmm0, qword ptr [rdx + 8]          
+1386bb   andpd xmm0, xmm6                         
+1386bf   ucomisd xmm1, xmm0                       
+1386c3   jb 0x138121                              
+1386c9   jmp 0x138682                             
+1386d0   test al, al                              
+1386d2   je 0x138121                              
+1386d8   cmp byte ptr [rbx], 0                    
+1386db   movsd xmm0, qword ptr [rsi + 0x10]       
+1386e0   movsd qword ptr [rbx + 8], xmm0          
+1386e5   jne 0x138121                             
+1386ee   jmp 0x138121                             
+1386f8   call 0x5c22d0                            ; 0x5c22d0
+138736   je 0x138830                              
+138746   cmp rax, rdx                             
+138749   je 0x13879e                              
+138755   cmp rax, rdx                             
+138758   je 0x138830                              
+138768   cmp rax, rdx                             
+13876b   je 0x1389b0                              
+138771   pxor xmm0, xmm0                          
+138775   cvtsi2sd xmm0, rcx                       
+13877a   divsd xmm0, qword ptr [rip + 0x884846]   ; data@9bcfc8=3600000000000.0
+138782   mulsd xmm0, qword ptr [rip + 0x884846]   ; data@9bcfd0=6.283185307179586
+13878a   call 0x635970                            ; sin
+13878f   ucomisd xmm0, xmm7                       
+138793   movapd xmm9, xmm0                        
+138798   jbe 0x138835                             
+13879e   movsd xmm0, qword ptr [rsp + 0xa8]       
+1387a7   movsd xmm1, qword ptr [rsp + 0xd8]       
+1387b0   subsd xmm0, qword ptr [rsp + 0xb8]       
+1387b9   subsd xmm1, qword ptr [rsp + 0xe8]       
+1387c2   cmp byte ptr [rbx], 0                    
+1387c5   andpd xmm0, xmm6                         
+1387c9   andpd xmm6, xmm1                         
+1387cd   movsd xmm1, qword ptr [rsi + 0x10]       
+1387d2   maxsd xmm6, xmm0                         
+1387d6   divsd xmm1, xmm9                         
+1387db   subsd xmm1, xmm6                         
+1387df   jne 0x1387e4                             
+1387e4   movsd qword ptr [rbx + 8], xmm1          
+1387e9   jmp 0x1385d0                             
+1387ee   movsd xmm0, qword ptr [rip + 0x884792]   ; data@9bcf88=1.0
+1387f6   divsd xmm0, xmm9                         
+1387fb   unpcklpd xmm0, xmm0                      
+1387ff   mulpd xmm0, xmmword ptr [rsp + 0x30]     
+138805   movaps xmmword ptr [rsp + 0x30], xmm0    
+13880a   jmp 0x1383c9                             
+13880f   movsd xmm9, qword ptr [rip + 0x884770]   ; data@9bcf88=1.0
+138818   movapd xmm0, xmm9                        
+13881d   divsd xmm0, xmm10                        
+138822   mulsd xmm6, xmm0                         
+138826   mulsd xmm0, xmm8                         
+13882b   jmp 0x1385a1                             
+138830   movapd xmm9, xmm7                        
+138842   mov dword ptr [rsp + 0x90], 0x203e2073   
+138850   mov qword ptr [rsp + 0x20], 0x15         
+138862   mov qword ptr [rsp + 0x80], rax          
+13886f   mov word ptr [r14 + 0x14], cx            
+138877   mov byte ptr [r14 + 0x16], 0x30          
+138881   mov qword ptr [rsp + 0x88], 7            
+13888d   mov byte ptr [rsp + 0x97], 0             
+138895   mov qword ptr [rsp + 0x60], rax          
+13889a   call 0x910ba0                            ; basic_string::_M_create
+1388a4   mov qword ptr [rsp + 0x60], rax          
+1388bb   mov qword ptr [rsp + 0x70], rdx          
+1388cd   mov qword ptr [rax + 8], rcx             
+1388d4   mov dword ptr [rax + 0x10], 0x636e6174   
+1388db   mov byte ptr [rax + 0x14], 0x65          
+1388e9   mov qword ptr [rsp + 0x68], rax          
+1388fb   mov qword ptr [rsp + 0x40], rax          
+138900   mov qword ptr [rsp + 0x28], 0x13         
+138909   call 0x910ba0                            ; basic_string::_M_create
+138913   mov qword ptr [rsp + 0x40], rax          
+138928   mov qword ptr [rsp + 0x50], rdx          
+13893f   mov qword ptr [rax + 8], rcx             
+138946   mov word ptr [rax + 0x10], dx            
+13894a   mov byte ptr [rax + 0x12], 0x70          
+138958   mov qword ptr [rsp + 0x48], rax          
+138966   call 0x60a620                            ; 0x60a620
+138974   cmp rcx, r13                             
+138977   je 0x13897e                              
+138979   call 0x9984b0                            ; 0x9984b0
+138987   cmp rcx, r12                             
+13898a   je 0x138991                              
+13898c   call 0x9984b0                            ; 0x9984b0
+13899d   cmp rcx, r14                             
+1389a0   je 0x13879e                              
+1389a6   call 0x9984b0                            ; 0x9984b0
+1389ab   jmp 0x13879e                             
+1389b0   movsd xmm9, qword ptr [rip + 0x8845d7]   ; data@9bcf90=-1.0
+1389b9   jmp 0x138835                             
+1389cd   cmp rcx, r14                             
+1389d0   je 0x1389d7                              
+1389d2   call 0x9984b0                            ; 0x9984b0
+1389da   call 0x62f280                            ; 0x62f280
+1389eb   cmp rcx, r13                             
+1389ee   je 0x1389f5                              
+1389f0   call 0x9984b0                            ; 0x9984b0
+1389fe   cmp rcx, r12                             
+138a01   je 0x1389c1                              
+138a03   call 0x9984b0                            ; 0x9984b0
+138a08   jmp 0x1389c1                             
+138a0d   jmp 0x1389f5                             
+138a0f   jmp 0x138a0a                             
+138a11   jmp 0x1389df                             
+138a13   jmp 0x1389df                             
+138a15   jmp 0x138a0a                             

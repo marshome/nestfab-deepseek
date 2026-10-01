@@ -1,0 +1,3077 @@
+=== 0x1EE50 (0x1EE50-0x22A19) []
+  01EE50  push r15                                   
+  01EE52  push r14                                   
+  01EE54  push r13                                   
+  01EE56  push r12                                   
+  01EE58  push rbp                                   
+  01EE59  push rdi                                   
+  01EE5A  push rsi                                   
+  01EE5B  push rbx                                   
+  01EE5C  sub rsp, 0x978                             
+  01EE63  movaps xmmword ptr [rsp + 0x920], xmm6     
+  01EE6B  movaps xmmword ptr [rsp + 0x930], xmm7     
+  01EE73  movaps xmmword ptr [rsp + 0x940], xmm8     
+  01EE7C  movaps xmmword ptr [rsp + 0x950], xmm9     
+  01EE85  movaps xmmword ptr [rsp + 0x960], xmm10    
+  01EE8E  mov qword ptr [rsp + 0x9c0], rcx           
+  01EE96  mov qword ptr [rsp + 0x9c8], rdx           
+  01EE9E  call 0x500710                              CALL sub_500710
+  01EEA3  mov rax, qword ptr [rsp + 0x9c8]           
+  01EEAB  mov rcx, qword ptr [rsp + 0x9c0]           
+  01EEB3  movsd xmm1, qword ptr [rax]                
+  01EEB7  call 0x4fbe60                              CALL sub_4FBE60
+  01EEBC  mov rax, qword ptr [rsp + 0x9c8]           
+  01EEC4  mov rcx, qword ptr [rsp + 0x9c0]           
+  01EECC  movsd xmm1, qword ptr [rax + 0x10]         
+  01EED1  call 0x4fbe80                              CALL sub_4FBE80
+  01EED6  mov rax, qword ptr [rsp + 0x9c8]           
+  01EEDE  mov rcx, qword ptr [rsp + 0x9c0]           
+  01EEE6  mov edx, dword ptr [rax + 0x18]            
+  01EEE9  call 0x4fbe90                              CALL sub_4FBE90
+  01EEEE  mov rax, qword ptr [rsp + 0x9c8]           
+  01EEF6  mov rcx, qword ptr [rsp + 0x9c0]           
+  01EEFE  mov edx, dword ptr [rax + 0x1c]            
+  01EF01  call 0x4fbea0                              CALL sub_4FBEA0
+  01EF06  mov rax, qword ptr [rsp + 0x9c8]           
+  01EF0E  pxor xmm6, xmm6                            
+  01EF12  movsd qword ptr [rsp + 0x8b0], xmm6        
+  01EF1B  mov edx, dword ptr [rax + 0x44]            
+  01EF1E  mov ecx, dword ptr [rax + 0x48]            
+  01EF21  mov r8d, dword ptr [rax + 0x58]            
+  01EF25  movsd xmm0, qword ptr [rax + 0x50]         
+  01EF2A  lea rax, [rsp + 0x8a0]                     
+  01EF32  test edx, edx                              
+  01EF34  mov rdx, rax                               
+  01EF37  mov rdi, rax                               
+  01EF3A  mov qword ptr [rsp + 0x60], rax            
+  01EF3F  setne byte ptr [rsp + 0x8a0]               
+  01EF47  test ecx, ecx                              
+  01EF49  mov rcx, qword ptr [rsp + 0x9c0]           
+  01EF51  movsd qword ptr [rsp + 0x8a8], xmm0        
+  01EF5A  setne byte ptr [rsp + 0x8a1]               
+  01EF62  test r8d, r8d                              
+  01EF65  setne byte ptr [rsp + 0x8a2]               
+  01EF6D  call 0x4fc190                              CALL sub_4FC190
+  01EF72  mov rax, qword ptr [rsp + 0x9c8]           
+  01EF7A  mov rsi, qword ptr [rsp + 0x9c8]           
+  01EF82  movzx ecx, byte ptr [rax + 0x21]           
+  01EF86  movzx edx, byte ptr [rax + 0x22]           
+  01EF8A  movzx r8d, byte ptr [rsi + 0x20]           
+  01EF8F  movzx eax, byte ptr [rax + 0x23]           
+  01EF93  mov byte ptr [rsp + 0x8a1], cl             
+  01EF9A  mov rcx, qword ptr [rsp + 0x9c0]           
+  01EFA2  mov byte ptr [rsp + 0x8a2], dl             
+  01EFA9  mov rdx, rdi                               
+  01EFAC  mov byte ptr [rsp + 0x8a0], r8b            
+  01EFB4  mov byte ptr [rsp + 0x8a3], al             
+  01EFBB  call 0x4fc070                              CALL sub_4FC070
+  01EFC0  lea rax, [rsp + 0x650]                     
+  01EFC8  mov rdx, qword ptr [rsp + 0x9c8]           
+  01EFD0  mov dword ptr [rsp + 0x658], 0             
+  01EFDB  mov qword ptr [rsp + 0x90], rax            
+  01EFE3  lea rax, [rsp + 0x658]                     
+  01EFEB  mov qword ptr [rsp + 0x668], rax           
+  01EFF3  mov qword ptr [rsp + 0x670], rax           
+  01EFFB  lea rax, [rsp + 0x840]                     
+  01F003  mov rcx, rax                               
+  01F006  mov qword ptr [rsp + 0xa0], rax            
+  01F00E  mov qword ptr [rsp + 0x660], 0             
+  01F01A  mov qword ptr [rsp + 0x678], 0             
+  01F026  call 0x676940                              CALL sub_676940
+  01F02B  mov rax, qword ptr [rsp + 0x9c8]           
+  01F033  mov rbx, qword ptr [rax + 0x1b0]           
+  01F03A  mov rsi, qword ptr [rax + 0x1b8]           
+  01F041  cmp rsi, rbx                               
+  01F044  je 0x2292a                                 
+  01F04A  mov rax, qword ptr [rbx]                   
+  01F04D  ucomisd xmm6, qword ptr [rax + 0x138]      
+  01F055  jp 0x22942                                 
+  01F05B  lea rax, [rbx + 8]                         
+  01F05F  je 0x1f08b                                 
+  01F061  jmp 0x22942                                
+  01F066  nop word ptr cs:[rax + rax]                
+  01F070  mov rdx, qword ptr [rdx]                   
+  01F073  add rax, 8                                 
+  01F077  ucomisd xmm6, qword ptr [rdx + 0x138]      
+  01F07F  jp 0x22942                                 
+  01F085  jne 0x22942                                
+  01F08B  cmp rsi, rax                               
+  01F08E  mov rdx, rax                               
+  01F091  jne 0x1f070                                
+  01F093  mov rcx, qword ptr [rsp + 0x9c8]           
+  01F09B  mov byte ptr [rsp + 0xb8], 0               
+  01F0A3  call 0x1bb10                               CALL sub_1BB10
+  01F0A8  mov byte ptr [rsp + 0xcf], al              
+  01F0AF  mov rax, rsi                               
+  01F0B2  sub rax, rbx                               
+  01F0B5  sar rax, 3                                 
+  01F0B9  test rax, rax                              
+  01F0BC  je 0x1fb49                                 
+  01F0C2  lea rax, [rsp + 0x460]                     
+  01F0CA  xor edx, edx                               
+  01F0CC  mov dword ptr [rsp + 0xc8], 0              
+  01F0D7  lea rdi, [rsp + 0x440]                     
+  01F0DF  mov qword ptr [rsp + 0x80], rax            
+  01F0E7  mov qword ptr [rsp + 0x88], rdi            
+  01F0EF  lea rax, [rsp + 0x470]                     
+  01F0F7  lea rdi, [rsp + 0x450]                     
+  01F0FF  mov qword ptr [rsp + 0xb0], rax            
+  01F107  mov qword ptr [rsp + 0xa8], rdi            
+  01F10F  mov rax, qword ptr [rbx + rdx*8]           
+  01F113  cmp byte ptr [rax + 0x160], 0              
+  01F11A  mov qword ptr [rsp + 0x70], rax            
+  01F11F  je 0x1fb27                                 
+  01F125  mov rdi, qword ptr [rsp + 0x9c8]           
+  01F12D  cmp byte ptr [rdi + 0x128], 0              
+  01F134  jne 0x209ba                                
+  01F13A  lea rdi, [rsp + 0x7a0]                     
+  01F142  mov rdx, rax                               
+  01F145  lea r8, [rax + 0x18]                       
+  01F149  mov rcx, rdi                               
+  01F14C  mov qword ptr [rsp + 0x78], rdi            
+  01F151  call 0x1e870                               CALL sub_1E870
+  01F156  mov rax, qword ptr [rsp + 0x7a8]           
+  01F15E  cmp qword ptr [rsp + 0x7a0], rax           
+  01F166  je 0x20baa                                 
+  01F16C  mov rax, qword ptr [rsp + 0x9c8]           
+  01F174  lea rbx, [rsp + 0x300]                     
+  01F17C  mov r8d, 0x10                              
+  01F182  lea r9, [rip + 0x98ecf5]                   
+  01F189  mov rcx, rbx                               
+  01F18C  lea rdx, [rip - 0x4143]                    
+  01F193  movzx eax, byte ptr [rax + 0x128]          
+  01F19A  mov ebp, eax                               
+  01F19C  mov byte ptr [rsp + 0x50], al              
+  01F1A0  mov rax, qword ptr [rsp + 0x70]            
+  01F1A5  xor ebp, 1                                 
+  01F1A8  movzx ebp, bpl                             
+  01F1AC  movsd xmm7, qword ptr [rax + 0x110]        
+  01F1B4  movsd xmm8, qword ptr [rax + 0x108]        
+  01F1BD  movsd xmm9, qword ptr [rax + 0x100]        
+  01F1C6  movsd xmm10, qword ptr [rax + 0xf8]        
+  01F1CF  mov edi, dword ptr [rax + 0xf0]            
+  01F1D5  mov eax, dword ptr [rsp + 0xc8]            
+  01F1DC  mov dword ptr [rsp + 0x20], eax            
+  01F1E0  call 0x1b170                               CALL sub_1B170
+  01F1E5  lea rsi, [rsp + 0x2e0]                     
+  01F1ED  lea rdx, [rip + 0x98ec8d]                  
+  01F1F4  mov rcx, rsi                               
+  01F1F7  call 0x1b130                               CALL sub_1B130
+  01F1FC  mov r9, qword ptr [rsp + 0x2e0]            
+  01F204  lea rdx, [rsi + 0x10]                      
+  01F208  mov eax, 0xf                               
+  01F20D  mov rcx, qword ptr [rsp + 0x2e8]           
+  01F215  mov r8, qword ptr [rsp + 0x308]            
+  01F21D  cmp r9, rdx                                
+  01F220  mov rdx, rax                               
+  01F223  cmovne rdx, qword ptr [rsp + 0x2f0]        
+  01F22C  lea r10, [rcx + r8]                        
+  01F230  cmp r10, rdx                               
+  01F233  mov rdx, qword ptr [rsp + 0x300]           
+  01F23B  jbe 0x20b8d                                
+  01F241  lea r11, [rbx + 0x10]                      
+  01F245  cmp rdx, r11                               
+  01F248  cmovne rax, qword ptr [rsp + 0x310]        
+  01F251  cmp r10, rax                               
+  01F254  ja 0x20b8d                                 
+  01F25A  mov qword ptr [rsp + 0x20], rcx            
+  01F25F  xor r8d, r8d                               
+  01F262  xor edx, edx                               
+  01F264  mov rcx, rbx                               
+  01F267  call 0x90ecb0                              CALL sub_90ECB0
+  01F26C  mov rdx, qword ptr [rsp + 0x60]            
+  01F271  add rdx, 0x10                              
+  01F275  mov qword ptr [rsp + 0x8a0], rdx           
+  01F27D  mov rcx, qword ptr [rax]                   
+  01F280  lea rdx, [rax + 0x10]                      
+  01F284  cmp rcx, rdx                               
+  01F287  je 0x20d60                                 
+  01F28D  mov qword ptr [rsp + 0x8a0], rcx           
+  01F295  mov rcx, qword ptr [rax + 0x10]            
+  01F299  mov qword ptr [rsp + 0x8b0], rcx           
+  01F2A1  mov rcx, qword ptr [rax + 8]               
+  01F2A5  mov r8d, edi                               
+  01F2A8  mov rdi, qword ptr [rsp + 0x60]            
+  01F2AD  mov r9, qword ptr [rsp + 0x78]             
+  01F2B2  mov qword ptr [rsp + 0x8a8], rcx           
+  01F2BA  mov rcx, qword ptr [rsp + 0x9c0]           
+  01F2C2  mov qword ptr [rax], rdx                   
+  01F2C5  mov rdx, rdi                               
+  01F2C8  mov qword ptr [rax + 8], 0                 
+  01F2D0  mov byte ptr [rax + 0x10], 0               
+  01F2D4  mov dword ptr [rsp + 0x40], ebp            
+  01F2D8  movsd qword ptr [rsp + 0x38], xmm7         
+  01F2DE  movsd qword ptr [rsp + 0x30], xmm8         
+  01F2E5  movsd qword ptr [rsp + 0x28], xmm9         
+  01F2EC  movsd qword ptr [rsp + 0x20], xmm10        
+  01F2F3  call 0x4ffc50                              CALL sub_4FFC50
+  01F2F8  mov rcx, qword ptr [rsp + 0x8a0]           
+  01F300  mov qword ptr [rsp + 0x50], rax            
+  01F305  mov rax, rdi                               
+  01F308  add rax, 0x10                              
+  01F30C  cmp rcx, rax                               
+  01F30F  je 0x1f316                                 
+  01F311  call 0x9984b0                              CALL sub_9984B0
+  01F316  mov rcx, qword ptr [rsp + 0x2e0]           
+  01F31E  add rsi, 0x10                              
+  01F322  cmp rcx, rsi                               
+  01F325  je 0x1f32c                                 
+  01F327  call 0x9984b0                              CALL sub_9984B0
+  01F32C  mov rcx, qword ptr [rsp + 0x300]           
+  01F334  add rbx, 0x10                              
+  01F338  cmp rcx, rbx                               
+  01F33B  je 0x1f342                                 
+  01F33D  call 0x9984b0                              CALL sub_9984B0
+  01F342  cmp qword ptr [rsp + 0x50], 0              
+  01F348  je 0x20bd9                                 
+  01F34E  mov rdi, qword ptr [rsp + 0x70]            
+  01F353  mov rsi, qword ptr [rsp + 0x50]            
+  01F358  mov edx, dword ptr [rdi + 0x120]           
+  01F35E  mov rcx, rsi                               
+  01F361  call 0x4f8cc0                              CALL sub_4F8CC0
+  01F366  movsd xmm1, qword ptr [rdi + 0x118]        
+  01F36E  mov rcx, rsi                               
+  01F371  call 0x4f9c20                              CALL sub_4F9C20
+  01F376  movzx eax, byte ptr [rdi + 0x134]          
+  01F37D  mov rcx, rsi                               
+  01F380  mov rdx, qword ptr [rsp + 0x60]            
+  01F385  mov dword ptr [rsp + 0x8a0], eax           
+  01F38C  call 0x4f8d20                              CALL sub_4F8D20
+  01F391  cmp byte ptr [rdi + 0x124], 0              
+  01F398  je 0x20b9a                                 
+  01F39E  mov eax, dword ptr [rdi + 0x128]           
+  01F3A4  mov rdi, qword ptr [rsp + 0x60]            
+  01F3A9  mov dword ptr [rsp + 0x8a0], eax           
+  01F3B0  mov rcx, qword ptr [rsp + 0x50]            
+  01F3B5  mov rdx, rdi                               
+  01F3B8  call 0x4f8d10                              CALL sub_4F8D10
+  01F3BD  mov rax, qword ptr [rsp + 0x70]            
+  01F3C2  cmp byte ptr [rax + 0x12c], 0              
+  01F3C9  je 0x20bbb                                 
+  01F3CF  mov r8d, dword ptr [rax + 0x130]           
+  01F3D6  mov rcx, rdi                               
+  01F3D9  mov rdx, qword ptr [rsp + 0x9c8]           
+  01F3E1  call 0x1b690                               CALL sub_1B690
+  01F3E6  mov rdx, qword ptr [rsp + 0x60]            
+  01F3EB  mov rcx, qword ptr [rsp + 0x50]            
+  01F3F0  call 0x4f8ce0                              CALL sub_4F8CE0
+  01F3F5  cmp byte ptr [rsp + 0xb8], 0               
+  01F3FD  je 0x1f416                                 
+  01F3FF  mov rax, qword ptr [rsp + 0x70]            
+  01F404  mov rcx, qword ptr [rsp + 0x50]            
+  01F409  movsd xmm1, qword ptr [rax + 0x138]        
+  01F411  call 0x4f8c50                              CALL sub_4F8C50
+  01F416  mov rax, qword ptr [rsp + 0x70]            
+  01F41B  mov rdi, qword ptr [rax + 0x90]            
+  01F422  cmp qword ptr [rax + 0x98], rdi            
+  01F429  je 0x21275                                 
+  01F42F  lea rbx, [rsp + 0x240]                     
+  01F437  mov rdi, rax                               
+  01F43A  lea rdx, [rax + 0xc0]                      
+  01F441  mov rcx, rbx                               
+  01F444  lea r8, [rax + 0xd8]                       
+  01F44B  call 0x1e900                               CALL sub_1E900
+  01F450  lea rsi, [rsp + 0x220]                     
+  01F458  lea rdx, [rdi + 0x90]                      
+  01F45F  mov rcx, rsi                               
+  01F462  lea r8, [rdi + 0xa8]                       
+  01F469  call 0x1e900                               CALL sub_1E900
+  01F46E  mov rax, qword ptr [rsp + 0x220]           
+  01F476  mov rcx, rsi                               
+  01F479  mov qword ptr [rsp + 0x220], 0             
+  01F485  mov qword ptr [rsp + 0x8a0], rax           
+  01F48D  mov rax, qword ptr [rsp + 0x228]           
+  01F495  mov qword ptr [rsp + 0x228], 0             
+  01F4A1  mov qword ptr [rsp + 0x8a8], rax           
+  01F4A9  mov rax, qword ptr [rsp + 0x230]           
+  01F4B1  mov qword ptr [rsp + 0x230], 0             
+  01F4BD  mov qword ptr [rsp + 0x8b0], rax           
+  01F4C5  mov rax, qword ptr [rsp + 0x240]           
+  01F4CD  mov qword ptr [rsp + 0x240], 0             
+  01F4D9  mov qword ptr [rsp + 0x8b8], rax           
+  01F4E1  mov rax, qword ptr [rsp + 0x248]           
+  01F4E9  mov qword ptr [rsp + 0x248], 0             
+  01F4F5  mov qword ptr [rsp + 0x8c0], rax           
+  01F4FD  mov rax, qword ptr [rsp + 0x250]           
+  01F505  mov qword ptr [rsp + 0x250], 0             
+  01F511  mov qword ptr [rsp + 0x8c8], rax           
+  01F519  call 0x8c2320                              CALL sub_8C2320
+  01F51E  mov rcx, rbx                               
+  01F521  call 0x8c2320                              CALL sub_8C2320
+  01F526  mov rax, qword ptr [rsp + 0x880]           
+  01F52E  mov rcx, qword ptr [rsp + 0x70]            
+  01F533  test rax, rax                              
+  01F536  mov qword ptr [rsp + 0x800], rcx           
+  01F53E  je 0x20978                                 
+  01F544  mov rdi, qword ptr [rsp + 0xa0]            
+  01F54C  lea rdx, [rdi + 0x38]                      
+  01F550  jmp 0x1f55e                                
+  01F552  mov rdx, rax                               
+  01F555  mov rax, qword ptr [rax + 0x10]            
+  01F559  test rax, rax                              
+  01F55C  je 0x1f56d                                 
+  01F55E  cmp rcx, qword ptr [rax + 0x20]            
+  01F562  jbe 0x1f552                                
+  01F564  mov rax, qword ptr [rax + 0x18]            
+  01F568  test rax, rax                              
+  01F56B  jne 0x1f55e                                
+  01F56D  mov rax, qword ptr [rsp + 0xa0]            
+  01F575  add rax, 0x38                              
+  01F579  cmp rdx, rax                               
+  01F57C  je 0x20984                                 
+  01F582  mov rax, qword ptr [rsp + 0x70]            
+  01F587  cmp rax, qword ptr [rdx + 0x20]            
+  01F58B  jb 0x20984                                 
+  01F591  mov r14, rdx                               
+  01F594  mov rdi, rax                               
+  01F597  mov rdx, qword ptr [rdi + 0x40]            
+  01F59B  lea rax, [rsp + 0x6e0]                     
+  01F5A3  mov dword ptr [rsp + 0x6e8], 0             
+  01F5AE  lea r8, [rax + 8]                          
+  01F5B2  mov qword ptr [rsp + 0x58], rax            
+  01F5B7  mov qword ptr [rsp + 0x6f0], 0             
+  01F5C3  mov qword ptr [rsp + 0x708], 0             
+  01F5CF  test rdx, rdx                              
+  01F5D2  mov qword ptr [rsp + 0x6f8], r8            
+  01F5DA  mov qword ptr [rsp + 0x700], r8            
+  01F5E2  je 0x1f644                                 
+  01F5E4  lea r9, [rsp + 0xf0]                       
+  01F5EC  mov rcx, rax                               
+  01F5EF  mov qword ptr [rsp + 0xf0], rax            
+  01F5F7  call 0x93e2c0                              CALL sub_93E2C0
+  01F5FC  mov qword ptr [rsp + 0x6f0], rax           
+  01F604  mov rcx, rax                               
+  01F607  jmp 0x1f60c                                
+  01F609  mov rcx, rdx                               
+  01F60C  mov rdx, qword ptr [rcx + 0x10]            
+  01F610  test rdx, rdx                              
+  01F613  jne 0x1f609                                
+  01F615  mov qword ptr [rsp + 0x6f8], rcx           
+  01F61D  jmp 0x1f622                                
+  01F61F  mov rax, rdx                               
+  01F622  mov rdx, qword ptr [rax + 0x18]            
+  01F626  test rdx, rdx                              
+  01F629  jne 0x1f61f                                
+  01F62B  mov qword ptr [rsp + 0x700], rax           
+  01F633  mov rax, qword ptr [rsp + 0x70]            
+  01F638  mov rax, qword ptr [rax + 0x58]            
+  01F63C  mov qword ptr [rsp + 0x708], rax           
+  01F644  mov rax, qword ptr [rsp + 0x70]            
+  01F649  lea rbp, [rsp + 0x480]                     
+  01F651  lea r13, [rsp + 0x7d0]                     
+  01F659  mov rbx, qword ptr [rax + 0x78]            
+  01F65D  lea r12, [rax + 0x68]                      
+  01F661  cmp rbx, r12                               
+  01F664  je 0x1f70a                                 
+  01F66A  nop word ptr [rax + rax]                   
+  01F670  mov esi, dword ptr [rbx + 0x20]            
+  01F673  lea rdi, [rbx + 0x28]                      
+  01F677  cmp esi, 8                                 
+  01F67A  ja 0x207ef                                 
+  01F680  mov rcx, qword ptr [rsp + 0x6f0]           
+  01F688  lea r8d, [rsi + rsi*4 + 5]                 
+  01F68D  mov rax, qword ptr [rsp + 0x58]            
+  01F692  add r8d, r8d                               
+  01F695  mov dword ptr [rsp + 0x7d0], r8d           
+  01F69D  test rcx, rcx                              
+  01F6A0  lea rdx, [rax + 8]                         
+  01F6A4  jne 0x1f6bc                                
+  01F6A6  jmp 0x207d0                                
+  01F6AB  nop dword ptr [rax + rax]                  
+  01F6B0  mov rdx, rcx                               
+  01F6B3  mov rcx, qword ptr [rcx + 0x10]            
+  01F6B7  test rcx, rcx                              
+  01F6BA  je 0x1f6cb                                 
+  01F6BC  cmp r8d, dword ptr [rcx + 0x20]            
+  01F6C0  jbe 0x1f6b0                                
+  01F6C2  mov rcx, qword ptr [rcx + 0x18]            
+  01F6C6  test rcx, rcx                              
+  01F6C9  jne 0x1f6bc                                
+  01F6CB  mov rax, qword ptr [rsp + 0x58]            
+  01F6D0  add rax, 8                                 
+  01F6D4  cmp rdx, rax                               
+  01F6D7  je 0x207d0                                 
+  01F6DD  cmp r8d, dword ptr [rdx + 0x20]            
+  01F6E1  jb 0x207d0                                 
+  01F6E7  mov rax, rdx                               
+  01F6EA  lea rcx, [rax + 0x28]                      
+  01F6EE  mov rdx, rdi                               
+  01F6F1  call 0x8c2380                              CALL sub_8C2380
+  01F6F6  mov rcx, rbx                               
+  01F6F9  call 0x979ff0                              CALL sub_979FF0
+  01F6FE  cmp r12, rax                               
+  01F701  mov rbx, rax                               
+  01F704  jne 0x1f670                                
+  01F70A  mov rsi, qword ptr [r14 + 0x40]            
+  01F70E  lea r12, [r14 + 0x30]                      
+  01F712  cmp rsi, r12                               
+  01F715  je 0x1f7e8                                 
+  01F71B  lea r13, [rsp + 0x4a0]                     
+  01F723  lea rax, [r13 + 0x10]                      
+  01F727  lea r14, [rsp + 0x4c0]                     
+  01F72F  mov qword ptr [rsp + 0x68], rax            
+  01F734  lea rax, [r14 + 0x10]                      
+  01F738  lea rbp, [rsp + 0x4e0]                     
+  01F740  mov qword ptr [rsp + 0x98], rax            
+  01F748  lea r15, [rsp + 0x7d0]                     
+  01F750  mov ebx, dword ptr [rsi + 0x20]            
+  01F753  lea rdi, [rsi + 0x28]                      
+  01F757  cmp ebx, 0x63                              
+  01F75A  ja 0x2088e                                 
+  01F760  mov rcx, qword ptr [rsp + 0x6f0]           
+  01F768  add ebx, 0xc9                              
+  01F76E  mov rax, qword ptr [rsp + 0x58]            
+  01F773  mov dword ptr [rsp + 0x7d0], ebx           
+  01F77A  test rcx, rcx                              
+  01F77D  lea rdx, [rax + 8]                         
+  01F781  jne 0x1f79c                                
+  01F783  jmp 0x207b0                                
+  01F788  nop dword ptr [rax + rax]                  
+  01F790  mov rdx, rcx                               
+  01F793  mov rcx, qword ptr [rcx + 0x10]            
+  01F797  test rcx, rcx                              
+  01F79A  je 0x1f7aa                                 
+  01F79C  cmp ebx, dword ptr [rcx + 0x20]            
+  01F79F  jbe 0x1f790                                
+  01F7A1  mov rcx, qword ptr [rcx + 0x18]            
+  01F7A5  test rcx, rcx                              
+  01F7A8  jne 0x1f79c                                
+  01F7AA  mov rax, qword ptr [rsp + 0x58]            
+  01F7AF  add rax, 8                                 
+  01F7B3  cmp rdx, rax                               
+  01F7B6  je 0x207b0                                 
+  01F7BC  cmp ebx, dword ptr [rdx + 0x20]            
+  01F7BF  jb 0x207b0                                 
+  01F7C5  mov rax, rdx                               
+  01F7C8  lea rcx, [rax + 0x28]                      
+  01F7CC  mov rdx, rdi                               
+  01F7CF  call 0x8c2380                              CALL sub_8C2380
+  01F7D4  mov rcx, rsi                               
+  01F7D7  call 0x979ff0                              CALL sub_979FF0
+  01F7DC  cmp r12, rax                               
+  01F7DF  mov rsi, rax                               
+  01F7E2  jne 0x1f750                                
+  01F7E8  mov rax, qword ptr [rsp + 0x6f0]           
+  01F7F0  mov dword ptr [rsp + 0x7d0], 0x3e9         
+  01F7FB  test rax, rax                              
+  01F7FE  je 0x20948                                 
+  01F804  mov rdi, qword ptr [rsp + 0x58]            
+  01F809  lea rdx, [rdi + 8]                         
+  01F80D  jmp 0x1f81b                                
+  01F80F  mov rdx, rax                               
+  01F812  mov rax, qword ptr [rax + 0x10]            
+  01F816  test rax, rax                              
+  01F819  je 0x1f82d                                 
+  01F81B  cmp dword ptr [rax + 0x20], 0x3e8          
+  01F822  ja 0x1f80f                                 
+  01F824  mov rax, qword ptr [rax + 0x18]            
+  01F828  test rax, rax                              
+  01F82B  jne 0x1f81b                                
+  01F82D  mov rax, qword ptr [rsp + 0x58]            
+  01F832  add rax, 8                                 
+  01F836  cmp rdx, rax                               
+  01F839  je 0x20951                                 
+  01F83F  cmp dword ptr [rdx + 0x20], 0x3e9          
+  01F846  ja 0x20951                                 
+  01F84C  mov rax, rdx                               
+  01F84F  mov rdx, qword ptr [rsp + 0x60]            
+  01F854  lea rcx, [rax + 0x28]                      
+  01F858  call 0x8c2380                              CALL sub_8C2380
+  01F85D  mov rax, qword ptr [rsp + 0x6f0]           
+  01F865  mov dword ptr [rsp + 0x7d0], 0x3ea         
+  01F870  test rax, rax                              
+  01F873  je 0x20918                                 
+  01F879  mov rdi, qword ptr [rsp + 0x58]            
+  01F87E  lea rdx, [rdi + 8]                         
+  01F882  jmp 0x1f890                                
+  01F884  mov rdx, rax                               
+  01F887  mov rax, qword ptr [rax + 0x10]            
+  01F88B  test rax, rax                              
+  01F88E  je 0x1f8a2                                 
+  01F890  cmp dword ptr [rax + 0x20], 0x3e9          
+  01F897  ja 0x1f884                                 
+  01F899  mov rax, qword ptr [rax + 0x18]            
+  01F89D  test rax, rax                              
+  01F8A0  jne 0x1f890                                
+  01F8A2  mov rax, qword ptr [rsp + 0x58]            
+  01F8A7  add rax, 8                                 
+  01F8AB  cmp rdx, rax                               
+  01F8AE  je 0x20921                                 
+  01F8B4  cmp dword ptr [rdx + 0x20], 0x3ea          
+  01F8BB  ja 0x20921                                 
+  01F8C1  mov rax, rdx                               
+  01F8C4  mov rdi, qword ptr [rsp + 0x60]            
+  01F8C9  lea rcx, [rax + 0x28]                      
+  01F8CD  lea rdx, [rdi + 0x18]                      
+  01F8D1  call 0x8c2380                              CALL sub_8C2380
+  01F8D6  mov rdi, qword ptr [rsp + 0x58]            
+  01F8DB  mov rax, qword ptr [rsp + 0x6f8]           
+  01F8E3  lea rdx, [rdi + 8]                         
+  01F8E7  cmp rax, rdx                               
+  01F8EA  je 0x1f9d0                                 
+  01F8F0  lea rbp, [rsp + 0x710]                     
+  01F8F8  mov qword ptr [rsp + 0x68], rax            
+  01F8FD  lea r12, [rsp + 0x260]                     
+  01F905  lea rsi, [rsp + 0x280]                     
+  01F90D  lea r15, [rbp + 0x18]                      
+  01F911  mov rax, qword ptr [rsp + 0x68]            
+  01F916  mov rbx, qword ptr [rax + 0x28]            
+  01F91A  mov r13, qword ptr [rax + 0x30]            
+  01F91E  mov r14d, dword ptr [rax + 0x20]           
+  01F922  cmp rbx, r13                               
+  01F925  je 0x1f9ac                                 
+  01F92B  lea rdi, [rsp + 0x7d0]                     
+  01F933  mov rdx, rbx                               
+  01F936  mov rcx, r12                               
+  01F939  call 0x5c5970                              CALL sub_5C5970
+  01F93E  mov rdx, r12                               
+  01F941  mov rcx, rbp                               
+  01F944  call 0x5c5bf0                              CALL sub_5C5BF0
+  01F949  mov rdx, rbp                               
+  01F94C  mov rcx, rsi                               
+  01F94F  call 0x5c6be0                              CALL sub_5C6BE0
+  01F954  mov edx, r14d                              
+  01F957  mov rcx, rdi                               
+  01F95A  call 0x54cea0                              CALL sub_54CEA0
+  01F95F  mov rcx, qword ptr [rsp + 0x50]            
+  01F964  mov r8, rsi                                
+  01F967  mov rdx, rdi                               
+  01F96A  call 0x4fa700                              CALL sub_4FA700
+  01F96F  mov rcx, rsi                               
+  01F972  call 0x8c4ff0                              CALL sub_8C4FF0
+  01F977  mov rcx, r15                               
+  01F97A  call 0x8c2320                              CALL sub_8C2320
+  01F97F  mov rcx, qword ptr [rsp + 0x710]           
+  01F987  test rcx, rcx                              
+  01F98A  je 0x1f991                                 
+  01F98C  call 0x9984b0                              CALL sub_9984B0
+  01F991  mov rcx, qword ptr [rsp + 0x260]           
+  01F999  test rcx, rcx                              
+  01F99C  je 0x1f9a3                                 
+  01F99E  call 0x9984b0                              CALL sub_9984B0
+  01F9A3  add rbx, 0x18                              
+  01F9A7  cmp r13, rbx                               
+  01F9AA  jne 0x1f933                                
+  01F9AC  mov rcx, qword ptr [rsp + 0x68]            
+  01F9B1  call 0x97a040                              CALL sub_97A040
+  01F9B6  mov rdi, rax                               
+  01F9B9  mov qword ptr [rsp + 0x68], rax            
+  01F9BE  mov rax, qword ptr [rsp + 0x58]            
+  01F9C3  add rax, 8                                 
+  01F9C7  cmp rdi, rax                               
+  01F9CA  jne 0x1f911                                
+  01F9D0  mov rdx, qword ptr [rsp + 0x6f0]           
+  01F9D8  mov rcx, qword ptr [rsp + 0x58]            
+  01F9DD  call 0x93e7b0                              CALL sub_93E7B0
+  01F9E2  mov rdi, qword ptr [rsp + 0x60]            
+  01F9E7  lea rcx, [rdi + 0x18]                      
+  01F9EB  call 0x8c2320                              CALL sub_8C2320
+  01F9F0  mov rcx, rdi                               
+  01F9F3  call 0x8c2320                              CALL sub_8C2320
+  01F9F8  mov rax, qword ptr [rsp + 0x660]           
+  01FA00  test rax, rax                              
+  01FA03  je 0x21389                                 
+  01FA09  mov rdi, qword ptr [rsp + 0x90]            
+  01FA11  mov rdx, qword ptr [rsp + 0x70]            
+  01FA16  lea rbx, [rdi + 8]                         
+  01FA1A  jmp 0x1fa28                                
+  01FA1C  mov rbx, rax                               
+  01FA1F  mov rax, qword ptr [rax + 0x10]            
+  01FA23  test rax, rax                              
+  01FA26  je 0x1fa37                                 
+  01FA28  cmp rdx, qword ptr [rax + 0x20]            
+  01FA2C  jbe 0x1fa1c                                
+  01FA2E  mov rax, qword ptr [rax + 0x18]            
+  01FA32  test rax, rax                              
+  01FA35  jne 0x1fa28                                
+  01FA37  mov rax, qword ptr [rsp + 0x90]            
+  01FA3F  add rax, 8                                 
+  01FA43  cmp rbx, rax                               
+  01FA46  je 0x1fa57                                 
+  01FA48  mov rax, qword ptr [rsp + 0x70]            
+  01FA4D  cmp rax, qword ptr [rbx + 0x20]            
+  01FA51  jae 0x1fafa                                
+  01FA57  mov ecx, 0x30                              
+  01FA5C  call 0x998500                              CALL sub_998500
+  01FA61  mov rsi, rax                               
+  01FA64  mov rax, qword ptr [rsp + 0x70]            
+  01FA69  mov r8, rbx                                
+  01FA6C  mov rdx, qword ptr [rsp + 0x90]            
+  01FA74  mov dword ptr [rsi + 0x28], 0              
+  01FA7B  lea r13, [rsp + 0xd0]                      
+  01FA83  lea r9, [rsi + 0x20]                       
+  01FA87  mov rcx, r13                               
+  01FA8A  mov qword ptr [rsi + 0x20], rax            
+  01FA8E  call 0x932a60                              CALL sub_932A60
+  01FA93  mov r8, qword ptr [rsp + 0xd8]             
+  01FA9B  mov rax, qword ptr [rsp + 0xd0]            
+  01FAA3  test r8, r8                                
+  01FAA6  mov rbx, rax                               
+  01FAA9  je 0x20d33                                 
+  01FAAF  mov rdi, qword ptr [rsp + 0x90]            
+  01FAB7  lea rdx, [rdi + 8]                         
+  01FABB  cmp r8, rdx                                
+  01FABE  sete dl                                    
+  01FAC1  test rax, rax                              
+  01FAC4  setne al                                   
+  01FAC7  or dl, al                                  
+  01FAC9  jne 0x1fad7                                
+  01FACB  mov rax, qword ptr [rsp + 0x70]            
+  01FAD0  cmp rax, qword ptr [r8 + 0x20]             
+  01FAD4  setb dl                                    
+  01FAD7  mov rax, qword ptr [rsp + 0x90]            
+  01FADF  movzx ecx, dl                              
+  01FAE2  mov rdx, rsi                               
+  01FAE5  mov rbx, rsi                               
+  01FAE8  lea r9, [rax + 8]                          
+  01FAEC  call 0x987220                              CALL sub_987220
+  01FAF1  add qword ptr [rsp + 0x678], 1             
+  01FAFA  mov rcx, qword ptr [rsp + 0x50]            
+  01FAFF  call 0x4f8c60                              CALL sub_4F8C60
+  01FB04  mov dword ptr [rbx + 0x28], eax            
+  01FB07  mov rcx, qword ptr [rsp + 0x78]            
+  01FB0C  call 0x8c4ff0                              CALL sub_8C4FF0
+  01FB11  mov rax, qword ptr [rsp + 0x9c8]           
+  01FB19  mov rbx, qword ptr [rax + 0x1b0]           
+  01FB20  mov rsi, qword ptr [rax + 0x1b8]           
+  01FB27  add dword ptr [rsp + 0xc8], 1              
+  01FB2F  mov rax, rsi                               
+  01FB32  mov edx, dword ptr [rsp + 0xc8]            
+  01FB39  sub rax, rbx                               
+  01FB3C  sar rax, 3                                 
+  01FB40  cmp rdx, rax                               
+  01FB43  jne 0x1f10f                                
+  01FB49  lea rax, [rsp + 0x680]                     
+  01FB51  mov rdi, qword ptr [rsp + 0x9c8]           
+  01FB59  mov dword ptr [rsp + 0x688], 0             
+  01FB64  mov qword ptr [rsp + 0x88], rax            
+  01FB6C  lea rax, [rsp + 0x688]                     
+  01FB74  mov qword ptr [rsp + 0x698], rax           
+  01FB7C  mov qword ptr [rsp + 0x6a0], rax           
+  01FB84  mov rax, qword ptr [rsp + 0x9c8]           
+  01FB8C  mov r8, qword ptr [rdi + 0x188]            
+  01FB93  mov qword ptr [rsp + 0x690], 0             
+  01FB9F  mov qword ptr [rsp + 0x6a8], 0             
+  01FBAB  mov rax, qword ptr [rax + 0x180]           
+  01FBB2  mov rdx, r8                                
+  01FBB5  sub rdx, rax                               
+  01FBB8  sar rdx, 3                                 
+  01FBBC  test rdx, rdx                              
+  01FBBF  je 0x21431                                 
+  01FBC5  lea rdi, [rsp + 0x520]                     
+  01FBCD  xor ecx, ecx                               
+  01FBCF  mov dword ptr [rsp + 0xc8], 0              
+  01FBDA  lea rsi, [rsp + 0x500]                     
+  01FBE2  mov qword ptr [rsp + 0xa8], rdi            
+  01FBEA  mov qword ptr [rsp + 0xb0], rsi            
+  01FBF2  lea rdi, [rsp + 0x530]                     
+  01FBFA  lea rsi, [rsp + 0x510]                     
+  01FC02  mov qword ptr [rsp + 0xc0], rdi            
+  01FC0A  mov qword ptr [rsp + 0xb8], rsi            
+  01FC12  jmp 0x1fc36                                
+  01FC14  add dword ptr [rsp + 0xc8], 1              
+  01FC1C  mov rdx, r8                                
+  01FC1F  mov ecx, dword ptr [rsp + 0xc8]            
+  01FC26  sub rdx, rax                               
+  01FC29  sar rdx, 3                                 
+  01FC2D  cmp rcx, rdx                               
+  01FC30  je 0x22957                                 
+  01FC36  mov rdi, qword ptr [rax + rcx*8]           
+  01FC3A  cmp byte ptr [rdi + 0x208], 0              
+  01FC41  mov qword ptr [rsp + 0x58], rdi            
+  01FC46  je 0x1fc14                                 
+  01FC48  lea rax, [rsp + 0x800]                     
+  01FC50  mov rdx, rdi                               
+  01FC53  mov rcx, rax                               
+  01FC56  mov qword ptr [rsp + 0x70], rax            
+  01FC5B  call 0x1ec80                               CALL sub_1EC80
+  01FC60  mov rax, qword ptr [rsp + 0x800]           
+  01FC68  cmp qword ptr [rsp + 0x808], rax           
+  01FC70  je 0x20fd7                                 
+  01FC76  mov rsi, qword ptr [rsp + 0x58]            
+  01FC7B  mov r12d, 0xf4240                          
+  01FC81  mov r8d, 0x10                              
+  01FC87  lea r9, [rip + 0x98e1f0]                   
+  01FC8E  mov edi, r12d                              
+  01FC91  lea rdx, [rip - 0x4c48]                    
+  01FC98  cmp dword ptr [rsi], 0xf4240               
+  01FC9E  mov rax, rsi                               
+  01FCA1  mov rbx, qword ptr [rsi + 0x1a0]           
+  01FCA8  cmovbe edi, dword ptr [rsi]                
+  01FCAB  lea rbp, [rsi + 0x188]                     
+  01FCB2  cmp dword ptr [rsi + 4], 0xf4240           
+  01FCB9  cmovbe r12d, dword ptr [rsi + 4]           
+  01FCBE  add rax, 0x1a0                             
+  01FCC4  cmp qword ptr [rsi + 0x1a8], rbx           
+  01FCCB  lea rbx, [rsp + 0x3a0]                     
+  01FCD3  mov rcx, rbx                               
+  01FCD6  cmovne rbp, rax                            
+  01FCDA  mov eax, dword ptr [rsp + 0xc8]            
+  01FCE1  mov dword ptr [rsp + 0x20], eax            
+  01FCE5  call 0x1b170                               CALL sub_1B170
+  01FCEA  lea rsi, [rsp + 0x380]                     
+  01FCF2  lea rdx, [rip + 0x98e19a]                  
+  01FCF9  mov rcx, rsi                               
+  01FCFC  call 0x1b130                               CALL sub_1B130
+  01FD01  mov r9, qword ptr [rsp + 0x380]            
+  01FD09  lea rdx, [rsi + 0x10]                      
+  01FD0D  mov eax, 0xf                               
+  01FD12  mov rcx, qword ptr [rsp + 0x388]           
+  01FD1A  mov r8, qword ptr [rsp + 0x3a8]            
+  01FD22  cmp r9, rdx                                
+  01FD25  mov rdx, rax                               
+  01FD28  cmovne rdx, qword ptr [rsp + 0x390]        
+  01FD31  lea r10, [rcx + r8]                        
+  01FD35  cmp r10, rdx                               
+  01FD38  mov rdx, qword ptr [rsp + 0x3a0]           
+  01FD40  jbe 0x21010                                
+  01FD46  lea r11, [rbx + 0x10]                      
+  01FD4A  cmp rdx, r11                               
+  01FD4D  cmovne rax, qword ptr [rsp + 0x3b0]        
+  01FD56  cmp r10, rax                               
+  01FD59  ja 0x21010                                 
+  01FD5F  mov qword ptr [rsp + 0x20], rcx            
+  01FD64  xor r8d, r8d                               
+  01FD67  xor edx, edx                               
+  01FD69  mov rcx, rbx                               
+  01FD6C  call 0x90ecb0                              CALL sub_90ECB0
+  01FD71  mov rdx, qword ptr [rsp + 0x60]            
+  01FD76  add rdx, 0x10                              
+  01FD7A  mov qword ptr [rsp + 0x8a0], rdx           
+  01FD82  mov rcx, qword ptr [rax]                   
+  01FD85  lea rdx, [rax + 0x10]                      
+  01FD89  cmp rcx, rdx                               
+  01FD8C  je 0x229d4                                 
+  01FD92  mov qword ptr [rsp + 0x8a0], rcx           
+  01FD9A  mov rcx, qword ptr [rax + 0x10]            
+  01FD9E  mov qword ptr [rsp + 0x8b0], rcx           
+  01FDA6  mov rcx, qword ptr [rax + 8]               
+  01FDAA  mov r8d, edi                               
+  01FDAD  mov r15, qword ptr [rsp + 0x60]            
+  01FDB2  mov r9, qword ptr [rsp + 0x70]             
+  01FDB7  mov qword ptr [rsp + 0x8a8], rcx           
+  01FDBF  mov rcx, qword ptr [rsp + 0x9c0]           
+  01FDC7  mov qword ptr [rax], rdx                   
+  01FDCA  mov rdx, r15                               
+  01FDCD  mov qword ptr [rax + 8], 0                 
+  01FDD5  mov byte ptr [rax + 0x10], 0               
+  01FDD9  mov qword ptr [rsp + 0x20], rbp            
+  01FDDE  call 0x501660                              CALL sub_501660
+  01FDE3  mov rcx, qword ptr [rsp + 0x8a0]           
+  01FDEB  mov qword ptr [rsp + 0x50], rax            
+  01FDF0  mov rax, r15                               
+  01FDF3  add rax, 0x10                              
+  01FDF7  cmp rcx, rax                               
+  01FDFA  je 0x1fe01                                 
+  01FDFC  call 0x9984b0                              CALL sub_9984B0
+  01FE01  mov rcx, qword ptr [rsp + 0x380]           
+  01FE09  add rsi, 0x10                              
+  01FE0D  cmp rcx, rsi                               
+  01FE10  je 0x1fe17                                 
+  01FE12  call 0x9984b0                              CALL sub_9984B0
+  01FE17  mov rcx, qword ptr [rsp + 0x3a0]           
+  01FE1F  add rbx, 0x10                              
+  01FE23  cmp rcx, rbx                               
+  01FE26  je 0x1fe2d                                 
+  01FE28  call 0x9984b0                              CALL sub_9984B0
+  01FE2D  mov rax, qword ptr [rsp + 0x690]           
+  01FE35  test rax, rax                              
+  01FE38  je 0x22971                                 
+  01FE3E  mov rsi, qword ptr [rsp + 0x88]            
+  01FE46  mov rdx, qword ptr [rsp + 0x58]            
+  01FE4B  lea rbx, [rsi + 8]                         
+  01FE4F  jmp 0x1fe5d                                
+  01FE51  mov rbx, rax                               
+  01FE54  mov rax, qword ptr [rax + 0x10]            
+  01FE58  test rax, rax                              
+  01FE5B  je 0x1fe6c                                 
+  01FE5D  cmp rdx, qword ptr [rax + 0x20]            
+  01FE61  jbe 0x1fe51                                
+  01FE63  mov rax, qword ptr [rax + 0x18]            
+  01FE67  test rax, rax                              
+  01FE6A  jne 0x1fe5d                                
+  01FE6C  mov rax, qword ptr [rsp + 0x88]            
+  01FE74  add rax, 8                                 
+  01FE78  cmp rbx, rax                               
+  01FE7B  je 0x1fe8c                                 
+  01FE7D  mov rax, qword ptr [rsp + 0x58]            
+  01FE82  cmp rax, qword ptr [rbx + 0x20]            
+  01FE86  jae 0x1ff30                                
+  01FE8C  mov ecx, 0x30                              
+  01FE91  call 0x998500                              CALL sub_998500
+  01FE96  mov rsi, rax                               
+  01FE99  mov rax, qword ptr [rsp + 0x58]            
+  01FE9E  mov r8, rbx                                
+  01FEA1  mov rdx, qword ptr [rsp + 0x88]            
+  01FEA9  mov qword ptr [rsi + 0x28], 0              
+  01FEB1  lea r13, [rsp + 0xd0]                      
+  01FEB9  lea r9, [rsi + 0x20]                       
+  01FEBD  mov rcx, r13                               
+  01FEC0  mov qword ptr [rsi + 0x20], rax            
+  01FEC4  call 0x9313d0                              CALL sub_9313D0
+  01FEC9  mov r8, qword ptr [rsp + 0xd8]             
+  01FED1  mov rax, qword ptr [rsp + 0xd0]            
+  01FED9  test r8, r8                                
+  01FEDC  mov rbx, rax                               
+  01FEDF  je 0x22964                                 
+  01FEE5  test rax, rax                              
+  01FEE8  mov rax, qword ptr [rsp + 0x88]            
+  01FEF0  setne dl                                   
+  01FEF3  add rax, 8                                 
+  01FEF7  cmp r8, rax                                
+  01FEFA  sete al                                    
+  01FEFD  or dl, al                                  
+  01FEFF  jne 0x1ff0d                                
+  01FF01  mov rax, qword ptr [rsp + 0x58]            
+  01FF06  cmp rax, qword ptr [r8 + 0x20]             
+  01FF0A  setb dl                                    
+  01FF0D  mov rax, qword ptr [rsp + 0x88]            
+  01FF15  movzx ecx, dl                              
+  01FF18  mov rdx, rsi                               
+  01FF1B  mov rbx, rsi                               
+  01FF1E  lea r9, [rax + 8]                          
+  01FF22  call 0x987220                              CALL sub_987220
+  01FF27  add qword ptr [rsp + 0x6a8], 1             
+  01FF30  mov rax, qword ptr [rsp + 0x50]            
+  01FF35  mov qword ptr [rbx + 0x28], rax            
+  01FF39  mov rbx, qword ptr [rsp + 0x58]            
+  01FF3E  mov rcx, rax                               
+  01FF41  mov rsi, rax                               
+  01FF44  mov edx, dword ptr [rbx + 8]               
+  01FF47  call 0x4f76c0                              CALL sub_4F76C0
+  01FF4C  lea edx, [r12 + rdi]                       
+  01FF50  mov rcx, rsi                               
+  01FF53  mov rdi, rsi                               
+  01FF56  call 0x4f7270                              CALL sub_4F7270
+  01FF5B  movzx edx, byte ptr [rbx + 0x1c]           
+  01FF5F  mov rcx, rdi                               
+  01FF62  call 0x4f7290                              CALL sub_4F7290
+  01FF67  lea rdx, [rbx + 0x20]                      
+  01FF6B  mov rcx, rdi                               
+  01FF6E  call 0x4f72b0                              CALL sub_4F72B0
+  01FF73  movsd xmm1, qword ptr [rbx + 0x10]         
+  01FF78  mov rcx, rdi                               
+  01FF7B  call 0x4f7340                              CALL sub_4F7340
+  01FF80  movzx edx, byte ptr [rbx + 0x209]          
+  01FF87  mov rcx, rdi                               
+  01FF8A  call 0x4f7380                              CALL sub_4F7380
+  01FF8F  cmp byte ptr [rbx + 0x20a], 0              
+  01FF96  jne 0x2101d                                
+  01FF9C  cmp byte ptr [rbx + 0x20b], 0              
+  01FFA3  je 0x1ffb4                                 
+  01FFA5  mov edx, 2                                 
+  01FFAA  mov rcx, qword ptr [rsp + 0x50]            
+  01FFAF  call 0x4f7390                              CALL sub_4F7390
+  01FFB4  mov rax, qword ptr [rsp + 0x58]            
+  01FFB9  mov eax, dword ptr [rax + 0x18]            
+  01FFBC  cmp eax, 1                                 
+  01FFBF  je 0x21126                                 
+  01FFC5  cmp eax, 2                                 
+  01FFC8  je 0x2110f                                 
+  01FFCE  mov rax, qword ptr [rsp + 0x850]           
+  01FFD6  mov rcx, qword ptr [rsp + 0x58]            
+  01FFDB  test rax, rax                              
+  01FFDE  mov qword ptr [rsp + 0x7d0], rcx           
+  01FFE6  je 0x21027                                 
+  01FFEC  mov rdi, qword ptr [rsp + 0xa0]            
+  01FFF4  lea rdx, [rdi + 8]                         
+  01FFF8  jmp 0x20006                                
+  01FFFA  mov rdx, rax                               
+  01FFFD  mov rax, qword ptr [rax + 0x10]            
+  020001  test rax, rax                              
+  020004  je 0x20015                                 
+  020006  cmp rcx, qword ptr [rax + 0x20]            
+  02000A  jbe 0x1fffa                                
+  02000C  mov rax, qword ptr [rax + 0x18]            
+  020010  test rax, rax                              
+  020013  jne 0x20006                                
+  020015  mov rax, qword ptr [rsp + 0xa0]            
+  02001D  add rax, 8                                 
+  020021  cmp rdx, rax                               
+  020024  je 0x21033                                 
+  02002A  mov rax, qword ptr [rsp + 0x58]            
+  02002F  cmp rax, qword ptr [rdx + 0x20]            
+  020033  jb 0x21033                                 
+  020039  mov r13, rdx                               
+  02003C  mov rdx, qword ptr [rax + 0xd8]            
+  020043  lea r15, [rsp + 0x740]                     
+  02004B  mov dword ptr [rsp + 0x748], 0             
+  020056  mov qword ptr [rsp + 0x750], 0             
+  020062  lea r8, [r15 + 8]                          
+  020066  mov qword ptr [rsp + 0x768], 0             
+  020072  mov qword ptr [rsp + 0x758], r8            
+  02007A  test rdx, rdx                              
+  02007D  mov qword ptr [rsp + 0x760], r8            
+  020085  je 0x200ea                                 
+  020087  lea r9, [rsp + 0x150]                      
+  02008F  mov rcx, r15                               
+  020092  mov qword ptr [rsp + 0x150], r15           
+  02009A  call 0x93e2c0                              CALL sub_93E2C0
+  02009F  mov qword ptr [rsp + 0x750], rax           
+  0200A7  mov rdx, rax                               
+  0200AA  jmp 0x200af                                
+  0200AC  mov rdx, rcx                               
+  0200AF  mov rcx, qword ptr [rdx + 0x10]            
+  0200B3  test rcx, rcx                              
+  0200B6  jne 0x200ac                                
+  0200B8  mov qword ptr [rsp + 0x758], rdx           
+  0200C0  jmp 0x200c5                                
+  0200C2  mov rax, rdx                               
+  0200C5  mov rdx, qword ptr [rax + 0x18]            
+  0200C9  test rdx, rdx                              
+  0200CC  jne 0x200c2                                
+  0200CE  mov qword ptr [rsp + 0x760], rax           
+  0200D6  mov rax, qword ptr [rsp + 0x58]            
+  0200DB  mov rax, qword ptr [rax + 0xf0]            
+  0200E2  mov qword ptr [rsp + 0x768], rax           
+  0200EA  mov rdi, qword ptr [rsp + 0x58]            
+  0200EF  lea rax, [rsp + 0x770]                     
+  0200F7  mov dword ptr [rsp + 0x778], 0             
+  020102  lea r8, [rax + 8]                          
+  020106  mov qword ptr [rsp + 0x78], rax            
+  02010B  mov qword ptr [rsp + 0x780], 0             
+  020117  mov qword ptr [rsp + 0x798], 0             
+  020123  mov rdx, qword ptr [rdi + 0x108]           
+  02012A  mov qword ptr [rsp + 0x788], r8            
+  020132  mov qword ptr [rsp + 0x790], r8            
+  02013A  test rdx, rdx                              
+  02013D  je 0x201a2                                 
+  02013F  lea r9, [rsp + 0x160]                      
+  020147  mov rcx, rax                               
+  02014A  mov qword ptr [rsp + 0x160], rax           
+  020152  call 0x93e2c0                              CALL sub_93E2C0
+  020157  mov qword ptr [rsp + 0x780], rax           
+  02015F  mov rdx, rax                               
+  020162  jmp 0x20167                                
+  020164  mov rdx, rcx                               
+  020167  mov rcx, qword ptr [rdx + 0x10]            
+  02016B  test rcx, rcx                              
+  02016E  jne 0x20164                                
+  020170  mov qword ptr [rsp + 0x788], rdx           
+  020178  jmp 0x2017d                                
+  02017A  mov rax, rdx                               
+  02017D  mov rdx, qword ptr [rax + 0x18]            
+  020181  test rdx, rdx                              
+  020184  jne 0x2017a                                
+  020186  mov qword ptr [rsp + 0x790], rax           
+  02018E  mov rax, qword ptr [rsp + 0x58]            
+  020193  mov rax, qword ptr [rax + 0x120]           
+  02019A  mov qword ptr [rsp + 0x798], rax           
+  0201A2  mov rax, qword ptr [rsp + 0x58]            
+  0201A7  lea r12, [rsp + 0x170]                     
+  0201AF  lea rdi, [r15 + 8]                         
+  0201B3  mov rbx, qword ptr [rax + 0x140]           
+  0201BA  lea rbp, [rax + 0x130]                     
+  0201C1  cmp rbx, rbp                               
+  0201C4  je 0x20250                                 
+  0201CA  nop word ptr [rax + rax]                   
+  0201D0  mov ecx, dword ptr [rbx + 0x20]            
+  0201D3  lea rsi, [rbx + 0x28]                      
+  0201D7  call 0x7bf0c0                              CALL sub_7BF0C0
+  0201DC  mov rcx, qword ptr [rsp + 0x750]           
+  0201E4  mov dword ptr [rsp + 0x8a0], eax           
+  0201EB  mov rdx, rdi                               
+  0201EE  test rcx, rcx                              
+  0201F1  jne 0x2020c                                
+  0201F3  jmp 0x20e2f                                
+  0201F8  nop dword ptr [rax + rax]                  
+  020200  mov rdx, rcx                               
+  020203  mov rcx, qword ptr [rcx + 0x10]            
+  020207  test rcx, rcx                              
+  02020A  je 0x2021a                                 
+  02020C  cmp eax, dword ptr [rcx + 0x20]            
+  02020F  jbe 0x20200                                
+  020211  mov rcx, qword ptr [rcx + 0x18]            
+  020215  test rcx, rcx                              
+  020218  jne 0x2020c                                
+  02021A  cmp rdx, rdi                               
+  02021D  je 0x20e2f                                 
+  020223  cmp eax, dword ptr [rdx + 0x20]            
+  020226  jb 0x20e2f                                 
+  02022C  mov rax, rdx                               
+  02022F  lea rcx, [rax + 0x28]                      
+  020233  mov rdx, rsi                               
+  020236  call 0x8c2380                              CALL sub_8C2380
+  02023B  mov rcx, rbx                               
+  02023E  call 0x979ff0                              CALL sub_979FF0
+  020243  cmp rbp, rax                               
+  020246  mov rbx, rax                               
+  020249  jne 0x201d0                                
+  02024B  mov rax, qword ptr [rsp + 0x58]            
+  020250  mov rbx, qword ptr [rax + 0x170]           
+  020257  lea rbp, [rax + 0x160]                     
+  02025E  mov rax, qword ptr [rsp + 0x78]            
+  020263  lea r12, [rsp + 0x180]                     
+  02026B  cmp rbx, rbp                               
+  02026E  lea rdi, [rax + 8]                         
+  020272  je 0x202eb                                 
+  020274  mov ecx, dword ptr [rbx + 0x20]            
+  020277  lea rsi, [rbx + 0x28]                      
+  02027B  call 0x7bf0c0                              CALL sub_7BF0C0
+  020280  mov rcx, qword ptr [rsp + 0x780]           
+  020288  mov dword ptr [rsp + 0x8a0], eax           
+  02028F  mov rdx, rdi                               
+  020292  test rcx, rcx                              
+  020295  jne 0x202ac                                
+  020297  jmp 0x20e10                                
+  02029C  nop dword ptr [rax]                        
+  0202A0  mov rdx, rcx                               
+  0202A3  mov rcx, qword ptr [rcx + 0x10]            
+  0202A7  test rcx, rcx                              
+  0202AA  je 0x202ba                                 
+  0202AC  cmp eax, dword ptr [rcx + 0x20]            
+  0202AF  jbe 0x202a0                                
+  0202B1  mov rcx, qword ptr [rcx + 0x18]            
+  0202B5  test rcx, rcx                              
+  0202B8  jne 0x202ac                                
+  0202BA  cmp rdx, rdi                               
+  0202BD  je 0x20e10                                 
+  0202C3  cmp eax, dword ptr [rdx + 0x20]            
+  0202C6  jb 0x20e10                                 
+  0202CC  mov rax, rdx                               
+  0202CF  lea rcx, [rax + 0x28]                      
+  0202D3  mov rdx, rsi                               
+  0202D6  call 0x8c2380                              CALL sub_8C2380
+  0202DB  mov rcx, rbx                               
+  0202DE  call 0x979ff0                              CALL sub_979FF0
+  0202E3  cmp rbp, rax                               
+  0202E6  mov rbx, rax                               
+  0202E9  jne 0x20274                                
+  0202EB  mov rax, qword ptr [rsp + 0x58]            
+  0202F0  mov rdi, qword ptr [rax + 0x98]            
+  0202F7  cmp qword ptr [rax + 0xa0], rdi            
+  0202FE  je 0x20377                                 
+  020300  mov dword ptr [rsp + 0x8a0], 0x3e9         
+  02030B  lea rbx, [rax + 0x98]                      
+  020312  mov rax, qword ptr [rsp + 0x750]           
+  02031A  lea rdx, [r15 + 8]                         
+  02031E  test rax, rax                              
+  020321  jne 0x2033c                                
+  020323  jmp 0x21065                                
+  020328  nop dword ptr [rax + rax]                  
+  020330  mov rdx, rax                               
+  020333  mov rax, qword ptr [rax + 0x10]            
+  020337  test rax, rax                              
+  02033A  je 0x2034e                                 
+  02033C  cmp dword ptr [rax + 0x20], 0x3e8          
+  020343  ja 0x20330                                 
+  020345  mov rax, qword ptr [rax + 0x18]            
+  020349  test rax, rax                              
+  02034C  jne 0x2033c                                
+  02034E  lea rax, [r15 + 8]                         
+  020352  cmp rdx, rax                               
+  020355  je 0x21065                                 
+  02035B  cmp dword ptr [rdx + 0x20], 0x3e9          
+  020362  ja 0x21065                                 
+  020368  mov rax, rdx                               
+  02036B  lea rcx, [rax + 0x28]                      
+  02036F  mov rdx, rbx                               
+  020372  call 0x8c2380                              CALL sub_8C2380
+  020377  mov rax, qword ptr [rsp + 0x58]            
+  02037C  mov rdi, qword ptr [rax + 0xb0]            
+  020383  cmp qword ptr [rax + 0xb8], rdi            
+  02038A  je 0x20406                                 
+  02038C  lea rbx, [rax + 0xb0]                      
+  020393  mov rax, qword ptr [rsp + 0x780]           
+  02039B  mov dword ptr [rsp + 0x8a0], 0x3e9         
+  0203A6  test rax, rax                              
+  0203A9  je 0x21087                                 
+  0203AF  mov rdi, qword ptr [rsp + 0x78]            
+  0203B4  lea rdx, [rdi + 8]                         
+  0203B8  jmp 0x203c6                                
+  0203BA  mov rdx, rax                               
+  0203BD  mov rax, qword ptr [rax + 0x10]            
+  0203C1  test rax, rax                              
+  0203C4  je 0x203d8                                 
+  0203C6  cmp dword ptr [rax + 0x20], 0x3e8          
+  0203CD  ja 0x203ba                                 
+  0203CF  mov rax, qword ptr [rax + 0x18]            
+  0203D3  test rax, rax                              
+  0203D6  jne 0x203c6                                
+  0203D8  mov rax, qword ptr [rsp + 0x78]            
+  0203DD  add rax, 8                                 
+  0203E1  cmp rdx, rax                               
+  0203E4  je 0x21090                                 
+  0203EA  cmp dword ptr [rdx + 0x20], 0x3e9          
+  0203F1  ja 0x21090                                 
+  0203F7  mov rax, rdx                               
+  0203FA  lea rcx, [rax + 0x28]                      
+  0203FE  mov rdx, rbx                               
+  020401  call 0x8c2380                              CALL sub_8C2380
+  020406  cmp byte ptr [rsp + 0xcf], 0               
+  02040E  jne 0x210b4                                
+  020414  mov rsi, qword ptr [r13 + 0x40]            
+  020418  lea r12, [r13 + 0x30]                      
+  02041C  lea rbp, [rsp + 0x540]                     
+  020424  lea r13, [rsp + 0x1b0]                     
+  02042C  cmp rsi, r12                               
+  02042F  je 0x204b0                                 
+  020431  mov ebx, dword ptr [rsi + 0x20]            
+  020434  lea rdi, [rsi + 0x28]                      
+  020438  cmp ebx, 0x63                              
+  02043B  ja 0x20f2b                                 
+  020441  mov rcx, qword ptr [rsp + 0x750]           
+  020449  lea rdx, [r15 + 8]                         
+  02044D  add ebx, 0x65                              
+  020450  mov dword ptr [rsp + 0x8a0], ebx           
+  020457  test rcx, rcx                              
+  02045A  jne 0x2046d                                
+  02045C  jmp 0x20f0e                                
+  020461  mov rdx, rcx                               
+  020464  mov rcx, qword ptr [rcx + 0x10]            
+  020468  test rcx, rcx                              
+  02046B  je 0x2047b                                 
+  02046D  cmp ebx, dword ptr [rcx + 0x20]            
+  020470  jbe 0x20461                                
+  020472  mov rcx, qword ptr [rcx + 0x18]            
+  020476  test rcx, rcx                              
+  020479  jne 0x2046d                                
+  02047B  lea rax, [r15 + 8]                         
+  02047F  cmp rdx, rax                               
+  020482  je 0x20f0e                                 
+  020488  cmp ebx, dword ptr [rdx + 0x20]            
+  02048B  jb 0x20f0e                                 
+  020491  mov rax, rdx                               
+  020494  lea rcx, [rax + 0x28]                      
+  020498  mov rdx, rdi                               
+  02049B  call 0x8c2380                              CALL sub_8C2380
+  0204A0  mov rcx, rsi                               
+  0204A3  call 0x979ff0                              CALL sub_979FF0
+  0204A8  cmp r12, rax                               
+  0204AB  mov rsi, rax                               
+  0204AE  jne 0x20431                                
+  0204B0  mov r12, qword ptr [rsp + 0x758]           
+  0204B8  lea rax, [r15 + 8]                         
+  0204BC  cmp r12, rax                               
+  0204BF  je 0x205c5                                 
+  0204C5  mov rax, qword ptr [rsp + 0x78]            
+  0204CA  add rax, 8                                 
+  0204CE  mov qword ptr [rsp + 0x68], rax            
+  0204D3  lea rax, [rsp + 0x2a0]                     
+  0204DB  mov qword ptr [rsp + 0x80], rax            
+  0204E3  lea rax, [rsp + 0x7a0]                     
+  0204EB  mov qword ptr [rsp + 0x98], rax            
+  0204F3  mov rax, qword ptr [rsp + 0x780]           
+  0204FB  mov ebp, dword ptr [r12 + 0x20]            
+  020500  test rax, rax                              
+  020503  je 0x2053a                                 
+  020505  mov rsi, qword ptr [rsp + 0x68]            
+  02050A  jmp 0x2051c                                
+  02050C  nop dword ptr [rax]                        
+  020510  mov rsi, rax                               
+  020513  mov rax, qword ptr [rax + 0x10]            
+  020517  test rax, rax                              
+  02051A  je 0x2052a                                 
+  02051C  cmp ebp, dword ptr [rax + 0x20]            
+  02051F  jbe 0x20510                                
+  020521  mov rax, qword ptr [rax + 0x18]            
+  020525  test rax, rax                              
+  020528  jne 0x2051c                                
+  02052A  cmp rsi, qword ptr [rsp + 0x68]            
+  02052F  je 0x2053a                                 
+  020531  cmp ebp, dword ptr [rsi + 0x20]            
+  020534  jae 0x20e4c                                
+  02053A  mov qword ptr [rsp + 0x2a0], 0             
+  020546  mov qword ptr [rsp + 0x2a8], 0             
+  020552  mov qword ptr [rsp + 0x2b0], 0             
+  02055E  mov rsi, qword ptr [rsp + 0x80]            
+  020566  lea rdx, [r12 + 0x28]                      
+  02056B  mov rdi, qword ptr [rsp + 0x60]            
+  020570  mov r8, rsi                                
+  020573  mov rcx, rdi                               
+  020576  call 0x1e870                               CALL sub_1E870
+  02057B  mov rcx, rsi                               
+  02057E  call 0x8c2320                              CALL sub_8C2320
+  020583  mov rsi, qword ptr [rsp + 0x98]            
+  02058B  mov edx, ebp                               
+  02058D  mov rcx, rsi                               
+  020590  call 0x54cea0                              CALL sub_54CEA0
+  020595  mov rcx, qword ptr [rsp + 0x50]            
+  02059A  mov r8, rdi                                
+  02059D  mov rdx, rsi                               
+  0205A0  call 0x4f76e0                              CALL sub_4F76E0
+  0205A5  mov rcx, rdi                               
+  0205A8  call 0x8c4ff0                              CALL sub_8C4FF0
+  0205AD  mov rcx, r12                               
+  0205B0  call 0x97a040                              CALL sub_97A040
+  0205B5  mov r12, rax                               
+  0205B8  lea rax, [r15 + 8]                         
+  0205BC  cmp r12, rax                               
+  0205BF  jne 0x204f3                                
+  0205C5  mov rdx, qword ptr [rsp + 0x780]           
+  0205CD  lea r13, [rsp + 0xd0]                      
+  0205D5  mov rcx, qword ptr [rsp + 0x78]            
+  0205DA  call 0x93e7b0                              CALL sub_93E7B0
+  0205DF  mov rdx, qword ptr [rsp + 0x750]           
+  0205E7  mov rcx, r15                               
+  0205EA  call 0x93e7b0                              CALL sub_93E7B0
+  0205EF  mov rax, qword ptr [rsp + 0x58]            
+  0205F4  mov r12, qword ptr [rax + 0x1f8]           
+  0205FB  mov rdi, qword ptr [rax + 0x1f0]           
+  020602  mov rax, qword ptr [rsp + 0x90]            
+  02060A  cmp r12, rdi                               
+  02060D  lea rbp, [rax + 8]                         
+  020611  je 0x20701                                 
+  020617  nop word ptr [rax + rax]                   
+  020620  mov rax, qword ptr [rsp + 0x660]           
+  020628  mov rsi, rbp                               
+  02062B  mov rbx, qword ptr [rdi]                   
+  02062E  test rax, rax                              
+  020631  jne 0x20641                                
+  020633  jmp 0x2065b                                
+  020635  mov rsi, rax                               
+  020638  mov rax, qword ptr [rax + 0x10]            
+  02063C  test rax, rax                              
+  02063F  je 0x20650                                 
+  020641  cmp rbx, qword ptr [rax + 0x20]            
+  020645  jbe 0x20635                                
+  020647  mov rax, qword ptr [rax + 0x18]            
+  02064B  test rax, rax                              
+  02064E  jne 0x20641                                
+  020650  cmp rsi, rbp                               
+  020653  je 0x2065b                                 
+  020655  cmp rbx, qword ptr [rsi + 0x20]            
+  020659  jae 0x206d7                                
+  02065B  mov ecx, 0x30                              
+  020660  call 0x998500                              CALL sub_998500
+  020665  mov r8, rsi                                
+  020668  mov qword ptr [rax + 0x20], rbx            
+  02066C  mov rcx, r13                               
+  02066F  mov r14, rax                               
+  020672  mov rdx, qword ptr [rsp + 0x90]            
+  02067A  mov dword ptr [rax + 0x28], 0              
+  020681  lea r9, [rax + 0x20]                       
+  020685  call 0x932a60                              CALL sub_932A60
+  02068A  mov r8, qword ptr [rsp + 0xd8]             
+  020692  mov rax, qword ptr [rsp + 0xd0]            
+  02069A  test r8, r8                                
+  02069D  mov rsi, rax                               
+  0206A0  je 0x20fca                                 
+  0206A6  test rax, rax                              
+  0206A9  setne cl                                   
+  0206AC  cmp r8, rbp                                
+  0206AF  sete al                                    
+  0206B2  or cl, al                                  
+  0206B4  jne 0x206bd                                
+  0206B6  cmp rbx, qword ptr [r8 + 0x20]             
+  0206BA  setb cl                                    
+  0206BD  movzx ecx, cl                              
+  0206C0  mov r9, rbp                                
+  0206C3  mov rdx, r14                               
+  0206C6  call 0x987220                              CALL sub_987220
+  0206CB  mov rsi, r14                               
+  0206CE  add qword ptr [rsp + 0x678], 1             
+  0206D7  mov edx, dword ptr [rsi + 0x28]            
+  0206DA  mov rcx, qword ptr [rsp + 0x9c0]           
+  0206E2  call 0x4fc940                              CALL sub_4FC940
+  0206E7  mov rcx, qword ptr [rsp + 0x50]            
+  0206EC  mov rdx, rax                               
+  0206EF  call 0x4f77d0                              CALL sub_4F77D0
+  0206F4  add rdi, 8                                 
+  0206F8  cmp r12, rdi                               
+  0206FB  jne 0x20620                                
+  020701  mov rax, qword ptr [rsp + 0x58]            
+  020706  mov rdi, qword ptr [rax + 0x1e0]           
+  02070D  mov rsi, qword ptr [rax + 0x1d8]           
+  020714  cmp rdi, rsi                               
+  020717  jne 0x20766                                
+  020719  jmp 0x20fe3                                
+  02071E  nop                                        
+  020720  mov rdx, qword ptr [rbx + 0x1a0]           
+  020727  lea rax, [rbx + 0x188]                     
+  02072E  cmp qword ptr [rbx + 0x1a8], rdx           
+  020735  lea r8, [rbx + 0x1a0]                      
+  02073C  mov rdx, qword ptr [rsp + 0x60]            
+  020741  mov rcx, qword ptr [rsp + 0x50]            
+  020746  cmove r8, rax                              
+  02074A  call 0x4f7a50                              CALL sub_4F7A50
+  02074F  mov rcx, qword ptr [rsp + 0x60]            
+  020754  add rsi, 8                                 
+  020758  call 0x8c4ff0                              CALL sub_8C4FF0
+  02075D  cmp rdi, rsi                               
+  020760  je 0x20fe3                                 
+  020766  mov rbx, qword ptr [rsi]                   
+  020769  mov rcx, qword ptr [rsp + 0x60]            
+  02076E  mov rdx, rbx                               
+  020771  call 0x1ec80                               CALL sub_1EC80
+  020776  mov rax, qword ptr [rsp + 0x8a0]           
+  02077E  cmp qword ptr [rsp + 0x8a8], rax           
+  020786  jne 0x20720                                
+  020788  mov byte ptr [rbx + 0x208], 0              
+  02078F  jmp 0x2074f                                
+  020791  mov rbx, rax                               
+  020794  mov rcx, qword ptr [rsp + 0x9c0]           
+  02079C  call 0x5007c0                              CALL sub_5007C0
+  0207A1  mov rcx, rbx                               
+  0207A4  call 0x62f280                              CALL sub_62F280
+  0207A9  nop dword ptr [rax]                        
+  0207B0  mov rcx, qword ptr [rsp + 0x58]            
+  0207B5  lea r8, [rsp + 0x110]                      
+  0207BD  mov qword ptr [rsp + 0x110], r15           
+  0207C5  call 0x1e010                               CALL sub_1E010
+  0207CA  jmp 0x1f7c8                                
+  0207CF  nop                                        
+  0207D0  mov rcx, qword ptr [rsp + 0x58]            
+  0207D5  lea r8, [rsp + 0x100]                      
+  0207DD  mov qword ptr [rsp + 0x100], r13           
+  0207E5  call 0x1e010                               CALL sub_1E010
+  0207EA  jmp 0x1f6ea                                
+  0207EF  lea rdx, [rip + 0x98d4b4]                  STR:"quality >= 0 && quality < 9"
+  0207F6  mov rcx, rbp                               
+  0207F9  call 0x1b130                               CALL sub_1B130
+  0207FE  mov rcx, qword ptr [rsp + 0x80]            
+  020806  lea rdx, [rip + 0x98d8c3]                  STR:"GetLayerLeatherSheet"
+  02080D  call 0x1b130                               CALL sub_1B130
+  020812  mov r15, qword ptr [rsp + 0x88]            
+  02081A  lea rdx, [rip + 0x98d4a7]                  STR:"../structure/border_property.hpp"
+  020821  mov rcx, r15                               
+  020824  call 0x1b130                               CALL sub_1B130
+  020829  mov r8, qword ptr [rsp + 0x80]             
+  020831  mov r9, rbp                                
+  020834  mov edx, 0x12                              
+  020839  mov rcx, r15                               
+  02083C  call 0x60a620                              CALL sub_60A620
+  020841  mov rcx, qword ptr [rsp + 0x440]           
+  020849  cmp rcx, qword ptr [rsp + 0xa8]            
+  020851  je 0x20858                                 
+  020853  call 0x9984b0                              CALL sub_9984B0
+  020858  mov rcx, qword ptr [rsp + 0x460]           
+  020860  cmp rcx, qword ptr [rsp + 0xb0]            
+  020868  je 0x2086f                                 
+  02086A  call 0x9984b0                              CALL sub_9984B0
+  02086F  mov rcx, qword ptr [rsp + 0x480]           
+  020877  lea rax, [rbp + 0x10]                      
+  02087B  cmp rcx, rax                               
+  02087E  je 0x1f680                                 
+  020884  call 0x9984b0                              CALL sub_9984B0
+  020889  jmp 0x1f680                                
+  02088E  lea rdx, [rip + 0x98d555]                  STR:"quality >= 0 && quality < 100"
+  020895  mov rcx, rbp                               
+  020898  call 0x1b130                               CALL sub_1B130
+  02089D  lea rdx, [rip + 0x98d7ec]                  STR:"GetLayerRestrictedZoneSheet"
+  0208A4  mov rcx, r14                               
+  0208A7  call 0x1b130                               CALL sub_1B130
+  0208AC  lea rdx, [rip + 0x98d415]                  STR:"../structure/border_property.hpp"
+  0208B3  mov rcx, r13                               
+  0208B6  call 0x1b130                               CALL sub_1B130
+  0208BB  mov r9, rbp                                
+  0208BE  mov r8, r14                                
+  0208C1  mov edx, 0x2d                              
+  0208C6  mov rcx, r13                               
+  0208C9  call 0x60a620                              CALL sub_60A620
+  0208CE  mov rcx, qword ptr [rsp + 0x4a0]           
+  0208D6  cmp rcx, qword ptr [rsp + 0x68]            
+  0208DB  je 0x208e2                                 
+  0208DD  call 0x9984b0                              CALL sub_9984B0
+  0208E2  mov rcx, qword ptr [rsp + 0x4c0]           
+  0208EA  cmp rcx, qword ptr [rsp + 0x98]            
+  0208F2  je 0x208f9                                 
+  0208F4  call 0x9984b0                              CALL sub_9984B0
+  0208F9  mov rcx, qword ptr [rsp + 0x4e0]           
+  020901  lea rax, [rbp + 0x10]                      
+  020905  cmp rcx, rax                               
+  020908  je 0x1f760                                 
+  02090E  call 0x9984b0                              CALL sub_9984B0
+  020913  jmp 0x1f760                                
+  020918  mov rax, qword ptr [rsp + 0x58]            
+  02091D  lea rdx, [rax + 8]                         
+  020921  mov rcx, qword ptr [rsp + 0x58]            
+  020926  lea rax, [rsp + 0x7d0]                     
+  02092E  lea r8, [rsp + 0x130]                      
+  020936  mov qword ptr [rsp + 0x130], rax           
+  02093E  call 0x1e010                               CALL sub_1E010
+  020943  jmp 0x1f8c4                                
+  020948  mov rax, qword ptr [rsp + 0x58]            
+  02094D  lea rdx, [rax + 8]                         
+  020951  mov rcx, qword ptr [rsp + 0x58]            
+  020956  lea rax, [rsp + 0x7d0]                     
+  02095E  lea r8, [rsp + 0x120]                      
+  020966  mov qword ptr [rsp + 0x120], rax           
+  02096E  call 0x1e010                               CALL sub_1E010
+  020973  jmp 0x1f84f                                
+  020978  mov rax, qword ptr [rsp + 0xa0]            
+  020980  lea rdx, [rax + 0x38]                      
+  020984  lea rax, [rsp + 0x800]                     
+  02098C  mov qword ptr [rsp + 0xe0], rax            
+  020994  mov rax, qword ptr [rsp + 0xa0]            
+  02099C  lea r8, [rsp + 0xe0]                       
+  0209A4  lea rcx, [rax + 0x30]                      
+  0209A8  call 0x1e2e0                               CALL sub_1E2E0
+  0209AD  mov r14, rax                               
+  0209B0  mov rdi, qword ptr [rsp + 0x70]            
+  0209B5  jmp 0x1f597                                
+  0209BA  lea r12, [rsp + 0x1e0]                     
+  0209C2  mov edx, 1                                 
+  0209C7  mov rcx, rax                               
+  0209CA  mov qword ptr [rsp + 0x1e0], 0             
+  0209D6  mov r8, r12                                
+  0209D9  mov rdi, rax                               
+  0209DC  mov qword ptr [rsp + 0x1e8], 0             
+  0209E8  mov qword ptr [rsp + 0x1f0], 0             
+  0209F4  lea rbp, [rsp + 0x200]                     
+  0209FC  mov qword ptr [rsp + 0x200], 0             
+  020A08  mov qword ptr [rsp + 0x208], 0             
+  020A14  mov qword ptr [rsp + 0x210], 0             
+  020A20  call 0x1e480                               CALL sub_1E480
+  020A25  lea rbp, [rsp + 0x200]                     
+  020A2D  xor edx, edx                               
+  020A2F  lea rcx, [rdi + 0x18]                      
+  020A33  mov r8, rbp                                
+  020A36  call 0x1e480                               CALL sub_1E480
+  020A3B  mov rdx, qword ptr [rsp + 0x1e0]           
+  020A43  movabs rcx, 0xaaaaaaaaaaaaaaab             
+  020A4D  mov rax, qword ptr [rsp + 0x1e8]           
+  020A55  sub rax, rdx                               
+  020A58  sar rax, 3                                 
+  020A5C  imul rax, rcx                              
+  020A60  cmp rax, 1                                 
+  020A64  je 0x20b0c                                 
+  020A6A  lea rdi, [rsp + 0x420]                     
+  020A72  lea rdx, [rip + 0x98d3e9]                  STR:"external_rings.size() == 1u"
+  020A79  mov rcx, rdi                               
+  020A7C  call 0x1b130                               CALL sub_1B130
+  020A81  lea rsi, [rsp + 0x400]                     
+  020A89  lea rdx, [rip + 0x98d570]                  STR:"ComputeSheetGeometryRowMode"
+  020A90  mov rcx, rsi                               
+  020A93  call 0x1b130                               CALL sub_1B130
+  020A98  lea rbx, [rsp + 0x3e0]                     
+  020AA0  lea rdx, [rip + 0x98d2ca]                  STR:"internal.cpp"
+  020AA7  mov rcx, rbx                               
+  020AAA  call 0x1b130                               CALL sub_1B130
+  020AAF  mov r9, rdi                                
+  020AB2  mov r8, rsi                                
+  020AB5  mov edx, 0x1b1                             
+  020ABA  mov rcx, rbx                               
+  020ABD  call 0x60a620                              CALL sub_60A620
+  020AC2  mov rcx, qword ptr [rsp + 0x3e0]           
+  020ACA  add rbx, 0x10                              
+  020ACE  cmp rcx, rbx                               
+  020AD1  je 0x20ad8                                 
+  020AD3  call 0x9984b0                              CALL sub_9984B0
+  020AD8  mov rcx, qword ptr [rsp + 0x400]           
+  020AE0  add rsi, 0x10                              
+  020AE4  cmp rcx, rsi                               
+  020AE7  je 0x20aee                                 
+  020AE9  call 0x9984b0                              CALL sub_9984B0
+  020AEE  mov rcx, qword ptr [rsp + 0x420]           
+  020AF6  add rdi, 0x10                              
+  020AFA  cmp rcx, rdi                               
+  020AFD  je 0x20b04                                 
+  020AFF  call 0x9984b0                              CALL sub_9984B0
+  020B04  mov rdx, qword ptr [rsp + 0x1e0]           
+  020B0C  lea rdi, [rsp + 0x6b0]                     
+  020B14  mov rcx, rdi                               
+  020B17  call 0x5c5bf0                              CALL sub_5C5BF0
+  020B1C  mov rsi, qword ptr [rsp + 0x208]           
+  020B24  mov rbx, qword ptr [rsp + 0x200]           
+  020B2C  cmp rbx, rsi                               
+  020B2F  je 0x20b45                                 
+  020B31  mov rdx, rbx                               
+  020B34  mov rcx, rdi                               
+  020B37  call 0x5c5ff0                              CALL sub_5C5FF0
+  020B3C  add rbx, 0x18                              
+  020B40  cmp rsi, rbx                               
+  020B43  jne 0x20b31                                
+  020B45  lea rax, [rsp + 0x7a0]                     
+  020B4D  mov rdx, rdi                               
+  020B50  mov rcx, rax                               
+  020B53  mov qword ptr [rsp + 0x78], rax            
+  020B58  call 0x5c6be0                              CALL sub_5C6BE0
+  020B5D  lea rcx, [rdi + 0x18]                      
+  020B61  call 0x8c2320                              CALL sub_8C2320
+  020B66  mov rcx, qword ptr [rsp + 0x6b0]           
+  020B6E  test rcx, rcx                              
+  020B71  je 0x20b78                                 
+  020B73  call 0x9984b0                              CALL sub_9984B0
+  020B78  mov rcx, rbp                               
+  020B7B  call 0x8c2320                              CALL sub_8C2320
+  020B80  mov rcx, r12                               
+  020B83  call 0x8c2320                              CALL sub_8C2320
+  020B88  jmp 0x1f156                                
+  020B8D  mov rcx, rsi                               
+  020B90  call 0x910a60                              CALL sub_910A60
+  020B95  jmp 0x1f26c                                
+  020B9A  mov rax, qword ptr [rsp + 0x9c8]           
+  020BA2  mov eax, dword ptr [rax + 0xc]             
+  020BA5  jmp 0x1f3a4                                
+  020BAA  mov rax, qword ptr [rsp + 0x70]            
+  020BAF  mov byte ptr [rax + 0x160], 0              
+  020BB6  jmp 0x1fb07                                
+  020BBB  mov rax, qword ptr [rsp + 0x9c8]           
+  020BC3  mov rcx, qword ptr [rsp + 0x60]            
+  020BC8  mov r8d, dword ptr [rax + 8]               
+  020BCC  mov rdx, rax                               
+  020BCF  call 0x1b690                               CALL sub_1B690
+  020BD4  jmp 0x1f3e6                                
+  020BD9  lea rdi, [rsp + 0x360]                     
+  020BE1  lea rdx, [rip + 0x98d29b]                  STR:"structure_sheet"
+  020BE8  mov rcx, rdi                               
+  020BEB  call 0x1b130                               CALL sub_1B130
+  020BF0  lea rsi, [rsp + 0x340]                     
+  020BF8  lea rdx, [rip + 0x98d421]                  STR:"CreateProblem"
+  020BFF  mov rcx, rsi                               
+  020C02  call 0x1b130                               CALL sub_1B130
+  020C07  lea rbx, [rsp + 0x320]                     
+  020C0F  lea rdx, [rip + 0x98d15b]                  STR:"internal.cpp"
+  020C16  mov rcx, rbx                               
+  020C19  call 0x1b130                               CALL sub_1B130
+  020C1E  mov r9, rdi                                
+  020C21  mov r8, rsi                                
+  020C24  mov edx, 0x380                             
+  020C29  mov rcx, rbx                               
+  020C2C  call 0x60a620                              CALL sub_60A620
+  020C31  mov rcx, qword ptr [rsp + 0x320]           
+  020C39  add rbx, 0x10                              
+  020C3D  cmp rcx, rbx                               
+  020C40  je 0x20c47                                 
+  020C42  call 0x9984b0                              CALL sub_9984B0
+  020C47  mov rcx, qword ptr [rsp + 0x340]           
+  020C4F  add rsi, 0x10                              
+  020C53  cmp rcx, rsi                               
+  020C56  je 0x20c5d                                 
+  020C58  call 0x9984b0                              CALL sub_9984B0
+  020C5D  mov rcx, qword ptr [rsp + 0x360]           
+  020C65  add rdi, 0x10                              
+  020C69  cmp rcx, rdi                               
+  020C6C  je 0x1f34e                                 
+  020C72  call 0x9984b0                              CALL sub_9984B0
+  020C77  jmp 0x1f34e                                
+  020C7C  mov rcx, qword ptr [rsp + 0x320]           
+  020C84  add rbx, 0x10                              
+  020C88  mov rbp, rax                               
+  020C8B  cmp rcx, rbx                               
+  020C8E  je 0x20c95                                 
+  020C90  call 0x9984b0                              CALL sub_9984B0
+  020C95  mov rbx, rbp                               
+  020C98  mov rcx, qword ptr [rsp + 0x340]           
+  020CA0  add rsi, 0x10                              
+  020CA4  cmp rcx, rsi                               
+  020CA7  je 0x20cae                                 
+  020CA9  call 0x9984b0                              CALL sub_9984B0
+  020CAE  mov rcx, qword ptr [rsp + 0x360]           
+  020CB6  add rdi, 0x10                              
+  020CBA  cmp rcx, rdi                               
+  020CBD  je 0x20cc4                                 
+  020CBF  call 0x9984b0                              CALL sub_9984B0
+  020CC4  mov rcx, qword ptr [rsp + 0x78]            
+  020CC9  call 0x8c4ff0                              CALL sub_8C4FF0
+  020CCE  mov rcx, qword ptr [rsp + 0xa0]            
+  020CD6  call 0x677af0                              CALL sub_677AF0
+  020CDB  mov rdx, qword ptr [rsp + 0x660]           
+  020CE3  mov rcx, qword ptr [rsp + 0x90]            
+  020CEB  call 0x932b80                              CALL sub_932B80
+  020CF0  jmp 0x20794                                
+  020CF5  mov rbx, rax                               
+  020CF8  jmp 0x20c98                                
+  020CFA  mov rbx, rax                               
+  020CFD  jmp 0x20cae                                
+  020CFF  mov rdi, rax                               
+  020D02  mov rcx, qword ptr [rsp + 0x2e0]           
+  020D0A  add rsi, 0x10                              
+  020D0E  cmp rcx, rsi                               
+  020D11  je 0x20d18                                 
+  020D13  call 0x9984b0                              CALL sub_9984B0
+  020D18  mov rcx, qword ptr [rsp + 0x300]           
+  020D20  add rbx, 0x10                              
+  020D24  cmp rcx, rbx                               
+  020D27  je 0x20d2e                                 
+  020D29  call 0x9984b0                              CALL sub_9984B0
+  020D2E  mov rbx, rdi                               
+  020D31  jmp 0x20cc4                                
+  020D33  mov rcx, rsi                               
+  020D36  call 0x9984b0                              CALL sub_9984B0
+  020D3B  jmp 0x1fafa                                
+  020D40  mov rdi, rax                               
+  020D43  mov rax, qword ptr [rsp + 0x60]            
+  020D48  mov rcx, qword ptr [rsp + 0x8a0]           
+  020D50  add rax, 0x10                              
+  020D54  cmp rcx, rax                               
+  020D57  je 0x20d02                                 
+  020D59  call 0x9984b0                              CALL sub_9984B0
+  020D5E  jmp 0x20d02                                
+  020D60  mov r9, qword ptr [rax + 0x10]             
+  020D64  mov r10, qword ptr [rax + 0x18]            
+  020D68  mov qword ptr [rsp + 0x8b0], r9            
+  020D70  mov qword ptr [rsp + 0x8b8], r10           
+  020D78  jmp 0x1f2a1                                
+  020D7D  mov rbx, rax                               
+  020D80  mov rcx, qword ptr [rsp + 0x420]           
+  020D88  add rdi, 0x10                              
+  020D8C  cmp rcx, rdi                               
+  020D8F  je 0x20d96                                 
+  020D91  call 0x9984b0                              CALL sub_9984B0
+  020D96  mov rcx, rbp                               
+  020D99  call 0x8c2320                              CALL sub_8C2320
+  020D9E  mov rcx, r12                               
+  020DA1  call 0x8c2320                              CALL sub_8C2320
+  020DA6  jmp 0x20cce                                
+  020DAB  mov rcx, rdi                               
+  020DAE  mov rbx, rax                               
+  020DB1  call 0x67fe90                              CALL sub_67FE90
+  020DB6  jmp 0x20d96                                
+  020DB8  mov rdi, rax                               
+  020DBB  jmp 0x20d18                                
+  020DC0  mov rbx, rax                               
+  020DC3  jmp 0x20cc4                                
+  020DC8  mov rcx, qword ptr [rsp + 0x3e0]           
+  020DD0  add rbx, 0x10                              
+  020DD4  mov r13, rax                               
+  020DD7  cmp rcx, rbx                               
+  020DDA  je 0x20de1                                 
+  020DDC  call 0x9984b0                              CALL sub_9984B0
+  020DE1  mov rbx, r13                               
+  020DE4  mov rcx, qword ptr [rsp + 0x400]           
+  020DEC  add rsi, 0x10                              
+  020DF0  cmp rcx, rsi                               
+  020DF3  je 0x20d80                                 
+  020DF5  call 0x9984b0                              CALL sub_9984B0
+  020DFA  jmp 0x20d80                                
+  020DFC  mov rbx, rax                               
+  020DFF  jmp 0x20de4                                
+  020E01  mov rbx, rax                               
+  020E04  jmp 0x20d96                                
+  020E06  nop word ptr cs:[rax + rax]                
+  020E10  mov rax, qword ptr [rsp + 0x60]            
+  020E15  mov r8, r12                                
+  020E18  mov rcx, qword ptr [rsp + 0x78]            
+  020E1D  mov qword ptr [rsp + 0x180], rax           
+  020E25  call 0x1e010                               CALL sub_1E010
+  020E2A  jmp 0x202cf                                
+  020E2F  mov rax, qword ptr [rsp + 0x60]            
+  020E34  mov r8, r12                                
+  020E37  mov rcx, r15                               
+  020E3A  mov qword ptr [rsp + 0x170], rax           
+  020E42  call 0x1e010                               CALL sub_1E010
+  020E47  jmp 0x2022f                                
+  020E4C  mov rdi, qword ptr [rsi + 0x30]            
+  020E50  xor r13d, r13d                             
+  020E53  movabs rdx, 0xaaaaaaaaaaaaaaab             
+  020E5D  mov qword ptr [rsp + 0x2a0], 0             
+  020E69  mov qword ptr [rsp + 0x2a8], 0             
+  020E75  mov rbx, qword ptr [rsi + 0x28]            
+  020E79  mov qword ptr [rsp + 0x2b0], 0             
+  020E85  mov r14, rdi                               
+  020E88  sub r14, rbx                               
+  020E8B  mov rax, r14                               
+  020E8E  sar rax, 3                                 
+  020E92  imul rax, rdx                              
+  020E96  test rax, rax                              
+  020E99  je 0x20ec1                                 
+  020E9B  movabs rdx, 0xaaaaaaaaaaaaaaa              
+  020EA5  cmp rax, rdx                               
+  020EA8  ja 0x21224                                 
+  020EAE  mov rcx, r14                               
+  020EB1  call 0x998500                              CALL sub_998500
+  020EB6  mov rdi, qword ptr [rsi + 0x30]            
+  020EBA  mov r13, rax                               
+  020EBD  mov rbx, qword ptr [rsi + 0x28]            
+  020EC1  add r14, r13                               
+  020EC4  cmp rdi, rbx                               
+  020EC7  mov qword ptr [rsp + 0x2a0], r13           
+  020ECF  mov rsi, r13                               
+  020ED2  mov qword ptr [rsp + 0x2a8], r13           
+  020EDA  mov qword ptr [rsp + 0x2b0], r14           
+  020EE2  je 0x20f01                                 
+  020EE4  test rsi, rsi                              
+  020EE7  je 0x20ef4                                 
+  020EE9  mov rdx, rbx                               
+  020EEC  mov rcx, rsi                               
+  020EEF  call 0x8c3730                              CALL sub_8C3730
+  020EF4  add rbx, 0x18                              
+  020EF8  add rsi, 0x18                              
+  020EFC  cmp rdi, rbx                               
+  020EFF  jne 0x20ee4                                
+  020F01  mov qword ptr [rsp + 0x2a8], rsi           
+  020F09  jmp 0x2055e                                
+  020F0E  mov rax, qword ptr [rsp + 0x60]            
+  020F13  mov r8, r13                                
+  020F16  mov rcx, r15                               
+  020F19  mov qword ptr [rsp + 0x1b0], rax           
+  020F21  call 0x1e010                               CALL sub_1E010
+  020F26  jmp 0x20494                                
+  020F2B  lea rdx, [rip + 0x98ceb8]                  STR:"quality >= 0 && quality < 100"
+  020F32  mov rcx, rbp                               
+  020F35  call 0x1b130                               CALL sub_1B130
+  020F3A  mov rcx, qword ptr [rsp + 0xa8]            
+  020F42  lea rdx, [rip + 0x98d127]                  STR:"GetLayerRestrictedZonePart"
+  020F49  call 0x1b130                               CALL sub_1B130
+  020F4E  mov r14, qword ptr [rsp + 0xb0]            
+  020F56  lea rdx, [rip + 0x98cd6b]                  STR:"../structure/border_property.hpp"
+  020F5D  mov rcx, r14                               
+  020F60  call 0x1b130                               CALL sub_1B130
+  020F65  mov r8, qword ptr [rsp + 0xa8]             
+  020F6D  mov r9, rbp                                
+  020F70  mov edx, 0x27                              
+  020F75  mov rcx, r14                               
+  020F78  call 0x60a620                              CALL sub_60A620
+  020F7D  mov rcx, qword ptr [rsp + 0x500]           
+  020F85  cmp rcx, qword ptr [rsp + 0xb8]            
+  020F8D  je 0x20f94                                 
+  020F8F  call 0x9984b0                              CALL sub_9984B0
+  020F94  mov rcx, qword ptr [rsp + 0x520]           
+  020F9C  cmp rcx, qword ptr [rsp + 0xc0]            
+  020FA4  je 0x20fab                                 
+  020FA6  call 0x9984b0                              CALL sub_9984B0
+  020FAB  mov rcx, qword ptr [rsp + 0x540]           
+  020FB3  lea rax, [rbp + 0x10]                      
+  020FB7  cmp rcx, rax                               
+  020FBA  je 0x20441                                 
+  020FC0  call 0x9984b0                              CALL sub_9984B0
+  020FC5  jmp 0x20441                                
+  020FCA  mov rcx, r14                               
+  020FCD  call 0x9984b0                              CALL sub_9984B0
+  020FD2  jmp 0x206d7                                
+  020FD7  mov rax, qword ptr [rsp + 0x58]            
+  020FDC  mov byte ptr [rax + 0x208], 0              
+  020FE3  mov rcx, qword ptr [rsp + 0x70]            
+  020FE8  call 0x8c4ff0                              CALL sub_8C4FF0
+  020FED  mov rax, qword ptr [rsp + 0x9c8]           
+  020FF5  mov rdi, qword ptr [rsp + 0x9c8]           
+  020FFD  mov rax, qword ptr [rax + 0x180]           
+  021004  mov r8, qword ptr [rdi + 0x188]            
+  02100B  jmp 0x1fc14                                
+  021010  mov rcx, rsi                               
+  021013  call 0x910a60                              CALL sub_910A60
+  021018  jmp 0x1fd71                                
+  02101D  mov edx, 1                                 
+  021022  jmp 0x1ffaa                                
+  021027  mov rax, qword ptr [rsp + 0xa0]            
+  02102F  lea rdx, [rax + 8]                         
+  021033  mov rcx, qword ptr [rsp + 0xa0]            
+  02103B  lea rax, [rsp + 0x7d0]                     
+  021043  lea r8, [rsp + 0x140]                      
+  02104B  mov qword ptr [rsp + 0x140], rax           
+  021053  call 0x1e140                               CALL sub_1E140
+  021058  mov r13, rax                               
+  02105B  mov rax, qword ptr [rsp + 0x58]            
+  021060  jmp 0x2003c                                
+  021065  mov rax, qword ptr [rsp + 0x60]            
+  02106A  lea r8, [rsp + 0x190]                      
+  021072  mov rcx, r15                               
+  021075  mov qword ptr [rsp + 0x190], rax           
+  02107D  call 0x1e010                               CALL sub_1E010
+  021082  jmp 0x2036b                                
+  021087  mov rax, qword ptr [rsp + 0x78]            
+  02108C  lea rdx, [rax + 8]                         
+  021090  mov rax, qword ptr [rsp + 0x60]            
+  021095  lea r8, [rsp + 0x1a0]                      
+  02109D  mov rcx, qword ptr [rsp + 0x78]            
+  0210A2  mov qword ptr [rsp + 0x1a0], rax           
+  0210AA  call 0x1e010                               CALL sub_1E010
+  0210AF  jmp 0x203fa                                
+  0210B4  mov rsi, qword ptr [rsp + 0x60]            
+  0210B9  mov rcx, r15                               
+  0210BC  mov dword ptr [rsp + 0x8a0], 0x3ea         
+  0210C7  mov rdi, qword ptr [rsp + 0x58]            
+  0210CC  mov rdx, rsi                               
+  0210CF  lea rbx, [rdi + 0x50]                      
+  0210D3  call 0x1e0d0                               CALL sub_1E0D0
+  0210D8  mov rdx, rbx                               
+  0210DB  mov rcx, rax                               
+  0210DE  call 0x8c2380                              CALL sub_8C2380
+  0210E3  mov rcx, qword ptr [rsp + 0x78]            
+  0210E8  mov rdx, rsi                               
+  0210EB  mov dword ptr [rsp + 0x8a0], 0x3ea         
+  0210F6  lea rbx, [rdi + 0x68]                      
+  0210FA  call 0x1e0d0                               CALL sub_1E0D0
+  0210FF  mov rdx, rbx                               
+  021102  mov rcx, rax                               
+  021105  call 0x8c2380                              CALL sub_8C2380
+  02110A  jmp 0x20414                                
+  02110F  mov rcx, qword ptr [rsp + 0x50]            
+  021114  xor r8d, r8d                               
+  021117  mov edx, 1                                 
+  02111C  call 0x4f7370                              CALL sub_4F7370
+  021121  jmp 0x1ffce                                
+  021126  mov rcx, qword ptr [rsp + 0x50]            
+  02112B  mov r8d, 1                                 
+  021131  mov edx, 1                                 
+  021136  call 0x4f7370                              CALL sub_4F7370
+  02113B  jmp 0x1ffce                                
+  021140  mov rbx, rax                               
+  021143  mov rdx, qword ptr [rsp + 0x780]           
+  02114B  mov rcx, qword ptr [rsp + 0x78]            
+  021150  call 0x93e7b0                              CALL sub_93E7B0
+  021155  mov rdx, qword ptr [rsp + 0x750]           
+  02115D  mov rcx, r15                               
+  021160  call 0x93e7b0                              CALL sub_93E7B0
+  021165  mov rcx, qword ptr [rsp + 0x70]            
+  02116A  call 0x8c4ff0                              CALL sub_8C4FF0
+  02116F  mov rdx, qword ptr [rsp + 0x690]           
+  021177  mov rcx, qword ptr [rsp + 0x88]            
+  02117F  call 0x9314f0                              CALL sub_9314F0
+  021184  jmp 0x20cce                                
+  021189  mov rcx, qword ptr [rsp + 0x60]            
+  02118E  mov rbx, rax                               
+  021191  call 0x8c4ff0                              CALL sub_8C4FF0
+  021196  jmp 0x21143                                
+  021198  mov rcx, qword ptr [rsp + 0x80]            
+  0211A0  mov rbx, rax                               
+  0211A3  call 0x8c2320                              CALL sub_8C2320
+  0211A8  jmp 0x21143                                
+  0211AA  mov rbx, rax                               
+  0211AD  mov rax, qword ptr [rsp + 0xa8]            
+  0211B5  mov rcx, qword ptr [rsp + 0x520]           
+  0211BD  add rax, 0x10                              
+  0211C1  cmp rcx, rax                               
+  0211C4  je 0x211cb                                 
+  0211C6  call 0x9984b0                              CALL sub_9984B0
+  0211CB  mov rcx, qword ptr [rsp + 0x540]           
+  0211D3  add rbp, 0x10                              
+  0211D7  cmp rcx, rbp                               
+  0211DA  je 0x21143                                 
+  0211E0  call 0x9984b0                              CALL sub_9984B0
+  0211E5  jmp 0x21143                                
+  0211EA  mov rbx, rax                               
+  0211ED  jmp 0x211cb                                
+  0211EF  mov rbx, rax                               
+  0211F2  mov rax, qword ptr [rsp + 0xb0]            
+  0211FA  mov rcx, qword ptr [rsp + 0x500]           
+  021202  add rax, 0x10                              
+  021206  cmp rcx, rax                               
+  021209  je 0x211ad                                 
+  02120B  call 0x9984b0                              CALL sub_9984B0
+  021210  jmp 0x211ad                                
+  021212  mov rcx, qword ptr [rsp + 0x60]            
+  021217  mov rbx, rax                               
+  02121A  call 0x8c4ff0                              CALL sub_8C4FF0
+  02121F  jmp 0x21165                                
+  021224  call 0x979e70                              CALL sub_979E70
+  021229  mov rcx, rax                               
+  02122C  call 0x9989a0                              CALL sub_9989A0
+  021231  cmp r13, rsi                               
+  021234  je 0x2124d                                 
+  021236  mov rcx, qword ptr [r13]                   
+  02123A  test rcx, rcx                              
+  02123D  je 0x21244                                 
+  02123F  call 0x9984b0                              CALL sub_9984B0
+  021244  add r13, 0x18                              
+  021248  cmp r13, rsi                               
+  02124B  jne 0x21236                                
+  02124D  call 0x998fe0                              CALL sub_998FE0
+  021252  mov rbx, rax                               
+  021255  jmp 0x21155                                
+  02125A  mov rbx, rax                               
+  02125D  jmp 0x20cce                                
+  021262  mov rsi, rax                               
+  021265  mov rcx, rbx                               
+  021268  call 0x8c2320                              CALL sub_8C2320
+  02126D  mov rbx, rsi                               
+  021270  jmp 0x20cc4                                
+  021275  lea rcx, [rsp + 0x7d0]                     
+  02127D  pxor xmm0, xmm0                            
+  021281  mov qword ptr [rsp + 0x800], 0             
+  02128D  mov qword ptr [rsp + 0x808], 0             
+  021299  mov qword ptr [rsp + 0x810], 0             
+  0212A5  mov qword ptr [rsp + 0x7d0], 0             
+  0212B1  mov qword ptr [rsp + 0x7d8], 0             
+  0212BD  mov qword ptr [rsp + 0x7e0], 0             
+  0212C9  movaps xmmword ptr [rsp + 0x8a0], xmm0     
+  0212D1  movaps xmmword ptr [rsp + 0x8b0], xmm0     
+  0212D9  movaps xmmword ptr [rsp + 0x8c0], xmm0     
+  0212E1  call 0x8c2320                              CALL sub_8C2320
+  0212E6  lea rcx, [rsp + 0x800]                     
+  0212EE  call 0x8c2320                              CALL sub_8C2320
+  0212F3  jmp 0x1f526                                
+  0212F8  mov rbx, rax                               
+  0212FB  mov rax, qword ptr [rsp + 0x88]            
+  021303  mov rcx, qword ptr [rsp + 0x440]           
+  02130B  add rax, 0x10                              
+  02130F  cmp rcx, rax                               
+  021312  je 0x21319                                 
+  021314  call 0x9984b0                              CALL sub_9984B0
+  021319  mov rax, qword ptr [rsp + 0x80]            
+  021321  mov rcx, qword ptr [rsp + 0x460]           
+  021329  add rax, 0x10                              
+  02132D  cmp rcx, rax                               
+  021330  je 0x21337                                 
+  021332  call 0x9984b0                              CALL sub_9984B0
+  021337  mov rcx, qword ptr [rsp + 0x480]           
+  02133F  add rbp, 0x10                              
+  021343  cmp rcx, rbp                               
+  021346  je 0x2134d                                 
+  021348  call 0x9984b0                              CALL sub_9984B0
+  02134D  mov rdx, qword ptr [rsp + 0x6f0]           
+  021355  mov rcx, qword ptr [rsp + 0x58]            
+  02135A  call 0x93e7b0                              CALL sub_93E7B0
+  02135F  mov rdi, qword ptr [rsp + 0x60]            
+  021364  lea rcx, [rdi + 0x18]                      
+  021368  call 0x8c2320                              CALL sub_8C2320
+  02136D  mov rcx, rdi                               
+  021370  call 0x8c2320                              CALL sub_8C2320
+  021375  jmp 0x20cc4                                
+  02137A  mov rbx, rax                               
+  02137D  jmp 0x21319                                
+  02137F  mov rbx, rax                               
+  021382  jmp 0x21337                                
+  021384  mov rbx, rax                               
+  021387  jmp 0x2135f                                
+  021389  mov rax, qword ptr [rsp + 0x90]            
+  021391  lea rbx, [rax + 8]                         
+  021395  jmp 0x1fa57                                
+  02139A  mov rcx, rsi                               
+  02139D  mov rbx, rax                               
+  0213A0  call 0x8c4ff0                              CALL sub_8C4FF0
+  0213A5  mov rcx, rbp                               
+  0213A8  call 0x67fe90                              CALL sub_67FE90
+  0213AD  mov rcx, qword ptr [rsp + 0x260]           
+  0213B5  test rcx, rcx                              
+  0213B8  jne 0x21348                                
+  0213BA  jmp 0x2134d                                
+  0213BC  mov rbx, rax                               
+  0213BF  jmp 0x213a5                                
+  0213C1  mov rbx, rax                               
+  0213C4  jmp 0x213ad                                
+  0213C6  mov rcx, qword ptr [rsp + 0x4a0]           
+  0213CE  add r13, 0x10                              
+  0213D2  mov rbx, rax                               
+  0213D5  cmp rcx, r13                               
+  0213D8  je 0x213df                                 
+  0213DA  call 0x9984b0                              CALL sub_9984B0
+  0213DF  mov rcx, qword ptr [rsp + 0x4c0]           
+  0213E7  add r14, 0x10                              
+  0213EB  cmp rcx, r14                               
+  0213EE  je 0x213f5                                 
+  0213F0  call 0x9984b0                              CALL sub_9984B0
+  0213F5  mov rcx, qword ptr [rsp + 0x4e0]           
+  0213FD  add rbp, 0x10                              
+  021401  cmp rcx, rbp                               
+  021404  jne 0x21348                                
+  02140A  jmp 0x2134d                                
+  02140F  mov rbx, rax                               
+  021412  jmp 0x213df                                
+  021414  mov rbx, rax                               
+  021417  jmp 0x213f5                                
+  021419  mov rbx, rax                               
+  02141C  jmp 0x2134d                                
+  021421  mov rbx, rax                               
+  021424  jmp 0x21165                                
+  021429  mov rbx, rax                               
+  02142C  jmp 0x2116f                                
+  021431  mov rax, rdi                               
+  021434  mov r8, qword ptr [rsp + 0x9c0]            
+  02143C  lea rcx, [rax + 0x198]                     
+  021443  mov rdx, qword ptr [rsp + 0x88]            
+  02144B  call 0x1c540                               CALL sub_1C540
+  021450  lea rdi, [rsp + 0x800]                     
+  021458  xor eax, eax                               
+  02145A  mov ecx, 7                                 
+  02145F  movsd xmm0, qword ptr [rip + 0x98cdc9]     
+  021467  movsd xmm1, qword ptr [rip + 0x98cdc9]     
+  02146F  mov qword ptr [rsp + 0x70], rdi            
+  021474  rep stosq qword ptr [rdi], rax             
+  021477  mov rax, qword ptr [rsp + 0x9c8]           
+  02147F  movsd qword ptr [rsp + 0x828], xmm1        
+  021488  movzx eax, byte ptr [rax + 0x5c]           
+  02148C  mov byte ptr [rsp + 0x800], al             
+  021493  mov rax, qword ptr [rsp + 0x9c8]           
+  02149B  cmp byte ptr [rax + 0x68], 0               
+  02149F  maxsd xmm0, qword ptr [rax + 0x60]         
+  0214A4  movsd qword ptr [rsp + 0x808], xmm0        
+  0214AD  jne 0x223a6                                
+  0214B3  mov edi, dword ptr [rax + 0x80]            
+  0214B9  movzx esi, byte ptr [rax + 0x84]           
+  0214C0  movzx ebx, byte ptr [rax + 0x85]           
+  0214C7  movsd xmm8, qword ptr [rax + 0x70]         
+  0214CD  movsd xmm7, qword ptr [rax + 0x78]         
+  0214D2  cmp byte ptr [rax + 0x88], 0               
+  0214D9  mov dword ptr [rsp + 0x830], edi           
+  0214E0  movsd qword ptr [rsp + 0x820], xmm8        
+  0214EA  movsd qword ptr [rsp + 0x828], xmm7        
+  0214F3  mov byte ptr [rsp + 0x834], sil            
+  0214FB  mov byte ptr [rsp + 0x835], bl             
+  021502  jne 0x22271                                
+  021508  movsd xmm7, qword ptr [rax + 0x90]         
+  021510  movsd qword ptr [rsp + 0x818], xmm7        
+  021519  mov rdx, qword ptr [rsp + 0x70]            
+  02151E  mov rcx, qword ptr [rsp + 0x9c0]           
+  021526  call 0x4fc010                              CALL sub_4FC010
+  02152B  mov rax, qword ptr [rsp + 0x9c8]           
+  021533  cmp byte ptr [rax + 0x98], 0               
+  02153A  jne 0x21e1c                                
+  021540  mov rax, qword ptr [rax + 0xa8]            
+  021547  mov qword ptr [rsp + 0x8a0], rax           
+  02154F  mov rax, qword ptr [rsp + 0x9c8]           
+  021557  mov rax, qword ptr [rax + 0xb0]            
+  02155E  mov qword ptr [rsp + 0x8a8], rax           
+  021566  mov rax, qword ptr [rsp + 0x9c8]           
+  02156E  mov rax, qword ptr [rax + 0xb8]            
+  021575  mov qword ptr [rsp + 0x8b0], rax           
+  02157D  mov rax, qword ptr [rsp + 0x9c8]           
+  021585  mov rax, qword ptr [rax + 0xc0]            
+  02158C  mov qword ptr [rsp + 0x8b8], rax           
+  021594  mov rax, qword ptr [rsp + 0x9c8]           
+  02159C  mov rax, qword ptr [rax + 0xc8]            
+  0215A3  mov qword ptr [rsp + 0x8c0], rax           
+  0215AB  mov rax, qword ptr [rsp + 0x9c8]           
+  0215B3  mov rax, qword ptr [rax + 0xd0]            
+  0215BA  mov qword ptr [rsp + 0x8c8], rax           
+  0215C2  mov rax, qword ptr [rsp + 0x9c8]           
+  0215CA  mov rax, qword ptr [rax + 0xd8]            
+  0215D1  mov qword ptr [rsp + 0x8d0], rax           
+  0215D9  mov rdi, qword ptr [rsp + 0x60]            
+  0215DE  mov rcx, qword ptr [rsp + 0x9c0]           
+  0215E6  mov rdx, rdi                               
+  0215E9  call 0x4fc140                              CALL sub_4FC140
+  0215EE  mov rax, qword ptr [rsp + 0x9c8]           
+  0215F6  mov rcx, rdi                               
+  0215F9  movzx edx, byte ptr [rax + 0xe0]           
+  021600  movsd xmm3, qword ptr [rax + 0xf0]         
+  021608  movsd xmm2, qword ptr [rax + 0xe8]         
+  021610  call 0x549ab0                              CALL sub_549AB0
+  021615  mov rcx, qword ptr [rsp + 0x9c0]           
+  02161D  mov rdx, rdi                               
+  021620  call 0x4fc080                              CALL sub_4FC080
+  021625  mov rdx, qword ptr [rsp + 0x9c8]           
+  02162D  lea rbx, [rsp + 0x3c0]                     
+  021635  mov rcx, rbx                               
+  021638  call 0x1c980                               CALL sub_1C980
+  02163D  mov rcx, qword ptr [rsp + 0x9c0]           
+  021645  mov rdx, rbx                               
+  021648  call 0x4fd100                              CALL sub_4FD100
+  02164D  mov rcx, qword ptr [rsp + 0x3c8]           
+  021655  test rcx, rcx                              
+  021658  je 0x2165f                                 
+  02165A  call 0x9984b0                              CALL sub_9984B0
+  02165F  mov rax, qword ptr [rsp + 0x9c8]           
+  021667  mov rcx, qword ptr [rsp + 0x9c0]           
+  02166F  movzx edx, byte ptr [rax + 0xf8]           
+  021676  call 0x4fc330                              CALL sub_4FC330
+  02167B  mov rax, qword ptr [rsp + 0x9c8]           
+  021683  mov rcx, qword ptr [rsp + 0x9c0]           
+  02168B  movzx edx, byte ptr [rax + 0xf9]           
+  021692  movsd xmm2, qword ptr [rax + 0x100]        
+  02169A  call 0x4fc360                              CALL sub_4FC360
+  02169F  mov rax, qword ptr [rsp + 0x9c8]           
+  0216A7  mov rcx, qword ptr [rsp + 0x9c0]           
+  0216AF  lea rdx, [rax + 0x128]                     
+  0216B6  call 0x4fc0b0                              CALL sub_4FC0B0
+  0216BB  mov rcx, qword ptr [rsp + 0x9c0]           
+  0216C3  call 0x4fc2f0                              CALL sub_4FC2F0
+  0216C8  test al, al                                
+  0216CA  jne 0x21cd1                                
+  0216D0  mov rax, qword ptr [rsp + 0x9c8]           
+  0216D8  mov rcx, qword ptr [rsp + 0x9c0]           
+  0216E0  lea rdx, [rax + 0x158]                     
+  0216E7  call 0x4fc100                              CALL sub_4FC100
+  0216EC  mov rcx, qword ptr [rsp + 0x9c0]           
+  0216F4  call 0x4fc300                              CALL sub_4FC300
+  0216F9  test al, al                                
+  0216FB  jne 0x21dae                                
+  021701  mov rax, qword ptr [rsp + 0x9c8]           
+  021709  mov qword ptr [rsp + 0x1c0], 0             
+  021715  mov rdi, qword ptr [rsp + 0x9c8]           
+  02171D  mov qword ptr [rsp + 0x1c8], 0             
+  021729  mov qword ptr [rsp + 0x1d0], 0             
+  021735  mov rax, qword ptr [rax + 0x2a8]           
+  02173C  mov rdi, qword ptr [rdi + 0x2b0]           
+  021743  cmp rax, rdi                               
+  021746  mov qword ptr [rsp + 0xb0], rdi            
+  02174E  je 0x21ce7                                 
+  021754  mov qword ptr [rsp + 0x78], rax            
+  021759  lea rax, [rsp + 0x1c0]                     
+  021761  mov qword ptr [rsp + 0xa8], rax            
+  021769  lea rax, [rsp + 0xd0]                      
+  021771  mov qword ptr [rsp + 0x98], rax            
+  021779  lea rax, [rsp + 0x620]                     
+  021781  mov qword ptr [rsp + 0x80], rax            
+  021789  lea rax, [rsp + 0x630]                     
+  021791  mov qword ptr [rsp + 0x50], rax            
+  021796  mov rax, qword ptr [rsp + 0x88]            
+  02179E  add rax, 8                                 
+  0217A2  mov qword ptr [rsp + 0x68], rax            
+  0217A7  mov ecx, 0x40                              
+  0217AC  mov qword ptr [rsp + 0x8a0], 0             
+  0217B8  mov qword ptr [rsp + 0x8a8], 0             
+  0217C4  call 0x998500                              CALL sub_998500
+  0217C9  lea rdx, [rax + 0x18]                      
+  0217CD  mov rcx, rax                               
+  0217D0  mov dword ptr [rax + 8], 1                 
+  0217D7  lea rdi, [rip + 0xa35a82]                  
+  0217DE  mov qword ptr [rax + 0x28], rdx            
+  0217E2  mov qword ptr [rax + 0x30], rdx            
+  0217E6  lea rdx, [rip + 0x9fedf3]                  
+  0217ED  mov dword ptr [rax + 0xc], 1               
+  0217F4  mov qword ptr [rax], rdi                   
+  0217F7  mov dword ptr [rax + 0x18], 0              
+  0217FE  mov qword ptr [rax + 0x20], 0              
+  021806  mov qword ptr [rax + 0x38], 0              
+  02180E  mov qword ptr [rsp + 0x8a8], rax           
+  021816  call 0x899690                              CALL sub_899690
+  02181B  mov qword ptr [rsp + 0x8a0], rax           
+  021823  mov rax, qword ptr [rsp + 0x78]            
+  021828  mov rdx, qword ptr [rax]                   
+  02182B  mov rcx, qword ptr [rdx + 0x10]            
+  02182F  mov rax, qword ptr [rdx + 0x18]            
+  021833  sub rax, rcx                               
+  021836  sar rax, 3                                 
+  02183A  test rax, rax                              
+  02183D  je 0x21bd6                                 
+  021843  mov rax, qword ptr [rdx + 0x28]            
+  021847  mov rdx, qword ptr [rdx + 0x30]            
+  02184B  mov rbx, qword ptr [rcx]                   
+  02184E  sub rdx, rax                               
+  021851  sar rdx, 2                                 
+  021855  test rdx, rdx                              
+  021858  je 0x21c99                                 
+  02185E  xor edx, edx                               
+  021860  mov dword ptr [rsp + 0x58], 0              
+  021868  nop dword ptr [rax + rax]                  
+  021870  lea rdi, [rax + rdx*4]                     
+  021874  mov rax, qword ptr [rsp + 0x690]           
+  02187C  mov rsi, qword ptr [rsp + 0x68]            
+  021881  test rax, rax                              
+  021884  jne 0x2189c                                
+  021886  jmp 0x218bc                                
+  021888  nop dword ptr [rax + rax]                  
+  021890  mov rsi, rax                               
+  021893  mov rax, qword ptr [rax + 0x10]            
+  021897  test rax, rax                              
+  02189A  je 0x218ab                                 
+  02189C  cmp rbx, qword ptr [rax + 0x20]            
+  0218A0  jbe 0x21890                                
+  0218A2  mov rax, qword ptr [rax + 0x18]            
+  0218A6  test rax, rax                              
+  0218A9  jne 0x2189c                                
+  0218AB  cmp rsi, qword ptr [rsp + 0x68]            
+  0218B0  je 0x218bc                                 
+  0218B2  cmp rbx, qword ptr [rsi + 0x20]            
+  0218B6  jae 0x21942                                
+  0218BC  mov ecx, 0x30                              
+  0218C1  call 0x998500                              CALL sub_998500
+  0218C6  mov qword ptr [rax + 0x20], rbx            
+  0218CA  lea r9, [rax + 0x20]                       
+  0218CE  mov r8, rsi                                
+  0218D1  mov rbp, rax                               
+  0218D4  mov rdx, qword ptr [rsp + 0x88]            
+  0218DC  mov qword ptr [rax + 0x28], 0              
+  0218E4  mov rcx, qword ptr [rsp + 0x98]            
+  0218EC  call 0x9313d0                              CALL sub_9313D0
+  0218F1  mov r8, qword ptr [rsp + 0xd8]             
+  0218F9  mov rax, qword ptr [rsp + 0xd0]            
+  021901  test r8, r8                                
+  021904  mov rsi, rax                               
+  021907  je 0x21bac                                 
+  02190D  cmp r8, qword ptr [rsp + 0x68]             
+  021912  sete cl                                    
+  021915  test rax, rax                              
+  021918  setne al                                   
+  02191B  or cl, al                                  
+  02191D  jne 0x21926                                
+  02191F  cmp rbx, qword ptr [r8 + 0x20]             
+  021923  setb cl                                    
+  021926  mov r9, qword ptr [rsp + 0x68]             
+  02192B  movzx ecx, cl                              
+  02192E  mov rdx, rbp                               
+  021931  mov rsi, rbp                               
+  021934  call 0x987220                              CALL sub_987220
+  021939  add qword ptr [rsp + 0x6a8], 1             
+  021942  mov rcx, qword ptr [rsi + 0x28]            
+  021946  call 0x4f7030                              CALL sub_4F7030
+  02194B  mov rsi, qword ptr [rsp + 0x50]            
+  021950  mov rcx, qword ptr [rsp + 0x80]            
+  021958  mov qword ptr [rsp + 0x620], rsi           
+  021960  mov rdx, qword ptr [rax]                   
+  021963  mov r8, rdx                                
+  021966  add r8, qword ptr [rax + 8]                
+  02196A  call 0x1b070                               CALL sub_1B070
+  02196F  mov eax, dword ptr [rdi]                   
+  021971  mov rdi, qword ptr [rsp + 0x8a0]           
+  021979  mov dword ptr [rsp + 0x640], eax           
+  021980  mov rbx, qword ptr [rdi + 0x10]            
+  021984  lea rax, [rdi + 8]                         
+  021988  mov qword ptr [rsp + 0x70], rax            
+  02198D  test rbx, rbx                              
+  021990  je 0x21b68                                 
+  021996  mov rsi, qword ptr [rsp + 0x620]           
+  02199E  mov r15, qword ptr [rsp + 0x628]           
+  0219A6  mov rbp, rsi                               
+  0219A9  jmp 0x219d4                                
+  0219AB  nop dword ptr [rax + rax]                  
+  0219B0  mov r8, r12                                
+  0219B3  mov rdx, r13                               
+  0219B6  mov rcx, rsi                               
+  0219B9  call 0x63f300                              CALL sub_63F300
+  0219BE  test eax, eax                              
+  0219C0  je 0x219eb                                 
+  0219C2  test eax, eax                              
+  0219C4  js 0x21a01                                 
+  0219C6  mov rax, qword ptr [rbx + 0x18]            
+  0219CA  xor edx, edx                               
+  0219CC  test rax, rax                              
+  0219CF  je 0x21a0f                                 
+  0219D1  mov rbx, rax                               
+  0219D4  mov r14, qword ptr [rbx + 0x28]            
+  0219D8  mov r12, r15                               
+  0219DB  mov r13, qword ptr [rbx + 0x20]            
+  0219DF  cmp r14, r15                               
+  0219E2  cmovbe r12, r14                            
+  0219E6  test r12, r12                              
+  0219E9  jne 0x219b0                                
+  0219EB  mov rax, r15                               
+  0219EE  sub rax, r14                               
+  0219F1  cmp rax, 0x7fffffff                        
+  0219F7  jg 0x219c6                                 
+  0219F9  cmp rax, -0x80000000                       
+  0219FF  jge 0x219c2                                
+  021A01  mov rax, qword ptr [rbx + 0x10]            
+  021A05  mov edx, 1                                 
+  021A0A  test rax, rax                              
+  021A0D  jne 0x219d1                                
+  021A0F  test dl, dl                                
+  021A11  mov r8, r12                                
+  021A14  jne 0x21b70                                
+  021A1A  test r8, r8                                
+  021A1D  je 0x21a90                                 
+  021A1F  mov rdx, rsi                               
+  021A22  mov rcx, r13                               
+  021A25  call 0x63f300                              CALL sub_63F300
+  021A2A  test eax, eax                              
+  021A2C  je 0x21a90                                 
+  021A2E  test eax, eax                              
+  021A30  js 0x21aac                                 
+  021A32  cmp rbp, qword ptr [rsp + 0x50]            
+  021A37  je 0x21a41                                 
+  021A39  mov rcx, rbp                               
+  021A3C  call 0x9984b0                              CALL sub_9984B0
+  021A41  mov rax, qword ptr [rsp + 0x78]            
+  021A46  add dword ptr [rsp + 0x58], 1              
+  021A4B  mov edx, dword ptr [rsp + 0x58]            
+  021A4F  mov rcx, qword ptr [rax]                   
+  021A52  mov r8, qword ptr [rcx + 0x10]             
+  021A56  mov rax, qword ptr [rcx + 0x18]            
+  021A5A  sub rax, r8                                
+  021A5D  sar rax, 3                                 
+  021A61  cmp rdx, rax                               
+  021A64  jae 0x21bd6                                
+  021A6A  mov rbx, qword ptr [r8 + rdx*8]            
+  021A6E  mov rax, qword ptr [rcx + 0x28]            
+  021A72  mov r8, qword ptr [rcx + 0x30]             
+  021A76  sub r8, rax                                
+  021A79  sar r8, 2                                  
+  021A7D  cmp rdx, r8                                
+  021A80  jb 0x21870                                 
+  021A86  jmp 0x21c9e                                
+  021A8B  nop dword ptr [rax + rax]                  
+  021A90  sub r14, r15                               
+  021A93  cmp r14, 0x7fffffff                        
+  021A9A  jg 0x21a32                                 
+  021A9C  cmp r14, -0x80000000                       
+  021AA3  jl 0x21aac                                 
+  021AA5  mov eax, r14d                              
+  021AA8  test eax, eax                              
+  021AAA  jns 0x21a32                                
+  021AAC  test rbx, rbx                              
+  021AAF  je 0x21dcc                                 
+  021AB5  cmp qword ptr [rsp + 0x70], rbx            
+  021ABA  je 0x21c60                                 
+  021AC0  mov rcx, qword ptr [rsp + 0x80]            
+  021AC8  lea rdx, [rbx + 0x20]                      
+  021ACC  call 0x82a450                              CALL sub_82A450
+  021AD1  shr eax, 0x1f                              
+  021AD4  mov esi, eax                               
+  021AD6  mov ecx, 0x48                              
+  021ADB  call 0x998500                              CALL sub_998500
+  021AE0  lea rdx, [rax + 0x30]                      
+  021AE4  mov qword ptr [rax + 0x20], rdx            
+  021AE8  mov rdx, qword ptr [rsp + 0x620]           
+  021AF0  cmp rdx, qword ptr [rsp + 0x50]            
+  021AF5  je 0x21bb9                                 
+  021AFB  mov qword ptr [rax + 0x20], rdx            
+  021AFF  mov rdx, qword ptr [rsp + 0x630]           
+  021B07  mov qword ptr [rax + 0x30], rdx            
+  021B0B  mov rdx, qword ptr [rsp + 0x628]           
+  021B13  movzx ecx, sil                             
+  021B17  mov r8, rbx                                
+  021B1A  mov qword ptr [rsp + 0x628], 0             
+  021B26  mov r9, qword ptr [rsp + 0x70]             
+  021B2B  mov byte ptr [rsp + 0x630], 0              
+  021B33  mov qword ptr [rax + 0x28], rdx            
+  021B37  mov rdx, qword ptr [rsp + 0x50]            
+  021B3C  mov qword ptr [rsp + 0x620], rdx           
+  021B44  mov edx, dword ptr [rsp + 0x640]           
+  021B4B  mov dword ptr [rax + 0x40], edx            
+  021B4E  mov rdx, rax                               
+  021B51  call 0x987220                              CALL sub_987220
+  021B56  mov rbp, qword ptr [rsp + 0x620]           
+  021B5E  add qword ptr [rdi + 0x28], 1              
+  021B63  jmp 0x21a32                                
+  021B68  lea rbx, [rdi + 8]                         
+  021B6C  nop dword ptr [rax]                        
+  021B70  cmp qword ptr [rdi + 0x18], rbx            
+  021B74  je 0x21ab5                                 
+  021B7A  mov rcx, rbx                               
+  021B7D  call 0x979fe0                              CALL sub_979FE0
+  021B82  mov r15, qword ptr [rsp + 0x628]           
+  021B8A  mov r14, qword ptr [rax + 0x28]            
+  021B8E  mov rsi, qword ptr [rsp + 0x620]           
+  021B96  mov r13, qword ptr [rax + 0x20]            
+  021B9A  mov r8, r15                                
+  021B9D  cmp r14, r15                               
+  021BA0  cmovbe r8, r14                             
+  021BA4  mov rbp, rsi                               
+  021BA7  jmp 0x21a1a                                
+  021BAC  mov rcx, rbp                               
+  021BAF  call 0x9984b0                              CALL sub_9984B0
+  021BB4  jmp 0x21942                                
+  021BB9  mov r9, qword ptr [rsp + 0x630]            
+  021BC1  mov r10, qword ptr [rsp + 0x638]           
+  021BC9  mov qword ptr [rax + 0x30], r9             
+  021BCD  mov qword ptr [rax + 0x38], r10            
+  021BD1  jmp 0x21b0b                                
+  021BD6  mov rax, qword ptr [rsp + 0x1c8]           
+  021BDE  cmp rax, qword ptr [rsp + 0x1d0]           
+  021BE6  je 0x21c85                                 
+  021BEC  test rax, rax                              
+  021BEF  je 0x21c1a                                 
+  021BF1  mov rdx, qword ptr [rsp + 0x8a0]           
+  021BF9  mov qword ptr [rax], rdx                   
+  021BFC  mov rdx, qword ptr [rsp + 0x8a8]           
+  021C04  test rdx, rdx                              
+  021C07  mov qword ptr [rax + 8], rdx               
+  021C0B  je 0x21c1a                                 
+  021C0D  lock add dword ptr [rdx + 8], 1            
+  021C12  mov rax, qword ptr [rsp + 0x1c8]           
+  021C1A  add rax, 0x10                              
+  021C1E  mov qword ptr [rsp + 0x1c8], rax           
+  021C26  mov rbx, qword ptr [rsp + 0x8a8]           
+  021C2E  test rbx, rbx                              
+  021C31  je 0x21c3a                                 
+  021C33  lock sub dword ptr [rbx + 8], 1            
+  021C38  je 0x21c6a                                 
+  021C3A  add qword ptr [rsp + 0x78], 8              
+  021C40  mov rax, qword ptr [rsp + 0x78]            
+  021C45  cmp qword ptr [rsp + 0xb0], rax            
+  021C4D  jne 0x217a7                                
+  021C53  mov rdx, qword ptr [rsp + 0xa8]            
+  021C5B  jmp 0x21cfa                                
+  021C60  mov esi, 1                                 
+  021C65  jmp 0x21ad6                                
+  021C6A  mov rax, qword ptr [rbx]                   
+  021C6D  mov rcx, rbx                               
+  021C70  call qword ptr [rax + 0x10]                
+  021C73  lock sub dword ptr [rbx + 0xc], 1          
+  021C78  jne 0x21c3a                                
+  021C7A  mov rax, qword ptr [rbx]                   
+  021C7D  mov rcx, rbx                               
+  021C80  call qword ptr [rax + 0x18]                
+  021C83  jmp 0x21c3a                                
+  021C85  mov rdx, qword ptr [rsp + 0x60]            
+  021C8A  mov rcx, qword ptr [rsp + 0xa8]            
+  021C92  call 0x8f8a80                              CALL sub_8F8A80
+  021C97  jmp 0x21c26                                
+  021C99  xor r8d, r8d                               
+  021C9C  xor edx, edx                               
+  021C9E  lea rcx, [rip + 0x98c283]                  STR:"vector::_M_range_check: __n (which is %zu) >= this->size() (which is %"
+  021CA5  call 0x983ca0                              CALL sub_983CA0
+  021CAA  mov rbx, rax                               
+  021CAD  mov rcx, qword ptr [rsp + 0x8a8]           
+  021CB5  test rcx, rcx                              
+  021CB8  je 0x21cbf                                 
+  021CBA  call 0x891b40                              CALL sub_891B40
+  021CBF  mov rcx, qword ptr [rsp + 0xa8]            
+  021CC7  call 0x8f8c20                              CALL sub_8F8C20
+  021CCC  jmp 0x2116f                                
+  021CD1  mov rcx, qword ptr [rsp + 0x9c0]           
+  021CD9  pxor xmm1, xmm1                            
+  021CDD  call 0x4fbe60                              CALL sub_4FBE60
+  021CE2  jmp 0x216d0                                
+  021CE7  lea rax, [rsp + 0x1c0]                     
+  021CEF  mov qword ptr [rsp + 0xa8], rax            
+  021CF7  mov rdx, rax                               
+  021CFA  mov rcx, qword ptr [rsp + 0x9c0]           
+  021D02  call 0x4fd120                              CALL sub_4FD120
+  021D07  mov rcx, qword ptr [rsp + 0xa8]            
+  021D0F  call 0x8f8c20                              CALL sub_8F8C20
+  021D14  mov rdx, qword ptr [rsp + 0x690]           
+  021D1C  mov rcx, qword ptr [rsp + 0x88]            
+  021D24  call 0x9314f0                              CALL sub_9314F0
+  021D29  mov rdi, qword ptr [rsp + 0xa0]            
+  021D31  mov rdx, qword ptr [rsp + 0x880]           
+  021D39  lea rcx, [rdi + 0x30]                      
+  021D3D  call 0x9328f0                              CALL sub_9328F0
+  021D42  mov rdx, qword ptr [rsp + 0x850]           
+  021D4A  mov rcx, rdi                               
+  021D4D  call 0x932780                              CALL sub_932780
+  021D52  mov rdx, qword ptr [rsp + 0x660]           
+  021D5A  mov rcx, qword ptr [rsp + 0x90]            
+  021D62  call 0x932b80                              CALL sub_932B80
+  021D67  mov rax, qword ptr [rsp + 0x9c0]           
+  021D6F  movaps xmm6, xmmword ptr [rsp + 0x920]     
+  021D77  movaps xmm7, xmmword ptr [rsp + 0x930]     
+  021D7F  movaps xmm8, xmmword ptr [rsp + 0x940]     
+  021D88  movaps xmm9, xmmword ptr [rsp + 0x950]     
+  021D91  movaps xmm10, xmmword ptr [rsp + 0x960]    
+  021D9A  add rsp, 0x978                             
+  021DA1  pop rbx                                    
+  021DA2  pop rsi                                    
+  021DA3  pop rdi                                    
+  021DA4  pop rbp                                    
+  021DA5  pop r12                                    
+  021DA7  pop r13                                    
+  021DA9  pop r14                                    
+  021DAB  pop r15                                    
+  021DAD  ret                                        
+  021DAE  mov rcx, qword ptr [rsp + 0x9c0]           
+  021DB6  pxor xmm1, xmm1                            
+  021DBA  call 0x4fbe60                              CALL sub_4FBE60
+  021DBF  jmp 0x21701                                
+  021DC4  mov rbx, rax                               
+  021DC7  jmp 0x21cbf                                
+  021DCC  mov rbp, rsi                               
+  021DCF  jmp 0x21a32                                
+  021DD4  mov rbx, rax                               
+  021DD7  mov rax, qword ptr [rsp + 0x80]            
+  021DDF  mov rcx, qword ptr [rsp + 0x620]           
+  021DE7  add rax, 0x10                              
+  021DEB  cmp rcx, rax                               
+  021DEE  je 0x21cad                                 
+  021DF4  call 0x9984b0                              CALL sub_9984B0
+  021DF9  jmp 0x21cad                                
+  021DFE  mov rcx, qword ptr [rsp + 0x3c8]           
+  021E06  mov rbx, rax                               
+  021E09  test rcx, rcx                              
+  021E0C  je 0x2116f                                 
+  021E12  call 0x9984b0                              CALL sub_9984B0
+  021E17  jmp 0x2116f                                
+  021E1C  mov rax, qword ptr [rsp + 0x70]            
+  021E21  mov dword ptr [rsp + 0x808], 0             
+  021E2C  lea rdi, [rip + 0x98c30d]                  
+  021E33  mov qword ptr [rsp + 0x810], 0             
+  021E3F  lea r13, [rsp + 0xd0]                      
+  021E47  mov qword ptr [rsp + 0x828], 0             
+  021E53  lea r12, [rip + 0x98c316]                  
+  021E5A  lea rbx, [rax + 8]                         
+  021E5E  mov qword ptr [rsp + 0x818], rbx           
+  021E66  mov qword ptr [rsp + 0x820], rbx           
+  021E6E  mov rdx, qword ptr [rsp + 0x70]            
+  021E73  mov r9, rdi                                
+  021E76  mov r8, rbx                                
+  021E79  mov rcx, r13                               
+  021E7C  call 0x9236d0                              CALL sub_9236D0
+  021E81  mov rbp, qword ptr [rsp + 0xd8]            
+  021E89  mov rax, qword ptr [rsp + 0xd0]            
+  021E91  test rbp, rbp                              
+  021E94  je 0x21ee5                                 
+  021E96  test rax, rax                              
+  021E99  setne sil                                  
+  021E9D  cmp rbp, rbx                               
+  021EA0  sete al                                    
+  021EA3  or sil, al                                 
+  021EA6  jne 0x21eb1                                
+  021EA8  mov eax, dword ptr [rbp + 0x20]            
+  021EAB  cmp dword ptr [rdi], eax                   
+  021EAD  setl sil                                   
+  021EB1  mov ecx, 0x30                              
+  021EB6  call 0x998500                              CALL sub_998500
+  021EBB  mov r9, qword ptr [rdi]                    
+  021EBE  movzx ecx, sil                             
+  021EC2  mov r8, rbp                                
+  021EC5  mov rdx, rax                               
+  021EC8  mov r10, qword ptr [rdi + 8]               
+  021ECC  mov qword ptr [rax + 0x20], r9             
+  021ED0  mov r9, rbx                                
+  021ED3  mov qword ptr [rax + 0x28], r10            
+  021ED7  call 0x987220                              CALL sub_987220
+  021EDC  add qword ptr [rsp + 0x828], 1             
+  021EE5  add rdi, 0x10                              
+  021EE9  cmp rdi, r12                               
+  021EEC  jne 0x21e6e                                
+  021EEE  mov rax, qword ptr [rsp + 0x9c8]           
+  021EF6  mov r12d, dword ptr [rax + 0xa8]           
+  021EFD  movsd xmm7, qword ptr [rax + 0xc0]         
+  021F05  movsd xmm8, qword ptr [rax + 0xc8]         
+  021F0E  movzx ebp, byte ptr [rax + 0xd0]           
+  021F15  movsd xmm9, qword ptr [rax + 0xd8]         
+  021F1E  mov rax, qword ptr [rsp + 0x810]           
+  021F26  test rax, rax                              
+  021F29  je 0x21f79                                 
+  021F2B  mov rdi, qword ptr [rsp + 0x9c8]           
+  021F33  mov rdx, rax                               
+  021F36  mov ecx, dword ptr [rdi + 0x9c]            
+  021F3C  mov rdi, qword ptr [rsp + 0x70]            
+  021F41  lea r8, [rdi + 8]                          
+  021F45  jmp 0x21f53                                
+  021F47  mov r8, rdx                                
+  021F4A  mov rdx, qword ptr [rdx + 0x10]            
+  021F4E  test rdx, rdx                              
+  021F51  je 0x21f61                                 
+  021F53  cmp ecx, dword ptr [rdx + 0x20]            
+  021F56  jle 0x21f47                                
+  021F58  mov rdx, qword ptr [rdx + 0x18]            
+  021F5C  test rdx, rdx                              
+  021F5F  jne 0x21f53                                
+  021F61  mov rdi, qword ptr [rsp + 0x70]            
+  021F66  lea rdx, [rdi + 8]                         
+  021F6A  cmp r8, rdx                                
+  021F6D  je 0x21f79                                 
+  021F6F  cmp ecx, dword ptr [r8 + 0x20]             
+  021F73  jge 0x22033                                
+  021F79  lea rdi, [rsp + 0x600]                     
+  021F81  lea rdx, [rip + 0x98bf60]                  STR:"boost.find(order.multitorch_cutting_preference) != boost.end()"
+  021F88  mov rcx, rdi                               
+  021F8B  call 0x1b130                               CALL sub_1B130
+  021F90  lea rsi, [rsp + 0x5e0]                     
+  021F98  lea rdx, [rip + 0x98c001]                  STR:"GetMultitorchProperties"
+  021F9F  mov rcx, rsi                               
+  021FA2  call 0x1b130                               CALL sub_1B130
+  021FA7  lea rbx, [rsp + 0x5c0]                     
+  021FAF  lea rdx, [rip + 0x98bdbb]                  STR:"internal.cpp"
+  021FB6  mov rcx, rbx                               
+  021FB9  call 0x1b130                               CALL sub_1B130
+  021FBE  mov r9, rdi                                
+  021FC1  mov r8, rsi                                
+  021FC4  mov edx, 0x289                             
+  021FC9  mov rcx, rbx                               
+  021FCC  call 0x60a620                              CALL sub_60A620
+  021FD1  mov rcx, qword ptr [rsp + 0x5c0]           
+  021FD9  add rbx, 0x10                              
+  021FDD  cmp rcx, rbx                               
+  021FE0  je 0x21fe7                                 
+  021FE2  call 0x9984b0                              CALL sub_9984B0
+  021FE7  mov rcx, qword ptr [rsp + 0x5e0]           
+  021FEF  add rsi, 0x10                              
+  021FF3  cmp rcx, rsi                               
+  021FF6  je 0x21ffd                                 
+  021FF8  call 0x9984b0                              CALL sub_9984B0
+  021FFD  mov rcx, qword ptr [rsp + 0x600]           
+  022005  add rdi, 0x10                              
+  022009  cmp rcx, rdi                               
+  02200C  je 0x22013                                 
+  02200E  call 0x9984b0                              CALL sub_9984B0
+  022013  mov rax, qword ptr [rsp + 0x810]           
+  02201B  test rax, rax                              
+  02201E  je 0x22085                                 
+  022020  mov rdi, qword ptr [rsp + 0x9c8]           
+  022028  mov ecx, dword ptr [rdi + 0x9c]            
+  02202E  mov rdi, qword ptr [rsp + 0x70]            
+  022033  lea rbx, [rdi + 8]                         
+  022037  jmp 0x22045                                
+  022039  mov rbx, rax                               
+  02203C  mov rax, qword ptr [rax + 0x10]            
+  022040  test rax, rax                              
+  022043  je 0x22053                                 
+  022045  cmp ecx, dword ptr [rax + 0x20]            
+  022048  jle 0x22039                                
+  02204A  mov rax, qword ptr [rax + 0x18]            
+  02204E  test rax, rax                              
+  022051  jne 0x22045                                
+  022053  mov rax, qword ptr [rsp + 0x70]            
+  022058  add rax, 8                                 
+  02205C  cmp rbx, rax                               
+  02205F  je 0x2208e                                 
+  022061  cmp ecx, dword ptr [rbx + 0x20]            
+  022064  jl 0x2208e                                 
+  022066  jmp 0x22121                                
+  02206B  mov rbx, rax                               
+  02206E  mov rdx, qword ptr [rsp + 0x810]           
+  022076  mov rcx, qword ptr [rsp + 0x70]            
+  02207B  call 0x9237f0                              CALL sub_9237F0
+  022080  jmp 0x2116f                                
+  022085  mov rax, qword ptr [rsp + 0x70]            
+  02208A  lea rbx, [rax + 8]                         
+  02208E  mov ecx, 0x30                              
+  022093  call 0x998500                              CALL sub_998500
+  022098  mov rsi, rax                               
+  02209B  mov rdx, qword ptr [rsp + 0x70]            
+  0220A0  mov r8, rbx                                
+  0220A3  mov rcx, r13                               
+  0220A6  mov rax, qword ptr [rsp + 0x9c8]           
+  0220AE  movsd qword ptr [rsi + 0x28], xmm6         
+  0220B3  lea r9, [rsi + 0x20]                       
+  0220B7  mov edi, dword ptr [rax + 0x9c]            
+  0220BD  mov dword ptr [rsi + 0x20], edi            
+  0220C0  call 0x9236d0                              CALL sub_9236D0
+  0220C5  mov r8, qword ptr [rsp + 0xd8]             
+  0220CD  mov rdx, qword ptr [rsp + 0xd0]            
+  0220D5  test r8, r8                                
+  0220D8  mov rbx, rdx                               
+  0220DB  je 0x221a0                                 
+  0220E1  mov rax, qword ptr [rsp + 0x70]            
+  0220E6  add rax, 8                                 
+  0220EA  cmp r8, rax                                
+  0220ED  sete al                                    
+  0220F0  test rdx, rdx                              
+  0220F3  setne dl                                   
+  0220F6  or al, dl                                  
+  0220F8  jne 0x22101                                
+  0220FA  cmp edi, dword ptr [r8 + 0x20]             
+  0220FE  setl al                                    
+  022101  movzx ecx, al                              
+  022104  mov rax, qword ptr [rsp + 0x70]            
+  022109  mov rdx, rsi                               
+  02210C  mov rbx, rsi                               
+  02210F  lea r9, [rax + 8]                          
+  022113  call 0x987220                              CALL sub_987220
+  022118  add qword ptr [rsp + 0x828], 1             
+  022121  mov rcx, qword ptr [rsp + 0x9c0]           
+  022129  movsd xmm1, qword ptr [rbx + 0x28]         
+  02212E  call 0x5452a0                              CALL sub_5452A0
+  022133  mov rax, qword ptr [rsp + 0x9c8]           
+  02213B  movapd xmm10, xmm0                         
+  022140  cmp byte ptr [rax + 0xa0], 0               
+  022147  jne 0x221ad                                
+  022149  mov rdx, qword ptr [rsp + 0x810]           
+  022151  mov dword ptr [rsp + 0x8a0], r12d          
+  022159  mov rcx, qword ptr [rsp + 0x70]            
+  02215E  movsd qword ptr [rsp + 0x8a8], xmm10       
+  022168  movsd qword ptr [rsp + 0x8b0], xmm6        
+  022171  movsd qword ptr [rsp + 0x8b8], xmm7        
+  02217A  movsd qword ptr [rsp + 0x8c0], xmm8        
+  022184  mov byte ptr [rsp + 0x8c8], bpl            
+  02218C  movsd qword ptr [rsp + 0x8d0], xmm9        
+  022196  call 0x9237f0                              CALL sub_9237F0
+  02219B  jmp 0x215d9                                
+  0221A0  mov rcx, rsi                               
+  0221A3  call 0x9984b0                              CALL sub_9984B0
+  0221A8  jmp 0x22121                                
+  0221AD  mov rdx, qword ptr [rsp + 0x9c0]           
+  0221B5  lea rbx, [rsp + 0x2c0]                     
+  0221BD  mov rcx, rbx                               
+  0221C0  call 0x523e60                              CALL sub_523E60
+  0221C5  mov rcx, qword ptr [rsp + 0x9c0]           
+  0221CD  mov rdx, rbx                               
+  0221D0  call 0x524b30                              CALL sub_524B30
+  0221D5  mov rcx, qword ptr [rsp + 0x2c0]           
+  0221DD  movsd xmm6, qword ptr [rip + 0x98c013]     
+  0221E5  mulsd xmm6, xmm0                           
+  0221E9  test rcx, rcx                              
+  0221EC  je 0x22149                                 
+  0221F2  call 0x9984b0                              CALL sub_9984B0
+  0221F7  jmp 0x22149                                
+  0221FC  mov rbx, rax                               
+  0221FF  mov rcx, qword ptr [rsp + 0x5e0]           
+  022207  add rsi, 0x10                              
+  02220B  cmp rcx, rsi                               
+  02220E  je 0x22215                                 
+  022210  call 0x9984b0                              CALL sub_9984B0
+  022215  mov rcx, qword ptr [rsp + 0x600]           
+  02221D  add rdi, 0x10                              
+  022221  cmp rcx, rdi                               
+  022224  je 0x2206e                                 
+  02222A  call 0x9984b0                              CALL sub_9984B0
+  02222F  jmp 0x2206e                                
+  022234  mov rcx, qword ptr [rsp + 0x5c0]           
+  02223C  add rbx, 0x10                              
+  022240  mov rbp, rax                               
+  022243  cmp rcx, rbx                               
+  022246  je 0x2224d                                 
+  022248  call 0x9984b0                              CALL sub_9984B0
+  02224D  mov rbx, rbp                               
+  022250  jmp 0x221ff                                
+  022252  mov rbx, rax                               
+  022255  jmp 0x22215                                
+  022257  mov rcx, qword ptr [rsp + 0x2c0]           
+  02225F  mov rbx, rax                               
+  022262  test rcx, rcx                              
+  022265  jne 0x2222a                                
+  022267  jmp 0x2206e                                
+  02226C  jmp 0x2206b                                
+  022271  lea rbx, [rsp + 0x7d0]                     
+  022279  mov dword ptr [rsp + 0x7d8], 0             
+  022284  mov qword ptr [rsp + 0x7e0], 0             
+  022290  lea rsi, [rbx + 8]                         
+  022294  mov qword ptr [rsp + 0x7e8], rsi           
+  02229C  lea rbp, [rip + 0x98bedd]                  
+  0222A3  mov qword ptr [rsp + 0x7f0], rsi           
+  0222AB  lea r13, [rsp + 0xd0]                      
+  0222B3  mov qword ptr [rsp + 0x7f8], 0             
+  0222BF  lea r14, [rip + 0x98befa]                  
+  0222C6  mov r9, rbp                                
+  0222C9  mov r8, rsi                                
+  0222CC  mov rdx, rbx                               
+  0222CF  mov rcx, r13                               
+  0222D2  call 0x923360                              CALL sub_923360
+  0222D7  mov r12, qword ptr [rsp + 0xd8]            
+  0222DF  mov rax, qword ptr [rsp + 0xd0]            
+  0222E7  test r12, r12                              
+  0222EA  je 0x2233f                                 
+  0222EC  test rax, rax                              
+  0222EF  setne dil                                  
+  0222F3  cmp r12, rsi                               
+  0222F6  sete al                                    
+  0222F9  or dil, al                                 
+  0222FC  jne 0x2230a                                
+  0222FE  mov eax, dword ptr [r12 + 0x20]            
+  022303  cmp dword ptr [rbp], eax                   
+  022306  setl dil                                   
+  02230A  mov ecx, 0x30                              
+  02230F  call 0x998500                              CALL sub_998500
+  022314  mov r9, qword ptr [rbp]                    
+  022318  movzx ecx, dil                             
+  02231C  mov r8, r12                                
+  02231F  mov rdx, rax                               
+  022322  mov r10, qword ptr [rbp + 8]               
+  022326  mov qword ptr [rax + 0x20], r9             
+  02232A  mov r9, rsi                                
+  02232D  mov qword ptr [rax + 0x28], r10            
+  022331  call 0x987220                              CALL sub_987220
+  022336  add qword ptr [rsp + 0x7f8], 1             
+  02233F  add rbp, 0x10                              
+  022343  cmp rbp, r14                               
+  022346  jne 0x222c6                                
+  02234C  mov rax, qword ptr [rsp + 0x7e0]           
+  022354  test rax, rax                              
+  022357  je 0x22869                                 
+  02235D  mov rdi, qword ptr [rsp + 0x9c8]           
+  022365  lea rsi, [rbx + 8]                         
+  022369  mov edx, dword ptr [rdi + 0x8c]            
+  02236F  jmp 0x2237d                                
+  022371  mov rsi, rax                               
+  022374  mov rax, qword ptr [rax + 0x10]            
+  022378  test rax, rax                              
+  02237B  je 0x2238b                                 
+  02237D  cmp dword ptr [rax + 0x20], edx            
+  022380  jge 0x22371                                
+  022382  mov rax, qword ptr [rax + 0x18]            
+  022386  test rax, rax                              
+  022389  jne 0x2237d                                
+  02238B  lea rax, [rbx + 8]                         
+  02238F  cmp rsi, rax                               
+  022392  je 0x2286d                                 
+  022398  cmp dword ptr [rsi + 0x20], edx            
+  02239B  jg 0x2286d                                 
+  0223A1  jmp 0x228f0                                
+  0223A6  movsd xmm0, qword ptr [rax]                
+  0223AA  lea rax, [rsp + 0x7a0]                     
+  0223B2  mov dword ptr [rsp + 0x8a0], 0             
+  0223BD  movsd xmm2, qword ptr [rip + 0x98be23]     
+  0223C5  mov dword ptr [rsp + 0x8b8], 2             
+  0223D0  lea rsi, [rsp + 0x7a8]                     
+  0223D8  mov byte ptr [rsp + 0x8bc], 1              
+  0223E0  lea r13, [rsp + 0xd0]                      
+  0223E8  movsd xmm4, qword ptr [rip + 0x98be50]     
+  0223F0  mulsd xmm2, xmm0                           
+  0223F4  addsd xmm0, xmm0                           
+  0223F8  movsd xmm5, qword ptr [rip + 0x98be48]     
+  022400  mov byte ptr [rsp + 0x8bd], 1              
+  022408  movsd xmm3, qword ptr [rip + 0x98bde8]     
+  022410  movsd qword ptr [rsp + 0x8b0], xmm4        
+  022419  mov dword ptr [rsp + 0x8c0], 1             
+  022424  movsd qword ptr [rsp + 0x8d0], xmm1        
+  02242D  mov dword ptr [rsp + 0x8d8], 1             
+  022438  movsd qword ptr [rsp + 0x8a8], xmm2        
+  022441  movsd qword ptr [rsp + 0x8c8], xmm2        
+  02244A  mov byte ptr [rsp + 0x8dc], 1              
+  022452  mov byte ptr [rsp + 0x8dd], 0              
+  02245A  mov dword ptr [rsp + 0x8e0], 2             
+  022465  movsd qword ptr [rsp + 0x8e8], xmm0        
+  02246E  movsd qword ptr [rsp + 0x8f0], xmm5        
+  022477  mov dword ptr [rsp + 0x8f8], 0             
+  022482  mov byte ptr [rsp + 0x8fc], 0              
+  02248A  mov byte ptr [rsp + 0x8fd], 0              
+  022492  mov dword ptr [rsp + 0x900], 3             
+  02249D  movsd qword ptr [rsp + 0x908], xmm0        
+  0224A6  movsd qword ptr [rsp + 0x910], xmm3        
+  0224AF  mov dword ptr [rsp + 0x918], 0             
+  0224BA  mov byte ptr [rsp + 0x91c], 0              
+  0224C2  mov byte ptr [rsp + 0x91d], 0              
+  0224CA  mov dword ptr [rsp + 0x7a8], 0             
+  0224D5  mov qword ptr [rsp + 0x7b0], 0             
+  0224E1  mov qword ptr [rsp + 0x7c8], 0             
+  0224ED  mov qword ptr [rsp + 0x78], rax            
+  0224F2  mov rbx, qword ptr [rsp + 0x60]            
+  0224F7  mov qword ptr [rsp + 0x7b8], rsi           
+  0224FF  mov qword ptr [rsp + 0x7c0], rsi           
+  022507  mov rdx, qword ptr [rsp + 0x78]            
+  02250C  mov r9, rbx                                
+  02250F  mov r8, rsi                                
+  022512  mov rcx, r13                               
+  022515  call 0x922ff0                              CALL sub_922FF0
+  02251A  mov rbp, qword ptr [rsp + 0xd8]            
+  022522  mov rax, qword ptr [rsp + 0xd0]            
+  02252A  test rbp, rbp                              
+  02252D  je 0x2258e                                 
+  02252F  test rax, rax                              
+  022532  setne dil                                  
+  022536  cmp rbp, rsi                               
+  022539  sete al                                    
+  02253C  or dil, al                                 
+  02253F  jne 0x2254a                                
+  022541  mov eax, dword ptr [rbp + 0x20]            
+  022544  cmp dword ptr [rbx], eax                   
+  022546  setl dil                                   
+  02254A  mov ecx, 0x40                              
+  02254F  call 0x998500                              CALL sub_998500
+  022554  mov rdx, qword ptr [rbx]                   
+  022557  movzx ecx, dil                             
+  02255B  mov r9, rsi                                
+  02255E  mov r8, rbp                                
+  022561  mov qword ptr [rax + 0x20], rdx            
+  022565  mov rdx, qword ptr [rbx + 8]               
+  022569  mov qword ptr [rax + 0x28], rdx            
+  02256D  mov rdx, qword ptr [rbx + 0x10]            
+  022571  mov qword ptr [rax + 0x30], rdx            
+  022575  mov rdx, qword ptr [rbx + 0x18]            
+  022579  mov qword ptr [rax + 0x38], rdx            
+  02257D  mov rdx, rax                               
+  022580  call 0x987220                              CALL sub_987220
+  022585  add qword ptr [rsp + 0x7c8], 1             
+  02258E  add rbx, 0x20                              
+  022592  lea rax, [rsp + 0x920]                     
+  02259A  cmp rbx, rax                               
+  02259D  jne 0x22507                                
+  0225A3  mov rdx, qword ptr [rsp + 0x7b0]           
+  0225AB  test rdx, rdx                              
+  0225AE  je 0x225fb                                 
+  0225B0  mov rax, qword ptr [rsp + 0x9c8]           
+  0225B8  mov rdi, qword ptr [rsp + 0x78]            
+  0225BD  mov ecx, dword ptr [rax + 0x6c]            
+  0225C0  mov rax, rdx                               
+  0225C3  lea r8, [rdi + 8]                          
+  0225C7  jmp 0x225d5                                
+  0225C9  mov r8, rax                                
+  0225CC  mov rax, qword ptr [rax + 0x10]            
+  0225D0  test rax, rax                              
+  0225D3  je 0x225e3                                 
+  0225D5  cmp ecx, dword ptr [rax + 0x20]            
+  0225D8  jle 0x225c9                                
+  0225DA  mov rax, qword ptr [rax + 0x18]            
+  0225DE  test rax, rax                              
+  0225E1  jne 0x225d5                                
+  0225E3  mov rax, qword ptr [rsp + 0x78]            
+  0225E8  add rax, 8                                 
+  0225EC  cmp r8, rax                                
+  0225EF  je 0x225fb                                 
+  0225F1  cmp ecx, dword ptr [r8 + 0x20]             
+  0225F5  jge 0x226ad                                
+  0225FB  lea rbx, [rsp + 0x5a0]                     
+  022603  lea rdx, [rip + 0x98b88e]                  STR:"all_settings.find(order.common_cut_safety_preference) != all_settings."
+  02260A  mov rcx, rbx                               
+  02260D  call 0x1b130                               CALL sub_1B130
+  022612  lea rsi, [rsp + 0x580]                     
+  02261A  lea rdx, [rip + 0x98b99f]                  STR:"GetCommonCutProperties"
+  022621  mov rcx, rsi                               
+  022624  call 0x1b130                               CALL sub_1B130
+  022629  lea rdi, [rsp + 0x560]                     
+  022631  lea rdx, [rip + 0x98b739]                  STR:"internal.cpp"
+  022638  mov rcx, rdi                               
+  02263B  call 0x1b130                               CALL sub_1B130
+  022640  mov r9, rbx                                
+  022643  mov r8, rsi                                
+  022646  mov edx, 0x260                             
+  02264B  mov rcx, rdi                               
+  02264E  call 0x60a620                              CALL sub_60A620
+  022653  mov rcx, qword ptr [rsp + 0x560]           
+  02265B  add rdi, 0x10                              
+  02265F  cmp rcx, rdi                               
+  022662  je 0x22669                                 
+  022664  call 0x9984b0                              CALL sub_9984B0
+  022669  mov rcx, qword ptr [rsp + 0x580]           
+  022671  add rsi, 0x10                              
+  022675  cmp rcx, rsi                               
+  022678  je 0x2267f                                 
+  02267A  call 0x9984b0                              CALL sub_9984B0
+  02267F  mov rcx, qword ptr [rsp + 0x5a0]           
+  022687  add rbx, 0x10                              
+  02268B  cmp rcx, rbx                               
+  02268E  je 0x22695                                 
+  022690  call 0x9984b0                              CALL sub_9984B0
+  022695  mov rdx, qword ptr [rsp + 0x7b0]           
+  02269D  test rdx, rdx                              
+  0226A0  je 0x22707                                 
+  0226A2  mov rax, qword ptr [rsp + 0x9c8]           
+  0226AA  mov ecx, dword ptr [rax + 0x6c]            
+  0226AD  mov rdi, qword ptr [rsp + 0x78]            
+  0226B2  mov rax, rdx                               
+  0226B5  lea rbx, [rdi + 8]                         
+  0226B9  jmp 0x226c7                                
+  0226BB  mov rbx, rax                               
+  0226BE  mov rax, qword ptr [rax + 0x10]            
+  0226C2  test rax, rax                              
+  0226C5  je 0x226d5                                 
+  0226C7  cmp dword ptr [rax + 0x20], ecx            
+  0226CA  jge 0x226bb                                
+  0226CC  mov rax, qword ptr [rax + 0x18]            
+  0226D0  test rax, rax                              
+  0226D3  jne 0x226c7                                
+  0226D5  mov rax, qword ptr [rsp + 0x78]            
+  0226DA  add rax, 8                                 
+  0226DE  cmp rbx, rax                               
+  0226E1  je 0x22710                                 
+  0226E3  cmp dword ptr [rbx + 0x20], ecx            
+  0226E6  jg 0x22710                                 
+  0226E8  jmp 0x227b8                                
+  0226ED  mov rbx, rax                               
+  0226F0  mov rdx, qword ptr [rsp + 0x7b0]           
+  0226F8  mov rcx, qword ptr [rsp + 0x78]            
+  0226FD  call 0x923110                              CALL sub_923110
+  022702  jmp 0x2116f                                
+  022707  mov rax, qword ptr [rsp + 0x78]            
+  02270C  lea rbx, [rax + 8]                         
+  022710  mov ecx, 0x40                              
+  022715  call 0x998500                              CALL sub_998500
+  02271A  mov rsi, rax                               
+  02271D  mov rdx, qword ptr [rsp + 0x78]            
+  022722  mov r8, rbx                                
+  022725  mov rcx, r13                               
+  022728  mov rax, qword ptr [rsp + 0x9c8]           
+  022730  movsd qword ptr [rsi + 0x28], xmm6         
+  022735  lea r9, [rsi + 0x20]                       
+  022739  movsd qword ptr [rsi + 0x30], xmm6         
+  02273E  mov dword ptr [rsi + 0x38], 0              
+  022745  mov byte ptr [rsi + 0x3c], 0               
+  022749  mov edi, dword ptr [rax + 0x6c]            
+  02274C  mov byte ptr [rsi + 0x3d], 0               
+  022750  mov dword ptr [rsi + 0x20], edi            
+  022753  call 0x922ff0                              CALL sub_922FF0
+  022758  mov r8, qword ptr [rsp + 0xd8]             
+  022760  mov rdx, qword ptr [rsp + 0xd0]            
+  022768  test r8, r8                                
+  02276B  mov rbx, rdx                               
+  02276E  je 0x227e5                                 
+  022770  mov rax, qword ptr [rsp + 0x78]            
+  022775  add rax, 8                                 
+  022779  cmp r8, rax                                
+  02277C  sete al                                    
+  02277F  test rdx, rdx                              
+  022782  setne dl                                   
+  022785  or al, dl                                  
+  022787  jne 0x22790                                
+  022789  cmp edi, dword ptr [r8 + 0x20]             
+  02278D  setl al                                    
+  022790  movzx ecx, al                              
+  022793  mov rax, qword ptr [rsp + 0x78]            
+  022798  mov rdx, rsi                               
+  02279B  mov rbx, rsi                               
+  02279E  lea r9, [rax + 8]                          
+  0227A2  call 0x987220                              CALL sub_987220
+  0227A7  add qword ptr [rsp + 0x7c8], 1             
+  0227B0  mov rdx, qword ptr [rsp + 0x7b0]           
+  0227B8  mov rcx, qword ptr [rsp + 0x78]            
+  0227BD  movsd xmm8, qword ptr [rbx + 0x28]         
+  0227C3  movsd xmm7, qword ptr [rbx + 0x30]         
+  0227C8  mov edi, dword ptr [rbx + 0x38]            
+  0227CB  movzx esi, byte ptr [rbx + 0x3c]           
+  0227CF  movzx ebx, byte ptr [rbx + 0x3d]           
+  0227D3  call 0x923110                              CALL sub_923110
+  0227D8  mov rax, qword ptr [rsp + 0x9c8]           
+  0227E0  jmp 0x214d2                                
+  0227E5  mov rcx, rsi                               
+  0227E8  call 0x9984b0                              CALL sub_9984B0
+  0227ED  jmp 0x227b0                                
+  0227EF  mov rdi, rax                               
+  0227F2  mov rcx, qword ptr [rsp + 0x580]           
+  0227FA  add rsi, 0x10                              
+  0227FE  cmp rcx, rsi                               
+  022801  je 0x22808                                 
+  022803  call 0x9984b0                              CALL sub_9984B0
+  022808  mov rcx, qword ptr [rsp + 0x5a0]           
+  022810  add rbx, 0x10                              
+  022814  cmp rcx, rbx                               
+  022817  je 0x2281e                                 
+  022819  call 0x9984b0                              CALL sub_9984B0
+  02281E  mov rbx, rdi                               
+  022821  jmp 0x226f0                                
+  022826  mov rdi, rax                               
+  022829  jmp 0x22808                                
+  02282B  mov rcx, qword ptr [rsp + 0x560]           
+  022833  add rdi, 0x10                              
+  022837  mov rbp, rax                               
+  02283A  cmp rcx, rdi                               
+  02283D  je 0x22844                                 
+  02283F  call 0x9984b0                              CALL sub_9984B0
+  022844  mov rdi, rbp                               
+  022847  jmp 0x227f2                                
+  022849  jmp 0x226ed                                
+  02284E  mov rdx, qword ptr [rsp + 0x7e0]           
+  022856  mov rsi, rax                               
+  022859  mov rcx, rbx                               
+  02285C  mov rbx, rsi                               
+  02285F  call 0x923480                              CALL sub_923480
+  022864  jmp 0x2116f                                
+  022869  lea rsi, [rbx + 8]                         
+  02286D  mov ecx, 0x30                              
+  022872  call 0x998500                              CALL sub_998500
+  022877  mov rdi, rax                               
+  02287A  mov rax, qword ptr [rsp + 0x9c8]           
+  022882  mov r8, rsi                                
+  022885  mov rdx, rbx                               
+  022888  movsd qword ptr [rdi + 0x28], xmm6         
+  02288D  lea r9, [rdi + 0x20]                       
+  022891  mov rcx, r13                               
+  022894  mov ebp, dword ptr [rax + 0x8c]            
+  02289A  mov dword ptr [rdi + 0x20], ebp            
+  02289D  call 0x923360                              CALL sub_923360
+  0228A2  mov r8, qword ptr [rsp + 0xd8]             
+  0228AA  mov rax, qword ptr [rsp + 0xd0]            
+  0228B2  test r8, r8                                
+  0228B5  mov rsi, rax                               
+  0228B8  je 0x2291b                                 
+  0228BA  test rax, rax                              
+  0228BD  lea rax, [rbx + 8]                         
+  0228C1  setne dl                                   
+  0228C4  cmp r8, rax                                
+  0228C7  sete al                                    
+  0228CA  or dl, al                                  
+  0228CC  jne 0x228d5                                
+  0228CE  cmp ebp, dword ptr [r8 + 0x20]             
+  0228D2  setl dl                                    
+  0228D5  lea r9, [rbx + 8]                          
+  0228D9  movzx ecx, dl                              
+  0228DC  mov rdx, rdi                               
+  0228DF  call 0x987220                              CALL sub_987220
+  0228E4  mov rsi, rdi                               
+  0228E7  add qword ptr [rsp + 0x7f8], 1             
+  0228F0  mov rcx, qword ptr [rsp + 0x9c0]           
+  0228F8  movsd xmm1, qword ptr [rsi + 0x28]         
+  0228FD  call 0x5452a0                              CALL sub_5452A0
+  022902  mov rdx, qword ptr [rsp + 0x7e0]           
+  02290A  mov rcx, rbx                               
+  02290D  movapd xmm7, xmm0                          
+  022911  call 0x923480                              CALL sub_923480
+  022916  jmp 0x21510                                
+  02291B  mov rcx, rdi                               
+  02291E  call 0x9984b0                              CALL sub_9984B0
+  022923  jmp 0x228f0                                
+  022925  jmp 0x2284e                                
+  02292A  mov byte ptr [rsp + 0xb8], 0               
+  022932  mov rcx, rax                               
+  022935  jmp 0x1f0a3                                
+  02293A  mov rbx, rax                               
+  02293D  jmp 0x20cdb                                
+  022942  mov byte ptr [rsp + 0xb8], 1               
+  02294A  mov rcx, qword ptr [rsp + 0x9c8]           
+  022952  jmp 0x1f0a3                                
+  022957  mov rax, qword ptr [rsp + 0x9c8]           
+  02295F  jmp 0x21434                                
+  022964  mov rcx, rsi                               
+  022967  call 0x9984b0                              CALL sub_9984B0
+  02296C  jmp 0x1ff30                                
+  022971  mov rax, qword ptr [rsp + 0x88]            
+  022979  lea rbx, [rax + 8]                         
+  02297D  jmp 0x1fe8c                                
+  022982  mov rdi, rax                               
+  022985  mov rax, qword ptr [rsp + 0x60]            
+  02298A  mov rcx, qword ptr [rsp + 0x8a0]           
+  022992  add rax, 0x10                              
+  022996  cmp rcx, rax                               
+  022999  je 0x229a0                                 
+  02299B  call 0x9984b0                              CALL sub_9984B0
+  0229A0  mov rcx, qword ptr [rsp + 0x380]           
+  0229A8  add rsi, 0x10                              
+  0229AC  cmp rcx, rsi                               
+  0229AF  je 0x229b6                                 
+  0229B1  call 0x9984b0                              CALL sub_9984B0
+  0229B6  mov rcx, qword ptr [rsp + 0x3a0]           
+  0229BE  add rbx, 0x10                              
+  0229C2  cmp rcx, rbx                               
+  0229C5  je 0x229cc                                 
+  0229C7  call 0x9984b0                              CALL sub_9984B0
+  0229CC  mov rbx, rdi                               
+  0229CF  jmp 0x21165                                
+  0229D4  mov r9, qword ptr [rax + 0x10]             
+  0229D8  mov r10, qword ptr [rax + 0x18]            
+  0229DC  mov qword ptr [rsp + 0x8b0], r9            
+  0229E4  mov qword ptr [rsp + 0x8b8], r10           
+  0229EC  jmp 0x1fda6                                
+  0229F1  mov rdi, rax                               
+  0229F4  jmp 0x229a0                                
+  0229F6  mov rdi, rax                               
+  0229F9  jmp 0x229b6                                
+  0229FB  mov rbx, rax                               
+  0229FE  call 0x998bc0                              CALL sub_998BC0
+  022A03  mov rcx, qword ptr [rsp + 0x2a0]           
+  022A0B  test rcx, rcx                              
+  022A0E  jne 0x211e0                                
+  022A14  jmp 0x21143                                

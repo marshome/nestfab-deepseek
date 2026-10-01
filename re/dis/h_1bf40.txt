@@ -1,0 +1,43 @@
+### fn 0x1bf40 name=None end=0x1bfd5 size=149
+STRINGS: 0x9add42:'c:\\Temp\\debug_nest.txt'
+CALLERS: 0x1e70:None, 0x2ab0:LaunchLocalComputation, 0x44e0:None, 0x6100:LaunchComputation, 0x8fc0:None, 0x9330:NewNoFitNesting, 0x9930:None, 0x9af0:NewNoFitContext, 0xa620:None, 0xc2a0:None, 0xc420:None, 0xc670:None, 0xc830:None, 0xc9a0:None, 0xcb20:None, 0xccb0:None, 0xd050:None, 0xd1a0:None, 0xdbb0:None, 0xde80:None, 0xe010:None, 0xe2d0:None, 0xe460:None, 0xe600:None, 0xe940:None, 0xeab0:None, 0xec90:None, 0xedf0:None, 0xef50:None, 0xf130:None, 0xf2c0:None, 0xf540:None, 0xf7c0:None, 0xfcf0:None, 0xff30:None, 0x104d0:WaitComputationTermination, 0x10650:WaitNextSolution, 0x109c0:None, 0x10b50:None, 0x11120:None, 0x11490:None, 0x13c90:None, 0x13e30:None, 0x13fe0:None, 0x14290:None, 0x14450:None, 0x14d10:None, 0x15bf0:None, 0x188d0:None, 0x18af0:None, 0x18e70:None, 0x19c40:None, 0x1a210:None, 0x1a8f0:None, 0x1aa90:None, 0x1ae40:None, 0x1bf40:None, 0x64abf0:None, 0x64ace0:None, 0x64aea0:None, 0x64b040:None, 0x64b1c0:None, 0x64b2c0:None, 0x64b480:None, 0x64b6c0:None, 0x64b960:None, 0x64bb20:None, 0x64bda0:None, 0x64beb0:None, 0x64c070:None, 0x64c290:None, 0x64c480:None, 0x64c6b0:None, 0x64c7b0:None, 0x64c940:None, 0x64ca50:None, 0x64cb30:None, 0x64cc30:None, 0x64cd90:None, 0x64cfa0:None, 0x64d0f0:None, 0x64d310:None, 0x64d420:None, 0x64d5a0:None, 0x64d7c0:None, 0x64d9c0:None, 0x64dac0:None, 0x64dd40:None, 0x64df60:None, 0x64e120:None, 0x64e200:None, 0x64e430:None, 0x64e630:None, 0x64e710:None, 0x64f5b0:None, 0x64f850:None
+CALLEES: 0x1be70:None, 0x1bf5a:None, 0x62d860:None, 0x62f280:None, 0x7bb430:None, 0x998cd0:None, 0x998da0:None, 0x998ee0:None
+
+  0001bf40  53                   push    rbx
+  0001bf41  4883ec20             sub     rsp, 0x20
+  0001bf45  e826ffffff           call    0x1be70  ; -> 0x1be70 None
+  0001bf4a  803800               cmp     byte ptr [rax], 0
+  0001bf4d  7422                 je      0x1bf71
+  0001bf4f  0fb6054a32b000       movzx   eax, byte ptr [rip + 0xb0324a]  ; DATA 0xb1f1a0
+  0001bf56  84c0                 test    al, al
+  0001bf58  7426                 je      0x1bf80
+  0001bf5a  8b054833b000         mov     eax, dword ptr [rip + 0xb03348]  ; DATA 0xb1f2a8
+  0001bf60  85c0                 test    eax, eax
+  0001bf62  750d                 jne     0x1bf71
+  0001bf64  488d055532b000       lea     rax, [rip + 0xb03255]  ; DATA 0xb1f1c0
+  0001bf6b  4883c420             add     rsp, 0x20
+  0001bf6f  5b                   pop     rbx
+  0001bf70  c3                   ret     
+  0001bf71  31c0                 xor     eax, eax
+  0001bf73  4883c420             add     rsp, 0x20
+  0001bf77  5b                   pop     rbx
+  0001bf78  c3                   ret     
+  0001bf79  0f1f8000000000       nop     dword ptr [rax]
+  0001bf80  488d0d1932b000       lea     rcx, [rip + 0xb03219]  ; DATA 0xb1f1a0
+  0001bf87  e814ce9700           call    0x998da0  ; -> 0x998da0 None
+  0001bf8c  85c0                 test    eax, eax
+  0001bf8e  74ca                 je      0x1bf5a
+  0001bf90  488d15ab1d9900       lea     rdx, [rip + 0x991dab]  ; "c:\Temp\debug_nest.txt"
+  0001bf97  488d0d2232b000       lea     rcx, [rip + 0xb03222]  ; DATA 0xb1f1c0
+  0001bf9e  e88df47900           call    0x7bb430  ; -> 0x7bb430 None
+  0001bfa3  488d0df631b000       lea     rcx, [rip + 0xb031f6]  ; DATA 0xb1f1a0
+  0001bfaa  e831cf9700           call    0x998ee0  ; -> 0x998ee0 None
+  0001bfaf  488d0d0af2ffff       lea     rcx, [rip - 0xdf6]  ; DATA 0x1b1c0
+  0001bfb6  e8a5186100           call    0x62d860  ; -> 0x62d860 None
+  0001bfbb  eb9d                 jmp     0x1bf5a  ; -> 0x1bf5a None
+  0001bfbd  488d0ddc31b000       lea     rcx, [rip + 0xb031dc]  ; DATA 0xb1f1a0
+  0001bfc4  4889c3               mov     rbx, rax
+  0001bfc7  e804cd9700           call    0x998cd0  ; -> 0x998cd0 None
+  0001bfcc  4889d9               mov     rcx, rbx
+  0001bfcf  e8ac326100           call    0x62f280  ; -> 0x62f280 None
+  0001bfd4  90                   nop     

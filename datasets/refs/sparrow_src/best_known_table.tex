@@ -1,0 +1,39 @@
+
+\newcommand{\trousersrecord}{92.62}
+\newcommand{\shapeszerorecord}{69.98}
+\newcommand{\swimrecord}{79.83}
+\newcommand{\jakobsonerecord}{89.26}
+\newcommand{\shirtsrecord}{90.92}
+
+\begin{table}[!htbp]
+    \centering
+    \setlength{\tabcolsep}{4pt} % Default is usually 6pt
+  \begin{tabular}{|l|c|cc|}
+     \hline
+  & \texttt{sparrow} & \multicolumn{2}{c|}{previous best} \\
+  instance & $\rho$ & $\rho$ & by \\ \hline
+  \texttt{ALBANO} & \textbf{89.82} & 89.58 & \tiny{E} \\
+  \texttt{DAGLI} & \textbf{90.17} & 89.51 & \tiny{E} \\
+  \texttt{FU} & \textbf{92.41} & \textbf{92.41} & \tiny{E} \\
+  \texttt{JAKOBS1} & \textbf{\jakobsonerecord} & 89.09 & \tiny{L/E/W/S} \\
+  \texttt{JAKOBS2} & \textbf{87.73} & \textbf{87.73} & \tiny{E/S} \\
+  \texttt{MAO} & \textbf{86.87} & 86.05 & \tiny{S} \\
+  \texttt{MARQUES} & \textbf{92.02} & 91.02 & \tiny{S} \\
+  \texttt{SHAPES0} & \textbf{\shapeszerorecord} & 68.79 & \tiny{E/W/S} \\
+  \texttt{SHAPES1} & \textbf{76.73} & \textbf{76.73} & \tiny{E/S} \\
+  \texttt{SHAPES2} & \textbf{86.23} & 84.84 & \tiny{E} \\
+  \texttt{SHIRTS} & \textbf{\shirtsrecord} & 88.96 & \tiny{E/W} \\
+  \texttt{SWIM} & \textbf{\swimrecord} & 75.94 & \tiny{E} \\
+  \texttt{TROUSERS} & \textbf{\trousersrecord} & 91.06 & \tiny{S} \\
+  \hline
+  \end{tabular}
+  \caption{The best solution densities ever produced by \texttt{sparrow} for instances in the benchmark set, accompanied by the previous best-known density and the algorithm that produced it:
+  \textsc{l} - \cite{leung2012extended}.
+  \textsc{e} - \cite{elkeran2013new},
+  \textsc{w} - \cite{wang2017flexible}, 
+  \textsc{s} - \cite{sato2019raster}.
+  Best densities are highlighted in bold.
+  Time limit is 20 minutes.
+  }
+\label{tab:best}
+\end{table}

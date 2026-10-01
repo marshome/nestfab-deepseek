@@ -1,0 +1,136 @@
+SetCommonCutMode	0xE460	404	148,149	->  | SetCommonCutMode
+SetPartCommonCutMode	0xDE50	36	166,167	SetPartCommonCutMode
+SetCommonCutObjective	0xEDF0	337	156,157	->  | SetCommonCutObjective
+SetCommonCutCuttingPreference	0xEC90	340	154,155	->  | SetCommonCutCuttingPreference
+SetCommonCutSafetyPreference	0xE940	354	150,151	->  | SetCommonCutSafetyPreference
+SetCommonCutAuthorizations	0xEAB0	468	152,153	->  | SetCommonCutAuthorizations
+CNS_GetCommonCut	0xBA50	825	160,161	cns.cpp | GetCommonCut | nesting->nesting | common_cut_number < evaluation.common_cut_segments.size() | CNS_GetCommonCut
+CNS_GetNumberOfCommonCuts	0xD710	346	158,159	cns.cpp | GetNumberOfCommonCuts | cns_nesting->nesting | // GetNumberOfCommonCuts  | CNS_GetNumberOfCommonCuts
+SetMultiTorchMode	0xEF50	479	174,175	->  | SetMultiTorchMode
+SetMultiTorchCuttingPreference	0xF130	388	176,177	->  | SetMultiTorchCuttingPreference
+SetMultiTorchObjective	0xF2C0	633	178,179	->  | SetMultiTorchObjective
+SetDetailedMultiTorchObjective	0xF540	629	186,187	->  | SetDetailedMultiTorchObjective
+CNS_GetPartTorchInfos	0xD870	826	184,185	cns.cpp | nesting->nesting | GetPartTorchInfos | part_index < nesting->nesting->nested_parts().size() | part_index < nesting->nesting->multitorch_infos().m_infos.size() | vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu) | CNS_GetPartTorchInfos
+SetShearMode	0xDDC0	33	146,147	SetShearMode
+SetPartialShearMode	0xDDF0	36	330,331	SetPartialShearMode
+SetShearGap	0xCEF0	45	212,213	SetShearGap
+SetShearRepulseFromBorders	0xDE20	33	304,305	SetShearRepulseFromBorders
+SetPipeMode	0xFCF0	568	258,259	->  | SetPipeMode
+SetRowMode	0xFBF0	244	256,257	SetRowMode
+GetNumberOfRows	0xFF30	271	264,265	->  | GetNumberOfRows
+GetRow	0x10040	384	266,267	cns.cpp | GetRow | row_number < row_intervals.size() | CNS_GetRow
+CNS_GetRow	0x10040	384	266,267	cns.cpp | GetRow | row_number < row_intervals.size() | CNS_GetRow
+SetLeatherMode	0x19C40	411	272,273	->  | SetLeatherMode
+AddLeatherQualityZoneInPart	0x19DE0	350	274,275	AddLeatherQualityZoneInPart
+AddLeatherQualityZoneInPart	0x19F40	342	292,293	AddLeatherQualityZoneInPart
+AddLeatherQualityZoneInSheet	0x1A0A0	331	276,277	AddLeatherQualityZoneInSheet
+SetMarkMode	0x188D0	529	246,247	SetMarkMode
+GetNumberOfMarks	0x18AF0	889	248,249	GetNumberOfMarks
+GetMark	0x18E70	1312	250,251	GetMark
+AddNonRectangularSheet	0x157A0	1098	116,117	AddNonRectangularSheet
+AddDefectToSheet	0x14190	124	118,119	AddDefectToSheet
+AddDefectToSheet	0x16970	426	71,72	AddDefectToSheet | // AddPolygonDefectToSheet
+AddPolygonDefectToSheet	NOTFOUND
+CNS_AddDefectFromNestedPart	0x12F40	894	306,307	CNS_AddDefectFromNestedPart
+SetDefectGap	0x109C0	388	80,81	->  | SetDefectGap
+AddToolPathToPart	0x101C0	127	290,291	AddToolPathToPart
+AddHoleInToolPath	0x10240	124	296,297	AddHoleInToolPath
+AddInflatedToolPathToPart	0x12C60	169	294,295	AddInflatedToolPathToPart
+CNS_AddOpenToolPathToPart	0x12D10	552	314,315	CNS_AddOpenToolPathToPart
+AddOpenCuttingPathToPart	0x14A60	678	124,125	AddOpenCuttingPathToPart
+CNS_AddToolPathDefectToSheet	NOTFOUND
+CNS_AddExternalToolPathBoundaryToSheet	NOTFOUND
+CNS_SheetAddRestrictedZone	0x1A210	1468	284,285	->  | CNS_SheetAddRestrictedZone
+CNS_SetZoneRestrictedPart	0x1AE40	507	280,281	->  | CNS_SetZoneRestrictedPart
+CNS_ForcePartOnBottomBorder	0x1A8F0	411	302,303	->  | CNS_ForcePartOnBottomBorder
+CreateRestrictedZoneConstraint	0x1AA90	944	278,279	->  | CreateRestrictedZoneConstraint | // 
+CNS_CreateAssemblyGroup	0x10B50	395	308,309	->  | CNS_CreateAssemblyGroup | // 
+CNS_AddAssemblyGroupPart	0x11830	180	310,311	CNS_AddAssemblyGroupPart
+AddSuggestedPartsGrouping	0x11640	483	218,219	cns.cpp | AddSuggestedPartsGrouping | order | CNS_AddSuggestedPartsGrouping
+AddPartToSuggestedPartsGrouping	0xF7C0	1072	220,221	->  | cns.cpp | AddPartToSuggestedPartsGrouping | group | CNS_AddPartToSuggestedPartsGrouping
+MakeClusterFromSuggestedPartsGrouping	NOTFOUND
+SetIncompatibleSheet	0x11490	423	214,215	->  | SetIncompatibleSheet
+ForcePartInsideHole	0xC610	43	334,335	ForcePartInsideHole
+ForcePartOutsideHole	NOTFOUND
+SetOffcutEvaluation	0xE2D0	399	142,143	->  | SetOffcutEvaluation
+SetObjective	0xCEC0	45	78,79	SetObjective
+SetSheetPrice	0xCB20	388	172,173	->  | SetSheetPrice
+SetSheetPriority	0x13C90	411	67,68	SetSheetPriority
+GetFillRatio	0xB4B0	34	168,169	GetFillRatio
+GetNestingFillRatio	0xB4E0	38	192,193	GetNestingFillRatio
+SetReorganizeBiggestPartNearOrigin	0x10470	42	336,337	SetReorganizeBiggestPartNearOrigin
+SetReorganizeLongestPartNearOrigin	0x104A0	42	338,339	SetReorganizeLongestPartNearOrigin
+SetSpecificSheetOrigin	0x13E30	417	298,299	SetSpecificSheetOrigin
+SetSpecificSheetObjective	0x13FE0	417	300,301	SetSpecificSheetObjective
+SetAutomaticStop	0xE010	353	140,141	->  | SetAutomaticStop
+SetFillLastNestingStrategy	0xDD90	36	144,145	SetFillLastNestingStrategy
+SetExtraParameters	0x11120	868	65,66	->  | SetExtraParameters
+GenerateDxfNesting	0xBF70	148	224,225	GenerateDxfNesting
+GenerateHtmlSolutionReport	0xB350	247	11,12	GenerateHtmlSolutionReport
+GenerateHtmlLaunchingOrderReport	0xB1D0	370	9,10	GenerateHtmlLaunchingOrderReport | <h1> Problem contains invalid parts. </h1> | <h1> Problem contains invalid sheets. </h1>
+GenerateLaunchingOrderProblem	0xB8D0	378	13,14	GenerateLaunchingOrderProblem | source_version
+GetSolution	0xB0A0	29	33,34	GetSolution
+GetNesting	0xB4E0	38	192,193	GetNestingFillRatio
+GetNesting	0xB750	384	332,333	cns.cpp | GetNestingBoundingBox | min_x && min_y && max_x && max_y | CNS_GetNestingBoundingBox
+GetNesting	0xBD90	470	170,171	cns.cpp | GetNestingDimensions | CNS_GetNestingDimensions
+GetNesting	0x10F30	490	21,22	cns.cpp | GetNesting | nesting_number < solution_aux.size() | CNS_GetNesting
+GetNestingDimensions	0xBD90	470	170,171	cns.cpp | GetNestingDimensions | CNS_GetNestingDimensions
+GetNestingBoundingBox	0xB750	384	332,333	cns.cpp | GetNestingBoundingBox | min_x && min_y && max_x && max_y | CNS_GetNestingBoundingBox
+GetNestedPart	0xD460	688	19,20	cns.cpp | GetNestedPart | nested_part_number <= nested_parts.size() | part_number <= order->parts.size() | CNS_GetNestedPart
+GetNestedPart	0x16E60	1727	206,207	GetNestedPartPartVariant
+GetNestedPartPartVariant	0x16E60	1727	206,207	GetNestedPartPartVariant
+GetPartWithBadGeometry	0xB510	43	29,30	GetPartWithBadGeometry
+NewLaunchingOrder	0x14620	1081	37,38	NewLaunchingOrder
+DeleteLaunchingOrder	0x118F0	3660	7,8	DeleteLaunchingOrder | *** ERROR unterminated/cancelled computation *** | ERROR unterminated/cancelled computation
+SetSheetGrainDirection	0xC9A0	372	98,99	->  | SetSheetGrainDirection
+SetExtraGapOnPart	0x14450	449	180,181	SetExtraGapOnPart
+SetSheetGaps	0xCCB0	527	45,46	->  | SetSheetGaps
+SetExtraGapOnPart	0x14450	449	180,181	SetExtraGapOnPart
+AddPart	0x14D10	1891	110,111	AddPart | // 
+AddSheet	0x15BF0	1717	5,6	//  | AddSheet
+SetPartPriority	0xC2A0	382	126,127	->  | SetPartPriority
+SetOrigin	0xD050	334	86,87	->  | SetOrigin
+SetInterpartGap	0xCF20	303	39,40	cns.cpp | SetInterpartGap | (gap >= 0.0) && "Negative part gap unsupported" | CNS_SetInterpartGap
+GetSheet	0xB060	52	61,62	GetSheetUserStringEx
+GetSheet	0xB600	332	31,32	GetSheet | number <= order->sheets.size() | cns.cpp | CNS_GetSheet
+GetSheet	0xC830	353	59,60	->  | GetSheetUserString
+GetNumberOfNestedParts	0xB190	63	23,24	GetNumberOfNestedParts
+GetMultiplicity	0xB100	34	17,18	GetMultiplicity
+GetLength	0xB130	36	96,97	GetLength
+GetHeight	0xB160	36	100,101	GetHeight
+SetSheetUserString	0xC670	446	57,58	->  | SetSheetUserString
+GetSheetUserString	0xC830	353	59,60	->  | GetSheetUserString
+SetPartUserString	0xC420	446	43,44	->  | SetPartUserString
+GetPartUserString	0xC5E0	36	27,28	GetPartUserString
+SetPartAuthorizations	0xC1A0	241	41,42	SetPartAuthorizations
+AddPartSpecificAuthorizations	0x10CE0	584	94,95	AddPartSpecificAuthorizations
+SetPartSpecificCommonCut	NOTFOUND
+CNS_SetNoOrientationMixOnPart	0xDBB0	382	190,191	->  | CNS_SetNoOrientationMixOnPart
+CNS_SetFloatingMode	0xDD30	36	182,183	CNS_SetFloatingMode
+CNS_SetOriginPackingMode	0xDD60	36	312,313	CNS_SetOriginPackingMode
+CNS_SetMultiplicityPreference	0xD1A0	353	128,129	->  | CNS_SetMultiplicityPreference
+CNS_SetNoMixPreference	0xD310	33	188,189	CNS_SetNoMixPreference
+CNS_SetNoSheetMixPreference	0xD340	33	222,223	CNS_SetNoSheetMixPreference
+CNS_SetEvaluateIntermediateNestingsAsLast	0x10440	42	316,317	CNS_SetEvaluateIntermediateNestingsAsLast
+GetNumberOfNestings	0xB0C0	52	25,26	GetNumberOfNestings
+GetPartUserStringEx	0xB020	52	55,56	GetPartUserStringEx
+GetSheetUserStringEx	0xB060	52	61,62	GetSheetUserStringEx
+AddPartVariantToPart	0x18100	1955	194,195	//  | AddPartVariantToPart
+AddRotatedPartVariantToPart	0x17520	3027	254,255	AddRotatedPartVariantToPart | // 
+AddHoleToPart	0x132E0	176	112,113	AddHoleToPart
+AddHoleToPart	0x13800	581	132,133	AddHoleToPart | // AddCircularHoleToPart
+AddHoleToPart	0x13A50	569	136,137	AddHoleToPart | // AddRectangularHoleToPart
+AddHoleToPart	0x16420	490	1,2	AddHoleToPart | // AddPolygonHoleToPart
+AddExternalBoundaryToPart	0x13390	124	114,115	AddExternalBoundaryToPart
+AddExternalBoundaryToPart	0x13410	512	260,261	AddExternalBoundaryToPart | // AddCircularExternalBoundaryToPart
+AddExternalBoundaryToPart	0x13610	486	262,263	AddExternalBoundaryToPart | // AddRectangularExternalBoundaryToPart
+AddExternalBoundaryToPart	0x167C0	426	104,105	AddExternalBoundaryToPart | // AddExternalPolygonBoundaryToPart
+AddExternalBoundaryToSheet	0x14210	117	120,121	AddExternalBoundaryToSheet
+AddExternalBoundaryToSheet	0x16610	419	102,103	AddExternalBoundaryToSheet | // AddExternalPolygonBoundaryToSheet
+AddCircularPart	NOTFOUND
+AddRectanglePart	NOTFOUND
+AddPolygonPart	NOTFOUND
+AddOptionalQuantityToPart	0x14290	440	138,139	AddOptionalQuantityToPart
+GetPartWithBadGeometry	0xB510	43	29,30	GetPartWithBadGeometry
+CNS_GetSheet	0xB600	332	31,32	GetSheet | number <= order->sheets.size() | cns.cpp | CNS_GetSheet
+CNS_GetNestedPart	0xD460	688	19,20	cns.cpp | GetNestedPart | nested_part_number <= nested_parts.size() | part_number <= order->parts.size() | CNS_GetNestedPart

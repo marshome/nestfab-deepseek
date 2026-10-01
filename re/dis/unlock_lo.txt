@@ -1,0 +1,17 @@
+### fn 0xd430 name=None end=0xd454 size=36
+STRINGS: 0x9acd43:'UnLockLaunchingOrder'
+CALLERS: 
+CALLEES: 0x64e630:None
+
+  0000d430  56                   push    rsi
+  0000d431  53                   push    rbx
+  0000d432  4883ec28             sub     rsp, 0x28
+  0000d436  4889ce               mov     rsi, rcx
+  0000d439  89d3                 mov     ebx, edx
+  0000d43b  488d0d01f99900       lea     rcx, [rip + 0x99f901]  ; "UnLockLaunchingOrder"
+  0000d442  e8e9116400           call    0x64e630  ; -> 0x64e630 None
+  0000d447  899e44020000         mov     dword ptr [rsi + 0x244], ebx
+  0000d44d  4883c428             add     rsp, 0x28
+  0000d451  5b                   pop     rbx
+  0000d452  5e                   pop     rsi
+  0000d453  c3                   ret     

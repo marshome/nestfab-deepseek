@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1740" height="1232" viewBox="0 0 1740 1232">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7b8794"/></marker></defs>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<text x="60" y="42" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#10202f">LP 与定价层（Prc / Lp / Coin）</text>
+<text x="60" y="68" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" fill="#55636f">REPORT §7.3；这一层是活的（vtable 地址点被真实 lea 引用）</text>
+<path d="M 240.0 178.0 L 240.0 220.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 282.0 L 240.0 324.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 386.0 L 240.0 428.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 500.0 L 240.0 532.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="223.0" y="507.5" width="34" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="240.0" y="520.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">Box</text>
+<path d="M 240.0 500.0 L 240.0 516.0 L 660.0 516.0 L 660.0 532.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="429.0" y="507.5" width="42" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="450.0" y="520.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">Hull</text>
+<path d="M 240.0 500.0 L 240.0 516.0 L 1080.0 516.0 L 1080.0 532.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="635.0" y="507.5" width="50" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="660.0" y="520.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">Alpha</text>
+<path d="M 240.0 500.0 L 240.0 516.0 L 1500.0 516.0 L 1500.0 532.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="841.0" y="507.5" width="58" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="870.0" y="520.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">Linear</text>
+<path d="M 240.0 594.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 660.0 594.0 L 660.0 615.0 L 240.0 615.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 1080.0 594.0 L 1080.0 615.0 L 240.0 615.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 1500.0 594.0 L 1500.0 615.0 L 240.0 615.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 698.0 L 240.0 740.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 802.0 L 240.0 844.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 906.0 L 240.0 948.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1010.0 L 240.0 1052.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="60" y="116" width="360" height="62" rx="31" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.3"/>
+<text x="240" y="143.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">压缩/后优化路径进入定价器</text>
+<text x="240" y="160.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">CompactNester::Run 0xB13D0 → 0xB0380 → 0x67460</text>
+<rect x="60" y="220" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="256.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">→ 0x1CD290 → 0x1CB100 → 0x1A6020 → 0x1A5B20</text>
+<rect x="60" y="324" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="351.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">定价器工厂 0x4D64C0</text>
+<text x="240" y="368.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">构造 Box / Hull / Alpha / LinearCombination 四个定价器</text>
+<polygon points="240,428 420,464 240,500 60,464" fill="#fff8ec" stroke="#b45309" stroke-width="1.3"/>
+<text x="240" y="469.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">哪个定价器 ？</text>
+<rect x="60" y="532" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="559.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">Box: 主算法 0x7C9D90</text>
+<text x="240" y="576.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">面积 (y1−y0)*(x1−x0) @ 0x7CB750</text>
+<rect x="480" y="532" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="660" y="559.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">Hull: slot2 0x7CA130 = [rdx+0x48]</text>
+<text x="660" y="576.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">预置凸包面量系数</text>
+<rect x="900" y="532" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="1080" y="559.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">Alpha: slot2 0x7CA1B0 = [rdx+0x68]</text>
+<text x="1080" y="576.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">预置 α-shape 面量系数</text>
+<rect x="1320" y="532" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="1500" y="559.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">LinearCombination: slot2 0x7CA370</text>
+<text x="1500" y="576.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">Σwᵢ·priceᵢ / Σwᵢ 加权平均</text>
+<rect x="60" y="636" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="663.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">PriceComputer 本体 0x7C4C70 / 0x7C4F90</text>
+<text x="240" y="680.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">[obj+0x10] 尾调用内部 +0x28/+0x30/+0x38/+0x40 槽</text>
+<rect x="60" y="740" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="767.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">Lp::LinearProgram ← Coin::CoinLP（vptr + ClpSimplex* @+8）</text>
+<text x="240" y="784.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">构造 0x267760；上下界/目标 ±inf、±1.0</text>
+<rect x="60" y="844" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="871.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">addColumn / addRow 装配 0x7CA830（3778 B）</text>
+<text x="240" y="888.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">对 16 B {double,int,int} 记录做有序插入/去重/扩容</text>
+<rect x="60" y="948" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="975.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">转发 thunk → ClpSimplex</text>
+<text x="240" y="992.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">0x7CB700→[+0x248] · 0x7CB710→[+0x228] · 0x7CB740→[+0x230]</text>
+<rect x="60" y="1052" width="360" height="62" rx="31" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.3"/>
+<text x="240" y="1088.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">取回原/对偶目标值</text>
+<text x="60" y="1136" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#667085">本层是否构成「列生成」尚未证实（findings_lp §7.3）；Prc::BoostAlpha / SurfaceCoeffs / DimAlpha 只有 RTTI 名、零指针引用。</text>
+<text x="60" y="1162" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#667085">方法学提醒：搜 vtable 头部（vtable+0）会得到「0 引用」的假结论；vptr 指向的是地址点（vtable+16）。</text>
+</svg>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1440" viewBox="0 0 900 1440">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7b8794"/></marker></defs>
+<rect width="100%%" height="100%%" fill="#ffffff"/>
+<text x="60" y="42" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#10202f">行排样：逐零件路径（候选角度 → 分值 → 取最小）</text>
+<text x="60" y="68" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" fill="#55636f">findings_lp_use §21–§38；整条链已闭合，注入点为 0</text>
+<path d="M 240.0 178.0 L 240.0 220.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 282.0 L 240.0 324.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 408.0 L 240.0 428.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="231.0" y="409.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="240.0" y="422.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">是</text>
+<path d="M 420.0 366.0 L 435.0 366.0 L 435.0 1228.0 L 660.0 1228.0 L 660.0 1218.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="426.0" y="788.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="435.0" y="801.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">否</text>
+<path d="M 240.0 490.0 L 240.0 532.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 594.0 L 240.0 636.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 698.0 L 240.0 740.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 802.0 L 240.0 844.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 906.0 L 240.0 948.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1010.0 L 240.0 1052.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1052.0 L 240.0 1083.0 L 660.0 1083.0 L 660.0 1114.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="441.0" y="1074.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="450.0" y="1087.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">是</text>
+<path d="M 240.0 1124.0 L 240.0 1156.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="231.0" y="1131.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="240.0" y="1144.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">否</text>
+<path d="M 660.0 1114.0 L 660.0 1135.0 L 240.0 1135.0 L 240.0 1156.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1156.0 L 240.0 1187.0 L 660.0 1187.0 L 660.0 1218.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="441.0" y="1178.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="450.0" y="1191.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">是</text>
+<path d="M 480.0 1187.0 L 465.0 1187.0 L 465.0 314.0 L 240.0 314.0 L 240.0 324.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<path d="M 240.0 1228.0 L 240.0 1260.0" fill="none" stroke="#7b8794" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="231.0" y="1235.5" width="18" height="17" rx="8" fill="#ffffff" stroke="#7b8794" stroke-width="0.9"/>
+<text x="240.0" y="1248.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11" fill="#33404d" text-anchor="middle">否</text>
+<rect x="60" y="116" width="360" height="62" rx="31" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.3"/>
+<text x="240" y="152.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x134470 候选角度循环（bestCandidate）</text>
+<rect x="60" y="220" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="247.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x8BEFC0 + 0x5C4C50 构造候选集</text>
+<text x="240" y="264.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">源自带元素 + 0° + 90°（0x13450B 追加）</text>
+<polygon points="240,324 420,366 240,408 60,366" fill="#fff8ec" stroke="#b45309" stroke-width="1.3"/>
+<text x="240" y="362.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x5C2E40 授权谓词通过 ？</text>
+<text x="240" y="379.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="400" fill="#33404d" text-anchor="middle">{tag, lo=角度, hi=角度}，两种区间极性</text>
+<rect x="60" y="428" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="455.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x133DE0 逐零件代价</text>
+<text x="240" y="472.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">0x5CEE50 角度→变换（tag≠0 → 镜像 {cos,+sin,sin,−cos}）</text>
+<rect x="60" y="532" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="559.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x5D38C0 仿射变换 → 0x5CD800 包围盒</text>
+<text x="240" y="576.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">0x133E67 取 20 × 高（rodata 0x9BCEB0）</text>
+<rect x="60" y="636" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="663.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">构造：Item 0x1333D0（0x90）→ 元素 0x136350（216 B）</text>
+<text x="240" y="680.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">→ Row::Squeezer 0x136B80 / 0x138A20</text>
+<rect x="60" y="740" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="767.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x137FE0 排空源记录（每条最多重试 count = 10000）</text>
+<text x="240" y="784.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">→ 0x137A90 合并 → 虚调用 slot 1 = 0x13A360</text>
+<rect x="60" y="844" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="871.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x13A360 / 0x1380D0 记忆化挤压代价</text>
+<text x="240" y="888.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">阈值/sin − max(跨度)；1e-06 平行闸 + 0.005 对齐闸</text>
+<rect x="60" y="948" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="240" y="975.5" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">0x137800 orderedAddElement（+ 重置分值缓存 -1.0）</text>
+<text x="240" y="992.5" font-family="Cascadia Mono, Consolas, monospace" font-size="11.5" font-weight="400" fill="#33404d" text-anchor="middle">→ 0x136CB0 惰性分值 = nodeLength(末元素) + 末元素值</text>
+<polygon points="240,1052 420,1088 240,1124 60,1088" fill="#fff8ec" stroke="#b45309" stroke-width="1.3"/>
+<text x="240" y="1093.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">分值 &lt; 当前最优 ？</text>
+<rect x="480" y="1052" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="660" y="1088.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">记住该候选（寄存器保存）</text>
+<polygon points="240,1156 420,1192 240,1228 60,1192" fill="#fff8ec" stroke="#b45309" stroke-width="1.3"/>
+<text x="240" y="1197.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">还有候选元素 ？</text>
+<rect x="480" y="1156" width="360" height="62" rx="5" fill="#eef4fb" stroke="#1f3a5f" stroke-width="1.3"/>
+<text x="660" y="1192.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">取下一个候选角度</text>
+<rect x="60" y="1260" width="360" height="62" rx="31" fill="#eefaf3" stroke="#1f4d3a" stroke-width="1.3"/>
+<text x="240" y="1296.0" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="12.5" font-weight="600" fill="#10202f" text-anchor="middle">返回最小分值的角度（全被拒则返回 0）</text>
+<text x="60" y="1344" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#667085">最终公式（各端均已命名）：score = Squeezer::cost(上一条记录的 node, 当前元素) − 环形面积 / cfg[+0x08]</text>
+<text x="60" y="1370" font-family="Segoe UI, Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="11.5" fill="#667085">元素（ScoreNode，216 B）的布局由 15 条 static_assert 锁进编译期；cfg[+0x08] = core+0x10 的配置系数。</text>
+</svg>

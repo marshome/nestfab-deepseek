@@ -1,0 +1,318 @@
+==========================================================================================
+LIBRARY / GEOMETRY FINGERPRINTS
+==========================================================================================
+ClipperLib                 0 hits
+clipper-lower              0 hits
+Minkowski/NFP             35 hits
+boost::geometry            0 hits
+anglesort/atan2            0 hits
+Eigen                      0 hits
+CGAL                       0 hits
+Clipper-ish names         25 hits
+CGAL/gmp                   0 hits
+Clp/Coin                  37 hits
+LSQR                       7 hits
+GA/genetic                 0 hits
+beams                     33 hits
+hull                       5 hits
+
+==========================================================================================
+STRINGS MATCHING geometry keywords (unique, len>=5)
+==========================================================================================
+count: 161
+    !detect_correct_invalid || IsGeometryValid(inflated)
+    !hull.emH
+    !rings.eH
+    ### ERROR: CoinLpIO: is_sense(): string: %s 
+    %d string elements had no values associated with them
+    (polygonH
+    (polygonL
+    (polygons.size() == 1u) && "internal error: no outer boundary"
+    ** Errors when converting strings, %d on this, %d on other
+    ** Objective offset is %g
+    ..\multi\rectangle_nester.cpp
+    // AddExternalPolygonBoundaryToPart
+    // AddExternalPolygonBoundaryToSheet
+    // AddNonRectangularPolygonSheet
+    // AddPolygonDefectToSheet
+    // AddPolygonHoleToPart
+    // AddPolygonPart
+    // AddRectanglePart
+    // NewNoFitContext
+    // NewNoFitNesting
+    //GetNoFitMap
+    11PartPolygon
+    11RealPolygon
+    12PolygonProxy
+    15OffsetEvaluator
+    20OffsetMultiEvaluator
+    = Angle9H
+    AddInflatedToolPathToPart
+    Angle(
+    CNS_NoFitContext
+    CNS_NoFitGetNumberOfHoles
+    CNS_NoFitGetPoint
+    CheckOffset
+    ComputeNoFitSheetMap
+    ComputeNoHoleRings
+    D$0hullH
+    DeleteNoFitContext
+    DeleteNoFitGeometry
+    DeleteNoFitNesting
+    Error during read of 
+    FileStore: maximum seek offset exceeded
+    GetInflatedModulesGeometries
+    GetNestableOffset
+    GetNestingAngle
+    GetNoFitH
+    GetNoFitMap
+    GetNoFitPlacementMap
+    GetNofit
+    GetPartUserString
+    GetPartUserStringEx
+    GetRing
+    GetSheetUserString
+    GetSheetUserStringEx
+    HULL OK
+    HullSurfH
+    InvertibleRSAFunction: computational error during private key operation
+    LINESTRING
+    LINESTRING(
+    MULTIPOLYGON
+    Multi::Rectangle
+    N3Prc17HullPriceComputerE
+    N5Multi15RectangleNesterE
+    N5Multi17NoFitMapCancellerE
+    N8CryptoPP11StringStoreE
+    N8CryptoPP12AbstractRingINS_14PolynomialMod2EE20MultiplicativeGroupTE
+    N8CryptoPP12AbstractRingINS_14PolynomialMod2EEE
+    N8CryptoPP12AbstractRingINS_7IntegerEE20MultiplicativeGroupTE
+    N8CryptoPP12AbstractRingINS_7IntegerEEE
+    N8CryptoPP12QuotientRingINS_17EuclideanDomainOfINS_14PolynomialMod2EEEEE
+    N8CryptoPP12StringSourceE
+    N8CryptoPP14SourceTemplateINS_11StringStoreEEE
+    NSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE
+    NSt7__cxx1119basic_istringstreamIwSt11char_traitsIwESaIwEEE
+    NSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE
+    NSt7__cxx1119basic_ostringstreamIwSt11char_traitsIwESaIwEEE
+    NewLocalAngleOptimize
+    NewNoFitContext
+    NewNoFitNesting
+    NoFitAddNestedPart
+    NoFitGenerateSvgGeometry
+    NoFitGenerateSvgNesting
+    NoFitGetNumberOfExternalPolygons
+    NoFitGetNumberOfInternalHoles
+    NoFitGetNumberOfPoints
+    NoFitGetPoint
+    NoFitMapH
+    NoFitSetMaximumComplexity
+    Not bothering to scale as good enough
+    OffsetCoH
+    Offsets computed 
+    Ordering 
+    OutputDebugStringA
+    OutputStringPointer
+    POLYGON
+    POLYGON(
+    POLYGON((
+    Preparing tree for beam 
+    RECTANGLE
+    SetPartUserString
+    SetSheetUserString
+    St15_Sp_counted_ptrIP13OffsetManagerLN9__gnu_cxx12_Lock_policyE2EE
+    St23_Sp_counted_ptr_inplaceI11NoFitStripsSaIS0_ELN9__gnu_cxx12_Lock_policyE2EE
+    St23_Sp_counted_ptr_inplaceI13OffsetManagerSaIS0_ELN9__gnu_cxx12_Lock_policyE2EE
+    St23_Sp_counted_ptr_inplaceI15OffsetEvaluatorSaIS0_ELN9__gnu_cxx12_Lock_policyE2EE
+    St23_Sp_counted_ptr_inplaceIN4Geom12MultiPolygonESaIS1_ELN9__gnu_cxx12_Lock_policyE2EE
+    StringSink: OutputStringPointer not specified
+    StringStore: missing InputBuffer argument
+    Type is not convertible to string
+    Unaable to handle string ranges row %d %s %s
+    \nofit_mH
+    \nofit_mfD
+    _angle =H
+    _offseteH
+    angle
+    angle_stH
+    beam_distinct_angle
+    boost::filesystem::path codecvt to string
+    boost::filesystem::path codecvt to wstring
+    boost::starts_with(sub_strings[0], std::string("ELEMENT_PATH"))
+    clustering
+    cns_no_fit.cpp
+    code CoinModel strings for rim
+    enable_rectangle
+    external_rings.size() == 1u
+    force_rectangle
+    g\nofit_H
+    inf obj %g, true %g - offsets %g %g
+    invalid size in COFF string table
+    nb_iterations_before_rectangle_advance
+    nb_iterations_before_rectangle_dual
+    nb_rectangle_advance_try
+    nb_rectangle_try
+    nc.m_offset_manager
+    nested_string
+    nesting_offset_ratio
+    nofit_poH
+    objective offset %g
+    offset2 %g 
+    offset_lH
+    offset_lfD
+    offsets.H
+    offsets.L
+    parameters.m_offset_manager
+    part.geometric_infos().hull().size() == 1
+    point_number < ring.size()
+    polygonsH
+    random_device::random_device(const std::string&)
+    rectangle common cut
+    restoring objective of %g
+    ring.cppH
+    std::string
+    string %s returns value %g and error-code %d
+    string literal
+    string::string
+    sub_strings.back() == ""
+    sub_strings.size() >= 3u
+    tooling_with_rectangle
+    tring: fH
+    tring: hH
+    uninitialized __any_string
+    void boost::multiprecision::backends::detail::raise_overflow(std::__cxx11::string)
+
+==========================================================================================
+ALL custom RTTI class names (non-boost/std/CryptoPP/Coin/Json)
+==========================================================================================
+   <subst>::__cxx11::basic_istringstream::<>                        vt=0xa54bc8 slots=2
+   <subst>::__cxx11::basic_istringstream::<>                        vt=0xa54c18 slots=2
+   <subst>::__cxx11::basic_ostringstream::<>                        vt=0xa54c68 slots=2
+   <subst>::__cxx11::basic_ostringstream::<>                        vt=0xa54cb8 slots=2
+   <subst>::__cxx11::basic_string::<>                               vt=0xa1f600 slots=2
+   <subst>::__cxx11::basic_stringbuf::<>                            vt=0xa54620 slots=14
+   <subst>::__cxx11::basic_stringbuf::<>                            vt=0xa546a0 slots=14
+   <subst>::__cxx11::basic_stringstream::<>                         vt=0xa54ac8 slots=2
+   <subst>::__cxx11::basic_stringstream::<>                         vt=0xa54b48 slots=2
+   <subst>::__cxx11::collate::<>                                    vt=0xa54d00 slots=5
+   <subst>::__cxx11::collate::<>                                    vt=0xa54d40 slots=5
+   <subst>::__cxx11::collate_byname::<>                             vt=0xa545a0 slots=5
+   <subst>::__cxx11::collate_byname::<>                             vt=0xa545e0 slots=5
+   <subst>::__cxx11::messages::<>                                   vt=0xa54d80 slots=5
+   <subst>::__cxx11::messages::<>                                   vt=0xa54dc0 slots=5
+   <subst>::__cxx11::messages_byname::<>                            vt=0xa54720 slots=5
+   <subst>::__cxx11::messages_byname::<>                            vt=0xa54760 slots=5
+   <subst>::__cxx11::money_get::<>                                  vt=0xa54f60 slots=4
+   <subst>::__cxx11::money_get::<>                                  vt=0xa54f90 slots=4
+   <subst>::__cxx11::money_put::<>                                  vt=0xa54fc0 slots=4
+   <subst>::__cxx11::money_put::<>                                  vt=0xa54ff0 slots=4
+   <subst>::__cxx11::moneypunct::<>                                 vt=0xa543e0 slots=11
+   <subst>::__cxx11::moneypunct::<>                                 vt=0xa54450 slots=11
+   <subst>::__cxx11::moneypunct::<>                                 vt=0xa544c0 slots=11
+   <subst>::__cxx11::moneypunct::<>                                 vt=0xa54530 slots=11
+   <subst>::__cxx11::moneypunct_byname::<>                          vt=0xa54900 slots=11
+   <subst>::__cxx11::moneypunct_byname::<>                          vt=0xa54970 slots=11
+   <subst>::__cxx11::moneypunct_byname::<>                          vt=0xa549e0 slots=11
+   <subst>::__cxx11::moneypunct_byname::<>                          vt=0xa54a50 slots=11
+   <subst>::__cxx11::numpunct::<>                                   vt=0xa54e00 slots=7
+   <subst>::__cxx11::numpunct::<>                                   vt=0xa54e50 slots=7
+   <subst>::__cxx11::numpunct_byname::<>                            vt=0xa547a0 slots=7
+   <subst>::__cxx11::numpunct_byname::<>                            vt=0xa547f0 slots=7
+   <subst>::__cxx11::time_get::<>                                   vt=0xa54ea0 slots=9
+   <subst>::__cxx11::time_get::<>                                   vt=0xa54f00 slots=9
+   <subst>::__cxx11::time_get_byname::<>                            vt=0xa54840 slots=9
+   <subst>::__cxx11::time_get_byname::<>                            vt=0xa548a0 slots=9
+   <subst>::__future_base::_Result_base                             vt=0xa541f0 slots=1
+   <subst>::ios_base::failure                                       vt=0xa55020 slots=3
+   <subst>::locale::facet                                           vt=0xa54270 slots=2
+   <subst>::thread::_State_impl::<<subst>::<subst>::<subst>::shared_ptr::<Engine::Engine>>::<subst>::<subst> vt=0xa542c0 slots=3
+   <subst>::thread::_State_impl::<<subst>>::<subst>                 vt=0xa54290 slots=3
+   <subst>::thread::_State_impl::<Engine::Engine>::Structure::Problem vt=0xa542f0 slots=3
+   <subst>::thread::_State_impl::<Multi::Supervisor>                vt=0xa54320 slots=3
+   <subst>::thread::_State_impl::<NoFitMultiThreadComputer::RunAllComputations> vt=0xa54350 slots=3
+   <subst>::thread::_State_impl::<Tiling::PackerCache::Implementation::PreUpdateTilings>::<subst>::vector::<<subst>::PartUpdaterInformer> vt=0xa54380 slots=3
+   Compact::Compacter::Implementation                               vt=0xa3d470 slots=3
+   Engine::BestObserver                                             vt=0xa3cf30 slots=6
+   Engine::CloudEngine                                              vt=0xa3ced0 slots=3
+   Engine::CompositeEngine                                          vt=0xa3d000 slots=3
+   Engine::CompositeObserver                                        vt=0xa3d060 slots=6
+   Engine::DelayedEngine                                            vt=0xa3cf70 slots=3
+   Engine::EquivalentEngine                                         vt=0xa3d030 slots=3
+   Engine::EquivalentObserver                                       vt=0xa3d0a0 slots=6
+   Engine::InfiniteEngine                                           vt=0xa3cfd0 slots=3
+   Engine::MultiEngine                                              vt=0xa3cf00 slots=3
+   Engine::NestingEngine                                            vt=0xa3cfa0 slots=3
+   Multi::AdvancedStrategist                                        vt=0xa3b970 slots=3
+   Multi::AllSheetSelector                                          vt=0xa3b840 slots=4
+   Multi::CompactCanceller                                          vt=0xa3b870 slots=3
+   Multi::CompactNester                                             vt=0xa3b610 slots=6
+   Multi::DatabaseNester                                            vt=0xa3b740 slots=6
+   Multi::FilterNester                                              vt=0xa3b4f0 slots=6
+   Multi::FlipNester                                                vt=0xa3b490 slots=6
+   Multi::LargestSheetSelector                                      vt=0xa3bac0 slots=4
+   Multi::LimitedNester                                             vt=0xa3b650 slots=6
+   Multi::MultiTorchNester                                          vt=0xa3b8a0 slots=6
+   Multi::NestingContextPool                                        vt=0xa3b9a0 slots=3
+   Multi::NestingNester                                             vt=0xa3b690 slots=6
+   Multi::NestingObserver                                           vt=0xa3b7c0 slots=6
+   Multi::NoFillNester                                              vt=0xa3b530 slots=6
+   Multi::NoFitMapCanceller                                         vt=0xa3b8e0 slots=3
+   Multi::NoMixSheetSelector                                        vt=0xa3b9d0 slots=4
+   Multi::PartUpdaterLimiter                                        vt=0xa3ba00 slots=4
+   Multi::RCompactCanceller                                         vt=0xa3b910 slots=3
+   Multi::RandomSheetSelector                                       vt=0xa3ba60 slots=4
+   Multi::RectangleNester                                           vt=0xa3b800 slots=6
+   Multi::RowNester                                                 vt=0xa3bb30 slots=6
+   Multi::SplitNode                                                 vt=0xa3bb70 slots=4
+   Multi::StrategyBasicAdder                                        vt=0xa3ba30 slots=3
+   Multi::StrategyDescriber                                         vt=0xa3b940 slots=3
+   Multi::Supervisor                                                vt=0xa3b4d0 slots=2
+   Multi::SupervisorCanceller                                       vt=0xa3ba90 slots=3
+   Multi::TerminalNode                                              vt=0xa3b570 slots=4
+   Multi::TilingNester                                              vt=0xa3b5a0 slots=6
+   Multi::TraceObserver                                             vt=0xa3b700 slots=6
+   Multi::WrapObserver                                              vt=0xa3b5e0 slots=3
+   Pack::BestNester                                                 vt=0xa3b400 slots=3
+   Pack::KnapsackNester                                             vt=0xa3b430 slots=3
+   Pack::RecursiveNester                                            vt=0xa3b460 slots=3
+   Prc::AlphaPriceComputer                                          vt=0xa3b130 slots=5
+   Prc::BoxPriceComputer                                            vt=0xa3b0b0 slots=5
+   Prc::HullPriceComputer                                           vt=0xa3b0f0 slots=5
+   Prc::LinearCombinationPricer                                     vt=0xa3b170 slots=5
+   RCompact::RotateLogger                                           vt=0xa533d0 slots=8
+   Row::BasicDistancer                                              vt=0xa3b1b0 slots=3
+   Row::Squeezer                                                    vt=0xa3b1e0 slots=3
+   Structure::BoxAreaDimensioner                                    vt=0xa534c0 slots=3
+   Structure::ClusterObserver                                       vt=0xa53420 slots=6
+   Structure::Observer                                              vt=0xa53550 slots=6
+   Structure::ParseProblemException                                 vt=0xa534f0 slots=3
+   Structure::ParseSolutionException                                vt=0xa53520 slots=3
+   Structure::SizeDimensioner                                       vt=0xa53460 slots=3
+   Structure::WidthDimensioner                                      vt=0xa53490 slots=3
+   Tiling::BasicCandidater                                          vt=0xa3d190 slots=3
+   Tiling::BiModulePattern                                          vt=0xa3d1c0 slots=8
+   Tiling::BoxMultiTiler                                            vt=0xa3d100 slots=5
+   Tiling::CompositePart                                            vt=0xa3d140 slots=2
+   Tiling::DensityEvaluator                                         vt=0xa3d210 slots=4
+   Tiling::MultiOrientedPartPattern                                 vt=0xa3d370 slots=8
+   Tiling::MultitorchEvaluator                                      vt=0xa3d310 slots=4
+   Tiling::ObliqueEvaluator                                         vt=0xa3d240 slots=4
+   Tiling::OldMultitorchEvaluator                                   vt=0xa3d340 slots=4
+   Tiling::PackerCache                                              vt=0xa3d0e0 slots=2
+   Tiling::Part                                                     vt=0xa3d420 slots=2
+   Tiling::QuantityEvaluator                                        vt=0xa3d270 slots=4
+   Tiling::ReusableEvaluator                                        vt=0xa3d2a0 slots=4
+   Tiling::SqueezeMultiTiler                                        vt=0xa3d2d0 slots=5
+   Tiling::UnlimitedDensityEvaluator                                vt=0xa3d3c0 slots=4
+   Tiling::UnlimitedXDensityEvaluator                               vt=0xa3d3f0 slots=4
+   Tiling::WarpCanceller                                            vt=0xa3d160 slots=3
+   Utils::BadResponseException                                      vt=0xa3bc80 slots=3
+   Utils::Canceller                                                 vt=0xa3bd70 slots=3
+   Utils::ConnectException                                          vt=0xa3bbf0 slots=3
+   Utils::LogSink                                                   vt=0xa3bd40 slots=1
+   Utils::OstreamSink::<<subst>>                                    vt=0xa3bba0 slots=8
+   Utils::ResolveException                                          vt=0xa3bc20 slots=3
+   Utils::TimeoutException                                          vt=0xa3bc50 slots=3
+   Utils::TimerWinImplementation                                    vt=0xa3bcb0 slots=3
+   dbg::file_error                                                  vt=0xa3b210 slots=3
+   dbg::symlog                                                      vt=0xa3b240 slots=3

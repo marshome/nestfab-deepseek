@@ -1,0 +1,93 @@
+### fn 0x12bba0 name=None end=0x12bcc0 size=288
+STRINGS: 0x9bcc94:'hasp_login', 0x9bcc9f:'hasp_logout', 0x9bccab:'hasp_write'
+CALLERS: 0x12d2e0:None
+CALLEES: 0x62f280:None, 0x9984b0:None, 0x998500:None
+
+  0012bba0  4155                 push    r13
+  0012bba2  4154                 push    r12
+  0012bba4  55                   push    rbp
+  0012bba5  57                   push    rdi
+  0012bba6  56                   push    rsi
+  0012bba7  53                   push    rbx
+  0012bba8  4883ec48             sub     rsp, 0x48
+  0012bbac  488b09               mov     rcx, qword ptr [rcx]
+  0012bbaf  4989d4               mov     r12, rdx
+  0012bbb2  ff15fcce9f00         call    qword ptr [rip + 0x9fcefc]  ; DATA 0xb28ab4
+  0012bbb8  4885c0               test    rax, rax
+  0012bbbb  4889c6               mov     rsi, rax
+  0012bbbe  0f84d5000000         je      0x12bc99
+  0012bbc4  488b1d91ce9f00       mov     rbx, qword ptr [rip + 0x9fce91]  ; DATA 0xb28a5c
+  0012bbcb  488d15c2108900       lea     rdx, [rip + 0x8910c2]  ; "hasp_login"
+  0012bbd2  4889c1               mov     rcx, rax
+  0012bbd5  ffd3                 call    rbx
+  0012bbd7  488d15c1108900       lea     rdx, [rip + 0x8910c1]  ; "hasp_logout"
+  0012bbde  4889f1               mov     rcx, rsi
+  0012bbe1  4889c7               mov     rdi, rax
+  0012bbe4  ffd3                 call    rbx
+  0012bbe6  488d15be108900       lea     rdx, [rip + 0x8910be]  ; "hasp_write"
+  0012bbed  4889f1               mov     rcx, rsi
+  0012bbf0  4889c5               mov     rbp, rax
+  0012bbf3  ffd3                 call    rbx
+  0012bbf5  4c8d44243c           lea     r8, [rsp + 0x3c]
+  0012bbfa  31c9                 xor     ecx, ecx
+  0012bbfc  c744243c00000000     mov     dword ptr [rsp + 0x3c], 0
+  0012bc04  488d1575648700       lea     rdx, [rip + 0x876475]  ; "r75pt0RaGrwcmVbAAsyuSRMo48r9PgZYIUq2Fo683tbYwE3ec49AQXaAFI8L8lc7z3CGERSozKfEwLY2em0PK3T1Ow5dwRNnGdh6zhrZw7l62+"
+  0012bc0b  4989c5               mov     r13, rax
+  0012bc0e  ffd7                 call    rdi
+  0012bc10  b990000000           mov     ecx, 0x90
+  0012bc15  e8e6c88600           call    0x998500  ; -> 0x998500 None
+  0012bc1a  b912000000           mov     ecx, 0x12
+  0012bc1f  4889c3               mov     rbx, rax
+  0012bc22  31c0                 xor     eax, eax
+  0012bc24  4889df               mov     rdi, rbx
+  0012bc27  f348ab               rep stosq qword ptr [rdi], rax
+  0012bc2a  498b4c2408           mov     rcx, qword ptr [r12 + 8]
+  0012bc2f  90                   nop     
+  0012bc30  4839c8               cmp     rax, rcx
+  0012bc33  ba20000000           mov     edx, 0x20
+  0012bc38  7308                 jae     0x12bc42
+  0012bc3a  498b1424             mov     rdx, qword ptr [r12]
+  0012bc3e  0fb61402             movzx   edx, byte ptr [rdx + rax]
+  0012bc42  88540310             mov     byte ptr [rbx + rax + 0x10], dl
+  0012bc46  4883c001             add     rax, 1
+  0012bc4a  483d80000000         cmp     rax, 0x80
+  0012bc50  75de                 jne     0x12bc30
+  0012bc52  48895c2420           mov     qword ptr [rsp + 0x20], rbx
+  0012bc57  41b990000000         mov     r9d, 0x90
+  0012bc5d  4531c0               xor     r8d, r8d
+  0012bc60  8b4c243c             mov     ecx, dword ptr [rsp + 0x3c]
+  0012bc64  baf4ff0000           mov     edx, 0xfff4
+  0012bc69  41ffd5               call    r13
+  0012bc6c  85c0                 test    eax, eax
+  0012bc6e  8b4c243c             mov     ecx, dword ptr [rsp + 0x3c]
+  0012bc72  410f94c4             sete    r12b
+  0012bc76  ffd5                 call    rbp
+  0012bc78  4889f1               mov     rcx, rsi
+  0012bc7b  ff153bcd9f00         call    qword ptr [rip + 0x9fcd3b]  ; DATA 0xb289bc
+  0012bc81  4889d9               mov     rcx, rbx
+  0012bc84  e827c88600           call    0x9984b0  ; -> 0x9984b0 None
+  0012bc89  4489e0               mov     eax, r12d
+  0012bc8c  4883c448             add     rsp, 0x48
+  0012bc90  5b                   pop     rbx
+  0012bc91  5e                   pop     rsi
+  0012bc92  5f                   pop     rdi
+  0012bc93  5d                   pop     rbp
+  0012bc94  415c                 pop     r12
+  0012bc96  415d                 pop     r13
+  0012bc98  c3                   ret     
+  0012bc99  4531e4               xor     r12d, r12d
+  0012bc9c  4489e0               mov     eax, r12d
+  0012bc9f  4883c448             add     rsp, 0x48
+  0012bca3  5b                   pop     rbx
+  0012bca4  5e                   pop     rsi
+  0012bca5  5f                   pop     rdi
+  0012bca6  5d                   pop     rbp
+  0012bca7  415c                 pop     r12
+  0012bca9  415d                 pop     r13
+  0012bcab  c3                   ret     
+  0012bcac  4889c6               mov     rsi, rax
+  0012bcaf  4889d9               mov     rcx, rbx
+  0012bcb2  e8f9c78600           call    0x9984b0  ; -> 0x9984b0 None
+  0012bcb7  4889f1               mov     rcx, rsi
+  0012bcba  e8c1355000           call    0x62f280  ; -> 0x62f280 None
+  0012bcbf  90                   nop     

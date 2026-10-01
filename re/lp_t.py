@@ -1,0 +1,19 @@
+import sys; sys.path.insert(0, r'D:\Nesting\nestfab\re')
+from lib import *
+import collections
+P = load_prof()
+# build callers index already in profile
+def cl(rva):
+    v = P.get(rva)
+    if not v: return []
+    return v['callers']
+
+keys = [0x7C4C70,0x7C4CF0,0x7C4CC0,0x7C4D50,0x7C4DD0,0x7C4F90,0x7C4FE0,0x7C50E0,
+        0x7C9D90,0x7CA100,0x7CA0D0,0x7CA130,0x7CA170,0x7CA140,0x7CA1B0,0x7CA200,0x7CA1C0,
+        0x7CA370,0x7CA6C0,0x7CA5C0,0x7CA810,0x138BE0,0x138CA0,0x13A360,
+        0x679E70,0x679DB0,0x679C20,0x679660,0x6792C0,0x679670,0x679940,0x679420,0x679D00,
+        0x7CB700,0x7CB710,0x7CB740,0x7CB720,0x7CB750,0x7CA830,0x9984B0,0x9984D0,0x998500,0x861A30]
+for k in keys:
+    c = cl(k)
+    v = P.get(k,{})
+    print('%08X size=%-6s name=%-24s callers: %s' % (k, v.get('size'), v.get('name'), ' '.join('%X'%x for x in c)))

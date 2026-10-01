@@ -1,0 +1,612 @@
+---- 50B286  lea rdx, [rip + 0x4cfad1]                  STR:"intergap"
+     50B28D  mov rcx, rdi
+     50B290  call 0x5052c0                              CALL sub_5052C0
+     50B295  mov rcx, qword ptr [rsp + 0x5f0]
+     50B29D  movapd xmm1, xmm0
+     50B2A1  call 0x4fbe60                              CALL sub_4FBE60
+     50B2A6  lea rdx, [rip + 0x4cfac9]                  STR:"layout_cost"
+     50B2AD  mov rcx, rdi
+     50B2B0  call 0x5052c0                              CALL sub_5052C0
+     50B2B5  mov rcx, qword ptr [rsp + 0x5f0]
+     50B2BD  movapd xmm1, xmm0
+     50B2C1  call 0x4fbe80                              CALL sub_4FBE80
+---- 50B2A6  lea rdx, [rip + 0x4cfac9]                  STR:"layout_cost"
+     50B2AD  mov rcx, rdi
+     50B2B0  call 0x5052c0                              CALL sub_5052C0
+     50B2B5  mov rcx, qword ptr [rsp + 0x5f0]
+     50B2BD  movapd xmm1, xmm0
+     50B2C1  call 0x4fbe80                              CALL sub_4FBE80
+     50B2C6  lea rdx, [rip + 0x4cfab5]                  STR:"max_active_parts"
+     50B2CD  mov rcx, rdi
+     50B2D0  call 0x505280                              CALL sub_505280
+     50B2D5  mov rcx, qword ptr [rsp + 0x5f0]
+     50B2DD  mov edx, eax
+     50B2DF  call 0x4fbe90                              CALL sub_4FBE90
+---- 50B2C6  lea rdx, [rip + 0x4cfab5]                  STR:"max_active_parts"
+     50B2CD  mov rcx, rdi
+     50B2D0  call 0x505280                              CALL sub_505280
+     50B2D5  mov rcx, qword ptr [rsp + 0x5f0]
+     50B2DD  mov edx, eax
+     50B2DF  call 0x4fbe90                              CALL sub_4FBE90
+     50B2E4  lea rdx, [rip + 0x4cfaa8]                  STR:"max_different_sheets"
+     50B2EB  mov rcx, rdi
+     50B2EE  call 0x505280                              CALL sub_505280
+     50B2F3  mov rcx, qword ptr [rsp + 0x5f0]
+     50B2FB  mov edx, eax
+     50B2FD  call 0x4fbea0                              CALL sub_4FBEA0
+---- 50B2E4  lea rdx, [rip + 0x4cfaa8]                  STR:"max_different_sheets"
+     50B2EB  mov rcx, rdi
+     50B2EE  call 0x505280                              CALL sub_505280
+     50B2F3  mov rcx, qword ptr [rsp + 0x5f0]
+     50B2FB  mov edx, eax
+     50B2FD  call 0x4fbea0                              CALL sub_4FBEA0
+     50B302  lea rdx, [rip + 0x4cfa5e]                  STR:"requested_time"
+     50B309  mov rcx, rdi
+     50B30C  call 0x5fd0a0                              CALL sub_5FD0A0
+     50B311  movsd xmm1, qword ptr [rip + 0x4cfdf7]
+     50B319  test al, al
+     50B31B  jne 0x50c00d
+---- 50B302  lea rdx, [rip + 0x4cfa5e]                  STR:"requested_time"
+     50B309  mov rcx, rdi
+     50B30C  call 0x5fd0a0                              CALL sub_5FD0A0
+     50B311  movsd xmm1, qword ptr [rip + 0x4cfdf7]
+     50B319  test al, al
+     50B31B  jne 0x50c00d
+     50B321  mov rcx, qword ptr [rsp + 0x5f0]
+     50B329  call 0x4fbe70                              CALL sub_4FBE70
+     50B32E  mov rsi, qword ptr [rsp + 0x48]
+     50B333  lea rax, [rsp + 0x380]
+     50B33B  mov rcx, rax
+     50B33E  mov rdi, rax
+---- 50B44B  lea rdx, [rip + 0x4cf956]                  STR:"strict_part_priorities"
+     50B452  mov rcx, rdi
+     50B455  call 0x505280                              CALL sub_505280
+     50B45A  mov rcx, qword ptr [rsp + 0x5f0]
+     50B462  xor edx, edx
+     50B464  test eax, eax
+     50B466  setne dl
+     50B469  call 0x4fc330                              CALL sub_4FC330
+     50B46E  lea rdx, [rip + 0x4cf96a]                  STR:"priority_interpenetration"
+     50B475  mov rcx, rdi
+     50B478  call 0x5052c0                              CALL sub_5052C0
+     50B47D  lea rdx, [rip + 0x4cf93c]                  STR:"have_priority_interpenetration"
+---- 50B46E  lea rdx, [rip + 0x4cf96a]                  STR:"priority_interpenetration"
+     50B475  mov rcx, rdi
+     50B478  call 0x5052c0                              CALL sub_5052C0
+     50B47D  lea rdx, [rip + 0x4cf93c]                  STR:"have_priority_interpenetration"
+     50B484  mov rcx, rdi
+     50B487  movapd xmm7, xmm0
+     50B48B  call 0x505280                              CALL sub_505280
+     50B490  mov rcx, qword ptr [rsp + 0x5f0]
+     50B498  xor edx, edx
+     50B49A  test eax, eax
+     50B49C  movapd xmm2, xmm7
+     50B4A0  setne dl
+---- 50B47D  lea rdx, [rip + 0x4cf93c]                  STR:"have_priority_interpenetration"
+     50B484  mov rcx, rdi
+     50B487  movapd xmm7, xmm0
+     50B48B  call 0x505280                              CALL sub_505280
+     50B490  mov rcx, qword ptr [rsp + 0x5f0]
+     50B498  xor edx, edx
+     50B49A  test eax, eax
+     50B49C  movapd xmm2, xmm7
+     50B4A0  setne dl
+     50B4A3  call 0x4fc360                              CALL sub_4FC360
+     50B4A8  lea rdx, [rip + 0x4cf802]                  STR:"sheets"
+     50B4AF  mov rcx, rdi
+---- 50B4A8  lea rdx, [rip + 0x4cf802]                  STR:"sheets"
+     50B4AF  mov rcx, rdi
+     50B4B2  call 0x600680                              CALL sub_600680
+     50B4B7  mov rcx, rax
+     50B4BA  call 0x5fcea0                              CALL sub_5FCEA0
+     50B4BF  test bl, bl
+     50B4C1  mov esi, eax
+     50B4C3  jne 0x50cca1
+     50B4C9  lea rdi, [rip + 0x4cf7e1]                  STR:"sheets"
+     50B4D0  xor ebx, ebx
+     50B4D2  test eax, eax
+     50B4D4  je 0x50b50b
+---- 50B4C9  lea rdi, [rip + 0x4cf7e1]                  STR:"sheets"
+     50B4D0  xor ebx, ebx
+     50B4D2  test eax, eax
+     50B4D4  je 0x50b50b
+     50B4D6  mov rcx, qword ptr [rsp + 0x48]
+     50B4DB  mov rdx, rdi
+     50B4DE  call 0x600680                              CALL sub_600680
+     50B4E3  mov edx, ebx
+     50B4E5  mov rcx, rax
+     50B4E8  call 0x5ffad0                              CALL sub_5FFAD0
+     50B4ED  mov r8, qword ptr [rsp + 0x5f0]
+     50B4F5  mov r9, rbp
+---- 50B510  lea rdx, [rip + 0x4cf838]                  STR:"parts"
+     50B517  call 0x600680                              CALL sub_600680
+     50B51C  mov rcx, rax
+     50B51F  call 0x5fcea0                              CALL sub_5FCEA0
+     50B524  test eax, eax
+     50B526  mov dword ptr [rsp + 0xa8], eax
+     50B52D  je 0x50bec0
+     50B533  lea rax, [rsp + 0x2a0]
+     50B53B  mov dword ptr [rsp + 0x7c], 0
+     50B543  mov qword ptr [rsp + 0x90], rax
+     50B54B  lea rax, [rsp + 0x2b0]
+     50B553  mov qword ptr [rsp + 0xb8], rax
+---- 50B580  lea rdx, [rip + 0x4cf7c8]                  STR:"parts"
+     50B587  call 0x600680                              CALL sub_600680
+     50B58C  mov edx, dword ptr [rsp + 0x7c]
+     50B590  mov rcx, rax
+     50B593  call 0x5ffad0                              CALL sub_5FFAD0
+     50B598  lea rdi, [rsp + 0x1a0]
+     50B5A0  mov rdx, rax
+     50B5A3  mov rcx, rdi
+     50B5A6  mov qword ptr [rsp + 0x38], rdi
+     50B5AB  call 0x5feb70                              CALL sub_5FEB70
+     50B5B0  lea rdx, [rip + 0x4cf20d]                  STR:"geometry"
+     50B5B7  mov rcx, rdi
+---- 50B5B0  lea rdx, [rip + 0x4cf20d]                  STR:"geometry"
+     50B5B7  mov rcx, rdi
+     50B5BA  call 0x5fd0a0                              CALL sub_5FD0A0
+     50B5BF  test al, al
+     50B5C1  je 0x50cb68
+     50B5C7  mov rdi, qword ptr [rsp + 0x38]
+     50B5CC  lea rdx, [rip + 0x4cf1f1]                  STR:"geometry"
+     50B5D3  mov rcx, rdi
+     50B5D6  call 0x5fd0a0                              CALL sub_5FD0A0
+     50B5DB  test al, al
+     50B5DD  jne 0x50c030
+     50B5E3  lea rdx, [rip + 0x4cf75d]                  STR:"modules"
+---- 50B5CC  lea rdx, [rip + 0x4cf1f1]                  STR:"geometry"
+     50B5D3  mov rcx, rdi
+     50B5D6  call 0x5fd0a0                              CALL sub_5FD0A0
+     50B5DB  test al, al
+     50B5DD  jne 0x50c030
+     50B5E3  lea rdx, [rip + 0x4cf75d]                  STR:"modules"
+     50B5EA  mov rcx, rdi
+     50B5ED  call 0x600680                              CALL sub_600680
+     50B5F2  xor edx, edx
+     50B5F4  mov rcx, rax
+     50B5F7  call 0x5ffad0                              CALL sub_5FFAD0
+     50B5FC  lea rdx, [rip + 0x4cf1c1]                  STR:"geometry"
+---- 50B5E3  lea rdx, [rip + 0x4cf75d]                  STR:"modules"
+     50B5EA  mov rcx, rdi
+     50B5ED  call 0x600680                              CALL sub_600680
+     50B5F2  xor edx, edx
+     50B5F4  mov rcx, rax
+     50B5F7  call 0x5ffad0                              CALL sub_5FFAD0
+     50B5FC  lea rdx, [rip + 0x4cf1c1]                  STR:"geometry"
+     50B603  mov rcx, rax
+     50B606  mov qword ptr [rsp + 0x60], rax
+     50B60B  call 0x600680                              CALL sub_600680
+     50B610  lea rbx, [rsp + 0x240]
+     50B618  mov rdx, rax
+---- 50B5FC  lea rdx, [rip + 0x4cf1c1]                  STR:"geometry"
+     50B603  mov rcx, rax
+     50B606  mov qword ptr [rsp + 0x60], rax
+     50B60B  call 0x600680                              CALL sub_600680
+     50B610  lea rbx, [rsp + 0x240]
+     50B618  mov rdx, rax
+     50B61B  mov rcx, rbx
+     50B61E  call 0x5fc7f0                              CALL sub_5FC7F0
+     50B623  mov rcx, qword ptr [rsp + 0x68]
+     50B628  mov rdx, rbx
+     50B62B  call 0x5e40d0                              CALL sub_5E40D0
+     50B630  mov rcx, qword ptr [rsp + 0x240]
+---- 50B941  lea rdx, [rip + 0x4cf21f]                  STR:"quantity"
+     50B948  mov rcx, rsi
+     50B94B  call 0x600680                              CALL sub_600680
+     50B950  mov rcx, rax
+     50B953  call 0x5fca80                              CALL sub_5FCA80
+     50B958  lea rdx, [rip + 0x4cf205]
+     50B95F  mov rcx, rsi
+     50B962  mov edi, eax
+     50B964  call 0x600680                              CALL sub_600680
+     50B969  lea rsi, [rsp + 0x260]
+     50B971  mov rdx, rax
+     50B974  mov rcx, rsi
+---- 50B9E7  lea rdx, [rip + 0x4cf486]                  STR:"original_geomtry"
+     50B9EE  mov rcx, rdi
+     50B9F1  call 0x5fd0a0                              CALL sub_5FD0A0
+     50B9F6  test al, al
+     50B9F8  je 0x50bd3e
+     50B9FE  mov rcx, qword ptr [rsp + 0x60]
+     50BA03  lea rdx, [rip + 0x4cf46a]                  STR:"original_geomtry"
+     50BA0A  call 0x600680                              CALL sub_600680
+     50BA0F  lea rbx, [rsp + 0x280]
+     50BA17  mov rdx, rax
+     50BA1A  mov rcx, rbx
+     50BA1D  call 0x5fc7f0                              CALL sub_5FC7F0
+---- 50BA03  lea rdx, [rip + 0x4cf46a]                  STR:"original_geomtry"
+     50BA0A  call 0x600680                              CALL sub_600680
+     50BA0F  lea rbx, [rsp + 0x280]
+     50BA17  mov rdx, rax
+     50BA1A  mov rcx, rbx
+     50BA1D  call 0x5fc7f0                              CALL sub_5FC7F0
+     50BA22  mov rcx, qword ptr [rsp + 0x40]
+     50BA27  mov rdx, rbx
+     50BA2A  call 0x5e40d0                              CALL sub_5E40D0
+     50BA2F  mov rcx, qword ptr [rsp + 0x280]
+     50BA37  add rbx, 0x10
+     50BA3B  cmp rcx, rbx
+---- 50BD43  lea rdx, [rip + 0x4ceffd]                  STR:"modules"
+     50BD4A  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BD4F  test al, al
+     50BD51  jne 0x50c03a
+     50BD57  mov rcx, qword ptr [rsp + 0x38]
+     50BD5C  lea rdx, [rip + 0x4cefd0]                  STR:"incompatible_sheets"
+     50BD63  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BD68  test al, al
+     50BD6A  jne 0x50c7bf
+     50BD70  cmp qword ptr [rsp + 0x58], 0
+     50BD76  je 0x50c92e
+     50BD7C  mov rsi, qword ptr [rsp + 0x38]
+---- 50BD5C  lea rdx, [rip + 0x4cefd0]                  STR:"incompatible_sheets"
+     50BD63  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BD68  test al, al
+     50BD6A  jne 0x50c7bf
+     50BD70  cmp qword ptr [rsp + 0x58], 0
+     50BD76  je 0x50c92e
+     50BD7C  mov rsi, qword ptr [rsp + 0x38]
+     50BD81  lea rdx, [rip + 0x4cef0c]                  STR:"priority"
+     50BD88  mov rcx, rsi
+     50BD8B  call 0x5052c0                              CALL sub_5052C0
+     50BD90  cvttsd2si rdx, xmm0
+     50BD95  mov rdi, qword ptr [rsp + 0x58]
+---- 50BD81  lea rdx, [rip + 0x4cef0c]                  STR:"priority"
+     50BD88  mov rcx, rsi
+     50BD8B  call 0x5052c0                              CALL sub_5052C0
+     50BD90  cvttsd2si rdx, xmm0
+     50BD95  mov rdi, qword ptr [rsp + 0x58]
+     50BD9A  mov rcx, rdi
+     50BD9D  call 0x4f76c0                              CALL sub_4F76C0
+     50BDA2  mov rcx, rdi
+     50BDA5  call 0x4f7060                              CALL sub_4F7060
+     50BDAA  lea rdx, [rip + 0x4cef07]                  STR:"max_quantity"
+     50BDB1  mov rcx, rsi
+     50BDB4  mov ebx, eax
+---- 50BDAA  lea rdx, [rip + 0x4cef07]                  STR:"max_quantity"
+     50BDB1  mov rcx, rsi
+     50BDB4  mov ebx, eax
+     50BDB6  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BDBB  test al, al
+     50BDBD  jne 0x50ca48
+     50BDC3  mov rcx, qword ptr [rsp + 0x58]
+     50BDC8  mov edx, ebx
+     50BDCA  call 0x4f7270                              CALL sub_4F7270
+     50BDCF  mov rcx, qword ptr [rsp + 0x38]
+     50BDD4  lea rdx, [rip + 0x4ceeea]                  STR:"common_cutable"
+     50BDDB  call 0x5fd0a0                              CALL sub_5FD0A0
+---- 50BDD4  lea rdx, [rip + 0x4ceeea]                  STR:"common_cutable"
+     50BDDB  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BDE0  test al, al
+     50BDE2  mov edx, 1
+     50BDE7  jne 0x50cb13
+     50BDED  mov rcx, qword ptr [rsp + 0x58]
+     50BDF2  call 0x4f7290                              CALL sub_4F7290
+     50BDF7  mov rcx, qword ptr [rsp + 0x38]
+     50BDFC  lea rdx, [rip + 0x4ceed1]                  STR:"extra_gap"
+     50BE03  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BE08  movsd xmm1, qword ptr [rip + 0x4cf300]
+     50BE10  test al, al
+---- 50BDFC  lea rdx, [rip + 0x4ceed1]                  STR:"extra_gap"
+     50BE03  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BE08  movsd xmm1, qword ptr [rip + 0x4cf300]
+     50BE10  test al, al
+     50BE12  jne 0x50caf1
+     50BE18  mov rsi, qword ptr [rsp + 0x58]
+     50BE1D  mov rcx, rsi
+     50BE20  call 0x4f7340                              CALL sub_4F7340
+     50BE25  mov rdi, qword ptr [rsp + 0x38]
+     50BE2A  lea rdx, [rip + 0x4ceec7]                  STR:"single_orientation_rot180_allowed"
+     50BE31  mov rcx, rdi
+     50BE34  call 0x505280                              CALL sub_505280
+---- 50BE2A  lea rdx, [rip + 0x4ceec7]                  STR:"single_orientation_rot180_allowed"
+     50BE31  mov rcx, rdi
+     50BE34  call 0x505280                              CALL sub_505280
+     50BE39  lea rdx, [rip + 0x4cee9e]                  STR:"single_orientation"
+     50BE40  xor ebx, ebx
+     50BE42  mov rcx, rdi
+     50BE45  test eax, eax
+     50BE47  setne bl
+     50BE4A  call 0x505280                              CALL sub_505280
+     50BE4F  xor edx, edx
+     50BE51  test eax, eax
+     50BE53  mov r8d, ebx
+---- 50BE39  lea rdx, [rip + 0x4cee9e]                  STR:"single_orientation"
+     50BE40  xor ebx, ebx
+     50BE42  mov rcx, rdi
+     50BE45  test eax, eax
+     50BE47  setne bl
+     50BE4A  call 0x505280                              CALL sub_505280
+     50BE4F  xor edx, edx
+     50BE51  test eax, eax
+     50BE53  mov r8d, ebx
+     50BE56  setne dl
+     50BE59  mov rcx, rsi
+     50BE5C  call 0x4f7370                              CALL sub_4F7370
+---- 50BE61  lea rdx, [rip + 0x4ceeb2]                  STR:"force_bottom"
+     50BE68  mov rcx, rdi
+     50BE6B  call 0x505280                              CALL sub_505280
+     50BE70  xor edx, edx
+     50BE72  test eax, eax
+     50BE74  mov rcx, rsi
+     50BE77  setne dl
+     50BE7A  call 0x4f7380                              CALL sub_4F7380
+     50BE7F  lea rdx, [rip + 0x4ceea1]                  STR:"hole_status"
+     50BE86  mov rcx, rdi
+     50BE89  call 0x505280                              CALL sub_505280
+     50BE8E  mov edx, eax
+---- 50BE7F  lea rdx, [rip + 0x4ceea1]                  STR:"hole_status"
+     50BE86  mov rcx, rdi
+     50BE89  call 0x505280                              CALL sub_505280
+     50BE8E  mov edx, eax
+     50BE90  mov rcx, rsi
+     50BE93  call 0x4f7390                              CALL sub_4F7390
+     50BE98  mov rcx, qword ptr [rsp + 0x68]
+     50BE9D  call 0x8c4ff0                              CALL sub_8C4FF0
+     50BEA2  mov rcx, rdi
+     50BEA5  call 0x5fe060                              CALL sub_5FE060
+     50BEAA  add dword ptr [rsp + 0x7c], 1
+     50BEAF  mov eax, dword ptr [rsp + 0x7c]
+---- 50BED7  lea rdx, [rip + 0x4cef1b]                  STR:"assembly_group"
+     50BEDE  mov rcx, rdi
+     50BEE1  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BEE6  test al, al
+     50BEE8  je 0x50bf29
+     50BEEA  lea rdx, [rip + 0x4cef08]                  STR:"assembly_group"
+     50BEF1  mov rcx, rdi
+     50BEF4  call 0x600680                              CALL sub_600680
+     50BEF9  lea rdi, [rsp + 0x1a0]
+     50BF01  mov rdx, rax
+     50BF04  mov rcx, rdi
+     50BF07  mov qword ptr [rsp + 0x38], rdi
+---- 50BEEA  lea rdx, [rip + 0x4cef08]                  STR:"assembly_group"
+     50BEF1  mov rcx, rdi
+     50BEF4  call 0x600680                              CALL sub_600680
+     50BEF9  lea rdi, [rsp + 0x1a0]
+     50BF01  mov rdx, rax
+     50BF04  mov rcx, rdi
+     50BF07  mov qword ptr [rsp + 0x38], rdi
+     50BF0C  call 0x509e40                              CALL sub_509E40
+     50BF11  mov rcx, qword ptr [rsp + 0x5f0]
+     50BF19  mov rdx, rdi
+     50BF1C  call 0x4fd120                              CALL sub_4FD120
+     50BF21  mov rcx, rdi
+---- 50BF2E  lea rdx, [rip + 0x4ce728]                  STR:"extra_infos"
+     50BF35  mov rcx, rdi
+     50BF38  call 0x5fd0a0                              CALL sub_5FD0A0
+     50BF3D  test al, al
+     50BF3F  je 0x50bf80
+     50BF41  lea rdx, [rip + 0x4ce715]                  STR:"extra_infos"
+     50BF48  mov rcx, rdi
+     50BF4B  call 0x600680                              CALL sub_600680
+     50BF50  mov rdi, qword ptr [rsp + 0x40]
+     50BF55  mov rdx, rax
+     50BF58  mov rcx, rdi
+     50BF5B  call 0x50ac80                              CALL sub_50AC80
+---- 50BF41  lea rdx, [rip + 0x4ce715]                  STR:"extra_infos"
+     50BF48  mov rcx, rdi
+     50BF4B  call 0x600680                              CALL sub_600680
+     50BF50  mov rdi, qword ptr [rsp + 0x40]
+     50BF55  mov rdx, rax
+     50BF58  mov rcx, rdi
+     50BF5B  call 0x50ac80                              CALL sub_50AC80
+     50BF60  mov rcx, qword ptr [rsp + 0x5f0]
+     50BF68  mov rdx, rdi
+     50BF6B  call 0x4fd550                              CALL sub_4FD550
+     50BF70  mov rdx, qword ptr [rsp + 0x390]
+     50BF78  mov rcx, rdi
+---- 50C012  lea rdx, [rip + 0x4ced4e]                  STR:"requested_time"
+     50C019  call 0x5fd060                              CALL sub_5FD060
+     50C01E  mov rcx, rax
+     50C021  call 0x5fcb90                              CALL sub_5FCB90
+     50C026  movapd xmm1, xmm0
+     50C02A  jmp 0x50b321
+     50C02F  nop
+     50C030  mov rax, qword ptr [rsp + 0x38]
+     50C035  jmp 0x50b5fc
+     50C03A  mov rcx, qword ptr [rsp + 0x38]
+     50C03F  lea rdx, [rip + 0x4ced01]                  STR:"modules"
+     50C046  call 0x600680                              CALL sub_600680
+---- 50C03F  lea rdx, [rip + 0x4ced01]                  STR:"modules"
+     50C046  call 0x600680                              CALL sub_600680
+     50C04B  mov rcx, rax
+     50C04E  call 0x5fcea0                              CALL sub_5FCEA0
+     50C053  cmp eax, 1
+     50C056  mov dword ptr [rsp + 0xac], eax
+     50C05D  je 0x50bd57
+     50C063  lea rax, [rsp + 0x360]
+     50C06B  mov dword ptr [rsp + 0x70], 1
+     50C073  movabs r13, 0xfffffffffffffff
+     50C07D  mov qword ptr [rsp + 0x80], rax
+     50C085  mov rcx, qword ptr [rsp + 0x38]
+---- 50C08A  lea rdx, [rip + 0x4cecb6]                  STR:"modules"
+     50C091  call 0x600680                              CALL sub_600680
+     50C096  mov edx, dword ptr [rsp + 0x70]
+     50C09A  mov rcx, rax
+     50C09D  call 0x5ffad0                              CALL sub_5FFAD0
+     50C0A2  mov rdi, qword ptr [rsp + 0x80]
+     50C0AA  mov rdx, rax
+     50C0AD  mov rcx, rdi
+     50C0B0  call 0x5feb70                              CALL sub_5FEB70
+     50C0B5  lea rdx, [rip + 0x4ce708]                  STR:"geometry"
+     50C0BC  mov rcx, rdi
+     50C0BF  call 0x600680                              CALL sub_600680
+---- 50C0B5  lea rdx, [rip + 0x4ce708]                  STR:"geometry"
+     50C0BC  mov rcx, rdi
+     50C0BF  call 0x600680                              CALL sub_600680
+     50C0C4  mov rdi, qword ptr [rsp + 0x90]
+     50C0CC  mov rdx, rax
+     50C0CF  mov rcx, rdi
+     50C0D2  call 0x5fc7f0                              CALL sub_5FC7F0
+     50C0D7  lea rbx, [rsp + 0x140]
+     50C0DF  mov rdx, rdi
+     50C0E2  mov rcx, rbx
+     50C0E5  call 0x5e40d0                              CALL sub_5E40D0
+     50C0EA  mov rax, qword ptr [rsp + 0x1c0]
+---- 50C7C4  lea rdx, [rip + 0x4ce568]                  STR:"incompatible_sheets"
+     50C7CB  call 0x600680                              CALL sub_600680
+     50C7D0  mov rcx, qword ptr [rsp + 0x40]
+     50C7D5  mov rdx, rax
+     50C7D8  call 0x50abd0                              CALL sub_50ABD0
+     50C7DD  mov rcx, qword ptr [rsp + 0x380]
+     50C7E5  mov r14, qword ptr [rsp + 0x388]
+     50C7ED  cmp r14, rcx
+     50C7F0  je 0x50c914
+     50C7F6  lea rdi, [rsp + 0x2e0]
+     50C7FE  mov rbx, rcx
+     50C801  lea rsi, [rsp + 0x2c0]
+---- 50C841  lea rdx, [rip + 0x4ce640]                  STR:"index < problem.GetNumberOfSheets()"
+     50C848  mov rcx, r15
+     50C84B  mov qword ptr [rsp + 0x300], rax
+     50C853  call 0x504fe0                              CALL sub_504FE0
+     50C858  lea r8, [rip + 0x4ce7ec]
+     50C85F  mov rcx, rdi
+     50C862  mov qword ptr [rsp + 0x2e0], r12
+     50C86A  lea rdx, [rip + 0x4ce7cf]                  STR:"LoadProblem"
+     50C871  call 0x504fe0                              CALL sub_504FE0
+     50C876  lea r8, [rip + 0x4cde2f]
+     50C87D  mov rcx, rsi
+     50C880  mov qword ptr [rsp + 0x2c0], rbp
+---- 50C888  lea rdx, [rip + 0x4cde05]                  STR:"..\structure\text_io.cpp"
+     50C88F  call 0x504fe0                              CALL sub_504FE0
+     50C894  mov r9, r15
+     50C897  mov r8, rdi
+     50C89A  mov edx, 0x4bb
+     50C89F  mov rcx, rsi
+     50C8A2  call 0x60a620                              CALL sub_60A620
+     50C8A7  mov rcx, qword ptr [rsp + 0x2c0]
+     50C8AF  cmp rcx, rbp
+     50C8B2  je 0x50c8b9
+     50C8B4  call 0x9984b0                              CALL sub_9984B0
+     50C8B9  mov rcx, qword ptr [rsp + 0x2e0]
+---- 50C936  lea rdx, [rip + 0x4ce56f]                  STR:"new_part"
+     50C93D  mov rcx, rbx
+     50C940  call 0x5050a0                              CALL sub_5050A0
+     50C945  lea rdi, [rsp + 0x340]
+     50C94D  lea rdx, [rip + 0x4ce6ec]                  STR:"LoadProblem"
+     50C954  mov rcx, rdi
+     50C957  call 0x5050a0                              CALL sub_5050A0
+     50C95C  lea rsi, [rsp + 0x320]
+     50C964  lea rdx, [rip + 0x4cdd29]                  STR:"..\structure\text_io.cpp"
+     50C96B  mov rcx, rsi
+     50C96E  call 0x5050a0                              CALL sub_5050A0
+     50C973  mov r9, rbx
+---- 50C964  lea rdx, [rip + 0x4cdd29]                  STR:"..\structure\text_io.cpp"
+     50C96B  mov rcx, rsi
+     50C96E  call 0x5050a0                              CALL sub_5050A0
+     50C973  mov r9, rbx
+     50C976  mov r8, rdi
+     50C979  mov edx, 0x4c0
+     50C97E  mov rcx, rsi
+     50C981  call 0x60a620                              CALL sub_60A620
+     50C986  mov rcx, qword ptr [rsp + 0x320]
+     50C98E  add rsi, 0x10
+     50C992  cmp rcx, rsi
+     50C995  je 0x50c99c
+---- 50CA4D  lea rdx, [rip + 0x4ce264]                  STR:"max_quantity"
+     50CA54  call 0x5fd060                              CALL sub_5FD060
+     50CA59  mov rcx, rax
+     50CA5C  call 0x5fc960                              CALL sub_5FC960
+     50CA61  mov ebx, eax
+     50CA63  jmp 0x50bdc3
+     50CA68  mov rcx, qword ptr [rsp + 0x320]
+     50CA70  add rsi, 0x10
+     50CA74  mov rbp, rax
+     50CA77  cmp rcx, rsi
+     50CA7A  je 0x50ca81
+     50CA7C  call 0x9984b0                              CALL sub_9984B0
+---- 50CAF6  lea rdx, [rip + 0x4ce1d7]                  STR:"extra_gap"
+     50CAFD  call 0x5fd060                              CALL sub_5FD060
+     50CB02  mov rcx, rax
+     50CB05  call 0x5fcb90                              CALL sub_5FCB90
+     50CB0A  movapd xmm1, xmm0
+     50CB0E  jmp 0x50be18
+     50CB13  mov rcx, qword ptr [rsp + 0x38]
+     50CB18  lea rdx, [rip + 0x4ce1a6]                  STR:"common_cutable"
+     50CB1F  call 0x5fd060                              CALL sub_5FD060
+     50CB24  mov rcx, rax
+     50CB27  call 0x5fc960                              CALL sub_5FC960
+     50CB2C  xor edx, edx
+---- 50CB18  lea rdx, [rip + 0x4ce1a6]                  STR:"common_cutable"
+     50CB1F  call 0x5fd060                              CALL sub_5FD060
+     50CB24  mov rcx, rax
+     50CB27  call 0x5fc960                              CALL sub_5FC960
+     50CB2C  xor edx, edx
+     50CB2E  test eax, eax
+     50CB30  setne dl
+     50CB33  jmp 0x50bded
+     50CB38  mov rbx, rax
+     50CB3B  call 0x998bc0                              CALL sub_998BC0
+     50CB40  mov rcx, qword ptr [rsp + 0xe0]
+     50CB48  test rcx, rcx
+---- 50CB6D  lea rdx, [rip + 0x4ce1d3]                  STR:"modules"
+     50CB74  call 0x5fd0a0                              CALL sub_5FD0A0
+     50CB79  test al, al
+     50CB7B  jne 0x50b5c7
+     50CB81  lea rdi, [rsp + 0x220]
+     50CB89  lea rdx, [rip + 0x4ce328]                  STR:"part.isMember(s_geometry) || part.isMember("modules")"
+     50CB90  mov rcx, rdi
+     50CB93  call 0x5050a0                              CALL sub_5050A0
+     50CB98  lea rsi, [rsp + 0x200]
+     50CBA0  lea rdx, [rip + 0x4ce499]                  STR:"LoadProblem"
+     50CBA7  mov rcx, rsi
+     50CBAA  call 0x5050a0                              CALL sub_5050A0
+---- 50CBB7  lea rdx, [rip + 0x4cdad6]                  STR:"..\structure\text_io.cpp"
+     50CBBE  mov rcx, rbx
+     50CBC1  call 0x5050a0                              CALL sub_5050A0
+     50CBC6  mov r9, rdi
+     50CBC9  mov r8, rsi
+     50CBCC  mov edx, 0x49a
+     50CBD1  mov rcx, rbx
+     50CBD4  call 0x60a620                              CALL sub_60A620
+     50CBD9  mov rcx, qword ptr [rsp + 0x1e0]
+     50CBE1  add rbx, 0x10
+     50CBE5  cmp rcx, rbx
+     50CBE8  je 0x50cbef
+---- 50CCB2  lea r12, [rip + 0x4cdff8]                  STR:"sheets"
+     50CCB9  lea r13, [rip + 0x4cdeb0]                  STR:"dimension_x"
+     50CCC0  lea r14, [rip + 0x4cdeb5]                  STR:"dimension_y"
+     50CCC7  mov rcx, qword ptr [rsp + 0x48]
+     50CCCC  mov rdx, r12
+     50CCCF  call 0x600680                              CALL sub_600680
+     50CCD4  mov edx, ebx
+     50CCD6  mov rcx, rax
+     50CCD9  call 0x5ffad0                              CALL sub_5FFAD0
+     50CCDE  mov r15, qword ptr [rsp + 0x40]
+     50CCE3  mov rdx, rax
+     50CCE6  mov rcx, r15
+---- 50CCB9  lea r13, [rip + 0x4cdeb0]                  STR:"dimension_x"
+     50CCC0  lea r14, [rip + 0x4cdeb5]                  STR:"dimension_y"
+     50CCC7  mov rcx, qword ptr [rsp + 0x48]
+     50CCCC  mov rdx, r12
+     50CCCF  call 0x600680                              CALL sub_600680
+     50CCD4  mov edx, ebx
+     50CCD6  mov rcx, rax
+     50CCD9  call 0x5ffad0                              CALL sub_5FFAD0
+     50CCDE  mov r15, qword ptr [rsp + 0x40]
+     50CCE3  mov rdx, rax
+     50CCE6  mov rcx, r15
+     50CCE9  call 0x5feb70                              CALL sub_5FEB70
+---- 50CCC0  lea r14, [rip + 0x4cdeb5]                  STR:"dimension_y"
+     50CCC7  mov rcx, qword ptr [rsp + 0x48]
+     50CCCC  mov rdx, r12
+     50CCCF  call 0x600680                              CALL sub_600680
+     50CCD4  mov edx, ebx
+     50CCD6  mov rcx, rax
+     50CCD9  call 0x5ffad0                              CALL sub_5FFAD0
+     50CCDE  mov r15, qword ptr [rsp + 0x40]
+     50CCE3  mov rdx, rax
+     50CCE6  mov rcx, r15
+     50CCE9  call 0x5feb70                              CALL sub_5FEB70
+     50CCEE  mov rdx, r13
+---- 50CD40  lea rdx, [rip + 0x4cdf6a]                  STR:"sheets"
+     50CD47  call 0x600680                              CALL sub_600680
+     50CD4C  mov edx, edi
+     50CD4E  mov rcx, rax
+     50CD51  call 0x5ffad0                              CALL sub_5FFAD0
+     50CD56  mov r8, qword ptr [rsp + 0x5f0]
+     50CD5E  mov r9, rbp
+     50CD61  movapd xmm1, xmm6
+     50CD65  mov rcx, rax
+     50CD68  call 0x5091b0                              CALL sub_5091B0
+     50CD6D  jmp 0x50b50b
+     50CD72  mov rcx, qword ptr [rsp + 0x40]

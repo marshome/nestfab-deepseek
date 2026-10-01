@@ -1,0 +1,953 @@
+
+<subst>::__cxx11::basic_istringstream::<>   (vtable @0xa54bc8, 2 slots)
+    v0  0091D460  
+    v1  0091D3D0  
+
+<subst>::__cxx11::basic_istringstream::<>   (vtable @0xa54c18, 2 slots)
+    v0  0091E990  
+    v1  0091E900  
+
+<subst>::__cxx11::basic_ostringstream::<>   (vtable @0xa54c68, 2 slots)
+    v0  0091FD80  
+    v1  0091FCF0  
+
+<subst>::__cxx11::basic_ostringstream::<>   (vtable @0xa54cb8, 2 slots)
+    v0  009211E0  
+    v1  00921150  
+
+<subst>::__cxx11::basic_string::<>   (vtable @0xa1f600, 2 slots)
+    v0  00A3AE80  
+    v1  00A331E0  
+
+<subst>::__cxx11::basic_stringbuf::<>   (vtable @0xa54620, 14 slots)
+    v0  00915EC0  
+    v1  00915E70  
+    v2  0088F8C0  
+    v3  00915040  
+    v4  00915150  
+    v5  00915310  
+    v6  0088F8A0  
+    v7  009156E0  
+    v8  0088FB80  
+    v9  00915710  
+    v10 0088F980  
+    v11 00915680  
+    v12 0088FC60  
+    v13 00915480  
+
+<subst>::__cxx11::basic_stringbuf::<>   (vtable @0xa546a0, 14 slots)
+    v0  00917740  
+    v1  009176F0  
+    v2  008902E0  
+    v3  00916880  
+    v4  00916980  
+    v5  00916B50  
+    v6  008902C0  
+    v7  00916EF0  
+    v8  008905B0  
+    v9  00916F30  
+    v10 008903B0  
+    v11 00916EA0  
+    v12 008906D0  
+    v13 00916CA0  
+
+<subst>::__cxx11::basic_stringstream::<>   (vtable @0xa54ac8, 2 slots)
+    v0  0091A7C0  
+    v1  0091A710  
+
+<subst>::__cxx11::basic_stringstream::<>   (vtable @0xa54b48, 2 slots)
+    v0  0091BF80  
+    v1  0091BED0  
+
+<subst>::__cxx11::collate::<>   (vtable @0xa54d00, 5 slots)
+    v0  00921710  
+    v1  009216E0  
+    v2  0082C780  
+    v3  0082C8C0  
+    v4  0082CB00  
+
+<subst>::__cxx11::collate::<>   (vtable @0xa54d40, 5 slots)
+    v0  009218C0  
+    v1  00921890  
+    v2  0082CB80  
+    v3  0082CCC0  
+    v4  0082CF40  
+
+<subst>::__cxx11::collate_byname::<>   (vtable @0xa545a0, 5 slots)
+    v0  00914550  
+    v1  00914520  
+    v2  0082C780  
+    v3  0082C8C0  
+    v4  0082CB00  
+
+<subst>::__cxx11::collate_byname::<>   (vtable @0xa545e0, 5 slots)
+    v0  00914920  
+    v1  009148F0  
+    v2  0082CB80  
+    v3  0082CCC0  
+    v4  0082CF40  
+
+<subst>::__cxx11::messages::<>   (vtable @0xa54d80, 5 slots)
+    v0  00921A90  
+    v1  00921A60  
+    v2  0082D120  
+    v3  0082D070  
+    v4  0082D130  
+
+<subst>::__cxx11::messages::<>   (vtable @0xa54dc0, 5 slots)
+    v0  00921C60  
+    v1  00921C30  
+    v2  0082D250  
+    v3  0082D220  
+    v4  0082D260  
+
+<subst>::__cxx11::messages_byname::<>   (vtable @0xa54720, 5 slots)
+    v0  00917B80  
+    v1  00917B50  
+    v2  0082D120  
+    v3  0082D070  
+    v4  0082D130  
+
+<subst>::__cxx11::messages_byname::<>   (vtable @0xa54760, 5 slots)
+    v0  00917D70  
+    v1  00917D40  
+    v2  0082D250  
+    v3  0082D220  
+    v4  0082D260  
+
+<subst>::__cxx11::money_get::<>   (vtable @0xa54f60, 4 slots)
+    v0  00922530  
+    v1  00922500  
+    v2  00837CE0  
+    v3  00837B00  
+
+<subst>::__cxx11::money_get::<>   (vtable @0xa54f90, 4 slots)
+    v0  009225C0  
+    v1  00922590  
+    v2  0083A810  
+    v3  0083A610  
+
+<subst>::__cxx11::money_put::<>   (vtable @0xa54fc0, 4 slots)
+    v0  00922650  
+    v1  00922620  
+    v2  0083AAE0  
+    v3  0083AA80  
+
+<subst>::__cxx11::money_put::<>   (vtable @0xa54ff0, 4 slots)
+    v0  009226E0  
+    v1  009226B0  
+    v2  0083BC40  
+    v3  0083BBE0  
+
+<subst>::__cxx11::moneypunct::<>   (vtable @0xa543e0, 11 slots)
+    v0  0090E150  
+    v1  0090E130  
+    v2  00828A90  
+    v3  00828B40  
+    v4  00828850  
+    v5  00828A30  
+    v6  00828AF0  
+    v7  00828AA0  
+    v8  00828A80  
+    v9  00828910  
+    v10 00828900  
+
+<subst>::__cxx11::moneypunct::<>   (vtable @0xa54450, 11 slots)
+    v0  0090E4D0  
+    v1  0090E4B0  
+    v2  00828F10  
+    v3  00828FC0  
+    v4  00828CD0  
+    v5  00828EB0  
+    v6  00828F70  
+    v7  00828F20  
+    v8  00828F00  
+    v9  00828D90  
+    v10 00828D80  
+
+<subst>::__cxx11::moneypunct::<>   (vtable @0xa544c0, 11 slots)
+    v0  0090E880  
+    v1  0090E860  
+    v2  00829400  
+    v3  008294B0  
+    v4  00829150  
+    v5  008293A0  
+    v6  00829460  
+    v7  00829410  
+    v8  008293F0  
+    v9  00829280  
+    v10 00829270  
+
+<subst>::__cxx11::moneypunct::<>   (vtable @0xa54530, 11 slots)
+    v0  0090EC30  
+    v1  0090EC10  
+    v2  00829960  
+    v3  00829A10  
+    v4  008296B0  
+    v5  00829900  
+    v6  008299C0  
+    v7  00829970  
+    v8  00829950  
+    v9  008297E0  
+    v10 008297D0  
+
+<subst>::__cxx11::moneypunct_byname::<>   (vtable @0xa54900, 11 slots)
+    v0  00918A00  
+    v1  009189D0  
+    v2  00828A90  
+    v3  00828B40  
+    v4  00828850  
+    v5  00828A30  
+    v6  00828AF0  
+    v7  00828AA0  
+    v8  00828A80  
+    v9  00828910  
+    v10 00828900  
+
+<subst>::__cxx11::moneypunct_byname::<>   (vtable @0xa54970, 11 slots)
+    v0  00918D90  
+    v1  00918D60  
+    v2  00828F10  
+    v3  00828FC0  
+    v4  00828CD0  
+    v5  00828EB0  
+    v6  00828F70  
+    v7  00828F20  
+    v8  00828F00  
+    v9  00828D90  
+    v10 00828D80  
+
+<subst>::__cxx11::moneypunct_byname::<>   (vtable @0xa549e0, 11 slots)
+    v0  00919120  
+    v1  009190F0  
+    v2  00829400  
+    v3  008294B0  
+    v4  00829150  
+    v5  008293A0  
+    v6  00829460  
+    v7  00829410  
+    v8  008293F0  
+    v9  00829280  
+    v10 00829270  
+
+<subst>::__cxx11::moneypunct_byname::<>   (vtable @0xa54a50, 11 slots)
+    v0  009194B0  
+    v1  00919480  
+    v2  00829960  
+    v3  00829A10  
+    v4  008296B0  
+    v5  00829900  
+    v6  008299C0  
+    v7  00829970  
+    v8  00829950  
+    v9  008297E0  
+    v10 008297D0  
+
+<subst>::__cxx11::numpunct::<>   (vtable @0xa54e00, 7 slots)
+    v0  00921FD0  
+    v1  00921FB0  
+    v2  0082D3C0  
+    v3  0082D3D0  
+    v4  0082D270  
+    v5  0082D2C0  
+    v6  0082D310  
+
+<subst>::__cxx11::numpunct::<>   (vtable @0xa54e50, 7 slots)
+    v0  00922350  
+    v1  00922330  
+    v2  0082D6F0  
+    v3  0082D700  
+    v4  0082D530  
+    v5  0082D5F0  
+    v6  0082D640  
+
+<subst>::__cxx11::numpunct_byname::<>   (vtable @0xa547a0, 7 slots)
+    v0  00918140  
+    v1  00918110  
+    v2  0082D3C0  
+    v3  0082D3D0  
+    v4  0082D270  
+    v5  0082D2C0  
+    v6  0082D310  
+
+<subst>::__cxx11::numpunct_byname::<>   (vtable @0xa547f0, 7 slots)
+    v0  009184D0  
+    v1  009184A0  
+    v2  0082D6F0  
+    v3  0082D700  
+    v4  0082D530  
+    v5  0082D5F0  
+    v6  0082D640  
+
+<subst>::__cxx11::time_get::<>   (vtable @0xa54ea0, 9 slots)
+    v0  00922410  
+    v1  009223E0  
+    v2  0082DE10  
+    v3  0082DA60  
+    v4  0082D900  
+    v5  0082E260  
+    v6  0082EA30  
+    v7  0082DBC0  
+    v8  00831300  
+
+<subst>::__cxx11::time_get::<>   (vtable @0xa54f00, 9 slots)
+    v0  009224A0  
+    v1  00922470  
+    v2  00831C50  
+    v3  00831850  
+    v4  008316C0  
+    v5  00831FB0  
+    v6  008327A0  
+    v7  008319E0  
+    v8  00834D80  
+
+<subst>::__cxx11::time_get_byname::<>   (vtable @0xa54840, 9 slots)
+    v0  009185A0  
+    v1  00918570  
+    v2  0082DE10  
+    v3  0082DA60  
+    v4  0082D900  
+    v5  0082E260  
+    v6  0082EA30  
+    v7  0082DBC0  
+    v8  00831300  
+
+<subst>::__cxx11::time_get_byname::<>   (vtable @0xa548a0, 9 slots)
+    v0  00918670  
+    v1  00918640  
+    v2  00831C50  
+    v3  00831850  
+    v4  008316C0  
+    v5  00831FB0  
+    v6  008327A0  
+    v7  008319E0  
+    v8  00834D80  
+
+<subst>::__future_base::_Result_base   (vtable @0xa541f0, 1 slots)
+    v0  00998FB0  
+
+<subst>::ios_base::failure   (vtable @0xa55020, 3 slots)
+    v0  009444E0  
+    v1  009444C0  
+    v2  00854020  
+
+<subst>::locale::facet   (vtable @0xa54270, 2 slots)
+    v0  008AA8B0  
+    v1  008AA8A0  
+
+<subst>::thread::_State_impl::<<subst>::<subst>::<subst>::shared_ptr::<Engine::Engine>>::<subst>::<subst>   (vtable @0xa542c0, 3 slots)
+    v0  008AAD10  
+    v1  008AACB0  
+    v2  008AACA0  
+
+<subst>::thread::_State_impl::<<subst>>::<subst>   (vtable @0xa54290, 3 slots)
+    v0  008AAC90  
+    v1  008AAC60  
+    v2  008AAC50  
+
+<subst>::thread::_State_impl::<Engine::Engine>::Structure::Problem   (vtable @0xa542f0, 3 slots)
+    v0  008AADC0  
+    v1  008AAD90  
+    v2  008AAD60  
+
+<subst>::thread::_State_impl::<Multi::Supervisor>   (vtable @0xa54320, 3 slots)
+    v0  008AAE20  
+    v1  008AADF0  
+    v2  008AADD0  
+
+<subst>::thread::_State_impl::<NoFitMultiThreadComputer::RunAllComputations>   (vtable @0xa54350, 3 slots)
+    v0  008AAEA0  
+    v1  008AAE70  
+    v2  008AAE30  
+
+<subst>::thread::_State_impl::<Tiling::PackerCache::Implementation::PreUpdateTilings>::<subst>::vector::<<subst>::PartUpdaterInformer>   (vtable @0xa54380, 3 slots)
+    v0  008AAF10  
+    v1  008AAEE0  
+    v2  008AAEB0  
+
+Compact::Compacter::Implementation   (vtable @0xa3d470, 3 slots)
+    v0  00774F50  
+    v1  00774EB0  
+    v2  007F4140  
+
+Engine::BestObserver   (vtable @0xa3cf30, 6 slots)
+    v0  00756CF0  
+    v1  00756B20  
+    v2  00755A40  
+    v3  00755A50  
+    v4  00755A80  
+    v5  00755A60  
+
+Engine::CloudEngine   (vtable @0xa3ced0, 3 slots)
+    v0  00755000  
+    v1  00754FB0  
+    v2  00026A60  
+
+Engine::CompositeEngine   (vtable @0xa3d000, 3 slots)
+    v0  0075BC30  
+    v1  0075BBA0  
+    v2  00759B70  
+
+Engine::CompositeObserver   (vtable @0xa3d060, 6 slots)
+    v0  0075DDC0  
+    v1  0075DDB0  
+    v2  0075CBC0  
+    v3  0075CC90  
+    v4  0075CDA0  
+    v5  0075CD30  
+
+Engine::DelayedEngine   (vtable @0xa3cf70, 3 slots)
+    v0  00757200  
+    v1  007571B0  
+    v2  00756EC0  
+
+Engine::EquivalentEngine   (vtable @0xa3d030, 3 slots)
+    v0  0075CB40  
+    v1  0075CAC0  
+    v2  0075BCC0  
+
+Engine::EquivalentObserver   (vtable @0xa3d0a0, 6 slots)
+    v0  0075E130  
+    v1  0075E0E0  
+    v2  0075DDD0  
+    v3  0075DDE0  
+    v4  0075E060  
+    v5  0075DDF0  
+
+Engine::InfiniteEngine   (vtable @0xa3cfd0, 3 slots)
+    v0  00759B20  
+    v1  00759AD0  
+    v2  00759A80  
+
+Engine::MultiEngine   (vtable @0xa3cf00, 3 slots)
+    v0  007559E0  
+    v1  00755970  
+    v2  00755050  
+
+Engine::NestingEngine   (vtable @0xa3cfa0, 3 slots)
+    v0  00757A70  
+    v1  00757A10  
+    v2  00757250  
+
+Multi::AdvancedStrategist   (vtable @0xa3b970, 3 slots)
+    v0  0069A470  
+    v1  0069A460  
+    v2  0002DF60  
+
+Multi::AllSheetSelector   (vtable @0xa3b840, 4 slots)
+    v0  006970F0  
+    v1  006970E0  
+    v2  007D2500  
+    v3  007D25E0  
+
+Multi::CompactCanceller   (vtable @0xa3b870, 3 slots)
+    v0  00697130  
+    v1  00697100  
+    v2  007D2610  
+
+Multi::CompactNester   (vtable @0xa3b610, 6 slots)
+    v0  00695E40  
+    v1  00695E10  
+    v2  000B3890  
+    v3  000B0130  
+    v4  000B46F0  
+    v5  000B13D0  
+
+Multi::DatabaseNester   (vtable @0xa3b740, 6 slots)
+    v0  0005B170  
+    v1  0005B100  
+    v2  000B4430  
+    v3  0005B1C0  
+    v4  0005B0F0  
+    v5  0005B250  
+
+Multi::FilterNester   (vtable @0xa3b4f0, 6 slots)
+    v0  006937D0  
+    v1  006937A0  
+    v2  000B43B0  
+    v3  000B3920  
+    v4  000B46F0  
+    v5  000B3AE0  
+
+Multi::FlipNester   (vtable @0xa3b490, 6 slots)
+    v0  00687E10  
+    v1  00687DE0  
+    v2  000B4440  
+    v3  0004B1C0  
+    v4  0004B2B0  
+    v5  0004B870  
+
+Multi::LargestSheetSelector   (vtable @0xa3bac0, 4 slots)
+    v0  0069A710  
+    v1  0069A700  
+    v2  007D3C50  
+    v3  007D3CE0  
+
+Multi::LimitedNester   (vtable @0xa3b650, 6 slots)
+    v0  00695E80  
+    v1  00695E50  
+    v2  000B4440  
+    v3  0004A960  
+    v4  0004A8D0  
+    v5  0004AB40  
+
+Multi::MultiTorchNester   (vtable @0xa3b8a0, 6 slots)
+    v0  00697260  
+    v1  00697230  
+    v2  000B4440  
+    v3  00077C90  
+    v4  00077C60  
+    v5  0007BCC0  
+
+Multi::NestingContextPool   (vtable @0xa3b9a0, 3 slots)
+    v0  0069A500  
+    v1  0069A480  
+    v2  007D2E20  
+
+Multi::NestingNester   (vtable @0xa3b690, 6 slots)
+    v0  00032EE0  
+    v1  00032F30  
+    v2  0003B110  
+    v3  00033100  
+    v4  00032D90  
+    v5  000378E0  
+
+Multi::NestingObserver   (vtable @0xa3b7c0, 6 slots)
+    v0  006970D0  
+    v1  006970C0  
+    v2  00697060  
+    v3  006970B0  
+    v4  007C2490  
+    v5  007C2480  
+
+Multi::NoFillNester   (vtable @0xa3b530, 6 slots)
+    v0  00693830  
+    v1  006937E0  
+    v2  000B4440  
+    v3  0007ECA0  
+    v4  000B46F0  
+    v5  0007F240  
+
+Multi::NoFitMapCanceller   (vtable @0xa3b8e0, 3 slots)
+    v0  0069A410  
+    v1  0069A400  
+    v2  007D29F0  
+
+Multi::NoMixSheetSelector   (vtable @0xa3b9d0, 4 slots)
+    v0  0069A5D0  
+    v1  0069A580  
+    v2  007D2ED0  
+    v3  007D33F0  
+
+Multi::PartUpdaterLimiter   (vtable @0xa3ba00, 4 slots)
+    v0  0069A640  
+    v1  0069A630  
+    v2  007D3530  
+    v3  007D34C0  
+
+Multi::RCompactCanceller   (vtable @0xa3b910, 3 slots)
+    v0  0069A430  
+    v1  0069A420  
+    v2  007D2CB0  
+
+Multi::RandomSheetSelector   (vtable @0xa3ba60, 4 slots)
+    v0  0069A680  
+    v1  0069A670  
+    v2  007D36E0  
+    v3  007D3C10  
+
+Multi::RectangleNester   (vtable @0xa3b800, 6 slots)
+    v0  0006D2E0  
+    v1  0006D3A0  
+    v2  000B4430  
+    v3  0006C9B0  
+    v4  00077780  
+    v5  00075FB0  
+
+Multi::RowNester   (vtable @0xa3bb30, 6 slots)
+    v0  0008EB40  
+    v1  0008EEA0  
+    v2  000B4430  
+    v3  0008CD20  
+    v4  0008C010  
+    v5  000913E0  
+
+Multi::SplitNode   (vtable @0xa3bb70, 4 slots)
+    v0  006AC2E0  
+    v1  006AC250  
+    v2  00097510  
+    v3  00097520  
+
+Multi::StrategyBasicAdder   (vtable @0xa3ba30, 3 slots)
+    v0  0069A660  
+    v1  0069A650  
+    v2  007D3600  
+
+Multi::StrategyDescriber   (vtable @0xa3b940, 3 slots)
+    v0  0069A450  
+    v1  0069A440  
+    v2  007D2CC0  
+
+Multi::Supervisor   (vtable @0xa3b4d0, 2 slots)
+    v0  00030B60  
+    v1  00030EB0  
+
+Multi::SupervisorCanceller   (vtable @0xa3ba90, 3 slots)
+    v0  0069A6D0  
+    v1  0069A690  
+    v2  00030030  
+
+Multi::TerminalNode   (vtable @0xa3b570, 4 slots)
+    v0  006938E0  
+    v1  00693870  
+    v2  000974F0  
+    v3  00097500  
+
+Multi::TilingNester   (vtable @0xa3b5a0, 6 slots)
+    v0  000456F0  
+    v1  00045680  
+    v2  000B4430  
+    v3  00045750  
+    v4  00045560  
+    v5  00046940  
+
+Multi::TraceObserver   (vtable @0xa3b700, 6 slots)
+    v0  00696C40  
+    v1  00696C30  
+    v2  007C2460  
+    v3  007C2470  
+    v4  0005ED40  basic_string::append
+    v5  0005F030  
+
+Multi::WrapObserver   (vtable @0xa3b5e0, 3 slots)
+    v0  00695DF0  
+    v1  00695DC0  
+    v2  007D2160  
+
+Pack::BestNester   (vtable @0xa3b400, 3 slots)
+    v0  00681EE0  
+    v1  00681E40  
+    v2  0015E410  
+
+Pack::KnapsackNester   (vtable @0xa3b430, 3 slots)
+    v0  00681F90  
+    v1  00681F80  
+    v2  0015DD70  
+
+Pack::RecursiveNester   (vtable @0xa3b460, 3 slots)
+    v0  00683D80  
+    v1  00681FA0  
+    v2  00165680  
+
+Prc::AlphaPriceComputer   (vtable @0xa3b130, 5 slots)
+    v0  00678D80  
+    v1  00678D70  
+    v2  007CA1B0  
+    v3  007CA200  
+    v4  007CA1C0  
+
+Prc::BoxPriceComputer   (vtable @0xa3b0b0, 5 slots)
+    v0  00678D40  
+    v1  00678D30  
+    v2  007C9D90  
+    v3  007CA100  
+    v4  007CA0D0  
+
+Prc::HullPriceComputer   (vtable @0xa3b0f0, 5 slots)
+    v0  00678D60  
+    v1  00678D50  
+    v2  007CA130  
+    v3  007CA170  
+    v4  007CA140  
+
+Prc::LinearCombinationPricer   (vtable @0xa3b170, 5 slots)
+    v0  00678DF0  
+    v1  00678D90  
+    v2  007CA370  
+    v3  007CA6C0  
+    v4  007CA5C0  
+
+RCompact::RotateLogger   (vtable @0xa533d0, 8 slots)
+    v0  007B3080  
+    v1  007B3070  
+    v2  007B3030  
+    v3  007B3060  
+    v4  007B3020  
+    v5  007B3010  
+    v6  007B3050  
+    v7  007B3040  
+
+Row::BasicDistancer   (vtable @0xa3b1b0, 3 slots)
+    v0  00679060  
+    v1  00679050  
+    v2  007CA810  
+
+Row::Squeezer   (vtable @0xa3b1e0, 3 slots)
+    v0  00138BE0  
+    v1  00138CA0  
+    v2  0013A360  
+
+Structure::BoxAreaDimensioner   (vtable @0xa534c0, 3 slots)
+    v0  007BF060  
+    v1  007BF050  
+    v2  0081E1E0  
+
+Structure::ClusterObserver   (vtable @0xa53420, 6 slots)
+    v0  007BC0C0  
+    v1  007BC000  
+    v2  007C2460  
+    v3  007C2470  
+    v4  005593F0  
+    v5  007C2480  
+
+Structure::Observer   (vtable @0xa53550, 6 slots)
+    v0  007C24B0  
+    v1  007C24A0  
+    v2  007C2460  
+    v3  007C2470  
+    v4  007C2490  
+    v5  007C2480  
+
+Structure::ParseProblemException   (vtable @0xa534f0, 3 slots)
+    v0  007BFE50  
+    v1  007BFE20  
+    v2  0081ED10  
+
+Structure::ParseSolutionException   (vtable @0xa53520, 3 slots)
+    v0  007BFE90  
+    v1  007BFE60  
+    v2  0081ED20  
+
+Structure::SizeDimensioner   (vtable @0xa53460, 3 slots)
+    v0  007BC330  
+    v1  007BC320  
+    v2  0081DF30  
+
+Structure::WidthDimensioner   (vtable @0xa53490, 3 slots)
+    v0  007BEFB0  
+    v1  007BEFA0  
+    v2  0081E0B0  
+
+Tiling::BasicCandidater   (vtable @0xa3d190, 3 slots)
+    v0  004F3600  
+    v1  004F3610  
+    v2  004F4600  
+
+Tiling::BiModulePattern   (vtable @0xa3d1c0, 8 slots)
+    v0  0076DB40  
+    v1  0076DB30  
+    v2  007E84F0  
+    v3  007E8100  
+    v4  007E8520  
+    v5  007E8150  
+    v6  007E8840  
+    v7  007E8820  
+
+Tiling::BoxMultiTiler   (vtable @0xa3d100, 5 slots)
+    v0  0076B3B0  
+    v1  0076B380  
+    v2  007E7FC0  
+    v3  007E7E90  
+    v4  007E7E80  
+
+Tiling::CompositePart   (vtable @0xa3d140, 2 slots)
+    v0  0076B420  
+    v1  0076B3E0  
+
+Tiling::DensityEvaluator   (vtable @0xa3d210, 4 slots)
+    v0  0076E390  
+    v1  0076E380  
+    v2  007E8910  
+    v3  004E7E50  
+
+Tiling::MultiOrientedPartPattern   (vtable @0xa3d370, 8 slots)
+    v0  0076F9D0  
+    v1  0076F9C0  
+    v2  007EBB90  
+    v3  007EB5E0  
+    v4  007EBC30  
+    v5  007EB990  
+    v6  007EBDB0  
+    v7  007EBD90  
+
+Tiling::MultitorchEvaluator   (vtable @0xa3d310, 4 slots)
+    v0  0076F260  
+    v1  0076F250  
+    v2  007E9240  
+    v3  004E7E50  
+
+Tiling::ObliqueEvaluator   (vtable @0xa3d240, 4 slots)
+    v0  0076E3D0  
+    v1  0076E3A0  
+    v2  007E8B30  
+    v3  007E8970  
+
+Tiling::OldMultitorchEvaluator   (vtable @0xa3d340, 4 slots)
+    v0  0076F9B0  
+    v1  0076F9A0  
+    v2  007EB320  
+    v3  004E7E50  
+
+Tiling::PackerCache   (vtable @0xa3d0e0, 2 slots)
+    v0  00158BE0  
+    v1  00158F60  
+
+Tiling::Part   (vtable @0xa3d420, 2 slots)
+    v0  004DAFC0  
+    v1  004DAEC0  
+
+Tiling::QuantityEvaluator   (vtable @0xa3d270, 4 slots)
+    v0  0076E410  
+    v1  0076E400  
+    v2  007E8DD0  
+    v3  007E8DA0  
+
+Tiling::ReusableEvaluator   (vtable @0xa3d2a0, 4 slots)
+    v0  0076E430  
+    v1  0076E420  
+    v2  007E8F60  
+    v3  004E7E50  
+
+Tiling::SqueezeMultiTiler   (vtable @0xa3d2d0, 5 slots)
+    v0  0076F0A0  
+    v1  0076EF00  
+    v2  007E91A0  
+    v3  007E9190  
+    v4  007E9180  
+
+Tiling::UnlimitedDensityEvaluator   (vtable @0xa3d3c0, 4 slots)
+    v0  0076F9F0  
+    v1  0076F9E0  
+    v2  007EBFC0  
+    v3  004E7E50  
+
+Tiling::UnlimitedXDensityEvaluator   (vtable @0xa3d3f0, 4 slots)
+    v0  0076FA10  
+    v1  0076FA00  
+    v2  007EC210  
+    v3  004E7E50  
+
+Tiling::WarpCanceller   (vtable @0xa3d160, 3 slots)
+    v0  0076DB20  
+    v1  0076DB10  
+    v2  007E80E0  
+
+Utils::BadResponseException   (vtable @0xa3bc80, 3 slots)
+    v0  006D5900  
+    v1  006D58D0  
+    v2  007D7940  
+
+Utils::Canceller   (vtable @0xa3bd70, 3 slots)
+    v0  006DA1E0  
+    v1  006DA1D0  
+    v2  007D7D20  
+
+Utils::ConnectException   (vtable @0xa3bbf0, 3 slots)
+    v0  006D3270  
+    v1  006D3240  
+    v2  007D7910  
+
+Utils::LogSink   (vtable @0xa3bd40, 1 slots)
+    v0  00998FB0  
+
+Utils::OstreamSink::<<subst>>   (vtable @0xa3bba0, 8 slots)
+    v0  006C88E0  
+    v1  006C9150  
+    v2  006C9090  
+    v3  001976B0  
+    v4  001980B0  
+    v5  00197D90  
+    v6  00198530  
+    v7  001977F0  
+
+Utils::ResolveException   (vtable @0xa3bc20, 3 slots)
+    v0  006D32B0  
+    v1  006D3280  
+    v2  007D7920  
+
+Utils::TimeoutException   (vtable @0xa3bc50, 3 slots)
+    v0  006D32F0  
+    v1  006D32C0  
+    v2  007D7930  
+
+Utils::TimerWinImplementation   (vtable @0xa3bcb0, 3 slots)
+    v0  006D5970  
+    v1  006D5960  
+    v2  006D5910  
+
+__cxxabiv1::__class_type_info   (vtable @0xa3ad90, 9 slots)
+    v0  00656340  
+    v1  00656310  
+    v2  00861A20  
+    v3  00861A20  
+    v4  007C4C70  
+    v5  007C4CF0  
+    v6  007C4CC0  
+    v7  007C4D50  
+    v8  007C4DD0  
+
+__cxxabiv1::__enum_type_info   (vtable @0xa3ad50, 6 slots)
+    v0  00656300  
+    v1  006562D0  
+    v2  00861A20  
+    v3  00861A20  
+    v4  00861A00  
+    v5  00861A10  
+
+__cxxabiv1::__fundamental_type_info   (vtable @0xa3af80, 6 slots)
+    v0  006564A0  
+    v1  00656470  
+    v2  00861A20  
+    v3  00861A20  
+    v4  00861A00  
+    v5  00861A10  
+
+__cxxabiv1::__pbase_type_info   (vtable @0xa3adf0, 7 slots)
+    v0  00656380  
+    v1  00656350  
+    v2  00861A20  
+    v3  00861A20  
+    v4  007C4DE0  
+    v5  00861A10  
+    v6  007C4EF0  
+
+__cxxabiv1::__pointer_type_info   (vtable @0xa3ae70, 7 slots)
+    v0  006563E0  
+    v1  006563B0  
+    v2  007C4F10  
+    v3  00861A20  
+    v4  007C4DE0  
+    v5  00861A10  
+    v6  007C4F20  
+
+__cxxabiv1::__si_class_type_info   (vtable @0xa3aec0, 9 slots)
+    v0  00656420  
+    v1  006563F0  
+    v2  00861A20  
+    v3  00861A20  
+    v4  007C4C70  
+    v5  007C4CF0  
+    v6  007C4F90  
+    v7  007C4FE0  
+    v8  007C50E0  
+
+__cxxabiv1::__vmi_class_type_info   (vtable @0xa3af20, 9 slots)
+    v0  00656460  
+    v1  00656430  
+    v2  00861A20  
+    v3  00861A20  
+    v4  007C4C70  
+    v5  007C4CF0  
+    v6  007C5150  
+    v7  007C5390  
+    v8  007C5A80  
+
+dbg::file_error   (vtable @0xa3b210, 3 slots)
+    v0  00679250  
+    v1  00679220  
+    v2  007CA820  
+
+dbg::symlog   (vtable @0xa3b240, 3 slots)
+    v0  00679270  
+    v1  00679260  
+    v2  0060B330  

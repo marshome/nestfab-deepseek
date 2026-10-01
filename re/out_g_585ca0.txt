@@ -1,0 +1,359 @@
+#### 0x585CA0 sub_585ca0 size=526 nins=153
+585ca0   push r12                              
+585ca2   push rbp                              
+585ca3   push rdi                              
+585ca4   push rsi                              
+585ca5   push rbx                              
+585ca6   sub rsp, 0x90                         
+585cad   movsd xmm2, qword ptr [rsp + 0xe8]    
+585cb6   lea rbx, [rsp + 0x30]                 
+585cbb   mov rdi, rcx                          
+585cbe   mov rbp, r8                           
+585cc1   lea rsi, [rsp + 0x50]                 
+585cc6   mov rcx, rbx                          
+585cc9   mov r12d, r9d                         
+585ccc   call 0x6863c0                            ; sub_6863c0(0x6863c0)
+585cd1   mov rdx, rbp                          
+585cd4   mov rcx, rsi                          
+585cd7   movsd xmm2, qword ptr [rsp + 0xe8]    
+585ce0   call 0x6863c0                            ; sub_6863c0(0x6863c0)
+585ce5   mov rax, qword ptr [rsp + 0xe0]       
+585ced   lea rbp, [rsp + 0x70]                 
+585cf2   mov r9d, r12d                         
+585cf5   mov r8, rsi                           
+585cf8   mov rdx, rbx                          
+585cfb   mov rcx, rbp                          
+585cfe   mov qword ptr [rsp + 0x20], rax       
+585d03   call 0x5a2530                            ; sub_5a2530(0x5a2530)
+585d08   movsd xmm2, qword ptr [rsp + 0xe8]    
+585d11   mov rdx, rbp                          
+585d14   mov rcx, rdi                          
+585d17   call 0x687080                            ; sub_687080(0x687080)
+585d1c   mov r12, qword ptr [rsp + 0x78]       
+585d21   mov rbp, qword ptr [rsp + 0x70]       
+585d26   cmp r12, rbp                          
+585d29   je 0x585d83                           
+585d2b   nop dword ptr [rax + rax]             
+585d30   mov rsi, qword ptr [rbp + 0x20]       
+585d34   mov rbx, qword ptr [rbp + 0x18]       
+585d38   cmp rsi, rbx                          
+585d3b   je 0x585d5a                           
+585d3d   nop dword ptr [rax]                   
+585d40   mov rcx, qword ptr [rbx]              
+585d43   test rcx, rcx                         
+585d46   je 0x585d4d                           
+585d48   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585d4d   add rbx, 0x18                         
+585d51   cmp rsi, rbx                          
+585d54   jne 0x585d40                          
+585d56   mov rbx, qword ptr [rbp + 0x18]       
+585d5a   test rbx, rbx                         
+585d5d   je 0x585d67                           
+585d5f   mov rcx, rbx                          
+585d62   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585d67   mov rcx, qword ptr [rbp]              
+585d6b   test rcx, rcx                         
+585d6e   je 0x585d75                           
+585d70   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585d75   add rbp, 0x30                         
+585d79   cmp r12, rbp                          
+585d7c   jne 0x585d30                          
+585d7e   mov rbp, qword ptr [rsp + 0x70]       
+585d83   test rbp, rbp                         
+585d86   je 0x585d90                           
+585d88   mov rcx, rbp                          
+585d8b   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585d90   mov r12, qword ptr [rsp + 0x58]       
+585d95   mov rbp, qword ptr [rsp + 0x50]       
+585d9a   cmp r12, rbp                          
+585d9d   je 0x585df3                           
+585d9f   nop                                   
+585da0   mov rsi, qword ptr [rbp + 0x20]       
+585da4   mov rbx, qword ptr [rbp + 0x18]       
+585da8   cmp rsi, rbx                          
+585dab   je 0x585dca                           
+585dad   nop dword ptr [rax]                   
+585db0   mov rcx, qword ptr [rbx]              
+585db3   test rcx, rcx                         
+585db6   je 0x585dbd                           
+585db8   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585dbd   add rbx, 0x18                         
+585dc1   cmp rsi, rbx                          
+585dc4   jne 0x585db0                          
+585dc6   mov rbx, qword ptr [rbp + 0x18]       
+585dca   test rbx, rbx                         
+585dcd   je 0x585dd7                           
+585dcf   mov rcx, rbx                          
+585dd2   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585dd7   mov rcx, qword ptr [rbp]              
+585ddb   test rcx, rcx                         
+585dde   je 0x585de5                           
+585de0   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585de5   add rbp, 0x30                         
+585de9   cmp r12, rbp                          
+585dec   jne 0x585da0                          
+585dee   mov rbp, qword ptr [rsp + 0x50]       
+585df3   test rbp, rbp                         
+585df6   je 0x585e00                           
+585df8   mov rcx, rbp                          
+585dfb   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585e00   mov r12, qword ptr [rsp + 0x38]       
+585e05   mov rbp, qword ptr [rsp + 0x30]       
+585e0a   cmp r12, rbp                          
+585e0d   je 0x585e63                           
+585e0f   nop                                   
+585e10   mov rsi, qword ptr [rbp + 0x20]       
+585e14   mov rbx, qword ptr [rbp + 0x18]       
+585e18   cmp rsi, rbx                          
+585e1b   je 0x585e3a                           
+585e1d   nop dword ptr [rax]                   
+585e20   mov rcx, qword ptr [rbx]              
+585e23   test rcx, rcx                         
+585e26   je 0x585e2d                           
+585e28   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585e2d   add rbx, 0x18                         
+585e31   cmp rsi, rbx                          
+585e34   jne 0x585e20                          
+585e36   mov rbx, qword ptr [rbp + 0x18]       
+585e3a   test rbx, rbx                         
+585e3d   je 0x585e47                           
+585e3f   mov rcx, rbx                          
+585e42   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585e47   mov rcx, qword ptr [rbp]              
+585e4b   test rcx, rcx                         
+585e4e   je 0x585e55                           
+585e50   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585e55   add rbp, 0x30                         
+585e59   cmp r12, rbp                          
+585e5c   jne 0x585e10                          
+585e5e   mov rbp, qword ptr [rsp + 0x30]       
+585e63   test rbp, rbp                         
+585e66   je 0x585e70                           
+585e68   mov rcx, rbp                          
+585e6b   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585e70   mov rax, rdi                          
+585e73   add rsp, 0x90                         
+585e7a   pop rbx                               
+585e7b   pop rsi                               
+585e7c   pop rdi                               
+585e7d   pop rbp                               
+585e7e   pop r12                               
+585e80   ret                                   
+585e81   mov rdi, rax                          
+585e84   mov rcx, rbx                          
+585e87   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+585e8c   mov rcx, rdi                          
+585e8f   call 0x62f280                            ; sub_62f280(0x62f280)
+585e94   mov rcx, rbp                          
+585e97   mov rdi, rax                          
+585e9a   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+585e9f   mov rcx, rsi                          
+585ea2   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+585ea7   jmp 0x585e84                          
+585ea9   mov rdi, rax                          
+585eac   jmp 0x585e9f                          
+
+#### 0x585EB0 sub_585eb0 size=685 nins=202
+585eb0   push r15                              
+585eb2   push r14                              
+585eb4   push r13                              
+585eb6   push r12                              
+585eb8   push rbp                              
+585eb9   push rdi                              
+585eba   push rsi                              
+585ebb   push rbx                              
+585ebc   sub rsp, 0xb8                         
+585ec3   movaps xmmword ptr [rsp + 0xa0], xmm6 
+585ecb   lea r14, [rsp + 0x20]                 
+585ed0   mov rbx, r8                           
+585ed3   movapd xmm6, xmm3                     
+585ed7   lea r13, [rsp + 0x40]                 
+585edc   movapd xmm2, xmm3                     
+585ee0   mov rsi, rcx                          
+585ee3   mov rcx, r14                          
+585ee6   call 0x6863c0                            ; sub_6863c0(0x6863c0)
+585eeb   movapd xmm2, xmm6                     
+585eef   mov rdx, rbx                          
+585ef2   mov rcx, r13                          
+585ef5   call 0x6863c0                            ; sub_6863c0(0x6863c0)
+585efa   lea rbx, [rsp + 0x80]                 
+585f02   mov r8, r13                           
+585f05   mov rdx, r14                          
+585f08   mov rcx, rbx                          
+585f0b   call 0x5a2f80                            ; sub_5a2f80(0x5a2f80)
+585f10   lea r15, [rsp + 0x60]                 
+585f15   mov r8, r13                           
+585f18   mov rdx, rbx                          
+585f1b   mov rcx, r15                          
+585f1e   call 0x59c560                            ; sub_59c560(0x59c560)
+585f23   mov r12, qword ptr [rsp + 0x88]       
+585f2b   mov rbp, qword ptr [rsp + 0x80]       
+585f33   cmp r12, rbp                          
+585f36   je 0x585f96                           
+585f38   nop dword ptr [rax + rax]             
+585f40   mov rdi, qword ptr [rbp + 0x20]       
+585f44   mov rbx, qword ptr [rbp + 0x18]       
+585f48   cmp rdi, rbx                          
+585f4b   je 0x585f6a                           
+585f4d   nop dword ptr [rax]                   
+585f50   mov rcx, qword ptr [rbx]              
+585f53   test rcx, rcx                         
+585f56   je 0x585f5d                           
+585f58   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585f5d   add rbx, 0x18                         
+585f61   cmp rdi, rbx                          
+585f64   jne 0x585f50                          
+585f66   mov rbx, qword ptr [rbp + 0x18]       
+585f6a   test rbx, rbx                         
+585f6d   je 0x585f77                           
+585f6f   mov rcx, rbx                          
+585f72   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585f77   mov rcx, qword ptr [rbp]              
+585f7b   test rcx, rcx                         
+585f7e   je 0x585f85                           
+585f80   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585f85   add rbp, 0x30                         
+585f89   cmp r12, rbp                          
+585f8c   jne 0x585f40                          
+585f8e   mov rbp, qword ptr [rsp + 0x80]       
+585f96   test rbp, rbp                         
+585f99   je 0x585fa3                           
+585f9b   mov rcx, rbp                          
+585f9e   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585fa3   movapd xmm2, xmm6                     
+585fa7   mov rdx, r15                          
+585faa   mov rcx, rsi                          
+585fad   call 0x687080                            ; sub_687080(0x687080)
+585fb2   mov r12, qword ptr [rsp + 0x68]       
+585fb7   mov rbp, qword ptr [rsp + 0x60]       
+585fbc   cmp r12, rbp                          
+585fbf   je 0x586013                           
+585fc1   mov rdi, qword ptr [rbp + 0x20]       
+585fc5   mov rbx, qword ptr [rbp + 0x18]       
+585fc9   cmp rdi, rbx                          
+585fcc   je 0x585fea                           
+585fce   nop                                   
+585fd0   mov rcx, qword ptr [rbx]              
+585fd3   test rcx, rcx                         
+585fd6   je 0x585fdd                           
+585fd8   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585fdd   add rbx, 0x18                         
+585fe1   cmp rdi, rbx                          
+585fe4   jne 0x585fd0                          
+585fe6   mov rbx, qword ptr [rbp + 0x18]       
+585fea   test rbx, rbx                         
+585fed   je 0x585ff7                           
+585fef   mov rcx, rbx                          
+585ff2   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+585ff7   mov rcx, qword ptr [rbp]              
+585ffb   test rcx, rcx                         
+585ffe   je 0x586005                           
+586000   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+586005   add rbp, 0x30                         
+586009   cmp r12, rbp                          
+58600c   jne 0x585fc1                          
+58600e   mov rbp, qword ptr [rsp + 0x60]       
+586013   test rbp, rbp                         
+586016   je 0x586020                           
+586018   mov rcx, rbp                          
+58601b   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+586020   mov r12, qword ptr [rsp + 0x48]       
+586025   mov rbp, qword ptr [rsp + 0x40]       
+58602a   cmp r12, rbp                          
+58602d   je 0x586083                           
+58602f   nop                                   
+586030   mov rdi, qword ptr [rbp + 0x20]       
+586034   mov rbx, qword ptr [rbp + 0x18]       
+586038   cmp rdi, rbx                          
+58603b   je 0x58605a                           
+58603d   nop dword ptr [rax]                   
+586040   mov rcx, qword ptr [rbx]              
+586043   test rcx, rcx                         
+586046   je 0x58604d                           
+586048   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+58604d   add rbx, 0x18                         
+586051   cmp rdi, rbx                          
+586054   jne 0x586040                          
+586056   mov rbx, qword ptr [rbp + 0x18]       
+58605a   test rbx, rbx                         
+58605d   je 0x586067                           
+58605f   mov rcx, rbx                          
+586062   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+586067   mov rcx, qword ptr [rbp]              
+58606b   test rcx, rcx                         
+58606e   je 0x586075                           
+586070   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+586075   add rbp, 0x30                         
+586079   cmp r12, rbp                          
+58607c   jne 0x586030                          
+58607e   mov rbp, qword ptr [rsp + 0x40]       
+586083   test rbp, rbp                         
+586086   je 0x586090                           
+586088   mov rcx, rbp                          
+58608b   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+586090   mov r12, qword ptr [rsp + 0x28]       
+586095   mov rbp, qword ptr [rsp + 0x20]       
+58609a   cmp r12, rbp                          
+58609d   je 0x5860f3                           
+58609f   nop                                   
+5860a0   mov rdi, qword ptr [rbp + 0x20]       
+5860a4   mov rbx, qword ptr [rbp + 0x18]       
+5860a8   cmp rdi, rbx                          
+5860ab   je 0x5860ca                           
+5860ad   nop dword ptr [rax]                   
+5860b0   mov rcx, qword ptr [rbx]              
+5860b3   test rcx, rcx                         
+5860b6   je 0x5860bd                           
+5860b8   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+5860bd   add rbx, 0x18                         
+5860c1   cmp rdi, rbx                          
+5860c4   jne 0x5860b0                          
+5860c6   mov rbx, qword ptr [rbp + 0x18]       
+5860ca   test rbx, rbx                         
+5860cd   je 0x5860d7                           
+5860cf   mov rcx, rbx                          
+5860d2   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+5860d7   mov rcx, qword ptr [rbp]              
+5860db   test rcx, rcx                         
+5860de   je 0x5860e5                           
+5860e0   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+5860e5   add rbp, 0x30                         
+5860e9   cmp r12, rbp                          
+5860ec   jne 0x5860a0                          
+5860ee   mov rbp, qword ptr [rsp + 0x20]       
+5860f3   test rbp, rbp                         
+5860f6   je 0x586101                           
+5860f8   mov rcx, rbp                          
+5860fb   call 0x9984b0                            ; sub_9984b0(0x9984b0)
+586100   nop                                   
+586101   movaps xmm6, xmmword ptr [rsp + 0xa0] 
+586109   mov rax, rsi                          
+58610c   add rsp, 0xb8                         
+586113   pop rbx                               
+586114   pop rsi                               
+586115   pop rdi                               
+586116   pop rbp                               
+586117   pop r12                               
+586119   pop r13                               
+58611b   pop r14                               
+58611d   pop r15                               
+58611f   ret                                   
+586120   mov rbx, rax                          
+586123   mov rcx, r14                          
+586126   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+58612b   mov rcx, rbx                          
+58612e   call 0x62f280                            ; sub_62f280(0x62f280)
+586133   mov rcx, r15                          
+586136   mov rbx, rax                          
+586139   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+58613e   mov rcx, r13                          
+586141   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+586146   jmp 0x586123                          
+586148   mov rsi, rax                          
+58614b   mov rcx, rbx                          
+58614e   call 0x8ce510                            ; sub_8ce510(0x8ce510)
+586153   mov rbx, rsi                          
+586156   jmp 0x58613e                          
+586158   mov rbx, rax                          
+58615b   jmp 0x58613e                          
+

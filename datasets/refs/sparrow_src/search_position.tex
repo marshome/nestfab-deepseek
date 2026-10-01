@@ -1,0 +1,9 @@
+\begin{algorithm}[ht]
+    \caption{\texttt{search\_position}($i$)}
+    \begin{algorithmic}[1]
+        \State $f(i,t)\mapsto e \ \gets$ \nameref{alg:eval_sample} \Comment{Alg. \ref{alg:eval_sample}}
+        \State $t^* \gets \Call{perform\_sampling}{i, f(i,t) \mapsto e}$ \Comment{Fig. \ref{fig:sampling}}
+        \State \Return $t^*$
+    \end{algorithmic}
+    \label{alg:search_position}
+\end{algorithm}

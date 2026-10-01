@@ -1,0 +1,195 @@
+### CNS_GetCommonCut @ 0xBA50  size=825 nins=200
+    arg-regs: {'edx': 1, 'r8': 1, 'r9': 1}
+    this=r14 stores: (none)
+    strings: cns.cpp@0x9ACA7F; GetCommonCut@0x9ACAEE; nesting->nesting@0x9ACAFB; common_cut_number < evaluation.common_cut_segments.size()@0x9ACB10; CNS_GetCommonCut@0x9AD610
+    callees: sub(0xAC50), sub(0xBA9F), sub(0xBAD5), sub(0xBCD0), sub(0xBCE6), sub(0xBCF1), sub(0xBD03), sub(0xBD20), sub(0xBD63), sub(0x51DD80), sub(0x60A620), sub(0x62F280), sub(0x64AEA0), sub(0x9984B0)
+    TAIL:
+      00BD52 add r12, 0x10                            
+      00BD56 mov rbx, rax                             
+      00BD59 cmp rcx, r12                             
+      00BD5C je 0xbd63                                
+      00BD5E call 0x9984b0                            
+      00BD63 mov rax, qword ptr [rsp + 0x28]          
+      00BD68 mov rcx, qword ptr [rsp + 0x70]          
+      00BD6D add rax, 0x10                            
+      00BD71 cmp rcx, rax                             
+      00BD74 je 0xbcd0                                
+      00BD7A call 0x9984b0                            
+      00BD7F jmp 0xbcd0                               
+      00BD84 mov rbx, rax                             
+      00BD87 jmp 0xbd63                               
+### CNS_GetNumberOfCommonCuts @ 0xD710  size=346 nins=89
+    arg-regs: {}
+    this=rsi stores: (none)
+    strings: cns.cpp@0x9ACA7F; GetNumberOfCommonCuts@0x9ACDBB; cns_nesting->nesting@0x9ACDD1; // GetNumberOfCommonCuts @0x9ACDE6; CNS_GetNumberOfCommonCuts@0x9AD630
+    callees: sub(0xAC50), sub(0xD738), sub(0xD81F), sub(0xD850), sub(0x51DD80), sub(0x60A620), sub(0x62F280), sub(0x64AEA0), sub(0x64E630), sub(0x9984B0)
+    TAIL:
+      00D83A mov rcx, qword ptr [rsp + 0x20]          
+      00D83F add rbp, 0x10                            
+      00D843 mov rsi, rax                             
+      00D846 cmp rcx, rbp                             
+      00D849 je 0xd850                                
+      00D84B call 0x9984b0                            
+      00D850 mov rcx, qword ptr [rsp + 0x40]          
+      00D855 add rdi, 0x10                            
+      00D859 cmp rcx, rdi                             
+      00D85C je 0xd81f                                
+      00D85E call 0x9984b0                            
+      00D863 jmp 0xd81f                               
+      00D865 mov rsi, rax                             
+      00D868 jmp 0xd850                               
+### GetRow @ 0x10040  size=384 nins=104
+    arg-regs: {'edx': 1, 'r8': 1, 'r9': 1}
+    this=rbp stores: (none)
+    strings: cns.cpp@0x9ACA7F; GetRow@0x9AD17D; row_number < row_intervals.size()@0x9AD188; CNS_GetRow@0x9AD568
+    callees: sub(0xAC50), sub(0x10090), sub(0x1015E), sub(0x10178), sub(0x10193), sub(0x51E060), sub(0x60A620), sub(0x62F280), sub(0x64B1C0), sub(0x9984B0)
+    TAIL:
+      010190 mov rbx, rax                             
+      010193 mov rcx, qword ptr [rsp + 0x60]          
+      010198 add r12, 0x10                            
+      01019C cmp rcx, r12                             
+      01019F je 0x10178                               
+      0101A1 call 0x9984b0                            
+      0101A6 jmp 0x10178                              
+      0101A8 mov rcx, qword ptr [rsp + 0x40]          
+      0101AD add r13, 0x10                            
+      0101B1 mov rbx, rax                             
+      0101B4 cmp rcx, r13                             
+      0101B7 je 0x10193                               
+      0101B9 call 0x9984b0                            
+      0101BE jmp 0x10193                              
+### GetNumberOfRows @ 0xFF30  size=271 nins=70
+    arg-regs: {}
+    this=rsi stores: (none)
+    strings: -> @0x9AC88E; GetNumberOfRows@0x9AD16D
+    callees: sub(0xAB20), sub(0xFFCC), sub(0x1BF40), sub(0x51E060), sub(0x62F280), sub(0x63F6B8), sub(0x63F6C0), sub(0x868490), sub(0x8761B0), sub(0x978010), sub(0x97ABF0), sub(0x9878C0), sub(0x9984B0)
+    TAIL:
+      01000A call 0x63f6b8                            
+      01000F jmp 0xffcc                               
+      010011 mov ecx, eax                             
+      010013 call 0x97abf0                            
+      010018 mov ecx, 1                               
+      01001D call 0x97abf0                            
+      010022 cmp byte ptr [rsp + 0x28], 0             
+      010027 mov rbx, rax                             
+      01002A je 0x10036                               
+      01002C lea rcx, [rsp + 0x20]                    
+      010031 call 0x8761b0                            
+      010036 mov rcx, rbx                             
+      010039 call 0x62f280                            
+      01003E nop                                      
+### SetRowMode @ 0xFBF0  size=244 nins=54
+    arg-regs: {'edx': 1, 'xmm2': 1, 'xmm3': 1}
+    this=rbx stores: Q[rbx+0x128]<-rax; Q[rbx+0x130]<-rax; Q[rbx+0x138]<-rax; Q[rbx+0x140]<-rax; Q[rbx+0x148]<-rax; B[rbx+0x150]<-al
+    strings: SetRowMode@0x9AD156
+    callees: sub(0x54C400), sub(0x64DF60)
+    TAIL:
+      00FCAC mov qword ptr [rbx + 0x138], rax         
+      00FCB3 mov rax, qword ptr [rsp + 0x58]          
+      00FCB8 mov qword ptr [rbx + 0x140], rax         
+      00FCBF mov rax, qword ptr [rsp + 0x60]          
+      00FCC4 mov qword ptr [rbx + 0x148], rax         
+      00FCCB movzx eax, byte ptr [rsp + 0x68]         
+      00FCD0 mov byte ptr [rbx + 0x150], al           
+      00FCD6 add rsp, 0x90                            
+      00FCDD pop rbx                                  
+      00FCDE pop rsi                                  
+      00FCDF pop rdi                                  
+      00FCE0 pop rbp                                  
+      00FCE1 pop r12                                  
+      00FCE3 ret                                      
+### SetPipeMode @ 0xFCF0  size=568 nins=124
+    arg-regs: {'edx': 1, 'xmm2': 1, 'xmm3': 1}
+    this=rsi stores: Q[rsi+0x158]<-rax; Q[rsi+0x160]<-rax; Q[rsi+0x168]<-rax; Q[rsi+0x170]<-rax; Q[rsi+0x178]<-rax
+    strings: -> @0x9AC88E; SetPipeMode@0x9AD161
+    callees: sub(0xAB20), sub(0x1BF40), sub(0x1C0C0), sub(0x54C430), sub(0x62F280), sub(0x63F6C0), sub(0x869D00), sub(0x8761B0), sub(0x978010), sub(0x97ABF0), sub(0x9878C0)
+    TAIL:
+      00FEF8 pop rbp                                  
+      00FEF9 ret                                      
+      00FEFA mov ecx, eax                             
+      00FEFC call 0x97abf0                            
+      00FF01 mov ecx, 1                               
+      00FF06 call 0x97abf0                            
+      00FF0B cmp byte ptr [rsp + 0x68], 0             
+      00FF10 mov rbx, rax                             
+      00FF13 je 0xff1f                                
+      00FF15 lea rcx, [rsp + 0x60]                    
+      00FF1A call 0x8761b0                            
+      00FF1F mov rcx, rbx                             
+      00FF22 call 0x62f280                            
+      00FF27 nop                                      
+### SetShearMode @ 0xDDC0  size=33 nins=12
+    arg-regs: {'edx': 1}
+    this=rsi stores: D[rsi+0x44]<-ebx
+    strings: SetShearMode@0x9ACF48
+    callees: sub(0x64E120)
+    TAIL:
+      00DDC0 push rsi                                 
+      00DDC1 push rbx                                 
+      00DDC2 sub rsp, 0x28                            
+      00DDC6 mov rsi, rcx                             
+      00DDC9 mov ebx, edx                             
+      00DDCB lea rcx, [rip + 0x99f176]                STR:"SetShearMode"
+      00DDD2 call 0x64e120                            
+      00DDD7 mov dword ptr [rsi + 0x44], ebx          
+      00DDDA add rsp, 0x28                            
+      00DDDE pop rbx                                  
+      00DDDF pop rsi                                  
+      00DDE0 ret                                      
+### SetPartialShearMode @ 0xDDF0  size=36 nins=13
+    arg-regs: {'edx': 1}
+    this=rsi stores: D[rsi+0x48]<-ebx; D[rsi+0x44]<-ebx
+    strings: SetPartialShearMode@0x9ACF55
+    callees: sub(0x64E120)
+    TAIL:
+      00DDF0 push rsi                                 
+      00DDF1 push rbx                                 
+      00DDF2 sub rsp, 0x28                            
+      00DDF6 mov rsi, rcx                             
+      00DDF9 mov ebx, edx                             
+      00DDFB lea rcx, [rip + 0x99f153]                STR:"SetPartialShearMode"
+      00DE02 call 0x64e120                            
+      00DE07 mov dword ptr [rsi + 0x48], ebx          
+      00DE0A mov dword ptr [rsi + 0x44], ebx          
+      00DE0D add rsp, 0x28                            
+      00DE11 pop rbx                                  
+      00DE12 pop rsi                                  
+      00DE13 ret                                      
+### SetShearRepulseFromBorders @ 0xDE20  size=33 nins=12
+    arg-regs: {'edx': 1}
+    this=rsi stores: D[rsi+0x58]<-ebx
+    strings: SetShearRepulseFromBorders@0x9ACF69
+    callees: sub(0x64E120)
+    TAIL:
+      00DE20 push rsi                                 
+      00DE21 push rbx                                 
+      00DE22 sub rsp, 0x28                            
+      00DE26 mov rsi, rcx                             
+      00DE29 mov ebx, edx                             
+      00DE2B lea rcx, [rip + 0x99f137]                STR:"SetShearRepulseFromBorders"
+      00DE32 call 0x64e120                            
+      00DE37 mov dword ptr [rsi + 0x58], ebx          
+      00DE3A add rsp, 0x28                            
+      00DE3E pop rbx                                  
+      00DE3F pop rsi                                  
+      00DE40 ret                                      
+### SetSheetGrainDirection @ 0xC9A0  size=372 nins=96
+    arg-regs: {'edx': 1}
+    this=rdi stores: (none)
+    strings: -> @0x9AC88E; SetSheetGrainDirection@0x9ACC19
+    callees: sub(0xAB20), sub(0xCA76), sub(0xCA8D), sub(0x1BF40), sub(0x62F280), sub(0x63F6B8), sub(0x63F6C0), sub(0x8264E0), sub(0x867BF0), sub(0x867DF0), sub(0x868490), sub(0x869D00), sub(0x8761B0), sub(0x978010)
+    TAIL:
+      00CADF jmp 0xca8d                               
+      00CAE1 mov ecx, 1                               
+      00CAE6 call 0x97abf0                            
+      00CAEB mov ecx, eax                             
+      00CAED call 0x97abf0                            
+      00CAF2 call 0x978750                            
+      00CAF7 cmp byte ptr [rsp + 0x28], 0             
+      00CAFC mov rbx, rax                             
+      00CAFF je 0xcb0b                                
+      00CB01 lea rcx, [rsp + 0x20]                    
+      00CB06 call 0x8761b0                            
+      00CB0B mov rcx, rbx                             
+      00CB0E call 0x62f280                            
+      00CB13 nop                                      

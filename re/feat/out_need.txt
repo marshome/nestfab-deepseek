@@ -1,0 +1,41 @@
+CNS_GetCommonCut                           rva=  47696 size=   825 name=None                                     strings=cns.cpp; GetCommonCut; nesting->nesting; common_cut_number < evaluation.common_cut_segments.size(); CNS_GetCommonCut
+CNS_GetNumberOfCommonCuts                  rva=  55056 size=   346 name=GetNumberOfCommonCuts                    strings=cns.cpp; GetNumberOfCommonCuts; cns_nesting->nesting; // GetNumberOfCommonCuts ; CNS_GetNumberOfCommonCuts
+CNS_GetPartTorchInfos                      rva=  55408 size=   826 name=None                                     strings=cns.cpp; nesting->nesting; GetPartTorchInfos; part_index < nesting->nesting->nested_parts().size(); part_index < nesting->nesting->multitorch_infos().m_infos.size(); vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+GetRow                                     rva=  65600 size=   384 name=None                                     strings=cns.cpp; GetRow; row_number < row_intervals.size(); CNS_GetRow
+CNS_GetRow                                 rva=  65600 size=   384 name=None                                     strings=cns.cpp; GetRow; row_number < row_intervals.size(); CNS_GetRow
+CNS_AddToolPathDefectToSheet               EXPORT-NOHIT  strRVAs=['0x9AD1CE']
+CNS_AddExternalToolPathBoundaryToSheet     EXPORT-NOHIT  strRVAs=['0x9AD1F0']
+AddSuggestedPartsGrouping                  rva=  71232 size=   483 name=None                                     strings=cns.cpp; AddSuggestedPartsGrouping; order; CNS_AddSuggestedPartsGrouping
+AddPartToSuggestedPartsGrouping            rva=  63424 size=  1072 name=None                                     strings=-> ; cns.cpp; AddPartToSuggestedPartsGrouping; group; CNS_AddPartToSuggestedPartsGrouping
+MakeClusterFromSuggestedPartsGrouping      EXPORT-NOHIT  strRVAs=['0x9AE040']
+ForcePartOutsideHole                       EXPORT-NOHIT  strRVAs=['0x9ACBDE']
+GenerateLaunchingOrderProblem              rva=  47312 size=   378 name=None                                     strings=GenerateLaunchingOrderProblem; source_version
+GetNesting                                 rva=  46304 size=    38 name=GetNestingFillRatio?                     strings=GetNestingFillRatio
+GetNesting                                 rva=  46928 size=   384 name=None                                     strings=cns.cpp; GetNestingBoundingBox; min_x && min_y && max_x && max_y; CNS_GetNestingBoundingBox
+GetNesting                                 rva=  48528 size=   470 name=None                                     strings=cns.cpp; GetNestingDimensions; CNS_GetNestingDimensions
+GetNesting                                 rva=  69424 size=   490 name=None                                     strings=cns.cpp; GetNesting; nesting_number < solution_aux.size(); CNS_GetNesting
+GetNestingDimensions                       rva=  48528 size=   470 name=None                                     strings=cns.cpp; GetNestingDimensions; CNS_GetNestingDimensions
+GetNestingBoundingBox                      rva=  46928 size=   384 name=None                                     strings=cns.cpp; GetNestingBoundingBox; min_x && min_y && max_x && max_y; CNS_GetNestingBoundingBox
+GetNestedPart                              rva=  54368 size=   688 name=None                                     strings=cns.cpp; GetNestedPart; nested_part_number <= nested_parts.size(); part_number <= order->parts.size(); CNS_GetNestedPart
+GetNestedPart                              rva=  93792 size=  1727 name=GetNestedPartPartVariant?                strings=GetNestedPartPartVariant
+UnSerializeSolution                        EXPORT-NOHIT  strRVAs=['0x9AE120', '0x9AE900']
+DrawSVG                                    EXPORT-NOHIT  strRVAs=['0x9AC7F8', '0x9DB948', '0x9DB950', '0x9DB968', '0x9DB990']
+common_cut_segments                        rva=  47696 size=   825 name=None                                     strings=cns.cpp; GetCommonCut; nesting->nesting; common_cut_number < evaluation.common_cut_segments.size(); CNS_GetCommonCut
+multitorch_infos                           rva=  55408 size=   826 name=None                                     strings=cns.cpp; nesting->nesting; GetPartTorchInfos; part_index < nesting->nesting->nested_parts().size(); part_index < nesting->nesting->multitorch_infos().m_infos.size(); vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+row_intervals                              rva=  65600 size=   384 name=None                                     strings=cns.cpp; GetRow; row_number < row_intervals.size(); CNS_GetRow
+ComputeSheetGeometryRowMode                EXPORT-NOHIT  strRVAs=['0x9AE000']
+GetCommonCutProperties                     EXPORT-NOHIT  strRVAs=['0x9ADFC0']
+GetMultitorchProperties                    EXPORT-NOHIT  strRVAs=['0x9ADFA0']
+border_property.hpp                        EXPORT-NOHIT  strRVAs=['0x9ADCC8', '0x9DB160']
+GetLayerRestrictedZonePart                 EXPORT-NOHIT  strRVAs=['0x9AE070']
+GetLayerRestrictedZoneSheet                EXPORT-NOHIT  strRVAs=['0x9AE090']
+GetLayerLeatherPart                        EXPORT-NOHIT  strRVAs=['0x9AE0B0']
+GetLayerLeatherSheet                       EXPORT-NOHIT  strRVAs=['0x9AE0D0']
+SetSheetGrainDirection                     rva=  51616 size=   372 name=SetSheetGrainDirection?                  strings=-> ; SetSheetGrainDirection
+SetIncompatibleSheet                       rva=  70800 size=   423 name=SetIncompatibleSheet?                    strings=-> ; SetIncompatibleSheet
+SetExtraGapOnPart                          rva=  83024 size=   449 name=SetExtraGapOnPart?                       strings=SetExtraGapOnPart
+BadCommonCutGaps                           EXPORT-NOHIT  strRVAs=['0x9ADDD6']
+cns_solution.css                           EXPORT-NOHIT  strRVAs=['0x9DB85C', '0x9DB873', '0x9DB887']
+common_cut_safety_preference               EXPORT-NOHIT  strRVAs=['0x9ADE98']
+all_settings                               EXPORT-NOHIT  strRVAs=['0x9ADE98']
+m_infos                                    rva=  55408 size=   826 name=None                                     strings=cns.cpp; nesting->nesting; GetPartTorchInfos; part_index < nesting->nesting->nested_parts().size(); part_index < nesting->nesting->multitorch_infos().m_infos.size(); vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)

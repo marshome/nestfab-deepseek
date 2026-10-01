@@ -1,0 +1,11 @@
+### fn 0xb5910 name=None end=0xb5926 size=22
+STRINGS: 
+CALLERS: 0x1e70:None, 0x44e0:None
+CALLEES: 0xb81f0:None
+
+  000b5910  4883ec28             sub     rsp, 0x28
+  000b5914  e8d7280000           call    0xb81f0  ; -> 0xb81f0 None
+  000b5919  3d14050000           cmp     eax, 0x514
+  000b591e  0f94c0               sete    al
+  000b5921  4883c428             add     rsp, 0x28
+  000b5925  c3                   ret     

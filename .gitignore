@@ -1,0 +1,59 @@
+# --- the proprietary target binary: NOT redistributed (see README) -----------------------------
+libcns_dump_64.dll
+libcns*.dll
+*.dll
+
+# --- build outputs -----------------------------------------------------------------------------
+build/
+cmake-build-*/
+_build/
+*.o
+*.obj
+*.a
+*.lib
+*.exe
+*.pdb
+*.ilk
+*.log.tmp
+
+# --- generated / derived analysis caches (regenerable from the dump) ---------------------------
+re/*.pkl
+re/__pycache__/
+**/__pycache__/
+*.pyc
+
+# --- third party: scripts and documentation are kept, sources and archives are not -------------
+third_party/_archives/
+third_party/_shim/
+third_party/src/
+third_party/build/
+third_party/build-cmake/
+third_party/build-cmake-*/
+third_party/install/
+third_party/gen/
+third_party/_probe.sh
+third_party/_cs.sh
+third_party/build_coinor.log
+third_party/fetch.log
+third_party/cmake_build.log
+third_party/test_osiclp.exe
+third_party/_cs.sh
+nul
+
+# --- datasets: fetched with the documented git commands; only results and the cited paper stay --
+datasets/esicup/
+datasets/or-datasets/
+datasets/work/
+datasets/refs/*.tar.gz
+datasets/bench_run.log
+
+# --- IDE / editor ------------------------------------------------------------------------------
+.idea/
+.vscode/
+*.user
+*.swp
+*~
+
+# --- misc --------------------------------------------------------------------------------------
+b.log
+re/*.bin

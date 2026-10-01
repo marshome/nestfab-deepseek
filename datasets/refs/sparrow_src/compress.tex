@@ -1,0 +1,16 @@
+\begin{algorithm}[htbp]
+    \caption{\texttt{compress}($s^*$)}
+    \begin{algorithmic}[1]
+        \While {$\texttt{TL}_{c}$ not reached}
+            \State $\tau \gets \text{elapsed time in phase}$
+            \State $r \gets \texttt{R}_{c}^s + (\texttt{R}_{c}^e - \texttt{R}_{c}^s) \cdot (\tau / \texttt{TL}_c)$ \Comment{Table \ref{tab:params}}
+            \State restore to $s^*$ and shrink strip by $r$
+            \State $s' \gets \Call{separate}{\texttt{K}_c,\texttt{N}_c}$ \Comment{Alg. \ref{alg:separate}}
+            \If{$s'$ \textbf{is} feasible} 
+                \State $s^* \gets s'$
+            \EndIf
+        \EndWhile
+        \State \Return $s^*$
+    \end{algorithmic}
+    \label{alg:compress}
+\end{algorithm}

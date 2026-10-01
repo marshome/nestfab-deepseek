@@ -1,0 +1,90 @@
+### fn 0x14e0 name=None end=0x15ec size=268
+STRINGS: 
+CALLERS: 0x14e0:None, 0x1e70:None
+CALLEES: 0x1503:None, 0x1517:None, 0x15c5:None, 0xb5af0:None, 0xb5b10:None, 0x12def0:None, 0x12df60:None, 0x12dfd0:None, 0x1321d0:None, 0x1322e0:None
+
+  000014e0  4155                 push    r13
+  000014e2  4154                 push    r12
+  000014e4  55                   push    rbp
+  000014e5  57                   push    rdi
+  000014e6  56                   push    rsi
+  000014e7  53                   push    rbx
+  000014e8  4883ec38             sub     rsp, 0x38
+  000014ec  4189cc               mov     r12d, ecx
+  000014ef  e8fc450b00           call    0xb5af0  ; -> 0xb5af0 None
+  000014f4  84c0                 test    al, al
+  000014f6  0f84e4000000         je      0x15e0
+  000014fc  e8df0d1300           call    0x1322e0  ; -> 0x1322e0 None
+  00001501  89c7                 mov     edi, eax
+  00001503  e8e8450b00           call    0xb5af0  ; -> 0xb5af0 None
+  00001508  84c0                 test    al, al
+  0000150a  0f84c4000000         je      0x15d4
+  00001510  e8bb0c1300           call    0x1321d0  ; -> 0x1321d0 None
+  00001515  89c5                 mov     ebp, eax
+  00001517  e8f4450b00           call    0xb5b10  ; -> 0xb5b10 None
+  0000151c  488d74242c           lea     rsi, [rsp + 0x2c]
+  00001521  488d5c2428           lea     rbx, [rsp + 0x28]
+  00001526  4189c5               mov     r13d, eax
+  00001529  41f7dd               neg     r13d
+  0000152c  83f8fe               cmp     eax, -2
+  0000152f  7555                 jne     0x1586
+  00001531  e98f000000           jmp     0x15c5  ; -> 0x15c5 None
+  00001536  662e0f1f840000000000 nop     word ptr cs:[rax + rax]
+  00001540  4589e8               mov     r8d, r13d
+  00001543  4889f2               mov     rdx, rsi
+  00001546  4889d9               mov     rcx, rbx
+  00001549  897c2428             mov     dword ptr [rsp + 0x28], edi
+  0000154d  896c242c             mov     dword ptr [rsp + 0x2c], ebp
+  00001551  e87aca1200           call    0x12dfd0  ; -> 0x12dfd0 None
+  00001556  8b54242c             mov     edx, dword ptr [rsp + 0x2c]
+  0000155a  8b442428             mov     eax, dword ptr [rsp + 0x28]
+  0000155e  8d4a08               lea     ecx, [rdx + 8]
+  00001561  4189d0               mov     r8d, edx
+  00001564  440fafc2             imul    r8d, edx
+  00001568  d3e0                 shl     eax, cl
+  0000156a  89d1                 mov     ecx, edx
+  0000156c  41d3e0               shl     r8d, cl
+  0000156f  4431c0               xor     eax, r8d
+  00001572  3534127856           xor     eax, 0x56781234
+  00001577  4139c4               cmp     r12d, eax
+  0000157a  7437                 je      0x15b3
+  0000157c  4183c501             add     r13d, 1
+  00001580  4183fd02             cmp     r13d, 2
+  00001584  743f                 je      0x15c5
+  00001586  4889f2               mov     rdx, rsi
+  00001589  4589e8               mov     r8d, r13d
+  0000158c  4889d9               mov     rcx, rbx
+  0000158f  897c2428             mov     dword ptr [rsp + 0x28], edi
+  00001593  896c242c             mov     dword ptr [rsp + 0x2c], ebp
+  00001597  e834ca1200           call    0x12dfd0  ; -> 0x12dfd0 None
+  0000159c  8b54242c             mov     edx, dword ptr [rsp + 0x2c]
+  000015a0  8b442428             mov     eax, dword ptr [rsp + 0x28]
+  000015a4  0fafd2               imul    edx, edx
+  000015a7  3578563412           xor     eax, 0x12345678
+  000015ac  31d0                 xor     eax, edx
+  000015ae  4139c4               cmp     r12d, eax
+  000015b1  758d                 jne     0x1540
+  000015b3  b801000000           mov     eax, 1
+  000015b8  4883c438             add     rsp, 0x38
+  000015bc  5b                   pop     rbx
+  000015bd  5e                   pop     rsi
+  000015be  5f                   pop     rdi
+  000015bf  5d                   pop     rbp
+  000015c0  415c                 pop     r12
+  000015c2  415d                 pop     r13
+  000015c4  c3                   ret     
+  000015c5  31c0                 xor     eax, eax
+  000015c7  4883c438             add     rsp, 0x38
+  000015cb  5b                   pop     rbx
+  000015cc  5e                   pop     rsi
+  000015cd  5f                   pop     rdi
+  000015ce  5d                   pop     rbp
+  000015cf  415c                 pop     r12
+  000015d1  415d                 pop     r13
+  000015d3  c3                   ret     
+  000015d4  e887c91200           call    0x12df60  ; -> 0x12df60 None
+  000015d9  89c5                 mov     ebp, eax
+  000015db  e937ffffff           jmp     0x1517  ; -> 0x1517 None
+  000015e0  e80bc91200           call    0x12def0  ; -> 0x12def0 None
+  000015e5  89c7                 mov     edi, eax
+  000015e7  e917ffffff           jmp     0x1503  ; -> 0x1503 None

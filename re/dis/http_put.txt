@@ -1,0 +1,14 @@
+### fn 0x2bd20 name=None end=0x2bd40 size=32
+STRINGS: 
+CALLERS: 0x26a60:None
+CALLEES: 0x2b660:None
+
+  0002bd20  4883ec38             sub     rsp, 0x38
+  0002bd24  4d89c1               mov     r9, r8
+  0002bd27  f20f115c2420         movsd   qword ptr [rsp + 0x20], xmm3
+  0002bd2d  4989d0               mov     r8, rdx
+  0002bd30  ba50000000           mov     edx, 0x50
+  0002bd35  e826f9ffff           call    0x2b660  ; -> 0x2b660 None
+  0002bd3a  90                   nop     
+  0002bd3b  4883c438             add     rsp, 0x38
+  0002bd3f  c3                   ret     

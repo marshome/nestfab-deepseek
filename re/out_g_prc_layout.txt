@@ -1,0 +1,390 @@
+#### 0x220ED0 AlphaSurfacePricer / DimPricer log site  size=563 nins=138
+220ed0   push r13                                  
+220ed2   push r12                                  
+220ed4   push rbp                                  
+220ed5   push rdi                                  
+220ed6   push rsi                                  
+220ed7   push rbx                                  
+220ed8   sub rsp, 0xb8                             
+220edf   mov r8d, 2                                
+220ee5   lea rbx, [rsp + 0x70]                     
+220eea   mov r12, rcx                              
+220eed   movapd xmm1, xmm2                         
+220ef1   mov rcx, rbx                              
+220ef4   mov r13, rdx                              
+220ef7   movq rbp, xmm2                            
+220efc   call 0x605680                                ; (0x605680)
+220f01   xor r8d, r8d                              
+220f04   xor edx, edx                              
+220f06   mov rcx, rbx                              
+220f09   mov qword ptr [rsp + 0x20], 3             
+220f12   lea r9, [rip + 0x7a0d79]                     ; STR@9c1c92 'AP '
+220f19   call 0x90ecb0                                ; basic_string::_M_replace(0x90ecb0)
+220f1e   lea rsi, [rsp + 0x90]                     
+220f26   lea rdx, [rsi + 0x10]                     
+220f2a   mov qword ptr [rsp + 0x90], rdx           
+220f32   mov rcx, qword ptr [rax]                  
+220f35   lea rdx, [rax + 0x10]                     
+220f39   cmp rcx, rdx                              
+220f3c   je 0x221062                               
+220f42   mov qword ptr [rsp + 0x90], rcx           
+220f4a   mov rcx, qword ptr [rax + 0x10]           
+220f4e   mov qword ptr [rsp + 0xa0], rcx           
+220f56   mov rcx, qword ptr [rax + 8]              
+220f5a   lea rdi, [rsp + 0x30]                     
+220f5f   mov byte ptr [rax + 0x10], 0              
+220f63   mov r8d, 3                                
+220f69   movq xmm1, rbp                            
+220f6e   mov qword ptr [rsp + 0x98], rcx           
+220f76   mov rcx, rdi                              
+220f79   mov qword ptr [rax], rdx                  
+220f7c   mov qword ptr [rax + 8], 0                
+220f84   call 0x605680                                ; (0x605680)
+220f89   mov qword ptr [rsp + 0x20], 0x13          
+220f92   lea r9, [rip + 0x7a0cfd]                     ; STR@9c1c96 'AlphaSurfacePricer '
+220f99   xor r8d, r8d                              
+220f9c   xor edx, edx                              
+220f9e   mov rcx, rdi                              
+220fa1   call 0x90ecb0                                ; basic_string::_M_replace(0x90ecb0)
+220fa6   lea rbp, [rsp + 0x50]                     
+220fab   lea rdx, [rbp + 0x10]                     
+220faf   mov qword ptr [rsp + 0x50], rdx           
+220fb4   mov rcx, qword ptr [rax]                  
+220fb7   lea rdx, [rax + 0x10]                     
+220fbb   cmp rcx, rdx                              
+220fbe   je 0x221080                               
+220fc4   mov qword ptr [rsp + 0x50], rcx           
+220fc9   mov rcx, qword ptr [rax + 0x10]           
+220fcd   mov qword ptr [rsp + 0x60], rcx           
+220fd2   mov rcx, qword ptr [rax + 8]              
+220fd6   mov byte ptr [rax + 0x10], 0              
+220fda   mov r9, rbp                               
+220fdd   xor r8d, r8d                              
+220fe0   mov qword ptr [rsp + 0x58], rcx           
+220fe5   mov rcx, r12                              
+220fe8   mov qword ptr [rax], rdx                  
+220feb   mov rdx, r13                              
+220fee   mov qword ptr [rax + 8], 0                
+220ff6   mov qword ptr [rsp + 0x20], rsi           
+220ffb   call 0x641c00                                ; (0x641c00)
+221000   mov rcx, qword ptr [rsp + 0x50]           
+221005   add rbp, 0x10                             
+221009   cmp rcx, rbp                              
+22100c   je 0x221013                               
+22100e   call 0x9984b0                                ; (0x9984b0)
+221013   mov rcx, qword ptr [rsp + 0x30]           
+221018   add rdi, 0x10                             
+22101c   cmp rcx, rdi                              
+22101f   je 0x221026                               
+221021   call 0x9984b0                                ; (0x9984b0)
+221026   mov rcx, qword ptr [rsp + 0x90]           
+22102e   add rsi, 0x10                             
+221032   cmp rcx, rsi                              
+221035   je 0x22103c                               
+221037   call 0x9984b0                                ; (0x9984b0)
+22103c   mov rcx, qword ptr [rsp + 0x70]           
+221041   add rbx, 0x10                             
+221045   cmp rcx, rbx                              
+221048   je 0x22104f                               
+22104a   call 0x9984b0                                ; (0x9984b0)
+22104f   mov rax, r12                              
+221052   add rsp, 0xb8                             
+221059   pop rbx                                   
+22105a   pop rsi                                   
+22105b   pop rdi                                   
+22105c   pop rbp                                   
+22105d   pop r12                                   
+22105f   pop r13                                   
+221061   ret                                       
+221062   mov r9, qword ptr [rax + 0x10]            
+221066   mov r10, qword ptr [rax + 0x18]           
+22106a   mov qword ptr [rsp + 0xa0], r9            
+221072   mov qword ptr [rsp + 0xa8], r10           
+22107a   jmp 0x220f56                              
+22107f   nop                                       
+221080   mov r9, qword ptr [rax + 0x10]            
+221084   mov r10, qword ptr [rax + 0x18]           
+221088   mov qword ptr [rsp + 0x60], r9            
+22108d   mov qword ptr [rsp + 0x68], r10           
+221092   jmp 0x220fd2                              
+221097   mov rdi, rax                              
+22109a   mov rcx, qword ptr [rsp + 0x90]           
+2210a2   add rsi, 0x10                             
+2210a6   cmp rcx, rsi                              
+2210a9   je 0x2210b0                               
+2210ab   call 0x9984b0                                ; (0x9984b0)
+2210b0   mov rcx, qword ptr [rsp + 0x70]           
+2210b5   add rbx, 0x10                             
+2210b9   cmp rcx, rbx                              
+2210bc   je 0x2210c3                               
+2210be   call 0x9984b0                                ; (0x9984b0)
+2210c3   mov rcx, rdi                              
+2210c6   call 0x62f280                                ; (0x62f280)
+2210cb   mov rcx, qword ptr [rsp + 0x50]           
+2210d0   add rbp, 0x10                             
+2210d4   mov r12, rax                              
+2210d7   cmp rcx, rbp                              
+2210da   je 0x2210e1                               
+2210dc   call 0x9984b0                                ; (0x9984b0)
+2210e1   mov rcx, qword ptr [rsp + 0x30]           
+2210e6   add rdi, 0x10                             
+2210ea   cmp rcx, rdi                              
+2210ed   je 0x2210f4                               
+2210ef   call 0x9984b0                                ; (0x9984b0)
+2210f4   mov rdi, r12                              
+2210f7   jmp 0x22109a                              
+2210f9   mov r12, rax                              
+2210fc   jmp 0x2210e1                              
+2210fe   mov rdi, rax                              
+221101   jmp 0x2210b0                              
+
+#### 0x23B080 Pb pricing (old_beam.cpp)  size=922 nins=224
+23b080   push rbp                                  
+23b081   push rdi                                  
+23b082   push rsi                                  
+23b083   push rbx                                  
+23b084   sub rsp, 0x98                             
+23b08b   movaps xmmword ptr [rsp + 0x80], xmm6     
+23b093   mov rax, qword ptr [rcx + 0x60]           
+23b097   mov rbx, rcx                              
+23b09a   lea rcx, [rax + 0x18]                     
+23b09e   call 0x21f210                                ; (0x21f210)
+23b0a3   mov rcx, qword ptr [rbx + 0x68]           
+23b0a7   mov rsi, rax                              
+23b0aa   mov rax, qword ptr [rbx + 0x60]           
+23b0ae   mov rdx, qword ptr [rax]                  
+23b0b1   add rdx, 8                                
+23b0b5   call 0x1be500                                ; (0x1be500)
+23b0ba   cmp qword ptr [rbx + 0x60], 0             
+23b0bf   movapd xmm6, xmm0                         
+23b0c3   je 0x23b2a6                               
+23b0c9   mov rdi, qword ptr [rbx]                  
+23b0cc   cmp rsi, rdi                              
+23b0cf   je 0x23b2c0                               
+23b0d5   mov rcx, qword ptr [rip + 0x7ccf54]          ; data@a08030
+23b0dc   mov r8d, 0x13                             
+23b0e2   lea rdx, [rip + 0x787330]                    ; STR@9c2419 'Pb global evaluate '
+23b0e9   call 0x978010                                ; (0x978010)
+23b0ee   mov rcx, qword ptr [rip + 0x7ccf3b]          ; data@a08030
+23b0f5   mov rdx, rdi                              
+23b0f8   call 0x8691a0                                ; (0x8691a0)
+23b0fd   mov r8d, 1                                
+23b103   lea rdx, [rip + 0x78717d]                    ; data@9c2287
+23b10a   mov rdi, rax                              
+23b10d   mov rcx, rax                              
+23b110   call 0x978010                                ; (0x978010)
+23b115   mov rcx, rdi                              
+23b118   mov rdx, rsi                              
+23b11b   call 0x8691a0                                ; (0x8691a0)
+23b120   mov rbp, rax                              
+23b123   mov rax, qword ptr [rax]                  
+23b126   mov rax, qword ptr [rax - 0x18]           
+23b12a   mov rdi, qword ptr [rbp + rax + 0xf0]     
+23b132   test rdi, rdi                             
+23b135   je 0x23b3c1                               
+23b13b   cmp byte ptr [rdi + 0x38], 0              
+23b13f   je 0x23b390                               
+23b145   movsx edx, byte ptr [rdi + 0x43]          
+23b149   mov rcx, rbp                              
+23b14c   call 0x867bf0                                ; (0x867bf0)
+23b151   mov rcx, rax                              
+23b154   call 0x867df0                                ; (0x867df0)
+23b159   mov rdi, qword ptr [rbx + 8]              
+23b15d   pxor xmm0, xmm0                           
+23b161   cvtsi2sd xmm0, rdi                        
+23b166   ucomisd xmm6, xmm0                        
+23b16a   jp 0x23b2d5                               
+23b170   jne 0x23b2d5                              
+23b176   cmp rsi, qword ptr [rbx]                  
+23b179   je 0x23b2a6                               
+23b17f   lea rsi, [rsp + 0x60]                     
+23b184   lea rdx, [rip + 0x7872ae]                    ; STR@9c2439 'm_eval.m_c == c'
+23b18b   mov rcx, rsi                              
+23b18e   call 0x2399d0                                ; (0x2399d0)
+23b193   lea rdi, [rsp + 0x40]                     
+23b198   lea rdx, [rip + 0x787461]                    ; STR@9c2600 'AssertCoherency'
+23b19f   mov rcx, rdi                              
+23b1a2   call 0x2399d0                                ; (0x2399d0)
+23b1a7   lea rbp, [rsp + 0x20]                     
+23b1ac   lea rdx, [rip + 0x787296]                    ; STR@9c2449 '..\\nesting\\algos\\old_beam.cpp'
+23b1b3   mov rcx, rbp                              
+23b1b6   call 0x2399d0                                ; (0x2399d0)
+23b1bb   mov r9, rsi                               
+23b1be   mov r8, rdi                               
+23b1c1   mov edx, 0x91                             
+23b1c6   mov rcx, rbp                              
+23b1c9   call 0x60a620                                ; (0x60a620)
+23b1ce   mov rcx, qword ptr [rsp + 0x20]           
+23b1d3   add rbp, 0x10                             
+23b1d7   cmp rcx, rbp                              
+23b1da   je 0x23b1e1                               
+23b1dc   call 0x9984b0                                ; (0x9984b0)
+23b1e1   mov rcx, qword ptr [rsp + 0x40]           
+23b1e6   add rdi, 0x10                             
+23b1ea   cmp rcx, rdi                              
+23b1ed   je 0x23b1f4                               
+23b1ef   call 0x9984b0                                ; (0x9984b0)
+23b1f4   mov rcx, qword ptr [rsp + 0x60]           
+23b1f9   add rsi, 0x10                             
+23b1fd   cmp rcx, rsi                              
+23b200   je 0x23b207                               
+23b202   call 0x9984b0                                ; (0x9984b0)
+23b207   pxor xmm0, xmm0                           
+23b20b   cvtsi2sd xmm0, qword ptr [rbx + 8]        
+23b211   ucomisd xmm6, xmm0                        
+23b215   jp 0x23b21d                               
+23b217   je 0x23b2a6                               
+23b21d   lea rsi, [rsp + 0x60]                     
+23b222   lea rdx, [rip + 0x78723e]                    ; STR@9c2467 'm_eval.m_v == v'
+23b229   mov rcx, rsi                              
+23b22c   call 0x2399d0                                ; (0x2399d0)
+23b231   lea rdi, [rsp + 0x40]                     
+23b236   lea rdx, [rip + 0x7873c3]                    ; STR@9c2600 'AssertCoherency'
+23b23d   mov rcx, rdi                              
+23b240   call 0x2399d0                                ; (0x2399d0)
+23b245   lea rbp, [rsp + 0x20]                     
+23b24a   lea rdx, [rip + 0x7871f8]                    ; STR@9c2449 '..\\nesting\\algos\\old_beam.cpp'
+23b251   mov rcx, rbp                              
+23b254   call 0x2399d0                                ; (0x2399d0)
+23b259   mov r9, rsi                               
+23b25c   mov r8, rdi                               
+23b25f   mov edx, 0x92                             
+23b264   mov rcx, rbp                              
+23b267   call 0x60a620                                ; (0x60a620)
+23b26c   mov rcx, qword ptr [rsp + 0x20]           
+23b271   add rbp, 0x10                             
+23b275   cmp rcx, rbp                              
+23b278   je 0x23b27f                               
+23b27a   call 0x9984b0                                ; (0x9984b0)
+23b27f   mov rcx, qword ptr [rsp + 0x40]           
+23b284   add rdi, 0x10                             
+23b288   cmp rcx, rdi                              
+23b28b   je 0x23b292                               
+23b28d   call 0x9984b0                                ; (0x9984b0)
+23b292   mov rcx, qword ptr [rsp + 0x60]           
+23b297   add rsi, 0x10                             
+23b29b   cmp rcx, rsi                              
+23b29e   je 0x23b2a6                               
+23b2a0   call 0x9984b0                                ; (0x9984b0)
+23b2a5   nop                                       
+23b2a6   movaps xmm6, xmmword ptr [rsp + 0x80]     
+23b2ae   add rsp, 0x98                             
+23b2b5   pop rbx                                   
+23b2b6   pop rsi                                   
+23b2b7   pop rdi                                   
+23b2b8   pop rbp                                   
+23b2b9   ret                                       
+23b2ba   nop word ptr [rax + rax]                  
+23b2c0   mov rdi, qword ptr [rbx + 8]              
+23b2c4   pxor xmm0, xmm0                           
+23b2c8   cvtsi2sd xmm0, rdi                        
+23b2cd   ucomisd xmm6, xmm0                        
+23b2d1   jp 0x23b2d5                               
+23b2d3   je 0x23b2a6                               
+23b2d5   mov rcx, qword ptr [rip + 0x7ccd54]          ; data@a08030
+23b2dc   mov r8d, 0xb                              
+23b2e2   lea rdx, [rip + 0x787144]                    ; STR@9c242d 'Pb pricing '
+23b2e9   call 0x978010                                ; (0x978010)
+23b2ee   mov rcx, qword ptr [rip + 0x7ccd3b]          ; data@a08030
+23b2f5   mov rdx, rdi                              
+23b2f8   call 0x8691a0                                ; (0x8691a0)
+23b2fd   mov r8d, 1                                
+23b303   lea rdx, [rip + 0x786f7d]                    ; data@9c2287
+23b30a   mov rdi, rax                              
+23b30d   mov rcx, rax                              
+23b310   call 0x978010                                ; (0x978010)
+23b315   mov rcx, rdi                              
+23b318   movapd xmm1, xmm6                         
+23b31c   call 0x8688e0                                ; (0x8688e0)
+23b321   mov rbp, rax                              
+23b324   mov rax, qword ptr [rax]                  
+23b327   mov rax, qword ptr [rax - 0x18]           
+23b32b   mov rdi, qword ptr [rbp + rax + 0xf0]     
+23b333   test rdi, rdi                             
+23b336   je 0x23b3c1                               
+23b33c   cmp byte ptr [rdi + 0x38], 0              
+23b340   je 0x23b364                               
+23b342   movsx edx, byte ptr [rdi + 0x43]          
+23b346   mov rcx, rbp                              
+23b349   call 0x867bf0                                ; (0x867bf0)
+23b34e   mov rcx, rax                              
+23b351   call 0x867df0                                ; (0x867df0)
+23b356   cmp rsi, qword ptr [rbx]                  
+23b359   jne 0x23b17f                              
+23b35f   jmp 0x23b207                              
+23b364   mov rcx, rdi                              
+23b367   call 0x8264e0                                ; (0x8264e0)
+23b36c   mov rax, qword ptr [rdi]                  
+23b36f   mov edx, 0xa                              
+23b374   lea rcx, [rip + 0x5eb3a5]                    ; data@826720
+23b37b   mov rax, qword ptr [rax + 0x30]           
+23b37f   cmp rax, rcx                              
+23b382   je 0x23b346                               
+23b384   mov rcx, rdi                              
+23b387   call rax                                  
+23b389   movsx edx, al                             
+23b38c   jmp 0x23b346                              
+23b38e   nop                                       
+23b390   mov rcx, rdi                              
+23b393   call 0x8264e0                                ; (0x8264e0)
+23b398   mov rax, qword ptr [rdi]                  
+23b39b   mov edx, 0xa                              
+23b3a0   lea rcx, [rip + 0x5eb379]                    ; data@826720
+23b3a7   mov rax, qword ptr [rax + 0x30]           
+23b3ab   cmp rax, rcx                              
+23b3ae   je 0x23b149                               
+23b3b4   mov rcx, rdi                              
+23b3b7   call rax                                  
+23b3b9   movsx edx, al                             
+23b3bc   jmp 0x23b149                              
+23b3c1   call 0x978750                                ; (0x978750)
+23b3c6   mov rcx, qword ptr [rsp + 0x20]           
+23b3cb   add rbp, 0x10                             
+23b3cf   mov rbx, rax                              
+23b3d2   cmp rcx, rbp                              
+23b3d5   je 0x23b3dc                               
+23b3d7   call 0x9984b0                                ; (0x9984b0)
+23b3dc   mov rcx, qword ptr [rsp + 0x40]           
+23b3e1   add rdi, 0x10                             
+23b3e5   cmp rcx, rdi                              
+23b3e8   je 0x23b3ef                               
+23b3ea   call 0x9984b0                                ; (0x9984b0)
+23b3ef   mov rcx, qword ptr [rsp + 0x60]           
+23b3f4   add rsi, 0x10                             
+23b3f8   cmp rcx, rsi                              
+23b3fb   je 0x23b402                               
+23b3fd   call 0x9984b0                                ; (0x9984b0)
+23b402   mov rcx, rbx                              
+23b405   call 0x62f280                                ; (0x62f280)
+23b40a   mov rbx, rax                              
+23b40d   jmp 0x23b3ef                              
+23b40f   mov rbx, rax                              
+23b412   jmp 0x23b3dc                              
+23b414   jmp 0x23b40a                              
+23b416   jmp 0x23b40f                              
+23b418   jmp 0x23b3c6                              
+
+
+#### field writes (movsd / mov to [reg+disp])
+--- 0x220ed0
+    220f09   mov qword ptr [rsp + 0x20], 3             
+    220f2a   mov qword ptr [rsp + 0x90], rdx           
+    220f42   mov qword ptr [rsp + 0x90], rcx           
+    220f4e   mov qword ptr [rsp + 0xa0], rcx           
+    220f5f   mov byte ptr [rax + 0x10], 0              
+    220f6e   mov qword ptr [rsp + 0x98], rcx           
+    220f7c   mov qword ptr [rax + 8], 0                
+    220f89   mov qword ptr [rsp + 0x20], 0x13          
+    220faf   mov qword ptr [rsp + 0x50], rdx           
+    220fc4   mov qword ptr [rsp + 0x50], rcx           
+    220fcd   mov qword ptr [rsp + 0x60], rcx           
+    220fd6   mov byte ptr [rax + 0x10], 0              
+    220fe0   mov qword ptr [rsp + 0x58], rcx           
+    220fee   mov qword ptr [rax + 8], 0                
+    220ff6   mov qword ptr [rsp + 0x20], rsi           
+    22106a   mov qword ptr [rsp + 0xa0], r9            
+    221072   mov qword ptr [rsp + 0xa8], r10           
+    221088   mov qword ptr [rsp + 0x60], r9            
+    22108d   mov qword ptr [rsp + 0x68], r10           
+--- 0x23b080
+    23b08b   movaps xmmword ptr [rsp + 0x80], xmm6     
