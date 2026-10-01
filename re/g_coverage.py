@@ -252,6 +252,15 @@ for a in sorted(buckets["domain"], key=lambda x: -(P[x].get("size") or 0))[:25]:
     f = P[a]
     print("   0x%-8x %-7s %-4d %s" % (a, f.get("size"), len(f.get("callers") or []), hint_of(f)[:60]))
 
+# ---------------------------------------------------------------- the vendor bucket (round 272d)
+# The summary below refers to `vendor`, which was not defined on every path: a NameError that only showed
+# up once the toolchain bucket changed. It is derived from the same classifier the buckets use.
+try:
+    vendor
+except NameError:
+    vendor = [a for a in missing if classify_identity(a) in ("third_party", "toolchain")]
+    vb = sum((P[a].get("size") or 0) for a in vendor)
+
 # ---------------------------------------------------------------- write the list
 out = [u"# 未覆盖函数清单（按体积排序，来自 `re/g_coverage.py`）\n",
        u"口径：**分母** = 从导出表出发沿 `callees` 可达的全部函数（库真正能跑到的代码）；",
