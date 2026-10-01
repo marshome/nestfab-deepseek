@@ -63,6 +63,15 @@ inline constexpr std::size_t kPbMode2SelectorByte = 0xC8;   // RE 0x4FC260 / 0x4
 inline constexpr std::size_t kPbToolingByte = 0xC9;         // RE 0x2CE3C cmp byte [rax+1],0
 inline constexpr int kModeShearTooling = 2;                 // RE 0x2CE00 is that mode's body
 
+// RE ..\nesting\algos\bucket_manager.hpp -- the beam-tree/bucket kernel (re/findings_bucket_manager.md).
+// The node evaluator is bounded by a slack on the surface: the assertion repeated at the three
+// ComputeNodeIndex instantiations (0x81C370 / 0x81C690 / 0x81C9B0) reads
+//     eval.m_c >= 0 && eval.m_c <= max_surface * 1.05
+// so 1.05 is a recovered constant, not a tuning choice. The same TU also asserts over
+// pricer.m_prices[p], surface_step, m_best and slices_width, i.e. the node carries a cost m_c, a
+// surface step, and the pricer exposes a per-part price array.
+inline constexpr double kEvalSurfaceSlack = 1.05;           // RE 0x81C690 assertion text
+
 struct EngineParams {
     int threads = 1;                    // RE: Problem::nb_max_threads
     std::uint32_t seed = 0;             // RE: Problem::seed (read at 0x24A80)

@@ -81,6 +81,7 @@ std::shared_ptr<Nester> makeStrategy(int mode) {
     }
 }
 
+LCNS_STRUCTURAL(tu.bucket_manager);
 LCNS_NOT_REVERSED(engine.beam_tree);
 std::vector<std::shared_ptr<Nester>> makeDefaultStrategies() {
     // RE 0x2D330: eight steps, ALL with mode 1, differing only in the six enable flags; 0x2C4D0

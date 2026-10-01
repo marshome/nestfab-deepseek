@@ -131,6 +131,9 @@ int main() {
     }
 
     // --- third party versions are bound to the evidence in the dump ---------------------------
+    // The beam-tree/bucket TU (..\nesting\algos\bucket_manager.hpp) asserts a surface slack; it is a
+    // recovered constant, quoted by the three ComputeNodeIndex instantiations.
+    CHECK_NEAR(kEvalSurfaceSlack, 1.05, 0.0);                  // RE 0x81C690 assertion text
     // The dump names the exact boost tree it was built against, so the vendored headers are pinned:
     //   0x9AE7A0  'C:\Users\renaud\nest\external\boost_1_63_0/boost/uuid/sha1.hpp'
 #ifdef LCNS_HAS_BOOST
@@ -147,9 +150,9 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 62);
+        CHECK(kGapCount == 63);
         CHECK(countOf(Status::Recovered) == 8);
-        CHECK(countOf(Status::Structural) == 15);
+        CHECK(countOf(Status::Structural) == 16);
         CHECK(countOf(Status::Substituted) == 27);
         CHECK(countOf(Status::NotReversed) == 11);
         CHECK(countOf(Status::NotInBinary) == 1);

@@ -218,6 +218,16 @@ inline constexpr Gap kGaps[] = {
     {"strategy.pack_recursive", Status::Substituted, "0x165680 -> 0x164FE0", "recursive packing; not transcribed"},
 
     // ---------------------------------------------------------------- engine / supervisor
+    {"tu.bucket_manager", Status::Structural, "0x215720 hub, 0x20FE90/0x212D30 InsertAllNext",
+     "the beam-tree/bucket kernel TU is identified: 177 functions / 174,273 bytes, its 47 string "
+     "vocabulary and its API surface are on record -- InsertAllNext (two template instantiations, "
+     "0x20FE90 / 0x212D30), IntroduceNestingNodes 0x20C440, AddNodeClusterChain 0x20C2D0, "
+     "CreateNestedChain 0x20C880, check_father 0x20EE50, NestingWindow 0x20CCE0, ComputeNodeIndex "
+     "0x81C690 (three instantiations), AddOrReplaceEquiv 0x6C7E80 / 0x23B420, ROOT_collection "
+     "0x1C5970, beam_slice_ 0x6548D0, beam_try_ 0x655A30, BestNodes 0x7B4000, GetNestableOffset "
+     "0x1A89D0, NG3 0x16E140 -- plus one recovered numeric constant, the surface slack 1.05 in "
+     "'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'. NOT transcribed: the bodies (0x215720 11.9 KB, "
+     "the two InsertAllNext instantiations, 0x23B420 16.4 KB) and the four Equiv* comparison rules"},
     {"module.engine", Status::Structural, "0x827F0 / 0x2DF60 / 0x2CCF0",
      "the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are "
      "recovered; the per-strategy budget bookkeeping here is a re-implementation"},
@@ -248,8 +258,9 @@ inline constexpr Gap kGaps[] = {
      "at 0x2DA00 -- the mode/flags -> nester table is recovered in engine.strategy_adder, and the "
      "mode-2 route plus the four extra schedule routes are in engine.mode2_shear_route"},
     {"engine.beam_tree", Status::NotReversed, "0x22CCA0 / 0x1C1650 / 0x974F0",
-     "tree_db preparation and node scoring (leaf value at +0x48, internal at +0x50) are located; "
-     "the beam tree is not reconstructed here"},
+     "tree_db preparation and node scoring (leaf value at +0x48, internal at +0x50) are located, "
+     "and the TU plus its whole API surface are now on record in tu.bucket_manager; the beam tree "
+     "ITSELF is still not reconstructed here"},
 
     // ---------------------------------------------------------------- tiling patterns
     {"module.tiling", Status::Substituted, "Tiling::BoxMultiTiler etc.",
