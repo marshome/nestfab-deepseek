@@ -1,0 +1,576 @@
+{
+ "0x16c140": [
+  "..\\nesting\\algos\\tree_db.cpp",
+  [
+   "0x1c37a0",
+   "0x1c4350",
+   "0x673c60"
+  ]
+ ],
+ "0x16c1a0": [
+  "..\\nesting\\algos\\tree_db.cpp",
+  [
+   "0x1c4350",
+   "0x673c60"
+  ]
+ ],
+ "0x16c4c0": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x180100": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x1a2900": [
+  "..\\nesting\\algos\\algo_parameters.cpp",
+  [
+   "0x1a3db0",
+   "0x1a89d0",
+   "0x1a8af0"
+  ]
+ ],
+ "0x1a6650": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x1b070": [
+  "internal.cpp",
+  [
+   "0x1e900",
+   "0x1ee50"
+  ]
+ ],
+ "0x1b130": [
+  "internal.cpp",
+  [
+   "0x1c2a0",
+   "0x1ee50",
+   "0x22e40"
+  ]
+ ],
+ "0x1be470": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x1c0bf0": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x1c1d40": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x1c8150": [
+  "..\\nesting\\algos\\postop.cpp",
+  [
+   "0x1c8d30",
+   "0x1c9290",
+   "0x1c97a0"
+  ]
+ ],
+ "0x1c8210": [
+  "..\\nesting\\algos\\postop.cpp",
+  [
+   "0x1cb100",
+   "0x7c5b70"
+  ]
+ ],
+ "0x1e480": [
+  "internal.cpp",
+  [
+   "0x1ee50",
+   "0x22e40"
+  ]
+ ],
+ "0x1e870": [
+  "internal.cpp",
+  [
+   "0x1e900",
+   "0x1ee50"
+  ]
+ ],
+ "0x224560": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x22d9e0": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x22da00": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x22da70": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x2393f0": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x24780": [
+  "..\\engine\\engine.cpp",
+  [
+   "0x75ddf0",
+   "0x8d4500"
+  ]
+ ],
+ "0x259df0": [
+  "..\\nesting\\algos\\compact.hpp",
+  [
+   "0x1da0c0",
+   "0x677cb0"
+  ]
+ ],
+ "0x25af80": [
+  "..\\nesting\\algos\\compact.hpp",
+  [
+   "0x1da0c0",
+   "0x677cb0"
+  ]
+ ],
+ "0x25c9e0": [
+  "..\\nesting\\algos\\compact.hpp",
+  [
+   "0x1da0c0",
+   "0x677cb0"
+  ]
+ ],
+ "0x2610c0": [
+  "..\\nesting\\algos\\compact.hpp",
+  [
+   "0x1da0c0",
+   "0x677cb0"
+  ]
+ ],
+ "0x261e60": [
+  "..\\nesting\\algos\\compact.hpp",
+  [
+   "0x1da0c0",
+   "0x677cb0"
+  ]
+ ],
+ "0x2fa90": [
+  "..\\multi\\supervisor.cpp",
+  [
+   "0x30030",
+   "0x68a6e0",
+   "0x7d29f0"
+  ]
+ ],
+ "0x3b1f0": [
+  "..\\multi\\nesting_context.cpp",
+  [
+   "0x3bcc0",
+   "0x3f070",
+   "0x41920"
+  ]
+ ],
+ "0x3b2b0": [
+  "..\\multi\\nesting_context.cpp",
+  [
+   "0x3b2f0",
+   "0x3b5f0",
+   "0x3bcc0",
+   "0x3c3f0",
+   "0x3c9e0",
+   "0x3dbe0",
+   "0x3e740",
+   "0x40070",
+   "0x40720",
+   "0x41920",
+   "0x434d0",
+   "0x696c50",
+   "0x69a720",
+   "0x69aa40",
+   "0x7d3e50",
+   "0x7d4050"
+  ]
+ ],
+ "0x4b9970": [
+  "..\\verify\\equivalent.cpp",
+  [
+   "0x4b9fa0",
+   "0x4ba110",
+   "0x4bb040",
+   "0x4bc9e0",
+   "0x4bdb70"
+  ]
+ ],
+ "0x4b9d70": [
+  "..\\verify\\equivalent.cpp",
+  [
+   "0x4bc9e0",
+   "0x4bdb70"
+  ]
+ ],
+ "0x4fc1d0": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x520a30",
+   "0x520e30",
+   "0x521210"
+  ]
+ ],
+ "0x5050a0": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x505ce0",
+   "0x509a40",
+   "0x50a550"
+  ]
+ ],
+ "0x505280": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x509a40",
+   "0x50ee50"
+  ]
+ ],
+ "0x51c250": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x528020",
+   "0x528d10"
+  ]
+ ],
+ "0x51c260": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x528020",
+   "0x528d10"
+  ]
+ ],
+ "0x520970": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x520a30",
+   "0x520e30",
+   "0x521210",
+   "0x525ef0",
+   "0x527870",
+   "0x528020",
+   "0x528d10",
+   "0x52aad0"
+  ]
+ ],
+ "0x52310": [
+  "..\\multi\\database.cpp",
+  [
+   "0x52c70",
+   "0x59d30",
+   "0x6a7800"
+  ]
+ ],
+ "0x5253e0": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x525ef0",
+   "0x527870",
+   "0x528020",
+   "0x528d10"
+  ]
+ ],
+ "0x5275f0": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x527870",
+   "0x528020",
+   "0x528d10"
+  ]
+ ],
+ "0x52f8f0": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x527870",
+   "0x528020",
+   "0x528d10"
+  ]
+ ],
+ "0x5c61e0": [
+  "cns_no_fit.cpp",
+  [
+   "0x7270",
+   "0x8e70"
+  ]
+ ],
+ "0x5d1360": [
+  "..\\verify\\equivalent.cpp",
+  [
+   "0x4bc9e0",
+   "0x4bdb70"
+  ]
+ ],
+ "0x5eaff0": [
+  "..\\structure\\stats.cpp",
+  [
+   "0x520a30",
+   "0x520e30",
+   "0x521210"
+  ]
+ ],
+ "0x5fc960": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x5fcb90": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x505ce0",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x5fcea0": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x505ce0",
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x5fd640": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x505ce0",
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x5fe060": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x5feb70": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x5ffad0": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x600680": [
+  "..\\structure\\text_io.cpp",
+  [
+   "0x509a40",
+   "0x50a550",
+   "0x50ee50"
+  ]
+ ],
+ "0x65b820": [
+  "..\\nesting\\algos\\multinesting_optimizer.cpp",
+  [
+   "0x1acf30",
+   "0x1ad3a0",
+   "0x1ad7e0"
+  ]
+ ],
+ "0x6dd780": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x6dde50": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x6de010": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x7602b0": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x7c1dc0": [
+  "..\\multi\\nesting_context.cpp",
+  [
+   "0x40720",
+   "0x41920"
+  ]
+ ],
+ "0x84ac0": [
+  "..\\multi\\marker.cpp",
+  [
+   "0x8b280",
+   "0x8ba70"
+  ]
+ ],
+ "0x8ab880": [
+  "..\\nesting\\algos\\sheet_optimizer.cpp",
+  [
+   "0x20c440",
+   "0x20c880"
+  ]
+ ],
+ "0x8c1e30": [
+  "internal.cpp",
+  [
+   "0x1e900",
+   "0x22e40"
+  ]
+ ],
+ "0x8c2320": [
+  "internal.cpp",
+  [
+   "0x1e900",
+   "0x1ee50",
+   "0x22e40"
+  ]
+ ],
+ "0x8c3730": [
+  "internal.cpp",
+  [
+   "0x1ee50",
+   "0x22e40"
+  ]
+ ],
+ "0x8ea1b0": [
+  "..\\multi\\nesting_context.cpp",
+  [
+   "0x3c9e0",
+   "0x69aa40"
+  ]
+ ],
+ "0x8f7d20": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720"
+  ]
+ ],
+ "0x8fee00": [
+  "..\\nesting\\algos\\tree_db.cpp",
+  [
+   "0x1c37a0",
+   "0x1c4350",
+   "0x673c60"
+  ]
+ ],
+ "0x900ae0": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720",
+   "0x7b4000",
+   "0x7b4b60",
+   "0x7b56c0"
+  ]
+ ],
+ "0x900d40": [
+  "..\\nesting\\algos\\bucket_manager.hpp",
+  [
+   "0x20fe90",
+   "0x212d30",
+   "0x215720",
+   "0x7b4000",
+   "0x7b4b60",
+   "0x7b56c0"
+  ]
+ ],
+ "0x9320a0": [
+  "..\\multi\\nesting_context.cpp",
+  [
+   "0x3f070",
+   "0x41920"
+  ]
+ ],
+ "0xac50": [
+  "cns.cpp",
+  [
+   "0xb600",
+   "0xb750",
+   "0xba50",
+   "0xbd90",
+   "0xcf20",
+   "0xd460",
+   "0xd710",
+   "0xd870",
+   "0xf7c0",
+   "0x10040",
+   "0x10f30",
+   "0x11640"
+  ]
+ ]
+}
