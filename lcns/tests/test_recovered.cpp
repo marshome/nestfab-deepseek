@@ -3388,7 +3388,7 @@ int main() {
         CHECK(kSsoField14 == kSsoCapacity);
         CHECK(kSsoField18 == kSsoData);
         CHECK(kSsoAlloc == 0x9984E0);
-        CHECK(kReleaserAltSightings == 2);
+        CHECK(kReleaserAltSightings == 3);            // updated in round 321: three sightings
         CHECK(kReleaserAlt == 0x9984A0);
         CHECK(kCopyAssignCallers2 == 25);
         CHECK(kCopyAssignCallers2 == kCopyAssignCallers);
@@ -4437,6 +4437,42 @@ int main() {
         CHECK(staysInline(kWideSsoChars));               // seven is well inside
         CHECK(!staysInline(kNarrowSsoCapacity + 1));
         CHECK(kNarrowSsoCapacity + 1 == 16);
+    }
+
+    // --- the two small destructors (RE 0x4b32f0 and 0x656000) ---------------------------------------
+    {
+        CHECK(kDtorSmall == 0x4B32F0);
+        CHECK(kDtorSmallVtableRva == 0x585231);
+        CHECK(kDtorSmallField == 0x18);
+        CHECK(kDtorSmallField == kSsoField18);
+        CHECK(kDtorSmallCallers == 23);
+        CHECK(kReleaserAlt == 0x9984A0);
+        CHECK(kReleaserAltSightings == 3);
+        CHECK(kTwoFieldDtor == 0x656000);
+        CHECK(kTwoFieldA == 0x58);
+        CHECK(kTwoFieldB == 0x10);
+        CHECK(kTwoFieldA != kTwoFieldB);
+        CHECK(kTwoFieldHelper == 0x891B40);
+        CHECK(kTwoFieldSites == 2);
+        CHECK(kTwoFieldCallers == 22);
+        CHECK(kTwoFieldRelease);
+        CHECK(kCallThenTailCall);
+        CHECK(kDtorSmall != kTwoFieldDtor);
+        CHECK(kSharedDealloc != kReleaserAlt);            // the two releasers remain distinct
+
+        // the shape both routines implement: release a field only when it is non-null
+        const auto releaseIfSet = [](void* p, int& releases) {
+            if (p != nullptr) { ++releases; return true; }
+            return false;
+        };
+        int releases = 0;
+        CHECK(!releaseIfSet(nullptr, releases));
+        CHECK(releases == 0);
+        CHECK(releaseIfSet(reinterpret_cast<void*>(1), releases));
+        CHECK(releases == 1);
+        // and the second routine releases both fields, the first by call and the last by tail call
+        CHECK(kTwoFieldSites == 2 && kTwoFieldSites - 1 == 1);
+        CHECK(kTwoFieldB < kTwoFieldA);
     }
 
     return check::finish("test_recovered");

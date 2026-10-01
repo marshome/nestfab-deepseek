@@ -2077,7 +2077,8 @@ inline constexpr std::size_t kSsoField10 = 0x10;             // RE 0x418C08
 inline constexpr std::size_t kSsoField14 = 0x14;             // RE 0x418C2D, the signed capacity
 inline constexpr std::size_t kSsoField18 = 0x18;             // RE 0x418C11, the buffer
 inline constexpr std::uintptr_t kSsoAlloc = 0x9984E0;        // RE 0x418C49
-inline constexpr int kReleaserAltSightings = 2;              // rounds 260 and this one
+inline constexpr int kReleaserAltSightings = 3;              // UPDATED in round 321: rounds 260, 291 and the
+// destructor at 0x4B32F0, which tail calls 0x9984A0 with the field at +0x18
 inline constexpr int kCopyAssignCallers2 = 25;
 static_assert(kSsoField14 == kSsoCapacity, "the capacity round 249 inferred");
 static_assert(kSsoField18 == kSsoData, "the data pointer round 249 inferred");
@@ -2772,6 +2773,30 @@ static_assert(kWideSsoChars * 2 + kScasbElementBytes == kNarrowSsoCapacity,
               "and seven wide characters plus one byte is fifteen -- observed, not designed");
 static_assert(kStringAllocHelperSightings == 2, "the allocation helper has a second sighting");
 static_assert(kStrlenViaScasb, "the length comes from a scasb scan");
+
+
+// --- two small destructors, and the alternate releaser's third sighting (round 321) ---------------------
+//     0x4B32F0/0x4B32F7 lea rax,[rip+0x585231] ; [rcx] = rax   ; a vtable
+//     0x4B32FA/0x4B3301 rcx = [rcx+0x18] ; je                   ; the sub-object
+//     0x4B3303 jmp 0x9984A0                                     ; tail called into the alternate releaser
+//     0x656008/0x656011 rcx = [rcx+0x58] ; call 0x891B40        ; one field, by call
+//     0x656016/0x656024 rcx = [rbx+0x10] ; jmp 0x891B40         ; the other, by tail call
+inline constexpr std::uintptr_t kDtorSmall = 0x4B32F0;       // RE the whole routine
+inline constexpr std::uintptr_t kDtorSmallVtableRva = 0x585231;  // RE 0x4B32F0
+inline constexpr std::size_t kDtorSmallField = 0x18;         // RE 0x4B32FA
+inline constexpr int kDtorSmallCallers = 23;
+inline constexpr std::uintptr_t kTwoFieldDtor = 0x656000;    // RE the second routine
+inline constexpr std::size_t kTwoFieldA = 0x58;              // RE 0x656008
+inline constexpr std::size_t kTwoFieldB = 0x10;              // RE 0x656016
+inline constexpr std::uintptr_t kTwoFieldHelper = 0x891B40;  // RE both release sites
+inline constexpr int kTwoFieldSites = 2;                     // RE 0x656011 and 0x656024
+inline constexpr int kTwoFieldCallers = 22;
+inline constexpr bool kTwoFieldRelease = true;               // two fields, one helper
+inline constexpr bool kCallThenTailCall = true;              // the first by call, the last by tail call
+static_assert(kReleaserAltSightings == 3, "the alternate releaser has a third sighting now");
+static_assert(kDtorSmallField == kSsoField18, "the sub-object sits where the string layout has its buffer");
+static_assert(kTwoFieldSites == 2, "two release sites in the second routine");
+static_assert(kTwoFieldA != kTwoFieldB, "and they release different fields");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

@@ -6357,3 +6357,26 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ 分配助手 `0x910BA0` 是**第二次目击**（round 275 认定）。
 
 **已落 `layout.hpp`**：`kNarrowStringCtor`(0x9A0480)、`kNarrowStringCallers`(34)、`kNarrowSsoCapacity`(15)、`kWideSsoChars`(7)、`kStrlenViaScasb`、`kEmptyCase`、`kInlineCase`、`kStringAllocHelperSightings`(2)、`kSsoRelationHolds`、`kScasbElementBytes` + **四条 `static_assert`** + 测试 24 条。
+
+### 附 239 **两个小析构器；且备用释放器的第三次目击**（goal round 321）**[已落码]**
+
+**（a）`0x4B32F0`（33 B / 23 个调用者）**：
+
+```
+4B32F0/4B32F7  lea rax,[rip+0x585231] ; [rcx] = rax   ; 装虚表
+4B32FA/4B3301  rcx = [rcx+0x18] ; je                   ; 子对象在 `+0x18`
+4B3303  jmp **0x9984A0**                               ; ★尾调备用释放器（**第三次目击**）
+```
+
+★ round 291 记的是两次 ⇒ **计数与其测试行同步修正**（“搜全文件”纪律再次生效）。
+
+**（b）`0x656000`（54 B / 22 个调用者）**：
+
+```
+656008/656011  rcx = [rcx+0x58] ; **call 0x891B40**   ; 第一个字段（调用）
+656016/656024  rcx = [rbx+0x10] ; **jmp 0x891B40**    ; 第二个字段（尾调）
+```
+
+⇒ **两个字段、一个助手**；**“先调用后尾调”的形状存在，正因为第一个字段之后还有第二个** —— 这是一条可复用的读法：**出现 `call` 而不是 `jmp`，往往意味着后面还有工作**。
+
+**已落 `layout.hpp`**：`kDtorSmall`、`kDtorSmallVtableRva`(0x585231)、`kDtorSmallField`(0x18)、`kDtorSmallCallers`(23)、`kTwoFieldDtor`、`kTwoFieldA/B`(0x58/0x10)、`kTwoFieldHelper`(0x891B40)、`kTwoFieldSites`(2)、`kTwoFieldCallers`(22)、`kTwoFieldRelease`、`kCallThenTailCall` + **四条 `static_assert`** + 测试 22 条。
