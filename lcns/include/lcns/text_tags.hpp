@@ -40,3 +40,6 @@ LCNS_STRUCTURAL(io.text_vocabulary);   // type tags, the comma, the cancellation
 
 // RE 0x77F2F7: the error text an encoder/decoder formatter builds (round 252).
 inline constexpr const char* kTagBerDecodeError = "BER decode error";
+
+// RE 0x77A4B8: the tag an object constructor installs (round 288).
+inline constexpr const char* kTagInputBuffer = "InputBuffer";

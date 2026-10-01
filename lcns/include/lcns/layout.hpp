@@ -1955,6 +1955,45 @@ static_assert(kAlloc60 == 96, "ninety-six bytes");
 static_assert(kCtor96InlineTarget > kCtor96Inline, "the inline buffer points forward");
 static_assert(kAlloc60 > kGetOrCreateBytes, "larger than the forty-eight byte object");
 
+
+// --- the InputBuffer object constructor 0x77A460, six callers (round 288) ------------------------------
+//     0x77A488 dword [rbx+0x14] = 0xFFFFFFFF   ; a -1 marker
+//     0x77A498 byte [rbx+0x18] = 0
+//     0x77A4B5 [rbx]   = rax + 0x10            ; one pointer from a global descriptor
+//     0x77A4BF [rbx+8] = rax + 0x1A0           ; another, 0x190 further into it
+//     0x77A4B8 lea rdx,[rip+0x23C577]          ; the literal 'InputBuffer'
+inline constexpr std::uintptr_t kInputBufferCtor = 0x77A460;  // RE the whole routine
+inline constexpr std::uintptr_t kInputBufferRva = 0x23C577;   // RE the literal
+inline constexpr std::size_t kInputBufferMarker = 0x14;       // RE 0x77A488
+inline constexpr std::uint32_t kInputBufferMarkerValue = 0xFFFFFFFFu;  // RE the -1 marker
+inline constexpr std::size_t kInputBufferByte = 0x18;         // RE 0x77A498
+inline constexpr std::size_t kInputBufferPtrA = 0x00;         // RE 0x77A4B5
+inline constexpr std::size_t kInputBufferPtrB = 0x08;         // RE 0x77A4BF
+inline constexpr std::uintptr_t kInputBufferDescriptorRva = 0x28DF88;  // RE 0x77A481
+inline constexpr int kInputBufferPtrOffsets = 2;              // the two descriptor offsets
+inline constexpr int kInputBufferCallers = 6;
+inline constexpr std::uintptr_t kInputBufferHelper = 0x118260;  // RE 0x77A472
+static_assert(kInputBufferMarkerValue == 0xFFFFFFFFu, "the marker is -1");
+static_assert(kInputBufferPtrB > kInputBufferPtrA, "the second pointer follows the first");
+
+// --- the size accessor 0x1186C0 and a tenth vtable slot (round 288) -------------------------------------
+//     0x1186CB/0x1186DC call qword [rax+0x160]   ; slot 0x160, called twice
+//     0x1186E8 call qword [rdx+0x90]             ; then the slot of round 286
+//     0x1186F4/0x1186FB  a global gate byte and r9 = -1 with dword 1 -- the guarded shape again
+inline constexpr std::uintptr_t kSizeAccessor = 0x1186C0;     // RE the whole routine
+inline constexpr std::size_t kVtableSlotG = 0x160;            // RE 0x1186CB
+inline constexpr int kVtableSlotsKnown5 = 10;                 // the nine of round 286 plus 0x160
+inline constexpr std::uintptr_t kSizeAccessorGateRva = 0xA08935;  // RE 0x1186F4
+inline constexpr std::int64_t kSizeAccessorSentinel = -1;     // RE 0x118722
+inline constexpr int kGuardPatternSightings = 3;              // rounds 283/284 and this one
+inline constexpr int kSizeAccessorCallers = 6;
+// OPEN QUESTION, recorded rather than settled: 0x77A460 calls 0x118260, which an earlier round registered as a
+// CryptoPP self-test. A routine that builds an object carrying 'InputBuffer' is domain code, so either that
+// registration is wrong in this context or 0x118260 is a general helper. NOT decided here.
+inline constexpr bool kHelperClassificationOpen = true;
+static_assert(kVtableSlotsKnown5 == kVtableSlotsKnown4 + 1, "one more slot than round 286");
+static_assert(kGuardPatternSightings == 3, "three sightings of the guarded shape");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -5728,3 +5728,22 @@ F74E6  cmp rax,r8 ; jb → 抛出路径        ; ★ **尺寸必须 ≥ ceil(位
 **（b）`0x6DE430`（379 B / 23 个调用者）= 构造器**：虚表 `+0x00`（rva `0x35D94F`）、dword `+0x10`、指针 `+0x18`、**内联缓冲区 `+0x20` 指向 `+0x30`**，并以 `0x998500` **分配 `0x60`（96）字节** ⇒ 分配器第五次目击。
 
 **已落 `layout.hpp`**：`kBerValidate`、`kBitToByteSites`(2)、`kValidateHelper`、`kSizeCall`、`kLengthCheckThrows`、`kCtor96*`（七个）、`kAlloc60`(0x60)、`kAllocatorSightings`(5)、`kCtor96Helper` + **五条 `static_assert`** + 测试 32 条。
+
+### 附 206 **`InputBuffer` 对象**、**第十个虚表槽**，与**一个必须核实的旧分类**（goal round 288）**[已落码]**
+
+**（a）`0x77A460`（272 B / 6 个调用者）= `InputBuffer` 对象的构造器**：
+
+```
+77A488  dword [rbx+0x14] = 0xFFFFFFFF   ; ★ **−1 标记**
+77A498  byte [rbx+0x18] = 0
+77A4B5/77A4BF  [rbx] = rax+0x10、[rbx+8] = rax+0x1A0   ; 从一个全局描述符取两个指针
+77A4B8  lea rdx,[rip+0x23C577]          ; ★★ **字符串 `'InputBuffer'`**
+```
+
+⇒ 这就是 **BER 的输入缓冲区对象**；`'InputBuffer'` 是与 `'BER decode error'` 并列的**新领域字符串**。
+
+**（b）`0x1186C0`（255 B / 6 个调用者）= 尺寸来源**：两次调 **`[rax+0x160]`**（★ **第十个槽**），再调结果的 **`[rdx+0x90]`**（round 286 的第九个）；其错误路径又是**全局字节 + `r9 = −1` + `dword 1`** 的受守卫形状（第三次目击）。
+
+★ **必须核实的旧分类（本轮不做结论）**：`0x77A460` 调用 **`0x118260`**，而早前轮次把 `0x118260` 登记为 **CryptoPP self-test**（`re/covlib.py`）。一个**构造携带 `'InputBuffer'` 对象**的例程显然是领域代码 ⇒ **要么那条登记在此语境下不成立，要么 `0x118260` 是一个通用助手** —— 以 `kHelperClassificationOpen` 标为**开放问题**，不替任一方立论。
+
+**已落**：`text_tags.hpp` 的 `kTagInputBuffer`；`layout.hpp` 的 `kInputBuffer*`（十一个）、`kSizeAccessor*`、`kVtableSlotG`(0x160)、`kVtableSlotsKnown5`(10)、`kGuardPatternSightings`(3)、`kHelperClassificationOpen` + **四条 `static_assert`** + 测试 28 条。

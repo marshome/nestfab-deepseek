@@ -3267,5 +3267,38 @@ int main() {
         CHECK(kCtor96Helper == 0x888FA0);
     }
 
+    // --- the InputBuffer object and the tenth slot (RE 0x77a460 and 0x1186c0) ------------------------
+    {
+        CHECK(kInputBufferCtor == 0x77A460);
+        CHECK(kInputBufferRva == 0x23C577);
+        CHECK(std::string(kTagInputBuffer) == "InputBuffer");
+        CHECK(std::string(kTagInputBuffer).size() == 11);
+        CHECK(kInputBufferMarker == 0x14);
+        CHECK(kInputBufferMarkerValue == 0xFFFFFFFFu);
+        CHECK(static_cast<std::int32_t>(kInputBufferMarkerValue) == -1);
+        CHECK(kInputBufferByte == 0x18);
+        CHECK(kInputBufferByte == kInputBufferMarker + 4);
+        CHECK(kInputBufferPtrA == 0x00);
+        CHECK(kInputBufferPtrB == 0x08);
+        CHECK(kInputBufferDescriptorRva == 0x28DF88);
+        CHECK(kInputBufferPtrOffsets == 2);
+        CHECK(kInputBufferCallers == 6);
+        CHECK(kInputBufferHelper == 0x118260);
+
+        CHECK(kSizeAccessor == 0x1186C0);
+        CHECK(kVtableSlotG == 0x160);
+        CHECK(kVtableSlotsKnown5 == 10);
+        CHECK(kVtableSlotsKnown5 == kVtableSlotsKnown4 + 1);
+        CHECK(kVtableSlotG > kVtableSlotStep);          // the tenth is the highest offset so far
+        CHECK(kSizeAccessorGateRva == 0xA08935);
+        CHECK(kSizeAccessorSentinel == -1);
+        CHECK(kGuardPatternSightings == 3);
+        CHECK(kSizeAccessorCallers == 6);
+        CHECK(kHelperClassificationOpen);               // recorded as open, not settled
+        // the domain strings this area carries
+        CHECK(std::string(kTagBerDecodeError) == "BER decode error");
+        CHECK(std::string(kTagInputBuffer) == "InputBuffer");
+    }
+
     return check::finish("test_recovered");
 }
