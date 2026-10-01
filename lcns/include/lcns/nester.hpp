@@ -14,8 +14,8 @@
 //   NestingNester embeds its own std::mt19937 (seed constant 0x6C078965, state words 624).
 #pragma once
 
+#include "lcns/engine.hpp"   // the recovered kTrace* prefixes the classes return
 #include <chrono>
-#include "lcns/engine.hpp"
 #include "lcns/recovery.hpp"
 #include <cstdint>
 #include <functional>
