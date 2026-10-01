@@ -6011,3 +6011,29 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ⇒ 两者**解码方式相同、字节来源不同** —— 此读法由指令差异本身支撑，并**作为差异记录**（`kDriversDifferInSource`）而不是抹平。
 
 **已落 `layout.hpp`**：`kDriverSibling`、`kDriverSiblingCallers`(2)、`kDriverFrameBytes`(0x108)、`kVtableSlotJ`(0xB0)、`kVtableSlotsKnown8`(13)、`kDriverPair`、`kDriversDifferInSource`、`kDriverByteSourceA/B`、`kDriverLocal/Marker/Byte/Probe` + **五条 `static_assert`** + 测试 26 条（含两个驱动器偏移互相相等的断言）。
+
+### 附 220 **两个驱动器到底有多像：用偏移量出来**（goal round 302）**[已落码]**
+
+`0x110B00` 的主体**逐指令重复** `0x10FD40`：
+
+```
+110B85 call qword [rax+0xA0]         对应  10FDC1（同一槽）
+110B90 cmp r15b, byte [rsp+0x58]     对应  10FDCC
+110B97 call 0x77F2D0                 对应  10FDD3（同一 BER 格式化器）
+110BB6 call qword [rax+0xA0] (r13)   对应  10FDF2
+110BC1 movzx r15d, byte [rsp+0xA0]   对应  10FDFD
+110BCD js 0x110CC7                   对应  10FE09 js 0x10FF07
+```
+
+★ **两个可复算的数字**：
+
+| 量 | 对象 A | 对象 B | 结论 |
+|---|---|---|---|
+| 负状态分支相对偏移 | `0x110CC7−0x110B00 = 0x1C7` | `0x10FF07−0x10FD40 = 0x1C7` | **相同** |
+| 首个共享指令相对偏移 | `0x110B85−0x110B00 = 0x85` | `0x10FDC1−0x10FD40 = 0x81` | **差 4** |
+
+⇒ 前言比后者**长 4 字节**（经槽 `0xB0` 的虚调把一次载入与一次调用打包在一起），而后面的分支**落在同一偏移** ⇒ 两者之间**必有 4 字节的补偿性差异**。
+
+★ **因此只能下“结构相同、带补偿性差异”的结论**，不能下“逐字节相同”（`kDriversByteIdentical = false`）—— **两个数据点不支持更强的说法，就不说**。
+
+**已落 `layout.hpp`**：`kDriverTwinOffset`(0x1C7)、`kSiblingNegativeBranch`(0x110CC7)、`kSiblingSharedAt`(0x85)、`kFirstDriverSharedAt`(0x81)、`kPrologueDelta`(4)、`kDriversStructurallySame`、`kDriversByteIdentical`(false)、`kDriversShareBody` + **四条 `static_assert`** + 测试 20 条。

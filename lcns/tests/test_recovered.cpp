@@ -3817,5 +3817,32 @@ int main() {
         CHECK(kVtableSlotA0CallSites == 2);
     }
 
+    // --- how much the two drivers share, by measurement (RE 0x110b00 and 0x10fd40) -----------------
+    {
+        CHECK(kDriverTwinOffset == 0x1C7);
+        CHECK(kSiblingNegativeBranch == 0x110CC7);
+        CHECK(kSiblingNegativeBranch - kDriverSibling == kDriverTwinOffset);
+        CHECK(kNegativeStatusBranch - 0x10FD40 == kDriverTwinOffset);   // the same relative offset
+        CHECK(kSiblingSharedAt == 0x85);
+        CHECK(kFirstDriverSharedAt == 0x81);
+        CHECK(kPrologueDelta == 4);
+        CHECK(kSiblingSharedAt - kFirstDriverSharedAt == kPrologueDelta);
+        CHECK(kDriversStructurallySame);
+        CHECK(!kDriversByteIdentical);                    // not supported, so not claimed
+        CHECK(kDriversShareBody);
+        // the two functions are the same size, so the four bytes must be compensated elsewhere
+        CHECK(kDriverSibling != 0x10FD40);
+        CHECK(kDriverFrameBytes == 0x108);
+
+        // the arithmetic the two measurements encode, restated so a compiler computes it too
+        const std::size_t twinA = kSiblingNegativeBranch - kDriverSibling;
+        const std::size_t twinB = kNegativeStatusBranch - 0x10FD40;
+        CHECK(twinA == twinB);
+        CHECK(twinA == kDriverTwinOffset);
+        const std::size_t delta = kSiblingSharedAt - kFirstDriverSharedAt;
+        CHECK(delta == kPrologueDelta);
+        CHECK(delta != 0);                                // if it were zero the prologues would match
+    }
+
     return check::finish("test_recovered");
 }

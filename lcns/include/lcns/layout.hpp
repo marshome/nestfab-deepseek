@@ -2348,6 +2348,26 @@ static_assert(kVtableSlotsKnown8 == kVtableSlotsKnown7 + 1, "one more slot than 
 static_assert(kDriverLocal - 0x14 == kDriverMarker - 0x28 || kDriverMarker - kDriverLocal == kInputBufferMarker,
               "the marker sits where round 288 put it");
 
+
+// --- how far the two drivers' sameness goes, measured rather than asserted (round 302) -----------------
+//     the negative-status branch:  0x110CC7 - 0x110B00 = 0x1C7  ==  0x10FF07 - 0x10FD40 = 0x1C7
+//     the first shared instruction: 0x110B85 - 0x110B00 = 0x85  against  0x10FDC1 - 0x10FD40 = 0x81
+// So the prologue is four bytes longer in the sibling while a later branch lands on the SAME offset, which requires a
+// compensating four-byte difference between them. "Structurally the same with compensating differences" is what the
+// two measurements support; "identical byte for byte" is NOT supported and is not claimed.
+inline constexpr std::size_t kDriverTwinOffset = 0x1C7;      // RE both functions, the js target
+inline constexpr std::uintptr_t kSiblingNegativeBranch = 0x110CC7;  // RE 0x110BCD
+inline constexpr std::size_t kSiblingSharedAt = 0x85;        // RE 0x110B85
+inline constexpr std::size_t kFirstDriverSharedAt = 0x81;    // RE 0x10FDC1
+inline constexpr std::size_t kPrologueDelta = 4;             // RE 0x85 - 0x81
+inline constexpr bool kDriversStructurallySame = true;       // what the offsets support
+inline constexpr bool kDriversByteIdentical = false;         // NOT supported: a compensating difference exists
+inline constexpr bool kDriversShareBody = true;              // the body repeats instruction for instruction
+static_assert(kDriverTwinOffset == 0x1C7, "the shared relative offset of the negative branch");
+static_assert(kSiblingSharedAt - kFirstDriverSharedAt == kPrologueDelta, "the prologue is four bytes longer");
+static_assert(kSiblingNegativeBranch - kDriverSibling == kDriverTwinOffset, "and the branch is at the same place");
+static_assert(kDriversStructurallySame && !kDriversByteIdentical, "the weaker claim only");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
