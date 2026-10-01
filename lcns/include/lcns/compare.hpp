@@ -112,4 +112,38 @@ inline double doubledThenHalved(double x) { return (x + x) * kSharedHalf; }
 // RE 0x5E63B6: the all-ones word stored at +0x28, which is -1 read as a signed integer.
 inline constexpr std::int64_t kSentinelMinusOne = -1;
 
+
+// --- almostEqual, read whole from 0x5E6060 (round 185) --------------------------------------------
+// 33 instructions, FORTY-NINE callers, no text of its own:
+//     5E6068  ucomisd a,b ; 5E606C jp <general> ; 5E6073 je -> eax=1     ; equal short-circuit
+//     5E6083  movsd xmm5,[0x7FEFFFFFFFFFFFFF]                            ; DBL_MAX, a finiteness guard
+//     5E608F  ucomisd xmm5,|a| ; jb -> 0 ; 5E609D ucomisd xmm5,|b| ; jb -> 0
+//     5E60A3  maxsd xmm1,xmm4                                            ; m = max(|a|,|b|)
+//     5E60B3  ucomisd 1.0,m ; ja <small>                                 ; the switch at 1.0
+//     5E60BD  mulsd xmm1,[2.22045e-16] ; 5E60C5 ucomisd xmm1,|a-b| ; setae al
+//     5E60D1  (small) movsd xmm1,[2.22045e-16] ; ucomisd xmm1,|a-b| ; setae al
+// The epsilon is the same 2.22045e-16 as the shared read-only slot at rva 0x9DFBA0 that round 172 recorded
+// from nine independent functions, and round 172's test already confirmed that value equals
+// std::numeric_limits<double>::epsilon() by computation.
+inline constexpr double kAlmostEqualSwitch = 1.0;                       // RE 0x5E60B3
+inline constexpr std::uint64_t kDoubleMaxBits = 0x7FEFFFFFFFFFFFFFULL;  // RE 0x5E6083
+
+inline bool almostEqual(double a, double b) {
+    if (a == b) {                                   // RE 0x5E606E/0x5E6073: the equality short-circuit
+        return true;
+    }
+    if (!(std::fabs(a) <= kSharedEpsilon * 0.0 + 1.7976931348623157e308)) {   // RE 0x5E608F: above DBL_MAX
+        return false;
+    }
+    if (!(std::fabs(b) <= 1.7976931348623157e308)) {                          // RE 0x5E609D
+        return false;
+    }
+    const double m = (std::fabs(a) > std::fabs(b)) ? std::fabs(a) : std::fabs(b);   // RE 0x5E60A3
+    const double diff = std::fabs(a - b);                                          // RE 0x5E60B7
+    if (kAlmostEqualSwitch > m) {                   // RE 0x5E60B3: the small-magnitude branch
+        return diff <= kSharedEpsilon;              // RE 0x5E60D1/0x5E60D9
+    }
+    return diff <= m * kSharedEpsilon;              // RE 0x5E60BD/0x5E60C5
+}
+
 }  // namespace lcns

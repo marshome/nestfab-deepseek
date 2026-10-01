@@ -1017,5 +1017,27 @@ int main() {
         CHECK(relativeScale(kInvalidDoubleSentinel, 0.0, 0.0, 0.0) == 1.0);   // |-1| under the floor
     }
 
+    // --- almostEqual (RE 0x5e6060: relative epsilon with a switch at 1.0) ---------------------------
+    {
+        CHECK(kAlmostEqualSwitch == 1.0);
+        CHECK(kDoubleMaxBits == 0x7FEFFFFFFFFFFFFFULL);
+        CHECK(almostEqual(1.0, 1.0));                       // the equality short-circuit
+        CHECK(almostEqual(0.0, 0.0));
+        // the small branch: |a-b| <= eps
+        CHECK(almostEqual(0.0, kSharedEpsilon));            // exactly at eps
+        CHECK(!almostEqual(0.0, 2.0 * kSharedEpsilon));
+        // the large branch: |a-b| <= max(|a|,|b|) * eps. The band here is 1e6*eps = 2.22e-10, so the test
+        // stays clearly inside and clearly outside rather than sitting on the boundary, where the rounding
+        // of the multiplication itself decides the outcome
+        CHECK(almostEqual(1e6, 1e6 + 0.5e-10));            // 5e-11 inside the band
+        CHECK(almostEqual(1e6, 1e6 - 0.5e-10));
+        CHECK(!almostEqual(1e6, 1e6 + 1e-9));              // 1e-9 outside it
+        CHECK(!almostEqual(1e6, 1e6 - 1e-9));
+        // order does not matter
+        CHECK(almostEqual(3.5, 3.5 + 10.0 * kSharedEpsilon) == almostEqual(3.5 + 10.0 * kSharedEpsilon, 3.5));
+        // and the epsilon used here is the shared one
+        CHECK(kSharedEpsilon == std::numeric_limits<double>::epsilon());
+    }
+
     return check::finish("test_recovered");
 }

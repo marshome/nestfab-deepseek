@@ -3591,3 +3591,21 @@ round 157 保留的只有一条：`0x82FA0BE82FA0BE83` **不是除法**（该判
    `0x6DB6DB6D…B7` 38）。结合 round 181（普通移位多为库容器），这些**很可能是库的哈希/混合代码**
    （libstdc++ 的 `hash_bytes` 一类），而非领域算法 —— 但**本轮只能说“形状与常量如此”**，
    “它们属于库”是**推断**，需要逐个看调用面才能定案。
+
+### 附 105 `0x5E6060`（33 条 / **49 个调用者**）**全读** = `almostEqual`（goal round 185）**[已落码]
+
+```
+5E6068  ucomisd a,b ; 5E606C jp <一般路径> ; 5E6073 je → eax=1     ; 相等短路
+5E6083  xmm5=[0x7FEFFFFFFFFFFFFF]                              ; DBL_MAX（有限性守卫）
+5E608F  ucomisd xmm5,|a| ; jb → 0 ; 5E609D ucomisd xmm5,|b| ; jb → 0
+5E60A3  maxsd xmm1,xmm4                                        ; m = max(|a|,|b|)
+5E60B3  ucomisd 1.0,m ; ja <小量分支>                     ; 切换阈值 1.0
+5E60BD  mulsd xmm1,[2.22045e-16] ; 5E60C5 ucomisd xmm1,|a−b| ; setae al   ; |a−b| ≤ m·ε
+5E60D1  （小量分支）xmm1=[2.22045e-16] ; ucomisd xmm1,|a−b| ; setae al ; |a−b| ≤ ε
+```
+
+⇒ **教科书式的相对 epsilon 近似相等**：相等直接真；两边超过 `DBL_MAX` 则假；`m = max(|a|,|b|)`；`m < 1` 时用 `|a−b| ≤ ε`，否则用 `|a−b| ≤ m·ε`。
+
+**互证**：这里的 `ε = 2.22045e-16` **正是 round 172 从 9 个独立函数记录的共享槽位**（rva `0x9DFBA0`），且 round 172 的测试已用**计算**确认它等于 `std::numeric_limits<double>::epsilon()`。
+
+已落 `compare.hpp`：`almostEqual`、`kAlmostEqualSwitch`、`kDoubleMaxBits` —— **一个有 49 个调用者的基础谓词现在有了名字与公式**；测试 10 条。
