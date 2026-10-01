@@ -5079,3 +5079,23 @@ F1B0B        `add eax,r10d` ⇒ 加上跳过的整字
 ⇒ 字段以 **8 字节步长**排列，起点 `+0xF0`。
 
 **已落**：`text_tags.hpp` 的 `kTagBerDecodeError`；`layout.hpp` 的 `kFormatter*`、`kGetter*` + **两条 `static_assert`** + 测试 23 条。
+
+### 附 173 大整数族的**第三个成员**；且**标签语义得到第二次印证**（goal round 253）**[已落码]
+
+`0xF1580`（67 B / **44 个调用者**）= “**是否为零**”：
+
+```
+F1580  cmp dword [rcx+0x20],1 ; je 0xF15C0   ; ★ 与 round 249 同一标签字段、同一“未设”值 1
+F1586  rdx = [rcx+0x18]                       ; 字数组（与 0xF1AA0/0xF19E0 同布局）
+F158C  cmp qword [rdx],0 ; jne                ; 首字快路径
+F1592  rax = [rcx+0x10]                       ; 字数
+F15A0/F15A6  与另两个成员**完全相同**的跳尾零字循环
+F15AE  test eax,eax ; sete al                 ; 剩余字数为 0 即为零
+```
+
+⇒ **大整数族现有三个成员**（`0xF1AA0` 位长、`0xF19E0` 字节长、`0xF1580` 零判定），**共用 `+0x10`/`+0x18` 布局与同一个跳字循环**。
+★ 更重要：**round 249 的“`+0x20 == 1` 表示未设”在一个与那个比较器无关的函数里再次出现** ⇒ **两次独立目击**，已由测试固定（含“标签为 1 时永不为零”与“标签为 2 时行为如零”两条）。
+
+`0x998CD0`（201 B / 36 个调用者）是异常路径：调 **`0x63F6A8`**（与 round 248 的一次性守卫**同一个被调**）、`0x63F6C0`/`0x63F720`/`0x63F6B8`，以 `0x9988C0` 分配 8 字节，并用 `0x7C4AB0`/`0x7C4A80`/`0x9A0700`。
+
+**已落 `layout.hpp`**：`kBigIntIsZero`、`kBigIntFamilyMembers`、`kBigInt*`、`kTagSecondSighting`、`kException*` + **三条 `static_assert`** + 测试 27 条。

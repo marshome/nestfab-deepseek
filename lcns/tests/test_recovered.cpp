@@ -2177,5 +2177,42 @@ int main() {
         CHECK(kGetterCallers == 42);
     }
 
+    // --- the big-integer family's third member and the tag's second sighting (RE 0xf1580) -----------
+    {
+        CHECK(kBigIntIsZero == 0xF1580);
+        CHECK(kBigIntFamilyMembers == 3);
+        CHECK(kBigIntZeroCallers == 44);
+        CHECK(kBigIntFirstWordFastPath);
+        CHECK(kTagSecondSighting == 1);
+        // it uses the same tag field and the same unset value as round 249's comparator
+        CHECK(kTagFieldOffset == 0x20);
+        CHECK(kTagUnsetValue == 1);
+        // and the same layout as the other two members
+        CHECK(kBigIntCountOffset == 0x10);
+        CHECK(kBigIntWordsOffset == 0x18);
+        CHECK(kBigIntWordsOffset - kBigIntCountOffset == 8);
+
+        // the predicate the instructions implement: tagged means "not zero" answers false
+        const auto isZero = [](std::uint32_t tag, const std::vector<std::uint64_t>& w) {
+            if (static_cast<int>(tag) == kTagUnsetValue) return false;       // RE 0xF1580/0xF15C0
+            if (!w.empty() && w[0] != 0) return false;                       // RE 0xF158C
+            std::size_t n = w.size();
+            while (n > 0 && w[n - 1] == 0) --n;                              // RE 0xF15A0/0xF15A6
+            return n == 0;                                                   // RE 0xF15AE
+        };
+        CHECK(!isZero(1, {}));            // tagged: never "zero"
+        CHECK(!isZero(1, {0, 0}));
+        CHECK(isZero(0, {}));
+        CHECK(isZero(0, {0, 0, 0}));
+        CHECK(!isZero(0, {1}));
+        CHECK(!isZero(0, {0, 1}));
+        CHECK(isZero(2, {0, 0}));         // a tag that is not the unset value behaves like zero-tagged
+
+        CHECK(kExceptionHelper == 0x63F6A8);
+        CHECK(kExceptionHelper == kOnceCallee);
+        CHECK(kExceptionAlloc == 8);
+        CHECK(kExceptionCallers == 36);
+    }
+
     return check::finish("test_recovered");
 }

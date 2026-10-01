@@ -1031,6 +1031,33 @@ inline constexpr std::uintptr_t kGetterCheckC = 0x990780;    // RE 0x9453B5
 inline constexpr int kGetterCallers = 42;
 static_assert(kGetterFieldB - kGetterFieldA == kGetterStep, "the two fields are one step apart");
 
+
+// --- the third member of the big-integer family, 0xF1580, forty-four callers (round 253) --------------
+//     0xF1580 cmp dword [rcx+0x20],1 ; je 0xF15C0   ; the tag of round 249, unset == 1, answers zero
+//     0xF1586 rdx = [rcx+0x18]                      ; the word array, as in 0xF1AA0 and 0xF19E0
+//     0xF158C cmp qword [rdx],0 ; jne               ; a fast path on the first word
+//     0xF1592 rax = [rcx+0x10]                      ; the word count
+//     0xF15A0/0xF15A6 the same trailing-zero-word skip loop as the other two
+//     0xF15AE test eax,eax ; sete al                ; zero exactly when nothing significant remains
+inline constexpr std::uintptr_t kBigIntIsZero = 0xF1580;      // RE the whole routine
+inline constexpr int kBigIntFamilyMembers = 3;                // bits 0xF1AA0, bytes 0xF19E0, this
+inline constexpr int kBigIntZeroCallers = 44;
+inline constexpr bool kBigIntFirstWordFastPath = true;        // RE 0xF158C
+// The tag semantics of round 249 are CORROBORATED here: the same 32-bit field at +0x20 with the same value 1
+// meaning unset, in a function that has nothing to do with that comparator. Two independent sightings.
+inline constexpr int kTagSecondSighting = 1;                  // RE 0xF1580
+static_assert(kBigIntFamilyMembers == 3, "three members share the +0x10 / +0x18 layout");
+
+// --- the exception plumbing of 0x998CD0, thirty-six callers (round 253) --------------------------------
+//     0x998CE7/0x998D12 call 0x63F6A8    ; the same callee round 248's once guard uses
+//     0x998CF3 call 0x63F6C0 ; 0x998D1E call 0x63F720 ; 0x998D2E call 0x63F6B8
+//     0x998D45 mov ecx,8 ; 0x998D4A call 0x9988C0     ; an eight-byte allocation
+//     0x998D68/0x998D89 call 0x7C4AB0 / 0x7C4A80 ; 0x998D73 call 0x9A0700
+inline constexpr std::uintptr_t kExceptionHelper = 0x63F6A8;   // RE 0x998CE7, the same as kOnceCallee
+inline constexpr std::size_t kExceptionAlloc = 8;              // RE 0x998D45
+inline constexpr int kExceptionCallers = 36;
+static_assert(kExceptionHelper == kOnceCallee, "one helper serves both the once guard and this plumbing");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
