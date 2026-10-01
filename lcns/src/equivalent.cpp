@@ -18,6 +18,13 @@ bool isValidReduction(double reduction) {
     return reduction > 0.0;
 }
 
+bool matchesOrder(std::size_t problemParts, std::size_t orderParts, std::size_t problemSheets,
+                  std::size_t orderSheets) {
+    // Both halves of the recovered assertion, and nothing more: the original does not compare
+    // anything else about the two problems here.
+    return problemParts == orderParts && problemSheets == orderSheets;
+}
+
 void zeroTriple(double* triple) {
     // RE 0x5C6100, three 8 byte stores and a ret. Guarded only because this port must not write
     // through a null pointer; the original has no such check (its caller always passes a live one).

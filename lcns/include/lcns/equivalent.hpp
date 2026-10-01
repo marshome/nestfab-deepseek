@@ -54,5 +54,14 @@ double reduceFromSource(const double* object, double p);
 // it is about to fill in. Nothing beyond the third double is touched.
 void zeroTriple(double* triple);
 
+// RE ..\structure\border_property.hpp (the cns_no_fit.cpp part, function 0x668F20), whose two
+// assertions are quoted in re/findings_border_property.md section 3:
+//     'm_equivalent_problem->GetNumberOfParts() == order->parts.size()'
+//     'm_equivalent_problem->GetNumberOfSheets() == order->sheets.size()'
+// The no-fit context holds an equivalent problem that must cover the order one-to-one, so the
+// original checks it at runtime. Carried here as a predicate so a port can check the same thing.
+bool matchesOrder(std::size_t problemParts, std::size_t orderParts, std::size_t problemSheets,
+                  std::size_t orderSheets);
+
 }  // namespace equivalent
 }  // namespace lcns

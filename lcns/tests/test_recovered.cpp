@@ -167,6 +167,15 @@ int main() {
         CHECK(composite == 4);
     }
 
+    // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
+    {
+        CHECK(equivalent::matchesOrder(12, 12, 3, 3));
+        CHECK(!equivalent::matchesOrder(12, 11, 3, 3));   // part count must match
+        CHECK(!equivalent::matchesOrder(12, 12, 3, 2));   // sheet count must match
+        CHECK(!equivalent::matchesOrder(0, 1, 0, 0));
+        CHECK(equivalent::matchesOrder(0, 0, 0, 0));      // both empty is consistent
+    }
+
     // --- the 24 byte triple zeroing helper (RE 0x5c6100, four instructions) --------------------
     {
         double v[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
