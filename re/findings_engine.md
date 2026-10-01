@@ -5520,3 +5520,17 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 测试固定了**尾部长度**的四个取值、**新尺寸**的两个取值与 SSO 判定的行为。
 
 **已落 `layout.hpp`**：`kStringReplace`、`kStringAllocHelper`、`kReplaceCopySites`、`kSsoCheckOffset`、`kReplaceData`/`kReplaceSize`、`kSharedDeallocSightings4`、`kSsoComparedByAddress` + **三条 `static_assert`** + 测试 20 条。
+
+### 附 194 **释放器的第二个入口**、又一跳板、两个字符串构造器（goal round 276）**[已落码]**
+
+| 地址 | 字节 | 调用者 | 读出的内容 |
+|---|---:|---:|---|
+| `0x86A2B0` | **5** | **27** | `jmp 0x9984B0` —— **共享释放器的别名** |
+| `0xF1550` | **5** | 26 | `jmp 0xF0F00` —— 又一跳板 |
+| `0x7B1F20` | 80 | 26 | 从 `{data,length}` 构造字符串（虚表 `+0x00`、类型 `+0x08`、字符串 `+0x10`，内联缓冲区 `+0x20`）|
+| `0xD0670` | 60 | 24 | 与 round 262 的 `0x20C080` **同形**（C 串构造）|
+
+★ **重要修正意义**：因为 `0x86A2B0` 是**释放器的第二个入口**，**此前“六次目击”低估了它的使用度** —— 另有 **27 个调用点**通过别名到达它。
+另：`0x7B1F20` 通过 **round 254 认定的 `std::string::_M_construct`**（`0xC71D0`）构造；`0xD0670` 使长度助手 **`0x63F238` 升至三次目击**。
+
+**已落 `layout.hpp`**：`kDeallocAlias`、`kAliasCallers`、`kForwarderF0F00`、`kForwardTarget`、`kStringView*`、`kFromCString2*`、`kLengthHelperSightings`、`kFromCStringSites` + **四条 `static_assert`** + 测试 24 条。

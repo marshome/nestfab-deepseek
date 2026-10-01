@@ -1626,6 +1626,44 @@ static_assert(kReplaceCopySites == 3, "three copies make the replacement");
 static_assert(kSsoCheckOffset == kWideCapacity, "the inline buffer is where the trio puts it");
 static_assert(kSharedDeallocSightings4 == 6, "six sightings of the shared deallocator");
 
+
+// --- a second entry to the shared deallocator, and another forwarder (round 276) -----------------------
+//     0x86A2B0 jmp 0x9984B0   ; a five-byte alias, TWENTY-SEVEN callers
+//     0xF1550  jmp 0xF0F00    ; a five-byte forwarder, twenty-six callers
+// So the deallocator is reached through two entry points, and the six sightings recorded earlier understated how
+// widely it is used: twenty-seven further sites arrive through the alias.
+inline constexpr std::uintptr_t kDeallocAlias = 0x86A2B0;    // RE the whole routine
+inline constexpr int kAliasCallers = 27;                     // RE the caller count
+inline constexpr std::uintptr_t kForwarderF0F00 = 0xF1550;   // RE the whole routine
+inline constexpr std::uintptr_t kForwardTarget = 0xF0F00;    // RE the jump
+inline constexpr int kForwardCallers = 26;
+inline constexpr int kDeallocEntryPoints = 2;                // 0x9984B0 and its alias
+static_assert(kDeallocAlias != kSharedDealloc, "the alias is a distinct address from the deallocator");
+
+// --- the string constructor 0x7B1F20, twenty-six callers (round 276) -----------------------------------
+//     0x7B1F30 [rcx] = a vtable (rva 0x2A0DC3)
+//     0x7B1F37 dword [rcx+8] = edx          ; a THIRTY-TWO bit kind at +0x08
+//     0x7B1F3A [rbx+0x10] = rbx+0x20        ; the string object at +0x10, its inline buffer at +0x20
+//     0x7B1F48 r8 = data + length           ; start plus length, as round 262's constructor computes
+//     0x7B1F4F call 0xC71D0                 ; std::string::_M_construct, identified in round 254
+inline constexpr std::uintptr_t kStringViewCtor = 0x7B1F20;   // RE the whole routine
+inline constexpr std::uintptr_t kStringViewVtableRva = 0x2A0DC3;   // RE 0x7B1F26
+inline constexpr std::size_t kStringViewKind = 0x08;          // RE 0x7B1F37
+inline constexpr std::size_t kStringViewObject = 0x10;        // RE 0x7B1F3A
+inline constexpr std::size_t kStringViewInline = 0x20;        // RE 0x7B1F33
+inline constexpr int kStringViewCallers = 26;
+inline constexpr bool kStringViewUsesMConstruct = true;       // RE 0x7B1F4F
+
+// --- the second C-string constructor 0xD0670, twenty-four callers (round 276) --------------------------
+//     0xD0676 r8 = -1 ; 0xD067D/0xD068A  the inline buffer at +0x10 ; 0xD0692 call 0x63F238 for the length
+//     0xD0697 lea r8,[rbx+rax]  ; the end is start plus length, exactly as 0x20C080 does
+inline constexpr std::uintptr_t kFromCString2 = 0xD0670;      // RE the whole routine
+inline constexpr int kFromCString2Callers = 24;
+inline constexpr int kLengthHelperSightings = 3;              // rounds 251, 262 and this one
+inline constexpr int kFromCStringSites = 2;                   // 0x20C080 and 0xD0670
+static_assert(kFromCStringSites == 2, "two sites build from a C string");
+static_assert(kStringViewInline > kStringViewObject, "the inline buffer follows the string object");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

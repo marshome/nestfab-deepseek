@@ -2883,5 +2883,38 @@ int main() {
         CHECK(!usesInline(buf + 1, buf));
     }
 
+    // --- the deallocator alias, the forwarder and the two string constructors (RE 0x86a2b0..0xd0670) -
+    {
+        CHECK(kDeallocAlias == 0x86A2B0);
+        CHECK(kDeallocAlias != kSharedDealloc);
+        CHECK(kAliasCallers == 27);
+        CHECK(kDeallocEntryPoints == 2);
+        CHECK(kSharedDealloc == 0x9984B0);
+        CHECK(kForwarderF0F00 == 0xF1550);
+        CHECK(kForwardTarget == 0xF0F00);
+        CHECK(kForwardCallers == 26);
+        CHECK(kForwarderF0F00 != kForwardTarget);
+
+        CHECK(kStringViewCtor == 0x7B1F20);
+        CHECK(kStringViewVtableRva == 0x2A0DC3);
+        CHECK(kStringViewKind == 0x08);
+        CHECK(kStringViewObject == 0x10);
+        CHECK(kStringViewInline == 0x20);
+        CHECK(kStringViewInline > kStringViewObject);
+        CHECK(kStringViewCallers == 26);
+        CHECK(kStringViewUsesMConstruct);
+        // it builds through the routine round 254 identified as std::string's _M_construct
+        CHECK(kStringViewUsesMConstruct && kStdStringConstruct == 0xC71D0);
+
+        CHECK(kFromCString2 == 0xD0670);
+        CHECK(kFromCString2Callers == 24);
+        CHECK(kLengthHelperSightings == 3);
+        CHECK(kFromCStringSites == 2);
+        CHECK(kFromCString2 != kFromCString);
+        CHECK(kLengthHelper == 0x63F238);
+        // the two C-string sites share the length helper and the inline-buffer offset
+        CHECK(kFromCStringSites == 2 && kSsoInline == 0x10);
+    }
+
     return check::finish("test_recovered");
 }
