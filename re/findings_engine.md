@@ -5503,3 +5503,20 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ⇒ round 260 的两级跳板**内层就是它**（测试断言 `kTrampolineInner == kForwarder`）。
 
 **已落 `layout.hpp`**：`kImportThunk*`、`kImportStubClose`、`kCloseCalleeIsImport`、`kImportStubsAreNotDomain`、`kForwarder*` + **三条 `static_assert`** + 测试 20 条；`re/covlib.py` 新增 1 条机制证据。
+
+### 附 193 **字符串替换/插入路径**（`0x910C20`，**43 个调用者**，goal round 275）**[已落码]**
+
+```
+910C3B  rdx = [rcx+8]                  ; 尺寸在 `+0x08`（round 262 的宽字符三元组）
+910C4E  r12 = rcx+0x10                 ; 内联缓冲区
+910C52/910C58/910C60  rbp = size − pos − count   ; ★ **尾部长度**
+910C63  cmp r12,[rcx] ; je              ; ★ **SSO 判定**（内联地址 vs 数据指针）
+910C78  call 0x910BA0                   ; 分配并搬移助手
+910C98/910CB7/910CDE  call 0x63F2F8     ; ★ **三次拷贝**：前缀、插入段、尾部
+910CEB  call 0x9984B0                   ; ★ 共享释放器，**第六次**目击
+```
+
+⇒ 即 **用某东西替换区间 `[pos, pos+count)`** 的操作；SSO 分支正是三元组所暗示的。
+测试固定了**尾部长度**的四个取值、**新尺寸**的两个取值与 SSO 判定的行为。
+
+**已落 `layout.hpp`**：`kStringReplace`、`kStringAllocHelper`、`kReplaceCopySites`、`kSsoCheckOffset`、`kReplaceData`/`kReplaceSize`、`kSharedDeallocSightings4`、`kSsoComparedByAddress` + **三条 `static_assert`** + 测试 20 条。

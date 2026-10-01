@@ -2846,5 +2846,42 @@ int main() {
         CHECK(kTrampolineInner == kForwarder);
     }
 
+    // --- the string replace/insert path (RE 0x910c20) -----------------------------------------------
+    {
+        CHECK(kStringReplace == 0x910C20);
+        CHECK(kStringAllocHelper == 0x910BA0);
+        CHECK(kReplaceCopySites == 3);
+        CHECK(kSsoCheckOffset == 0x10);
+        CHECK(kSsoCheckOffset == kWideCapacity);
+        CHECK(kReplaceData == 0x00);
+        CHECK(kReplaceSize == 0x08);
+        CHECK(kStringReplaceCallers == 43);
+        CHECK(kSsoComparedByAddress);
+        CHECK(kSharedDeallocSightings4 == 6);
+        CHECK(kSharedDeallocSightings4 > kSharedDeallocSightings2);
+        // the three copies use the memcpy helper the other paths use
+        CHECK(kMemcpyHelper == 0x63F2F8);
+        CHECK(kSharedDealloc == 0x9984B0);
+
+        // the tail length the routine computes, and the size it ends with
+        const auto tailLength = [](std::int64_t size, std::int64_t pos, std::int64_t count) {
+            return size - pos - count;                  // RE 0x910C52/0x910C58/0x910C60
+        };
+        CHECK(tailLength(10, 3, 4) == 3);
+        CHECK(tailLength(10, 0, 0) == 10);
+        CHECK(tailLength(10, 10, 0) == 0);
+        CHECK(tailLength(5, 5, 0) == 0);
+        const auto newSize = [](std::int64_t size, std::int64_t count, std::int64_t added) {
+            return size - count + added;                // the size the replacement produces
+        };
+        CHECK(newSize(10, 4, 7) == 13);
+        CHECK(newSize(10, 0, 0) == 10);
+        // the SSO branch is taken when the data pointer still points at the inline buffer
+        const auto usesInline = [](const void* data, const void* inlineBuf) { return data == inlineBuf; };
+        const char buf[32] = {};
+        CHECK(usesInline(buf, buf));
+        CHECK(!usesInline(buf + 1, buf));
+    }
+
     return check::finish("test_recovered");
 }

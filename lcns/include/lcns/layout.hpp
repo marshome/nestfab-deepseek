@@ -1605,6 +1605,27 @@ inline constexpr std::uintptr_t kForwarderFailureB = 0x998A60;  // RE 0x877140
 static_assert(kForwarderCallee - kImportThunkBlock == 0xD8, "the forwarder's stub is 0xD8 into the block");
 static_assert(kForwarderCallee == 0x63F4B8, "the forwarder calls the stub 0xD8 into the block");
 
+
+// --- the string replace/insert path 0x910C20, forty-three callers (round 275) ---------------------------
+//     0x910C3B rdx = [rcx+8]            ; the size at +0x08, the wide-string trio of round 262
+//     0x910C4E/0x910C63  r12 = rcx+0x10, compared with the data pointer at +0x00: the SSO check
+//     0x910C52/0x910C58/0x910C60  the tail length is size - pos - count
+//     0x910C78 call 0x910BA0            ; the allocate-and-move helper
+//     0x910C98/0x910CB7/0x910CDE call 0x63F2F8   ; three copies: prefix, inserted part and tail
+//     0x910CEB call 0x9984B0            ; the shared deallocator, its SIXTH sighting
+inline constexpr std::uintptr_t kStringReplace = 0x910C20;   // RE the whole routine
+inline constexpr std::uintptr_t kStringAllocHelper = 0x910BA0;  // RE 0x910C78
+inline constexpr int kReplaceCopySites = 3;                  // RE the three calls to 0x63F2F8
+inline constexpr std::size_t kSsoCheckOffset = 0x10;         // RE 0x910C4E
+inline constexpr std::size_t kReplaceData = 0x00;            // RE 0x910C63
+inline constexpr std::size_t kReplaceSize = 0x08;            // RE 0x910C3B
+inline constexpr int kStringReplaceCallers = 43;
+inline constexpr int kSharedDeallocSightings4 = 6;           // rounds 248, 252, 254, 256, 261 and this
+inline constexpr bool kSsoComparedByAddress = true;          // RE 0x910C63
+static_assert(kReplaceCopySites == 3, "three copies make the replacement");
+static_assert(kSsoCheckOffset == kWideCapacity, "the inline buffer is where the trio puts it");
+static_assert(kSharedDeallocSightings4 == 6, "six sightings of the shared deallocator");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
