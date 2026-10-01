@@ -95,7 +95,13 @@ print("reachable from the exports: %d functions, %d bytes (%.1f%% of all code)"
 # reports are excluded, otherwise listing a function as "not covered" would mark it as covered.
 SKIP_NAMES = {"exports_table.csv", "exports_table.json", "exports_table.md",
               "UNCOVERED_RANKED.md", "RECOVERY_STATUS.md", "vtables.json", "prof2.pkl",
-              "g_coverage.py", "results.csv"}
+              "g_coverage.py", "results.csv",
+              # IDENTIFIED.md is a GENERATED INVENTORY (re/g_identify.py). It records provenance and
+              # shape for functions whose bodies nobody has read, and 80% of its rows carry no
+              # identity at all ("shape only"). Letting it count as "cited" would move this metric
+              # from ~32% to ~90% while nothing was actually reversed, so it is excluded here and
+              # reported as its own, clearly weaker tier further down.
+              "IDENTIFIED.md", "identified_summary.json", "g_identify.py"}
 addr_re = re.compile(r"0x([0-9A-Fa-f]{3,8})")
 cited = Counter()
 files = []
@@ -199,6 +205,47 @@ print("   have NO identification evidence at all (no name, no string, no data re
 print("      %5d fns, %8d B (%.1f%% of reachable)" % (len(noev), nev_b, 100.0 * nev_b / max(1, reach_bytes)))
 print("   have a name or a string, i.e. CAN be identified by the current tooling:")
 print("      %5d fns, %8d B" % (len(buckets["domain"]) - len(noev), db - nev_b))
+print()
+# --- tier report (goal round 8): the metric must not conflate three very different things ---------
+#   A. implemented in code   -- the address appears in lcns/**.cpp|hpp, i.e. something was written
+#   B. documented            -- the address appears in a re/ findings doc (read and described)
+#   C. identified by evidence-- only provenance/shape is on record (re/IDENTIFIED.md, generated)
+#   D. no record at all      -- nothing anywhere
+import glob as _glob  # noqa: E402
+_code, _docs = set(), set()
+for fp in _glob.glob(os.path.join(LC, "**", "*.cpp"), recursive=True) + \
+        _glob.glob(os.path.join(LC, "**", "*.hpp"), recursive=True):
+    if os.sep + "build" in fp:
+        continue
+    try:
+        t = io.open(fp, encoding="utf-8", errors="ignore").read()
+    except Exception:
+        continue
+    for m in addr_re.finditer(t):
+        v = int(m.group(1), 16)
+        if v in P:
+            _code.add(v)
+_cited_set = set(cited)   # `cited` above is a Counter, not a set
+_in_code = len(_code & seen)
+_in_docs = len((_cited_set & seen) - _code)
+ident = {}
+try:
+    ident = json.load(io.open(os.path.join(RE, "identified_summary.json"), encoding="utf-8"))
+except Exception:
+    pass
+print("=== tiers over the reachable set (they must never be added together) ===")
+print("   A implemented in lcns code (address cited in lcns/**.cpp|hpp) : %5d fns" % _in_code)
+print("   B documented in re/ findings docs                            : %5d fns" % _in_docs)
+print("   C identified by evidence only (re/IDENTIFIED.md, generated)   : %5d fns, %d B"
+      % (ident.get("total", 0), ident.get("bytes", 0)))
+if ident.get("by_evidence"):
+    parts = ["%s %d" % (k, v["fns"]) for k, v in sorted(ident["by_evidence"].items(),
+                                                       key=lambda kv: -kv[1]["bytes"])]
+    print("        by evidence class: " + ", ".join(parts))
+    print("        NOTE: 'shape only' means no identity at all is known -- size, instruction count")
+    print("        and branch shape. Tier C is NOT reverse engineering; it is a worklist.")
+print("   D no record at all                                          : %5d fns"
+      % max(0, len(seen) - _in_code - _in_docs - ident.get("total", 0)))
 print()
 print("=== top 25 DOMAIN functions still not looked at ===")
 for a in sorted(buckets["domain"], key=lambda x: -(P[x].get("size") or 0))[:25]:
