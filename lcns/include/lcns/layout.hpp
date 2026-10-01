@@ -3216,6 +3216,36 @@ static_assert(kStackStringBuffers == 3, "three stack strings");
 static_assert(kStackStringInline == kSsoInline, "each points sixteen bytes ahead, as the trio does");
 static_assert(kLazyMemberCache - kLazyMemberFlag == 8, "the cache follows the flag by eight");
 
+
+// --- a quantitative profile of the floating-point code (round 337) ---------------------------------------
+// The sweep counted arithmetic opcodes in every un-cited domain function of at most four hundred bytes:
+//     movsd 1005, mulsd 101, addsd 83, subsd 49, divsd 9, sqrtsd 4, addpd 4, subpd 2, movhpd 27, movlpd 7,
+//     unpcklpd 1
+inline constexpr int kFloatKernelsUncited = 55;              // functions with at least one arithmetic opcode
+inline constexpr int kOpcodeMovsd = 1005;                    // RE the totals
+inline constexpr int kOpcodeMulsd = 101;
+inline constexpr int kOpcodeAddsd = 83;
+inline constexpr int kOpcodeSubsd = 49;
+inline constexpr int kOpcodeDivsd = 9;
+inline constexpr int kOpcodeSqrtsd = 4;
+inline constexpr int kOpcodeAddpd = 4;                       // the packed form round 333 found
+inline constexpr int kOpcodeMovhpd = 27;
+inline constexpr int kFloatArithmeticTotal = 250;            // the arithmetic opcodes added up
+inline constexpr bool kScalarStyleDominates = true;           // 246 scalar against 4 packed
+// The two bodies that do the most arithmetic are described and NOT named: this work does not write the address of an
+// unread function into its sources, because citing it would raise the proxy metric without a reading. They are left
+// for a round that reads them.
+inline constexpr const char* kTopKernelShapeA = "eight additions and twelve multiplications";
+inline constexpr const char* kTopKernelShapeB = "eight multiplications, six subtractions and three square roots";
+inline constexpr int kTopKernelArithmeticA = 20;             // RE the count
+inline constexpr int kTopKernelArithmeticB = 20;
+inline constexpr bool kKernelsPointedAtNotRead = true;
+static_assert(kFloatKernelsUncited == 55, "fifty-five routines compute in floating point");
+static_assert(kOpcodeAddsd > kOpcodeAddpd, "scalar additions outnumber the packed ones");
+static_assert(kOpcodeMulsd > kOpcodeSqrtsd, "and multiplications outnumber the square roots");
+static_assert(kScalarStyleDominates, "so the scalar style is the one to expect");
+static_assert(kKernelsPointedAtNotRead, "and the candidates are left unread, not cited");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

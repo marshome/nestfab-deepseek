@@ -6668,3 +6668,20 @@ F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路�
 ★★ **方法论发现（本轮最重要）**：该字符串**不存在于数据段**。本工作的**每一份字符串清单都是搜数据段**（包括得到 `'BER decode error'`、`'InputBuffer'` 的那些） ⇒ **在栈上由立即数拼出的字符串对它是不可见的（结构上如此）**，因此**清单是不完整的** —— 这一点**明说出来**，而不留作暗含。
 
 **已落 `layout.hpp`**：`kLazyMember`(0x4F9200)、`kLazyMemberCallers`(21)、`kLazyMemberFlag`(0x100)、`kLazyMemberCache`(0x108)、`kImmediateGeometry`、`kImmediateMHaveG`、`kImmediateTr`、`kStackStringBuffers`(3)、`kStackStringInline`(0x10)、`kStringsBuiltFromImmediates`、`kStringInventoryIncomplete`、`kStringGeometry`、`kStringMHaveG` + **四条 `static_assert`** + 测试 26 条（含逐字节解码的可检验断言）。
+
+### 附 255 **浮点代码的量化画像**，以及**候选者有意不入册**（goal round 337）**[已落码]**
+
+扫描问的是另一个问题：未引用领域集里**有多少浮点运算、是什么形状**。≤400 字节且至少含一条算术指令的函数共 **55 个**，指令总数：
+
+| 指令 | 次数 | | 指令 | 次数 |
+|---|---:|---|---|---:|
+| `movsd` | **1005** | | `divsd` | 9 |
+| `mulsd` | 101 | | **`sqrtsd`** | **4** |
+| `addsd` | 83 | | **`addpd`** | **4** |
+| `subsd` | 49 | | `movhpd`/`movlpd`/`unpcklpd` | 27/7/1 |
+
+★ **两个结论**：**(1)** **标量双精度占绝对主导** —— round 333 发现的**打包形式（`addpd`）很稀少**（**4 次** 对 **83 次标量加法**）；**(2)** 动作（`movsd` 1005）多于运算（共约 250）—— **这就是标量内核的样子**。
+
+★★ **最有希望的两个候选者在此不写地址**：本工作自 rounds 278/279 起的规矩是**不把未读函数的地址写进源码**（引用它们会在没有阅读的情况下抬高代理指标）。它们以**形状**记录（“**8 次加法 + 12 次乘法**”、“**8 次乘法 + 6 次减法 + 3 次开方**”），**留给专门读它们的那一轮**。
+
+**已落 `layout.hpp`**：`kFloatKernelsUncited`(55)、`kOpcode*`（八个）、`kFloatArithmeticTotal`(250)、`kScalarStyleDominates`、`kTopKernelShapeA/B`、`kTopKernelArithmeticA/B`(20/20)、`kKernelsPointedAtNotRead` + **五条 `static_assert`** + 测试 26 条。

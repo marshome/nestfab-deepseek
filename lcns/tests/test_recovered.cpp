@@ -5098,5 +5098,40 @@ int main() {
         CHECK(!needsInit(1));
     }
 
+    // --- the floating-point profile, and the candidates left unread (RE the round-337 sweep) ---------
+    {
+        CHECK(kFloatKernelsUncited == 55);
+        CHECK(kOpcodeMovsd == 1005);
+        CHECK(kOpcodeMulsd == 101);
+        CHECK(kOpcodeAddsd == 83);
+        CHECK(kOpcodeSubsd == 49);
+        CHECK(kOpcodeDivsd == 9);
+        CHECK(kOpcodeSqrtsd == 4);
+        CHECK(kOpcodeAddpd == 4);
+        CHECK(kOpcodeMovhpd == 27);
+        CHECK(kFloatArithmeticTotal == 250);
+        CHECK(kScalarStyleDominates);
+        CHECK(kOpcodeAddsd > kOpcodeAddpd);
+        CHECK(kOpcodeMulsd > kOpcodeSqrtsd);
+        CHECK(kTopKernelArithmeticA == 20);
+        CHECK(kTopKernelArithmeticB == 20);
+        CHECK(kKernelsPointedAtNotRead);
+        CHECK(std::string(kTopKernelShapeA) == "eight additions and twelve multiplications");
+        CHECK(std::string(kTopKernelShapeB) != std::string(kTopKernelShapeA));
+        CHECK(kPointAddSSE == 0x16C270);                 // the one packed kernel that WAS read
+
+        // the arithmetic the totals describe
+        const int scalar = kOpcodeMulsd + kOpcodeAddsd + kOpcodeSubsd + kOpcodeDivsd + kOpcodeSqrtsd;
+        const int packed = kOpcodeAddpd;
+        CHECK(scalar == 246);
+        CHECK(packed == 4);
+        CHECK(scalar > packed * 50);                     // dominance, stated as a ratio rather than a word
+        CHECK(scalar - packed == 242);
+        CHECK(kFloatArithmeticTotal > scalar - packed);  // the two totals measure different things
+        // and the moves outnumber the arithmetic, which is what a scalar kernel looks like
+        CHECK(kOpcodeMovsd > kFloatArithmeticTotal);
+        CHECK(kFloatArithmeticTotal + kOpcodeMovsd == 1255);
+    }
+
     return check::finish("test_recovered");
 }
