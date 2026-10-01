@@ -3556,6 +3556,36 @@ static_assert(kLibraryComplete, "and together they cover the operations a 2x3 af
 static_assert(kBothOperandsSameRecord, "six doubles from each operand, so both are the same record");
 static_assert(kMatrixMultiplyCallers > kMakeTranslationCallers, "the workhorse is called more than the builder");
 
+
+// --- an accumulator over 312-byte elements (round 349) ----------------------------------------------------
+//     0x50FD62 byte [rcx] = 1                  ; the output's flag
+//     0x50FD68..0x50FD7A  four doubles zeroed at +0x08, +0x10, +0x18 and +0x20
+//     0x50FD8D/0x50FD89   the range's end and begin from [rbx+8] and [rbx]
+//     0x50FD98/0x50FDBB   two accessors, 0x4F8370 and 0x4F8380, reached through 0x51D2F0
+//     0x50FDA8 add rbx,0x138                   ; the element stride
+inline constexpr std::uintptr_t kAccumulate = 0x50FD40;      // RE the whole routine
+inline constexpr int kAccumulateCallers = 3;
+inline constexpr std::size_t kElementStride138 = 0x138;      // RE 0x50FDA8
+inline constexpr std::size_t kAccumulatorFlag = 0x00;        // RE 0x50FD62
+inline constexpr std::size_t kAccumulatorA = 0x08;           // RE 0x50FD68
+inline constexpr std::size_t kAccumulatorB = 0x10;           // RE 0x50FD70
+inline constexpr std::size_t kAccumulatorC = 0x18;           // RE 0x50FD75
+inline constexpr std::size_t kAccumulatorD = 0x20;           // RE 0x50FD7A
+inline constexpr int kAccumulatorDoubles = 4;                // the four above
+inline constexpr std::uintptr_t kElementGetter = 0x51D2F0;   // RE the two calls
+inline constexpr std::uintptr_t kElementAccessorA = 0x4F8370;  // RE 0x50FDA0
+inline constexpr std::uintptr_t kElementAccessorB = 0x4F8380;  // RE 0x50FDBB
+inline constexpr int kAccessorsPerElement = 2;               // RE the two chains
+inline constexpr std::uintptr_t kInit5C8A10 = 0x5C8A10;      // RE 0x50FD84
+inline constexpr bool kHelperBelowAffine = true;             // same high range, not a library member
+static_assert(kAccumulatorD - kAccumulatorA == 0x18, "four doubles, eight bytes apart");
+static_assert(kAccumulatorA > kAccumulatorFlag, "and they follow the flag byte");
+static_assert(kAccessorsPerElement == 2, "two accessors per element");
+static_assert(kElementAccessorB - kElementAccessorA == 0x10, "sixteen bytes apart in code");
+static_assert(kElementStride138 == 312, "the stride is three hundred and twelve bytes");
+static_assert(kHelperBelowAffine && kInit5C8A10 < kMakeTranslation,
+              "the helper sits below the affine library in the same range, without being a member");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

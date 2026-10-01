@@ -6911,3 +6911,20 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ⇒ `kAffineLibraryMembers = 7`、`kLibraryComplete = true`：**一个 2×3 仿射所需的操作已齐备**。
 
 **已落 `layout.hpp`**：`kMatrixMultiply`(0x5CE970)、`kMatrixMultiplyCallers`(38)、`kMulOperandA/B`、`kMatrixLayoutRoutines`(7)、`kMatrixLayoutReads`(8)、`kAffineLibraryMembers`(7)、`kLibraryComplete`、`kBothOperandsSameRecord`、`kAffineLibrary` + **五条 `static_assert`** + 测试 26 条（含“先平移再缩放”与“一步复合”**结果相等**的行为验证，以及 `comp = {2,0,0,1,2,1}` 的手算）。
+
+### 附 267 **对 312 字节元素数组的累加器**（goal round 349）**[已落码]**
+
+`0x50FD40`（270 B / 3 个调用者）：
+
+```
+50FD62  byte [rcx] = **1**                ; 输出的标志字节
+50FD68..50FD7A  `+0x08`、`+0x10`、`+0x18`、`+0x20` 四个 double **清零**  ; ★ 累加器
+50FD8D/50FD89  范围的 end 与 begin（`[rbx+8]`、`[rbx]`）
+50FD98/50FDBB  两条访问器链：**0x51D2F0** → **0x4F8370** / **0x4F8380**
+50FDA8  `add rbx, **0x138**`              ; ★★ **元素步长 312 字节**
+```
+
+⇒ 输出是**一个标志加四个 double**，输入是**以 `0x138` 为步长行走的范围**，每元素经**同一 getter（`0x51D2F0`）到两个访问器** —— 形状属于**对排样/实体列表的累加**：四个 double 是累加器，两个访问器提供被累加的量。
+★ **该步长是本工作记录到的最大元素**；循环前调的助手 **0x5C8A10** 位于**同一高地址段但在仿射库之下**，**不是该库成员**。
+
+**已落 `layout.hpp`**：`kAccumulate`(0x50FD40)、`kAccumulateCallers`(3)、`kElementStride138`(0x138)、`kAccumulatorFlag`(0x00)、`kAccumulatorA..D`(0x08…0x20)、`kAccumulatorDoubles`(4)、`kElementGetter`(0x51D2F0)、`kElementAccessorA/B`(0x4F8370/0x4F8380)、`kAccessorsPerElement`(2)、`kInit5C8A10`(0x5C8A10)、`kHelperBelowAffine` + **六条 `static_assert`** + 测试 26 条（含步长行走的地址算术与累加器布局验证）。

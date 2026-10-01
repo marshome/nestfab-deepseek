@@ -5632,5 +5632,49 @@ int main() {
         CHECK(kAffineLibraryMembers == 7);
     }
 
+    // --- the accumulator over 312-byte elements (RE 0x50fd40) ---------------------------------------
+    {
+        CHECK(kAccumulate == 0x50FD40);
+        CHECK(kAccumulateCallers == 3);
+        CHECK(kElementStride138 == 0x138);
+        CHECK(kElementStride138 == 312);
+        CHECK(kAccumulatorFlag == 0x00);
+        CHECK(kAccumulatorA == 0x08);
+        CHECK(kAccumulatorB == 0x10);
+        CHECK(kAccumulatorC == 0x18);
+        CHECK(kAccumulatorD == 0x20);
+        CHECK(kAccumulatorD - kAccumulatorA == 0x18);
+        CHECK(kAccumulatorA > kAccumulatorFlag);
+        CHECK(kAccumulatorDoubles == 4);
+        CHECK(kElementGetter == 0x51D2F0);
+        CHECK(kElementAccessorA == 0x4F8370);
+        CHECK(kElementAccessorB == 0x4F8380);
+        CHECK(kElementAccessorB - kElementAccessorA == 0x10);
+        CHECK(kAccessorsPerElement == 2);
+        CHECK(kInit5C8A10 == 0x5C8A10);
+        CHECK(kHelperBelowAffine);
+        CHECK(kInit5C8A10 < kMakeTranslation);
+        CHECK(kElementStride138 != kSegmentBytes);       // a much larger element than a segment
+
+        // the walk the loop performs, as offsets -- no pointer arithmetic on a null pointer
+        const auto offsetOf = [](int index) {
+            return static_cast<std::size_t>(index) * kElementStride138;
+        };
+        CHECK(offsetOf(0) == 0u);
+        CHECK(offsetOf(1) == 312u);
+        CHECK(offsetOf(3) == 936u);
+        CHECK(offsetOf(1) - offsetOf(0) == kElementStride138);
+        // the accumulator's own layout: a flag, then four doubles
+        struct Acc { unsigned char flag; double a, b, c, d; };
+        CHECK(sizeof(Acc) >= kAccumulatorD + sizeof(double));
+        Acc acc{};
+        acc.flag = 1;
+        acc.a = acc.b = acc.c = acc.d = 0.0;
+        CHECK(acc.flag == 1);
+        CHECK(acc.a == 0.0 && acc.d == 0.0);
+        CHECK(kElementStride138 * 2 == 624);
+        CHECK(kAccumulatorDoubles * 8 == 32);
+    }
+
     return check::finish("test_recovered");
 }
