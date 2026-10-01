@@ -439,4 +439,27 @@ inline constexpr std::size_t kRefCountOffset = 0x08;       // RE 0x1C6658: the `
 static_assert((1 << kBucketShift) == kBucketCount, "the shift and the bucket count agree");
 static_assert(kBucketEntryStride == kSmallRecordStride, "the entries are the 24-byte records of round 157");
 
+
+// --- the adaptive time budget guard of 0x65C0F0 (round 221) -----------------------------------------
+//     65C11A/65C131 the retry counter lives at +0xC and its limit at +8
+//     65C1F3 ucomisd xmm0,[rbx]        ; the budget itself is a double at +0x00
+//     65C198 movsd xmm2,[1000.0]       ; rva 0x9BF510, the milliseconds divisor
+//     65C1A8 addsd xmm1,[2.0]          ; rva 0x9BF518, the retry term added to the count
+//     65C1D0 divsd xmm0,xmm2           ; elapsed milliseconds / 1000
+//     65C1DE divsd xmm0,xmm1           ; / (count + 2)
+//     65C1EF addsd                     ; plus the earlier interval
+// and the elapsed time comes from the nanosecond clock 0x8A8190, with the /1e6 magic of round 148
+// (0x431BDE82D7B634DB with `sar rdx,0x12`) -- so this function cross-verifies both.
+inline constexpr std::size_t kGuardBudgetOffset = 0x00;    // RE 0x65C1F3
+inline constexpr std::size_t kGuardLimitOffset = 0x08;     // RE 0x65C134
+inline constexpr std::size_t kGuardCountOffset = 0x0C;     // RE 0x65C11A and 0x65C137
+inline constexpr double kGuardDivisorMs = 1000.0;          // RE 0x65C198 (rva 0x9BF510)
+inline constexpr double kGuardRetryTerm = 2.0;             // RE 0x65C1A8 (rva 0x9BF518)
+
+// --- the vtable slots the guard tests against the two anchors (round 221) -----------------------------
+//     65C10D mov rax,[rdx+0x10] ; 65C111 cmp rax,r8   with r8 = 0x7C2460
+//     65C121 mov rdx,[rdx+0x18] ; 65C12C cmp rdx,r8   with r8 = 0x7C2470
+inline constexpr std::size_t kGuardTypeSlotA = 0x10;       // RE 0x65C10D
+inline constexpr std::size_t kGuardTypeSlotB = 0x18;       // RE 0x65C121
+
 }  // namespace lcns

@@ -4513,3 +4513,26 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 其中模与除都是 GCC 对**有符号**哈希生成的形式（四条符号修正），**测试逐个复现并与 C++ 的 `%`/`/` 对比 87 个取值**。
 
 **已落 `layout.hpp`**：`kHashFieldOffset`、`kBucketCount`、`kBucketShift`、`kBucketEntryStride`、`kBucketChainOffset`、`kRefCountOffset` + 两条 `static_assert` + 测试 12 条（含逐点对比）。
+
+### 附 144 **自适应时间预算守卫**：一次跨四轮的互证（goal round 221）**[已落码]
+
+由 round 220 的**类型锚点回流**找到的第二个使用者 **`0x65C0F0`**，读全后是**时间预算守卫**：
+
+```
+65C10D  rax=[rdx+0x10] ; 65C111 cmp rax,0x7C2460     ; ★ 用 vtable 槽 +0x10 比类型 A（round 219）
+65C121  rdx=[rdx+0x18] ; 65C12C cmp rdx,0x7C2470     ; ★ 槽 +0x18 比类型 B
+65C11A/65C131  重试计数 `+0xC`，上限 `+8`
+65C172/65C181  call 0x8A8190                            ; ★ **纳秒时钟**（早前轮次恢复）
+65C198  xmm2=[1000.0]（rva 0x9BF510）
+65C1A8  addsd xmm1,[2.0]（rva 0x9BF518）
+65C18E  movabs rcx,0x431BDE82D7B634DB ; 65C1B3 imul rcx ; 65C1C1 sar rdx,0x12
+        ★★ **round 148 的 ÷1e6 幻数，这是第二次独立出现**
+65C1D0  divsd xmm0,xmm2；65C1DE divsd xmm0,xmm1              ; /1000 再 /(count+2)
+65C1F3  ucomisd xmm0,[rbx] ; seta al                     ; 与 `+0x00` 的预算比较
+```
+
+⇒ **按已用时间自适应预算**：毫秒除以 1000、再除以 `(次数+2)`，累加后与预算字段比较。
+
+★ **一次跨四轮的互证**：它同时使用了 **round 148 的 ÷1e6 幻数**、**早前轮次的纳秒时钟 `0x8A8190`**、以及 **round 219 的两个类型锚点** —— 而它是**通过类型锚点回流找到的**，不是为了找它们而去找它们。
+
+**已落 `layout.hpp`**：`kGuardBudgetOffset/Limit/Count`、`kGuardDivisorMs`、`kGuardRetryTerm`、`kGuardTypeSlotA/B` + 测试 15 条（包括把该表达式逐步重算并与预算比较）。

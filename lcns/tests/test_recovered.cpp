@@ -1556,5 +1556,37 @@ int main() {
         CHECK(3 * kBucketEntryStride == 72);                       // `lea rdx,[rbx+rbx*2]` then scaled by 8
     }
 
+    // --- the adaptive budget guard (RE 0x65c198/0x65c1a8/0x65c1d0/0x65c1de) ---------------------------
+    {
+        CHECK(kGuardBudgetOffset == 0x00);
+        CHECK(kGuardLimitOffset == 0x08);
+        CHECK(kGuardCountOffset == 0x0C);
+        CHECK(kGuardLimitOffset < kGuardCountOffset);          // limit then counter, both below 0x10
+        CHECK(kGuardDivisorMs == 1000.0);
+        CHECK(kGuardRetryTerm == 2.0);
+        CHECK(kGuardTypeSlotA == 0x10);
+        CHECK(kGuardTypeSlotB == 0x18);
+        CHECK(kGuardTypeSlotB - kGuardTypeSlotA == 8);         // consecutive vtable slots
+
+        // the expression the instructions build, evaluated step by step:
+        //   (elapsed_ns / 1e6) / 1000 / (count + 2)  plus the same for the earlier interval
+        const auto adapted = [](double elapsedNs, int count) {
+            const double millis = elapsedNs / kMicroScale;                 // the /1e6 magic of round 148
+            return (millis / kGuardDivisorMs) / (static_cast<double>(count) + kGuardRetryTerm);
+        };
+        CHECK(adapted(0.0, 0) == 0.0);
+        CHECK(adapted(2.0e6, 0) == 0.001);    // 2 ms -> 0.002 / 2 = 0.001
+        CHECK(adapted(2.0e9, 0) == 1.0);      // 2000 ms -> 2.0 / 2 = 1.0
+        // larger counts shrink the adapted figure, which is the point of dividing by (count + 2)
+        CHECK(adapted(2.0e9, 8) < adapted(2.0e9, 0));
+        CHECK(adapted(2.0e9, 8) == 0.2);      // 2.0 / 10 = 0.2
+        // and the comparison against the budget is a strict `seta`
+        const auto exceeds = [&](double elapsedNs, int count, double budget) {
+            return adapted(elapsedNs, count) > budget;
+        };
+        CHECK(exceeds(2.0e9, 8, 0.1));
+        CHECK(!exceeds(2.0e9, 8, 0.3));
+    }
+
     return check::finish("test_recovered");
 }
