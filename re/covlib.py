@@ -140,6 +140,57 @@ def classify(a):
     return "domain"
 
 
+# --- identity-based classification (goal round 7) ---------------------------------------------
+# The rule above excludes a function as soon as ANY string it references matches. But the strings a
+# function references include the names of the functions it CALLS, so a domain function that merely
+# calls std::vector::reserve was being moved out of the "still to reverse" list. Measured on the
+# current data: 64 functions / 125,925 bytes were excluded that way alone. That is an optimistic
+# bias -- it hides work -- so the exclusion now requires IDENTITY evidence:
+#
+#   * the function's own recovered NAME is a library symbol, or
+#   * ALL of its strings are library symbols (nothing domain specific at all), or
+#   * its strings show it was compiled from a third party SOURCE PATH (boost/, cryptopp/, clp/,
+#     osi/, coinutils/, jsoncpp/ under external/ or third_party/),
+#
+# and a called-library string alone is no longer enough.
+VENDOR_PATH_PAT = re.compile(
+    r"(external[\\/](boost_1_63_0|clp|coinutils|osi|cryptopp|jsoncpp)|"
+    r"third_party[\\/]src[\\/](boost_1_63_0|clp-|coinutils-|osi-|cryptopp|jsoncpp)|"
+    r"(^|[\\/])boost[\\/][a-z0-9_]+\.hpp|"
+    r"cryptopp[\\/]|jsoncpp[\\/]|coin-or)", re.I)
+
+
+def classify_identity(a):
+    """Same three names as classify(), but only on identity evidence (see the note above)."""
+    f = PROF[a]
+    strs = []
+    for s in (f.get("strings") or []):
+        strs.append(str(s[1]) if isinstance(s, (tuple, list)) and len(s) == 2 else str(s))
+    strs = [s for s in strs if s]
+    name = str(f.get("name") or "")
+    if TOOLCHAIN_PAT.search(name):
+        return "toolchain"
+    if THIRD_PARTY_PAT.search(name):
+        return "third_party"
+    if any(VENDOR_PATH_PAT.search(s) for s in strs):
+        return "third_party"
+    if strs:
+        lib = [s for s in strs if TOOLCHAIN_PAT.search(s) or THIRD_PARTY_PAT.search(s)]
+        if len(lib) == len(strs):
+            return "toolchain" if not any(THIRD_PARTY_PAT.search(s) for s in strs) else "third_party"
+    return "domain"
+
+
+def has_identity_evidence(a):
+    """True when there is anything at all to identify the function by (name, string, data ref)."""
+    f = PROF[a]
+    if f.get("name"):
+        return True
+    if f.get("strings"):
+        return True
+    return False
+
+
 def hint_of(f):
     for s in (f.get("strings") or []):
         if isinstance(s, (tuple, list)) and len(s) == 2:

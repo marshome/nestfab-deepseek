@@ -17,7 +17,7 @@ from collections import Counter, deque
 
 sys.path.insert(0, r"D:\Nesting\nestfab\re")
 from lib import *  # noqa: E402
-from covlib import classify  # noqa: E402  (three way: toolchain / third_party / domain)
+from covlib import classify, classify_identity, has_identity_evidence  # noqa: E402
 
 RE = r"D:\Nesting\nestfab\re"
 LC = r"D:\Nesting\nestfab\lcns"
@@ -162,20 +162,43 @@ print("   not-cited reachable: %d functions, %d bytes (%.1f%% of reachable)"
 # Per the human instruction (goal round 2) third party libraries are DOWNLOADED AND LINKED, not
 # reversed, so they are excluded -- but explicitly, via third_party/fetch.py's evidence-based
 # manifest, and split from the toolchain (libstdc++/MinGW) which is excluded for the same reason.
+#
+# ROUND 7 CORRECTION: exclusion now needs IDENTITY evidence (see covlib.classify_identity): the
+# function's own name, or all of its strings, or a third party SOURCE PATH. Before this the rule
+# fired on any referenced string, including the names of functions it merely CALLS, which moved 64
+# domain functions / 125,925 bytes out of the work list on no real evidence. The old loose rule is
+# still computed, so the size of that bias stays visible and auditable.
 buckets = {"toolchain": [], "third_party": [], "domain": []}
+loose = {"toolchain": [], "third_party": [], "domain": []}
 for a in missing:
-    buckets[classify(a)].append(a)
+    buckets[classify_identity(a)].append(a)
+    loose[classify(a)].append(a)
 vb = sum((P[a].get("size") or 0) for a in buckets["third_party"])
 tb = sum((P[a].get("size") or 0) for a in buckets["toolchain"])
 db = sum((P[a].get("size") or 0) for a in buckets["domain"])
+ldb = sum((P[a].get("size") or 0) for a in loose["domain"])
 print()
-print("=== of the un-cited reachable code ===")
+print("=== of the un-cited reachable code (identity evidence required, round 7) ===")
 print("   third party to LINK (see third_party/README.md): %5d fns, %8d B (%.1f%% of reachable)"
       % (len(buckets["third_party"]), vb, 100.0 * vb / max(1, reach_bytes)))
 print("   toolchain libstdc++/MinGW                      : %5d fns, %8d B (%.1f%%)"
       % (len(buckets["toolchain"]), tb, 100.0 * tb / max(1, reach_bytes)))
 print("   libcns DOMAIN code STILL TO REVERSE            : %5d fns, %8d B (%.1f%%)"
       % (len(buckets["domain"]), db, 100.0 * db / max(1, reach_bytes)))
+print("   (the previous loose rule reported %d fns / %d B of domain -- %d B of that was excluded"
+      % (len(loose["domain"]), ldb, max(0, db - ldb)))
+print("    merely because a CALLED function's name looked like a library symbol)")
+print()
+# The honest second number: within the domain bucket, how much has ANY identification channel?
+# A function with no name, no string and no data reference cannot be identified by the current
+# tooling at all -- that, not "cited", is the real work list.
+noev = [a for a in buckets["domain"] if not has_identity_evidence(a)]
+nev_b = sum((P[a].get("size") or 0) for a in noev)
+print("=== the real work list inside that domain bucket ===")
+print("   have NO identification evidence at all (no name, no string, no data ref):")
+print("      %5d fns, %8d B (%.1f%% of reachable)" % (len(noev), nev_b, 100.0 * nev_b / max(1, reach_bytes)))
+print("   have a name or a string, i.e. CAN be identified by the current tooling:")
+print("      %5d fns, %8d B" % (len(buckets["domain"]) - len(noev), db - nev_b))
 print()
 print("=== top 25 DOMAIN functions still not looked at ===")
 for a in sorted(buckets["domain"], key=lambda x: -(P[x].get("size") or 0))[:25]:
