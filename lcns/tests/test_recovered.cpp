@@ -18,6 +18,7 @@
 #include "lcns/budget.hpp"
 #include "lcns/layout.hpp"
 #include "lcns/steps.hpp"
+#include "lcns/units.hpp"
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
@@ -852,6 +853,21 @@ int main() {
         CHECK(degreeTurnCount(180.0) == 1);                // 0.5 + 0.5 = 1.0 exactly
         CHECK(degreeTurnCount(179.0) == 0);
         CHECK(degreeTurnCount(1080.0) == 3);
+    }
+
+    // --- the micro-scale convention (RE 0x19f269 / 0x19fa25, shared rvas) ---------------------------
+    {
+        CHECK(kMicroScale == 1e6);
+        CHECK(kMicroInverse == 1e-6);
+        CHECK(kTenThousandth == 0.0001);
+        CHECK(microToUnit(1000000) == 1.0);
+        CHECK(microToUnit(500000) == 0.5);
+        CHECK(microToUnit(100) == 0.0001);
+        CHECK(unitToMicro(1.0) == 1e6);
+        // the two constants describe the same relation
+        CHECK(kMicroInverse * kMicroScale == 1.0);
+        // and the shared 0.0001 slot is the same value as the fine step of 0x1a1810
+        CHECK(kTenThousandth == kStepFine);
     }
 
     return check::finish("test_recovered");

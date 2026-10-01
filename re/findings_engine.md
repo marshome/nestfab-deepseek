@@ -3208,3 +3208,22 @@ compacting ... <before_shake> => <after_shake>
 **4 个槽位判定为【非 double】（未解析）**：它们解析出来是**退正规数**（`1.6976e-312`、`5.30499e-313`、`2.122e-313`），真实默认值不可能是这个量级，因此它们**很可能是指针或 16 字节块**（`movdqa`/`movups` 读取）：`0x9B05A0`（@`0x4e676`）、`0x9B05D0`（@`0x4e6ad`）、`0x9B05E0`（@`0x4e6d1`）、`0x9B0620`（@`0x4e8a6`）。
 
 ⇒ **这是一份领域对象的参数默认值表**，每个值都有 RVA 与加载位置作证据；对应的字段偏移集合已在前一节列出。
+
+### 附 90 **微尺度换算是工程惯例**：两个独立函数、共享常量块（goal round 171）**[已落码]
+
+```
+0x19F1F0:  19F25F cvtsi2sd xmm1,[rbx] ; 19F269 divsd xmm1,[1e6]
+0x19F8F0:  19FA0E cvtsi2sd xmm2,[rdi] ; 19FA25 divsd xmm2,[1e6]
+```
+
+两者的常量取自**同一块只读数据**：
+
+| 值 | RVA | 加载于 |
+|---|---|---|
+| `1e-06` | `0x9BE4F0` | `0x19F246`、`0x19FA1D` |
+| `0.0001` | `0x9BE4F8` | `0x19F2CC`、`0x19FA89` |
+| `1e+06` | `0x9BE508` | `0x19F269`、`0x19FA25` |
+
+⇒ **两个互相独立的函数、同一个除数、同一块常量** ⇒ 这是**工程惯例**而非局部选择；与已落的 `kSeedScale = 1e6`、`0.0001` 步长对得上。
+
+**已落 `lcns/include/lcns/units.hpp`**：`kMicroScale`/`kMicroInverse`/`kTenThousandth` + `microToUnit`/`unitToMicro`，测试 9 条（含与 `kStepFine` 的一致性）。
