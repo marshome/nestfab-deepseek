@@ -7,6 +7,7 @@
 #include <sstream>
 #include <thread>
 
+LCNS_STRUCTURAL(tu.structure_interface);
 LCNS_STRUCTURAL(module.engine);
 namespace lcns {
 namespace {
