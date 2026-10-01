@@ -5249,3 +5249,29 @@ F34F3/F34F6  复制 `+0x20` 的 32 位字段 —— 即 rounds 249/253 的**标�
 **（b）`0x8772A0`（38 B / 4 个调用者）**：`call 0x877120` 取值，再 `mov ecx,eax ; jmp 0x65C940` 把该值传给下一个函数 ⇒ **两级跳板**。
 
 **已落 `layout.hpp`**：`kByteTrioA`、`kOptionalBuffer`、`kSecondBuffer`、`kBlockA0*`、`kReleaserAlt`、`kTrampoline*` + **两条 `static_assert`** + 测试 25 条。
+
+### 附 181 **对象析构器（三处早前落码在此会合）**与**漫入式引用计数赋值**（goal round 261）**[已落码]
+
+**（a）`0x87F2A0`（60 B / 35 个调用者）= 对象的析构器**：
+
+```
+87F2AF  [rcx] = 虚表（rva 0x1D6394）
+87F2B2  call 0x87D8E0        ; ★ round 258 的**重置例程**
+87F2B7/87F2BB  rcx = rbx+0x48 ; call 0x8774F0   ; ★ round 248 的**五字节跳板**，作用于 `+0x48` 子对象
+87F2C7/87F2D7  rcx = rbx+0x38 ; jmp 0x8AABC0    ; `+0x38` 子对象，尾调
+```
+
+⇒ **rounds 248、258、259 三处独立落码在同一个函数里会合** ⇒ 它们互相印证（重置例程、跳板、`+0x48` 子对象）。
+
+**（b）`0x8AABF0`（84 B / 35 个调用者）= 漫入式引用计数的赋值**：
+
+```
+8AABFB  lock add dword [rcx],1   ; 新指向者计数 **原子加一**
+8AAC02  lock sub dword [rbx],1   ; 旧指向者计数 **原子减一**
+8AAC06  je                       ; 减到 0 则释放：0x8AA690 与 **0x9984B0**（第五次目击）
+8AAC0B  [rax] = [rdx]            ; 最后才赋值指针
+```
+
+★ **发现差异并如实记下（而不混为一谈）**：**本处计数在 `+0x00`**，而 **round 248 的释放例程在 `+0x10`** 减一 ⇒ **它们是两个不同的引用计数类型**，谁属于哪个类型**本轮未确定**（代码中用 `kCounterOffsetsDiffer` 标记）。
+
+**已落 `layout.hpp`**：`kObject*`、`kSubObject*`、`kIntrusive*`、`kCounterOffsetHere`、`kCounterOffsetsDiffer` + **两条 `static_assert`** + 测试 22 条。

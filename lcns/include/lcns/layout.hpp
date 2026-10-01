@@ -1236,6 +1236,36 @@ inline constexpr std::uintptr_t kTrampolineInner = 0x877120; // RE 0x8772AD
 inline constexpr std::uintptr_t kTrampolineTarget = 0x65C940; // RE 0x8772C1
 inline constexpr int kTrampolineCallers = 4;
 
+
+// --- the object's destructor, 0x87F2A0, thirty-five callers (round 261) --------------------------------
+//     0x87F2AF a vtable is installed at [rcx] (rva 0x1D6394)
+//     0x87F2B2 call 0x87D8E0        ; round 258's reset routine
+//     0x87F2B7/0x87F2BB  rcx = rbx+0x48 ; call 0x8774F0   ; round 248's thunk on the +0x48 sub-object
+//     0x87F2C7/0x87F2D7  rcx = rbx+0x38 ; jmp 0x8AABC0    ; the +0x38 sub-object
+// Three earlier landings appear together here, which is why this round is a corroboration as much as a reading.
+inline constexpr std::uintptr_t kObjectDestructor = 0x87F2A0;   // RE the whole routine
+inline constexpr std::uintptr_t kObjectVtableRva = 0x1D6394;    // RE 0x87F2A5
+inline constexpr std::size_t kSubObjectA = 0x48;                // RE 0x87F2B7, destroyed through the thunk
+inline constexpr std::size_t kSubObjectB = 0x38;                // RE 0x87F2C7
+inline constexpr std::uintptr_t kSubObjectTailCall = 0x8AABC0;  // RE 0x87F2D7
+inline constexpr int kObjectDestructorCallers = 35;
+static_assert(kSubObjectA == kResetEmbedded, "the thunked sub-object is the one the reset uses");
+
+// --- the intrusive reference-count assignment 0x8AABF0, thirty-five callers (round 261) ----------------
+//     0x8AABFB lock add dword [rcx],1   ; increment the incoming counter
+//     0x8AAC02 lock sub dword [rbx],1   ; decrement the outgoing one
+//     0x8AAC06 je                       ; zero means release: 0x8AA690 and then the shared deallocator
+//     0x8AAC0B [rax] = [rdx]            ; and only then is the pointer assigned
+inline constexpr std::uintptr_t kIntrusiveAssign = 0x8AABF0;    // RE the whole routine
+inline constexpr std::size_t kCounterOffsetHere = 0x00;         // RE 0x8AABFB
+inline constexpr std::uintptr_t kIntrusiveReleaseHelper = 0x8AA690;  // RE 0x8AAC21
+inline constexpr int kIntrusiveAssignCallers = 35;
+inline constexpr int kSharedDeallocSightings3 = 5;              // rounds 248, 252, 254, 256 and this one
+// The release routine of round 248 decrements the counter at +0x10; this one at +0x00. Recorded as an observed
+// DIFFERENCE: they are two distinct refcounted types, and which is which is NOT established.
+inline constexpr bool kCounterOffsetsDiffer = true;
+static_assert(kCounterOffsetHere != kReleaseCounterOffset, "the two counters are at different offsets");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

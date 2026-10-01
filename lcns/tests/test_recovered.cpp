@@ -2403,5 +2403,45 @@ int main() {
         CHECK(kTrampoline != kTrampolineTarget);
     }
 
+    // --- the object destructor and the intrusive assignment (RE 0x87f2a0 and 0x8aabf0) --------------
+    {
+        CHECK(kObjectDestructor == 0x87F2A0);
+        CHECK(kObjectVtableRva == 0x1D6394);
+        CHECK(kSubObjectA == 0x48);
+        CHECK(kSubObjectB == 0x38);
+        CHECK(kSubObjectA == kResetEmbedded);          // the same sub-object the reset works through
+        CHECK(kSubObjectTailCall == 0x8AABC0);
+        CHECK(kObjectDestructorCallers == 35);
+        // it calls the round-258 reset and the round-248 thunk, which is the corroboration
+        CHECK(kResetEntry == 0x87D8E0);
+        CHECK(kThunkTarget == 0x8771C0);
+
+        CHECK(kIntrusiveAssign == 0x8AABF0);
+        CHECK(kCounterOffsetHere == 0x00);
+        CHECK(kIntrusiveReleaseHelper == 0x8AA690);
+        CHECK(kIntrusiveAssignCallers == 35);
+        CHECK(kSharedDeallocSightings3 == 5);
+        CHECK(kCounterOffsetsDiffer);
+        // the two counters really are at different offsets: observed, not reconciled
+        CHECK(kCounterOffsetHere != kReleaseCounterOffset);
+        CHECK(kReleaseCounterOffset == 0x10);
+
+        // the assignment as the instructions perform it: increment the new, decrement the old, release at zero
+        const auto assign = [](int& oldCount, int& newCount, bool& released) {
+            ++newCount;                                 // RE 0x8AABFB
+            released = (--oldCount == 0);               // RE 0x8AAC02/0x8AAC06
+            return true;
+        };
+        int oldCount = 1, newCount = 0; bool released = false;
+        assign(oldCount, newCount, released);
+        CHECK(oldCount == 0);
+        CHECK(newCount == 1);
+        CHECK(released);                                // the outgoing counter reached zero
+        int oldCount2 = 3, newCount2 = 0; bool released2 = false;
+        assign(oldCount2, newCount2, released2);
+        CHECK(oldCount2 == 2);
+        CHECK(!released2);
+    }
+
     return check::finish("test_recovered");
 }
