@@ -866,6 +866,39 @@ static_assert(kRatioAlmostKeyA > kRatioAlmostKeyB && kRatioAlmostKeyB > kRatioAl
               "the key words are compared in descending offset order");
 inline constexpr int kRatioFamilyRuleCases = 3;             // equal by tie test, ordered, or margin
 
+
+// --- four widely called primitives (round 248) -------------------------------------------------------
+// (1) THE ATOMIC RELEASE, 0x86A2C0, sixty-one callers:
+//     86A2C0 mov eax,0xFFFFFFFF                    ; -1
+//     86A2C5 lock xadd dword [rcx+0x10], eax       ; atomic fetch-add of -1; eax holds the OLD count
+//     86A2CC test eax,eax ; 86A2CC jle 0x86A2D0
+//     86A2D0 jmp 0x9984B0                          ; only a non-positive old count reaches the deallocator
+inline constexpr std::size_t kReleaseCounterOffset = 0x10;      // RE 0x86A2C5
+inline constexpr std::uintptr_t kReleaseDealloc = 0x9984B0;     // RE 0x86A2D0
+inline constexpr int kReleaseCallers = 61;
+inline constexpr std::uint32_t kReleaseDecrement = 0xFFFFFFFFu; // RE 0x86A2C0, i.e. -1 as an int32
+
+// (2) THE STRICT GREATER PREDICATE, 0x5C4D30, thirty-nine callers:
+//     5C4D30/5C4D33 al = [rcx], r8b = [rdx] ; 5C4D3A je ; 5C4D3C cmp ; 5C4D3F seta
+//     5C4D43/5C4D47 rax = [rcx+8] ; cmp [rdx+8],rax ; 5C4D4F setg al
+//     5C4D56 mov edx,0 ; 5C4D5B cmove eax,edx
+// NOTE what it is NOT: with equality mapped to zero and `setg`/`seta` for the rest, this answers "is a greater
+// than b" and never -1. Calling it a three-way comparator would be wrong and is avoided here.
+inline constexpr std::size_t kCompareByteOffset = 0x00;         // RE 0x5C4D30
+inline constexpr std::size_t kCompareWordOffset = 0x08;         // RE 0x5C4D43
+inline constexpr int kCompareCallers = 39;
+inline constexpr bool kCompareIsStrictGreater = true;           // RE the seta/setg/cmove shape
+
+// (3) THE THUNK, 0x8774F0, five bytes and sixty-seven callers: `jmp 0x8771C0`, so every one of those call sites
+//     really reaches 0x8771C0.
+inline constexpr std::uintptr_t kThunkTarget = 0x8771C0;        // RE 0x8774F0
+inline constexpr int kThunkCallers = 67;
+
+// (4) THE ONCE GUARD, 0x8AA7E0, sixty-five callers: it calls 0x63F6A8 and then returns the qword at the data slot
+//     rip+0x100502, which is the once/singleton shape.
+inline constexpr std::uintptr_t kOnceCallee = 0x63F6A8;         // RE 0x8AA7F2
+inline constexpr int kOnceCallers = 65;
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

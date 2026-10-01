@@ -1983,5 +1983,43 @@ int main() {
         CHECK(!almostEqual(4.0, 2.0));
     }
 
+    // --- the four widely called primitives (RE 0x86a2c0, 0x5c4d30, 0x8774f0, 0x8aa7e0) ----------------
+    {
+        CHECK(kReleaseCounterOffset == 0x10);
+        CHECK(kReleaseCounterOffset == 16);
+        CHECK(kReleaseDealloc == 0x9984B0);
+        CHECK(kReleaseCallers == 61);
+        CHECK(kReleaseDecrement == 0xFFFFFFFFu);
+        CHECK(static_cast<std::int32_t>(kReleaseDecrement) == -1);      // it is -1 as an int32
+        // the release, restated: only a non-positive old count goes on to the deallocator
+        const auto release = [](int count) { return count <= 0; };
+        CHECK(release(0));
+        CHECK(release(-1));
+        CHECK(!release(1));
+        CHECK(!release(2));
+
+        CHECK(kCompareByteOffset == 0x00);
+        CHECK(kCompareWordOffset == 0x08);
+        CHECK(kCompareCallers == 39);
+        CHECK(kCompareIsStrictGreater);
+        // the predicate answers "greater", never -1: equality is zero and less-than is zero too
+        const auto greater = [](unsigned char aB, std::int64_t aW,
+                                unsigned char bB, std::int64_t bW) {
+            if (aB != bB) return aB > bB;
+            return aW > bW;
+        };
+        CHECK(greater(1, 0, 0, 9));        // the byte decides
+        CHECK(!greater(0, 9, 1, 0));
+        CHECK(greater(5, 10, 5, 9));       // equal bytes, so the word decides
+        CHECK(!greater(5, 9, 5, 10));
+        CHECK(!greater(5, 9, 5, 9));       // equality is not "greater"
+
+        CHECK(kThunkTarget == 0x8771C0);
+        CHECK(kThunkCallers == 67);
+        CHECK(kOnceCallee == 0x63F6A8);
+        CHECK(kOnceCallers == 65);
+        CHECK(kOnceCallers > kReleaseCallers);
+    }
+
     return check::finish("test_recovered");
 }
