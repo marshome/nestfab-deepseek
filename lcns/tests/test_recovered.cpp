@@ -1333,5 +1333,52 @@ int main() {
         CHECK(kDefaultAngleDegrees == 90.0);
     }
 
+    // --- the tolerance'd orientation test (RE 0x24b7cb) and the array test (RE 0x5436d8) --------------
+    {
+        CHECK(kOrientationEpsilon == 0.001);
+        CHECK(kOrientationFieldCount == 4);
+        CHECK(kArrayCompareEpsilon == 0.0001);
+        CHECK(kArrayCompareStride == 8);
+        CHECK(kArrayCompareEpsilon < kOrientationEpsilon);      // the two tolerances differ by ten times
+        CHECK(kOrientationEpsilon / kArrayCompareEpsilon == 10.0);
+
+        // the shape the orientation test performs: a determinant compared with the tolerance,
+        // then its sign when it is outside the band
+        // four points, so every parameter is used, mirroring the function's own dependence on four corners
+        const auto orientation = [](const Point2dLike& a, const Point2dLike& b,
+                                    const Point2dLike& c, const Point2dLike& d) {
+            const double det = (b.x - a.x) * (d.y - a.y) - (c.x - a.x) * (b.y - a.y);
+            if (std::fabs(det) < kOrientationEpsilon) {
+                return 0;
+            }
+            return det < 0.0 ? 1 : 0;
+        };
+        CHECK(orientation({0.0, 0.0}, {1.0, 0.0}, {0.0, 1.0}, {1.0, 1.0}) == 0);    // positive determinant
+        CHECK(orientation({0.0, 0.0}, {1.0, 0.0}, {0.0, -1.0}, {1.0, -1.0}) == 1);  // negative
+        CHECK(orientation({0.0, 0.0}, {1.0, 0.0}, {2.0, 0.0}, {3.0, 0.0}) == 0);    // inside the band
+
+        // the dominance test: any second[i] above first[i] + eps is a violation
+        const auto dominates = [](const double* first, const double* second, std::size_t n) {
+            for (std::size_t i = 0; i < n; ++i) {
+                if (second[i] > first[i] + kArrayCompareEpsilon) {
+                    return 1;
+                }
+            }
+            return 0;
+        };
+        const double a[2] = {1.0, 2.0};
+        const double b[2] = {1.0 + 0.5 * kArrayCompareEpsilon, 2.0};
+        const double c[2] = {1.0, 2.0 + 2 * kArrayCompareEpsilon};
+        CHECK(dominates(a, b, 2) == 0);      // inside the tolerance
+        CHECK(dominates(a, c, 2) == 1);      // outside it
+        CHECK(dominates(a, a, 2) == 0);
+
+        CHECK(kCtorFlagByteOffset == 0x140);
+        CHECK(kCtorZeroQwordOffset == 0x138);
+        CHECK(kCtorFlagByteOffset - kCtorZeroQwordOffset == 8);   // the flag follows the zeroed word
+        CHECK(kCtorDoubleDefault == 1.0);
+        CHECK(kCtorDoubleDefault == kAlmostEqualSwitch);          // the same 1.0 literal as round 185
+    }
+
     return check::finish("test_recovered");
 }

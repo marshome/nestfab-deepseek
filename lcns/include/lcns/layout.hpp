@@ -286,4 +286,32 @@ inline constexpr double kTranslateInvalidValue = -1.0;
 // is not claimed here.
 inline constexpr double kDefaultAngleDegrees = 90.0;
 
+
+// --- the epsilon-gated orientation test of 0x24B790 (round 215) --------------------------------------
+// RE 0x24B7CB: the literal 0.001 at rva 0x9C2930, compared with the magnitude of a determinant formed by
+//     24B7A5/24B7A9/24B7AD   (third - first) * (fourth - second)
+//     24B7B6/24B7C3/24B7C7   (another difference) * (another difference)
+//     24B7D3 sub             the difference of the two products
+//     24B7DB andpd           the sign mask -> magnitude
+//     24B7E7 ja              inside the band -> the function returns zero
+//     24B7ED/24B7F1 seta     otherwise the sign decides
+// so this is an orientation predicate with a tolerance below which the figure is treated as degenerate.
+inline constexpr double kOrientationEpsilon = 0.001;    // RE 0x24B7CB (rva 0x9C2930)
+inline constexpr int kOrientationFieldCount = 4;        // RE the four fields read: +0x00,+0x08,+0x10,+0x18,+0x20,+0x28
+
+// --- the tolerance'd dominance test of 0x5436C0 (round 215) ------------------------------------------
+//     5436C8/5436CB  the count of eight byte elements
+//     5436E5 addsd   first[i] + 0.0001
+//     5436EE ucomisd ; 5436F2 ja -> 1     second[i] exceeds that -> a violation, reported immediately
+inline constexpr double kArrayCompareEpsilon = 0.0001;  // RE 0x5436D8 (rva 0x9DBF88)
+inline constexpr std::size_t kArrayCompareStride = 8;   // RE 0x5436CB: sar rcx,3
+
+// --- the constructor fields of 0x21F9F0 (round 215) --------------------------------------------------
+//     21FA27 byte [rbx+0x140] = sil      ; a byte flag
+//     21FA2E qword [rbx+0x138] = 0       ; a zeroed word just before it
+//     21FA15 [rcx+8] = 1.0              ; RE rva 0x9C1BF0
+inline constexpr std::size_t kCtorFlagByteOffset = 0x140;    // RE 0x21FA27
+inline constexpr std::size_t kCtorZeroQwordOffset = 0x138;   // RE 0x21FA2E
+inline constexpr double kCtorDoubleDefault = 1.0;            // RE 0x21FA15
+
 }  // namespace lcns

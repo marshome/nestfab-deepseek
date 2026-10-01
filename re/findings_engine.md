@@ -4203,3 +4203,194 @@ README 对 T7 的范围定义是“**先只建立链接能力**”（因为需�
 **（c）`0x5C3D30`（33 B）**：`movsd xmm2,[90.0]`（rva `0x9DE7C0`）传给 `0x5C3820` ⇒ **九十度默认值**，与 round 198 的 `Angle( deg)` 标签相符；**被调者的含义本轮不声称**。
 
 **已落 `layout.hpp`**：`kRecord48Doubles`/`kRecord48Defaults`、`kTranslate*`（含与 `kInvalidDoubleSentinel` 的一致性）、`kDefaultAngleDegrees` + 测试 16 条。
+
+### 附 136 小函数 + 正常字面量：第二批候选的逐条清单（goal round 215）
+
+按 round 214 的判据（**小 + 指数域非零的 double 字面量**）读下一批，逐条记下供下一轮落码（恒等访问器调用已剔除）：
+
+```
+=== 0x21f9f0 (80 B, 3 callers, cited) ===
+   21f9f0   push rsi                                       
+   21f9f1   push rbx                                       
+   21f9f2   sub rsp, 0x28                                  
+   21f9f6   lea rax, [rip + 0x818293]                      
+   21f9fd   movsd xmm0, qword ptr [rip + 0x7a21eb]            = 1 (rva 0x9C1BF0)
+   21fa05   movzx esi, byte ptr [rsp + 0x60]               
+   21fa0a   mov rbx, rcx                                   
+   21fa0d   mov qword ptr [rcx + 0x10], r9         +0x10   
+   21fa11   movzx r9d, sil                                 
+   21fa15   movsd qword ptr [rcx + 8], xmm0        +0x8    
+   21fa1a   lea rcx, [rcx + 0x18]                  +0x18   
+   21fa1e   mov qword ptr [rcx - 0x18], rax        +0x-18  
+   21fa22   call 0x1fd6c0                                     -> 0x1fd6c0
+   21fa27   mov byte ptr [rbx + 0x140], sil        +0x140  
+   21fa2e   mov qword ptr [rbx + 0x138], 0         +0x138  
+   21fa39   add rsp, 0x28                                  
+   21fa3d   pop rbx                                        
+   21fa3e   pop rsi                                        
+   21fa3f   ret                                            
+
+=== 0x24b790 (101 B, 1 callers, cited) ===
+   24b790   xor eax, eax                                   
+   24b792   movsd xmm2, qword ptr [rcx + 8]        +0x8    
+   24b797   movsd xmm3, qword ptr [rcx]                    
+   24b79b   movsd xmm0, qword ptr [rcx + 0x10]     +0x10   
+   24b7a0   movsd xmm1, qword ptr [rcx + 0x28]     +0x28   
+   24b7a5   subsd xmm0, xmm3                               
+   24b7a9   subsd xmm1, xmm2                               
+   24b7ad   mulsd xmm0, xmm1                               
+   24b7b1   movsd xmm1, qword ptr [rcx + 0x18]     +0x18   
+   24b7b6   subsd xmm1, xmm2                               
+   24b7ba   movapd xmm2, xmm1                              
+   24b7be   movsd xmm1, qword ptr [rcx + 0x20]     +0x20   
+   24b7c3   subsd xmm1, xmm3                               
+   24b7c7   mulsd xmm1, xmm2                               
+   24b7cb   movsd xmm2, qword ptr [rip + 0x77715d]            = 0.001 (rva 0x9C2930)
+   24b7d3   subsd xmm0, xmm1                               
+   24b7d7   movapd xmm1, xmm0                              
+   24b7db   andpd xmm1, xmmword ptr [rip + 0x77713d]            (not a literal)
+   24b7e3   ucomisd xmm2, xmm1                             
+   24b7e7   ja 0x24b7f4                                    
+   24b7e9   pxor xmm1, xmm1                                
+   24b7ed   ucomisd xmm1, xmm0                             
+   24b7f1   seta al                                        
+   24b7f4   ret                                            
+
+=== 0x5436c0 (106 B, 1 callers, cited) ===
+   5436c0   mov r8, qword ptr [rcx + 8]            +0x8    
+   5436c4   mov rcx, qword ptr [rcx + 0x10]        +0x10   
+   5436c8   sub rcx, r8                                    
+   5436cb   sar rcx, 3                                     
+   5436cf   test rcx, rcx                                  
+   5436d2   je 0x543721                                    
+   5436d4   mov r9, qword ptr [rdx + 8]            +0x8    
+   5436d8   movsd xmm2, qword ptr [rip + 0x4988a8]            = 0.0001 (rva 0x9DBF88)
+   5436e0   movsd xmm0, qword ptr [r8]                     
+   5436e5   addsd xmm0, xmm2                               
+   5436e9   movsd xmm1, qword ptr [r9]                     
+   5436ee   ucomisd xmm1, xmm0                             
+   5436f2   ja 0x543724                                    
+   5436f4   xor edx, edx                                   
+   5436f6   jmp 0x543716                                      -> 0x543716
+   5436f8   nop dword ptr [rax + rax]                      
+   543700   movsd xmm0, qword ptr [r8 + rax*8]             
+   543706   movsd xmm1, qword ptr [r9 + rax*8]             
+   54370c   addsd xmm0, xmm2                               
+   543710   ucomisd xmm1, xmm0                             
+   543714   ja 0x543724                                    
+   543716   lea eax, [rdx + 1]                     +0x1    
+   543719   cmp rax, rcx                                   
+   54371c   mov rdx, rax                                   
+   54371f   jb 0x543700                                    
+   543721   xor eax, eax                                   
+   543723   ret                                            
+   543724   mov eax, 1                                     
+   543729   ret                                            
+
+=== 0x16c0d0 (108 B, 10 callers, cited) ===
+   16c0d0   push rsi                                       
+   16c0d1   push rbx                                       
+   16c0d2   sub rsp, 0x28                                  
+   16c0d6   mov rax, qword ptr [rcx]                       
+   16c0d9   cmp qword ptr [rdx], rax                       
+   16c0dc   mov rsi, rcx                                   
+   16c0df   mov rbx, rdx                                   
+   16c0e2   je 0x16c0f0                                    
+   16c0e4   xor eax, eax                                   
+   16c0e6   add rsp, 0x28                                  
+   16c0ea   pop rbx                                        
+   16c0eb   pop rsi                                        
+   16c0ec   ret                                            
+   16c0ed   nop dword ptr [rax]                            
+   16c0f0   lea rdx, [rdx + 0x18]                  +0x18   
+   16c0f4   lea rcx, [rcx + 0x18]                  +0x18   
+   16c0f8   call 0x5c4cf0                                     -> 0x5c4cf0
+   16c0fd   test al, al                                    
+   16c0ff   je 0x16c0e4                                    
+   16c101   movsd xmm0, qword ptr [rsi + 8]        +0x8    
+   16c106   subsd xmm0, qword ptr [rbx + 8]        +0x8    
+   16c10b   movsd xmm2, qword ptr [rip + 0x8519ed]            (not a literal)
+   16c113   movsd xmm1, qword ptr [rip + 0x8519f5]            = 1e-06 (rva 0x9BDB10)
+   16c11b   andpd xmm0, xmm2                               
+   16c11f   ucomisd xmm1, xmm0                             
+   16c123   jb 0x16c0e4                                    
+   16c125   movsd xmm0, qword ptr [rsi + 0x10]     +0x10   
+   16c12a   subsd xmm0, qword ptr [rbx + 0x10]     +0x10   
+   16c12f   andpd xmm0, xmm2                               
+   16c133   ucomisd xmm1, xmm0                             
+   16c137   setae al                                       
+   16c13a   jmp 0x16c0e6                                      -> 0x16c0e6
+
+=== 0x525760 (109 B, 3 callers, cited) ===
+   525760   sub rsp, 0xb8                                  
+   525767   movsd xmm1, qword ptr [rip + 0x4b64a1]            = 0.95 (rva 0x9DBC10)
+   52576f   mov rax, rcx                                   
+   525772   mov rcx, qword ptr [rdx]                       
+   525775   mov qword ptr [rsp + 0x30], rcx                
+   52577a   mov r11, qword ptr [rdx + 8]           +0x8    
+   52577e   lea rcx, [rsp + 0x60]                          
+   525783   mov r10, qword ptr [rdx + 0x10]        +0x10   
+   525787   mov r9, qword ptr [rdx + 0x18]         +0x18   
+   52578b   mov rdx, qword ptr [rdx + 0x20]        +0x20   
+   52578f   movsd qword ptr [rsp + 0x20], xmm1             
+   525795   mov qword ptr [rsp + 0x38], r11                
+   52579a   mov qword ptr [rsp + 0x40], r10                
+   52579f   mov qword ptr [rsp + 0x48], r9                 
+   5257a4   mov r9d, r8d                                   
+   5257a7   mov qword ptr [rsp + 0x50], rdx                
+   5257ac   lea r8, [rsp + 0x30]                           
+   5257b1   mov rdx, rax                                   
+   5257b4   call 0x5253e0                                     -> 0x5253e0
+   5257b9   movsd xmm0, qword ptr [rsp + 0x60]             
+   5257bf   addsd xmm0, qword ptr [rsp + 0x68]             
+   5257c5   add rsp, 0xb8                                  
+   5257cc   ret                                            
+
+=== 0x7db6e0 (122 B, 4 callers, cited) ===
+   7db6e0   mov rax, qword ptr [rcx]                       
+   7db6e3   cmp qword ptr [rdx], rax                       
+   7db6e6   je 0x7db6f0                                    
+   7db6e8   jmp 0x7db490                                      -> 0x7db490
+   7db6ed   nop dword ptr [rax]                            
+   7db6f0   mov rax, qword ptr [rdx + 0x18]        +0x18   
+   7db6f4   cmp qword ptr [rcx + 0x18], rax        +0x18   
+   7db6f8   jne 0x7db6e8                                   
+   7db6fa   mov rax, qword ptr [rdx + 0x10]        +0x10   
+   7db6fe   cmp qword ptr [rcx + 0x10], rax        +0x10   
+   7db702   jne 0x7db6e8                                   
+   7db704   mov rax, qword ptr [rdx + 8]           +0x8    
+   7db708   cmp qword ptr [rcx + 8], rax           +0x8    
+   7db70c   jne 0x7db6e8                                   
+   7db70e   movsd xmm1, qword ptr [rcx + 0x38]     +0x38   
+   7db713   movsd xmm2, qword ptr [rdx + 0x38]     +0x38   
+   7db718   movsd xmm3, qword ptr [rip + 0x204500]            = 50 (rva 0x9DFC20)
+   7db720   movapd xmm0, xmm1                              
+   7db724   subsd xmm0, xmm2                               
+   7db728   andpd xmm0, xmmword ptr [rip + 0x204480]            (not a literal)
+   7db730   ucomisd xmm3, xmm0                             
+   7db734   jbe 0x7db752                                   
+   7db736   movsd xmm0, qword ptr [rcx + 0x28]     +0x28   
+   7db73b   movsd xmm1, qword ptr [rdx + 0x28]     +0x28   
+   7db740   mulsd xmm0, qword ptr [rdx + 0x30]     +0x30   
+   7db745   mulsd xmm1, qword ptr [rcx + 0x30]     +0x30   
+   7db74a   ucomisd xmm1, xmm0                             
+   7db74e   seta al                                        
+   7db751   ret                                            
+   7db752   ucomisd xmm2, xmm1                             
+   7db756   seta al                                        
+   7db759   ret                                            
+
+```
+
+### 附 137 两个新容差常量与一组构造器字段（goal round 215）**[已落码]
+
+**（a）`0x24B790`（101 B）= 带容差的方向判定**：形成两个差、相乘、相减（**行列式**），取绝对值后与 **`0.001`**（rva `0x9C2930`）比较：**在容差带内返回 0**，否则由行列式符号决定。
+★ **与 round 174 的叉积判定同族**（同样是叉积 + 绝对值 + 容差），但常量不同。
+
+**（b）`0x5436C0`（106 B）= 容差下的“支配”测试**：遍历 8 字节元素（`sar rcx,3`），若任一 `second[i] > first[i] + 0.0001`（rva `0x9DBF88`）则**立即返回 1**，否则 0。
+
+**（c）`0x21F9F0`（80 B）= 构造器**：`[rcx+0x10]=r9`、`[rcx+8]=1.0`（rva `0x9C1BF0`）、`[rcx]=某地址`，调 `0x1FD6C0`，然后 **`byte [rbx+0x140]=sil`**、**`qword [rbx+0x138]=0`**。
+
+**已落 `layout.hpp`**：`kOrientationEpsilon`(0.001)、`kOrientationFieldCount`、`kArrayCompareEpsilon`(0.0001)、`kArrayCompareStride`、`kCtorFlagByteOffset`、`kCtorZeroQwordOffset`、`kCtorDoubleDefault` + 测试 18 条（含两个容差相差十倍、`kCtorDoubleDefault == kAlmostEqualSwitch` 等交叉断言）。
+
+**本轮又读到两个候选的部分结构**：`0x16C0D0`（108 B，10 个调用者）先比 `[rcx]` 与 `[rdx]`，再对两者的 `+0x18` 调 `0x5C4CF0`，最后比 `[rsi+8]−[rbx+8]` ⇒ **记录的序谓词**（未定完）。
