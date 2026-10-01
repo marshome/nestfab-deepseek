@@ -16,6 +16,7 @@
 #include "lcns/boolean.hpp"
 #include "lcns/engine.hpp"
 #include "lcns/budget.hpp"
+#include "lcns/layout.hpp"
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
@@ -771,6 +772,28 @@ int main() {
         CHECK(halfOfWeightedBudget(kBudgetBase) == 3.5e7);
         CHECK(halfOfWeightedBudget(kBudgetBase) + static_cast<double>(truncated) == 3.5e7 + (0.25e8 - 30.0));
         CHECK(halfOfWeightedBudget(kBudgetBase) + static_cast<double>(truncated) == 5.999997e7);
+    }
+
+    // --- the record layout facts (RE 0x1a90bb/0x1b3943/0x1f8327/0x1aa8b8) ---------------------------
+    {
+        CHECK(kRunRecordStride == 240);
+        CHECK(kTimingRecordStride == 344);
+        CHECK(kSmallRecordStride == 24);
+        CHECK(kRunRecordStride != kTimingRecordStride);
+        CHECK(kTimingRecordStride > kRunRecordStride);
+        CHECK(kCounterOffset == 0x4C);
+        CHECK(kLeadingCountOffset == 0x140);
+        CHECK(kLeadingCountOffset < kTimingRecordStride);
+        CHECK(kTrailingCountOffset == 0x20);
+        CHECK(kSmallRecordLimitOffset == 0x28);
+        CHECK(kTripledFieldOffset == 0x18);
+        // the two-step divisions, with the shift kept separate
+        CHECK(kCountShift == 3);
+        CHECK(kCountDivisor == 10);
+        CHECK(kCountNetDivisor == 80);
+        CHECK(kSmallSpanShift == 4);
+        CHECK(kSmallSpanDivisor == 24);
+        CHECK(kSmallSpanNetDivisor == 384);
     }
 
     return check::finish("test_recovered");
