@@ -3302,6 +3302,33 @@ static_assert(kAffineMatrixDoubles == 6 && kMatrixForm2x3, "six doubles, the 2x3
 static_assert(kMulCount >= kMulCountInWindow, "the sweep counted at least as many as the window shows");
 static_assert(kAffineSourceBytes == kSegmentBytes, "the source is one segment in size");
 
+
+// --- the floating-point classification guard 0x62FE20, eighty-nine callers (round 340) -------------------
+//     0x62FE30 and eax,0x7FF00000   ; the exponent field of the high dword
+//     0x62FE35 and edx,0xFFFFF      ; the mantissa field
+//     0x62FE41 or ecx,eax ; je      ; everything zero means the operand is zero
+//     0x62FE47 jne                  ; an exponent of zero is its own class
+//     0x62FE52 test eax,eax ; js    ; the sign bit
+//     0x62FE5E ucomisd against 1.0 from rva 0xA06838
+//     0x62FE00 subps and xorpd with a packed constant from rva 0xA06800
+inline constexpr std::uintptr_t kFloatCheck = 0x62FE20;      // RE the whole routine
+inline constexpr int kFloatCheckCallers = 89;                // RE the profile
+inline constexpr std::uint32_t kExponentMask = 0x7FF00000u;  // RE 0x62FE30
+inline constexpr std::uint32_t kMantissaMask = 0xFFFFFu;     // RE 0x62FE35
+inline constexpr bool kZeroTested = true;                    // RE 0x62FE41
+inline constexpr bool kExponentTested = true;                // RE 0x62FE47
+inline constexpr bool kSignTested = true;                    // RE 0x62FE52
+inline constexpr std::uintptr_t kOneDoubleRva = 0xA06838;    // RE 0x62FE56, the constant it compares against
+inline constexpr std::uintptr_t kFloatCheckPacked = 0x62FE00;  // RE the sibling with no callers of its own
+inline constexpr std::uintptr_t kPackedConstantRva = 0xA06800;  // RE 0x62FE00, its packed constant
+inline constexpr bool kPackedSibling = true;                 // one routine handles two doubles at once
+static_assert(kExponentMask == 0x7FF00000u, "the exponent field of a double's high dword");
+static_assert((kExponentMask & kMantissaMask) == 0, "the exponent and mantissa fields do not overlap");
+static_assert((kExponentMask | kMantissaMask) == 0x7FFFFFFFu,
+              "and together they are every bit but the sign");
+static_assert(kZeroTested && kExponentTested && kSignTested, "all three tests are in the body");
+static_assert(kFloatCheckPacked < kFloatCheck, "the packed sibling sits immediately before it");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

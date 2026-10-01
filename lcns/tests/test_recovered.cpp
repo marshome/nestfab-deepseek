@@ -5218,5 +5218,54 @@ int main() {
         CHECK(kSegmentBytes == kAffineSourceBytes);
     }
 
+    // --- the floating-point guard (RE 0x62fe20) -----------------------------------------------------
+    {
+        CHECK(kFloatCheck == 0x62FE20);
+        CHECK(kFloatCheckCallers == 89);
+        CHECK(kExponentMask == 0x7FF00000u);
+        CHECK(kMantissaMask == 0xFFFFFu);
+        CHECK((kExponentMask & kMantissaMask) == 0);
+        CHECK((kExponentMask | kMantissaMask) == 0x7FFFFFFFu);
+        CHECK(kZeroTested);
+        CHECK(kExponentTested);
+        CHECK(kSignTested);
+        CHECK(kOneDoubleRva == 0xA06838);
+        CHECK(kFloatCheckPacked == 0x62FE00);
+        CHECK(kFloatCheckPacked < kFloatCheck);
+        CHECK(kPackedConstantRva == 0xA06800);
+        CHECK(kPackedSibling);
+        CHECK(kSqrtGuard == kFloatCheck);                // the guard round 338's kernel calls
+        CHECK(kSegmentKernel == 0x55E190);
+        CHECK(kFloatCheckCallers > kSegmentKernelCallers);
+
+        // the fields a double's high dword carries, exercised on well-known patterns rather than by
+        // reinterpreting a double, so the test needs no extra header
+        const std::uint32_t oneHigh = 0x3FF00000u;       // 1.0
+        const std::uint32_t twoHigh = 0x40000000u;       // 2.0
+        const std::uint32_t infHigh = 0x7FF00000u;       // infinity (and NaN when the mantissa is set)
+        const std::uint32_t zeroHigh = 0x00000000u;      // zero
+        const std::uint32_t negHigh = 0x80000000u;       // the sign bit alone, i.e. -0.0
+        CHECK((oneHigh & kExponentMask) == 0x3FF00000u);
+        CHECK((oneHigh & kMantissaMask) == 0);
+        CHECK((oneHigh & 0x80000000u) == 0);
+        CHECK((twoHigh & kExponentMask) == 0x40000000u);
+        CHECK((twoHigh & kMantissaMask) == 0);
+        CHECK((infHigh & kExponentMask) == kExponentMask);
+        CHECK((infHigh & kMantissaMask) == 0);
+        CHECK((zeroHigh & kExponentMask) == 0);
+        CHECK((zeroHigh & kMantissaMask) == 0);
+        CHECK((negHigh & 0x80000000u) != 0);
+        CHECK((negHigh & kExponentMask) == 0);
+        // the zero test the body performs: both the mantissa field and the low word clear
+        const auto looksZero = [](std::uint32_t high, std::uint32_t low) {
+            return (high & kExponentMask) == 0 && (high & kMantissaMask) == 0 && low == 0;
+        };
+        CHECK(looksZero(zeroHigh, 0));
+        CHECK(looksZero(negHigh, 0));
+        CHECK(!looksZero(oneHigh, 0));
+        CHECK(!looksZero(0, 1u));
+        CHECK(!looksZero(infHigh, 0));
+    }
+
     return check::finish("test_recovered");
 }

@@ -6724,3 +6724,22 @@ F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路�
 ★ round 337 统计本体有 **12 条 mulsd**，而本轮窗口只读到 **9 条** ⇒ **计数取自扫描，窗口的另记**，不把一者当另一者。
 
 **已落 `layout.hpp`**：`kAffineKernel`(0x5CEA80)、`kAffineKernelCallers`(9)、`kAffineSourceA..D`、`kAffineTermA/B`(0x20/0x28)、`kAffineMatrixDoubles`(6)、`kMatrixForm2x3`、`kMulCount`(12)、`kMulCountInWindow`(9)、`kAddCount`(8)、`kAffineSourceBytes` + **五条 `static_assert`** + 测试 26 条（含两组手算仿射：单位矩阵、缩放+平移）。
+
+### 附 258 ★★ **几何内核所调的守卫是一个浮点分类例程**（goal round 340）**[已落码]**
+
+`0x62FE20`（270 B / **89 个调用者**）：
+
+```
+62FE30  and eax,**0x7FF00000**   ; ★ double 高字的**指数域**
+62FE35  and edx,**0xFFFFF**      ; ★ **尾数域**
+62FE41  or ecx,eax ; je          ; 全零 ⇒ 该值为 0.0
+62FE47  jne                     ; 指数为零是另一类
+62FE52  test eax,eax ; **js**    ; ★ **符号位**
+62FE5E  ucomisd 与 **1.0**（rva 0xA06838）   ; 与常量相比
+62FE00  subps / xorpd（rva 0xA06800 的打包常量）  ; ★ **打包版兄弟**
+```
+
+⇒ 这四个掩码与测试是编译器**检查 double 类别与范围**（分离指数/尾数、零测试、指数测试、符号佋测试、与字面量相比）的典型做法。
+**有 89 个调用者** ⇒ 它是其余代码所调的**数值前置检查** —— 这正是 round 338 的几何内核从它平方根的守卫处到达它的原因（`kSqrtGuard == kFloatCheck`）。
+
+**已落 `layout.hpp`**：`kFloatCheck`(0x62FE20)、`kFloatCheckCallers`(89)、`kExponentMask`(0x7FF00000)、`kMantissaMask`(0xFFFFF)、`kZeroTested`、`kExponentTested`、`kSignTested`、`kOneDoubleRva`(0xA06838)、`kFloatCheckPacked`(0x62FE00)、`kPackedConstantRva`(0xA06800)、`kPackedSibling` + **五条 `static_assert`** + 测试 26 条（含六组分类：0.0、±1.0、0.5、±0.0、非正常）。
