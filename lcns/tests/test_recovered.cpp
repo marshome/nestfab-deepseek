@@ -1795,6 +1795,20 @@ int main() {
         CHECK(kCtorFamilyUnitRva == 0x9C1BF0);
         CHECK(kCtorFamilyCallee == 0x1FD6C0);
         CHECK(kCtorFamilyMembers == 4);
+        // round 236: a wrapper that allocates twice
+        CHECK(kAlloc0x50 == 0x50);
+        CHECK(kAlloc0x1B8 == 0x1B8);
+        CHECK(kAlloc0x50 == 80);
+        CHECK(kAlloc0x1B8 == 440);
+        CHECK(kWrapperVtable == 0x00);
+        CHECK(kWrapperFirstField == 0x08);
+        CHECK(kWrapperSource == 0x40);
+        CHECK(kWrapperBody == 0x48);
+        CHECK(kWrapperBody - kWrapperSource == 8);
+        CHECK(kWrapperZeroedQwords == 7);
+        CHECK(kWrapperSource - kWrapperFirstField == 0x38);
+        CHECK(kAlloc0x1B8 != kSize158);
+        CHECK(kAlloc0x50 != kSize148);
         CHECK(kCtorPairAWord == 0x138);
         CHECK(kCtorPairAFlag == 0x140);
         CHECK(kCtorPairBWord == 0x148);

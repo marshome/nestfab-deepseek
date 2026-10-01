@@ -627,6 +627,25 @@ inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
 
+// --- the two-allocation wrapper of 0x21C770 (round 236) ---------------------------------------------
+//     21C792 mov ecx,0x50 ; 21C79D call 0x998500        ; allocate 80 bytes
+//     21C7AA..21C7DA zero qwords at +0x08, +0x10, +0x18, +0x20, +0x28, +0x30, +0x38
+//     21C7ED [rbx+0x40] = [rdi]                         ; the source pointer
+//     21C7E5 [rbx+0x48] = 0
+//     21C7F1 lea rax,[rip+0x81AD18] ; 21C7F8 [rbx] = rax ; a vtable at offset zero
+//     21C7A2 mov ecx,0x1B8 ; 21C7FB call 0x998500       ; then a second allocation of 440 bytes
+//     21C80D call 0x1FD180
+// so this wrapper allocates twice -- 80 bytes for the header it fills in above and 440 for the body it hands to
+// 0x1FD180 -- and both sizes were unrecorded before.
+inline constexpr std::size_t kAlloc0x50 = 0x50;          // RE 0x21C792 (80)
+inline constexpr std::size_t kAlloc0x1B8 = 0x1B8;        // RE 0x21C7A2 (440)
+inline constexpr std::size_t kWrapperVtable = 0x00;      // RE 0x21C7F8
+inline constexpr std::size_t kWrapperFirstField = 0x08;  // RE 0x21C7AA
+inline constexpr std::size_t kWrapperSource = 0x40;      // RE 0x21C7ED
+inline constexpr std::size_t kWrapperBody = 0x48;        // RE 0x21C812
+inline constexpr int kWrapperZeroedQwords = 7;           // RE the seven stores from 0x21C7AA
+static_assert(kAlloc0x50 == 80 && kAlloc0x1B8 == 440, "the two allocation sizes of 0x21C770");
+
 // --- the constructor family of 0x21F9F0 / 0x220730 / 0x220230 (round 228) ---------------------------
 // Shared by all three:
 //     the unit literal at rva 0x9C1BF0: 21FA15 in round 215, 220780 (0x220730) and 22026A (0x220230)

@@ -4834,3 +4834,19 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 另：`0x714D40` 在调用后以 **`mov ecx,0x68`**（104 字节）分配。
 
 **已落 `layout.hpp`**：`kTreeLookupGreater`、`kTreeLookupLess`、`kTreeLookupDirections`、`kTreeLookupAlloc` + 测试 8 条。
+
+### 附 158 **两次分配的包装函数 `0x21C770`**（goal round 236）**[已落码]
+
+```
+21C792  mov ecx,0x50 ; 21C79D call 0x998500      ; 分配 **80 字节**
+21C7AA..21C7DA  将 +0x08、+0x10、+0x18、+0x20、+0x28、+0x30、+0x38 置零（七个 qword）
+21C7ED  [rbx+0x40] = [rdi]                       ; 源指针
+21C7E5  [rbx+0x48] = 0
+21C7F1/21C7F8  [rbx] = 虚表（rip+0x81AD18）
+21C7A2  mov ecx,0x1B8 ; 21C7FB call 0x998500     ; 再分配 **440 字节**
+21C80D  call 0x1FD180                            ; 将其交给该被调
+```
+
+⇒ 它**分配两次**（头 80 字节 + 体 440 字节）；**两个尺寸此前未记录**。
+
+**已落 `layout.hpp`**：`kAlloc0x50`、`kAlloc0x1B8`、`kWrapper*`（四个偏移）、`kWrapperZeroedQwords`+ `static_assert` + 测试 14 条。
