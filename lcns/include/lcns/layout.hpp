@@ -582,7 +582,20 @@ inline constexpr std::size_t kRatioFamilyDenA = 0x80;      // RE 0x724E8F
 inline constexpr std::size_t kRatioFamilyNumB = 0x78;      // RE 0x724E94
 inline constexpr std::size_t kRatioFamilyDenB = 0x48;      // RE 0x724E94
 inline constexpr int kRatioFamilyTag = 6;                  // RE 0x724EB4
-inline constexpr int kRatioFamilyMembers = 2;              // the two functions that share this rule
+inline constexpr int kRatioFamilyMembers = 3;              // 0x7DB6E0, 0x724E40 and 0x725140
+// RE 0x725140 (round 231) is a NEAR TWIN of 0x724E40: the same 50.0 slot, the same field offsets (+0x50 and
+// +0x88 for the margin, +0x40/+0x80 and +0x78/+0x48 for the ratio), the same `dword [rbx+0x10] = 6` tag and
+// the same 56-byte stride at 0x7251CC/0x7251D4. Two instantiations of one rule, as with the twins of round
+// 174 -- so the family has three distinct field-sets of which two are a twin pair.
+inline constexpr int kRatioFamilyTwins = 2;                 // 0x724E40 and 0x725140
+// RE 0x716DA0 (round 231) is the family's USE SITE: it walks a tree with [rax+0x20] as the key and [rax+0x10]
+// / [rax+0x18] as the children -- the layout of round 178 -- and calls the round-216 comparator 0x7DB6E0 from
+// inside that walk (0x716E6A), carrying the family's 50.0 too (0x716E24).
+inline constexpr std::uintptr_t kComparatorUseSite = 0x716DA0;   // RE 0x716E6A
+inline constexpr std::size_t kUseSiteTreeKey = 0x20;             // RE 0x716E3C
+inline constexpr std::size_t kUseSiteTreeChildA = 0x10;          // RE 0x716E33
+inline constexpr std::size_t kUseSiteTreeChildB = 0x18;          // RE 0x716E4F
+static_assert(kRatioFamilyTwins <= kRatioFamilyMembers, "the twins are members");
 
 // --- two sizes seen for the first time (round 227) ----------------------------------------------------
 //     724ECC/724ED7  `lea rcx,[rdx*8] ; sub rcx,rdx` then scaled by eight: 7 * 8 = 56 bytes per element

@@ -1722,10 +1722,21 @@ int main() {
         CHECK(kRatioFamilyNumB == 0x78);
         CHECK(kRatioFamilyDenB == 0x48);
         CHECK(kRatioFamilyTag == 6);
-        CHECK(kRatioFamilyMembers == 2);
+        CHECK(kRatioFamilyMembers == 3);
         // the fields of this member are distinct from the round-216 member's, which is why it is a second member
         CHECK(kRatioFamilyPrimaryA != kRatioPrimaryOffset);
         CHECK(kRatioFamilyNumA != kRatioNumeratorOffset);
+        // round 231: a near twin of the second member, so two of the three are that pair
+        CHECK(kRatioFamilyTwins == 2);
+        CHECK(kRatioFamilyTwins <= kRatioFamilyMembers);
+        // and the family has a use site: a tree walk that calls the round-216 comparator
+        CHECK(kComparatorUseSite == 0x716DA0);
+        CHECK(kUseSiteTreeKey == 0x20);
+        CHECK(kUseSiteTreeChildA == 0x10);
+        CHECK(kUseSiteTreeChildB == 0x18);
+        CHECK(kUseSiteTreeChildA == kTreeNodeLeft);              // the tree layout of round 178
+        CHECK(kUseSiteTreeChildB == kTreeNodeRight);
+        CHECK(kUseSiteTreeKey == kTreeNodeKey);
 
         // the rule, restated for this member's fields
         const auto ratioLess = [](double aNum, double aDen, double aPri,
