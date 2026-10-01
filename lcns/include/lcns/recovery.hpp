@@ -228,6 +228,19 @@ inline constexpr Gap kGaps[] = {
      "0x1A89D0, NG3 0x16E140 -- plus one recovered numeric constant, the surface slack 1.05 in "
      "'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'. NOT transcribed: the bodies (0x215720 11.9 KB, "
      "the two InsertAllNext instantiations, 0x23B420 16.4 KB) and the four Equiv* comparison rules"},
+    {"tu.packer_cache", Status::Structural, "0x765460, 0x769410, 0x763ee0, 0x158810",
+     "the tiling pattern computation and cache TU is identified: 276 functions / 278,386 bytes. Its "
+     "16 pattern keys are on record (box, box_min_dist, cc_matrix, cc_mono, cc_specific, "
+     "composite_bi, composite_box, composite_dual_bi, composite_mono, min_box_bi, mono, oblique_bi, "
+     "oblique_pentagon, part, pentagon, windmill -- lcns::tiling::kPatternKeys), as are the four "
+     "entry points ComputeMonoTilings 0x158810, ComputeMinBoxBiTilings / ComputePartTilings / "
+     "OppositePattern 0x765460, ComputeCommonCutMonoTilings 0x769410, the getters GetPart 0x768b80 / "
+     "0x76a010, GetCommonCutPart 0x764a80, SetPartAuthorizations 0xc1a0, the two per-part arrays "
+     "m_tiling_parts / m_common_cut_tiling_parts, the evaluator invariant "
+     "'!parameters.basic_evaluators && !parameters.quantity_evaluators', and a thread pool logging "
+     "'Packer Cache max threads: ' / 'Thread <'. Cross confirmation: '!shear' appears here, "
+     "independently of the shear/tooling route found in 0x2CE00. NOT transcribed: the pattern "
+     "generation rules themselves, the cache key/eviction policy and the thread pool merge"},
     {"module.engine", Status::Structural, "0x827F0 / 0x2DF60 / 0x2CCF0",
      "the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are "
      "recovered; the per-strategy budget bookkeeping here is a re-implementation"},

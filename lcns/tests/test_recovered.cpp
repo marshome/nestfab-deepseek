@@ -18,6 +18,7 @@
 #include "lcns/nfp.hpp"
 #include "lcns/recovery.hpp"
 #include "lcns/row.hpp"
+#include "lcns/tiling.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -130,6 +131,19 @@ int main() {
         for (const std::shared_ptr<Nester>& s : def) CHECK(s != nullptr);
     }
 
+    // --- the tiling pattern catalogue (RE ..\tiling\packer_cache.cpp, 0x765460) ----------------
+    {
+        CHECK(tiling::kPatternKeyCount == 16);
+        CHECK(std::strcmp(tiling::kPatternKeys[0], "box") == 0);
+        CHECK(std::strcmp(tiling::kPatternKeys[15], "windmill") == 0);
+        // the composite family corresponds to the `enable_composite_tiling` option key
+        int composite = 0;
+        for (std::size_t i = 0; i < tiling::kPatternKeyCount; ++i) {
+            if (std::strncmp(tiling::kPatternKeys[i], "composite_", 10) == 0) ++composite;
+        }
+        CHECK(composite == 4);
+    }
+
     // --- third party versions are bound to the evidence in the dump ---------------------------
     // The beam-tree/bucket TU (..\nesting\algos\bucket_manager.hpp) asserts a surface slack; it is a
     // recovered constant, quoted by the three ComputeNodeIndex instantiations.
@@ -150,9 +164,9 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 63);
+        CHECK(kGapCount == 64);
         CHECK(countOf(Status::Recovered) == 8);
-        CHECK(countOf(Status::Structural) == 16);
+        CHECK(countOf(Status::Structural) == 17);
         CHECK(countOf(Status::Substituted) == 27);
         CHECK(countOf(Status::NotReversed) == 11);
         CHECK(countOf(Status::NotInBinary) == 1);

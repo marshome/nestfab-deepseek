@@ -23,6 +23,27 @@
 namespace lcns {
 namespace tiling {
 
+// RE ..\tiling\packer_cache.cpp (276 functions / 278,386 bytes; re/findings_packer_cache.md) --
+// the pattern catalogue the cache is keyed by. These are the literals the binary passes around,
+// read out of the tiling functions (0x765460, 0x769410, 0x763ee0, 0x158810):
+//   box, box_min_dist, cc_matrix, cc_mono, cc_specific, composite_bi, composite_box,
+//   composite_dual_bi, composite_mono, min_box_bi, mono, oblique_bi, oblique_pentagon,
+//   part, pentagon, windmill
+// (the option key `enable_composite_tiling` and the guard `!shear` come from the same TU).
+inline constexpr const char* kPatternKeys[] = {
+    "box", "box_min_dist", "cc_matrix", "cc_mono", "cc_specific", "composite_bi", "composite_box",
+    "composite_dual_bi", "composite_mono", "min_box_bi", "mono", "oblique_bi",
+    "oblique_pentagon", "part", "pentagon", "windmill",
+};
+inline constexpr std::size_t kPatternKeyCount = sizeof(kPatternKeys) / sizeof(kPatternKeys[0]);
+
+// The four tiling entry points of the same TU (names recovered from the assertion strings):
+//   ComputeMonoTilings 0x158810, ComputeMinBoxBiTilings 0x765460,
+//   ComputePartTilings 0x765460,  ComputeCommonCutMonoTilings 0x769410
+// and the getters GetPart 0x768b80 / 0x76a010, GetCommonCutPart 0x764a80 / 0x769410,
+// SetPartAuthorizations 0xc1a0, plus OppositePattern and the thread pool that logs
+// "Packer Cache max threads: " / "Thread <n> ... updating part ... tilings." (0x763ee0, 0x76a130).
+
 // One pre-computed placement inside a pattern (sheet coordinates).
 struct PatternCell {
     int partIndex = -1;

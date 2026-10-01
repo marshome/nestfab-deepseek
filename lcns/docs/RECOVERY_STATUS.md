@@ -6,7 +6,7 @@
 | 状态 | 含义 | 条目数 |
 |---|---|---:|
 | `Recovered`（已恢复） | instruction-level faithful; constants cite RVAs checked by tests | 8 |
-| `Structural`（结构已恢复） | structure/algorithm skeleton recovered; body re-implemented | 16 |
+| `Structural`（结构已恢复） | structure/algorithm skeleton recovered; body re-implemented | 17 |
 | `Substituted`（替代实现） | the original uses something unavailable here, or heuristic constants were NOT recovered | 27 |
 | `NotReversed`（**尚未逆向**） | feature exists in the DLL but has NOT been reverse engineered (the only macro that means this) | 11 |
 | `NotInBinary`（非原库） | our own extension | 1 |
@@ -39,6 +39,7 @@
 | `module.nfp` | `0x8AC0 / 0x665BF0 / 0x687080` | cache thresholds (25000 @0x61A8, 19999999 @0x1312CFF) are recovered constants; the map machinery here is a re-implementation | src/nfp.cpp:9 |
 | `row.finalize_passes` | `0x1B33B0 / 0x40720 / 0x1E1BF0` | the recovered order (postop -> renest in holes -> packed bottom left) is honoured; each pass is a re-implementation | src/nester.cpp:955 |
 | `tu.bucket_manager` | `0x215720 hub, 0x20FE90/0x212D30 InsertAllNext` | the beam-tree/bucket kernel TU is identified: 177 functions / 174,273 bytes, its 47 string vocabulary and its API surface are on record -- InsertAllNext (two template instantiations, 0x20FE90 / 0x212D30), IntroduceNestingNodes 0x20C440, AddNodeClusterChain 0x20C2D0, CreateNestedChain 0x20C880, check_father 0x20EE50, NestingWindow 0x20CCE0, ComputeNodeIndex 0x81C690 (three instantiations), AddOrReplaceEquiv 0x6C7E80 / 0x23B420, ROOT_collection 0x1C5970, beam_slice_ 0x6548D0, beam_try_ 0x655A30, BestNodes 0x7B4000, GetNestableOffset 0x1A89D0, NG3 0x16E140 -- plus one recovered numeric constant, the surface slack 1.05 in 'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'. NOT transcribed: the bodies (0x215720 11.9 KB, the two InsertAllNext instantiations, 0x23B420 16.4 KB) and the four Equiv* comparison rules | src/engine.cpp:84 |
+| `tu.packer_cache` | `0x765460, 0x769410, 0x763ee0, 0x158810` | the tiling pattern computation and cache TU is identified: 276 functions / 278,386 bytes. Its 16 pattern keys are on record (box, box_min_dist, cc_matrix, cc_mono, cc_specific, composite_bi, composite_box, composite_dual_bi, composite_mono, min_box_bi, mono, oblique_bi, oblique_pentagon, part, pentagon, windmill -- lcns::tiling::kPatternKeys), as are the four entry points ComputeMonoTilings 0x158810, ComputeMinBoxBiTilings / ComputePartTilings / OppositePattern 0x765460, ComputeCommonCutMonoTilings 0x769410, the getters GetPart 0x768b80 / 0x76a010, GetCommonCutPart 0x764a80, SetPartAuthorizations 0xc1a0, the two per-part arrays m_tiling_parts / m_common_cut_tiling_parts, the evaluator invariant '!parameters.basic_evaluators && !parameters.quantity_evaluators', and a thread pool logging 'Packer Cache max threads: ' / 'Thread <'. Cross confirmation: '!shear' appears here, independently of the shear/tooling route found in 0x2CE00. NOT transcribed: the pattern generation rules themselves, the cache key/eviction policy and the thread pool merge | src/tiling.cpp:8 |
 | `module.engine` | `0x827F0 / 0x2DF60 / 0x2CCF0` | the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are recovered; the per-strategy budget bookkeeping here is a re-implementation | src/engine.cpp:10 |
 | `engine.mode2_shear_route` | `0x2CE00 (1055 B)` | mode 2 of the dispatcher 0x2DF60 is the SHEAR/TOOLING route: it reads Pb[+0xC8] (via the address accessor 0x4FC2C0), then Pb[+0xC9] -- the tooling switch -- and a bool from 0x5223A0, and it carries an inline built assertion '!is_tooling && \"Normal shear is incompatible with ... contact ...\"' plus a string 'AddShear' and the TU ..\\multi\\... . The route, its switches and that message are recovered; the three branch bodies themselves are NOT transcribed. Also from this round: 0x2D650 is the function EPILOGUE of 0x2D330, not a gate, and the four extra schedule routes are mode 1 + the Flip flag (0x2DA32), mode 0 via 0x2BE50 + cascade (0x2DAC1), mode 2 (0x2DC60) and the 0x2D7E1 branch | src/engine.cpp:32 |
 | `module.lp` | `Lp::LinearProgram / Coin::CoinLP` | the CoinLP slot structure and the 3 parallel vector + COO accumulator layout are recovered | src/lp.cpp:13 |
@@ -70,14 +71,14 @@
 | `strategy.pack_best` | `0x15E410` | best-of-children; body not transcribed | src/nester.cpp:848 |
 | `strategy.pack_knapsack` | `0x15DD70 -> 0x15D1F0` | knapsack selection; not transcribed | src/nester.cpp:863 |
 | `strategy.pack_recursive` | `0x165680 -> 0x164FE0` | recursive packing; not transcribed | src/nester.cpp:868 |
-| `module.tiling` | `Tiling::BoxMultiTiler etc.` | class names and parameter keys are recovered; the pattern generation here is our own | src/tiling.cpp:8 |
-| `tiling.eval.density` | `Tiling::DensityEvaluator` | scoring formula NOT recovered | src/tiling.cpp:131 |
-| `tiling.eval.unlimited_density` | `-` | scoring formula NOT recovered | src/tiling.cpp:136 |
-| `tiling.eval.unlimited_x_density` | `-` | scoring formula NOT recovered | src/tiling.cpp:150 |
-| `tiling.eval.quantity` | `-` | scoring formula NOT recovered | src/tiling.cpp:162 |
-| `tiling.eval.reusable` | `-` | scoring formula NOT recovered (weight 0.25 here is ours) | src/tiling.cpp:168 |
-| `tiling.eval.oblique` | `-` | scoring formula NOT recovered | src/tiling.cpp:178 |
-| `tiling.eval.multitorch` | `-` | scoring formula NOT recovered | src/tiling.cpp:188 |
+| `module.tiling` | `Tiling::BoxMultiTiler etc.` | class names and parameter keys are recovered; the pattern generation here is our own | src/tiling.cpp:9 |
+| `tiling.eval.density` | `Tiling::DensityEvaluator` | scoring formula NOT recovered | src/tiling.cpp:132 |
+| `tiling.eval.unlimited_density` | `-` | scoring formula NOT recovered | src/tiling.cpp:137 |
+| `tiling.eval.unlimited_x_density` | `-` | scoring formula NOT recovered | src/tiling.cpp:151 |
+| `tiling.eval.quantity` | `-` | scoring formula NOT recovered | src/tiling.cpp:163 |
+| `tiling.eval.reusable` | `-` | scoring formula NOT recovered (weight 0.25 here is ours) | src/tiling.cpp:169 |
+| `tiling.eval.oblique` | `-` | scoring formula NOT recovered | src/tiling.cpp:179 |
+| `tiling.eval.multitorch` | `-` | scoring formula NOT recovered | src/tiling.cpp:189 |
 | `lp.simplex_fallback` | `not in the binary (lcns only)` | the zero dependency Simplex stays as a fallback for builds configured without the COIN-OR archives (-DLCNS_WITH_CLP=OFF, or archives absent). It is NOT what the original runs, so any build using it must be described as using a substitute backend | src/lp.cpp:272 |
 
 ## NotReversed（**尚未逆向**）
