@@ -1666,3 +1666,37 @@ class NeverCanceller : public Canceller { ... };
 ## 未测试类门禁的判定规则（goal round 92）
 
 **规则**：类体内**只有数据成员、没有成员函数**的（纯记录体）可以列为**有理由的例外**（理由：纯数据记录）；**带成员函数的类必须被真实测试命名**。这是关于代码的规则，**不是**让门禁安静的手段；它会连同例外清单一起输出。
+
+## vtable 通道的工作清单，已按“工程是否已知”过滤（goal round 93）
+
+未引用 vtable 通道中的类：**27**；其中名字**已出现在 `lcns/`** 的：**0**；**全新的：27**。以下只列全新者（按字节排序），作为后续工作清单。
+
+| 类 | 未引用函数 | 字节 |
+|---|---:|---:|
+| `N5boost4asio6detail10win_thread4funcINS1_21resolver_service_base22work_io_service_runnerEEE` | 2 | 5315 |
+| `N8CryptoPP15InvalidArgumentE` | 9 | 4523 |
+| `N8CryptoPP14NotImplementedE` | 7 | 3625 |
+| `N5boost16exception_detail10clone_baseE` | 12 | 3313 |
+| `N3dbg10file_errorE` | 6 | 3009 |
+| `N5boost9exceptionE` | 8 | 2841 |
+| `N8CryptoPP7IntegerE` | 2 | 952 |
+| `N9__gnu_cxx26__concurrence_unlock_errorE` | 4 | 840 |
+| `N5boost4asio6detail19win_iocp_io_serviceE` | 1 | 699 |
+| `N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_6system12system_errorEEEEE` | 2 | 674 |
+| `N5boost6system12system_errorE` | 2 | 674 |
+| `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt11range_errorEEEE` | 2 | 541 |
+| `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt14overflow_errorEEEE` | 2 | 541 |
+| `N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_12bad_rationalEEEEE` | 2 | 540 |
+| `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt13runtime_errorEEEE` | 2 | 527 |
+| `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12length_errorEEEE` | 2 | 490 |
+| `N5boost16exception_detail19error_info_injectorINS_6system12system_errorEEE` | 1 | 437 |
+| `N5boost12bad_rationalE` | 1 | 422 |
+| `N8CryptoPP15SelfTestFailureE` | 1 | 355 |
+| `N8CryptoPP9AlgorithmE` | 1 | 355 |
+| `N5boost8geometry31overlay_invalid_input_exceptionE` | 1 | 325 |
+| `N5boost16exception_detail19error_info_injectorISt12length_errorEE` | 1 | 305 |
+| `N8CryptoPP12BERDecodeErrE` | 1 | 215 |
+| `N8CryptoPP9ExceptionE` | 1 | 215 |
+| `N9__gnu_cxx24__concurrence_lock_errorE` | 1 | 47 |
+| `N9__gnu_cxx29__concurrence_broadcast_errorE` | 1 | 47 |
+| `N5boost8geometry18centroid_exceptionE` | 1 | 47 |
