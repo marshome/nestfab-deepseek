@@ -271,6 +271,8 @@ inline constexpr Gap kGaps[] = {
      "first result point must sit at the origin under Utils::eps_equals. Option keys here: biggest, "
      "packer_cache, sheet, y_valid, _mod. NOT transcribed: the 12.8 KB checker 0x193420, the "
      "FillNesting/ComputeGroups bodies, the module authorization logic and the cluster construction"},
+    {"verify.defect_reduction", Status::Structural, "0x4BC9E0 (reduction form), 0x4F9C30 (getter)",
+     "the equivalent-problem defect reduction. RECOVERED at instruction level: the form is x - 0.5*p (0x4bca56 mulsd then 0x4bca5b subsd with the constant 0.5 at 0x4bca44), the result is compared against zero (0x4bca60) and the same function asserts defect_reduction > 0.0, and x comes from the three-instruction getter 0x4f9c30 = movsd xmm0,[rcx+0x58]. INFERRED: what that field measures and where p comes from -- the reader is on the equivalent-problem side, not a Part, and +0x58 belongs to a record of consecutive doubles that 0x827f0 copies wholesale (findings_equivalent.md sections 7-14). lcns now implements the FORM in include/lcns/equivalent.hpp + src/equivalent.cpp with test_recovered asserting it, which is why this is Structural rather than NotReversed: the formula is represented in code, its inputs are not yet understood"},
     {"tu.equivalent", Status::NotReversed, "0x4BDB70 (11150 B), 0x4BC9E0, 0x4BB040, 0x75BCC0",
      "the equivalent-problem reduction TU (..\\verify\\equivalent.cpp): 190 functions / 163,972 "
      "bytes, of which the API surface and the invariants ARE recovered -- EquivalentProblemRaw / "

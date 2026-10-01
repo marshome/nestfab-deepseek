@@ -71,7 +71,8 @@ endif()
 # (OsiClpSolverInterface at 0x9C31A3). Built by third_party/CMakeLists.txt.
 set(LCNS_COINOR "${LCNS_THIRD_PARTY}/build-cmake")
 if(LCNS_WITH_CLP AND EXISTS "${LCNS_COINOR}/libclp.a")
-  target_sources(lcns_nest PRIVATE src/lp_clp.cpp)
+  target_sources(lcns_nest PRIVATE src/equivalent.cpp
+ src/lp_clp.cpp)
   target_include_directories(lcns_nest SYSTEM PRIVATE
     "${LCNS_THIRD_PARTY}/compat"
     "${LCNS_THIRD_PARTY}/src/clp-1.15.3/Clp/src"

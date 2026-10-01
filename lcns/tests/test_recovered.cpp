@@ -16,6 +16,7 @@
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
+#include "lcns/equivalent.hpp"
 #include "lcns/recovery.hpp"
 #include "lcns/row.hpp"
 #include "lcns/tiling.hpp"
@@ -166,6 +167,25 @@ int main() {
         CHECK(composite == 4);
     }
 
+    // --- the recovered defect reduction (RE 0x4bc9e0, ..\\verify\\equivalent.cpp) --------------
+    {
+        CHECK(equivalent::kDefectWeight == 0.5);
+        CHECK(equivalent::kReductionSourceOffset == 0x58);
+        // RE 0x4bca56 mulsd then 0x4bca5b subsd: x - 0.5*p
+        CHECK(equivalent::reduce(1.0, 1.0) == 0.5);
+        CHECK(equivalent::reduce(3.0, 2.0) == 2.0);
+        CHECK(equivalent::reduce(0.5, 1.0) == 0.0);
+        // RE the assertion 'defect_reduction > 0.0' -- strictly positive, so exactly zero fails
+        CHECK(equivalent::isValidReduction(0.25));
+        CHECK(!equivalent::isValidReduction(0.0));
+        CHECK(!equivalent::isValidReduction(-0.25));
+        // RE 0x4f9c30 `movsd xmm0,[rcx+0x58]` reads the 11th double of the record
+        double obj[16] = {0};
+        obj[equivalent::kReductionSourceOffset / sizeof(double)] = 2.0;
+        CHECK(equivalent::reduceFromSource(obj, 2.0) == 1.0);
+        CHECK(equivalent::reduceFromSource(nullptr, 1.0) == 0.0);
+    }
+
     // --- third party versions are bound to the evidence in the dump ---------------------------
     // The border/structure TU asserts TWO quality domains at 0x1ee50 / 0x7bf0c0; they are different
     // sets in the same model, so both are bound here.
@@ -190,9 +210,9 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 77);
+        CHECK(kGapCount == 78);
         CHECK(countOf(Status::Recovered) == 9);
-        CHECK(countOf(Status::Structural) == 26);
+        CHECK(countOf(Status::Structural) == 27);
         CHECK(countOf(Status::NotReversed) == 13);
         CHECK(countOf(Status::Substituted) == 28);
         CHECK(countOf(Status::NotInBinary) == 1);
