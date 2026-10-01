@@ -126,7 +126,7 @@ struct Gap {
 inline constexpr Gap kGaps[] = {
     // ---------------------------------------------------------------- TU dossiers (goal round 1+)
     {"tu.svg_io", Status::Structural, "0x7CCDF0 writer; exports 326/328 (0x9550/0x9790)",
-     "the DOCUMENT SCHEMA is recovered and implemented in lcns::toSvg: px+viewBox header with "
+     "the TU also generates an HTML report (1x513880 = DrawHtmlPartsTable with the per-part columns dimensions/contribution/per-sheet/priority/quantity behind problem.GetNumberOfSheets() != 0, plus log-scale axis code at 0x63bf20 using log10 2 and log10 1.5) -- recorded in round 31; the DOCUMENT SCHEMA is recovered and implemented in lcns::toSvg: px+viewBox header with "
      "version/xmlns:xlink, <defs><pattern id=diagonalHatch0 patternUnits=userSpaceOnUse>, the outer "
      "<g transform=scale(1,-1)>, per-item translate groups, fill-rule=evenodd paths, the mark "
      "circle r=0.5% in stroke:rgb(192,0,0), and the style fragments of 0x5DAEB0/0x5DDDD0/0x5DC9D0/"
