@@ -369,6 +369,16 @@ inline void quarterTurnDirections(double out[4]) {
     out[3] = kQuarterTurn2Pi;
 }
 
+// RE the call graph, rounds 51-52: only the EXTERNAL BOUNDARY route reaches the quadrant-angle
+// routine. The chain is 0x13410 AddExternalBoundaryToPart -> 0x1BA30 (boundary only) -> 0x1B910
+// (boundary only) -> 0x5ED8C0 (757 B, the six quadrant angles and the wrap past a full turn), and the
+// hole route (0x13800 -> 0x5CD5C0 -> 0x5CD360 / 0x5C8A10) never touches it, while the plain
+// rectangle route (0x15620 -> 0x14D10) does not either. So "this kind gets corner arcs" is a fact
+// about the call graph, not a guess about geometry.
+inline bool usesCornerArcs(PartGeometryKind kind) {
+    return kind == PartGeometryKind::ExternalBoundary;
+}
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 

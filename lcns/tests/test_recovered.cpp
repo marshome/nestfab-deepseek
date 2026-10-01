@@ -215,6 +215,15 @@ int main() {
             geom::quarterTurnDirections(d);
             CHECK(d[0] == geom::kQuarterTurnHalfPi && d[3] == geom::kQuarterTurn2Pi);
         }
+        {
+            double d[4];
+            geom::quarterTurnDirections(d);
+            CHECK(d[0] == geom::kQuarterTurnHalfPi && d[3] == geom::kQuarterTurn2Pi);
+        }
+        // RE the call graph: only the external boundary route reaches the quadrant-angle routine
+        CHECK(geom::usesCornerArcs(geom::PartGeometryKind::ExternalBoundary));
+        CHECK(!geom::usesCornerArcs(geom::PartGeometryKind::Hole));
+        CHECK(!geom::usesCornerArcs(geom::PartGeometryKind::Rectangle));
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
