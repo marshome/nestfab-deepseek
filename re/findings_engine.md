@@ -3847,3 +3847,32 @@ round 194 觉得“形状奇怪”的 `je`+`eax=0`，**正是“否定的 AND”
 ⇒ **已登记为 toolchain**（不计入领域代码）。
 
 **已落 `layout.hpp`**：`kFiveFieldRecord`、`kRecordWord5Offset`、`kFiveFieldRecordBytes`、`kOstreamSetstateBit` + 测试 7 条。
+
+### 附 118 **几何类型的文本词汇表**（rodata，goal round 198）**[已落码]
+
+`0x70C480` 传给 `0x978010` 的两个地址解出来是 **`0x9DF0F5`（一个 NUL）与 `0x9DF0F6`（一个空格）**
+⇒ 它的坐标打印器写的是 **`x` + `" "` + `y`**。
+
+紧挨着它们是**一张连续的类型标签表**：
+
+| rva | 文本 |
+|---|---|
+| `0x9DF0E4` | `' in (` |
+| `0x9DF0ED` | **`POINT`** |
+| `0x9DF0F8` | **`VECTOR(`** |
+| `0x9DF103` | **`MULTIPOINT(`** |
+| `0x9DF10F` | **`MULTIVECTOR(`** |
+| `0x9DF11C` | `Angle(` |
+| `0x9DF123` | ` deg)` |
+| `0x9DF129` | `BOX(empty)` |
+| `0x9DF134` | `BOX(` |
+| `0x9DF139` | `), ` |
+| `0x9DF140` | `SEGMENT(` |
+| `0x9DF149`/`0x9DF14E` | `flip` / `normal` |
+| `0x9DF155` | **`ORIENTATION(`** |
+
+⇒ 这是**工程自己的几何类型文本形式**（类似 WKT），**是领域词汇而非库文本**，给出了几何层**建模了哪些类型**的直接证据（对 TU 归属与 C++ 侧都有用）。
+
+另外 `0x9DF0CA` 是 `stod`、`0x9DF0A0` 是 `basic_string::_M_construct null not valid`（库）。
+
+**已落 `include/lcns/text_tags.hpp`**：10 个类型标签 + `kCoordinateSeparator`、`kElementSeparator` + 测试 16 条（含“`MULTI…` = `MULTI` + 单数标签”这条**表结构**断言）。

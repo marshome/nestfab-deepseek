@@ -21,6 +21,7 @@
 #include "lcns/steps.hpp"
 #include "lcns/units.hpp"
 #include "lcns/compare.hpp"
+#include "lcns/text_tags.hpp"
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
@@ -1160,6 +1161,33 @@ int main() {
         CHECK(kRecordWord5Offset == kGetterFieldOffset + 8);  // and the getter's field is one word earlier
         CHECK(kOstreamSetstateBit == 1);
         CHECK((static_cast<unsigned>(kOstreamSetstateBit) | 1u) == 1u);   // RE the `or edx,1`
+    }
+
+    // --- the geometry type vocabulary in rodata (RE rva 0x9df0ed..0x9df155) --------------------------
+    {
+        CHECK(std::string(kTagPoint) == "POINT");
+        CHECK(std::string(kTagVector) == "VECTOR(");
+        CHECK(std::string(kTagMultiPoint) == "MULTIPOINT(");
+        CHECK(std::string(kTagMultiVector) == "MULTIVECTOR(");
+        CHECK(std::string(kTagAngle) == "Angle(");
+        CHECK(std::string(kTagDegreeSuffix) == " deg)");
+        CHECK(std::string(kTagBoxEmpty) == "BOX(empty)");
+        CHECK(std::string(kTagBox) == "BOX(");
+        CHECK(std::string(kTagSegment) == "SEGMENT(");
+        CHECK(std::string(kTagOrientation) == "ORIENTATION(");
+        CHECK(std::string(kTagIn) == "' in (");
+        CHECK(kGeometryTagCount == 10);
+        // RE 0x9DF0F6: the address the printer loads is a single space
+        CHECK(std::string(kCoordinateSeparator) == " ");
+        CHECK(std::string(kCoordinateSeparator).size() == 1);
+        // RE 0x9DF139
+        CHECK(std::string(kElementSeparator) == "), ");
+        // the multi- forms are "MULTI" followed by the singular form, which is how the table reads
+        CHECK(std::string(kTagMultiPoint) == std::string("MULTI") + kTagPoint + "(");
+        CHECK(std::string(kTagMultiVector) == std::string("MULTI") + kTagVector);
+        // and the singular point tag carries no parenthesis while the vector one does
+        CHECK(std::string(kTagPoint).find('(') == std::string::npos);
+        CHECK(std::string(kTagVector).back() == '(');
     }
 
     return check::finish("test_recovered");
