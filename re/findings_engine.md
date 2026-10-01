@@ -5710,3 +5710,21 @@ F7BEC  movzx r8d,word [rsp+0x2E] ; F7BF2 add r8,7 ; F7BF6 shr r8,3
 ⇒ `(v + 7) >> 3` 即 **ceil(v/8)** —— **将 BER 值的位数换算成字节数**。失败路径以 `0x9988C0` 分配 `0x30`、经 **`0x999030`**（第四次目击）抛出；并调虚表槽 **`+0x90`** ⇒ **第九个槽**。
 
 **已落 `layout.hpp`**：`kStatusReaderC*`、`kFinalisedFlagFrees`、`kReaderIsDestructor`、`kStatusReaderFamily2`(3)、`kBerByteCount`、`kBitToByteAddend/Shift`、`kBitToByteCtor/Alloc`、`kVtableSlotF`(0x90)、`kVtableSlotsKnown4`(9)、`kThrowSite` + **三条 `static_assert`** + 测试 30 条（含位→字节的八个手算取值）。
+
+### 附 205 **位→字节换算的第二个站点（作为长度校验）**与**带内联缓冲区的构造器**（goal round 287）**[已落码]**
+
+**（a）`0xF7470`（165 B，无直接调用者）**：
+
+```
+F7481  call 0x77A460                    ; 在 `rsp+0x30` 建一个临时对象
+F7494  call 0x11A780                    ; 取 16 位值到 `rsp+0x2E`
+F74D3  call 0x1186C0                    ; 取回一个尺寸到 rax
+F74DE/0xF74E2  `(v + 7) >> 3`            ; ★ **与 `0xF7B90` 相同的取整**
+F74E6  cmp rax,r8 ; jb → 抛出路径        ; ★ **尺寸必须 ≥ ceil(位数/8)**
+```
+
+⇒ 位→字节换算**现有两个站点**，且在此处被用作**长度校验**：源数据必须至少有 `ceil(位数/8)` 字节。**这是 `cmp`/`jb` 与抛出路径支撑的读法，不是猜测**。
+
+**（b）`0x6DE430`（379 B / 23 个调用者）= 构造器**：虚表 `+0x00`（rva `0x35D94F`）、dword `+0x10`、指针 `+0x18`、**内联缓冲区 `+0x20` 指向 `+0x30`**，并以 `0x998500` **分配 `0x60`（96）字节** ⇒ 分配器第五次目击。
+
+**已落 `layout.hpp`**：`kBerValidate`、`kBitToByteSites`(2)、`kValidateHelper`、`kSizeCall`、`kLengthCheckThrows`、`kCtor96*`（七个）、`kAlloc60`(0x60)、`kAllocatorSightings`(5)、`kCtor96Helper` + **五条 `static_assert`** + 测试 32 条。

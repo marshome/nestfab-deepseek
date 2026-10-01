@@ -3228,5 +3228,44 @@ int main() {
         CHECK(std::string(actsAs(false)) == "read");
     }
 
+    // --- the length check and the inline-buffer constructor (RE 0xf7470 and 0x6de430) --------------
+    {
+        CHECK(kBerValidate == 0xF7470);
+        CHECK(kBitToByteSites == 2);
+        CHECK(kValidateHelper == 0x77A460);
+        CHECK(kSizeCall == 0x1186C0);
+        CHECK(kLengthCheckThrows);
+        CHECK(kBerValidateCallers == 0);
+        CHECK(kBerValidate != kBerByteCount);           // two distinct sites of the same conversion
+        CHECK(kBitToByteAddend == 7 && kBitToByteShift == 3);
+
+        // the check the instructions perform: the size must be at least ceil(bits/8)
+        const auto accepts = [](std::uint64_t size, std::uint32_t bits) {
+            const std::uint64_t needed = (bits + 7) >> 3;
+            return size >= needed;                      // RE 0xF74E6 (jb -> the throw path)
+        };
+        CHECK(accepts(2, 16));
+        CHECK(accepts(3, 17));
+        CHECK(!accepts(1, 16));
+        CHECK(!accepts(0, 1));
+        CHECK(accepts(1, 8));
+        CHECK(!accepts(0, 8));
+
+        CHECK(kCtor96 == 0x6DE430);
+        CHECK(kCtor96VtableRva == 0x35D94F);
+        CHECK(kCtor96Dword == 0x10);
+        CHECK(kCtor96Pointer == 0x18);
+        CHECK(kCtor96Inline == 0x20);
+        CHECK(kCtor96InlineTarget == 0x30);
+        CHECK(kCtor96InlineTarget > kCtor96Inline);
+        CHECK(kCtor96InlineTarget - kCtor96Inline == 0x10);
+        CHECK(kAlloc60 == 0x60);
+        CHECK(kAlloc60 == 96);
+        CHECK(kAlloc60 > kGetOrCreateBytes);
+        CHECK(kCtor96Callers == 23);
+        CHECK(kAllocatorSightings == 5);
+        CHECK(kCtor96Helper == 0x888FA0);
+    }
+
     return check::finish("test_recovered");
 }

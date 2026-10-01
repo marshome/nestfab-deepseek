@@ -1919,6 +1919,42 @@ static_assert((1 << kBitToByteShift) == 8, "the shift is the byte size");
 static_assert(kVtableSlotsKnown4 == kVtableSlotsKnown3 + 1, "one more slot than round 284");
 static_assert(kBitToByteAddend == 7, "ceil is add-seven");
 
+
+// --- the second bit-to-byte site, used as a length check, 0xF7470 (round 287) --------------------------
+//     0xF7481 call 0x77A460       ; a temporary is built at rsp+0x30
+//     0xF7494 call 0x11A780       ; the sixteen-bit value, into rsp+0x2E
+//     0xF74D3 call 0x1186C0       ; a size comes back in rax
+//     0xF74DE/0xF74E2 (v + 7) >> 3 ; the SAME ceiling as 0xF7B90
+//     0xF74E6 cmp rax,r8 ; jb 0xF749F   ; the size must be at least that, or the throw path runs
+inline constexpr std::uintptr_t kBerValidate = 0xF7470;      // RE the whole routine
+inline constexpr int kBitToByteSites = 2;                    // 0xF7B90 and 0xF7470
+inline constexpr std::uintptr_t kValidateHelper = 0x77A460;  // RE 0xF7481
+inline constexpr std::uintptr_t kSizeCall = 0x1186C0;        // RE 0xF74D3
+inline constexpr bool kLengthCheckThrows = true;             // RE 0xF74E6/0xF74E9
+inline constexpr int kBerValidateCallers = 0;                // reached through a vtable
+static_assert(kBitToByteSites == 2, "the ceiling has two sites");
+static_assert(kLengthCheckThrows, "the check diverts to the throw path");
+
+// --- the constructor with an inline buffer 0x6DE430, twenty-three callers (round 287) -------------------
+//     0x6DE456 [rsi+0x20] = rsi+0x30   ; the inline buffer and what it points at
+//     0x6DE44E dword [rsi+0x10] = edi  ; a 32-bit field
+//     0x6DE461 [rsi+0x18] = rbx        ; a pointer or length taken from the argument struct
+//     0x6DE471 [rsi] = a vtable (rva 0x35D94F)
+//     0x6DE484 mov ecx,0x60 ; call 0x998500   ; a ninety-six byte allocation
+inline constexpr std::uintptr_t kCtor96 = 0x6DE430;          // RE the whole routine
+inline constexpr std::uintptr_t kCtor96VtableRva = 0x35D94F; // RE 0x6DE45A
+inline constexpr std::size_t kCtor96Dword = 0x10;            // RE 0x6DE44E
+inline constexpr std::size_t kCtor96Pointer = 0x18;          // RE 0x6DE461
+inline constexpr std::size_t kCtor96Inline = 0x20;           // RE 0x6DE456
+inline constexpr std::size_t kCtor96InlineTarget = 0x30;     // RE 0x6DE44A
+inline constexpr std::size_t kAlloc60 = 0x60;                // RE 0x6DE451 (96)
+inline constexpr int kCtor96Callers = 23;
+inline constexpr int kAllocatorSightings = 5;                // rounds 252, 256, 271, and the two here
+inline constexpr std::uintptr_t kCtor96Helper = 0x888FA0;    // RE 0x6DE445
+static_assert(kAlloc60 == 96, "ninety-six bytes");
+static_assert(kCtor96InlineTarget > kCtor96Inline, "the inline buffer points forward");
+static_assert(kAlloc60 > kGetOrCreateBytes, "larger than the forty-eight byte object");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
