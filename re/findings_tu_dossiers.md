@@ -1610,3 +1610,54 @@
 
 
 **合计**：**0** 个未引用函数 / **0** 字节 ⇒ 归属到 0 个 TU。
+
+### 附 80 “自带 TU 路径”这条通道**已经收完**（goal round 161）**[否定结果]
+
+把 round 160 的方法推广到镜像里每一条 TU 路径：**38 个 TU、177 个函数、492717 字节**，而其中**仍未被引用的函数 = 0**。
+
+⇒ **该通道已经没有余量**（它当初就是那 151 个种子的来源，当时已归档）。**这不是方法失败，而是方法在如实报告“该管道已见底”**。
+
+**下表仍有价值**（它就是目标要求的“逐 TU 识别”的结构图），但**对判据贡献为 0**，必须直说：
+
+| TU 路径 | 函数 | 字节 |
+|---|---:|---:|
+| `..\nesting\algos\bucket_manager.hpp` | 11 | 56097 |
+| `..\multi\worker.cpp` | 9 | 34250 |
+| `..\multi\nesting_context.cpp` | 22 | 31244 |
+| `..\multi\float_filler.cpp` | 3 | 29517 |
+| `..\structure\problem.cpp` | 10 | 25604 |
+| `..\structure\text_io.cpp` | 9 | 22371 |
+| `..\nesting\algos\algo_helpers.hpp` | 5 | 21822 |
+| `..\tiling\packer_cache.cpp` | 7 | 21165 |
+| `..\verify\equivalent.cpp` | 6 | 19936 |
+| `..\structure\svg_io.cpp` | 6 | 18531 |
+| `..\multi\database.cpp` | 5 | 18043 |
+| `..\nesting\algos\compact.hpp` | 4 | 17126 |
+| `..\nesting\algos\postop_move.cpp` | 6 | 15903 |
+| `..\engine\cloud_engine.cpp` | 1 | 15430 |
+| `..\multi\nesting_nester.cpp` | 1 | 14374 |
+| `..\nesting\algos\tree_db.cpp` | 10 | 13957 |
+| `..\nesting\structure_interface_private.hpp` | 3 | 13948 |
+| `..\nesting\algos\postop.cpp` | 6 | 13625 |
+| `..\structure\stats.cpp` | 9 | 12217 |
+| `..\multi\rectangle_nester.cpp` | 1 | 11478 |
+| `..\nesting\algos\multinesting_optimizer.cpp` | 5 | 10792 |
+| `..\tiling\packer.cpp` | 1 | 8230 |
+| `..\multi\tiling_nester.cpp` | 3 | 6437 |
+| `..\nesting\algos\algo_parameters.cpp` | 6 | 5238 |
+| `..\nesting\ios\log_ios.cpp` | 2 | 4976 |
+| `..\structure\automatic_cluster.cpp` | 2 | 4056 |
+| `..\nesting\tiled_multipart.cpp` | 2 | 4045 |
+| `..\tiling\optimizer.cpp` | 2 | 3823 |
+| `..\multi\supervisor.cpp` | 5 | 3632 |
+| `..\multi\marker.cpp` | 2 | 3454 |
+| `..\nesting\algos\sheet_optimizer.cpp` | 4 | 2799 |
+| `..\geom\text_io.cpp` | 1 | 2639 |
+| `..\engine\engine.cpp` | 3 | 2059 |
+| `..\structure\multitorch_eval.cpp` | 1 | 1215 |
+| `..\nesting\algos\old_beam.cpp` | 1 | 922 |
+| `..\nesting\algos\tree_db.hpp` | 1 | 803 |
+| `..\exact\relinker_internal.cpp` | 1 | 546 |
+| `..\structure\border_property.hpp` | 1 | 413 |
+
+**结论**：剩下的未引用领域函数**没有路径证据**，这与 round 109 对 D 桶（无锚定证据）的统计一致。
