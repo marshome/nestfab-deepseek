@@ -3332,5 +3332,49 @@ int main() {
         CHECK(kDomainCallingLibraryStaysDomain == (callerIsDomain() && calleeIsLibrary()));
     }
 
+    // --- the triple-buffer record and the copy assignment (RE 0x6de430 and 0x418bd0) ----------------
+    {
+        CHECK(kInlineBufferA == 0x10);
+        CHECK(kInlineBufferB == 0x20);
+        CHECK(kInlineBufferC == 0x40);
+        CHECK(kInlineTargetA == 0x20);
+        CHECK(kInlineTargetB == 0x30);
+        CHECK(kInlineTargetC == 0x50);
+        CHECK(kInlineBufferPairs == 3);
+        CHECK(kInlineBufferB - kInlineBufferA == 0x10);
+        CHECK(kInlineTargetB - kInlineTargetA == 0x10);
+        CHECK(kInlineTargetB - kInlineBufferB == 0x10);   // each buffer points one step ahead of itself
+        CHECK(kInlineTargetC - kInlineBufferC == 0x10);
+        CHECK(kInlineTargetC - kInlineTargetB == 0x20);
+        CHECK(kRecordVtable == 0x00);
+        CHECK(kRecordWordA == 0x08);
+        CHECK(kRecordWordB == 0x0C);
+        CHECK(kRecordWordB - kRecordWordA == 4);
+        CHECK(kRecordVtableRva == 0x35E739);
+        CHECK(kRecordBytes == 0x60);
+        CHECK(kRecordBytes == kAlloc60);
+
+        CHECK(kCopyAssign == 0x418BD0);
+        CHECK(kCopyField == 0x04);
+        CHECK(kCopyCapacity == 0x14);
+        CHECK(kCopyCapacity == kSsoCapacity);            // the field round 249 recorded
+        CHECK(kCopyHelper == 0x63F258);
+        CHECK(kHelperClusterStep == 0x20);
+        CHECK(kCopyHelper == kHelperClusterBase + kHelperClusterStep);
+        CHECK(kCopyHelper != kLengthHelper);             // a different helper in the same cluster
+        CHECK(kCopyAssignCallers == 25);
+
+        // the three buffers and their targets, as the constructor lays them out
+        struct Pair { std::size_t buf; std::size_t target; };
+        const Pair pairs[3] = {{kInlineBufferA, kInlineTargetA},
+                               {kInlineBufferB, kInlineTargetB},
+                               {kInlineBufferC, kInlineTargetC}};
+        for (int i = 0; i < kInlineBufferPairs; ++i) {
+            CHECK(pairs[i].target - pairs[i].buf == 0x10);
+        }
+        CHECK(pairs[1].buf - pairs[0].buf == 0x10);
+        CHECK(pairs[2].buf - pairs[1].buf == 0x20);
+    }
+
     return check::finish("test_recovered");
 }

@@ -5765,3 +5765,22 @@ F74E6  cmp rax,r8 ; jb → 抛出路径        ; ★ **尺寸必须 ≥ ceil(位
 它自己的逻辑：探针 `0xD5970`、状态 `0xD5990`（**值 1 表示禁用**）、以 `0x30` 分配并抛出那两条消息。
 
 **已落**：`layout.hpp` 的 `kCryptoPpSelfTest`、`kSelfTest*`（七个）、`kDomainCallingLibraryStaysDomain` + **三条 `static_assert`** + 测试 19 条；并把 `kHelperClassificationOpen` **置为 false**（附理由）。
+
+### 附 208 **三内联缓冲区记录**与**带新助手的拷贝赋值**（goal round 290）**[已落码]**
+
+**（a）`0x6DE430` 所分配的 `0x60` 块本身是一个记录**：
+
+```
+6DE49F  [rbx] = rbx+0x10        ; 第一个内联缓冲区
+6DE4AC  [rbx+0x20] = rbx+0x30   ; 第二个
+6DE4C0  [rbx+0x40] = rbx+0x50   ; 第三个
+6DE4A4/6DE4BC/6DE4CC  每个缓冲区起点各一个零字
+6DE4E7/6DE4EE  两个 dword 置 **1**   ; 引用计数记录的形状
+6DE4F5  [rax] = 虚表（rva 0x35E739）
+```
+
+⇒ **三对 `{指针, 零}`**，每对内部相隔 **`0x10`**，三个缓冲区分别在 `+0x10`、`+0x20`、`+0x40`。
+
+**（b）`0x418BD0`（509 B / 25 个调用者）= 拷贝赋值**：`cmp rcx,rdx ; je`（**自检**）、拷贝 `+0x04` 的 32 位字段、调 **`0x63F258`**（与 round 251 的长度助手 `0x63F238` **同一簇、相差 `0x20`**）、并读 **`+0x14`**（**正是 round 249 记录的容量字段**）。
+
+**已落 `layout.hpp`**：`kInline*`（六个）、`kInlineBufferPairs`(3)、`kRecord*`（四个）、`kCopy*`（五个）、`kHelperClusterStep`(0x20) + **六条 `static_assert`** + 测试 30 条。

@@ -2021,6 +2021,44 @@ static_assert(kSelfTestStatusDisabled == 1, "the disabled status is one");
 static_assert(!kHelperClassificationOpen, "the classification is settled");
 static_assert(kSelfTestCallers > kBerReaderCallers, "the self-test is called far more widely");
 
+
+// --- the triple-buffer record 0x6DE430 allocates (round 290) -------------------------------------------
+//     0x6DE49F [rbx] = rbx+0x10 ; 0x6DE4AC [rbx+0x20] = rbx+0x30 ; 0x6DE4C0 [rbx+0x40] = rbx+0x50
+//     0x6DE4A4/0x6DE4BC/0x6DE4CC  a zero word at each buffer's start
+//     0x6DE4D9/0x6DE4E7/0x6DE4EE  the record's own links, with two dwords set to ONE
+//     0x6DE4E0 a vtable from rva 0x35E739 at +0x00
+inline constexpr std::size_t kInlineBufferA = 0x10;          // RE 0x6DE49F
+inline constexpr std::size_t kInlineBufferB = 0x20;          // RE 0x6DE4AC
+inline constexpr std::size_t kInlineBufferC = 0x40;          // RE 0x6DE4C0
+inline constexpr std::size_t kInlineTargetA = 0x20;          // RE 0x6DE49F's target
+inline constexpr std::size_t kInlineTargetB = 0x30;          // RE 0x6DE4AC's target
+inline constexpr std::size_t kInlineTargetC = 0x50;          // RE 0x6DE4C0's target
+inline constexpr int kInlineBufferPairs = 3;                 // RE the three pairs
+inline constexpr std::size_t kRecordVtable = 0x00;           // RE 0x6DE4F5
+inline constexpr std::size_t kRecordWordA = 0x08;            // RE 0x6DE4E7
+inline constexpr std::size_t kRecordWordB = 0x0C;            // RE 0x6DE4EE
+inline constexpr std::uintptr_t kRecordVtableRva = 0x35E739; // RE 0x6DE4E0
+inline constexpr std::size_t kRecordBytes = 0x60;            // RE 0x6DE4D0
+static_assert(kInlineBufferPairs == 3, "three inline buffers");
+static_assert(kInlineBufferB - kInlineBufferA == 0x10, "the first pair is sixteen bytes apart");
+static_assert(kInlineTargetC - kInlineTargetB == 0x20, "the third target follows the second by 0x20");
+static_assert(kRecordWordB - kRecordWordA == 4, "the two one-valued dwords are adjacent");
+
+// --- the copy assignment 0x418BD0, twenty-five callers (round 290) -------------------------------------
+//     0x418BDE cmp rcx,rdx ; je 0x418C97   ; a self-check, as an assignment should have
+//     0x418BED/0x418BF8  the 32-bit field at +0x04 copied
+//     0x418BFB call 0x63F258                ; a helper 0x20 above the length helper of round 251
+//     0x418C00 edx = [rbx+0x14]             ; the field round 249 recorded
+inline constexpr std::uintptr_t kCopyAssign = 0x418BD0;      // RE the whole routine
+inline constexpr std::size_t kCopyField = 0x04;              // RE 0x418BED
+inline constexpr std::size_t kCopyCapacity = 0x14;           // RE 0x418C00
+inline constexpr std::uintptr_t kCopyHelper = 0x63F258;      // RE 0x418BFB
+inline constexpr std::size_t kHelperClusterStep = 0x20;      // RE 0x63F258 - 0x63F238
+inline constexpr int kCopyAssignCallers = 25;
+inline constexpr std::uintptr_t kHelperClusterBase = 0x63F238;  // the length helper of round 251
+static_assert(kCopyHelper == kHelperClusterBase + kHelperClusterStep, "the helper sits one step into the cluster");
+static_assert(kCopyCapacity == kSsoCapacity, "the field round 249 recorded as the capacity");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
