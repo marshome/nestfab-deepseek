@@ -1728,6 +1728,17 @@ int main() {
         CHECK(kRatioFamilyTagCount == 2);
         CHECK(kRatioFamilyTagA != kRatioFamilyTagB);
         CHECK(kRatioFamilyTag == kRatioFamilyTagA);
+        // round 244: each tag has two sites, and the same rule runs on stack copies too
+        CHECK(kRatioFamilyTagSites6 == 2);
+        CHECK(kRatioFamilyTagSites5 == 2);
+        CHECK(kRatioFamilyTagSites6 + kRatioFamilyTagSites5 == 4);
+        CHECK(kRatioFamilyStackPrimaryA == 0xD0);
+        CHECK(kRatioFamilyStackPrimaryB == 0x108);
+        CHECK(kRatioFamilyStackTag == 0x160);
+        CHECK(kRatioFamilyStackPrimaryB > kRatioFamilyStackPrimaryA);
+        CHECK(kRatioFamilyStackTag > kRatioFamilyStackPrimaryB);
+        CHECK(kRatioFamilyStackPrimaryB - kRatioFamilyStackPrimaryA == 0x38);
+        CHECK(kRatioFamilyStackTag - kRatioFamilyStackPrimaryB == 0x58);
         CHECK(kRatioFamilyMembers == 3);
         // the fields of this member are distinct from the round-216 member's, which is why it is a second member
         CHECK(kRatioFamilyPrimaryA != kRatioPrimaryOffset);

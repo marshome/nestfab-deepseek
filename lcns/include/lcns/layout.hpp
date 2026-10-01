@@ -590,6 +590,21 @@ inline constexpr int kRatioFamilyTag = 6;                  // RE 0x724EB4 (the 0
 inline constexpr int kRatioFamilyTagA = 6;                  // RE 0x724EB4 and 0x7251B4
 inline constexpr int kRatioFamilyTagB = 5;                  // RE 0x72D638
 inline constexpr int kRatioFamilyTagCount = 2;              // the two variants the group splits into
+// RE 0x712740 (round 244): the SAME rule and the SAME tag of five as 0x72D5B0, but operating on stack copies
+// rather than on object fields:
+//     712E40/712E49  xmm1 = [rsp+0xD0], xmm2 = [rsp+0x108]     ; the primary pair, on the stack
+//     712E52 xmm3 = [50.0] ; 712E5E subsd ; 712E62 andpd ; 712E6A ucomisd ; 712E6E ja
+//     712E74/712E78 seta                                        ; the direct comparison
+//     712E83 dword [rsp+0x160] = 5                              ; the tag, FIVE again
+//     712E96 shl rax,4 ; 712EA3/712EAB/712EAE rdx*8-rdx then *8  ; the 16-byte selection and the 56 stride
+// so the variants are not tied to a storage form: the same two tags appear on object fields and on stack copies.
+// Each tag now has TWO sites.
+inline constexpr int kRatioFamilyTagSites6 = 2;              // 0x724E40 and 0x725140
+inline constexpr int kRatioFamilyTagSites5 = 2;              // 0x72D5B0 and 0x712740
+inline constexpr std::size_t kRatioFamilyStackPrimaryA = 0xD0;   // RE 0x712E40
+inline constexpr std::size_t kRatioFamilyStackPrimaryB = 0x108;  // RE 0x712E49
+inline constexpr std::size_t kRatioFamilyStackTag = 0x160;       // RE 0x712E83
+static_assert(kRatioFamilyTagSites6 + kRatioFamilyTagSites5 == 4, "four tag sites in the group");
 inline constexpr int kRatioFamilyMembers = 3;              // 0x7DB6E0, 0x724E40 and 0x725140
 // RE 0x725140 (round 231) is a NEAR TWIN of 0x724E40: the same 50.0 slot, the same field offsets (+0x50 and
 // +0x88 for the margin, +0x40/+0x80 and +0x78/+0x48 for the ratio), the same `dword [rbx+0x10] = 6` tag and
