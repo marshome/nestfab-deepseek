@@ -1376,7 +1376,11 @@ inline constexpr std::uintptr_t kBigIntDispatchBranch = 0xF1B20; // RE the whole
 inline constexpr int kBigIntDispatchBranchCallers = 4;
 // WHAT IS NOT CLAIMED: that the operation is a multiplication, or that the extra word is a carry. Only the
 // arithmetic the instructions perform -- add one, then clear the low bit -- is landed.
-inline constexpr bool kOperationIdentityOpen = true;
+inline constexpr bool kOperationIdentityOpen = false;   // CORRECTED in round 266: read below
+// Round 265 left the operation unidentified. Round 266 read the kernel 0xEF280 and it is ADDITION:
+// `add rax,[r8+r10*8]` with `jb` capturing the carry, `add rax,rsi` folding the incoming one, and
+// `setb sil` carrying it into the next limb. The flag therefore becomes false, with the reason
+// recorded rather than the earlier value quietly dropped.
 
 // --- the per-limb routine 0xF4830 and its kernel (round 265) ------------------------------------------
 //     0xF4855/0xF4858/0xF485E  the two word counts compared three ways: equal, or the first greater
@@ -1398,6 +1402,38 @@ inline constexpr int kRegistryKind = 2;                      // RE 0x8A81F7
 inline constexpr int kOnceHelperSightings = 3;               // rounds 248, 253 and this one
 static_assert(kBigIntRoundMask == 0xFFFFFFFEu, "the low bit is cleared");
 static_assert(kOnceHelperSightings == 3, "the once helper has three sightings");
+
+
+// --- the per-limb kernel 0xEF280 is ADDITION WITH CARRY (round 266) ------------------------------------
+//     0xEF283 test rcx,rcx ; je -> return 0     ; the limb count
+//     0xEF288/0xEF28B  the index in r10 and the INCOMING CARRY in rsi
+//     0xEF296 add rax,[r8+r10*8]                ; limb plus limb
+//     0xEF29A jb                                ; a carry out
+//     0xEF29C add rax,rsi                       ; plus the carry from the previous limb
+//     0xEF29F [rdx+r10*8] = rax                 ; store
+//     0xEF2A8 setb sil ; 0xEF2CB add r10,2       ; carry onward, TWO limbs per iteration
+//     0xEF2D2/0xEF2D7 the carry chain
+inline constexpr std::uintptr_t kLimbAdd = 0xEF280;          // RE the whole routine
+inline constexpr bool kAddIsAddition = true;                 // RE the add/jb/setb chain
+inline constexpr int kLimbsPerIteration = 2;                 // RE 0xEF2CB
+inline constexpr int kLimbAddCallers = 17;
+inline constexpr std::uintptr_t kAdditionSite = 0xF49E0;     // the operation of round 263/265, now identified
+static_assert(kLimbsPerIteration == 2, "two limbs per iteration");
+
+// --- the registry initialiser 0x8A9510, two callers (round 266) ---------------------------------------
+//     0x8A9520 mov dword [rcx],edx      ; the kind goes to +0x00
+//     0x8A9525 mov qword [rcx+0x10],0x2E ; a count of 46 at +0x10
+//     0x8A9540/0x8A9565  two static arrays are zeroed eight bytes at a time
+//     0x8A9550/0x8A957C  their bases are stored at +0x08 and +0x18
+inline constexpr std::uintptr_t kRegistryInitRoutine = 0x8A9510;   // RE the whole routine
+inline constexpr std::size_t kRegistryKindField = 0x00;      // RE 0x8A9520
+inline constexpr std::size_t kRegistryCountField = 0x10;     // RE 0x8A9525
+inline constexpr std::size_t kRegistryCountValue = 0x2E;     // RE 0x8A9525 (46)
+inline constexpr std::size_t kRegistryArrayA = 0x08;         // RE 0x8A9550
+inline constexpr std::size_t kRegistryArrayB = 0x18;         // RE 0x8A957C
+inline constexpr int kRegistryInitCallers = 2;
+static_assert(kRegistryCountValue == 46, "the registry starts with forty-six");
+static_assert(kRegistryArrayB - kRegistryArrayA == 0x10, "the two array bases are sixteen bytes apart");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

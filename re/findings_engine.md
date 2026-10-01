@@ -5365,3 +5365,23 @@ F1B61/F1B69  另一个操作数的 `+0x10` 字数与 `+0x18` 字数组
 **（c）`0x8A81C0`（91 B）= 全局注册表的一次性守卫**：`0x63F6A8`（**第三次目击**）+ 全局测试，首次调用时以 `edx = 2` 调 `0x8A9510`。
 
 **已落 `layout.hpp`**：`kBigIntRoundMask`、`kBigIntGrowStep`、`kOperationIdentityOpen`、`kLimbRoutine`、`kLimbKernel`、`kLimbCountCases`、`kRegistry*`、`kOnceHelperSightings` + **两条 `static_assert`** + 测试 30 条。
+
+### 附 186 **逐字内核就是加法 —— round 265 留白的运算身份被认定**（goal round 266）**[已落码]
+
+`0xEF280`（114 B / 17 个调用者）= **带进位传播的逐字加法**：
+
+```
+EF283  test rcx,rcx ; je → 返回 0   ; 字数
+EF288/EF28B  下标在 r10，**传入进位在 rsi**
+EF296  add rax,[r8+r10*8]          ; 字 + 字
+EF29A  jb                          ; 进位输出
+EF29C  add rax,rsi                 ; 叠加上一字的进位
+EF29F  [rdx+r10*8] = rax           ; 存入
+EF2A8  setb sil ; EF2CB add r10,2  ; 进位继续，**每轮两字**
+```
+
+★ **这正是“未读完不声称”的价值**：round 265 记下 `kOperationIdentityOpen = true` 并**拒绝**把它叫乘法；本轮读到内核，**身份由证据定下** ⇒ 那个标志**修正为 false**，**并把理由写在原处**（而不是静默地把旧值抹掉）。
+
+另：`0x8A9510`（4479 B / 2 个调用者）= 注册表初始化**：种类写 `+0x00`，**`+0x10` = `0x2E`（46）**，两个静态数组就地置零，其基址存入 `+0x08` 与 `+0x18`。
+
+**已落 `layout.hpp`**：`kLimbAdd`、`kAddIsAddition`、`kLimbsPerIteration`、`kAdditionSite`、`kRegistry*` + **三条 `static_assert`** + 测试 22 条（含进位链的三个手算样本）。

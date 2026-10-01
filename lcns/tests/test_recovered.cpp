@@ -2555,7 +2555,7 @@ int main() {
         CHECK(kBigIntGrowStep == 1);
         CHECK(kBigIntDispatchBranch == 0xF1B20);
         CHECK(kBigIntDispatchBranchCallers == 4);
-        CHECK(kOperationIdentityOpen);                  // the operation is NOT identified
+        CHECK(!kOperationIdentityOpen);                 // corrected in round 266: it IS identified
         // the arithmetic the instructions do, for the first few counts
         const auto rounded = [](std::uint32_t n) { return (n + kBigIntGrowStep) & kBigIntRoundMask; };
         CHECK(rounded(0) == 0);
@@ -2581,6 +2581,53 @@ int main() {
         CHECK(kRegistryKind == 2);
         CHECK(kOnceHelperSightings == 3);
         CHECK(kOnceCallee == 0x63F6A8);                 // the once helper round 248 landed
+    }
+
+    // --- the kernel is addition, so the identity is settled (RE 0xef280) ---------------------------
+    {
+        CHECK(kLimbAdd == 0xEF280);
+        CHECK(kAddIsAddition);
+        CHECK(kLimbsPerIteration == 2);
+        CHECK(kLimbAddCallers == 17);
+        CHECK(kAdditionSite == kTagDispatch);           // the operation of rounds 263/265
+        CHECK(!kOperationIdentityOpen);                 // the round-265 open question is closed
+
+        // the carry propagation the instructions implement, limb by limb
+        const auto addWithCarry = [](const std::vector<std::uint64_t>& a,
+                                     const std::vector<std::uint64_t>& b) {
+            std::vector<std::uint64_t> out(a.size(), 0);
+            std::uint64_t carry = 0;                  // the incoming carry, held in rsi
+            for (std::size_t i = 0; i < a.size(); ++i) {
+                const std::uint64_t first = a[i] + b[i];        // RE 0xEF296
+                const bool carried = first < a[i];              // RE 0xEF29A (jb)
+                const std::uint64_t second = first + carry;     // RE 0xEF29C
+                const bool carriedAgain = second < first;       // RE 0xEF2A8 (setb)
+                out[i] = second;
+                carry = (carried || carriedAgain) ? 1u : 0u;    // RE the carry chain
+            }
+            return out;
+        };
+        const auto r1 = addWithCarry({1, 2}, {3, 4});
+        CHECK(r1[0] == 4);
+        CHECK(r1[1] == 6);
+        // a carry out of the low limb is folded into the next one
+        const auto r2 = addWithCarry({~0ULL, 0}, {1, 0});
+        CHECK(r2[0] == 0);
+        CHECK(r2[1] == 1);
+        const auto r3 = addWithCarry({~0ULL, ~0ULL}, {1, 0});
+        CHECK(r3[0] == 0);
+        CHECK(r3[1] == 0);
+        CHECK(kLimbsPerIteration * 8 == 16);             // two limbs per iteration is sixteen bytes
+
+        CHECK(kRegistryInitRoutine == 0x8A9510);
+        CHECK(kRegistryKindField == 0x00);
+        CHECK(kRegistryCountField == 0x10);
+        CHECK(kRegistryCountValue == 0x2E);
+        CHECK(kRegistryCountValue == 46);
+        CHECK(kRegistryArrayA == 0x08);
+        CHECK(kRegistryArrayB == 0x18);
+        CHECK(kRegistryArrayB - kRegistryArrayA == 0x10);
+        CHECK(kRegistryInitCallers == 2);
     }
 
     return check::finish("test_recovered");
