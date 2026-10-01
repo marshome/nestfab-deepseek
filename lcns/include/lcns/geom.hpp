@@ -379,6 +379,13 @@ inline bool usesCornerArcs(PartGeometryKind kind) {
     return kind == PartGeometryKind::ExternalBoundary;
 }
 
+// RE 0x13800 AddHoleToPart, the store at 0x1399C: `mov dword ptr [rsp + 0x28], 1`. It is the ONE
+// thing the hole route does that the external-boundary route (0x13410) does not -- the two otherwise
+// load the same constants and call the same prep routine. So the hole is marked by a flag, and what
+// the flag is read for is not recovered yet; the offset and the value are.
+inline constexpr std::size_t kHoleExtraFlagOffset = 0x28;   // RE 0x1399C
+inline constexpr int kHoleExtraFlagValue = 1;               // RE 0x1399C
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 

@@ -224,6 +224,10 @@ int main() {
         CHECK(geom::usesCornerArcs(geom::PartGeometryKind::ExternalBoundary));
         CHECK(!geom::usesCornerArcs(geom::PartGeometryKind::Hole));
         CHECK(!geom::usesCornerArcs(geom::PartGeometryKind::Rectangle));
+        CHECK(!geom::usesCornerArcs(geom::PartGeometryKind::Rectangle));
+        // RE 0x1399c: the hole route's one extra store, which the boundary route does not make
+        CHECK(geom::kHoleExtraFlagOffset == 0x28);
+        CHECK(geom::kHoleExtraFlagValue == 1);
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
