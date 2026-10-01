@@ -5918,3 +5918,24 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ **证据强度已如实标注**：此判定**依靠形状与“类型来自全局”**，**没有任何字符串支持** —— **比 round 289 的 CryptoPP 案例弱**（那个有自己的文本）。`kLengthErrorShapeOnly` 与 `covlib.py` 条目里的理由都写明了这一点。
 
 **已落**：`layout.hpp` 的 `kThrowLengthError`、`kLengthError*`（五个）、`kThrowHelperSightings`(5)、`kAllocatorSightings3`(4)、`kLengthErrorShapeOnly` + **三条 `static_assert`** + 测试 21 条；`re/covlib.py` 新增**一条带证据强度说明**的工具链条目。
+
+### 附 215 **共享抛出助手就是 C++ 运行时的抛出入口**（字符串证据）（goal round 297）**[已落码]**
+
+`0x999030`（108 B / **476 个调用者**）：
+
+```
+99906E  movabs rax,0x474E5543432B2B00   ; ★★ 按大端读出 **`"GNUCC++"`（带 NUL）**
+999078  mov qword [rbx],rax             ; 该字写入异常头部
+999040  call 0x998CB0                   ; 取线程全局
+999049  add dword [rax+8],1             ; ★ **未捕获计数器加一**
+999045  sub rbx,0x40                    ; ★ 头部在对象指针**前方 0x40**处
+99905C/999065  call 0x963560、0x962F10   ; 类型查找
+```
+
+`"GNUCC++"` 是 **GCC 的 C++ 异常 ABI 版本串** ⇒ 这是**运行时的抛出入口**。
+
+★ **证据强度：字符串级（本工作可得的最强类型）** —— 与 round 296 的“仅形状”条目形成明显对比；两者在 `covlib.py` 里的理由字段都如实写明强度。
+
+★ **测试把字节拆开验证**：以立即数的字节序重建出 `G`,`N`,`U`,`C`,`C`,`+`,`+`,NUL 八个字节，并断言 `substr(0,7) == "GNUCC++"`；对“这些字节落在何处”**不多说一句**。
+
+**已落**：`layout.hpp` 的 `kCxaThrow`、`kCxaMagic`、`kCxaHeaderOffset`(0x40)、`kUncaughtOffset`(0x08)、`kCxaGlobals`(0x998CB0)、`kCxaTypeLookupA/B`、`kCxaThrowCallers`(476)、`kCxaFieldOffset`、`kCxaIdentifiedByString` + **四条 `static_assert`** + 测试 26 条；`re/covlib.py` 新增一条**字符串证据**条目。

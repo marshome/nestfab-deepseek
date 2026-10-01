@@ -2228,6 +2228,29 @@ static_assert(kLengthErrorObjectBytes == sizeof(void*), "the object holds one po
 static_assert(kThrowHelperSightings == 5, "the shared throw helper again");
 static_assert(kLengthErrorShapeOnly, "the identification is shape-based, and recorded as such");
 
+
+// --- the C++ runtime's throw entry point 0x999030, four hundred and seventy-six callers (round 297) ------
+//     0x99906E movabs rax,0x474E5543432B2B00   ; 'G','N','U','C','C','+','+',NUL -- the GCC C++ ABI string
+//     0x999078 mov qword [rbx],rax             ; written at the exception's head
+//     0x999040 call 0x998CB0                   ; the per-thread globals
+//     0x999049 add dword [rax+8],1             ; the uncaught counter, incremented
+//     0x999045 sub rbx,0x40                    ; the header sits forty bytes before the object pointer
+//     0x99905C/0x999065 call 0x963560, 0x962F10  ; type lookups
+inline constexpr std::uintptr_t kCxaThrow = 0x999030;        // RE the whole routine
+inline constexpr std::uint64_t kCxaMagic = 0x474E5543432B2B00ULL;  // RE 0x99906E
+inline constexpr std::size_t kCxaHeaderOffset = 0x40;        // RE 0x999045
+inline constexpr std::size_t kUncaughtOffset = 0x08;         // RE 0x999049
+inline constexpr std::uintptr_t kCxaGlobals = 0x998CB0;      // RE 0x999040
+inline constexpr std::uintptr_t kCxaTypeLookupA = 0x963560;  // RE 0x99905C
+inline constexpr std::uintptr_t kCxaTypeLookupB = 0x962F10;  // RE 0x999065
+inline constexpr int kCxaThrowCallers = 476;                 // RE the profile
+inline constexpr std::size_t kCxaFieldOffset = 0x60;         // RE 0x99904D (rbx - 0x60)
+inline constexpr bool kCxaIdentifiedByString = true;         // the ABI string, not a shape
+static_assert(kCxaMagic == 0x474E5543432B2B00ULL, "the ABI magic as the immediate spells it");
+static_assert(kCxaHeaderOffset == 0x40, "the header is forty bytes before the object");
+static_assert(kCxaIdentifiedByString, "identified by its own ABI text");
+static_assert(kCxaThrowCallers == 476, "four hundred and seventy-six throw sites");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -986,3 +986,7 @@ LIBRARY_EVIDENCED[0x630FD0] = ("toolchain", "a single jmp to 0x63F3B0, an import
 # installs a type taken from a global with `lea`, and throws through 0x999030, which is libstdc++'s
 # __throw_length_error shape. No string supports it, so the reason says so.
 LIBRARY_EVIDENCED[0x979E70] = ("toolchain", "the length-error thrower: an eight byte exception whose one word is a pointer to its type, with the type taken from a global, and a bare throw -- the __throw_length_error shape, identified by shape rather than by text; 51 bytes, 676 callers")
+# Round 297, STRING evidence (the strongest kind here): the body writes the immediate 0x474E5543432B2B00,
+# which read big-endian spells "GNUCC++" with a NUL -- the GCC C++ ABI exception version string -- and
+# increments a counter at the per-thread globals fetched from 0x998CB0.
+LIBRARY_EVIDENCED[0x999030] = ("toolchain", "the C++ runtime throw entry point: writes the GNUCC++ ABI string and increments the uncaught counter at [globals+8]; 108 bytes, 476 callers")

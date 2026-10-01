@@ -3619,5 +3619,52 @@ int main() {
         CHECK(kGrowthHelper == 0x913690);
     }
 
+    // --- the runtime's throw entry point and its ABI string (RE 0x999030) ---------------------------
+    {
+        CHECK(kCxaThrow == 0x999030);
+        CHECK(kCxaMagic == 0x474E5543432B2B00ULL);
+        CHECK(kCxaHeaderOffset == 0x40);
+        CHECK(kUncaughtOffset == 0x08);
+        CHECK(kCxaGlobals == 0x998CB0);
+        CHECK(kCxaTypeLookupA == 0x963560);
+        CHECK(kCxaTypeLookupB == 0x962F10);
+        CHECK(kCxaThrowCallers == 476);
+        CHECK(kCxaFieldOffset == 0x60);
+        CHECK(kCxaIdentifiedByString);
+        CHECK(kThrowSite == kCxaThrow);                  // the helper rounds 286 and 296 reached
+        CHECK(kThrowLengthError != kCxaThrow);
+        CHECK(kCxaTypeLookupA != kCxaTypeLookupB);
+        CHECK(kCxaThrowCallers < kThrowLengthErrorCallers);   // 476 throw sites, 676 length-error sites
+        CHECK(kCxaThrowCallers > kThrowHelperSightings);      // and far more than the sightings count
+
+        // the ABI string, taken from the immediate's byte sequence
+        const auto magic = [](std::uint64_t v) {
+            char out[9] = {};
+            for (int i = 0; i < 8; ++i) {
+                out[i] = static_cast<char>((v >> (8 * (7 - i))) & 0xFF);   // the immediate read big-endian
+            }
+            return std::string(out, 8);
+        };
+        const std::string m = magic(kCxaMagic);
+        CHECK(m.size() == 8);
+        CHECK(m[0] == 'G');
+        CHECK(m[1] == 'N');
+        CHECK(m[2] == 'U');
+        CHECK(m[3] == 'C');
+        CHECK(m[4] == 'C');
+        CHECK(m[5] == '+');
+        CHECK(m[6] == '+');
+        CHECK(m[7] == '\0');
+        CHECK(m.substr(0, 7) == "GNUCC++");
+        // and the two hex digits that spell it
+        CHECK((kCxaMagic >> 56) == 0x47);
+        CHECK(((kCxaMagic >> 48) & 0xFF) == 0x4E);
+        CHECK(((kCxaMagic >> 40) & 0xFF) == 0x55);
+
+        // the header arithmetic the routine performs
+        CHECK(kCxaHeaderOffset == kCxaFieldOffset - 0x20);
+        CHECK(kUncaughtOffset % 4 == 0);                 // a dword counter
+    }
+
     return check::finish("test_recovered");
 }
