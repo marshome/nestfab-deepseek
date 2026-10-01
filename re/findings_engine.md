@@ -6524,3 +6524,22 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ **销毁顺序**：元素 → 记录数组 → **最外层字段最后**（`kDestructionOrderRecorded`）。
 
 **已落 `layout.hpp`**：`kOuterIsLinkedList`、`kListNextOffset`(0x10)、`kNested4Stages`(3)、`kExitFreesFirstField`、`kExitField`(0x00)、`kSharedDeallocSightings10`(11)、`kDestructionOrderRecorded`、`kNested4DepthReadingCorrected` + **四条 `static_assert`** + 测试 20 条。
+
+### 附 248 ★★ **孪生对象的构造器，以及我对“标志对”的命名更正**（goal round 330）**[已落码]**
+
+`0x111AD0`（64 B / **21 个调用者**）正是 rounds 324–326 那对孪生对象的**构造器**：
+
+```
+111AE2  call **0xC33F0**          ; ★ round 299 的助手（而非孪生们用的 0xC3A40）
+111AF2/111AFC  两个虚表（rva 0x934222、0x93439C）
+111AEE  [rbx+0x48] = rdi         ; rounds 324–326 用的那个字段
+111B00  byte [rbx+**0x50**] = **0**   ; ★ **标志，初始为零**
+111B04  byte [rbx+**0x51**] = **sil** ; ★★ **第二个字节来自构造参数**
+```
+
+⇒ `+0x50` 与 `+0x51` 是**一个标志加一个值**，**不是两个标志** —— 这**更正了我在 round 325 给该习语的名字**。回看 rounds 280/285/313，那些站点**支持改名而非旧名**：它们处 `+0x28` 被**置一**、`+0x29` 被**测试** —— **同一形状从另一端看**。
+间距与三次目击**依然成立**，**名字不成立**。
+
+★ 它同时**确认了助手族**：构造器调 `0xC33F0`（round 299 的），孪生们调 `0xC3A40` ⇒ **两个成员、两个地址、如今两者都被观察到在用**。
+
+**已落 `layout.hpp`**：`kTwinsCtor`(0x111AD0)、`kTwinsCtorCallers`(21)、`kTwinsCtorVtableRvaA/B`、`k50IsFlag`、`k51IsValue`、`k51FromArgument`、`kCtorUsesFirstHelper`、`kHelperFamilyBothObserved`、`kFlagPairNarrowed`、`kPairIsFlagPlusValue` + **四条 `static_assert`** + 测试 26 条。

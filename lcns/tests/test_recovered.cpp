@@ -4809,5 +4809,44 @@ int main() {
         CHECK(kNested4Stages == 3);
     }
 
+    // --- the twins' constructor and the corrected name (RE 0x111ad0) --------------------------------
+    {
+        CHECK(kTwinsCtor == 0x111AD0);
+        CHECK(kTwinsCtorCallers == 21);
+        CHECK(kTwinsCtorVtableRvaA == 0x934222);
+        CHECK(kTwinsCtorVtableRvaB == 0x93439C);
+        CHECK(kTwinsCtorVtableRvaA != kTwinsCtorVtableRvaB);
+        CHECK(k50IsFlag);
+        CHECK(k51IsValue);
+        CHECK(k51FromArgument);
+        CHECK(kFlagPairNarrowed);                        // my round-325 name, corrected
+        CHECK(kPairIsFlagPlusValue);
+        CHECK(kFlagPairIdiom);                           // the observation stands
+        CHECK(kFlagPairCount == 3);                      // and so do the three sightings
+        CHECK(kFlagPairStride == 1);
+        CHECK(kCtorUsesFirstHelper);
+        CHECK(kHelperFamilyBothObserved);
+        CHECK(kLocalConstruct == 0xC33F0);               // the helper this constructor calls
+        CHECK(kLocalConstruct2 == 0xC3A40);              // and the one the twins call
+        CHECK(kLocalConstruct != kLocalConstruct2);
+        CHECK(kTwinsCtor != kLazyInit50 && kTwinsCtor != kLazyForceVariant);
+        CHECK(kLazyInitFlag == 0x50 && kLazyInitFlag2 == 0x51);
+        CHECK(kLazyInitField == 0x48);
+
+        // the state the constructor leaves, and the flag's meaning
+        struct Obj { unsigned char flag; unsigned char value; };
+        const auto construct = [](unsigned char arg) { Obj o{}; o.flag = 0; o.value = arg; return o; };
+        const Obj a = construct(7);
+        CHECK(a.flag == 0);                              // not yet initialised
+        CHECK(a.value == 7);
+        const Obj b = construct(0);
+        CHECK(b.flag == 0 && b.value == 0);
+        // the flag is therefore what the lazy initialiser tests, and the value is configuration
+        const auto needsInit = [](const Obj& o) { return o.flag == 0; };
+        CHECK(needsInit(a));
+        CHECK(needsInit(b));
+        CHECK(a.value != b.value);
+    }
+
     return check::finish("test_recovered");
 }

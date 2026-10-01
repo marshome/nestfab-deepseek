@@ -3022,6 +3022,32 @@ static_assert(kListNextOffset == kNested4FieldA, "the next link is the field at 
 static_assert(kDestructionOrderRecorded && kNested4Stages == 3, "three stages, outermost last");
 static_assert(kSharedDeallocSightings10 == kSharedDeallocSightings5 + 4, "the deallocator again");
 
+
+// --- the constructor of the twins' object, and the name the idiom should have had (round 330) ------------
+//     0x111AE2 call 0xC33F0          ; round 299's helper, not the twins' 0xC3A40
+//     0x111AF2/0x111AFC  two vtables from rva 0x934222 and 0x93439C
+//     0x111AEE [rbx+0x48] = rdi      ; the field the twins use
+//     0x111B00 byte [rbx+0x50] = 0   ; a FLAG initialised to zero
+//     0x111B04 byte [rbx+0x51] = sil ; and a VALUE taken from the constructor's argument
+inline constexpr std::uintptr_t kTwinsCtor = 0x111AD0;       // RE the whole routine
+inline constexpr int kTwinsCtorCallers = 21;
+inline constexpr std::uintptr_t kTwinsCtorVtableRvaA = 0x934222;  // RE 0x111AE7
+inline constexpr std::uintptr_t kTwinsCtorVtableRvaB = 0x93439C;  // RE 0x111AF5
+inline constexpr bool k50IsFlag = true;                      // RE 0x111B00
+inline constexpr bool k51IsValue = true;                     // RE 0x111B04
+inline constexpr bool k51FromArgument = true;                // RE sil
+inline constexpr bool kCtorUsesFirstHelper = true;           // RE the call to 0xC33F0
+inline constexpr bool kHelperFamilyBothObserved = true;      // 0xC33F0 here, 0xC3A40 in the twins
+// CORRECTED NAME: I called +0x50/+0x51 a "flag pair" in round 325. This constructor shows +0x50 zeroed as a flag and
+// +0x51 written from an argument, so the pair is a flag PLUS A VALUE. Re-reading rounds 280/285/313 supports that:
+// there +0x28 was set to one and +0x29 was tested, which is the same shape seen from the other side.
+inline constexpr bool kFlagPairNarrowed = true;
+inline constexpr bool kPairIsFlagPlusValue = true;
+static_assert(k50IsFlag && k51IsValue && kFlagPairNarrowed, "a flag and a value, not two flags");
+static_assert(kLazyInitFlag2 - kLazyInitFlag == kFlagPairStride, "the spacing is unchanged");
+static_assert(kCtorUsesFirstHelper && kHelperFamilyBothObserved, "both helpers are now seen in use");
+static_assert(kLocalConstruct == 0xC33F0 && kLocalConstruct2 == 0xC3A40, "the two members are distinct");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
