@@ -5167,3 +5167,26 @@ C2560  call 0x9984B0      ; ★ 共享释放器，**第四次**目击
 **（b）`0x998920`（51 B / 44 个调用者）**：`mov ecx,8` + `0x9988C0`（分配 8 字节），然后调 `0x999030`（抛出路径）。两个助手**各自第三次出现**（rounds 252/253 + 本轮）。
 
 **已落 `layout.hpp`**：`kListNode*`、`kListHeadOffset`、`kListReleaseHelper`、`kAlloc8`、`kAllocHelper`、`kThrowHelper`、`kSharedDeallocSightings2`、`kHelperSightings` + **三条 `static_assert`** + 测试 20 条。
+
+### 附 177 **大整数的拷贝赋值（**162 个调用者**，全程最高）**（goal round 257）**[已落码]
+
+`0xF3460`（321 B）= 大整数类型的**赋值运算符**：
+
+```
+F3470  je                 ; ★ **自赋值保护**
+F3476/F347A/F347E  源与目标的字数（均 `+0x10`）、源字数组 `+0x18`
+F3487..F34A1  族的跳尾零字循环再现
+F34A5  cmp rax,8 ; jbe 0xF3592     ; ★ **≤8 的分支未转储出来**（不猜）
+F34AF  cmp rax,0x10 ; mov ebx,0x10  ; ≤16 ⇒ **16**
+F3530  cmp rax,0x20 ; mov ebx,0x20  ; ≤32 ⇒ **32**
+F353F  cmp rax,0x40 ; mov ebx,0x40  ; ≤64 ⇒ **64**
+F354E..F3588  `mov ebx,1 ; shl rbx,cl` ⇒ 超出后取**下一个二次幂**
+F34CD  call 0x78F740     ; 按所选容量分配
+F34EE  call 0x63F2F8     ; 拷贝 `count*8` 字节
+F34F3/F34F6  复制 `+0x20` 的 32 位字段 —— 即 rounds 249/253 的**标签/符号**
+```
+
+⇒ 它**第四次印证大整数布局**（`+0x10`/`+0x18`/`+0x20`），并暴露**容量阶梯**、**二次幂取整**与两个助手**。
+**明确不声称**：`≤8` 的分支（`0xF3592`）**未转储出来** ⇒ 它的容量**未记录**，而不是猜一个值。
+
+**已落 `layout.hpp`**：`kBigIntAssign*`、`kBigIntAlloc`、`kBigIntCopy`、`kBigIntCap*`、`kBigIntAssignSelfGuard`、`kBigIntSmallBranchUnknown` + **两条 `static_assert`** + 测试 21 条（含容量函数的八个取值）。

@@ -2267,5 +2267,43 @@ int main() {
         CHECK(kThrowHelper == 0x999030);
     }
 
+    // --- the big-integer copy assignment, the most called function read so far (RE 0xf3460) ---------
+    {
+        CHECK(kBigIntAssign == 0xF3460);
+        CHECK(kBigIntAssignCallers == 162);
+        CHECK(kBigIntAlloc == 0x78F740);
+        CHECK(kBigIntCopy == 0x63F2F8);
+        CHECK(kBigIntCapSixteen == 16);
+        CHECK(kBigIntCapThirtyTwo == 32);
+        CHECK(kBigIntCapSixtyFour == 64);
+        CHECK(kBigIntCapSixteen * 2 == kBigIntCapThirtyTwo);
+        CHECK(kBigIntCapThirtyTwo * 2 == kBigIntCapSixtyFour);
+        CHECK(kBigIntCapLadderKnown == 3);
+        CHECK(kBigIntAssignSelfGuard);
+        CHECK(kBigIntSmallBranchUnknown);        // the <= 8 branch was not dumped: not guessed
+
+        // the capacity the instructions choose, for the counts whose thresholds were actually read
+        const auto capacity = [](std::uint64_t words) -> std::uint64_t {
+            if (words <= 8) return 0;                    // NOT READ: the branch at 0xF3592
+            if (words <= kBigIntCapSixteen) return kBigIntCapSixteen;
+            if (words <= kBigIntCapThirtyTwo) return kBigIntCapThirtyTwo;
+            if (words <= kBigIntCapSixtyFour) return kBigIntCapSixtyFour;
+            std::uint64_t cap = 1;                        // RE 0xF354E..0xF3588
+            while (cap < words) cap <<= 1;
+            return cap;
+        };
+        CHECK(capacity(9) == 16);
+        CHECK(capacity(16) == 16);
+        CHECK(capacity(17) == 32);
+        CHECK(capacity(32) == 32);
+        CHECK(capacity(33) == 64);
+        CHECK(capacity(64) == 64);
+        CHECK(capacity(65) == 128);                       // the next power of two
+        CHECK(capacity(129) == 256);
+        // and the copy is always count * 8 bytes
+        CHECK(kBigIntCapSixteen * 8 == 128);
+        CHECK(kBigIntAssignCallers > kAccessorCallers);
+    }
+
     return check::finish("test_recovered");
 }

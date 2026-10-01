@@ -1118,6 +1118,33 @@ inline constexpr int kAlloc8Callers = 44;
 inline constexpr int kHelperSightings = 3;                   // rounds 252, 253 and this one
 static_assert(kAlloc8 == 8, "eight bytes");
 
+
+// --- the big-integer copy assignment 0xF3460, ONE HUNDRED AND SIXTY-TWO callers (round 257) ------------
+//     0xF3470 je          a self-assignment guard -- assigning an object to itself does nothing
+//     0xF3476/0xF347A     the source and destination word counts, both at +0x10
+//     0xF347E             the source word array at +0x18
+//     0xF3487..0xF34A1    the family's trailing-zero-word skip
+//     0xF34A5 cmp rax,8   ; at most eight words takes a branch that was NOT dumped and is left unrecorded
+//     0xF34AF cmp rax,0x10; above eight and at most sixteen -> SIXTEEN
+//     0xF3530 cmp rax,0x20; at most thirty-two            -> THIRTY-TWO
+//     0xF353F cmp rax,0x40; at most sixty-four            -> SIXTY-FOUR
+//     0xF354E..0xF3588    beyond that, `mov ebx,1 ; shl rbx,cl` after a bisection: the NEXT POWER OF TWO
+//     0xF34CD call 0x78F740   ; the allocation of the chosen capacity
+//     0xF34EE call 0x63F2F8   ; the copy, with r8 = count * 8
+//     0xF34F3/0xF34F6         the 32-bit field at +0x20 is copied: the tag/sign of rounds 249 and 253
+inline constexpr std::uintptr_t kBigIntAssign = 0xF3460;      // RE the whole routine
+inline constexpr int kBigIntAssignCallers = 162;
+inline constexpr std::uintptr_t kBigIntAlloc = 0x78F740;      // RE 0xF34CD
+inline constexpr std::uintptr_t kBigIntCopy = 0x63F2F8;       // RE 0xF34EE
+inline constexpr std::size_t kBigIntCapSixteen = 0x10;        // RE 0xF34AF
+inline constexpr std::size_t kBigIntCapThirtyTwo = 0x20;      // RE 0xF3530
+inline constexpr std::size_t kBigIntCapSixtyFour = 0x40;      // RE 0xF353F
+inline constexpr int kBigIntCapLadderKnown = 3;               // the three thresholds actually dumped
+inline constexpr bool kBigIntAssignSelfGuard = true;          // RE 0xF3470
+inline constexpr bool kBigIntSmallBranchUnknown = true;      // RE 0xF34A5: the <= 8 branch is NOT recorded
+static_assert(kBigIntCapSixteen * 2 == kBigIntCapThirtyTwo, "the ladder doubles");
+static_assert(kBigIntCapThirtyTwo * 2 == kBigIntCapSixtyFour, "the ladder doubles");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
