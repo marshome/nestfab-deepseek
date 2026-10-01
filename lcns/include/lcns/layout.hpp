@@ -663,4 +663,19 @@ static_assert(kSize158 == kTimingRecordStride, "the allocation size is the strid
 static_assert(kCtorPairAFlag - kCtorPairAWord == 8, "the flag follows its zeroed word");
 static_assert(kCtorPairBWord - kCtorPairAWord == kCtorPairSpacing, "the two pairs are one spacing apart");
 
+
+// --- the family rule completed: the ratio comparison is epsilon-guarded (round 233) ------------------
+// RE 0x7DC360: after the margin test, the two ratios are compared by cross multiplication
+//     7DC401 mulsd [rdx+0x30],[rcx+0x38]      ; the numerator is +0x30, the denominator +0x38
+//     7DC416 mulsd [rcx+0x30],[rdx+0x38]
+//     7DC42E call 0x5E6060                    ; and then almostEqual guards the comparison
+//     7DC433 jne -> the comparison falls through (treated as equal)
+//     7DC437 ucomisd ; seta                   ; otherwise the order of the products decides
+// so this pair of members differs from the round-216 member exactly by that tie test, which is why they call
+// almostEqual. The rule is: margin, then the epsilon-guarded cross-multiplied ratio.
+inline constexpr std::size_t kRatioAlmostNum = 0x30;        // RE 0x7DC401
+inline constexpr std::size_t kRatioAlmostDen = 0x38;        // RE 0x7DC40B
+inline constexpr int kRatioAlmostPair = 2;                  // 0x7DB7D0 and 0x7DC360
+inline constexpr int kRatioFamilyRuleCases = 3;             // equal by tie test, ordered, or margin
+
 }  // namespace lcns

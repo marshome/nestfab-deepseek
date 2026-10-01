@@ -4725,3 +4725,23 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 3. **`0x714D40` 与 `0x716DA0` 共用树字段**（`+0x10`/`+0x18`/`+0x20`），后者调 round 216 比较器 ⇒ **树遍历组**。
 
 **已落 `layout.hpp`**：`kRatioFamilyTwins`(3)、`kRatioFamilyRatioFields`(7)、`kRatioFamilyAlmost*`、`kAlmostEqualPredicate`、`kRatioFamilyAlmostPair`/`TreePair` + 测试 18 条。
+
+### 附 156 **族规则补全：比值比较先过 `almostEqual`**（goal round 233）**[已落码]
+
+`0x7DC360`（569 B / 4 个调用者）把规则补全：
+
+```
+7DC3DA  xmm3=[50.0]                        ; 族容差
+7DC3E2/7DC3EA  |a − b|；7DC3F2 ucomisd xmm3,xmm0 ; 7DC3F6 ja 0x7DC401
+7DC3F8  ucomisd xmm2,xmm1 ; seta al         ; 容差之外 ⇒ 直接比主字段
+7DC401  xmm7 = [rdx+0x30] × [rcx+0x38]     ; ★ 分子 `+0x30`、分母 `+0x38`
+7DC416  xmm6 = [rcx+0x30] × [rdx+0x38]
+7DC42E  call 0x5E6060                        ; ★ **almostEqual(两个交叉积)**
+7DC433  jne → 相等则“落空”（视为相等）
+7DC437  ucomisd xmm7,xmm6 ; seta al          ; 否则按交叉积大小
+```
+
+⇒ **完整规则**：先看主字段差是否 ≥ 50；否则比两个比值（**交叉相乘**），**且先用 `almostEqual` 判它们是否近似相等** —— 相等即视为“不分高低”。
+★ 这**解释了这一对为何调 `0x5E6060`**（round 185 的 `almostEqual`）：比值比较是**ε-守卫**的。
+
+**已落 `layout.hpp`**：`kRatioAlmostNum`/`Den`、`kRatioAlmostPair`、`kRatioFamilyRuleCases` + 测试 12 条（三个手算样本：`1/2 > 1/4`、`1/2 == 2/4`（交叉积均为 4）、容差路径由主字段定）。

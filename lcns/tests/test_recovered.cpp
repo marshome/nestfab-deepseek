@@ -1821,5 +1821,40 @@ int main() {
         CHECK(kCtorVecSource - kCtorVecArgument == 8);
     }
 
+    // --- the family rule completed (RE 0x7dc401/0x7dc416/0x7dc42e) -------------------------------------
+    {
+        CHECK(kRatioAlmostNum == 0x30);
+        CHECK(kRatioAlmostDen == 0x38);
+        CHECK(kRatioAlmostPair == 2);
+        CHECK(kRatioFamilyRuleCases == 3);
+        CHECK(kRatioAlmostDen - kRatioAlmostNum == 8);
+        CHECK(kAlmostEqualPredicate == 0x5E6060);        // the predicate the tie test calls
+
+        // the rule as the instructions implement it: -1, 0 or +1, with the tie test in the middle
+        const auto compare = [](double aNum, double aDen, double aPri,
+                                double bNum, double bDen, double bPri) {
+            if (std::fabs(aPri - bPri) >= kRatioCompareMargin) {
+                if (aPri == bPri) return 0;
+                return aPri > bPri ? 1 : -1;                       // RE 0x7DC3F8/0x7DC3FC
+            }
+            const double crossA = aNum * bDen;                      // RE 0x7DC401
+            const double crossB = bNum * aDen;                      // RE 0x7DC416
+            if (almostEqual(crossA, crossB)) {                      // RE 0x7DC42E/0x7DC433
+                return 0;                                           // the comparison falls through
+            }
+            return crossA > crossB ? 1 : -1;                        // RE 0x7DC437/0x7DC43B
+        };
+        // case 1: 1/2 against 1/4 -- cross products 4 and 2, so the first ratio is greater
+        CHECK(compare(1.0, 2.0, 0.0, 1.0, 4.0, 0.0) == 1);
+        // case 2: 1/2 against 2/4 -- both cross products are 4, so the tie test reports equality
+        CHECK(compare(1.0, 2.0, 0.0, 2.0, 4.0, 0.0) == 0);
+        // case 3: far apart primaries, so the margin path decides on the primary field
+        CHECK(compare(1.0, 2.0, 10.0, 1.0, 2.0, 100.0) == -1);
+        CHECK(compare(1.0, 2.0, 100.0, 1.0, 2.0, 10.0) == 1);
+        // and the tie test is the same epsilon the predicate of round 185 uses
+        CHECK(almostEqual(4.0, 4.0));
+        CHECK(!almostEqual(4.0, 2.0));
+    }
+
     return check::finish("test_recovered");
 }
