@@ -3142,5 +3142,45 @@ int main() {
         CHECK(inits == 1);                              // initialised once
     }
 
+    // --- the second status reader and the BER reader's callers (RE 0x111a50) ------------------------
+    {
+        CHECK(kStatusReaderB == 0x111A50);
+        CHECK(kStatusReaderBbytes == 74);
+        CHECK(kStatusReaderFamily == 2);
+        CHECK(kStatusReadersAmongCallers == 2);
+        CHECK(kStatusReaderFamily == kStatusReadersAmongCallers);
+        CHECK(kStatusOutOffset == 0x2E);
+        CHECK(kStatusExpected2 == 2);
+        CHECK(kStatusExpected2 == kStatusExpected);
+        CHECK(kBerReaderCaller == kBerLengthReader);
+        CHECK(kBerReaderCallers == 9);
+        CHECK(kBerReaderCallers > kStatusReadersAmongCallers);
+        // the two readers are distinct routines over the SAME layout
+        CHECK(kStatusReaderB != kFinaliseWithRetry);
+        CHECK(kFinaliseFlagA == 0x28 && kFinaliseFlagB == 0x29 && kFinalisePointer == 0x30);
+        CHECK(kFinaliseCallers == 24);
+
+        // the shared retry logic both readers implement
+        const auto readWithRetry = [](bool& flag, std::uint16_t& status, int& reports) {
+            flag = true;                                 // RE 0x111A58
+            while (status != 0) {                        // RE 0x111A90
+                ++reports;                               // RE 0x111A8A
+                status = 0;                              // the retry succeeds
+            }
+            return true;
+        };
+        bool flag = false;
+        std::uint16_t status = 1;
+        int reports = 0;
+        readWithRetry(flag, status, reports);
+        CHECK(flag);
+        CHECK(status == 0);
+        CHECK(reports == 1);
+        std::uint16_t already = 0;
+        int none = 0;
+        readWithRetry(flag, already, none);
+        CHECK(none == 0);                                // nothing to report
+    }
+
     return check::finish("test_recovered");
 }

@@ -5670,3 +5670,19 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 ★ **明确未读**：第四个守卫字节的地址**不记录**，因为它的分支（`0x11AA20`、`0x11AA80`）**未转储出来** —— 记为**未读**（`kFourthGateByteUnread`）而不是猜一个值。
 
 **已落 `layout.hpp`**：`kGateCallSlot`(0x110)、`kGateSites`(4)、`kGateBytesRead`(3)、`kGateByteA/B/C`、`kGateInitAddress`、`kGateInit`(0x998DA0)、`kGateArgsPerSite`、`kGateConstant2`、`kFourthGateByteUnread` + **三条 `static_assert`** + 测试 21 条。
+
+### 附 203 **状态读取器是一个族**；且 BER 读取器的 9 个调用者已知（goal round 285）**[已落码]**
+
+`0x11A780` 的调用者共 9 个（尺寸：74、137、153×2、165、1134×2、1509、1987 B）。最小的 `0x111A50`（74 B）与 round 280 的 `0x10F770` **逐字段重合**：
+
+```
+111A54/111A58  标志 `+0x29`、`+0x28`（进入时置位第二个）
+111A5E  `+0x30` 的指针
+111A70  rcx = [rcx+0x20]                    ; 与 `0x10F770` 同一来源字段
+111A74/111A79/111A7F  输出缓冲区 `rsp+0x2E`、`r8d = 1`、**调 BER 读取器**
+111A84/111A8A/111A90  状态 `2`、BER 格式化器、非零则重试
+```
+
+⇒ 携带 `+0x20`、`+0x28`、`+0x29`、`+0x30` 的对象**至少有两个同形的状态读取方法**，且两者**都调 BER 长度读取器、都通过构造 `'BER decode error'` 的格式化器报告** ⇒ **BER 读数是该对象的性质，而不是某一个例程的性质**。
+
+**已落 `layout.hpp`**：`kStatusReaderB`(0x111A50)、`kStatusReaderBbytes`(74)、`kStatusReaderFamily`(2)、`kStatusOutOffset`(0x2E)、`kStatusExpected2`、`kBerReaderCaller`、`kBerReaderCallers`(9)、`kStatusReadersAmongCallers`(2) + **四条 `static_assert`** + 测试 18 条。

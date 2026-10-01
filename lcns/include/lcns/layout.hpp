@@ -1865,6 +1865,28 @@ static_assert(kGateBytesRead == 3 && kGateSites == 4, "three of four gate bytes 
 static_assert(kGateCallSlot == kVtableSlotE, "the guarded slot is the eighth one");
 static_assert(kGateConstant2 == kGateConstant, "the same constant at every site");
 
+
+// --- the second status reader 0x111A50, and the BER reader's caller profile (round 285) -----------------
+//     0x111A54/0x111A58  the flags at +0x29 and +0x28, exactly as 0x10F770 uses them
+//     0x111A5E           the pointer at +0x30
+//     0x111A70           the source at +0x20
+//     0x111A74/0x111A79/0x111A7F  the out buffer at rsp+0x2E, r8d = 1, and the call to the BER reader
+//     0x111A84/0x111A8A/0x111A90  status 2, the BER formatter, and the retry while the word is non-zero
+inline constexpr std::uintptr_t kStatusReaderB = 0x111A50;   // RE the whole routine
+inline constexpr int kStatusReaderBbytes = 74;               // RE the function size
+inline constexpr int kStatusReaderFamily = 2;                // 0x10F770 and 0x111A50
+inline constexpr std::size_t kStatusOutOffset = 0x2E;        // RE 0x111A74 and 0x10F7B4 alike
+inline constexpr std::int32_t kStatusExpected2 = 2;          // RE 0x111A84
+inline constexpr std::uintptr_t kBerReaderCaller = 0x11A780; // RE 0x111A7F
+inline constexpr int kBerReaderCallers = 9;                  // RE the profile
+inline constexpr int kStatusReadersAmongCallers = 2;         // two of the nine carry this shape
+static_assert(kStatusReaderFamily == kStatusReadersAmongCallers, "the family is what the callers show");
+static_assert(kStatusExpected2 == kStatusExpected, "the same status as round 280");
+static_assert(kStatusOutOffset == 0x2E, "the out buffer is a sixteen-bit word");
+// The two readers share every field offset, which is what makes them a family rather than a coincidence.
+static_assert(kFinaliseFlagA == 0x28 && kFinaliseFlagB == 0x29 && kFinalisePointer == 0x30,
+              "round 280's offsets for the same object");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
