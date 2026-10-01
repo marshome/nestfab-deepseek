@@ -240,6 +240,17 @@ int main() {
         CHECK(geom::normaliseAngle(0.0) == 0.0);
         CHECK(std::fabs(geom::normaliseAngle(-0.5) - (6.283185 - 0.5)) < 2e-6);
         CHECK(std::fabs(geom::normaliseAngle(6.283185 + 0.5) - 0.5) < 2e-6);
+        CHECK(std::fabs(geom::normaliseAngle(6.283185 + 0.5) - 0.5) < 2e-6);
+        // RE 0x5ed453..0x5ed47b: the corner kernel's primitive -- point difference and squared length
+        {
+            const double a[2] = {5.0, 7.0};
+            const double b[2] = {2.0, 3.0};
+            const geom::Vec2d v = geom::subtractPoints2d(a, b);
+            CHECK(v.x == 3.0);
+            CHECK(v.y == 4.0);
+            CHECK(geom::lengthSquared2d(v) == 25.0);          // 3-4-5, and no square root at this site
+            CHECK(geom::lengthSquared2d(geom::Vec2d{0.0, 0.0}) == 0.0);
+        }
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----

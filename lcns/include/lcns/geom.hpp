@@ -418,6 +418,30 @@ inline double normaliseAngle(double angle) {
     return angle;
 }
 
+// RE 0x5ED3D0, the primitive the corner geometry is built from (goal round 57 data-flow trace):
+//     5ED453  movsd xmm11, [rbx]        ; a.x      (point A lives at offset +0 of its object)
+//     5ED458  movsd xmm6,  [rbx + 8]    ; a.y
+//     5ED45D  subsd xmm11, [rsi]        ; a.x - b.x
+//     5ED462  subsd xmm6,  [rsi + 8]    ; a.y - b.y
+//     5ED476  mulsd xmm8, xmm6          ; dy * dy
+//     5ED47B  addsd xmm8, xmm0          ; + dx * dx  -> a squared length
+// Two adjacent edges are formed this way per corner, which is why the same function also needs the
+// quadrant angles and the +-2pi normalisation (round 55): it is the corner-arc kernel.
+struct Vec2d {
+    double x = 0.0;
+    double y = 0.0;
+};
+
+// RE the two differences above: a and b are 2 double points laid out as {x, y}.
+inline Vec2d subtractPoints2d(const double* a, const double* b) {
+    return Vec2d{a[0] - b[0], a[1] - b[1]};
+}
+
+// RE 0x5ED476 / 0x5ED47B: dy*dy + dx*dx, i.e. the squared length, with no square root at this site.
+inline double lengthSquared2d(const Vec2d& v) {
+    return v.y * v.y + v.x * v.x;
+}
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 
