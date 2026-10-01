@@ -2852,3 +2852,22 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 ⇒ 再除以 `1000` ⇒ **tick 源是 1e9 缩放（纳秒），被减掉的是“已经历秒数”**，即预算形如 **`0.7×base − 历时秒数`**。已把 `budgetAfterTwoCounts` 更名为 `budgetAfterElapsedTicks`，并加 `kTickDivisor = 1000000`（含实验依据）。
 
 **仍未恢复**：`0x8A8190` 到底读的是什么（计数器/时钟/合成值），只知道它的**两次读数在此处被相减**。
+
+### 附 70 tick 源是**纳秒时钟**，round 148 的算术从另一端被印证（goal round 149）**[链条闭合]
+
+`0x8A8190`（9 条指令 / **14 个调用者**）全读：
+
+```
+8A8194  xor ecx,ecx                       ; 参数 1 = 0
+8A8196  lea rdx,[rsp+0x20]                ; 参数 2 = &一个两字段结构
+8A819B  call 0x63F730                     ; 填写 {秒, 纳秒}（+0 / +8）
+8A81A0  movsxd rdx,dword [rsp+0x28]       ; 纳秒字段符号扩展
+8A81A5  imul rax,qword [rsp+0x20],0x3B9ACA00   ; 秒 × 1,000,000,000
+8A81AE  add rax,rdx                       ; + 纳秒
+```
+
+⇒ 返回 **秒×1e9 + 纳秒 = 纳秒计数**；这**从另一端确认了 round 148**：`/1e6 再 /1000` 正好是 **`/1e9`**，即把纳秒化为**秒**。
+
+**完整链条（现已闭合）**：`0x8A8190` 取纳秒 → 两次读数相减 → `/1e9` 得历时秒数 → 从 **`0.7×1e8`** 的预算里减掉。
+
+**已落 `lcns`**：`kNanosecondsPerSecond = 1000000000`、`nanosecondsFromPair`、`nanosecondsToSeconds`，并加一条**跨函数一致性测试**（预算减去的正是 `nanosecondsToSeconds(1e9) = 1`）。

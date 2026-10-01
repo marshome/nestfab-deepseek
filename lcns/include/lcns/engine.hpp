@@ -276,6 +276,26 @@ inline constexpr double kMsPerSecond = 1000.0;    // RE 0x1B4B2C
 // RE 0x1B4B1E/0x1B4B41: the magic-multiply divisor, confirmed by experiment (round 148)
 inline constexpr std::int64_t kTickDivisor = 1000000;
 
+// RE 0x8A8190 (9 instructions, 14 callers), read whole -- the tick source behind the budget arithmetic:
+//     8A8194  xor ecx,ecx                        ; arg1 = 0
+//     8A8196  lea rdx,[rsp+0x20]                 ; arg2 = &pair
+//     8A819B  call 0x63F730                      ; fills a {seconds, nanoseconds} pair at +0 and +8
+//     8A81A0  movsxd rdx,dword [rsp+0x28]        ; the nanoseconds field, sign-extended
+//     8A81A5  imul rax,qword [rsp+0x20],0x3B9ACA00   ; seconds * 1000000000
+//     8A81AE  add rax,rdx                        ; + nanoseconds
+// So it returns seconds * 1e9 + nanoseconds: a nanosecond clock. This CONFIRMS round 148's arithmetic from
+// the other end -- dividing by 1e6 and then by 1000 is exactly a division by 1e9, i.e. seconds.
+inline constexpr std::int64_t kNanosecondsPerSecond = 1000000000;   // RE 0x8A81A5: 0x3B9ACA00
+
+// RE 0x8A81A5/0x8A81AE: the two-field reading combined into one count.
+inline std::int64_t nanosecondsFromPair(std::int64_t seconds, std::int64_t nanoseconds) {
+    return seconds * kNanosecondsPerSecond + nanoseconds;
+}
+
+// RE the two divisions at 0x1B4B48..0x1B4B51 (by kTickDivisor then kMsPerSecond): nanoseconds -> seconds.
+inline double nanosecondsToSeconds(std::int64_t nanoseconds) {
+    return static_cast<double>(nanoseconds / kTickDivisor) / kMsPerSecond;
+}
 // RE 0x1B4933: the base weighted by 0.7.
 inline double weightedBudget(double base) { return kBudgetWeightLow * base; }
 

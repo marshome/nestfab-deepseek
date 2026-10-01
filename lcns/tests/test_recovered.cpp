@@ -573,6 +573,22 @@ int main() {
         CHECK(budgetAfterElapsedTicks(kBudgetBase, 1000000LL, 0LL) == 7e7 - 0.001);
     }
 
+    // --- the nanosecond clock and the conversion (RE 0x8a8190, then 0x1b4b48/0x1b4b4d) -------------
+    {
+        CHECK(kNanosecondsPerSecond == 1000000000LL);
+        // the pair combination, as the two instructions do it
+        CHECK(nanosecondsFromPair(0, 500) == 500LL);
+        CHECK(nanosecondsFromPair(1, 0) == 1000000000LL);
+        CHECK(nanosecondsFromPair(2, 250) == 2000000250LL);
+        // and the conversion back to seconds: /1e6 then /1000
+        CHECK(nanosecondsToSeconds(1000000000LL) == 1.0);
+        CHECK(nanosecondsToSeconds(500000000LL) == 0.5);
+        CHECK(nanosecondsToSeconds(1000000LL) == 0.001);
+        CHECK(nanosecondsToSeconds(0LL) == 0.0);
+        // a one-second difference is exactly what the budget arithmetic subtracts
+        CHECK(budgetAfterElapsedTicks(kBudgetBase, 1000000000LL, 0LL) == 7e7 - nanosecondsToSeconds(1000000000LL));
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
