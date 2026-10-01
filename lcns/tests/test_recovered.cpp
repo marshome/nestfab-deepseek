@@ -2062,5 +2062,45 @@ int main() {
         CHECK(kSsoData > kSsoCapacity);
     }
 
+    // --- the bit-length algorithm and the container walk (RE 0xf1aa0 and 0x8f2ca0) ------------------
+    {
+        CHECK(kBigIntCountOffset == 0x10);
+        CHECK(kBigIntWordsOffset == 0x18);
+        CHECK(kBitsPerWord == 0x40);
+        CHECK(kBitsPerWord == 64);
+        CHECK(kBitShiftPerWord == 6);
+        CHECK(1 << kBitShiftPerWord == kBitsPerWord);
+        CHECK(kBitLengthBisect);
+        CHECK(kBitLengthCallers == 55);
+
+        // the algorithm the instructions implement: skip trailing zero words, then find the top set bit
+        const auto bitLength = [](const std::vector<std::uint64_t>& w) {
+            std::size_t n = w.size();
+            while (n > 0 && w[n - 1] == 0) --n;          // RE 0xF1AB0/0xF1AB6
+            if (n == 0) return 0;                        // RE 0xF1AAD -> 0xF1B10
+            std::uint64_t top = w[n - 1];
+            int bits = 0;
+            while (top) { top >>= 1; ++bits; }           // the bisection's answer for one word
+            return static_cast<int>((n - 1) * kBitsPerWord) + bits;   // RE 0xF1AC4
+        };
+        CHECK(bitLength({}) == 0);
+        CHECK(bitLength({0}) == 0);
+        CHECK(bitLength({0, 0, 0}) == 0);
+        CHECK(bitLength({1}) == 1);
+        CHECK(bitLength({0x80}) == 8);
+        CHECK(bitLength({0xFF}) == 8);
+        CHECK(bitLength({0x100}) == 9);
+        CHECK(bitLength({0, 1}) == 65);                  // one whole word plus one bit
+        CHECK(bitLength({0, 1, 0, 0}) == 65);            // trailing zeros do not count
+        CHECK(bitLength({~0ULL}) == 64);
+
+        CHECK(kWalkBeginOffset == 0x00);
+        CHECK(kWalkEndOffset == 0x08);
+        CHECK(kWalkElementStride == 0x10);
+        CHECK(kWalkElementStride == kPoint2dSize);
+        CHECK(kWalkCallers == 51);
+        CHECK(kWalkEndOffset > kWalkBeginOffset);
+    }
+
     return check::finish("test_recovered");
 }

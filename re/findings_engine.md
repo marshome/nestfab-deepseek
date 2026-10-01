@@ -5025,3 +5025,23 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 形状像**小对象/SSO 访问器**，但**形状不等于证据** ⇒ 以 **`[推断]`** 登记（`kSsoInference = true`），只把**偏移与尾调**当事实。
 
 **已落 `layout.hpp`**：`kTag*`、`kDelegateCompare`、`kSign*`、`kKind*`、`kPayload*`、`kSso*` + 测试 26 条。
+
+### 附 170 **位长算法**（`0xF1AA0`，**55 个调用者**）与容器遍历（goal round 250）**[已落码]
+
+`0xF1AA0`（119 B）**不只是常量**，而是一个**算法**：多字大整数的**位长**：
+
+```
+F1AA0/F1AA4  字数 `+0x10`、字数组 `+0x18`
+F1AAD        字数为 0 ⇒ 返回 0
+F1AB0/F1AB6  `sub rdx,1` + `cmp [rcx+rdx*8-8],0` ⇒ **跳过尾部零字**
+F1AC4        `shl eax,6` ⇒ 每字 **64 位**
+F1ADE        `eax = 0x40` ⇒ 对 64 位作**二分**
+F1AF0..F1B09  `shr r8,cl` + `test` + `cmp ecx,1` + `ja` ⇒ 二分循环
+F1B0B        `add eax,r10d` ⇒ 加上跳过的整字
+```
+
+⇒ 返回值是**有效位数（bit length）**。测试里用可执行版本固定了 10 个手算样本（`{}`→0、`{1}`→1、`{0x80}`→8、`{0,1}`→**65**、`{~0}`→64）。
+
+`0x8F2CA0`（89 B / 51 个调用者）：遍历 `+0x00`（begin）到 `+0x08`（end），**元素步长 16 字节**（`lea rax,[rbx+0x10]`）。
+
+**已落 `layout.hpp`**：`kBigInt*`、`kBitsPerWord`、`kBitShiftPerWord`、`kBitLength*`、`kWalk*` + `static_assert` + 测试 24 条。

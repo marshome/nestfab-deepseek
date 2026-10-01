@@ -939,6 +939,31 @@ inline constexpr std::uintptr_t kSsoTailCall = 0x9984A0;    // RE 0x4189D4
 inline constexpr int kSsoCallers = 58;
 inline constexpr bool kSsoInference = true;                 // NOT proven, see the comment above
 
+
+// --- the bit-length algorithm of 0xF1AA0, fifty-five callers (round 250) ------------------------------
+//     0xF1AA0/0xF1AA4  the word count at +0x10 and the word array at +0x18
+//     0xF1AAD          a zero count returns zero
+//     0xF1AB0/0xF1AB6  trailing zero words are skipped
+//     0xF1AC4 shl eax,6          -- each word contributes 64 bits, applied as a shift of six
+//     0xF1ADE mov eax,0x40       -- the bisection starts at 64
+//     0xF1AF0..0xF1B09 the bisection itself: shr r8,cl, test, cmp ecx,1, ja
+inline constexpr std::size_t kBigIntCountOffset = 0x10;      // RE 0xF1AA0
+inline constexpr std::size_t kBigIntWordsOffset = 0x18;      // RE 0xF1AA4
+inline constexpr int kBitsPerWord = 0x40;                    // RE 0xF1ADE
+inline constexpr int kBitShiftPerWord = 6;                   // RE 0xF1AC4 (a shift of six is times 64)
+inline constexpr bool kBitLengthBisect = true;               // RE the loop at 0xF1AF0
+inline constexpr int kBitLengthCallers = 55;
+static_assert(1 << kBitShiftPerWord == kBitsPerWord, "the shift counts the bits of one word");
+
+// --- the container walk of 0x8F2CA0, fifty-one callers (round 250) ------------------------------------
+//     0x8F2CA7/0x8F2CAB  the end at +0x08 and the begin at +0x00
+//     0x8F2CB1 cmp rsi,rbx ; je                     ; walk until they meet
+//     0x8F2CC3 lea rax,[rbx+0x10] ; 0x8F2CC7 cmp rcx,rax   ; the element stride is sixteen bytes
+inline constexpr std::size_t kWalkBeginOffset = 0x00;        // RE 0x8F2CAB
+inline constexpr std::size_t kWalkEndOffset = 0x08;          // RE 0x8F2CA7
+inline constexpr std::size_t kWalkElementStride = 0x10;      // RE 0x8F2CC3
+inline constexpr int kWalkCallers = 51;
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
