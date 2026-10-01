@@ -101,7 +101,9 @@ SKIP_NAMES = {"exports_table.csv", "exports_table.json", "exports_table.md",
               # identity at all ("shape only"). Letting it count as "cited" would move this metric
               # from ~32% to ~90% while nothing was actually reversed, so it is excluded here and
               # reported as its own, clearly weaker tier further down.
-              "IDENTIFIED.md", "identified_summary.json", "g_identify.py"}
+              "IDENTIFIED.md", "identified_summary.json", "g_identify.py",
+              # the shape-level sweep is tier C by construction (re/SWEEP.md)
+              "SWEEP.md", "g_sweep.py"}
 addr_re = re.compile(r"0x([0-9A-Fa-f]{3,8})")
 cited = Counter()
 files = []
