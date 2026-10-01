@@ -3460,3 +3460,52 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 
 ⇒ **可用的判据：“普通移位”多为库容器；“魔数乘法”才是领域记录。**
 这条把后续的搜索重定向到魔数乘法侧，而不是在 8/16 字节的库代码里耗时间。
+
+### 附 102 **魔数乘法地图**：剩余领域代码里的除法常量（goal round 182）
+
+按 round 181 的方法论结论，**领域记录与比例换算用魔数乘法编码**；本轮扫描未引用函数里“`movabs` 立即被 `imul` 消费”的 64 位常量，**并逐个用实验确定除数**（模拟该序列与**向零截断**对比，15 个样本）。
+
+| 魔数 | 函数数 | 实验结果 |
+|---|---:|---|
+| `0xAAAAAAAAAAAAAAAB` | 172 | no divisor (not a division) |
+| `0xCCCCCCCCCCCCCCCD` | 56 | no divisor (not a division) |
+| `0x6DB6DB6DB6DB6DB7` | 40 | no divisor (not a division) |
+| `0xEEEEEEEEEEEEEEEF` | 26 | no divisor (not a division) |
+| `0xDB6DB6DB6DB6DB7` | 23 | no divisor (not a division) |
+| `0x86BCA1AF286BCA1B` | 19 | no divisor (not a division) |
+| `0xAAAAAAAAAAAAAAB` | 18 | shift 0 -> /24 |
+| `0xEC4EC4EC4EC4EC5` | 18 | no divisor (not a division) |
+| `0x8E38E38E38E38E39` | 15 | no divisor (not a division) |
+| `0xE38E38E38E38E39` | 13 | shift 0 -> /18 |
+| `0x6F96F96F96F96F97` | 9 | no divisor (not a division) |
+| `0x82FA0BE82FA0BE83` | 8 | no divisor (not a division) |
+| `0xD37A6F4DE9BD37A7` | 7 | no divisor (not a division) |
+| `0x4EC4EC4EC4EC4EC5` | 7 | no divisor (not a division) |
+| `0xFAFAFAFAFAFAFAFB` | 6 | no divisor (not a division) |
+| `0x6FB586FB586FB587` | 6 | no divisor (not a division) |
+| `0x2E8BA2E8BA2E8BA3` | 5 | no divisor (not a division) |
+| `0x84BDA12F684BDA13` | 5 | no divisor (not a division) |
+| `0xEEEEEEEEEEEEEEF` | 5 | no divisor (not a division) |
+| `0xCCCCCCCCCCCCCCD` | 4 | shift 0 -> /20 |
+| `0xC30C30C30C30C30D` | 4 | no divisor (not a division) |
+| `0x9C5FFF26ED75ED55` | 3 | no divisor (not a division) |
+| `0x34630B8A000` | 3 | no divisor (not a division) |
+| `0x431BDE82D7B634DB` | 3 | no divisor (not a division) |
+| `0x4BDA12F684BDA13` | 3 | shift 0 -> /54 |
+| `0xE8BA2E8BA2E8BA3` | 3 | no divisor (not a division) |
+| `0x21CFB2B78C13521D` | 2 | no divisor (not a division) |
+| `0x112E0BE826D694B3` | 2 | no divisor (not a division) |
+| `0xF83E0F83E0F83E1` | 2 | no divisor (not a division) |
+| `0x34F72C234F72C235` | 2 | no divisor (not a division) |
+| `0xFB586FB586FB587` | 2 | no divisor (not a division) |
+| `0xF0F0F0F0F0F0F0F1` | 2 | no divisor (not a division) |
+| `0x4FA4FA4FA4FA4FA5` | 1 | no divisor (not a division) |
+| `0x9249249249249249` | 1 | no divisor (not a division) |
+| `0x20C49BA5E353F7CF` | 1 | no divisor (not a division) |
+| `0xAFAFAFAFAFAFAFB` | 1 | no divisor (not a division) |
+| `0x1FFFFFFFFFFFFFFF` | 1 | no divisor (not a division) |
+| `0xF96F96F96F96F97` | 1 | no divisor (not a division) |
+| `0x638E38E38E38E39` | 1 | no divisor (not a division) |
+| `0x37A6F4DE9BD37A7` | 1 | no divisor (not a division) |
+
+⇒ 这就是**剩余代码里的除法常量清单**，每个除数都由实验而非记忆得出。
