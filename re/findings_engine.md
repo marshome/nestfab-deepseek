@@ -6508,3 +6508,19 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ 后者记为**两次读数之间的一致**，**不说成同一个对象** —— 同样的偏移出现在**不同类型的不同深度**上。
 
 **已落 `layout.hpp`**：`kNested4`、`kNested4Callers`(21)、`kNested4Outer`(0x28)、`kNested4Address`(0x18)、`kNested4FieldA/B`、`kNested4PairA..D`、`kNested4Helper`(0x939E00)、`kNested4Levels`(4)、`kNestedLayouts2`(4)、`kSharedDeallocSightings9`(10)、`kNested4ReusesRound254Pair` + **六条 `static_assert`** + 测试 26 条；`kNestedLayouts` 由 3 **更新为 4**（旧断言同步修正）。
+
+### 附 247 **外层是链表，这收窄了 round 328 的“四层”说法**（goal round 329）**[已落码]**
+
+```
+67DB4B  r13 = [r12+**0x10**]           ; 下一个链节
+67DBB4  r12 = r13 ; 67DBBF jne 0x67DB34   ; ★ **遍历在它上重入**
+67DBC5/67DBCB  rcx = [r15] ; je 0x67DBE2  ; 首字段最后才释放
+67DBDD  jmp 0x9984B0                       ; 尾调（**第十一次目击**）
+```
+
+★ r13 在 `0x67DB4B` 取自 `[r12+0x10]`，而循环在它上**重入** ⇒ **外层是单链表**（next 在 `+0x10`），**不是静态嵌套的四层**。因此 round 328 的说法在此**收窄**：所谓四层是**链表 → 链表节点的数组 → 该数组的元素**（共三阶段）。
+**证据未变，变的是我给它起的形状名字** ⇒ 以 `kNested4DepthReadingCorrected` 记录收窄。
+
+★ **销毁顺序**：元素 → 记录数组 → **最外层字段最后**（`kDestructionOrderRecorded`）。
+
+**已落 `layout.hpp`**：`kOuterIsLinkedList`、`kListNextOffset`(0x10)、`kNested4Stages`(3)、`kExitFreesFirstField`、`kExitField`(0x00)、`kSharedDeallocSightings10`(11)、`kDestructionOrderRecorded`、`kNested4DepthReadingCorrected` + **四条 `static_assert`** + 测试 20 条。

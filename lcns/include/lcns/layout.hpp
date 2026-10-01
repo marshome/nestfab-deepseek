@@ -3001,6 +3001,27 @@ static_assert(kNested4PairC == kNestedInnerBegin && kNested4PairD == kNestedInne
 static_assert(kNestedLayouts2 == kNestedLayouts, "one count, updated once");
 static_assert(kSharedDeallocSightings9 == kSharedDeallocSightings5 + 3, "the deallocator again");
 
+
+// --- the outer structure is a list, and the destruction order (round 329) --------------------------------
+//     0x67DB4B r13 = [r12+0x10]              ; the next link
+//     0x67DBB4 r12 = r13 ; 0x67DBBF jne 0x67DB34   ; the walk re-enters on it
+//     0x67DBC5/0x67DBCB rcx = [r15] ; je 0x67DBE2  ; the first field is freed last
+//     0x67DBDD jmp 0x9984B0                  ; by tail call, an eleventh sighting
+inline constexpr bool kOuterIsLinkedList = true;             // RE the re-entry at 0x67DBBF
+inline constexpr std::size_t kListNextOffset = 0x10;         // RE 0x67DB4B and 0x67DBB4
+inline constexpr int kNested4Stages = 3;                     // the list, its array, and that array's elements
+inline constexpr bool kExitFreesFirstField = true;           // RE 0x67DBC5
+inline constexpr std::size_t kExitField = 0x00;              // RE 0x67DBC5 (r15 is the object)
+inline constexpr int kSharedDeallocSightings10 = 11;         // rounds 248 to 328 and this
+inline constexpr bool kDestructionOrderRecorded = true;      // three stages, outermost last
+// NARROWED from round 328: I called this a four-level teardown. The re-entry proves the outer structure is a LIST
+// walked through +0x10, so the shape is a list, then the list record's array, then that array's elements.
+inline constexpr bool kNested4DepthReadingCorrected = true;
+static_assert(kOuterIsLinkedList && kNested4DepthReadingCorrected, "the reading is narrowed, not the evidence");
+static_assert(kListNextOffset == kNested4FieldA, "the next link is the field at +0x10 that was read earlier");
+static_assert(kDestructionOrderRecorded && kNested4Stages == 3, "three stages, outermost last");
+static_assert(kSharedDeallocSightings10 == kSharedDeallocSightings5 + 4, "the deallocator again");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

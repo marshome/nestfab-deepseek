@@ -4776,5 +4776,38 @@ int main() {
         CHECK(kNested4Levels > kNestedLayouts - 1);
     }
 
+    // --- the list walk and the destruction order (RE 0x67db10) --------------------------------------
+    {
+        CHECK(kOuterIsLinkedList);
+        CHECK(kListNextOffset == 0x10);
+        CHECK(kListNextOffset == kNested4FieldA);        // the same field rounds 328 read as a level
+        CHECK(kNested4Stages == 3);
+        CHECK(kDestructionOrderRecorded);
+        CHECK(kExitFreesFirstField);
+        CHECK(kExitField == 0x00);
+        CHECK(kNested4DepthReadingCorrected);            // my round-328 name for the shape, narrowed
+        CHECK(kNested4Levels == 4);                      // the old count stands, its meaning does not
+        CHECK(kSharedDeallocSightings10 == 11);
+        CHECK(kSharedDeallocSightings10 == kSharedDeallocSightings5 + 4);
+        CHECK(kSharedDealloc == 0x9984B0);
+        CHECK(kNested4Helper == 0x939E00);
+
+        // the walk the instructions implement: follow the next link until it is null
+        struct Rec { int payload; Rec* next; };
+        Rec c{3, nullptr}, b{2, &c}, a{1, &b};
+        int visited = 0;
+        for (Rec* p = &a; p != nullptr; p = p->next) {   // RE the re-entry at 0x67DBBF
+            ++visited;
+        }
+        CHECK(visited == 3);
+        CHECK(a.next == &b);
+        CHECK(c.next == nullptr);
+        // and the three stages, in the order the routine frees them
+        const char* stages[3] = {"elements", "record array", "outer field"};
+        CHECK(std::string(stages[0]) == "elements");
+        CHECK(std::string(stages[2]) == "outer field");
+        CHECK(kNested4Stages == 3);
+    }
+
     return check::finish("test_recovered");
 }
