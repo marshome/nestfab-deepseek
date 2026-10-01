@@ -102,4 +102,23 @@ inline bool hasAtLeastOneRecord(std::size_t spanBytes) {
     return spanBytes > kMinSpanForOneRecord;              // RE the `ja` at 0x5E7939
 }
 
+
+// --- the 16-byte container of 0x6DE940 (round 180) ------------------------------------------------
+// RE 0x6DE94E/0x6DE95A/0x6DE960: the byte span is shifted right by four, so the element count of that
+// container follows a 16-byte record. That is a FIFTH stride beside 48 (round 159), 240 (round 141),
+// 344 (round 156) and the /24 count (round 157); each keeps its own evidence and none overwrites another.
+inline constexpr std::size_t kSizeRecordStride = 16;      // RE 0x6DE960: sar rax,4
+inline constexpr int kSizeRecordShift = 4;                // RE 0x6DE960
+
+inline std::int64_t elementCount16(std::size_t spanBytes) {
+    return static_cast<std::int64_t>(spanBytes) >> kSizeRecordShift;   // RE the shift itself
+}
+
+// --- the sentinel convention, seen in two independent constructors (round 180) ---------------------
+// 0x5E6360 tail:  [rax+0x28], [rax+0x30], [rax+0x38] = 0xFFFFFFFFFFFFFFFF ; movsd [rax+0x40], [-1.0]
+// 0x89D2F0     :  [rsi+0x60], [rsi+0x68], [rsi+0x70] = -1               ; movsd [rsi+0x78], [-1.0]
+inline constexpr int kSentinelCount = 3;                  // RE both sites: three qwords
+inline constexpr std::int64_t kInvalidIndexSentinel = -1; // RE the all-ones word
+inline constexpr double kInvalidDoubleSentinel = -1.0;    // RE 0x5E6400 and 0x89D3C5
+
 }  // namespace lcns

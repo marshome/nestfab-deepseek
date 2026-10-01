@@ -3405,3 +3405,23 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 `47` 恰好是 round 159 从 `lea rbx,[rax+rax*2] ; shl rbx,4` 测得的 **48 字节记录步长减一**，在此处当**尺寸门**用：对 48 字节记录而言，`span > 47` 即**“至少一个元素”**。
 **两条独立事实指向同一记录大小**，所以这不是一个孤立常量。
 已落 `layout.hpp`：`kMinSpanForOneRecord`、`hasAtLeastOneRecord` + 测试 6 条。
+
+### 附 100 `0x6DE940` = **16 字节记录**的 size 访问器；且**哨兵惯例出现两次**（goal round 180）**[已落码]
+
+**（a）`0x6DE940`（15 条，21 个调用者）**：
+
+```
+6DE94E  call 0x5C5260 ; 6DE951 rbx=[rax+8] ; 6DE955 call 0x5C5260 ; 6DE95A sub rbx,[rax] ; 6DE960 sar rax,4
+```
+
+⇒ 返回 `span >> 4`，即**记录为 16 字节**的容器元素数 —— 这是第**五**种步长（旁侧 48、240、344 与 `/24` 计数），**各自保留证据、互不覆盖**。
+
+**（b）哨兵惯例，两个独立构造函数各出现一次**：
+
+| 位置 | 三个 qword `−1` | `−1.0` double |
+|---|---|---|
+| `0x5E6360` 尾部 | `[rax+0x28]`、`[rax+0x30]`、`[rax+0x38]` | `[rax+0x40]`（RE `0x5E6400`）|
+| `0x89D2F0`（树节点）| `[rsi+0x60]`、`[rsi+0x68]`、`[rsi+0x70]` | `[rsi+0x78]`（RE `0x89D3C5`）|
+
+⇒ **两个独立构造函数、地址不同、惯例相同** ⇒ 值得落码。
+已落 `layout.hpp`：`kSizeRecordStride`/`kSizeRecordShift`/`elementCount16`、`kSentinelCount`/`kInvalidIndexSentinel`/`kInvalidDoubleSentinel` + 测试 16 条（含四种步长互不相等、与 round 178 的 `kTreeNodeNoIndex` 一致）。

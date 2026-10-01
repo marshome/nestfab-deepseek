@@ -995,5 +995,27 @@ int main() {
         CHECK(hasAtLeastOneRecord(96));                            // two
     }
 
+    // --- the 16-byte container and the sentinel convention (RE 0x6de960, 0x5e6400, 0x89d3c5) ---------
+    {
+        CHECK(kSizeRecordStride == 16);
+        CHECK(kSizeRecordShift == 4);
+        CHECK(elementCount16(0) == 0);
+        CHECK(elementCount16(16) == 1);
+        CHECK(elementCount16(160) == 10);
+        CHECK(elementCount16(15) == 0);                  // a partial record is not counted
+        // the four strides recorded so far are all different, which is why each keeps its own constant
+        CHECK(kSizeRecordStride != kIndexedRecordStride);
+        CHECK(kSizeRecordStride != kRunRecordStride);
+        CHECK(kSizeRecordStride != kTimingRecordStride);
+        // the sentinel convention appears in two constructors with different addresses
+        CHECK(kSentinelCount == 3);
+        CHECK(kInvalidIndexSentinel == -1);
+        CHECK(kInvalidDoubleSentinel == -1.0);
+        CHECK(static_cast<std::uint64_t>(kInvalidIndexSentinel) == 0xFFFFFFFFFFFFFFFFULL);
+        // and it agrees with the tree node of round 178
+        CHECK(kInvalidIndexSentinel == kTreeNodeNoIndex);
+        CHECK(relativeScale(kInvalidDoubleSentinel, 0.0, 0.0, 0.0) == 1.0);   // |-1| under the floor
+    }
+
     return check::finish("test_recovered");
 }
