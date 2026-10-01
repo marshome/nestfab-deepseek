@@ -352,6 +352,20 @@ private:
     std::vector<std::pair<std::uint64_t, Solution>> db_;
 };
 
+// RE 0x1ADC20 (3261 B / 655 instructions, 3 callers, 46 callees). Its own strings are 'choosen' and
+// 'database' (referenced at 0x1ADDB4 and 0x1AE718) and it calls three times into
+// ..\nesting\algos\multinesting_optimizer.cpp. Two tolerance-shaped uses were read at instruction
+// level:
+//     1AE387  movsd xmm6,[0.999] ; 1AE392 mulsd xmm6,xmm0     -> 0.999 * f(...)
+//     1AE682  imul rcx,rdx ; 1AE693 cvtsi2sd xmm0,rcx ; 1AE698 mulsd xmm0,[0.25]
+//                                                             -> 0.25 * (a * b), sign checked first
+// RECOVERED: the texts, the tolerance constants and the call into the multinesting optimizer.
+// NOT RECOVERED: what the two formulas compute and what their operands are, so no function is written
+// for them -- the constants are kept with their provenance instead.
+inline constexpr double kMultinestingTolerance = 0.999;   // RE 0x1AE387
+inline constexpr double kMultinestingQuarter = 0.25;      // RE 0x1AE698, a product scaled by 1/4
+
+
 class RectangleNester : public Nester {        // RE 0xA3B800, Run = 0x75FB0
 public:
     const char* name() const override { return "RectangleNester"; }

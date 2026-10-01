@@ -384,6 +384,16 @@ int main() {
         CHECK(static_cast<double>(kCommonCutRatioScale10) == 10.0);
     }
 
+    // --- multinesting tolerances (RE 0x1adc20: 0.999 * f(...) and 0.25 * (a*b)) -------------------
+    {
+        CHECK(kMultinestingTolerance == 0.999);
+        CHECK(kMultinestingQuarter == 0.25);
+        // the shapes the instructions show, applied to arbitrary operands: the constants are recovered,
+        // the operands are not, so only the arithmetic is asserted here
+        CHECK(std::fabs(0.999 * 4.0 - 3.996) < 1e-12);
+        CHECK(0.25 * (8 * 4) == 8.0);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
