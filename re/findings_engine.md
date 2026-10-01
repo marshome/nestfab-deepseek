@@ -6201,3 +6201,20 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 **（c）`0x112102` 以 `rdx = rbx` 调 `0x63F300`**（比拷贝助手 `0x63F2F8` **后移 8 字节**）⇒ **助手簇已知五名成员**：`0x63F238`、`0x63F258`、`0x63F2E8`、`0x63F2F8`、**`0x63F300`**。
 
 **已落 `layout.hpp`**：`kParserErrorSites`(4)、`kErrorSiteStride`(5)、`kParserErrorFirst/Last`、`kParserMinElements`(2)、`kParserGrow`(0x90D560)、`kGrowArgumentIsDifference`、`kCompareHelper`(0x63F300)、`kCompareHelperDelta`(8)、`kHelperClusterMembers`(5)、`kReadNullBranch` + **五条 `static_assert`** + 测试 22 条。
+
+### 附 230 **驱动器族的第四个成员，以及它们不同的虚表指针数**（goal round 312）**[已落码]**
+
+`0x112740`（1987 B / **9 个调用者**）与前三个同形：同样的 `0x128` 帧、同样的**就地 `InputBuffer`**（`+0x14`/`+0x18`/`+0x20`/`+0x28`）、**同样先过自检门**、同样以 `0x30` 调 `0x111890` —— 但它携带 **三个**虚表指针。
+
+**四个成员的虚表指针数各不相同**：
+
+| 成员 | 帧 | 虚表指针数 | 调用者 |
+|---|---:|---:|---:|
+| `0x10FD40` | 0x108 | 2 | 1 |
+| `0x110B00` | 0x108 | 2 | 2 |
+| `0x112150` | 0x128 | 4 | 0（虚表）|
+| **`0x112740`** | **0x128** | **3** | **9** |
+
+⇒ **就地偏移集合第六次确认，自检第五次**。族内变化的是**对象携带几个虚表指针** —— 这是**按接口数参数化的模板**的形状；此读法**作为数字暗示的理解提出，不声称更强**。
+
+**已落 `layout.hpp`**：`kDriverFourth`(0x112740)、`kDriverFourthCallers`(9)、`kDriverFamily`(4)、`kDriverVtables4`(3)、`kDriverVtableCountsDiffer`、`kInPlaceConfirmations3`(6)、`kDriverFamilyHelperShared`、`kFamilyReadingIsTemplate` + **五条 `static_assert`** + 测试 24 条。

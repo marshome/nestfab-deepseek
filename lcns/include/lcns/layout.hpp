@@ -2565,6 +2565,29 @@ static_assert(kParserErrorLast - kParserErrorFirst == 3 * kErrorSiteStride, "the
 static_assert(kCompareHelper == kMemcpyHelper + kCompareHelperDelta, "the compare helper follows the copy helper");
 static_assert(kHelperClusterMembers == 5, "five members of the cluster are now known");
 
+
+// --- the fourth driver 0x112740, and the family's varying vtable counts (round 312) ---------------------
+//     0x11274C sub rsp,0x128           ; the same frame as the third
+//     0x112753/0x11275A/0x112761       ; three vtable pointers
+//     0x112768 lea rsi,[rsp+0x60]      ; the same in-place object
+//     0x112778 call 0x118260           ; the same self-test, first
+//     0x112785/0x11278D/0x11279C/0x1127A4  the same fields at the same relative offsets
+//     0x1127AC call 0x111890 with 0x30 ; the same helper and size
+inline constexpr std::uintptr_t kDriverFourth = 0x112740;    // RE the whole routine
+inline constexpr int kDriverFourthCallers = 9;               // RE the profile
+inline constexpr int kDriverFamily = 4;                      // rounds 298, 301, 304 and this
+inline constexpr int kDriverVtables4 = 3;                    // RE the three lea instructions
+inline constexpr int kDriverVtableCountsDiffer = 1;          // they are 2, 2, 4 and 3
+inline constexpr int kInPlaceConfirmations3 = 6;             // rounds 288, 291, 298, 301, 304/305 and this
+inline constexpr bool kDriverFamilyHelperShared = true;      // all four call 0x111890 with 0x30
+inline constexpr bool kFamilyReadingIsTemplate = true;       // offered as the reading, nothing stronger
+static_assert(kDriverFamily == 4, "four members");
+static_assert(kDriverVtables4 == 3, "the fourth carries three");
+static_assert(kDriverVtables4 != kDriverVtablesPair && kDriverVtables4 != kDriverVtables3,
+              "and that differs from the other members");
+static_assert(kInPlaceConfirmations3 == 6, "six confirmations of the in-place offsets");
+static_assert(kDriverFamilyHelperShared, "one helper serves the whole family");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

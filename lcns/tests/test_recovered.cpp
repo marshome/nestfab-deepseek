@@ -4127,5 +4127,38 @@ int main() {
         CHECK(kParserErrorSites * kErrorSiteStride == 20);   // the error surface occupies twenty bytes
     }
 
+    // --- the driver family's fourth member (RE 0x112740) --------------------------------------------
+    {
+        CHECK(kDriverFourth == 0x112740);
+        CHECK(kDriverFourthCallers == 9);
+        CHECK(kDriverFamily == 4);
+        CHECK(kDriverVtables4 == 3);
+        CHECK(kDriverVtableCountsDiffer == 1);           // 2, 2, 4 and 3
+        CHECK(kInPlaceConfirmations3 == 6);
+        CHECK(kInPlaceConfirmations2 == 5);              // round 305 counted five before this
+        CHECK(kDriverFamilyHelperShared);
+        CHECK(kFamilyReadingIsTemplate);
+        // the frames: the pair at 0x108, the third and fourth at 0x128
+        CHECK(kDriverFrameBytes == 0x108);
+        CHECK(kDriverThirdFrame == 0x128);
+        CHECK(kDriverThirdFrame > kDriverFrameBytes);
+        // the four vtable counts, recorded rather than merged
+        const int counts[4] = {kDriverVtablesPair, kDriverVtablesPair, kDriverVtables3, kDriverVtables4};
+        CHECK(counts[0] == 2);
+        CHECK(counts[1] == 2);
+        CHECK(counts[2] == 4);
+        CHECK(counts[3] == 3);
+        CHECK(counts[0] == counts[1]);                   // the pair agrees with itself
+        CHECK(counts[2] != counts[3]);
+        int sum = 0;
+        for (int i = 0; i < kDriverFamily; ++i) sum += counts[i];
+        CHECK(sum == 11);                                // 2 + 2 + 4 + 3, added up
+        // the shared traits
+        CHECK(kSelfTestFirst);
+        CHECK(kHelper111890Size == 0x30);
+        CHECK(kHelper111890Calls >= 2);
+        CHECK(kInputBufferLocalMarker - kInputBufferLocal == kInputBufferMarker);
+    }
+
     return check::finish("test_recovered");
 }
