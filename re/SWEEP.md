@@ -1608,3 +1608,57 @@ round 84 的走链少了一次解引用（`type_info[+8]` **存的是指针**，
 命中最多的是 **address point(+0x10)**。完整映射：`re/vtable_refs.json`（生成物，不计入引用）。
 
 **口径**：“该函数引用了该类的 vtable 地址”是硬事实；「它是构造/析构”是**推论**。
+
+## 缺失的门禁：头文件里的类必须在测试里出现（goal round 90）**[待落实为硬性检查]**
+
+round 89 把 `canceller.hpp` 提交了却**没带测试**（锚点不匹配），而守卫只查“构建/门禁/有改动”。本轮把“**头文件里声明的类必须在 `tests/` 出现过**”做成一个**报告**（本轮先报数，下一步再升为硬性检查并为合理例外列出理由）。
+
+本轮报告：**23** 个类在 `tests/` 里从未出现。
+* `ExportInfo` — `api.hpp`
+* `Diagnostic` — `api.hpp`
+* `Library` — `api.hpp`
+* `Impl` — `api.hpp`
+* `Api` — `api.hpp`
+* `HttpResponse` — `cloud.hpp`
+* `SocketHttpClient` — `cloud.hpp`
+* `Supervisor` — `engine.hpp`
+* `ConvEdge` — `geom.hpp`
+* `Triplet` — `lp.hpp`
+* `Triplet` — `lp_clp.hpp`
+* `CommonCutSegment` — `model.hpp`
+* `MultitorchInfo` — `model.hpp`
+* `BestObserver` — `nester.hpp`
+* `BeamParams` — `nester.hpp`
+* `BeamNode` — `nester.hpp`
+* `BeamStats` — `nester.hpp`
+* `PlacementCheck` — `nester.hpp`
+* `DatabaseNester` — `nester.hpp`
+* `CompositeNester` — `nester.hpp`
+* `NFPKey` — `nfp.hpp`
+* `NFPKeyHash` — `nfp.hpp`
+* `IntervalList` — `row.hpp`
+
+## 教训：我重复发现了工程里早已有的知识（goal round 90）
+
+rounds 88-89 我把取消器族（六个 3 槽 vtable、`Utils::Canceller` 的
+`0x7D7D20 = xor eax,eax; ret`、`Multi::RCompactCanceller` 的 `0x7D2CB0`）当作“新发现”，
+并写了一个新的 `include/lcns/canceller.hpp`。实际上 **`lcns/include/lcns/nester.hpp` 里早就有**：
+
+```cpp
+// RE: Utils::Canceller, base probeCancel() == false (0x7D7D20)
+class Canceller { ... virtual bool probeCancel() { return cancelled_; } ... };
+// RE Multi::SupervisorCanceller::ProbeCancel (0x30030): elapsed / limit > 1.0
+class TimeCanceller : public Canceller { ... };
+// RE Multi::RCompactCanceller (0x7D2CB0) is `xor eax,eax; ret` -- never cancels.
+class NeverCanceller : public Canceller { ... };
+```
+
+而且它的**接口设计比我新写的更对**：我写的是 `void cancel()`，
+而指令证据显示第三槽是 **返回 bool 的探测**（`xor eax,eax; ret`）。
+
+**处置**：删除我新建的 `canceller.hpp`（已 `git rm`），回退相关测试，
+不在已有类旁边再摆一个重复定义。
+
+**根因**：我在“发现”之前**没有先搜工程里已有的同名概念**。
+**固定检查项**（第 7 条）：任何新建类/接口前，**先在 `lcns/` 全仓搜类名与关键词**；
+命中则改为“补充证据到已有代码”，而不是新建。
