@@ -1323,7 +1323,11 @@ inline constexpr int kTagSightings = 5;                      // rounds 249, 253 
 //       0x87EE91 `mov qword [rbx+0x70],0x200` gives the object an initial 512.
 inline constexpr std::uintptr_t kObjectCtor = 0x87EDF0;      // RE the whole routine
 inline constexpr std::uintptr_t kObjectCtorVtableRva = 0x1D67ED;   // RE 0x87EE4C
-inline constexpr std::uintptr_t kObjectCtorThunk = 0x8774E0; // RE 0x87EE65, the sibling of 0x8774F0
+inline constexpr std::uintptr_t kObjectCtorThunk = 0x8774E0; // RE 0x87EE65
+// CORRECTED in round 270: this is NOT a thunk and NOT the sibling of 0x8774F0. It is twelve bytes
+// that write zero to the qword at +0x00 and the byte at +0x08 (`mov qword [rcx],0 ; mov byte
+// [rcx+8],0 ; ret`). Round 263 inferred "thunk" from the neighbouring address, which was a guess;
+// the address is right and the description was wrong.
 inline constexpr std::uintptr_t kObjectCtorHelper = 0x8AAB00; // RE 0x87EE47
 inline constexpr std::size_t kByteQuartetA = 0x78;           // RE 0x87EE99
 inline constexpr std::size_t kByteQuartetB = 0x79;           // RE 0x87EE9D
@@ -1514,6 +1518,35 @@ static_assert(!kSignResultOpen, "the sign question is settled: the routine does 
 // --- the family now has two sites for each operation (round 269) ---------------------------------------
 inline constexpr int kAdditionSites = 2;                     // 0xEF280's body and 0xF4830's use of it
 static_assert(kAdditionSites == kSubtractionSites, "addition and subtraction mirror each other");
+
+
+// --- the close helper 0x8771C0 and its retry (round 270) -----------------------------------------------
+//     0x8771C6 cmp qword [rcx],0 ; je -> return 0   ; nothing to close
+//     0x8771CF cmp byte [rcx+8],0 ; jne 0x8771F0    ; the flag that enables the retry path
+//     0x8771F0 rsi = [a data slot] ; call rsi       ; an INDIRECT call through a global function pointer
+//     0x8771F9 dword [rax] = 0                      ; the error slot is cleared before each attempt
+//     0x8771FF call 0x63F3E0 ; test eax,eax ; je    ; the operation
+//     0x87720B call rsi ; cmp dword [rax],4 ; je 0x8771FF   ; RETRY while the error code is FOUR
+inline constexpr std::uintptr_t kCloseHelper = 0x8771C0;     // RE the whole routine
+inline constexpr std::int32_t kCloseRetryCode = 4;           // RE 0x87720D -- the interrupted-call code
+inline constexpr std::uintptr_t kCloseCallee = 0x63F3E0;     // RE 0x877202
+inline constexpr std::size_t kCloseHandle = 0x00;            // RE 0x8771C6
+inline constexpr std::size_t kCloseFlag = 0x08;              // RE 0x8771CF
+inline constexpr int kCloseCallers = 3;
+inline constexpr bool kCloseUsesGlobalCallback = true;       // RE 0x8771F7/0x8771F0
+inline constexpr bool kCloseRetries = true;                  // RE 0x87720D
+static_assert(kCloseRetryCode == 4, "the retried error code is four");
+
+// --- the two-field clear of 0x8774E0, which is NOT a thunk (round 270) ---------------------------------
+//     0x8774E0 mov qword [rcx],0 ; 0x8774E7 mov byte [rcx+8],0 ; ret        -- twelve bytes in all
+inline constexpr std::uintptr_t kClearPair = 0x8774E0;       // RE the whole routine
+inline constexpr std::size_t kClearPairQword = 0x00;         // RE 0x8774E0
+inline constexpr std::size_t kClearPairByte = 0x08;          // RE 0x8774E7
+inline constexpr std::size_t kClearPairBytes = 12;           // RE the function size
+inline constexpr int kClearPairCallers = 4;
+inline constexpr bool kClearPairNotThunk = true;             // the round-263 wording is corrected
+static_assert(kClearPairBytes == 12, "the clear is twelve bytes, not the five of a thunk");
+static_assert(kClearPairByte == kCloseFlag, "the byte it clears is the flag the close reads");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

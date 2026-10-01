@@ -5443,3 +5443,28 @@ F1C9C/0xF1CA2/0xF1CA5  [rcx] = [rcx] − r14   ; ★ **把借位叠入高位字*
 ⇒ **族内每个运算现有两个站点**：加法（`0xEF280` 与 `0xF4830`）、减法（`0xEF300` 与 `0xF1B20`）。
 
 **已落 `layout.hpp`**：`kSubRoutine`、`kBorrowIntoTail`、`kSubClearsTag`、`kSubtractionSites`、`kAdditionSites`、`kOrderingScanInferred` + **四条 `static_assert`** + 测试 20 条。
+
+### 附 190 **带 EINTR 重试的关闭例程**，以及**对 round 263 措辞的纠正**（goal round 270）**[已落码]**
+
+**（a）`0x8771C0`（101 B）= 带重试的关闭**：
+
+```
+8771C6  cmp qword [rcx],0 ; je → 返回 0     ; 无句可关
+8771CF  cmp byte [rcx+8],0 ; jne 0x8771F0      ; ★ 决定重试路径是否适用的标志
+8771F0  rsi = [数据槽] ; call rsi        ; ★ **通过全局函数指针的间接调用**
+8771F9  dword [rax] = 0                       ; 每次尝试前清错误槽
+8771FF  call 0x63F3E0 ; test eax,eax ; je     ; 关闭操作
+87720B  call rsi ; cmp dword [rax],4 ; je 0x8771FF   ; ★ **错误码为 4 时重试（EINTR）**
+```
+
+**（b）纠正**：`0x8774E0`（12 B）**不是跳板**，而是**清两个字段**：
+
+```
+8774E0  mov qword [rcx],0 ; 8774E7 mov byte [rcx+8],0 ; ret
+```
+
+round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”，**依据只是邻近的地址** —— **那是一个猜测，而且是错的**。地址对，描述错；**纠正写在原处与文档里**，而不是让旧措辞继续立着。
+
+★ 两者相连：**它清的 `+0x08` 字节，正是关闭例程读的那个标志**（测试断言 `kClearPairByte == kCloseFlag`）。
+
+**已落 `layout.hpp`**：`kClose*`、`kClearPair*` + **三条 `static_assert`** + 测试 21 条。

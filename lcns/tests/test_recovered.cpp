@@ -2754,5 +2754,37 @@ int main() {
         CHECK(top == 7);
     }
 
+    // --- the close retry and the corrected "thunk" (RE 0x8771c0 and 0x8774e0) ----------------------
+    {
+        CHECK(kCloseHelper == 0x8771C0);
+        CHECK(kCloseRetryCode == 4);
+        CHECK(kCloseCallee == 0x63F3E0);
+        CHECK(kCloseHandle == 0x00);
+        CHECK(kCloseFlag == 0x08);
+        CHECK(kCloseCallers == 3);
+        CHECK(kCloseUsesGlobalCallback);
+        CHECK(kCloseRetries);
+
+        CHECK(kClearPair == 0x8774E0);
+        CHECK(kClearPairQword == 0x00);
+        CHECK(kClearPairByte == 0x08);
+        CHECK(kClearPairBytes == 12);
+        CHECK(kClearPairCallers == 4);
+        CHECK(kClearPairNotThunk);                      // round 263 called it a thunk: corrected
+        CHECK(kClearPairBytes != 5);                    // a thunk is five bytes; this is not one
+        // cross-link: the byte it clears is the flag the close helper reads
+        CHECK(kClearPairByte == kCloseFlag);
+        CHECK(kClearPairQword == kCloseHandle);
+        // and it is NOT the round-248 thunk, whose target is elsewhere
+        CHECK(kClearPair != kThunkTarget);
+        CHECK(kObjectCtorThunk == kClearPair);          // the address recorded in round 263 was right
+
+        // the retry loop the close performs, on the code the instructions compare against
+        const auto shouldRetry = [](std::int32_t errorCode) { return errorCode == kCloseRetryCode; };
+        CHECK(shouldRetry(4));
+        CHECK(!shouldRetry(0));
+        CHECK(!shouldRetry(5));
+    }
+
     return check::finish("test_recovered");
 }
