@@ -71,4 +71,23 @@ inline constexpr std::size_t kRecordFlagOffset = 0x28;    // byte
 // helper works on: m_elements.
 inline constexpr const char* kElementsContainerAssert = "!m_elements.empty()";   // RE 0x6D6510
 
+
+// --- the search tree of 0x89D2F0 (round 178) ------------------------------------------------------
+// Read from its entry: the root lives at [rcx+8]; each node links left at +0x10, right at +0x18 and carries its
+// key at +0x20; insertion allocates 0x98 bytes and zeroes or sentinels the new node:
+//     89D360  mov ecx,0x98 ; call 0x998500                        ; 152 bytes
+//     89D38F  [rsi+0x40] = 0.0, [rsi+0x48] = 0.0, [rsi+0x50] = 0.0
+//     89D3B9  [rsi+0x60] = -1, [rsi+0x68] = -1, [rsi+0x70] = -1     ; "no index"
+//     89D3C5  movsd [rsi+0x78], [-1.0]                             ; from rva 0x9DFBD8
+//     89D3CA  [rsi+0x80] = 0, [rsi+0x88] = 0, [rsi+0x90] = 0
+inline constexpr std::size_t kTreeNodeBytes = 0x98;      // RE 0x89D360: 152
+inline constexpr std::size_t kTreeNodeLeft = 0x10;       // RE 0x89D33D
+inline constexpr std::size_t kTreeNodeRight = 0x18;      // RE 0x89D323
+inline constexpr std::size_t kTreeNodeKey = 0x20;        // RE 0x89D32C
+inline constexpr std::size_t kTreeNodeFirstDouble = 0x40;   // RE 0x89D38F
+inline constexpr std::size_t kTreeNodeFirstSentinel = 0x60;  // RE 0x89D3B9
+inline constexpr std::size_t kTreeNodeSentinelDouble = 0x78; // RE 0x89D3C5
+inline constexpr std::size_t kTreeNodeTail = 0x80;          // RE 0x89D3CA
+inline constexpr std::int64_t kTreeNodeNoIndex = -1;        // RE 0x89D3B2/0x89D3B9
+
 }  // namespace lcns

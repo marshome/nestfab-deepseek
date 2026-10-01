@@ -966,5 +966,24 @@ int main() {
         CHECK(static_cast<std::uint64_t>(kSentinelMinusOne) == 0xFFFFFFFFFFFFFFFFULL);   // RE 0x5E63B6
     }
 
+    // --- the search tree of 0x89d2f0 (RE 0x89d360 and the node initialisation) ----------------------
+    {
+        CHECK(kTreeNodeBytes == 152);
+        CHECK(kTreeNodeLeft == 0x10);
+        CHECK(kTreeNodeRight == 0x18);
+        CHECK(kTreeNodeKey == 0x20);
+        CHECK(kTreeNodeFirstDouble == 0x40);
+        CHECK(kTreeNodeFirstSentinel == 0x60);
+        CHECK(kTreeNodeSentinelDouble == 0x78);
+        CHECK(kTreeNodeTail == 0x80);
+        CHECK(kTreeNodeNoIndex == -1);
+        // the offsets sit inside the allocation, in increasing order
+        CHECK(kTreeNodeKey < kTreeNodeFirstDouble);
+        CHECK(kTreeNodeFirstDouble < kTreeNodeFirstSentinel);
+        CHECK(kTreeNodeFirstSentinel < kTreeNodeSentinelDouble);
+        CHECK(kTreeNodeSentinelDouble < kTreeNodeTail);
+        CHECK(kTreeNodeTail < kTreeNodeBytes);
+    }
+
     return check::finish("test_recovered");
 }
