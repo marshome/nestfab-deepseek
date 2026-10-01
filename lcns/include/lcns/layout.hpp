@@ -527,4 +527,42 @@ inline constexpr std::size_t kContainFlagOffset = 0x28; // RE 0x14F623
 inline constexpr std::size_t kContainSizeOffset = 0x38; // RE 0x14F64C
 inline constexpr int kContainCoordinateCount = 4;       // RE the four comparisons
 
+
+// --- the 0x98-byte initialiser of 0x704260 (round 226) ----------------------------------------------
+//     704264 movsd xmm1,[1.0] (rva 0x9DFBC8)
+//     70428C [rcx+0x30] = 1.0    70429B [rcx+0x48] = 1.0
+//     7042AE [rcx+0x68] = 1.0    7042BD [rcx+0x80] = 1.0
+//     7042A5 byte [rcx+0x58] = 0 7042CD byte [rcx+0x90] = 0
+//     70426C [rcx] = 0           704273/704278/70427D/704282/704287/704291/704296/7042A0/7042B3/7042B8/7042C5
+//                                 all zero as doubles
+// so the object is 0x98 bytes with four unit entries, separated by 0x18, 0x20 and 0x18 bytes, and two zeroed
+// byte flags. That is the shape of a transform with four unit scale entries rather than a plain record.
+inline constexpr std::size_t kCtor098Bytes = 0x98;
+inline constexpr std::size_t kCtor098UnitA = 0x30;    // RE 0x70428C
+inline constexpr std::size_t kCtor098UnitB = 0x48;    // RE 0x70429B
+inline constexpr std::size_t kCtor098UnitC = 0x68;    // RE 0x7042AE
+inline constexpr std::size_t kCtor098UnitD = 0x80;    // RE 0x7042BD
+inline constexpr std::size_t kCtor098FlagA = 0x58;    // RE 0x7042A5, a byte
+inline constexpr std::size_t kCtor098FlagB = 0x90;    // RE 0x7042CD, a byte
+inline constexpr int kCtor098UnitCount = 4;
+
+// --- the smaller initialiser of 0x2B3990 (round 226) --------------------------------------------------
+//     2B39AC/2B39B0/2B39B5 zeros at +0x00, +0x08, +0x10 ; 2B39BA +0x28 zero
+//     2B39C7/2B39CC the same constant double to +0x18 and +0x20
+//     2B39D1 [rcx+0x30] = 1.0 (rva 0x9C6CC0)
+//     2B39D6 movups [rcx+0x38], <sixteen bytes from a constant block>
+//     2B39DA dword [rcx+0x48] = 0
+inline constexpr std::size_t kCtor4CUnit = 0x30;         // RE 0x2B39D1
+inline constexpr std::size_t kCtor4CBlock = 0x38;        // RE 0x2B39D6, sixteen bytes
+inline constexpr std::size_t kCtor4CBlockBytes = 0x10;
+inline constexpr std::size_t kCtor4CDword = 0x48;        // RE 0x2B39DA
+inline constexpr std::size_t kCtor4CBytes = 0x4C;
+inline constexpr std::size_t kCtor4CPairA = 0x18;        // RE 0x2B39C7
+inline constexpr std::size_t kCtor4CPairB = 0x20;        // RE 0x2B39CC
+
+// --- the shared unit literal (round 226) --------------------------------------------------------------
+// RE the queue: 0x704260, 0x700250 and 0x72D7E0 all read the 1.0 at rva 0x9DFBC8, so the same pool entry feeds
+// three different initialisers.
+inline constexpr std::uintptr_t kSharedUnitRva = 0x9DFBC8;
+
 }  // namespace lcns

@@ -1675,5 +1675,42 @@ int main() {
         CHECK(kContainCoordinateCount == 4);
     }
 
+    // --- the two initialisers (RE 0x704260 and 0x2b3990) and the shared unit literal --------------------
+    {
+        CHECK(kCtor098Bytes == 0x98);
+        CHECK(kCtor098UnitCount == 4);
+        CHECK(kCtor098UnitA == 0x30);
+        CHECK(kCtor098UnitB == 0x48);
+        CHECK(kCtor098UnitC == 0x68);
+        CHECK(kCtor098UnitD == 0x80);
+        // the spacings the instructions produce, hand checked above
+        CHECK(kCtor098UnitB - kCtor098UnitA == 0x18);
+        CHECK(kCtor098UnitC - kCtor098UnitB == 0x20);
+        CHECK(kCtor098UnitD - kCtor098UnitC == 0x18);
+        CHECK(kCtor098UnitB - kCtor098UnitA == 24);
+        CHECK(kCtor098UnitC - kCtor098UnitB == 32);
+        // every unit entry sits inside the object, and the flags do too
+        CHECK(kCtor098UnitD + 8 <= kCtor098Bytes);
+        CHECK(kCtor098FlagA < kCtor098UnitC);
+        CHECK(kCtor098FlagB < kCtor098Bytes);
+        CHECK(kCtor098FlagB - kCtor098FlagA == 0x38);
+
+        CHECK(kCtor4CUnit == 0x30);
+        CHECK(kCtor4CBlock == 0x38);
+        CHECK(kCtor4CBlockBytes == 0x10);
+        CHECK(kCtor4CDword == 0x48);
+        CHECK(kCtor4CBytes == 0x4C);
+        CHECK(kCtor4CPairA == 0x18);
+        CHECK(kCtor4CPairB == 0x20);
+        CHECK(kCtor4CPairB - kCtor4CPairA == 8);              // two consecutive doubles
+        CHECK(kCtor4CBlock + kCtor4CBlockBytes == kCtor4CDword);   // the block ends where the dword starts
+        CHECK(kCtor4CDword + 4 == kCtor4CBytes);                   // and the object ends after the dword
+
+        CHECK(kSharedUnitRva == 0x9DFBC8);
+        // the unit literal the four entries use is the same value as the other unit defaults landed so far
+        CHECK(kStepsDefaultPlus == 1.0);
+        CHECK(kCtorDoubleDefault == 1.0);
+    }
+
     return check::finish("test_recovered");
 }
