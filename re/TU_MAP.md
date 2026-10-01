@@ -8,7 +8,7 @@
 3. **graph** —— 调用图标签传播（多数已标注邻居一致时赋值）
 
 - 可达 **6181** 个 / 4670042 字节；已归位 **4163** 个 / 69.5% 字节
-- 自有 TU：**49** 个 / 2977830 字节，其中**已引用 561663 字节 = 18.9%**
+- 自有 TU：**49** 个 / 2977830 字节，其中**已引用 814411 字节 = 27.3%**
 - 第三方 TU：6 个 / 265935 字节（按已分类处理，不列入待逆向）
 - 仍无标签：**2025** 个 / **1426277** 字节（需逐个按调用者/字符串反推）
 
@@ -16,53 +16,53 @@
 
 | 原 TU | 函数数 | 字节 | 已引用 | 未引用 | 进度 |
 |---|---:|---:|---:|---:|---:|
-| `..\tiling\packer_cache.cpp` | 273 | 274948 | 35982 | **238966** | 13% |
-| `..\multi\nesting_context.cpp` | 270 | 205881 | 20248 | **185633** | 10% |
+| `..\tiling\packer_cache.cpp` | 273 | 274948 | 80720 | **194228** | 29% |
 | `..\engine\cloud_engine.cpp` | 566 | 252728 | 82190 | **170538** | 33% |
-| `..\structure\svg_io.cpp` | 236 | 239605 | 70927 | **168678** | 30% |
-| `..\structure\border_property.hpp` | 332 | 199302 | 33203 | **166099** | 17% |
-| `..\nesting\algos\bucket_manager.hpp` | 167 | 157150 | 26236 | **130914** | 17% |
+| `..\structure\border_property.hpp` | 332 | 199302 | 41621 | **157681** | 21% |
+| `..\multi\nesting_context.cpp` | 270 | 205881 | 51620 | **154261** | 25% |
+| `..\structure\svg_io.cpp` | 236 | 239605 | 118457 | **121148** | 49% |
 | `..\tiling\packer.cpp` | 105 | 119483 | 8242 | **111241** | 7% |
-| `..\verify\equivalent.cpp` | 177 | 140629 | 34795 | **105834** | 25% |
-| `..\structure\problem.cpp` | 124 | 103521 | 10325 | **93196** | 10% |
-| `..\multi\rectangle_nester.cpp` | 105 | 99266 | 9014 | **90252** | 9% |
+| `..\structure\problem.cpp` | 124 | 103521 | 11465 | **92056** | 11% |
+| `..\verify\equivalent.cpp` | 177 | 140629 | 48647 | **91982** | 35% |
 | `..\exact\relinker_internal.cpp` | 65 | 82005 | 196 | **81809** | 0% |
 | `..\nesting\algos\compact.hpp` | 87 | 96219 | 15993 | **80226** | 17% |
 | `..\multi\row_nester.cpp` | 120 | 102779 | 25586 | **77193** | 25% |
-| `..\nesting\algos\algo_parameters.cpp` | 102 | 75592 | 0 | **75592** | 0% |
+| `..\nesting\algos\algo_parameters.cpp` | 102 | 75592 | 277 | **75315** | 0% |
+| `..\nesting\algos\bucket_manager.hpp` | 167 | 157150 | 89200 | **67950** | 57% |
 | `..\structure\text_io.cpp` | 125 | 66361 | 6383 | **59978** | 10% |
-| `..\tiling\optimizer.cpp` | 48 | 53229 | 0 | **53229** | 0% |
+| `..\multi\rectangle_nester.cpp` | 105 | 99266 | 41594 | **57672** | 42% |
+| `..\tiling\optimizer.cpp` | 48 | 53229 | 370 | **52859** | 1% |
 | `..\exact\geom_conversion.inl` | 72 | 69044 | 21970 | **47074** | 32% |
-| `..\multi\tiling_nester.cpp` | 47 | 63011 | 16821 | **46190** | 27% |
+| `..\multi\tiling_nester.cpp` | 47 | 63011 | 16958 | **46053** | 27% |
 | `..\nesting\algos\multinesting_optimizer.cpp` | 81 | 52533 | 7564 | **44969** | 14% |
 | `..\multi\marker.cpp` | 28 | 42036 | 0 | **42036** | 0% |
 | `..\structure\automatic_cluster.cpp` | 59 | 41447 | 0 | **41447** | 0% |
 | `..\nesting\algos\tree_db.cpp` | 79 | 41745 | 7743 | **34002** | 19% |
 | `..\multi\database.cpp` | 21 | 46244 | 13057 | **33187** | 28% |
-| `..\nesting\algos\..\nesting.hpp` | 37 | 29134 | 33 | **29101** | 0% |
+| `..\nesting\algos\..\nesting.hpp` | 37 | 29134 | 794 | **28340** | 3% |
 | `..\structure\stats.cpp` | 55 | 33364 | 6473 | **26891** | 19% |
 | `..\nesting\structure_interface_private.hpp` | 47 | 28590 | 2167 | **26423** | 8% |
 | `..\structure\multitorch_eval.cpp` | 36 | 26305 | 2048 | **24257** | 8% |
 | `..\multi\float_filler.cpp` | 11 | 19904 | 0 | **19904** | 0% |
-| `..\utils\evaluated_object.hpp` | 28 | 14927 | 0 | **14927** | 0% |
 | `..\multi\multitorch_nester.cpp` | 16 | 26939 | 12514 | **14425** | 46% |
+| `..\utils\evaluated_object.hpp` | 28 | 14927 | 847 | **14080** | 6% |
 | `..\nesting\algos\postop.cpp` | 22 | 27302 | 13234 | **14068** | 48% |
 | `..\engine\engine.cpp` | 18 | 37510 | 26241 | **11269** | 70% |
 | `..\multi\pack_nester.cpp` | 12 | 11321 | 500 | **10821** | 4% |
 | `..\nesting\ios\log_ios.cpp` | 10 | 5551 | 0 | **5551** | 0% |
-| `..\nesting\algos\algo_helpers.hpp` | 5 | 5459 | 0 | **5459** | 0% |
 | `..\structure\part.cpp` | 25 | 6683 | 1821 | **4862** | 27% |
-| `..\multi\database_nester.cpp` | 22 | 9309 | 4532 | **4777** | 49% |
 | `..\structure\sheet.cpp` | 16 | 4701 | 0 | **4701** | 0% |
 | `..\utils\continuous_index_map.hpp` | 7 | 4657 | 0 | **4657** | 0% |
-| `..\multi\nesting_nester.cpp` | 19 | 18848 | 14374 | **4474** | 76% |
-| `..\multi\supervisor.cpp` | 13 | 7187 | 3299 | **3888** | 46% |
-| `..\nesting\algos\sheet_optimizer.cpp` | 6 | 2903 | 0 | **2903** | 0% |
+| `..\multi\nesting_nester.cpp` | 19 | 18848 | 14449 | **4399** | 77% |
+| `..\nesting\algos\algo_helpers.hpp` | 5 | 5459 | 1600 | **3859** | 29% |
+| `..\multi\supervisor.cpp` | 13 | 7187 | 3354 | **3833** | 47% |
+| `..\multi\database_nester.cpp` | 22 | 9309 | 7726 | **1583** | 83% |
 | `..\nesting\nesting.cpp` | 17 | 6172 | 4904 | **1268** | 79% |
 | `..\nesting\algos\tree_db.hpp` | 3 | 1255 | 0 | **1255** | 0% |
 | `..\multi\limited_nester.cpp` | 6 | 2773 | 2001 | **772** | 72% |
-| `..\multi\compact_nester.cpp` | 11 | 14137 | 13560 | **577** | 96% |
 | `..\multi\filter_nester.cpp` | 6 | 3638 | 3148 | **490** | 87% |
+| `..\nesting\algos\sheet_optimizer.cpp` | 6 | 2903 | 2512 | **391** | 87% |
+| `..\multi\compact_nester.cpp` | 11 | 14137 | 13886 | **251** | 98% |
 | `..\nesting\algos\no_fit.cpp` | 5 | 113 | 0 | **113** | 0% |
 | `..\multi\flip_nester.cpp` | 7 | 4390 | 4339 | **51** | 99% |
 
