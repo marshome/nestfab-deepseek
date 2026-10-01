@@ -35,4 +35,31 @@ inline bool withinTolerance(double value, double tolerance) {
     return std::fabs(value) <= tolerance;      // RE the andpd sign-mask read before the comparisons
 }
 
+
+// --- the quantity the twins compare (round 175) ---------------------------------------------------
+// RE 0x74B390 and 0x74B660 (34 instructions each, instruction-for-instruction identical):
+//     74B395 movsd xmm5,[rcx] ; 74B399 movsd xmm4,[rcx+8]     ; A
+//     74B39E movsd xmm1,[r8]  ; 74B3A3 movsd xmm0,[r8+8]      ; C
+//     74B3A9 movsd xmm3,[rdx] ; 74B3B9 movsd xmm2,[rdx+8]     ; B
+//     74B3AD subsd xmm1,xmm5 ; 74B3BE subsd xmm0,xmm4         ; C - A
+//     74B3CC subsd xmm3,xmm5 ; 74B3D5 subsd xmm2,xmm4         ; B - A
+//     74B410 mulsd xmm1,[rsp+0x50] ; 74B41C mulsd xmm0,[rsp+0x58] ; 74B422 subsd xmm0,xmm1
+// so the result is a 2D cross product: the signed area of the triangle ABC, i.e. the orientation test.
+struct Point2dLike {
+    double x;
+    double y;
+};
+
+inline double crossProduct2d(const Point2dLike& a, const Point2dLike& b, const Point2dLike& c) {
+    const double acx = c.x - a.x;      // RE 0x74B3AD
+    const double acy = c.y - a.y;      // RE 0x74B3BE
+    const double abx = b.x - a.x;      // RE 0x74B3CC
+    const double aby = b.y - a.y;      // RE 0x74B3D5
+    return abx * acy - acx * aby;      // RE 0x74B410/0x74B41C/0x74B422
+}
+
+// RE 0x74B40C: one component of the result is written through the fourth argument (r9), and the value stored
+// is c.x - a.x (the [rsp+0x30] slot, i.e. AC.x). B takes no part in that component, so no function is written
+// for it here -- a helper that ignored one of its own parameters would be a warning, not a recovery.
+
 }  // namespace lcns

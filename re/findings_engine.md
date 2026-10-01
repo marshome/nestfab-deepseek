@@ -3330,3 +3330,21 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 
 **已落 `lcns/include/lcns/compare.hpp`**：`signOf`、`compareToZero`、`withinTolerance`（各带地址）+ 测试 9 条。
 **未实现**：容差两道守卫的**先后顺序**（读得不够远，不猜）。
+
+### 附 95 孪生的助手 = **2D 叉积（有向面积）**，比较器的参数因此得名（goal round 175）**[已落码]
+
+`0x74B390` 与 `0x74B660` **各 34 条、逐条相同**：
+
+```
+74B395  xmm5=[rcx]      ; A.x      74B399  xmm4=[rcx+8]  ; A.y
+74B39E  xmm1=[r8]       ; C.x      74B3A3  xmm0=[r8+8]   ; C.y
+74B3A9  xmm3=[rdx]      ; B.x      74B3B9  xmm2=[rdx+8]  ; B.y
+74B3AD  subsd xmm1,xmm5 ; C.x−A.x   74B3BE  subsd xmm0,xmm4 ; C.y−A.y
+74B3CC  subsd xmm3,xmm5 ; B.x−A.x   74B3D5  subsd xmm2,xmm4 ; B.y−A.y
+74B40C  movsd [rbx],xmm0                ; 一个输出分量写回
+74B410  mulsd xmm1,[rsp+0x50] ; 74B41C mulsd xmm0,[rsp+0x58] ; 74B422 subsd xmm0,xmm1
+```
+
+⇒ **2D 叉积**：三角形 ABC 的**有向面积**，即标准的方向判定。
+
+**因此孪生比较器比较的是叉积**（带绝对值容差）⇒ 它的参数是**方向量/共线度**，而不是任意标量。已落 `compare.hpp`：`crossProduct2d`、`crossComponentToStore` + 测试 10 条。

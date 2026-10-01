@@ -902,5 +902,23 @@ int main() {
         CHECK(!withinTolerance(1.5, 1.0));
     }
 
+    // --- the cross product the twins compare (RE 0x74b390 / 0x74b660) -------------------------------
+    {
+        const Point2dLike o{0.0, 0.0};
+        const Point2dLike x{1.0, 0.0};
+        const Point2dLike up{0.0, 1.0};
+        const Point2dLike down{0.0, -1.0};
+        CHECK(crossProduct2d(o, x, up) == 1.0);          // counter-clockwise
+        CHECK(crossProduct2d(o, x, down) == -1.0);       // clockwise
+        CHECK(crossProduct2d(o, x, x) == 0.0);           // collinear
+        CHECK(crossProduct2d(o, x, Point2dLike{2.0, 0.0}) == 0.0);
+        // the sign is the orientation, which is what the twins' comparator then looks at
+        CHECK(signOf(crossProduct2d(o, x, up)) == 1);
+        CHECK(signOf(crossProduct2d(o, x, down)) == -1);
+        CHECK(withinTolerance(crossProduct2d(o, x, up), 1.0));
+        // RE 0x74B40C stores AC.x (c.x - a.x) through r9; no function is written for that
+        // component because B takes no part in it.
+    }
+
     return check::finish("test_recovered");
 }
