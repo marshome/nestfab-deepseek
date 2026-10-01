@@ -1,0 +1,212 @@
+[
+  {
+    "rva": 5362416,
+    "size": 5,
+    "symbol": "lcns_orig_51d2f0",
+    "status": "callable",
+    "reason": "",
+    "note": "pointer getter: returns [rcx+0x60]",
+    "callers": 102,
+    "sha256": "ca3aab76b94acd7081ad378320443ef2f9a4c3551ec59cde6a86c27d7062522a"
+  },
+  {
+    "rva": 5210992,
+    "size": 6,
+    "symbol": "lcns_orig_4f8370",
+    "status": "callable",
+    "reason": "",
+    "note": "double accessor: returns [rcx+0x28]",
+    "callers": 74,
+    "sha256": "bab1c3cf7a3c086e24ef67e9ad80db0a146bd093af6bb15379d60385532283d3"
+  },
+  {
+    "rva": 5211008,
+    "size": 6,
+    "symbol": "lcns_orig_4f8380",
+    "status": "callable",
+    "reason": "",
+    "note": "double accessor: returns [rcx+0x30]",
+    "callers": 85,
+    "sha256": "d53241d8a2cf3cbde6f551b0114f81e25af6de7b3175ccca4d332542f18d65fb"
+  },
+  {
+    "rva": 5102864,
+    "size": 5,
+    "symbol": "lcns_orig_4ddd10",
+    "status": "callable",
+    "reason": "",
+    "note": "returns the address of the field at +0x48",
+    "callers": 18,
+    "sha256": "d6dde944ab17a80038c06eafcf1c49f8944fbc09134b758e4efda9017f8472f5"
+  },
+  {
+    "rva": 1491568,
+    "size": 34,
+    "symbol": "lcns_orig_16c270",
+    "status": "callable",
+    "reason": "",
+    "note": "packed double addition of two 2D points (addpd)",
+    "callers": 19,
+    "sha256": "8037548adc25fa7eeb0360ad73467619eb9af65f542a9ca10f2c7d6bdf90feaa"
+  },
+  {
+    "rva": 2405440,
+    "size": 61,
+    "symbol": "lcns_orig_24b440",
+    "status": "callable",
+    "reason": "",
+    "note": "two-dimensional cross product / orientation determinant",
+    "callers": 2,
+    "sha256": "1e689559dfcde151c28ab9ed2c29d0f10007c58abd01dda177cb7e239bc1ee36"
+  },
+  {
+    "rva": 6094208,
+    "size": 64,
+    "symbol": "lcns_orig_5cfd80",
+    "status": "callable",
+    "reason": "",
+    "note": "in-place 2x3 affine transform of one point",
+    "callers": 4,
+    "sha256": "a47843c42ba82adb172ba813d945f60c33a40e4f28f2545531326e037030a7ec"
+  },
+  {
+    "rva": 6094272,
+    "size": 160,
+    "symbol": "lcns_orig_5cfdc0",
+    "status": "callable",
+    "reason": "",
+    "note": "in-place 2x3 affine transform of both points of a segment",
+    "callers": 3,
+    "sha256": "bd406f6324dd73145b149cc8af30265f67be7a76c22262028102f26e033db8aa"
+  },
+  {
+    "rva": 6089344,
+    "size": 269,
+    "symbol": "lcns_orig_5cea80",
+    "status": "callable",
+    "reason": "",
+    "note": "affine transform applied to a source record, functional form",
+    "callers": 9,
+    "sha256": "7c2297bb43e8a96865177c08637c282c3abf2afcf1704247a857e7c05063f1b6"
+  },
+  {
+    "rva": 6092464,
+    "size": 235,
+    "symbol": "lcns_orig_5cf6b0",
+    "status": "callable",
+    "reason": "",
+    "note": "affine transform, out of place",
+    "callers": 6,
+    "sha256": "2913a685d3e8420c3fbad3e8706228ba4de4d09783aad3ccdde0e355e394fa1b"
+  },
+  {
+    "rva": 6089072,
+    "size": 269,
+    "symbol": "lcns_orig_5ce970",
+    "status": "callable",
+    "reason": "",
+    "note": "composition of two 2x3 affine transforms",
+    "callers": 38,
+    "sha256": "d910ebbbcf0478750d2b2a1ddf196f4b5ac49e6f996adf211d0abc6a46d0f3bd"
+  },
+  {
+    "rva": 6088624,
+    "size": 50,
+    "symbol": "lcns_orig_5ce7b0",
+    "status": "comment_only",
+    "reason": "rip-relative memory access to rva 0x9DE930",
+    "note": "builds a translation matrix (identity basis + point)",
+    "callers": 32,
+    "sha256": "1c553f16928c26c0173c2de81a054b5edaafc671750db4bc7bf5487e8af1270c"
+  },
+  {
+    "rva": 6090064,
+    "size": 196,
+    "symbol": "lcns_orig_5ced50",
+    "status": "comment_only",
+    "reason": "rip-relative memory access to rva 0x9DE930; rip-relative memory access to rva 0x9DE960",
+    "note": "inverse of a 2x3 affine matrix",
+    "callers": 24,
+    "sha256": "71653da18d5c60a8564445ad58f0b3b24d7639bccb7efedf71fa3a017edf9b9d"
+  },
+  {
+    "rva": 5628304,
+    "size": 258,
+    "symbol": "lcns_orig_55e190",
+    "status": "comment_only",
+    "reason": "call to 0x62FE20 outside the block",
+    "note": "segment length pair, min and max, with a square-root guard",
+    "callers": 3,
+    "sha256": "aea332921bf9a743b522a12559953a18cd3dc39c7c2889f8e8bfeffd78e4f32b"
+  },
+  {
+    "rva": 6487584,
+    "size": 270,
+    "symbol": "lcns_orig_62fe20",
+    "status": "comment_only",
+    "reason": "call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)",
+    "note": "floating-point classification and range guard, 89 callers",
+    "callers": 89,
+    "sha256": "92ba45ca52d125e32af5d8f222dee28c09d4134141b999a3588aff4c0d76180f"
+  },
+  {
+    "rva": 5307712,
+    "size": 270,
+    "symbol": "lcns_orig_50fd40",
+    "status": "comment_only",
+    "reason": "call to 0x4F8370 outside the block; call to 0x4F8380 outside the block; call to 0x51D2F0 outside the block; call to 0x5C8A10 outside the block",
+    "note": "accumulator over a range of 312-byte elements",
+    "callers": 3,
+    "sha256": "0bd76831f963660517c123629b68239771edc3f74587a380dcef90d1893c1a7b"
+  },
+  {
+    "rva": 2415936,
+    "size": 238,
+    "symbol": "lcns_orig_24dd40",
+    "status": "comment_only",
+    "reason": "call to 0x24B440 outside the block; call to 0x24C610 outside the block; call to 0x5CF6B0 outside the block; rip-relative memory access to rva 0x9C2B30",
+    "note": "composition of two transformed fields with weights",
+    "callers": 1,
+    "sha256": "4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e"
+  },
+  {
+    "rva": 4948432,
+    "size": 78,
+    "symbol": "lcns_orig_4b81d0",
+    "status": "comment_only",
+    "reason": "call to 0x998500 outside the block",
+    "note": "builds the object whose first member is the 0.01 tolerance",
+    "callers": 4,
+    "sha256": "31b092b0bf261d80450ce3783f7583863fd71e1a6f8eba5f6379769db10628e3"
+  },
+  {
+    "rva": 2410000,
+    "size": 138,
+    "symbol": "lcns_orig_24c610",
+    "status": "comment_only",
+    "reason": "call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CE970 outside the block; call to 0x5CED50 outside the block",
+    "note": "four-stage geometry chain over the packed +0x70 point",
+    "callers": 4,
+    "sha256": "50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc"
+  },
+  {
+    "rva": 1120976,
+    "size": 64,
+    "symbol": "lcns_orig_111ad0",
+    "status": "comment_only",
+    "reason": "call to 0xC33F0 outside the block; rip-relative memory access to rva 0xA45D10; rip-relative memory access to rva 0xA45E98",
+    "note": "constructor of the twins' object (two vtables)",
+    "callers": 21,
+    "sha256": "e3f1487d0f779a0a9152c745741974bce0afbab0ed9852cc0d6f3be90aca9c55"
+  },
+  {
+    "rva": 2373664,
+    "size": 15524,
+    "symbol": "lcns_orig_243820",
+    "status": "comment_only",
+    "reason": "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+91 more)",
+    "note": "head of the largest routine here (15,524 bytes): geometry entry",
+    "callers": 3,
+    "sha256": "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"
+  }
+]
