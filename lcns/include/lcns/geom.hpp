@@ -318,6 +318,24 @@ struct RectCorner {
 inline constexpr int kRectangleCornerCount = 4;        // RE 0x156D1 r8d = 4, 0x138DE [rsp+0x40] = 4
 inline constexpr std::size_t kRectangleRecordBytes = 0x60;   // RE 0x1566F / 0x138xx ecx = 0x60
 
+// RE the three Add* entries compared side by side (goal round 49). They differ ONLY in data:
+//   0x15620 AddRectanglePart          -> final call 0x14d10                       no constants
+//   0x13410 AddExternalBoundaryToPart -> 0x64c940 then 0x1ba30, 0.292893 + 0.0001
+//   0x13800 AddHoleToPart             -> 0x64c940 then 0x5cd5c0, 0.292893 + 0.0001, and one extra
+//                                        flag store [rsp+0x28] = 1 that the other two do not have
+// All three build the same 0x60 byte four corner record and all three call operator new(0x60).
+enum class PartGeometryKind {
+    Rectangle = 0,          // RE 0x15620, final step 0x14d10
+    ExternalBoundary = 1,   // RE 0x13410, 0.292893 / 0.0001, no hole flag
+    Hole = 2,               // RE 0x13800, 0.292893 / 0.0001, plus the flag [rsp+0x28] = 1
+};
+
+// RE 0x9AD9D0, loaded by both the boundary and the hole path. The VALUE is recovered; reading it as
+// 1 - 1/sqrt(2) is an inference (it fits to all six digits), and no symbol states it.
+inline constexpr double kCornerOffset = 0.292893;
+// RE 0x9AD9C8, an epsilon both paths use (hole: twice, boundary: once).
+inline constexpr double kGeometryEpsilon = 0.0001;
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 

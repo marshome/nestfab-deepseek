@@ -180,6 +180,14 @@ int main() {
         CHECK(geom::kRectangleCornerCount == 4);
         CHECK(geom::kRectangleRecordBytes == 0x60);
         CHECK(sizeof(geom::RectCorner) * geom::kRectangleCornerCount == geom::kRectangleRecordBytes);
+        // the three entries differ only in data (RE 0x15620 / 0x13410 / 0x13800)
+        CHECK(static_cast<int>(geom::PartGeometryKind::Rectangle) == 0);
+        CHECK(static_cast<int>(geom::PartGeometryKind::ExternalBoundary) == 1);
+        CHECK(static_cast<int>(geom::PartGeometryKind::Hole) == 2);
+        CHECK(geom::kCornerOffset == 0.292893);      // RE 0x9ad9d0
+        CHECK(geom::kGeometryEpsilon == 0.0001);     // RE 0x9ad9c8
+        // the recovered value fits 1 - 1/sqrt(2) to six digits (that reading is an inference)
+        CHECK(std::fabs(geom::kCornerOffset - (1.0 - 1.0 / std::sqrt(2.0))) < 1e-6);
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
