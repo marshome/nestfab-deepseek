@@ -1178,6 +1178,38 @@ static_assert(kResetTripleB - kResetTripleA == 8, "the three pointers are eight 
 static_assert(kResetTripleC - kResetTripleB == 8, "the three pointers are eight bytes apart");
 static_assert(kResetByteB - kResetByteA == 1, "the two bytes are adjacent");
 
+
+// --- the non-null predicate, 0x822590, thirty-six callers (round 259) ---------------------------------
+//     0x822590 cmp qword [rcx],0 ; 0x822594 setne al ; ret
+// exactly "the first field of the object is not null", which is why round 258's reset gates on its answer.
+inline constexpr std::uintptr_t kNonNullPredicate = 0x822590;   // RE the whole routine
+inline constexpr std::size_t kNonNullFieldOffset = 0x00;        // RE 0x822590
+inline constexpr int kNonNullCallers = 36;
+
+// --- the polymorphic status query 0x87D270, three callers (round 259) ---------------------------------
+//     0x87D28A cmp [rcx+0x20],[rcx+0x28] ; jb   ; an ordering or capacity check
+//     0x87D297 cmp byte [rcx+0x7A],0            ; the byte round 258 clears
+//     0x87D29D/0x87D2A7  the interface pointer at +0x98, null tested
+//     0x87D2B0 call qword [rax+0x30]            ; virtual slot 0x30
+//     0x87D2EA call qword [rax+0x18]            ; virtual slot 0x18
+//     0x87D304 call qword [rax+0x68] with edx = 0xFFFFFFFF
+//     0x87D307 cmp eax,-1 ; setne bl            ; the answer is "not the sentinel"
+inline constexpr std::uintptr_t kStatusQuery = 0x87D270;        // RE the whole routine
+inline constexpr std::size_t kInterfaceOffset = 0x98;           // RE 0x87D29D
+inline constexpr std::size_t kVtableSlotA = 0x18;               // RE 0x87D2EA
+inline constexpr std::size_t kVtableSlotB = 0x30;               // RE 0x87D2B0
+inline constexpr std::size_t kVtableSlotC = 0x68;               // RE 0x87D304
+inline constexpr std::int32_t kStatusSentinel = -1;             // RE 0x87D2FC
+inline constexpr std::int32_t kStatusOne = 1;                   // RE 0x87D2F4
+inline constexpr std::int32_t kStatusTwo = 2;                   // RE 0x87D2F2
+inline constexpr std::uintptr_t kStatusHelper = 0x8772A0;       // RE 0x87D337
+inline constexpr std::size_t kStatusCountA = 0x20;              // RE 0x87D28A
+inline constexpr std::size_t kStatusCountB = 0x28;              // RE 0x87D28A
+inline constexpr std::size_t kStatusFlag = 0x7A;                // RE 0x87D297
+static_assert(kInterfaceOffset == 0x98, "the interface pointer sits at 0x98");
+static_assert(kStatusCountB - kStatusCountA == 8, "the two counts are eight bytes apart");
+static_assert(kStatusSentinel == -1, "the sentinel is minus one");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

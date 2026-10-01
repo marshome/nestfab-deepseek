@@ -2337,5 +2337,42 @@ int main() {
         CHECK(kResetEntry != kThunkTarget);
     }
 
+    // --- the non-null predicate and the polymorphic status query (RE 0x822590 and 0x87d270) ---------
+    {
+        CHECK(kNonNullPredicate == 0x822590);
+        CHECK(kNonNullFieldOffset == 0x00);
+        CHECK(kNonNullCallers == 36);
+        // an eight-byte function that is exactly "the field is not null"
+        const auto nonNull = [](const void* p) { return p != nullptr; };
+        CHECK(!nonNull(nullptr));
+        CHECK(nonNull(reinterpret_cast<const void*>(1)));
+        CHECK(nonNull(static_cast<const void*>(&kNonNullCallers)));
+
+        CHECK(kStatusQuery == 0x87D270);
+        CHECK(kInterfaceOffset == 0x98);
+        CHECK(kVtableSlotA == 0x18);
+        CHECK(kVtableSlotB == 0x30);
+        CHECK(kVtableSlotC == 0x68);
+        CHECK(kStatusSentinel == -1);
+        CHECK(kStatusOne == 1);
+        CHECK(kStatusTwo == 2);
+        CHECK(kVtableSlotC - kVtableSlotB == 0x38);
+        CHECK(kVtableSlotB - kVtableSlotA == 0x18);
+        CHECK(kStatusHelper == 0x8772A0);
+        CHECK(kStatusCountA == 0x20);
+        CHECK(kStatusCountB == 0x28);
+        CHECK(kStatusCountB - kStatusCountA == 8);
+        CHECK(kStatusFlag == 0x7A);
+        // the flag the query reads is the very byte round 258's reset clears
+        CHECK(kStatusFlag == kResetByteB);
+
+        // the answer the instructions compute: "not the sentinel"
+        const auto answered = [](std::int32_t code) { return code != kStatusSentinel; };
+        CHECK(!answered(-1));
+        CHECK(answered(0));
+        CHECK(answered(1));
+        CHECK(answered(2));
+    }
+
     return check::finish("test_recovered");
 }
