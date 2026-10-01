@@ -127,7 +127,14 @@ bool coversReference(double candidateArea, double referenceArea);
 // VALUES are recovered; the SEMANTICS of each one is inferred from its use, so they are named
 // after their role in the comparison rather than after any symbol.
 inline constexpr double kToleranceUpper = 1.001;   // RE 0x9B1740, see 'res <= y * 1.001'
-inline constexpr double kToleranceLower = 0.999;   // RE 0x9B1758
+inline constexpr double kToleranceLower = 0.999;
+
+// RE 0x3C110 (639 B / 160 instructions), whose own text is 'enlarged_' plus a libstdc++ append
+// assertion and which loads the double 1.000001. That is a relative epsilon of 1 + 1e-6, an order of
+// magnitude tighter than kToleranceUpper (1.001), so it is kept as its own constant rather than folded
+// into that one. RECOVERED: the value and the function that loads it. INFERRED: that it is used as a
+// relative comparison bound -- the comparison itself was not read.
+inline constexpr double kRelativeEpsilon = 1.000001;   // RE 0x3C110   // RE 0x9B1758
 
 struct EngineParams {
     int threads = 1;                    // RE: Problem::nb_max_threads

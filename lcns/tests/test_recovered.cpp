@@ -425,6 +425,15 @@ int main() {
         CHECK(!isShutdownState(11));
     }
 
+    // --- the tighter relative epsilon (RE 0x3c110, 'enlarged_') ------------------------------------
+    {
+        CHECK(kRelativeEpsilon == 1.000001);
+        // an order of magnitude tighter than the existing upper tolerance
+        CHECK(kToleranceUpper == 1.001);
+        CHECK(kRelativeEpsilon < kToleranceUpper);
+        CHECK(kRelativeEpsilon > 1.0);
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
