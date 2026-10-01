@@ -386,6 +386,19 @@ inline bool usesCornerArcs(PartGeometryKind kind) {
 inline constexpr std::size_t kHoleExtraFlagOffset = 0x28;   // RE 0x1399C
 inline constexpr int kHoleExtraFlagValue = 1;               // RE 0x1399C
 
+// RE the external-boundary call chain, walked step by step in rounds 50-54. Kept as named data so the
+// port can say which routine of the chain it reproduces:
+//   0x13410 AddExternalBoundaryToPart
+//     -> 0x1BA30 (boundary only, 198 B)
+//       -> 0x1B910 (boundary only, 278 B)
+//         -> 0x5ED8C0 (757 B, the six quadrant angles and the wrap past a full turn)
+//           -> 0x5CB400 (45 B leaf, one 0.5) and 0x5ED3D0 (1183 B) and 0x634C70 (41 B leaf)
+// The hole route and the plain rectangle route never enter this chain (see usesCornerArcs).
+inline constexpr unsigned long kBoundaryChainStep1 = 0x1BA30;   // RE 0x13410
+inline constexpr unsigned long kBoundaryChainStep2 = 0x1B910;   // RE 0x1BA30
+inline constexpr unsigned long kBoundaryChainStep3 = 0x5ED8C0;  // RE 0x1B910
+inline constexpr unsigned long kBoundaryChainStep4 = 0x5ED3D0;  // RE 0x5ED8C0, the 1183 B body
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 

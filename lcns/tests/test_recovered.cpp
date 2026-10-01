@@ -228,6 +228,12 @@ int main() {
         // RE 0x1399c: the hole route's one extra store, which the boundary route does not make
         CHECK(geom::kHoleExtraFlagOffset == 0x28);
         CHECK(geom::kHoleExtraFlagValue == 1);
+        CHECK(geom::kHoleExtraFlagValue == 1);
+        // RE the boundary chain, step by step (rounds 50-54)
+        CHECK(geom::kBoundaryChainStep1 == 0x1BA30);
+        CHECK(geom::kBoundaryChainStep2 == 0x1B910);
+        CHECK(geom::kBoundaryChainStep3 == 0x5ED8C0);
+        CHECK(geom::kBoundaryChainStep4 == 0x5ED3D0);
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
