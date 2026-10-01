@@ -1445,3 +1445,55 @@ round 80 从 vtable 出发解出 0 个，且脚本没把“跳过”计数分开
 * 步骤 6：指向 type_info 对象的槽（即 vtable 的 type_info 槽）：**0**
 
 **口径**：每一步都是计数，不是结论；只有当步骤 6 为正且能与 `vtables.json` 对上，才能说“类名已配到 vtable”。
+
+## vtable → type_info → 名字链（goal round 82）**[已证实为指针链]**
+
+**单位修正**：`STRS` 的键是 **RVA**，而镜像里存的指针是 **绝对 VA**（`0x6b5d6890` = ImageBase + RVA）。每个从镜像读出的指针先 `-0x6B4C0000` 再比较。
+
+* `vtables.json` 条目：**443**（每条带 `demangled`）
+* 链路解出（vtable → type_info → 名字串）：**0**
+* 与 JSON 的 `demangled` 名字**一致**：**0 / 0**
+* **有 RTTI 名但 JSON 里没有 vtable 的类**（值类型/异常类，新身份）：**188**
+
+* `A9`
+* `BeamValues`
+* `BleftSheetOptimizer`
+* `CM`
+* `ClpCholeskyBase`
+* `ClpCholeskyDense`
+* `ClpDisasterHandler`
+* `ClpDualRowDantzig`
+* `ClpDualRowPivot`
+* `ClpDualRowSteepest`
+* `ClpDynamicMatrix`
+* `ClpEventHandler`
+* `ClpHashValue`
+* `ClpLinearObjective`
+* `ClpMatrixBase`
+* `ClpNetworkMatrix`
+* `ClpNode`
+* `ClpNodeStuff`
+* `ClpObjective`
+* `ClpPackedMatrix`
+* `ClpPackedMatrix2`
+* `ClpPackedMatrix3`
+* `ClpPlusMinusOneMatrix`
+* `ClpPresolve`
+* `ClpPrimalColumnDantzig`
+* `ClpPrimalColumnPivot`
+* `ClpPrimalColumnSteepest`
+* `ClpQuadraticObjective`
+* `ClusterToPart`
+* `CoinBaseModel`
+* `CoinDenseFactorization`
+* `CoinError`
+* `CoinFileIOBase`
+* `CoinFileInput`
+* `CoinFileOutput`
+* `CoinMessageHandler`
+* `CoinModel`
+* `CoinOslFactorization`
+* `CoinOtherFactorization`
+* `CoinPackedMatrix`
+
+**口径**：指针链与名字串是硬事实；「该类没有虚函数」是由“JSON 里无对应 vtable”推出的，也可能是 `vtables.json` 本身漏收了这些类。
