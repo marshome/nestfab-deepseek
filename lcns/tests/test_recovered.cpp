@@ -414,6 +414,17 @@ int main() {
         CHECK(std::strcmp(kCommentLocalCancel, kCommentLocalTerminate) != 0);
     }
 
+    // --- the thread shutdown state gate (RE 0x1cc0 / 0x5d90: cmp [+0x4C] with 9 and 0xA) ----------
+    {
+        CHECK(kThreadStateCancel == 9);
+        CHECK(kThreadStateTerminate == 10);
+        CHECK(isShutdownState(9));
+        CHECK(isShutdownState(10));
+        CHECK(!isShutdownState(0));
+        CHECK(!isShutdownState(8));
+        CHECK(!isShutdownState(11));
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720

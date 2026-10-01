@@ -389,6 +389,23 @@ inline bool activeNestingReady(const void* mBase) { return mBase != nullptr; }
 inline constexpr const char* kCommentLocalCancel = "// LocalCancel waiting for threads termination";
 inline constexpr const char* kCommentLocalTerminate = "// LocalTerminate waiting for threads termination";
 
+// RE 0x1CC0 (LocalCancel) and 0x5D90 (LocalTerminate). Both start by comparing the SAME field with two
+// values and returning immediately unless one matches:
+//     1CCA  mov eax,[rcx+0x4C] ; cmp eax,9   ; je <work>
+//     1CD5  mov eax,[rcx+0x4C] ; cmp eax,0xA ; je <work>
+// so the field at +0x4C is a state and these two values are the states in which the local shutdown runs.
+// RECOVERED: the field offset, the two compared values and the early-return shape.
+// INFERRED:  that the state names are about cancelling and terminating -- the comments on the two
+//            functions say so, the numbers themselves carry no name.
+inline constexpr int kThreadStateCancel = 9;       // RE 0x1CCA: cmp eax,9
+inline constexpr int kThreadStateTerminate = 10;   // RE 0x1CD8: cmp eax,0xA
+
+// RE the early-return shape of both functions: only those two states do the work.
+inline bool isShutdownState(int state) {
+    return state == kThreadStateCancel || state == kThreadStateTerminate;
+}
+
+
 
 
 
