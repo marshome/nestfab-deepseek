@@ -899,6 +899,46 @@ inline constexpr int kThunkCallers = 67;
 inline constexpr std::uintptr_t kOnceCallee = 0x63F6A8;         // RE 0x8AA7F2
 inline constexpr int kOnceCallers = 65;
 
+
+// --- the tag-aware comparator of 0xF2000, sixty-six callers (round 249) ------------------------------
+//     0xF2004/0xF200A/0xF2020/0xF2040  a 32-bit tag at +0x20 whose value ONE means unset
+//     0xF2014/0xF202B                  delegate to 0xF1F50 when neither is tagged
+//     0xF2030 neg eax                  when BOTH are tagged the delegate's answer is NEGATED
+inline constexpr std::size_t kTagFieldOffset = 0x20;       // RE 0xF2004
+inline constexpr int kTagUnsetValue = 1;                   // RE 0xF2004, 0xF200A, 0xF2020, 0xF2040
+inline constexpr std::uintptr_t kDelegateCompare = 0xF1F50; // RE 0xF2014 and 0xF202B
+inline constexpr bool kBothUnsetNegates = true;             // RE 0xF2030
+inline constexpr int kTagAwareCallers = 66;
+
+// --- the tagged sign object of 0xF12C0, sixty-four callers (round 249) --------------------------------
+//     0xF12D8 lea rax,[rip+0x960411] ; 0xF12EC [rsi] = rax    ; a vtable at offset zero
+//     0xF12DF [rsi+0x10] = 2                                  ; a kind of two
+//     0xF12E7 mov ecx,0x10 ; 0xF12EF call 0xFE1F0             ; a sixteen-byte payload
+//     0xF12F6/0xF12FE/0xF1300  sign extraction: negate and set the flag when negative
+//     0xF1308 [rsi+0x20] = edx                                ; the sign lives at the same +0x20 as the tag
+//     0xF130B/0xF130E  the payload is {magnitude, 0}
+inline constexpr std::uintptr_t kSignVtableRva = 0x960411;  // RE 0xF12D8
+inline constexpr std::size_t kKindOffset = 0x10;            // RE 0xF12DF
+inline constexpr int kKindValue2 = 2;                       // RE 0xF12DF
+inline constexpr std::size_t kSignOffset = 0x20;            // RE 0xF1308, the same offset as the tag
+inline constexpr std::size_t kPayloadBytes = 0x10;          // RE 0xF12E7
+inline constexpr std::uintptr_t kPayloadAlloc = 0xFE1F0;    // RE 0xF12EF
+inline constexpr std::uintptr_t kLazyInitCallee = 0xEEEE0;  // RE 0xF1320
+inline constexpr int kSignObjectCallers = 64;
+
+// --- the suspected small-object accessor of 0x4189B0, fifty-eight callers (round 249) ------------------
+//     0x4189B7/0x4189E0/0x4189E2  counts at +0x14 and +0x00
+//     0x4189C1/0x4189C5           the pointer at +0x18
+//     0x4189D4 jmp 0x9984A0       tail call with it
+// INFERENCE, not a recovered layout: the offsets and the tail call are read, but the claim that this is a
+// small-object/SSO accessor is a reading of the SHAPE only and is marked as such.
+inline constexpr std::size_t kSsoCapacity = 0x14;           // RE 0x4189B7
+inline constexpr std::size_t kSsoSize = 0x00;               // RE 0x4189E0
+inline constexpr std::size_t kSsoData = 0x18;               // RE 0x4189C1
+inline constexpr std::uintptr_t kSsoTailCall = 0x9984A0;    // RE 0x4189D4
+inline constexpr int kSsoCallers = 58;
+inline constexpr bool kSsoInference = true;                 // NOT proven, see the comment above
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

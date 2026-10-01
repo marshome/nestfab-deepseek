@@ -2021,5 +2021,46 @@ int main() {
         CHECK(kOnceCallers > kReleaseCallers);
     }
 
+    // --- the tag-aware comparator and the tagged sign object (RE 0xf2000 and 0xf12c0) ----------------
+    {
+        CHECK(kTagFieldOffset == 0x20);
+        CHECK(kTagUnsetValue == 1);
+        CHECK(kDelegateCompare == 0xF1F50);
+        CHECK(kBothUnsetNegates);
+        CHECK(kTagAwareCallers == 66);
+        // the comparator as the instructions implement it, including the negation in the both-unset case
+        const auto cmp = [](int aTag, int bTag, int delegated) {
+            if (aTag == kTagUnsetValue) {
+                if (bTag != kTagUnsetValue) return -1;      // RE 0xF2024
+                return -delegated;                          // RE 0xF2030
+            }
+            if (bTag == kTagUnsetValue) return 1;           // RE 0xF2040
+            return delegated;                               // RE 0xF2014
+        };
+        CHECK(cmp(1, 0, 7) == -1);          // only the left is unset
+        CHECK(cmp(0, 1, 7) == 1);           // only the right is unset
+        CHECK(cmp(1, 1, 7) == -7);          // both unset: the delegate's answer is negated
+        CHECK(cmp(1, 1, -3) == 3);
+        CHECK(cmp(0, 0, -3) == -3);         // neither unset: the delegate decides
+
+        CHECK(kSignVtableRva == 0x960411);
+        CHECK(kKindOffset == 0x10);
+        CHECK(kKindValue2 == 2);
+        CHECK(kSignOffset == 0x20);
+        CHECK(kSignOffset == kTagFieldOffset);          // the sign and the tag share the offset
+        CHECK(kPayloadBytes == 0x10);
+        CHECK(kPayloadAlloc == 0xFE1F0);
+        CHECK(kLazyInitCallee == 0xEEEE0);
+        CHECK(kSignObjectCallers == 64);
+
+        CHECK(kSsoCapacity == 0x14);
+        CHECK(kSsoSize == 0x00);
+        CHECK(kSsoData == 0x18);
+        CHECK(kSsoTailCall == 0x9984A0);
+        CHECK(kSsoCallers == 58);
+        CHECK(kSsoInference);                            // it is landed as an inference, not as proof
+        CHECK(kSsoData > kSsoCapacity);
+    }
+
     return check::finish("test_recovered");
 }
