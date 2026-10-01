@@ -6454,3 +6454,22 @@ rounds 317/318 的分派目标实际上调用了 **`0x11A780`（rounds 281–284
 ★ 存入 `rsp+0x38` 的 **全 1 哨兵**与 round 260 记录的状态哨兵（−1）**同值**。
 
 **已落 `layout.hpp`**：`kLazyInitFlag2`(0x51)、`kFlagPairStride`(1)、`kFlagPairIdiom`、`kFlagPairCount`(3)、`kSlotBUsed`、`kSlotBArgConstant`、`kNeighbourHelper`(0x10F8C0)、`kNeighbourDelta`(0x2F0)、`kAllOnesSentinel`、`kGlobalArgRva`(0x8F7E31)、`kFinalCall10FBB0`(0xC2510)、`kSentinelUser`(0xC2EC0) + **六条 `static_assert`** + 测试 26 条。
+
+### 附 244 **孪生对指认出了槽 `+0x110` 的实现**；以及原子引用计数释放（goal round 326）**[已落码]**
+
+**（a）`0x111B50`（126 B / 21 个调用者）几乎重复 `0x10FBB0`**：同 `+0x50` 标志、同 `+0x51` 标志对、同 `0xC3A40`、同 `+0x48` 字段、同槽 `+0x30`、同 `0x10F8C0`、同**全 1 哨兵**。**只差最后一调**：
+
+```
+0x10FBB0：结尾 `call 0xC2EC0`（直接）
+0x111B50：结尾 `call qword [rax+0x110]`（虚调）
+```
+
+⇒ 直接调用与虚调用**是同一个操作** ⇒ **可推出 `0xC2EC0` 就是槽 `+0x110` 的实现**。
+但这是**从孪生对推出的而非读虚表得到的** ⇒ 以 `kSlot110ImplInferred` **标明为推出**，不冒充直读。
+
+★ 另一处差异：`0x10FBB0` **先测试** `+0x50` 再置位，而 `0x111B50` **无条件置位** ⇒ 后者是同一操作的**强制变体**，而非同一逻辑的第二份拷贝。
+
+**（b）`0x862030`（21 B / 20 个调用者）= 原子引用计数释放**：`lock xadd dword [rcx+0x10], eax`（`eax = −1`，返回**旧值**），`jle` 则走释放路径 ⇒ `kAtomicRelease`，计数在 **`+0x10`**。
+★ 这是**第三个计数偏移**（round 291 记的 `+0x08`/`+0x0C` 属于另一个对象） ⇒ **三者并列记录，不合并为“那个计数器”**。
+
+**已落 `layout.hpp`**：`kLazyForceVariant`(0x111B50)、`kLazyForceCallers`(21)、`kSlot110Impl`(0xC2EC0)、`kSlot110ImplInferred`、`kForceSetsFlagUnconditionally`、`kTwinDelta326`(0x1A0)、`kAtomicRelease`(0x862030)、`kAtomicReleaseCallers`(20)、`kRefcountOffset3`(0x10)、`kAtomicDecrement`、`kReleaseIfBelowOne`、`kDecrementAmount`、`kReleasePath`(0x862040)、`kRefcountOffsetsKnown`(3) + **六条 `static_assert`** + 测试 28 条。

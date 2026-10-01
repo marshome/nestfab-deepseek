@@ -4639,5 +4639,57 @@ int main() {
         CHECK(~kAllOnesSentinel == 0);
     }
 
+    // --- the twin pair and the atomic release (RE 0x111b50 and 0x862030) ----------------------------
+    {
+        CHECK(kLazyForceVariant == 0x111B50);
+        CHECK(kLazyForceCallers == 21);
+        CHECK(kSlot110Impl == 0xC2EC0);
+        CHECK(kSlot110Impl == kSentinelUser);            // the routine its twin calls directly
+        CHECK(kSlot110ImplInferred);                     // marked inferred, not read
+        CHECK(kForceSetsFlagUnconditionally);
+        CHECK(kTwinDelta326 == 0x1FA0);                // corrected in 326c: the delta is 0x1FA0
+        CHECK(kLazyForceVariant - kLazyInit50 == kTwinDelta326);
+        CHECK(kLazyInit50 == 0x10FBB0);
+        CHECK(kLazyInitFlag == 0x50 && kLazyInitFlag2 == 0x51);
+        CHECK(kVtableSlotE == 0x110);
+        CHECK(kSlotBUsed);                               // the same slot +0x30 is used by both
+        CHECK(kLocalConstruct2 == 0xC3A40);              // and the same init helper
+        CHECK(kNeighbourHelper == 0x10F8C0);
+        CHECK(kAllOnesSentinel == 0xFFFFFFFFFFFFFFFFULL);
+
+        CHECK(kAtomicRelease == 0x862030);
+        CHECK(kAtomicReleaseCallers == 20);
+        CHECK(kRefcountOffset3 == 0x10);
+        CHECK(kAtomicDecrement);
+        CHECK(kReleaseIfBelowOne);
+        CHECK(kDecrementAmount == -1);
+        CHECK(kReleasePath == 0x862040);
+        CHECK(kRefcountOffsetsKnown == 3);
+        CHECK(kRefcountOffset3 != kRecordCounterA);      // a third offset, not merged with +0x08
+        CHECK(kRefcountOffset3 != kRecordCounterB);      // nor with +0x0C
+        CHECK(kRecordCounters == 2);
+
+        // the atomic decrement's decision, for the values that matter
+        const auto shouldRelease = [](std::int32_t old) { return old <= 0; };
+        CHECK(shouldRelease(0));
+        CHECK(shouldRelease(-1));
+        CHECK(!shouldRelease(1));
+        CHECK(!shouldRelease(2));
+        // CORRECTED in round 326c: the xadd returns the OLD value and the branch is `jle`, so the release path
+        // runs when the old value was at or below ZERO -- a count of one decrements to zero and does NOT release.
+        std::int32_t count = 1;
+        const std::int32_t old = count;
+        count += kDecrementAmount;
+        CHECK(old == 1);
+        CHECK(!shouldRelease(old));                       // one becomes zero, no release
+        CHECK(count == 0);
+        std::int32_t already = 0;
+        const std::int32_t old0 = already;
+        already += kDecrementAmount;
+        CHECK(old0 == 0);
+        CHECK(shouldRelease(old0));                       // an already-zero counter releases
+        CHECK(already == -1);
+    }
+
     return check::finish("test_recovered");
 }

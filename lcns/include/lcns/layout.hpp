@@ -2909,6 +2909,38 @@ static_assert(kSlotBUsed && kVtableSlotB == 0x30, "the slot used is the one roun
 static_assert(kAllOnesSentinel == static_cast<std::uint64_t>(-1), "the sentinel is all ones");
 static_assert(kNeighbourDelta == 0x2F0, "the helper sits 0x2F0 below this function");
 
+
+// --- the twin that identifies slot +0x110's implementation (round 326) ----------------------------------
+//     0x111B56/0x111B77/0x111B8A/0x111B94   the same flag, flag pair, slot and helper as 0x10FBB0
+//     0x111BC0 call qword [rax+0x110]        ; where its twin calls 0xC2EC0 directly
+inline constexpr std::uintptr_t kLazyForceVariant = 0x111B50;  // RE the whole routine
+inline constexpr int kLazyForceCallers = 21;
+inline constexpr std::uintptr_t kSlot110Impl = 0xC2EC0;      // INFERRED from the twin pair, not read from a vtable
+inline constexpr bool kSlot110ImplInferred = true;           // said so rather than presented as read
+inline constexpr bool kForceSetsFlagUnconditionally = true;  // RE 0x111B56, against the test in the twin
+inline constexpr std::size_t kTwinDelta326 = 0x1FA0;         // RE 0x111B50 - 0x10FBB0 (corrected in 326c)
+static_assert(kSlot110Impl == kSentinelUser, "the inferred implementation is the routine the twin calls");
+static_assert(kSlot110ImplInferred, "and that identification is marked inferred");
+static_assert(kForceSetsFlagUnconditionally, "this variant forces the flag");
+
+// --- the atomic reference-count release 0x862030 (round 326) ---------------------------------------------
+//     0x862030/0x862035  eax = -1 ; lock xadd dword [rcx+0x10], eax
+//     0x86203A/0x86203C  test eax,eax ; jle 0x862040
+inline constexpr std::uintptr_t kAtomicRelease = 0x862030;   // RE the whole routine
+inline constexpr int kAtomicReleaseCallers = 20;
+inline constexpr std::size_t kRefcountOffset3 = 0x10;        // RE 0x862035
+inline constexpr bool kAtomicDecrement = true;               // RE the lock xadd
+inline constexpr bool kReleaseIfBelowOne = true;             // RE the jle
+inline constexpr std::int32_t kDecrementAmount = -1;         // RE eax = 0xffffffff
+inline constexpr std::uintptr_t kReleasePath = 0x862040;     // RE the branch target
+// A third counter offset. Round 291 recorded +0x08 and +0x0C on ONE object; this is +0x10, on possibly another, so the
+// three are listed rather than merged into one "the counter" claim.
+inline constexpr int kRefcountOffsetsKnown = 3;
+static_assert(kRefcountOffset3 == 0x10, "the counter is at +0x10 here");
+static_assert(kAtomicDecrement && kReleaseIfBelowOne, "an atomic decrement with a release branch");
+static_assert(kDecrementAmount == -1, "the decrement is one");
+static_assert(kRefcountOffsetsKnown == 3, "three counter offsets are now recorded");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
