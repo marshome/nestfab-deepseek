@@ -174,4 +174,30 @@ inline constexpr std::size_t kFiveFieldRecordBytes = 5 * 8;     // 40
 // null path. 0x9920C0 is libstdc++'s operator<< for a C string, registered as toolchain in covlib.
 inline constexpr int kOstreamSetstateBit = 1;
 
+
+// --- the four-double object is a rectangle (round 200) ---------------------------------------------
+// RE 0x5E5DD0: it loads [rcx+8], [rcx+0x10], [rcx+0x18] and [rcx+0x20] -- the four doubles round 177 recorded --
+// and then selects one by index:
+//     5E5E1C and edx,3      ; modulo FOUR
+//     5E5E35 shl rdx,4      ; times SIXTEEN, one point
+//     5E5E3E/5E5E42         ; read that point's two doubles
+//     5E5E47/5E5E4F         ; write them through r9
+// The four fields are EIGHT bytes apart (0x20 - 0x08 = 24 = 3 * 8), i.e. four consecutive doubles = two points
+// (x1,y1,x2,y2). The routine loads them as two xmm pairs and builds a four-point stack array with `shufpd` and
+// `movhpd` (0x5E5E23/0x5E5E28), and only then indexes that array with `and edx,3 ; shl rdx,4`. So the four corners
+// are DERIVED from the two opposite corners by permutation -- the standard rectangle corner accessor -- and the
+// earlier wording here, which called the fields themselves four points, was wrong and is withdrawn.
+inline constexpr int kBoxCornerCount = 4;                 // RE 0x5E5E1C
+inline constexpr std::size_t kBoxCornerBytes = 16;        // RE 0x5E5E35
+
+inline std::size_t cornerIndex(std::size_t i) { return i & (kBoxCornerCount - 1); }   // RE the `and edx,3`
+
+// --- the 504-byte block of 0x5E5EE0 (round 200) -----------------------------------------------------
+//     5E5F06 mov ecx,0x1F8 ; 5E5F12 call 0x998500      ; the allocation
+//     5E5F17 lea rdx,[rax+0x1F8]                       ; the end of the block
+//     5E5F21..5E5F3D store the block and its end at +0x28,+0x18,+0x20,+0x48,+0x38,+0x40,+0x10,+0x30
+inline constexpr std::size_t kContainerBlockBytes = 0x1F8;   // RE 0x5E5F06: 504
+inline constexpr std::size_t kContainerFieldLow = 0x10;      // RE 0x5E5F39
+inline constexpr std::size_t kContainerFieldHigh = 0x48;     // RE 0x5E5F2D
+
 }  // namespace lcns

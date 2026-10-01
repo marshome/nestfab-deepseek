@@ -1190,5 +1190,27 @@ int main() {
         CHECK(std::string(kTagVector).back() == '(');
     }
 
+    // --- the rectangle of four doubles (RE 0x5e5e1c `and edx,3` with 0x5e5e35 `shl rdx,4`) -------------
+    {
+        CHECK(kBoxCornerCount == 4);
+        CHECK(kBoxCornerBytes == 16);
+        CHECK(kBoxCornerBytes == kPoint2dSize);              // a corner is a point
+        CHECK(cornerIndex(0) == 0);
+        CHECK(cornerIndex(3) == 3);
+        CHECK(cornerIndex(4) == 0);                          // modulo four, as the `and` does
+        CHECK(cornerIndex(7) == 3);
+        // the four fields of the object of round 177 are FOUR DOUBLES, eight bytes apart: two points,
+        // (x1,y1,x2,y2), from which the four corners are derived by permutation
+        CHECK(kObjectFieldA + 8 == kObjectFieldB);
+        CHECK(kObjectFieldB + 8 == kObjectFieldC);
+        CHECK(kObjectFieldC + 8 == kObjectFieldD);
+        CHECK(kObjectFieldD - kObjectFieldA == 3 * sizeof(double));
+        CHECK(kObjectFieldD - kObjectFieldA != 3 * kBoxCornerBytes);   // not four stored points
+        // and the container's block
+        CHECK(kContainerBlockBytes == 504);
+        CHECK(kContainerBlockBytes % kBoxCornerBytes == 8);  // 504 = 31 points + 8
+        CHECK(kContainerFieldLow < kContainerFieldHigh);
+    }
+
     return check::finish("test_recovered");
 }
