@@ -2274,6 +2274,27 @@ static_assert(kInputBufferLocalLink - kInputBufferLocal == 0x20, "the link offse
 static_assert(kVtableSlotsKnown7 == kVtableSlotsKnown6 + 1, "one more slot than round 291");
 static_assert(kSelfTestFirst, "the self-test runs before the operation");
 
+
+// --- the driver 0x10FD40's control flow (round 299) -----------------------------------------------------
+//     0x10FDC1/0x10FDF2  call qword [rax+0xA0], twice, the second time on the link at rsp+0x80
+//     0x10FDFD/0x10FE09  the result's FIRST BYTE is read and sign tested; negative goes to 0x10FF07
+//     0x10FDCC cmp r15b, byte [rsp+0x58]   ; the probe's byte against a field at +0x58
+//     0x10FDCA/0x10FDFB/0x10FDD3  three failure sites, all reaching 0x77F2D0
+//     0x10FE2A call 0xC33F0 with the local object and a zero
+inline constexpr std::size_t kVtableSlotA0CallSites = 2;     // RE 0x10FDC1 and 0x10FDF2
+inline constexpr bool kSlotA0ReturnsPointer = true;          // RE 0x10FDFD
+inline constexpr bool kStatusByteSignTest = true;            // RE 0x10FE09
+inline constexpr std::uintptr_t kNegativeStatusBranch = 0x10FF07;  // RE 0x10FE09
+inline constexpr std::size_t kStatusComparedField = 0x58;    // RE 0x10FDCC
+inline constexpr int kDriverFailureSites = 3;                // RE 0x10FDCA, 0x10FDFB and 0x10FDD3
+inline constexpr std::uintptr_t kDriverReportsVia = 0x77F2D0;  // the BER formatter of round 280
+inline constexpr std::uintptr_t kLocalConstruct = 0xC33F0;   // RE 0x10FE2A
+inline constexpr std::uintptr_t kResultObject = 0xA0;        // RE 0x10FDFD, the local frame offset
+static_assert(kVtableSlotA0CallSites == 2, "the slot is called twice");
+static_assert(kStatusByteSignTest, "the first byte is treated as signed");
+static_assert(kDriverFailureSites == 3, "three ways this driver fails");
+static_assert(kDriverReportsVia == 0x77F2D0, "and all of them report through the BER formatter");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -5958,3 +5958,19 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ **自检调用是领域事实而非库事实**：这个操作**先检查加密自检门**，正是 `0x89F8E6` 两条文本所描述的东西 ⇒ **r289 的 CryptoPP 链接在此得到领域意义**。
 
 **已落 `layout.hpp`**：`kInputBufferLocal*`（四个）、`kInputBufferInPlace`、`kSelfTestFirst`、`kSelfTestArgument`、`kFlagProbe`(0x1170B0)、`kVtableSlotI`(0xA0)、`kVtableSlotsKnown7`(12)、`kDriverCallers` + **五条 `static_assert`** + 测试 24 条。
+
+### 附 217 **驱动器的控制流**：槽 `+0xA0` 返回指针、首字节有符号、**三处失败全走 BER 格式化器**（goal round 299）**[已落码]**
+
+```
+10FDC1/10FDF2  call qword [rax+0xA0]×2（第二次作用在 `rsp+0x80` 的链接对象上）
+10FDFD  movzx r15d, byte [rsp+0xA0]   ; ★ 取结果对象的**首字节**
+10FE09  js 0x10FF07                    ; ★★ **符号测试**：负值走另一分支
+10FDCC  cmp r15b, byte [rsp+0x58]      ; 探针的字节与 `+0x58` 字段相比
+10FDCA/10FDFB/10FDD3  ★ **三处失败点，全部到达 `0x77F2D0`**
+```
+
+⇒ 槽 `+0xA0` **返回指针**，其首字节是**有符号状态**；且该驱动器**每一条失败路径都终于构造 `'BER decode error'` 的格式化器** —— 这是目前为止“该簇在解 BER”**最强的陈述**。
+
+★ 与 round 291 的关联：当时已证实首字段是**有符号**（`+0x00`）；本轮在另一个对象上看到同样的符号处理（`movzx` + `js`），两处互相印证。
+
+**已落 `layout.hpp`**：`kVtableSlotA0CallSites`(2)、`kSlotA0ReturnsPointer`、`kStatusByteSignTest`、`kNegativeStatusBranch`(0x10FF07)、`kStatusComparedField`(0x58)、`kDriverFailureSites`(3)、`kDriverReportsVia`、`kLocalConstruct`(0xC33F0)、`kResultObject`(0xA0) + **四条 `static_assert`** + 测试 22 条（含符号测试的六个手算取值）。

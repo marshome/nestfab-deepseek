@@ -3703,5 +3703,39 @@ int main() {
         CHECK(kInputBufferCtor == 0x77A460);
     }
 
+    // --- the driver's control flow and its signed status (RE 0x10fd40) ------------------------------
+    {
+        CHECK(kVtableSlotA0CallSites == 2);
+        CHECK(kSlotA0ReturnsPointer);
+        CHECK(kStatusByteSignTest);
+        CHECK(kNegativeStatusBranch == 0x10FF07);
+        CHECK(kStatusComparedField == 0x58);
+        CHECK(kDriverFailureSites == 3);
+        CHECK(kDriverReportsVia == 0x77F2D0);
+        CHECK(kDriverReportsVia == kBerErrorFormatter);   // the formatter of round 280
+        CHECK(kLocalConstruct == 0xC33F0);
+        CHECK(kResultObject == 0xA0);
+        CHECK(kVtableSlotI == 0xA0);                      // the slot and the frame offset coincide numerically
+        CHECK(kStatusComparedField != kResultObject);     // but the compared field is elsewhere
+        CHECK(kDriverCallers == 1);
+
+        // the sign test the instruction performs on the first byte
+        const auto isNegative = [](std::uint8_t raw) {
+            return static_cast<std::int8_t>(raw) < 0;     // RE 0x10FE09 (js after movzx)
+        };
+        CHECK(!isNegative(0));
+        CHECK(!isNegative(1));
+        CHECK(!isNegative(127));
+        CHECK(isNegative(128));                           // 0x80 is -128
+        CHECK(isNegative(0xFF));                          // and 0xFF is -1
+        CHECK(!isNegative(0x7F));
+
+        // and the equality the driver checks: the probe's byte against the field
+        const auto matches = [](std::uint8_t probe, std::uint8_t field) { return probe == field; };
+        CHECK(matches(3, 3));
+        CHECK(!matches(3, 4));
+        CHECK(matches(0, 0));
+    }
+
     return check::finish("test_recovered");
 }
