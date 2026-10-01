@@ -217,3 +217,81 @@
 * 种子（身份级）**1** 个；本文件保留的函数 **1** 个
 * 种子标识词：`IsLeather`(1)、`GetLeatherLayer`(1)
 * 保留的函数：`0x7bc180`(种子)
+# 逐 TU 档案：以“引用了该 TU 的特异字符串”为证据（goal round 98）
+
+**证据形式**：每行给出该函数**实际引用的那个字符串**（及它被多少个函数引用，越少越有辨识度）。这与 round 97 失败的区别是：**证据随每个函数一起走**，而不是一个传播出来的标签。
+
+**证据强度声明**：“引用了某 TU 的断言字符串”说明该函数**参与该 TU 的代码路径**，是**强推论**（但仍不是“身份级”：不排除跨 TU 使用同一断言）。
+
+## `..\nesting\algos\compact.hpp`—6 个函数 / 16327 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x1b0f70` | 9274 | 1813 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x1b5a70` | 2660 | 548 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x1abb20` | 2149 | 420 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x1ae990` | 1136 | 236 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x6d5b30` | 583 | 158 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 10 |
+| `0x6d5d80` | 525 | 145 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 10 |
+
+## `..\structure\multitorch_eval.cpp`—4 个函数 / 12558 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x53f910` | 11110 | 2221 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 11 |
+| `0x53a680` | 669 | 160 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 11 |
+| `0x53a290` | 441 | 112 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 11 |
+| `0x53a520` | 338 | 96 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 11 |
+
+## `..\nesting\algos\tree_db.cpp`—10 个函数 / 4363 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x7ba1d0` | 590 | 154 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7ba9a0` | 487 | 133 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7b9690` | 464 | 130 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7ba420` | 464 | 134 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7bad20` | 423 | 121 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x81d260` | 423 | 121 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7bab90` | 400 | 113 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7ba050` | 375 | 109 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7ba6b0` | 373 | 109 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+| `0x7ba830` | 364 | 107 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 12 |
+
+## `..\structure\automatic_cluster.cpp`—1 个函数 / 3833 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x5584b0` | 3833 | 756 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 2 |
+
+## `..\structure\problem.cpp`—3 个函数 / 2719 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x92af20` | 1056 | 264 | `basic_string::_M_construct null not valid` | 9 |
+| `0x8ec3b0` | 1021 | 260 | `basic_string::_M_construct null not valid` | 9 |
+| `0x4fd900` | 642 | 162 | `basic_string::_M_construct null not valid` | 9 |
+
+## `..\multi\nesting_nester.cpp`—1 个函数 / 2240 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x33100` | 2240 | 459 | `basic_string::append` | 4 |
+
+## `..\engine\cloud_engine.cpp`—1 个函数 / 437 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x268a0` | 437 | 116 | `basic_string::_M_construct null not valid` | 8 |
+
+## `..\multi\nesting_context.cpp`—1 个函数 / 365 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x7d7a90` | 365 | 107 | `vector::_M_range_check: __n (which is %zu) >= this->size() (` | 3 |
+
+## `..\structure\text_io.cpp`—1 个函数 / 107 字节
+
+| 函数 | 字节 | 指令 | 引用的字符串 | 该串被引用次数 |
+|---|---:|---:|---|---:|
+| `0x5053c0` | 107 | 33 | `extra_infos` | 5 |
