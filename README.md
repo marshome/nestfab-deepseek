@@ -91,7 +91,7 @@ JSON/DXF/SVG 格式与授权事实**已恢复到地址级**；
 
 ## 引用与许可
 
-* 本仓库的分析与代码：见 `LICENSE`（如有）。
+* 本仓库**未附许可文件**：默认保留所有权利。若需以其他条款使用，请与作者联系后再行添加。
 * `datasets/` 下的数据**不属于本仓库**：它们的来源与许可见 [`datasets/README.md`](datasets/README.md)
   （ESICUP 数据集 CC0-1.0；OR-Datasets MIT；引用的论文 CC BY 4.0，请按其要求署名）。
 * 第三方库的许可见 [`third_party/README.md`](third_party/README.md)。
