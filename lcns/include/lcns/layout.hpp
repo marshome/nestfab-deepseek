@@ -2390,6 +2390,29 @@ static_assert(kDifferenceLocalized && kBranchOffsetsIdentical, "both findings ho
 static_assert(kBranchOffset0 == kDriverTwinOffset, "the first is the offset round 302 measured");
 static_assert(kOffsetsCompared == 14, "fourteen offsets were compared");
 
+
+// --- the third driver 0x112150, reached through a vtable (round 304) ------------------------------------
+//     0x11215C sub rsp,0x128                    ; a larger frame than the pair's 0x108
+//     0x112163..0x112178 four vtable pointers    ; against the pair's two
+//     0x11217F lea rbp,[rsp+0x60]                ; the same in-place object base
+//     0x11218A lea r13,[rsp+0xa0]                ; its own second local
+//     0x112197 call 0x118260 with edx = 0        ; the self-test, again first
+//     0x1121A4/0x1121AC  the marker and the byte at the same offsets
+//     0x1121CB call 0x111890 with edx = 0x30     ; a helper given forty-eight as a size
+inline constexpr std::uintptr_t kDriverThird = 0x112150;     // RE the whole routine
+inline constexpr std::size_t kDriverThirdFrame = 0x128;      // RE 0x11215C (296)
+inline constexpr int kDriverVtables3 = 4;                    // RE the four lea instructions
+inline constexpr int kDriverVtablesPair = 2;                 // RE the pair of rounds 298/301
+inline constexpr std::size_t kThirdLocal = 0xA0;             // RE 0x11218A
+inline constexpr std::uintptr_t kHelper111890 = 0x111890;    // RE 0x1121CB
+inline constexpr std::size_t kHelper111890Size = 0x30;       // RE 0x11219C
+inline constexpr int kDriverThirdCallers = 0;                // reached through a vtable
+inline constexpr int kInPlaceConfirmations = 4;              // rounds 288, 291, 298 and 301/304
+static_assert(kDriverThirdFrame > kDriverFrameBytes, "the third driver frames larger");
+static_assert(kDriverVtables3 > kDriverVtablesPair, "and carries more vtable pointers");
+static_assert(kHelper111890Size == kGetOrCreateBytes, "the same forty-eight as the get-or-create object");
+static_assert(kThirdLocal == kResultObject, "its second local sits where the pair's result object does");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

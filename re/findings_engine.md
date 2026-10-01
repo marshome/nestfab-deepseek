@@ -6063,3 +6063,23 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ⇒ 这是比 round 302 **更精确的陈述**（差异被**局域化**），也依然**不声称逐字节相同**。
 
 **已落 `layout.hpp`**：`kDifferenceRegionStart`(0x85)、`kDifferenceRegionEnd`(0x1C7)、`kDifferenceLocalized`、`kBranchOffsetsIdentical`、`kOffsetsCompared`(14)、`kBranchOffset0..3` + **四条 `static_assert`** + 测试 20 条。
+
+### 附 222 **第三个驱动器：更大、更富，但就地布局再次一致**（goal round 304）**[已落码]**
+
+`0x112150`（1509 B，**无直接调用者**，经虚表到达）：
+
+```
+11215C  sub rsp,**0x128**                 ; 比那一对的 0x108 更大
+112163/11216A/112171/112178  **四个虚表指针**   ; 而那一对只有两个
+11217F  rbp = rsp+0x60                    ; ★ **同一就地基址**
+11218A  r13 = rsp+0xA0                    ; 它自己的第二个本地对象
+112197  call 0x118260（edx = 0）        ; ★ **同样先过自检门**
+1121A4/1121AC  标记与字节在**同一偏移**
+1121CB  call 0x111890（edx = **0x30**）    ; ★ 以**四十八**为尺寸参
+```
+
+⇒ **`+0x60` 就地 `InputBuffer` 的 `+0x14`/`+0x18`/`+0x20` 字段现已在三个例程上确认四次**；**自检门确认三次**。该驱动器与那一对的差异：**四个虚表指针、更大的帧、另一个本地对象**。
+
+★ 它传给 `0x111890` 的 `0x30` **与 round 280 的 get-or-create 对象同尺寸** —— 以 `static_assert` 锁死而**不合并含义**。
+
+**已落 `layout.hpp`**：`kDriverThird`、`kDriverThirdFrame`(0x128)、`kDriverVtables3`(4)、`kDriverVtablesPair`(2)、`kThirdLocal`(0xA0)、`kHelper111890`、`kHelper111890Size`(0x30)、`kDriverThirdCallers`(0)、`kInPlaceConfirmations`(4) + **四条 `static_assert`** + 测试 22 条。

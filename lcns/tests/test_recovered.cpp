@@ -3874,5 +3874,35 @@ int main() {
         CHECK(!kDriversByteIdentical);                       // still not identical overall
     }
 
+    // --- the third driver and its differences (RE 0x112150) -----------------------------------------
+    {
+        CHECK(kDriverThird == 0x112150);
+        CHECK(kDriverThirdFrame == 0x128);
+        CHECK(kDriverThirdFrame == 296);
+        CHECK(kDriverFrameBytes == 0x108);
+        CHECK(kDriverThirdFrame > kDriverFrameBytes);
+        CHECK(kDriverVtables3 == 4);
+        CHECK(kDriverVtablesPair == 2);
+        CHECK(kDriverVtables3 > kDriverVtablesPair);
+        CHECK(kThirdLocal == 0xA0);
+        CHECK(kHelper111890 == 0x111890);
+        CHECK(kHelper111890Size == 0x30);
+        CHECK(kHelper111890Size == kGetOrCreateBytes);
+        CHECK(kDriverThirdCallers == 0);
+        CHECK(kInPlaceConfirmations == 4);
+        // the same in-place offsets as the pair, once more
+        CHECK(kInputBufferLocal == 0x60);
+        CHECK(kInputBufferLocalMarker - kInputBufferLocal == kInputBufferMarker);
+        CHECK(kInputBufferLocalByte - kInputBufferLocal == kInputBufferByte);
+        CHECK(kThirdLocal == kResultObject);
+
+        // the three drivers are distinct, and only the third has four vtable pointers
+        CHECK(kDriverThird != kDriverSibling);
+        CHECK(kDriverThird != 0x10FD40);
+        CHECK(kDriverVtables3 != kDriverVtablesPair);
+        CHECK(kDriverThirdFrame - kDriverFrameBytes == 0x20);   // thirty-two bytes more of frame
+        CHECK(kSelfTestFirst);                                  // and the same gate, again
+    }
+
     return check::finish("test_recovered");
 }
