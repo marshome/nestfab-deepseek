@@ -167,6 +167,17 @@ int main() {
         CHECK(composite == 4);
     }
 
+    // --- the recovered rectangle corner order (RE 0x15620 AddRectanglePart) --------------------
+    {
+        geom::RectCorner c[4];
+        geom::rectangleCorners(1.0, 2.0, 5.0, 8.0, c);
+        CHECK(c[0].x == 1.0 && c[0].y == 2.0);   // (x0,y0)
+        CHECK(c[1].x == 5.0 && c[1].y == 2.0);   // (x1,y0)
+        CHECK(c[2].x == 5.0 && c[2].y == 8.0);   // (x1,y1)
+        CHECK(c[3].x == 1.0 && c[3].y == 8.0);   // (x0,y1)
+        for (int i = 0; i < 4; ++i) CHECK(c[i].z == 0.0);   // every third slot is zero
+    }
+
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----
     {
         CHECK(equivalent::matchesOrder(12, 12, 3, 3));

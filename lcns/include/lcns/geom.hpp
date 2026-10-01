@@ -298,4 +298,19 @@ std::string toWkt(const Ring& r);
 std::string toWkt(const Polygon& p);
 std::string toWkt(const MultiPolygon& mp);
 
+// RE 0x15620 `AddRectanglePart` (374 B / 79 instructions), transcribed because the CORNER ORDER is
+// part of the algorithm: the original lays a 12 double (0x60 byte) record on the stack as
+//     { x0, y0, 0,  x1, y0, 0,  x1, y1, 0,  x0, y1, 0 }
+// built from the two opposite corners (xmm2,xmm3) and (xmm7,xmm6), zero filling every third slot,
+// then allocates 96 bytes with operator new (0x998500) and hands the consumer r8d = 4. Nothing else
+// is computed here -- no area, no bounds -- so this is the whole of what the routine decides.
+struct RectCorner {
+    double x = 0.0;
+    double y = 0.0;
+    double z = 0.0;   // the third slot of every triple is zero in the original
+};
+
+// RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
+void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
+
 }  // namespace lcns::geom

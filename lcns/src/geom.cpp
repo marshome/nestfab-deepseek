@@ -801,4 +801,12 @@ std::string toWkt(const MultiPolygon& mp) {
     return os.str();
 }
 
+// RE 0x15620: the four stores in the order the original performs them (see geom.hpp).
+void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]) {
+    out[0] = RectCorner{x0, y0, 0.0};
+    out[1] = RectCorner{x1, y0, 0.0};
+    out[2] = RectCorner{x1, y1, 0.0};
+    out[3] = RectCorner{x0, y1, 0.0};
+}
+
 }  // namespace lcns::geom
