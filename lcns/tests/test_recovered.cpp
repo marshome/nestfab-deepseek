@@ -5736,8 +5736,10 @@ int main() {
         CHECK(kRangeLengthComputed);
         CHECK(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL);
         CHECK(kDivisionMagicDivisors == 3);
-        CHECK(kShiftNotReadYet);
-        CHECK(kImpliedRecordBytes == 18);
+        CHECK(!kShiftNotReadYet);                         // round 352 read the shift
+        CHECK(kShiftReadInRound352);
+        CHECK(kImpliedRecordBytesCandidate == 18);       // the withdrawn candidate
+        CHECK(kImpliedRecordSizeIsWithdrawn);
         CHECK(kTopCallersUncited == 2);
         CHECK(kGetter60 == 0x51D2F0);
         CHECK(kHelper51D0C0 != kGetter60);                 // a different helper in the same range
@@ -5748,14 +5750,51 @@ int main() {
         CHECK(kDivisionMagic18 != 0xC30C30C30C30C30DULL);  // twenty-one
         CHECK(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL);
         // the shift that would settle eighteen against nine has not been read, and the constants say so
-        CHECK(kShiftNotReadYet);
-        CHECK(kImpliedRecordBytes * 2 == 36);              // eighteen and nine are the two candidates
+        CHECK(!kShiftNotReadYet);                         // round 352 read the shift (second occurrence, also corrected)
+        CHECK(kImpliedRecordBytesCandidate * 2 == 36);   // eighteen and nine were the two candidates
         CHECK(kRangeLengthComputed);
         // a range length is end minus begin, as the instruction computes it
         const auto rangeLength = [](std::uintptr_t begin, std::uintptr_t end) { return end - begin; };
         CHECK(rangeLength(0x1000, 0x1012) == 18);
         CHECK(rangeLength(0x1000, 0x1000) == 0);
         CHECK(rangeLength(0, 0x24) == 36);
+    }
+
+    // --- the magic's nature, and the withdrawal (RE 0x2438b1 to 0x2438bf) ---------------------------
+    {
+        CHECK(kShiftBeforeMultiply);
+        CHECK(kPreShift == 3);
+        CHECK(kLowHalfKept);
+        CHECK(kIMulIsTwoOperand);
+        CHECK(kMagicIs15Inverse);
+        CHECK(kFifteen == 15);
+        CHECK(kComparisonValue == 0xC8);
+        CHECK(kComparisonValue == 200);
+        CHECK(kComparisonIsBucketLike);
+        CHECK(kDivisorWithdrawn);                         // round 351's reading of it
+        CHECK(kImpliedRecordSizeWithdrawn);               // and the eighteen bytes that followed from it
+        CHECK(kUseAt243925Unread);
+        CHECK(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL); // the constant itself stays recorded
+        CHECK(kShiftNotReadYet == false);                 // the shift HAS now been read
+
+        // the property the hand check found: fifteen times the constant is one, modulo 2^64
+        const std::uint64_t product = static_cast<std::uint64_t>(kFifteen * kDivisionMagic18);
+        CHECK(product == 1ULL);
+        CHECK(kDivisionMagic18 != 0ULL);
+        // and the value a length would produce, taken as the low half of the sequence
+        const auto sequence = [](std::uint64_t length) {
+            const std::uint64_t shifted = length >> kPreShift;                 // RE the sar
+            return static_cast<std::uint64_t>(shifted * kDivisionMagic18);     // RE the two-operand multiply
+        };
+        // a length of 456 gives 57 after the shift, and the sequence's value is what faces the comparison
+        CHECK(sequence(456) == ((456u >> 3) * kDivisionMagic18));
+        CHECK((456u >> 3) == 57u);
+        // the comparison the routine performs
+        const auto withinBuckets = [](std::uint64_t v) { return v <= kComparisonValue; };
+        CHECK(withinBuckets(0));
+        CHECK(withinBuckets(200));
+        CHECK(!withinBuckets(201));
+        CHECK(kPreShift == 3);
     }
 
     return check::finish("test_recovered");

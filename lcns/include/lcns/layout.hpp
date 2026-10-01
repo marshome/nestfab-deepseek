@@ -3632,14 +3632,45 @@ inline constexpr std::uintptr_t kHelper51D0C0 = 0x51D0C0;    // RE 0x243898
 inline constexpr bool kRangeLengthComputed = true;           // RE 0x2438A1
 inline constexpr std::uint64_t kDivisionMagic18 = 0xEEEEEEEEEEEEEEEFULL;  // RE 0x2438A7
 inline constexpr int kDivisionMagicDivisors = 3;             // 1e6, 21 and this
-inline constexpr bool kShiftNotReadYet = true;               // so the divisor is 18 or 9, not settled here
-inline constexpr std::size_t kImpliedRecordBytes = 18;       // if the quotient is by eighteen
+inline constexpr bool kShiftNotReadYet = false;              // READ in round 352: a shift of three, BEFORE the multiply
+inline constexpr bool kShiftReadInRound352 = true;          // and the divisor reading withdrawn with it
+inline constexpr std::size_t kImpliedRecordBytesCandidate = 18;  // the withdrawn candidate, kept for the record
+inline constexpr bool kImpliedRecordSizeIsWithdrawn = true;    // withdrawn in round 352
 inline constexpr int kTopCallersUncited = 2;                 // counted, not named
 static_assert(kBigFrame == 0xE18 && kBigFrame > 0x800, "a frame of 3608 bytes");
 static_assert(kBigXmmSaved == 6, "six doubles preserved across the call");
 static_assert(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL, "the magic as loaded");
-static_assert(kShiftNotReadYet, "and the shift that fixes the divisor is marked unread");
+static_assert(!kShiftNotReadYet && kShiftReadInRound352, "the shift was read in round 352");
 static_assert(kTopCallersUncited == 2, "two of the ten largest callers remain un-cited, and are not named here");
+
+
+// --- the magic's real nature, and the withdrawal of round 351's divisor (round 352) -----------------------
+//     0x2438B1 sar rax,3        ; the shift comes BEFORE the multiply
+//     0x2438B5 imul rax,rdx     ; two operands, so the LOW half is kept
+//     0x2438B9 cmp rax,0xC8     ; against two hundred
+//     0x2438BF jbe 0x243925     ; and that chooses a path
+//     15 * 0xEEEEEEEEEEEEEEEF is congruent to one modulo 2^64, verified by hand and asserted in the tests.
+inline constexpr bool kShiftBeforeMultiply = true;           // RE 0x2438B1 preceding 0x2438B5
+inline constexpr int kPreShift = 3;                          // RE `sar rax,3`
+inline constexpr bool kLowHalfKept = true;                   // RE the two-operand imul
+inline constexpr bool kMagicIs15Inverse = true;              // the constant is the modular inverse of fifteen
+inline constexpr std::uint64_t kFifteen = 15;                // whose product with it is one
+inline constexpr std::uint64_t kComparisonValue = 0xC8;      // RE 0x2438B9
+inline constexpr bool kComparisonIsBucketLike = true;        // a value derived from the length against 200
+// WITHDRAWN, from round 351: the reading of this constant as the magic for dividing by eighteen, and with it the
+// implied record size of eighteen bytes. The instruction form is the low half with the shift first, which is not the
+// division idiom, so the divisor is not supported by the evidence. The constant stays recorded, its interpretation does
+// not.
+inline constexpr bool kDivisorWithdrawn = true;
+inline constexpr bool kImpliedRecordSizeWithdrawn = true;
+inline constexpr bool kIMulIsTwoOperand = true;              // the reason the withdrawal is required
+inline constexpr bool kUseAt243925Unread = true;             // what the comparison guards is not read yet
+static_assert(kShiftBeforeMultiply && kIMulIsTwoOperand, "the shift first, and the low half");
+static_assert(kLowHalfKept != false, "the low half is what a two-operand multiply produces");
+static_assert(kDivisorWithdrawn && kImpliedRecordSizeWithdrawn, "the round-351 reading is withdrawn");
+static_assert(kMagicIs15Inverse && kFifteen == 15, "fifteen times the constant is one, modulo 2^64");
+static_assert(kComparisonValue == 200 && kComparisonIsBucketLike, "and the result faces a comparison with 200");
+static_assert(kUseAt243925Unread, "what that comparison guards is left unread");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

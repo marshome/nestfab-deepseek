@@ -6965,3 +6965,22 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ `0x51D2F0` 的十个最大调用者中**有两个仍为未引用领域代码**；**其地址在此不写**（自 round 278 的规矩）—— **只计数，不命名**（`kTopCallersUncited = 2`）。
 
 **已落 `layout.hpp`**：`kBigRoutine`(0x243820)、`kBigRoutineSize`(15524)、`kBigRoutineCallers`(3)、`kBigFrame`(0xE18)、`kBigXmmSaved`(6)、`kStringPvBarRva`(0x8DEC00)、`kStringPvBar`、`kHelper5F4310`、`kHelper51D0C0`、`kRangeLengthComputed`、`kDivisionMagic18`、`kDivisionMagicDivisors`(3)、`kShiftNotReadYet`、`kImpliedRecordBytes`(18)、`kTopCallersUncited`(2) + **五条 `static_assert`** + 测试 26 条。
+
+### 附 270 ★★ **撤回 round 351 的除数：该常量是 15 的模逆**（goal round 352）**[已落码]**
+
+紧跟魔数之后的指令：
+
+```
+2438B1  `sar rax, **3**`          ; ★ **移位在乘法之前**
+2438B5  `imul rax, rdx`           ; ★★ **双操作数 ⇒ 取低半**（非除法惯用式）
+2438B9  `cmp rax, **0xC8**`       ; 与 **200** 相比
+2438BF  `jbe 0x243925`           ; 该比较决定走哪条路
+```
+
+★★ **round 351 把它叫作“除以 18 的魔数”，甚至据此记下“隐含记录大小 18 字节”。**这个读法经不起指令形式的检验**：常量除法用**乘积的高半**，而这里是**双操作数 `imul`（保留低半）**，且**移位在前**。
+
+★ 该常量的真正性质**可手算验证**：**15 × 0xEEEEEEEEEEEEEEEF ≡ 1（mod 2⁶⁴）** ⇒ 它是 **15 的模逆**，该序列是**一次模乘（散列/缩放）而非除法**；其结果随后**与 200 相比**以选路。
+
+⇒ 本轮**撤回除数与隐含记录大小**（`kDivisorWithdrawn`、`kImpliedRecordSizeWithdrawn`），**保留可检验的算术**，并把 `0x243925` 处该结果的用途**标为未读**（`kUseAt243925Unread`）。
+
+**已落 `layout.hpp`**：`kShiftBeforeMultiply`、`kPreShift`(3)、`kLowHalfKept`、`kMagicIs15Inverse`、`kFifteen`(15)、`kComparisonValue`(0xC8)、`kComparisonIsBucketLike`、`kDivisorWithdrawn`、`kImpliedRecordSizeWithdrawn`、`kIMulIsTwoOperand`、`kUseAt243925Unread` + **七条 `static_assert`** + 测试 26 条（含“15 × 魔数 == 1”的运行时验证与序列值的复算）。
