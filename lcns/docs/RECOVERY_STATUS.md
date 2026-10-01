@@ -60,11 +60,11 @@
 | `module.nester` | `12 strategies` | each strategy's identity (vtable address point, Run size, key literals) is recovered, but EVERY Run body here is our own placement search: the original bodies are not transcribed | src/nester.cpp:348 |
 | `search.pack_all` | `0x378E0 (NestingNester::Run, 14374 B)` | packAll is a bottom-left/beam placement search we wrote; the original main packer was not transcribed | src/nester.cpp:349 |
 | `search.beam_width` | `option beam_width (reader 0x4EECB)` | BeamParams::width. The MECHANISM is recovered: the binary holds no constant at all, it looks the value up in the option table under beam_width / beam_advanced_width (reader 0x4F342) / beam_expert_width (reader 0x4F365), and reports it at 0x655DC6. The default value here is therefore ours (a tunable), not a recovered number | include/lcns/nester.hpp:180 |
-| `strategy.nesting` | `0x378E0` | Run body not transcribed | src/nester.cpp:444 |
+| `strategy.nesting` | `0x378E0` | Run body not transcribed. idENDTIFIED FURTHER in round 27: its own inlined strings give the TU (..\\multi\\nesting_nester.cpp), the name Run, and TWO assertions -- deg_steps.size() == try_parts_ratio.size() (two parallel rotation arrays) and parameters().nesting_pow_boost >= 1.0 (the parameter nesting_pow_boost has a hard lower bound of 1.0) -- plus a degree schedule read from its constants (5, 15, 30) with weights 0.33/0.2/0.7/0.015. 75 callees, of which 0x344d0 (6748 B) and 0x35f30 (6436 B) are the largest. This is the routine whose substitute causes the density gap. | src/nester.cpp:444 |
 | `strategy.flip` | `0x4B870` | mirror-and-compare; literal \"temporary_flipped\" recovered | src/nester.cpp:489 |
 | `strategy.filter` | `0xB3AE0` | filter/lower-bound wrapper; body not transcribed | src/nester.cpp:512 |
 | `strategy.nofill` | `0x7F240` | fill-forbidding variant; body not transcribed | src/nester.cpp:524 |
-| `strategy.tiling` | `0x46940` | pattern-based; body not transcribed | src/nester.cpp:538 |
+| `strategy.tiling` | `0x46940` | pattern-based; body not transcribed. Round 27: identified by its strings as Tiling/Run with the TU and the pattern catalogue in tu.packer_cache; 16,258 bytes / 3,115 instructions / 72 callees, largest 0x693950 (4157 B) and 0x7d12a0 (3762 B); constants 1.0 and 1.5 | src/nester.cpp:538 |
 | `strategy.compact` | `0xB13D0` | compact-then-evaluate; body not transcribed | src/nester.cpp:648 |
 | `strategy.limited` | `0x4AB40` | limited wrapper; body not transcribed | src/nester.cpp:659 |
 | `strategy.database` | `0x5B250` | tree_db/bucket_manager reuse; not transcribed | src/nester.cpp:698 |
