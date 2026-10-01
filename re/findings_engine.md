@@ -6814,3 +6814,22 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 对象因此携带 `+0x38`、`+0x58`、`+0x60`、`+0x68`、`+0x70` 处的子对象，而本例程是**本工作读到的第一个帧高 `0xD0` 的例程**。
 
 **已落 `layout.hpp`**：`kCompose`(0x24DD40)、`kComposeCallers`(1)、`kComposeFieldA/B/C`(0x68/0x70/0x38)、`kComposeWeightA/B`(0x58/0x60)、`kComposeHelper1`(0x24C610)、`kComposeHelperSightings`(2)、`kComposeHelper2`(0x5CF6B0)、`kGeometryClusterMember`、`kComposeFrame`(0xD0)、`kComposeTempA/B/C` + **五条 `static_assert`** + 测试 24 条。
+
+### 附 262 ★★ **非就地变换：仿射族的第四个变体**（goal round 344）**[已落码]**
+
+`0x5CF6B0`（235 B / 6 个调用者）：
+
+```
+5CF6F2/5CF701/5CF72A/5CF72E  先把**四个 double 从 `rdx` 拷到 `rcx`**
+5CF6D5/5CF6DA  矩阵 a、b（`+0x00`、`+0x08`）
+5CF6C9/5CF6CF  矩阵 c、d（`+0x10`、`+0x18`）
+5CF6E6/5CF6EC  平移 tx、ty（`+0x20`、`+0x28`）
+5CF732/5CF73D/5CF748/5CF74C  与就地版本同样的四次乘法与两次加法
+```
+
+⇒ 它把同一套算术算到**与源不同的目的地**（先拷过去再算）。**矩阵六个偏移是 rounds 339/341/342 用过的那六个** ⇒ **第四个例程与它们一致**，公式也是**第三次**读到。
+
+⇒ 族有**四个变体**：就地单点（`0x5CFD80`）、就地两点（`0x5CFDC0`）、**非就地（本轮）**、以及读段+矩阵的函数式（`0x5CEA80`）。
+★ 且 round 343 的组合例程调的**正是本例程**（`kComposeHelper2 == kAffineOutOfPlace`）。
+
+**已落 `layout.hpp`**：`kAffineOutOfPlace`(0x5CF6B0)、`kAffineOutOfPlaceCallers`(6)、`kMatrixLayoutConfirmed3`、`kAffineFormulaConfirmed2`、`kAffineVariants`(4)、`kCopiedDoubles`(4)、`kAffineSrcPairA/B`(0x00/0x10) + **五条 `static_assert`** + 测试 24 条（含“非就地与就地对同一输入结果一致、且源未被改动”的验证）。

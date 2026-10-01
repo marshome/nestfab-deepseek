@@ -5395,5 +5395,46 @@ int main() {
         CHECK(kComposeFrame - kComposeTempC == 0x30);
     }
 
+    // --- the out-of-place transform, and the family of four (RE 0x5cf6b0) ---------------------------
+    {
+        CHECK(kAffineOutOfPlace == 0x5CF6B0);
+        CHECK(kAffineOutOfPlaceCallers == 6);
+        CHECK(kMatrixLayoutConfirmed3);
+        CHECK(kAffineFormulaConfirmed2);
+        CHECK(kAffineVariants == 4);
+        CHECK(kCopiedDoubles == 4);
+        CHECK(kAffineSrcPairA == 0x00);
+        CHECK(kAffineSrcPairB == 0x10);
+        CHECK(kAffineSrcPairB - kAffineSrcPairA == kSegmentEndA - kSegmentStartA);
+        CHECK(kComposeHelper2 == kAffineOutOfPlace);     // the composition of round 343 calls THIS one
+        CHECK(kGeometryClusterMember);
+        // the four variants are four distinct addresses
+        CHECK(kAffineOutOfPlace != kAffineInPlace);
+        CHECK(kAffineOutOfPlace != kAffineTwoPoints);
+        CHECK(kAffineOutOfPlace != kAffineKernel);
+        CHECK(kAffineInPlace != kAffineTwoPoints);
+        CHECK(kMatrixA == 0x00 && kMatrixB == 0x08 && kMatrixC == 0x10 && kMatrixD == 0x18);
+        CHECK(kMatrixTx == 0x20 && kMatrixTy == 0x28);
+
+        // out of place and in place must agree for the same input, which is what makes them variants
+        const auto applyOutOfPlace = [](const double m[6], const double src[4], double dst[4]) {
+            dst[0] = src[0]; dst[1] = src[1]; dst[2] = src[2]; dst[3] = src[3];   // RE the four copies
+            const double m2[6] = {m[0], m[1], m[2], m[3], m[4], m[5]};
+            const double ax = m2[0] * dst[0] + m2[1] * dst[1] + m2[2];
+            const double ay = m2[3] * dst[0] + m2[4] * dst[1] + m2[5];
+            const double bx = m2[0] * dst[2] + m2[1] * dst[3] + m2[2];
+            const double by = m2[3] * dst[2] + m2[4] * dst[3] + m2[5];
+            dst[0] = ax; dst[1] = ay; dst[2] = bx; dst[3] = by;
+        };
+        const double m[6] = {2, 0, 1, 0, 2, -1};
+        const double src[4] = {0, 0, 1, 1};
+        double dst[4] = {0, 0, 0, 0};
+        applyOutOfPlace(m, src, dst);
+        CHECK(dst[0] == 1.0 && dst[1] == -1.0);
+        CHECK(dst[2] == 3.0 && dst[3] == 1.0);
+        CHECK(src[0] == 0.0 && src[3] == 1.0);           // the source is untouched, being out of place
+        CHECK(kCopiedDoubles == 4);
+    }
+
     return check::finish("test_recovered");
 }

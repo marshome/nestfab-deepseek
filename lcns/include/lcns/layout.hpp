@@ -3417,6 +3417,29 @@ static_assert(kComposeWeightB - kComposeWeightA == 8, "the two weights are one d
 static_assert(kComposeFrame == 0xD0, "a frame of two hundred and eight bytes");
 static_assert(kGeometryClusterMember, "the second helper sits in the geometry range");
 
+
+// --- the out-of-place affine transform, fourth of the family (round 344) --------------------------------
+//     0x5CF6F2/0x5CF701  the first pair copied from rdx to rcx
+//     0x5CF72A/0x5CF72E  and the second pair
+//     0x5CF6D5/0x5CF6DA  the matrix's a and b
+//     0x5CF6C9/0x5CF6CF  its c and d
+//     0x5CF6E6/0x5CF6EC  its tx and ty
+//     0x5CF732/0x5CF73D/0x5CF748/0x5CF74C  the same products and additions as the in-place versions
+inline constexpr std::uintptr_t kAffineOutOfPlace = 0x5CF6B0;  // RE the whole routine
+inline constexpr int kAffineOutOfPlaceCallers = 6;
+inline constexpr bool kMatrixLayoutConfirmed3 = true;        // a FOURTH routine reads the same six offsets
+inline constexpr bool kAffineFormulaConfirmed2 = true;       // and the formula a third time
+inline constexpr int kAffineVariants = 4;                    // in place one point, in place two, out of place, functional
+inline constexpr int kCopiedDoubles = 4;                     // RE the four copies
+inline constexpr std::size_t kAffineSrcPairA = 0x00;         // RE 0x5CF6E3
+inline constexpr std::size_t kAffineSrcPairB = 0x10;         // RE 0x5CF713
+static_assert(kAffineVariants == 4, "four variants of one formula");
+static_assert(kCopiedDoubles == 4, "four doubles are copied across");
+static_assert(kAffineSrcPairB - kAffineSrcPairA == kSegmentEndA - kSegmentStartA,
+              "the two pairs are the segment's two points again");
+static_assert(kMatrixLayoutConfirmed2 && kMatrixLayoutConfirmed3, "confirmed twice over and now a fourth time");
+static_assert(kAffineFormulaConfirmed && kAffineFormulaConfirmed2, "and the formula a third time");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
