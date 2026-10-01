@@ -1,6 +1,6 @@
 # TU `equivalent` -- vocabulary dossier
 
-190 functions / 163972 bytes (cited 44922 = 27.4%)
+190 functions / 163972 bytes (cited 47023 = 28.7%)
 
 ## strings referenced
 
@@ -56,7 +56,7 @@
 | `0x9c280` | 2731 | 2 | graph-strict | - | basic_string::_M_construct null not valid |
 | `0x8abb50` | 2549 | 2 | graph-strict | - |  |
 | `0x5a2690` | 2286 | 2 | graph-strict | yes | data@0xa3bd80 |
-| `0x4bb040` | 2101 | 2 | direct | - | ..\verify\equivalent.cpp |
+| `0x4bb040` | 2101 | 2 | direct | yes | ..\verify\equivalent.cpp |
 | `0x715320` | 1964 | 3 | graph | - | data@0x9dfba0 |
 | `0x5387c0` | 1876 | 3 | graph-strict | - | data@0x9dbcb0 |
 | `0x5455a0` | 1863 | 2 | graph-strict | - |  |

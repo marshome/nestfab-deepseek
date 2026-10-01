@@ -255,6 +255,18 @@ inline constexpr Gap kGaps[] = {
      "first result point must sit at the origin under Utils::eps_equals. Option keys here: biggest, "
      "packer_cache, sheet, y_valid, _mod. NOT transcribed: the 12.8 KB checker 0x193420, the "
      "FillNesting/ComputeGroups bodies, the module authorization logic and the cluster construction"},
+    {"tu.equivalent", Status::NotReversed, "0x4BDB70 (11150 B), 0x4BC9E0, 0x4BB040, 0x75BCC0",
+     "the equivalent-problem reduction TU (..\\verify\\equivalent.cpp): 190 functions / 163,972 "
+     "bytes, of which the API surface and the invariants ARE recovered -- EquivalentProblemRaw / "
+     "AddEquivalentPart / IsTooBigGeometry 0x4bdb70, EquivalentSmallerDefects 0x4bc9e0, "
+     "GetOriginalNesting 0x4bb040, EquivalentNestingOrigin 0x4b9fa0, "
+     "EquivalentUsedSurfaceEvaluation 0x4ba110, the EquivalentEngine vtable implementation 0x75bcc0, "
+     "CNS_AddDefectFromNestedPart 0x12f40 -- and the assertions give hard facts: defect_reduction > "
+     "0.0, max_price_per_area != 0.0, extra_equivalent_quantity >= 0, "
+     "modules_geometries.size() == nb_modules, a cache is consulted (it != cache.end()), "
+     "GetOriginalNesting requires multiplicity == 1, and the original itself refuses the grain mode "
+     "('internal error mode not yet supported with grain'). NOT reversed: lcns has NO equivalent "
+     "problem reduction at all, and the defect-reduction and used-surface formulas are unread"},
     {"module.engine", Status::Structural, "0x827F0 / 0x2DF60 / 0x2CCF0",
      "the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are "
      "recovered; the per-strategy budget bookkeeping here is a re-implementation"},
