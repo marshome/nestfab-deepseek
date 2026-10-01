@@ -1463,6 +1463,31 @@ inline constexpr int kComparePathCallers = 4;
 inline constexpr bool kSignResultOpen = true;
 static_assert(kCompareKernel != kLimbAdd, "the comparison kernel is not the addition kernel");
 
+
+// --- the subtraction kernel 0xEF300 is the mirror of the addition (round 268) ---------------------------
+//     0xEF319 sub rax,[r9+r10*8]   ; subtract, where the addition did `add`
+//     0xEF320 setb sil             ; the BORROW, where the addition used `jb`
+//     0xEF324 sub rbx,r11          ; minus the incoming borrow
+//     0xEF327 [rdx+r10*8] = rbx    ; store
+//     0xEF330 setb r11b ; 0xEF346/0xEF34E/0xEF351  the borrow chain
+//     0xEF359 add r10,2            ; two limbs per iteration, as the addition
+inline constexpr std::uintptr_t kLimbSub = 0xEF300;          // RE the whole routine
+inline constexpr bool kSubIsSubtraction = true;              // RE the sub/setb chain
+inline constexpr int kLimbSubCallers = 14;
+inline constexpr int kKernelPair = 2;                        // addition and subtraction
+inline constexpr std::size_t kLimbSubBytes = 111;            // RE the function size
+inline constexpr std::size_t kLimbAddBytes = 114;            // RE the function size
+static_assert(kSubIsSubtraction, "the kernel subtracts");
+static_assert(kKernelPair == 2, "two arithmetic kernels are identified");
+// The caller 0xF1B20 scans the limbs from the top and then subtracts. Whether it converts the borrow into a sign
+// is NOT read, so the sign question stays open even though the kernel no longer is.
+inline constexpr bool kComparisonUsesSubtraction = true;
+
+// --- the two kernels are a mirror pair (round 268) ----------------------------------------------------
+inline constexpr std::uintptr_t kKernelAdd = 0xEF280;        // the addition kernel
+inline constexpr std::uintptr_t kKernelSub = 0xEF300;        // the subtraction kernel
+static_assert(kKernelAdd != kKernelSub, "the two kernels are distinct addresses");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

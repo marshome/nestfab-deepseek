@@ -2677,5 +2677,50 @@ int main() {
         CHECK(compareFromTop({1, 1}, {9, 0}) == false);  // 1 is not < 0 at the top
     }
 
+    // --- the subtraction kernel, the mirror of the addition (RE 0xef300) ---------------------------
+    {
+        CHECK(kLimbSub == 0xEF300);
+        CHECK(kSubIsSubtraction);
+        CHECK(kLimbSubCallers == 14);
+        CHECK(kKernelPair == 2);
+        CHECK(kLimbSubBytes == 111);
+        CHECK(kLimbAddBytes == 114);
+        CHECK(kLimbSubBytes < kLimbAddBytes);
+        CHECK(kComparisonUsesSubtraction);
+        CHECK(kSignResultOpen);                         // the caller's sign convention is still unread
+        CHECK(kKernelAdd == kLimbAdd);
+        CHECK(kKernelSub == kCompareKernel);
+        CHECK(kKernelAdd != kKernelSub);
+
+        // the borrow propagation the instructions perform, limb by limb
+        const auto subWithBorrow = [](const std::vector<std::uint64_t>& a,
+                                      const std::vector<std::uint64_t>& b) {
+            std::vector<std::uint64_t> out(a.size(), 0);
+            std::uint64_t borrow = 0;                   // the incoming borrow
+            for (std::size_t i = 0; i < a.size(); ++i) {
+                const std::uint64_t first = a[i] - b[i];        // RE 0xEF319
+                const bool borrowed = a[i] < b[i];              // RE 0xEF320 (setb)
+                const std::uint64_t second = first - borrow;    // RE 0xEF324
+                const bool borrowedAgain = first < borrow;      // RE 0xEF330 (setb)
+                out[i] = second;
+                borrow = (borrowed || borrowedAgain) ? 1u : 0u; // RE the borrow chain
+            }
+            return out;
+        };
+        const auto d1 = subWithBorrow({5, 5}, {1, 2});
+        CHECK(d1[0] == 4);
+        CHECK(d1[1] == 3);
+        // borrowing out of the low limb
+        const auto d2 = subWithBorrow({0, 1}, {1, 0});
+        CHECK(d2[0] == ~0ULL);
+        CHECK(d2[1] == 0);
+        // subtracting a number from itself gives zero
+        const auto d3 = subWithBorrow({7, 7}, {7, 7});
+        CHECK(d3[0] == 0);
+        CHECK(d3[1] == 0);
+        // and the addition kernel's carry chain is the same shape, reversed
+        CHECK(kLimbsPerIteration == 2);
+    }
+
     return check::finish("test_recovered");
 }

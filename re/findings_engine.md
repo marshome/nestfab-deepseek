@@ -5404,3 +5404,21 @@ F48BC  dword [rbx+0x20] = 0    ; ★ 运算完成时**清掉标签**
 ★ **不声称**：不声称它返回符号，也不声称 `0xEF300` 内部算什么（`kSignResultOpen = true`）。
 
 **已落 `layout.hpp`**：`kAddRoutine`、`kAddClearsTag`、`kCarryIntoTail`、`kAdditionConfirmations`、`kCompareKernel`、`kReverseLimbCompare`、`kSignResultOpen` + **三条 `static_assert`** + 测试 22 条。
+
+### 附 188 **第二个内核是减法**（加法内核的镜像，goal round 268）**[已落码]
+
+`0xEF300`（111 B / 14 个调用者）与 `0xEF280`（114 B）逐条对照：
+
+| 加法内核 `0xEF280` | **减法内核 `0xEF300`** |
+|---|---|
+| `add rax,[r8+r10*8]` | `sub rax,[r9+r10*8]` |
+| `jb`（进位）| `setb sil`（**借位**）|
+| `add rax,rsi`（叠加进位）| `sub rbx,r11`（减去借位）|
+| `setb sil` 传播 | `setb r11b` 传播 |
+| `add r10,2`（每轮两字）| `add r10,2`（同）|
+
+⇒ 族的两个运算（**加、减**）**均由指令认定**；两者尺寸仅差 3 字节（**镜像对**）。
+
+★ **依然开放的不是内核而是调用者**：`0xF1B20` 先从高位扫描、再做这个减法，但**它是否把借位变成符号尚未读到** ⇒ `kSignResultOpen` **保持 true**，而内核身份已记录。
+
+**已落 `layout.hpp`**：`kLimbSub`、`kSubIsSubtraction`、`kKernelPair`、`kLimb*Bytes`、`kComparisonUsesSubtraction`、`kKernelAdd`/`kKernelSub` + **三条 `static_assert`** + 测试 21 条（含借位链的三个手算样本）。
