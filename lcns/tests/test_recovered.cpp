@@ -286,38 +286,38 @@ int main() {
         equivalent::zeroTriple(nullptr);   // the port guards; the original does not
     }
 
-    // --- the twelve length-prefixed parameter names (RE the 0x6ca720 family) --------------
+    // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
-        CHECK(std::strcmp(kParamNames[0], "10BeamValues") == 0);   // RE 0x6ca720
-        CHECK(std::strcmp(kParamNames[1], "10Off2Weight") == 0);   // RE 0x6ca840
-        CHECK(std::strcmp(kParamNames[2], "10PartRatios") == 0);   // RE 0x6ca960
-        CHECK(std::strcmp(kParamNames[3], "11RepeatSheet") == 0);   // RE 0x6caa80
-        CHECK(std::strcmp(kParamNames[4], "11TilingLimit") == 0);   // RE 0x6caba0
-        CHECK(std::strcmp(kParamNames[5], "13ODescriptions") == 0);   // RE 0x6cacc0
-        CHECK(std::strcmp(kParamNames[6], "13PosDirections") == 0);   // RE 0x6cade0
-        CHECK(std::strcmp(kParamNames[7], "14ODescriptions2") == 0);   // RE 0x6caf00
-        CHECK(std::strcmp(kParamNames[8], "6UseMap") == 0);   // RE 0x6cb020
-        CHECK(std::strcmp(kParamNames[9], "7OPricer") == 0);   // RE 0x6cb140
-        CHECK(std::strcmp(kParamNames[10], "7ZfSizes") == 0);   // RE 0x6cb260
-        CHECK(std::strcmp(kParamNames[11], "8DegSteps") == 0);   // RE 0x6cb380
+        CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
+        CHECK(std::strcmp(kTypeInfoNames[1], "10Off2Weight") == 0);   // RE 0x6ca840
+        CHECK(std::strcmp(kTypeInfoNames[2], "10PartRatios") == 0);   // RE 0x6ca960
+        CHECK(std::strcmp(kTypeInfoNames[3], "11RepeatSheet") == 0);   // RE 0x6caa80
+        CHECK(std::strcmp(kTypeInfoNames[4], "11TilingLimit") == 0);   // RE 0x6caba0
+        CHECK(std::strcmp(kTypeInfoNames[5], "13ODescriptions") == 0);   // RE 0x6cacc0
+        CHECK(std::strcmp(kTypeInfoNames[6], "13PosDirections") == 0);   // RE 0x6cade0
+        CHECK(std::strcmp(kTypeInfoNames[7], "14ODescriptions2") == 0);   // RE 0x6caf00
+        CHECK(std::strcmp(kTypeInfoNames[8], "6UseMap") == 0);   // RE 0x6cb020
+        CHECK(std::strcmp(kTypeInfoNames[9], "7OPricer") == 0);   // RE 0x6cb140
+        CHECK(std::strcmp(kTypeInfoNames[10], "7ZfSizes") == 0);   // RE 0x6cb260
+        CHECK(std::strcmp(kTypeInfoNames[11], "8DegSteps") == 0);   // RE 0x6cb380
         // the scheme holds for every one of them: prefix == length, and it round trips
         for (int i = 0; i < 12; ++i) {
             std::string decoded;
-            CHECK(decodeParamName(kParamNames[i], &decoded));
-            CHECK(encodeParamName(decoded) == kParamNames[i]);
-            CHECK(paramNameIndex(kParamNames[i]) == i);
+            CHECK(decodeTypeInfoName(kTypeInfoNames[i], &decoded));
+            CHECK(encodeTypeInfoName(decoded) == kTypeInfoNames[i]);
+            CHECK(typeInfoNameIndex(kTypeInfoNames[i]) == i);
         }
         // a wrong or missing prefix, or a trailing name, is rejected
         std::string tmp;
-        CHECK(!decodeParamName("99BeamValues", &tmp));
-        CHECK(!decodeParamName("BeamValues", &tmp));
-        CHECK(!decodeParamName("0", &tmp));
-        CHECK(!decodeParamName("6Use", &tmp));
-        CHECK(paramNameIndex("10NotAName") == -1);
-        CHECK(encodeParamName("UseMap") == kParamNames[8]);
+        CHECK(!decodeTypeInfoName("99BeamValues", &tmp));
+        CHECK(!decodeTypeInfoName("BeamValues", &tmp));
+        CHECK(!decodeTypeInfoName("0", &tmp));
+        CHECK(!decodeTypeInfoName("6Use", &tmp));
+        CHECK(typeInfoNameIndex("10NotAName") == -1);
+        CHECK(encodeTypeInfoName("UseMap") == kTypeInfoNames[8]);
         // the two names that carry a digit must still decode
-        CHECK(decodeParamName("10Off2Weight", &tmp) && tmp == "Off2Weight");
-        CHECK(decodeParamName("14ODescriptions2", &tmp) && tmp == "ODescriptions2");
+        CHECK(decodeTypeInfoName("10Off2Weight", &tmp) && tmp == "Off2Weight");
+        CHECK(decodeTypeInfoName("14ODescriptions2", &tmp) && tmp == "ODescriptions2");
     }
 
     // --- the surface-slack assertion as a predicate (RE 0x81c370 / 0x81c690 / 0x81c9b0) --------

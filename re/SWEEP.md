@@ -1423,3 +1423,12 @@
 * `14twoxtwo_action`  → name `twoxtwo_action`
 
 **口径**：这是字符串层面的事实；「它们都是选项名」是推论，需要逐个看引用者。
+
+## 类名 ↔ vtable 对照（goal round 80）**[已证实为指针链]**
+
+Itanium 布局：vtable 前两个字分别是 offset-to-top 与 **type_info 指针**，type_info 的第二个字是 **名字指针**。于是每个 vtable 只需两次间接就能取到真实类名。
+
+解出：**0 / 443** 个 vtable。
+
+
+**口径**：指针链与字符串是硬事实；「该 vtable 属于该类」由 ABI 布局保证。

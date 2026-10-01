@@ -13,7 +13,7 @@ LCNS_STRUCTURAL(tu.structure_interface);
 // caller skips when 0.99*reference <= candidate. Expressed as a predicate on the surviving side.
 namespace lcns {
 // RE the 0x6CA720 family, read one by one in round 66 (handler address -> stored name).
-const char* const kParamNames[12] = {
+const char* const kTypeInfoNames[12] = {
     "10BeamValues",
     "10Off2Weight",
     "10PartRatios",
@@ -29,11 +29,11 @@ const char* const kParamNames[12] = {
 };
 
 // RE the encoding: <decimal length><name>, with the length always truthful in the twelve samples.
-std::string encodeParamName(const std::string& name) {
+std::string encodeTypeInfoName(const std::string& name) {
     return std::to_string(name.size()) + name;
 }
 
-bool decodeParamName(const std::string& encoded, std::string* name) {
+bool decodeTypeInfoName(const std::string& encoded, std::string* name) {
     std::size_t i = 0;
     while (i < encoded.size() && encoded[i] >= '0' && encoded[i] <= '9') {
         ++i;
@@ -52,9 +52,9 @@ bool decodeParamName(const std::string& encoded, std::string* name) {
 }
 
 // One handler per name, so an encoded name identifies the handler.
-int paramNameIndex(const std::string& encoded) {
+int typeInfoNameIndex(const std::string& encoded) {
     for (int i = 0; i < 12; ++i) {
-        if (encoded == kParamNames[i]) {
+        if (encoded == kTypeInfoNames[i]) {
             return i;
         }
     }
