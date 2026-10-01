@@ -1210,6 +1210,32 @@ static_assert(kInterfaceOffset == 0x98, "the interface pointer sits at 0x98");
 static_assert(kStatusCountB - kStatusCountA == 8, "the two counts are eight bytes apart");
 static_assert(kStatusSentinel == -1, "the sentinel is minus one");
 
+
+// --- the optional-buffer releaser 0x87D4E0, two callers (round 260) -----------------------------------
+//     0x87D4E5 cmp byte [rcx+0x78],0 ; je        ; the FIRST byte of the trio round 258 half-cleared
+//     0x87D4EE/0x87D4F7 the buffer at +0x68, released with 0x9984A0
+//     0x87D4FC/0x87D504 the buffer pointer and its flag are both cleared
+//     0x87D508/0x87D514 the second buffer at +0xA0, released the same way
+//     0x87D519/0x87D524/0x87D52F/0x87D53A   +0xA0, +0xA8, +0xB0 and +0xB8 are zeroed
+inline constexpr std::size_t kByteTrioA = 0x78;              // RE 0x87D4E5 -- round 258 cleared B and C
+inline constexpr std::size_t kOptionalBuffer = 0x68;         // RE 0x87D4EE
+inline constexpr std::size_t kSecondBuffer = 0xA0;           // RE 0x87D508
+inline constexpr std::size_t kBlockA0 = 0xA0;                // RE 0x87D519
+inline constexpr std::size_t kBlockA0End = 0xB8;             // RE 0x87D53A
+inline constexpr int kBlockA0Qwords = 4;                     // RE the four stores
+inline constexpr std::uintptr_t kReleaserAlt = 0x9984A0;     // RE 0x87D4F7, distinct from 0x9984B0
+inline constexpr int kReleaserCallers = 2;
+static_assert(kBlockA0End - kBlockA0 == (kBlockA0Qwords - 1) * 8, "four qwords, eight bytes apart");
+static_assert(kByteTrioA + 2 == kResetByteB, "the trio starts two bytes before round 258's second byte");
+
+// --- the two-step trampoline 0x8772A0, four callers (round 260) ----------------------------------------
+//     0x8772AD call 0x877120                     ; obtain a value
+//     0x8772BA mov ecx,eax ; 0x8772C1 jmp 0x65C940 ; and marshal it into the next function
+inline constexpr std::uintptr_t kTrampoline = 0x8772A0;      // RE the whole routine
+inline constexpr std::uintptr_t kTrampolineInner = 0x877120; // RE 0x8772AD
+inline constexpr std::uintptr_t kTrampolineTarget = 0x65C940; // RE 0x8772C1
+inline constexpr int kTrampolineCallers = 4;
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

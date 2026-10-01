@@ -5236,3 +5236,16 @@ F34F3/F34F6  复制 `+0x20` 的 32 位字段 —— 即 rounds 249/253 的**标�
 ⇒ **`+0x98` 是一个多态接口**；对象以 **−1 / 1 / 2** 作为返回码语义。这是本项目首次读到**虚表接口布局**（此前只有“虚表指针地址”）。
 
 **已落 `layout.hpp`**：`kNonNull*`、`kStatus*`、`kInterfaceOffset`、`kVtableSlotA/B/C` + **三条 `static_assert`** + 测试 27 条。
+
+### 附 180 **可选缓冲区释放器**与**两级跳板**（goal round 260）**[已落码]
+
+**（a）`0x87D4E0`（107 B）**：先看 `+0x78` 字节标志，释放 `+0x68` 的缓冲区（用 **`0x9984A0`**），清掉指针与标志；再释放 `+0xA0` 的第二个缓冲区，并将 **`+0xA0`/`+0xA8`/`+0xB0`/`+0xB8` 四个 qword 置零**。
+
+★ **三条结论**：
+1. **字节三连是 `+0x78`/`+0x79`/`+0x7A`** —— round 258 清的是**后两个**，本轮补上了**缺的第一个**；（测试里用 `kByteTrioA+1 == kResetByteA`、`+2 == kResetByteB` 锁死）
+2. **`0x9984A0` 是第二个释放器**，**与广泛共用的 `0x9984B0` 不同**（测试断言 `kReleaserAlt != kSharedDealloc`）；
+3. `+0xA0` 起是一个**32 字节块**（四个 qword，步长 8）。
+
+**（b）`0x8772A0`（38 B / 4 个调用者）**：`call 0x877120` 取值，再 `mov ecx,eax ; jmp 0x65C940` 把该值传给下一个函数 ⇒ **两级跳板**。
+
+**已落 `layout.hpp`**：`kByteTrioA`、`kOptionalBuffer`、`kSecondBuffer`、`kBlockA0*`、`kReleaserAlt`、`kTrampoline*` + **两条 `static_assert`** + 测试 25 条。

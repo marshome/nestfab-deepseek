@@ -2374,5 +2374,34 @@ int main() {
         CHECK(answered(2));
     }
 
+    // --- the buffer releaser and the trampoline (RE 0x87d4e0 and 0x8772a0) --------------------------
+    {
+        CHECK(kByteTrioA == 0x78);
+        CHECK(kOptionalBuffer == 0x68);
+        CHECK(kSecondBuffer == 0xA0);
+        CHECK(kBlockA0 == 0xA0);
+        CHECK(kBlockA0End == 0xB8);
+        CHECK(kBlockA0Qwords == 4);
+        CHECK(kBlockA0End - kBlockA0 == (kBlockA0Qwords - 1) * 8);
+        CHECK(kBlockA0End - kBlockA0 == 24);
+        CHECK(kReleaserAlt == 0x9984A0);
+        CHECK(kReleaserCallers == 2);
+        // the second releaser is NOT the widely shared one
+        CHECK(kReleaserAlt != kSharedDealloc);
+        CHECK(kSharedDealloc == 0x9984B0);
+        // cross-link: this routine uses the FIRST byte of the trio whose other two round 258 clears
+        CHECK(kByteTrioA + 1 == kResetByteA);
+        CHECK(kByteTrioA + 2 == kResetByteB);
+        CHECK(kResetByteB == kStatusFlag);
+        CHECK(kOptionalBuffer < kByteTrioA);
+
+        CHECK(kTrampoline == 0x8772A0);
+        CHECK(kTrampolineInner == 0x877120);
+        CHECK(kTrampolineTarget == 0x65C940);
+        CHECK(kTrampolineCallers == 4);
+        CHECK(kTrampoline != kTrampolineInner);
+        CHECK(kTrampoline != kTrampolineTarget);
+    }
+
     return check::finish("test_recovered");
 }
