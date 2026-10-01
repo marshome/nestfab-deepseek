@@ -717,6 +717,25 @@ static_assert(kCtorPairBWord - kCtorPairAWord == kCtorPairSpacing, "the two pair
 inline constexpr std::size_t kRatioAlmostNum = 0x30;        // RE 0x7DC401
 inline constexpr std::size_t kRatioAlmostDen = 0x38;        // RE 0x7DC40B
 inline constexpr int kRatioAlmostPair = 2;                  // 0x7DB7D0 and 0x7DC360
+// RE 0x7DB7D0 (round 238), the pair's larger member, read to complete the family's field table:
+//     7DB844/7DB84E/7DB858  it compares three key words first: +0x20, then +0x18, then +0x10
+//     7DB85E/7DB863        xmm1 = [rcx+0x40], xmm2 = [rdx+0x40]   <- the PRIMARY pair is +0x40 here
+//     7DB868 xmm3 = [50.0] ; 7DB874 subsd ; 7DB878 andpd ; 7DB880 ucomisd ; 7DB884 ja
+//     7DB886 seta          the direct comparison, taken when the margin is not exceeded
+//     7DB89D/7DB8BB        the ratio cross products from +0x30 and +0x38, as in round 233
+//     7DB8CC call 0x5E6060 ; 7DB8D5 seta   the epsilon guarded ratio comparison
+// So each family member has its own PRIMARY OFFSET (+0x38 for the round-216 member, +0x50/+0x88 for the
+// twin group, +0x40 here) AND its own ratio offsets: the twin group reads +0x40/+0x80 and +0x78/+0x48 while
+// this pair reads +0x30/+0x38. Round 233's note that the ratio fields are shared was wrong and is corrected
+// here: what the members share is the 50.0 literal and the rule, not the offsets. This pair additionally
+// compares three key words before applying the rule.
+inline constexpr std::size_t kRatioAlmostPrimary = 0x40;    // RE 0x7DB85E
+inline constexpr int kRatioAlmostKeyWords = 3;              // RE 0x7DB844, 0x7DB84E, 0x7DB858
+inline constexpr std::size_t kRatioAlmostKeyA = 0x20;       // RE 0x7DB844
+inline constexpr std::size_t kRatioAlmostKeyB = 0x18;       // RE 0x7DB84E
+inline constexpr std::size_t kRatioAlmostKeyC = 0x10;       // RE 0x7DB858
+static_assert(kRatioAlmostKeyA > kRatioAlmostKeyB && kRatioAlmostKeyB > kRatioAlmostKeyC,
+              "the key words are compared in descending offset order");
 inline constexpr int kRatioFamilyRuleCases = 3;             // equal by tie test, ordered, or margin
 
 }  // namespace lcns

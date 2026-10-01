@@ -1859,6 +1859,24 @@ int main() {
         CHECK(kRatioAlmostNum == 0x30);
         CHECK(kRatioAlmostDen == 0x38);
         CHECK(kRatioAlmostPair == 2);
+        // round 238: this pair's own primary offset and its three key words
+        CHECK(kRatioAlmostPrimary == 0x40);
+        CHECK(kRatioAlmostKeyWords == 3);
+        CHECK(kRatioAlmostKeyA == 0x20);
+        CHECK(kRatioAlmostKeyB == 0x18);
+        CHECK(kRatioAlmostKeyC == 0x10);
+        CHECK(kRatioAlmostKeyA > kRatioAlmostKeyB);
+        CHECK(kRatioAlmostKeyB > kRatioAlmostKeyC);
+        // each member has a different primary offset, which is why the table has three entries
+        CHECK(kRatioAlmostPrimary != kRatioPrimaryOffset);
+        CHECK(kRatioAlmostPrimary != kRatioFamilyPrimaryA);
+        // CORRECTED in round 238: the ratio offsets are NOT shared either. My first version asserted
+        // they were, and the failure showed the opposite: the twin group reads +0x40/+0x80 and +0x78/+0x48,
+        // while this pair reads +0x30/+0x38. Only the 50.0 literal and the RULE are shared across members.
+        CHECK(kRatioAlmostNum != kRatioFamilyNumA);
+        CHECK(kRatioAlmostDen != kRatioFamilyDenB);
+        CHECK(kRatioAlmostNum == 0x30 && kRatioAlmostDen == 0x38);
+        CHECK(kRatioFamilyNumA == 0x40 && kRatioFamilyDenB == 0x48);
         CHECK(kRatioFamilyRuleCases == 3);
         CHECK(kRatioAlmostDen - kRatioAlmostNum == 8);
         CHECK(kAlmostEqualPredicate == 0x5E6060);        // the predicate the tie test calls

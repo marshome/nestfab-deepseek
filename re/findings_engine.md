@@ -4866,3 +4866,20 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 ⇒ **单位四元组 `(0,1,0,0)`**（四分量量的单位值）出现**两次**；且 **−1 哨兵第四次出现**（rounds 178/180/219、本轮），这一次用在**栈位**而非对象字段。
 
 **已落 `layout.hpp`**：`kIdentityQuadPattern`、`kIdentityQuadCount`、`kSentinelQwordUses`、`kIdentityQuadStride`+ `static_assert` + 测试 11 条。
+
+### 附 160 族内**每个成员有自己的主字段**；且这一对先比三个键字（goal round 238）**[已落码]
+
+`0x7DB7D0`（811 B）补全了族的字段表：
+
+```
+7DB844/7DB84E/7DB858  先比三个键字：`+0x20`、`+0x18`、`+0x10`
+7DB85E/7DB863  xmm1=[rcx+0x40]、xmm2=[rdx+0x40]      ; ★ **本成员的主字段是 `+0x40`**
+7DB868/7DB874/7DB880/7DB884  与 50 比较（绝对差）；超出 ⇒ 直接比（`seta`）
+7DB89D/7DB8BB  比值交叉积（`+0x30` 与 `+0x38`）
+7DB8CC/7DB8D5  `almostEqual` 守卫后比大小
+```
+
+⇒ **三个成员的主字段各不相同**：round 216 用 `+0x38`、孪生组用 `+0x50`/`+0x88`、**本成员用 `+0x40`**；而**比值字段 `+0x30`/`+0x38` 是全族共用**。
+另：本成员在规则之前**先比三个键字**（降序偏移）。
+
+**已落 `layout.hpp`**：`kRatioAlmostPrimary`、`kRatioAlmostKey*`、`kRatioAlmostKeyWords` + `static_assert` + 测试 12 条。
