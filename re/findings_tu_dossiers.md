@@ -1572,3 +1572,34 @@
 | 函数 | 字节 | 指令 | 证据（引用的类） |
 |---|---:|---:|---|
 | `0x5f47c0` | 112 | 29 | `Utils::TimerWinImplementation` |
+
+## TU 档案：`..\multi\nesting_context.cpp`（goal round 160）**[每行带自带文本]**
+
+**方法**：该 TU 的路径字符串出现在哪些函数里，那些函数就归属于它；它们同时携带**断言原文**，因此可以在**方法名层面**记录。
+
+**共 22 个函数 / 31244 字节**；恢复出的名字：`ComputeSheetLayers`、`FillNestingAndSplit`、`GetNestingPart`、`IsCompatible`、`authorizations`、`group_indices`、`layers`、`m_parts`、`matrix_indices`、`multiplicity`、`packer_cache`
+
+| 函数 | 字节 | 自带文本（即证据）|
+|---|---:|---|
+| `0x41920` | 5640 | `sheet`、`nesting.multiplicity() == 1u`、`nesting.sheet()` |
+| `0x69aa40` | 4801 | `nb_modules > 0`、`_mod`、`m_parts.size() >= nb_parts` |
+| `0x442e0` | 2520 | `count++ <= initial_multiplicity`、`FillNestingAndSplit` |
+| `0x3c9e0` | 2045 | `!layers.front().empty()`、`ComputeSheetLayers` |
+| `0x3dbe0` | 2033 | `sheet`、`nesting_part_index < m_parts.size()`、`ToNesting` |
+| `0x3f070` | 1733 | `nesting_part_index < m_parts.size()`、`GetNestingPart` |
+| `0x40070` | 1697 | `matrix_indices.size() == group_indices.size()`、`part_and_module.part()->module(part_and_module.module_index()).authori`、`ComputeGroups` |
+| `0x3e740` | 1547 | `biggest`、`packer_cache`、`SetMultiTorchParameters` |
+| `0x3c3f0` | 1517 | `biggest`、`context.GetPackerCache()`、`SetCommonCutParameters` |
+| `0x40720` | 1220 | `sheet`、`!box.empty()`、`Renested ` |
+| `0x3bcc0` | 1089 | `index <= quantities.size()`、`NestedQuantities` |
+| `0x696c50` | 1030 | `sheet`、`Default`、`Implementation` |
+| `0x43180` | 573 | `sheet`、`DirectionalFillNesting` |
+| `0x3b2f0` | 524 | `y_valid`、`ComputeRealNestingWindow` |
+| `0x7d3e50` | 504 | `index >= 0 && index < m_parts.size()`、`!IsCluster(p)`、`GetStructureModule` |
+| `0x43670` | 475 | `nesting.sheet()`、`DirectionalFillNesting` |
+| `0x69a720` | 454 | `vector::_M_range_check: __n (which is %zu) >= this->size() (which is %`、`index >= (m_parts.size() - m_clusters.size()) && index < m_parts.size(`、`GetCluster` |
+| `0x434d0` | 407 | `nesting.sheet()`、`FillNesting` |
+| `0x3b8a0` | 394 | `false`、`GetNestingAngle` |
+| `0x3b5f0` | 367 | `sheet`、`GetTypicalLength` |
+| `0x7d4050` | 356 | `index >= 0 && index < m_parts.size()`、`IsCluster` |
+| `0x7d3d10` | 318 | `nesting_part_index < m_parts.size()`、`GetNestingPart` |
