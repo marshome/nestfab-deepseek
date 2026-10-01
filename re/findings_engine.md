@@ -6942,3 +6942,26 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ **两处偏移巧合，记为巧合**：`+0x28`、`+0x30` 在仿射矩阵里是平移的 y 及邻位；`+0x60` 是 round 343 组合例程用的权重。**它们是不同类型、来自不同子系统** ⇒ 记为**偏移重现**，而非“同一对象被看到两次”（自 round 262 起的区分）。
 
 **已落 `layout.hpp`**：`kGetter60`、`kGetter60Callers`(102)、`kGetter60Offset`(0x60)、`kAccessorPair28/30`、`kAccessorPair28/30Callers`(74/85)、`kAccessorPair28/30Offset`(0x28/0x30)、`kQuantitiesAre28And30`、`kChainLength`(3)、`kOffsetsRecur`、`kNotMergedAcrossTypes` + **五条 `static_assert`** + 测试 26 条（含用结构体模拟该链并累加得 6.5 的行为验证）。
+
+### 附 269 ★★ **本语料库最大函数的开头，以及第三个除法魔数**（goal round 351）**[已落码]**
+
+`0x243820`（**15,524 B** / 3 个调用者）—— 本工作读过的最大函数体：
+
+```
+24382C  `sub rsp, **0xE18**`              ; 帧 3,608 字节
+243833..243855  保存**六个 XMM**
+243871/243874/243879  rsi = rdx；**xmm9 = xmm2**；**xmm8 = xmm3**   ; ★ 参数含 double
+243889  lea rdx,[rip+**0x8DEC00**]        ; 字面量 **`'pv|'`**
+243890/243898  call **0x5F4310**（带该字符串）、**0x51D0C0**
+2438A1  rdx = `[rax+8] − [rax]`        ; ★ **一个区间的长度**
+2438A7  movabs rdx, **0xEEEEEEEEEEEEEEEF** ; ★★ **第三个除法魔数**
+```
+
+★ 该魔数是**除以 18（或 9，取决于随后的移位）**的已知值，而它**紧接在区间长度计算之后** ⇒ 指向**以 18 字节为单位数记录**。
+**如实处理**：只记“该常量是什么”与“它前面是什么”，并把**决定除数的移位标为未读**（`kShiftNotReadYet`），而不当作已定的除数。
+
+★ 帧、六个被保存的 double、double 参数与字符串合起来说明它是**几何入口**，这也是它为何是该子对象最重的使用者。
+
+★ `0x51D2F0` 的十个最大调用者中**有两个仍为未引用领域代码**；**其地址在此不写**（自 round 278 的规矩）—— **只计数，不命名**（`kTopCallersUncited = 2`）。
+
+**已落 `layout.hpp`**：`kBigRoutine`(0x243820)、`kBigRoutineSize`(15524)、`kBigRoutineCallers`(3)、`kBigFrame`(0xE18)、`kBigXmmSaved`(6)、`kStringPvBarRva`(0x8DEC00)、`kStringPvBar`、`kHelper5F4310`、`kHelper51D0C0`、`kRangeLengthComputed`、`kDivisionMagic18`、`kDivisionMagicDivisors`(3)、`kShiftNotReadYet`、`kImpliedRecordBytes`(18)、`kTopCallersUncited`(2) + **五条 `static_assert`** + 测试 26 条。

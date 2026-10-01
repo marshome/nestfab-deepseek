@@ -5720,5 +5720,43 @@ int main() {
         CHECK(kChainLength == 3);
     }
 
+    // --- the largest routine's head, and the third division magic (RE 0x243820) --------------------
+    {
+        CHECK(kBigRoutine == 0x243820);
+        CHECK(kBigRoutineSize == 15524);
+        CHECK(kBigRoutineCallers == 3);
+        CHECK(kBigFrame == 0xE18);
+        CHECK(kBigFrame == 3608);
+        CHECK(kBigXmmSaved == 6);
+        CHECK(kStringPvBarRva == 0x8DEC00);
+        CHECK(std::string(kStringPvBar) == "pv|");
+        CHECK(kHelper5F4310 == 0x5F4310);
+        CHECK(kHelper51D0C0 == 0x51D0C0);
+        CHECK(kHelper5F4310 != kHelper51D0C0);
+        CHECK(kRangeLengthComputed);
+        CHECK(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL);
+        CHECK(kDivisionMagicDivisors == 3);
+        CHECK(kShiftNotReadYet);
+        CHECK(kImpliedRecordBytes == 18);
+        CHECK(kTopCallersUncited == 2);
+        CHECK(kGetter60 == 0x51D2F0);
+        CHECK(kHelper51D0C0 != kGetter60);                 // a different helper in the same range
+        CHECK(kBigRoutineSize > kComposeFrame);           // the body dwarfs the frames read earlier
+
+        // the two division magics already confirmed, and this third one, by value
+        CHECK(kDivisionMagic18 != 0x431BDE82D7B634DBULL);  // one million
+        CHECK(kDivisionMagic18 != 0xC30C30C30C30C30DULL);  // twenty-one
+        CHECK(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL);
+        // the shift that would settle eighteen against nine has not been read, and the constants say so
+        CHECK(kShiftNotReadYet);
+        CHECK(kImpliedRecordBytes * 2 == 36);              // eighteen and nine are the two candidates
+        CHECK(kRangeLengthComputed);
+        // a range length is end minus begin, as the instruction computes it
+        const auto rangeLength = [](std::uintptr_t begin, std::uintptr_t end) { return end - begin; };
+        CHECK(rangeLength(0x1000, 0x1012) == 18);
+        CHECK(rangeLength(0x1000, 0x1000) == 0);
+        CHECK(rangeLength(0, 0x24) == 36);
+    }
+
     return check::finish("test_recovered");
 }

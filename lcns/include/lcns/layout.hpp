@@ -3612,6 +3612,35 @@ static_assert(kAccessorPair30Callers > kAccessorPair28Callers, "the second acces
 static_assert(kQuantitiesAre28And30 && kChainLength == 3, "three routines, two quantities");
 static_assert(kOffsetsRecur && kNotMergedAcrossTypes, "the same offsets, and no merging");
 
+
+// --- the largest routine's head, and a third division magic (round 351) -----------------------------------
+//     0x24382C sub rsp,0xE18            ; the frame
+//     0x243871/0x243874/0x243879        ; rdx, xmm2 and xmm3 -- pointers and doubles
+//     0x243889 lea rdx,[rip+0x8DEC00]   ; the literal 'pv|'
+//     0x243890/0x243898                 ; the helpers 0x5F4310 and 0x51D0C0
+//     0x2438A1 rdx = [rax+8] - [rax]    ; a range's length
+//     0x2438A7 movabs rdx,0xEEEEEEEEEEEEEEEF  ; the division magic
+inline constexpr std::uintptr_t kBigRoutine = 0x243820;      // RE the head
+inline constexpr std::size_t kBigRoutineSize = 15524;        // the largest body read so far
+inline constexpr int kBigRoutineCallers = 3;
+inline constexpr std::size_t kBigFrame = 0xE18;              // RE 0x24382C
+inline constexpr int kBigXmmSaved = 6;                       // RE the six movaps stores
+inline constexpr std::uintptr_t kStringPvBarRva = 0x8DEC00;  // RE 0x243889
+inline constexpr const char* kStringPvBar = "pv|";
+inline constexpr std::uintptr_t kHelper5F4310 = 0x5F4310;    // RE 0x243890
+inline constexpr std::uintptr_t kHelper51D0C0 = 0x51D0C0;    // RE 0x243898
+inline constexpr bool kRangeLengthComputed = true;           // RE 0x2438A1
+inline constexpr std::uint64_t kDivisionMagic18 = 0xEEEEEEEEEEEEEEEFULL;  // RE 0x2438A7
+inline constexpr int kDivisionMagicDivisors = 3;             // 1e6, 21 and this
+inline constexpr bool kShiftNotReadYet = true;               // so the divisor is 18 or 9, not settled here
+inline constexpr std::size_t kImpliedRecordBytes = 18;       // if the quotient is by eighteen
+inline constexpr int kTopCallersUncited = 2;                 // counted, not named
+static_assert(kBigFrame == 0xE18 && kBigFrame > 0x800, "a frame of 3608 bytes");
+static_assert(kBigXmmSaved == 6, "six doubles preserved across the call");
+static_assert(kDivisionMagic18 == 0xEEEEEEEEEEEEEEEFULL, "the magic as loaded");
+static_assert(kShiftNotReadYet, "and the shift that fixes the divisor is marked unread");
+static_assert(kTopCallersUncited == 2, "two of the ten largest callers remain un-cited, and are not named here");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
