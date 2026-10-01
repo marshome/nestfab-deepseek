@@ -1688,3 +1688,19 @@
 | `0x65e310` | 284 | `..\nesting\algos\../nesting.hpp` |
 
 **合计归档**：**10** 个未引用函数。
+
+# 附 81 “成员/方法名”通道的归档（goal round 163）**[每行带命中标识符]**
+
+**规则**：函数自带文本含**领域标识符**（成员名 / 下划线名 / 作用域名），且**无**库标记；**命中的标识符逐行存储**作为该行证据。
+已排除的库标识符：`size()`、`deque::_M_new_elements_at_*`、`memcpy_s`、`transaction_safe`、`restrict`、`basic_string`、`vector::`、`std::`、`boost`、`CryptoPP`、`entry_event`、`exit_event`。
+
+**共 6 个函数 / 5234 字节**。
+
+| 函数 | 字节 | 命中的领域标识符（证据）| 自带文本片段 |
+|---|---:|---|---|
+| `0x1b0760` | 2060 | `after_shake`、`before_shake` | `shaker_` |
+| `0x1a1810` | 1545 | `nb_double_steps`、`nb_int_steps`、`nb_strips` | `p.first ` |
+| `0x506780` | 540 | `border_property`、`extra_geometries` | `border_property` |
+| `0x5524b0` | 496 | `nb_parsed` | `[Cluster : time=` |
+| `0x5069a0` | 392 | `quality_zone_enable`、`quality_zone_interactions` | `quality_zone_enable` |
+| `0x505780` | 201 | `clustered_parts` | `clustered_parts` |
