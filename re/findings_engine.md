@@ -3039,3 +3039,26 @@ writers of a 32-bit +0x4C among reachable functions: 49 sites
 ```
 
 我**只对除数（10 与 24）做实验确认**；移位（/8 与 /16）是**独立的一步**，我**不把它偷偷并进除数**。两个净效除数均按“两步”如实记录。
+
+### 附 79 插入助手、**新字符串**、**跨函数确认的记录布局**（goal round 159）
+
+```
+1AA8C5  mov eax,[rsi+0x18] ; 1AA8C8 lea rbx,[rax+rax*2] ; 1AA8CC shl rbx,4   ; ★ 字段 × 48
+1AA8D0  add rbx,rcx                                                          ; 被索引的记录
+1AA8D3  cmp byte [rbx+0x28],0 ; jne 0x1AA8F0
+1AA8DF  call 0x1A8C80 ; test al,al ; jne … ; 1AA8E8 ret                 ; 早退返回 0
+1AA8F6  call 0x1A9350
+1AA8FB  mov eax,[rdi+0x18] ; 1AA901 mov [rbx+0x18],eax   ; 复制三个字段
+1AA904  mov rax,[rdi+0x20] ; 1AA908 mov [rbx+0x20],rax
+1AA90C  movzx eax,byte [rdi+0x28] ; 1AA910 mov [rbx+0x28],al
+1AA913  call 0x6D6510                                    ; ★ 带 **'!m_elements.empty()'**
+1AA918  mov eax,1 ; ret                                  ; 成功返回 1
+```
+
+**（1）新领域字符串**：`0x6D6510` 带 **`!m_elements.empty()`** ⇒ 原工程里该容器叫 **`m_elements`**。
+
+**（2）两个步长并存，各自保留**：索引用 **`字段×48`**（与 344 、与 round 157 的 `/24` 计数都不同）。**我不用新发现去覆盖旧度量**，两者并列记录。
+
+**（3）布局在两个函数里独立印证**：被复制的记录正是 round 155 在**栈上拼出**的三字段（`+0x18` dword、`+0x20` qword、`+0x28` byte）⇒ **同一布局**。
+
+**（4）TU 归属**：64 位 `+0x140` 的写入者共 **129 个位点 / 129 个函数**，其中 `0x40070`（1697 B）自带路径 **`..\multi\nesting_context.cpp`** ⇒ 该字段可**按名归属到 TU**。
