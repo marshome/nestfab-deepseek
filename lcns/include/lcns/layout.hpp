@@ -3246,6 +3246,35 @@ static_assert(kOpcodeMulsd > kOpcodeSqrtsd, "and multiplications outnumber the s
 static_assert(kScalarStyleDominates, "so the scalar style is the one to expect");
 static_assert(kKernelsPointedAtNotRead, "and the candidates are left unread, not cited");
 
+
+// --- a geometric distance kernel (round 338), the candidate round 337 left uncited -----------------------
+//     0x55E1AB/0x55E1B0  a segment's end at +0x10 and +0x18
+//     0x55E1B5/0x55E1B9  minus its start at +0x00 and +0x08, giving the delta
+//     0x55E1C7..0x55E1CF squares, adds and 0x55E1D7 sqrtsd     ; the length
+//     0x55E216/0x55E220  minsd and maxsd of two lengths
+//     0x55E229/0x55E22E  scaled by [rdi+0x28] and [rdi+0x20]
+//     0x55E249 maxsd against [rdi+0x40]
+//     0x55E1DD call 0x62FE20 on the path where `ucomisd`'s comparison does not hold
+inline constexpr std::uintptr_t kSegmentKernel = 0x55E190;   // RE the whole routine
+inline constexpr int kSegmentKernelCallers = 3;
+inline constexpr std::size_t kSegmentStartA = 0x00;          // RE 0x55E1B5
+inline constexpr std::size_t kSegmentStartB = 0x08;          // RE 0x55E1B9
+inline constexpr std::size_t kSegmentEndA = 0x10;            // RE 0x55E1AB
+inline constexpr std::size_t kSegmentEndB = 0x18;            // RE 0x55E1B0
+inline constexpr std::size_t kSegmentBytes = 0x20;           // the two points, four doubles
+inline constexpr bool kLengthViaSqrt = true;                 // RE the square-sum then sqrtsd
+inline constexpr int kSqrtCount = 3;                         // RE the sweep of round 337 and the body
+inline constexpr std::uintptr_t kSqrtGuard = 0x62FE20;       // RE 0x55E1DD
+inline constexpr std::size_t kParamA = 0x20;                 // RE 0x55E224
+inline constexpr std::size_t kParamB = 0x28;                 // RE 0x55E229
+inline constexpr std::size_t kParamC = 0x40;                 // RE 0x55E244
+inline constexpr bool kMinMaxPairUsed = true;                // RE 0x55E216 and 0x55E220
+static_assert(kSegmentEndA - kSegmentStartA == 0x10, "the two points are sixteen bytes apart");
+static_assert(kSegmentEndB - kSegmentStartB == 0x10, "in both coordinates");
+static_assert(kSegmentEndB + 8 == kSegmentBytes, "a segment is four doubles");
+static_assert(kSqrtCount == 3, "three square roots, as the sweep counted");
+static_assert(kLengthViaSqrt && kMinMaxPairUsed, "a length, and a min/max pair");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -6685,3 +6685,25 @@ F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路�
 ★★ **最有希望的两个候选者在此不写地址**：本工作自 rounds 278/279 起的规矩是**不把未读函数的地址写进源码**（引用它们会在没有阅读的情况下抬高代理指标）。它们以**形状**记录（“**8 次加法 + 12 次乘法**”、“**8 次乘法 + 6 次减法 + 3 次开方**”），**留给专门读它们的那一轮**。
 
 **已落 `layout.hpp`**：`kFloatKernelsUncited`(55)、`kOpcode*`（八个）、`kFloatArithmeticTotal`(250)、`kScalarStyleDominates`、`kTopKernelShapeA/B`、`kTopKernelArithmeticA/B`(20/20)、`kKernelsPointedAtNotRead` + **五条 `static_assert`** + 测试 26 条。
+
+### 附 256 ★★ **几何距离内核**（round 337 点出、本轮读了才入册）（goal round 338）**[已落码]**
+
+`0x55E190`（258 B / 3 个调用者）：
+
+```
+55E1AB/55E1B0  xmm0 = [rcx+**0x10**]；xmm1 = [rcx+**0x18**]   ; 一段的**终点**
+55E1B5/55E1B9  减去 [rcx]、[rcx+**0x08**]              ; 得到增量（两个 double）
+55E1C7..55E1CF  平方并相加；55E1D7 **sqrtsd**            ; ★ **长度**
+55E1DD  call **0x62FE20**                                  ; 守卫路径
+…对第二段（rsi）如法得 xmm8 …
+55E216/55E220  **minsd** xmm8,xmm6；**maxsd** xmm0,xmm6        ; ★ 两长度的**小与大**
+55E229/55E22E  xmm0 *= [rdi+**0x28**]；xmm6 *= [rdi+**0x20**]  ; 按参数对象缩放
+55E249  **maxsd** against [rdi+**0x40**]                    ; 最大值链
+```
+
+⇒ 它量两段、取其长度的 **min 与 max**，再与**参数对象的缩放项**经 `maxsd` 链合成 —— 形状属于**间隙或代价项**，正是本项目几何词汇所需。
+**由此得出的记录布局**：一段的**起点在 `+0x00`/`+0x08`、终点在 `+0x10`/`+0x18`**，每个坐标一个 double（共 4 个）。
+
+守卫是 `ucomisd xmm7(=0), xmm0 ; jbe`：调用 `0x62FE20` **发生在该比较不成立的路径上**。浮点比较的旗位行为相当微妙 ⇒ **只陈述指令，不编 NaN 的故事**。
+
+**已落 `layout.hpp`**：`kSegmentKernel`(0x55E190)、`kSegmentKernelCallers`(3)、`kSegmentStartA/B`、`kSegmentEndA/B`、`kSegmentBytes`(0x20)、`kLengthViaSqrt`、`kSqrtCount`(3)、`kSqrtGuard`(0x62FE20)、`kParamA/B/C`(0x20/0x28/0x40)、`kMinMaxPairUsed` + **五条 `static_assert`** + 测试 24 条（含三组手算距离：`(0,0)-(3,4) ⇒ 5`）。

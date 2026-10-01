@@ -5133,5 +5133,47 @@ int main() {
         CHECK(kFloatArithmeticTotal + kOpcodeMovsd == 1255);
     }
 
+    // --- the geometric distance kernel (RE 0x55e190) ------------------------------------------------
+    {
+        CHECK(kSegmentKernel == 0x55E190);
+        CHECK(kSegmentKernelCallers == 3);
+        CHECK(kSegmentStartA == 0x00);
+        CHECK(kSegmentStartB == 0x08);
+        CHECK(kSegmentEndA == 0x10);
+        CHECK(kSegmentEndB == 0x18);
+        CHECK(kSegmentBytes == 0x20);
+        CHECK(kSegmentEndA - kSegmentStartA == 0x10);
+        CHECK(kSegmentEndB - kSegmentStartB == 0x10);
+        CHECK(kSegmentEndB + 8 == kSegmentBytes);
+        CHECK(kLengthViaSqrt);
+        CHECK(kSqrtCount == 3);
+        CHECK(kSqrtGuard == 0x62FE20);
+        CHECK(kParamA == 0x20);
+        CHECK(kParamB == 0x28);
+        CHECK(kParamC == 0x40);
+        CHECK(kMinMaxPairUsed);
+        CHECK(kPointAddSSE == 0x16C270);                 // the other floating-point kernel read here
+        CHECK(kSegmentKernel != kPointAddSSE);
+        CHECK(kOpcodeSqrtsd == 4);                       // three here, one elsewhere
+
+        // the length computation the instructions perform, in the order they do it
+        const auto lengthOf = [](double x0, double y0, double x1, double y1) {
+            const double dx = x1 - x0;                   // RE the two subsd
+            const double dy = y1 - y0;
+            return std::sqrt(dx * dx + dy * dy);         // RE the two mulsd, the addsd and the sqrtsd
+        };
+        CHECK(lengthOf(0.0, 0.0, 3.0, 4.0) == 5.0);
+        CHECK(lengthOf(1.0, 1.0, 4.0, 5.0) == 5.0);
+        CHECK(lengthOf(0.0, 0.0, 0.0, 0.0) == 0.0);
+        // and the pairing the kernel takes from the two lengths
+        const double a = lengthOf(0.0, 0.0, 3.0, 4.0);
+        const double b = lengthOf(0.0, 0.0, 6.0, 8.0);
+        CHECK(a == 5.0 && b == 10.0);
+        CHECK(std::min(a, b) == a);                      // RE minsd
+        CHECK(std::max(a, b) == b);                      // RE maxsd
+        CHECK(std::min(a, b) * 2.0 == std::max(a, b));
+        CHECK(kSegmentBytes == 4 * sizeof(double));   // four coordinates
+    }
+
     return check::finish("test_recovered");
 }
