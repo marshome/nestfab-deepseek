@@ -964,6 +964,40 @@ inline constexpr std::size_t kWalkEndOffset = 0x08;          // RE 0x8F2CA7
 inline constexpr std::size_t kWalkElementStride = 0x10;      // RE 0x8F2CC3
 inline constexpr int kWalkCallers = 51;
 
+
+// --- the byte-length sibling, 0xF19E0, fifty callers (round 251) --------------------------------------
+//     0xF19E0/0xF19E4  the same word count at +0x10 and word array at +0x18
+//     0xF1A0A lea r10d,[rax*8]     ; eight bytes per word, where the bit version shifts by six
+//     0xF1A46 cmp ecx,8 ; ja       ; the bisection stops at eight rather than one
+//     0xF1A4B shr eax,3            ; and the answer is divided by eight
+inline constexpr int kBytesPerWord = 8;                      // RE 0xF1A0A
+inline constexpr int kByteShiftPerWord = 3;                  // RE 0xF1A4B
+inline constexpr int kByteLengthCallers = 50;
+static_assert(kBitsPerWord == kBytesPerWord * 8, "bits per word are eight times bytes per word");
+static_assert(1 << kByteShiftPerWord == kBytesPerWord, "the shift is the byte count");
+
+// --- the two add-then-shift idioms, now explained (round 251) -----------------------------------------
+// RE 0xF1AC4 (`lea eax,[rdx+0x3FFFFFF] ; shl eax,6`) and 0xF1A04/0xF1A0A (`lea eax,[rdx+0x1FFFFFFF] ; *8`).
+// In 32-bit arithmetic these are exactly (count - 1) * 64 and (count - 1) * 8:
+//     (count + 0x3FFFFFF) << 6 == count*64 + 0xFFFFFFC0 == (count - 1) * 64   (mod 2**32)
+//     (count + 0x1FFFFFFF) * 8 == count*8  + 0xFFFFFFF8 == (count - 1) * 8    (mod 2**32)
+// because 0x3FFFFFF == 2**26 - 1 and 0x1FFFFFFF == 2**29 - 1. The test asserts the identity, so this is checked,
+// not merely claimed.
+inline constexpr std::uint32_t kBitsScaleAddend = 0x3FFFFFFu;   // RE 0xF1AC4
+inline constexpr std::uint32_t kBytesScaleAddend = 0x1FFFFFFFu; // RE 0xF1A04
+static_assert(kBitsScaleAddend == (1u << 26) - 1, "the addend is 2**26 - 1");
+static_assert(kBytesScaleAddend == (1u << 29) - 1, "the addend is 2**29 - 1");
+
+// --- the search wrapper of 0x86B6B0, thirty-seven callers (round 251) ---------------------------------
+//     0x86B6BC rdx = -1                        ; the default answer
+//     0x86B6D0 call 0x63F238                   ; a length helper (skipped when the second argument is null)
+//     0x86B6E4 call 0x869EF0                   ; the search itself
+//     0x86B6E9 [rsi] = rax                     ; the result
+inline constexpr std::uintptr_t kSearchHelper = 0x869EF0;       // RE 0x86B6E4
+inline constexpr std::uintptr_t kLengthHelper = 0x63F238;       // RE 0x86B6D0
+inline constexpr std::int64_t kSearchDefault = -1;              // RE 0x86B6BC
+inline constexpr int kSearchCallers = 37;
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

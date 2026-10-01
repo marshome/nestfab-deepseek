@@ -5045,3 +5045,27 @@ F1B0B        `add eax,r10d` ⇒ 加上跳过的整字
 `0x8F2CA0`（89 B / 51 个调用者）：遍历 `+0x00`（begin）到 `+0x08`（end），**元素步长 16 字节**（`lea rax,[rbx+0x10]`）。
 
 **已落 `layout.hpp`**：`kBigInt*`、`kBitsPerWord`、`kBitShiftPerWord`、`kBitLength*`、`kWalk*` + `static_assert` + 测试 24 条。
+
+### 附 171 **字节长度兄弟函数**与**两个“加后移位”惯用式的解释**（goal round 251）**[已落码]
+
+`0xF19E0`（121 B / **50 个调用者**）是 round 250 那个位长函数的**兄弟**：同一套遍历（`+0x10` 字数、`+0x18` 字数组、跳尾部零字、对顶字二分），但**用字节回答**：
+
+| | 位长 `0xF1AA0` | **字节长 `0xF19E0`** |
+|---|---|---|
+| 每字 | `shl eax,6`（×64）| `lea r10d,[rax*8]`（×8）|
+| 二分终止 | `cmp ecx,1` | `cmp ecx,8` |
+| 收尾 | — | `shr eax,3`（÷8）|
+
+★ **两个魔数加数现在被严格解释**（而不只是记录）：32 位算术下
+
+```
+(count + 0x3FFFFFF) << 6  ==  (count - 1) * 64      （mod 2**32）
+(count + 0x1FFFFFFF) * 8  ==  (count - 1) * 8       （mod 2**32）
+因为 0x3FFFFFF == 2**26 - 1、0x1FFFFFFF == 2**29 - 1（即 -(64) 与 -(8) 的补码形式）
+```
+
+测试**直接断言这个恒等式**（count = 1..5 逐个比对两种写法）⇒ **是检验而非口头声称**。
+
+`0x86B6B0`（67 B / 37 个调用者）：默认 −1，先调长度助手 `0x63F238`，再调搜索 `0x869EF0`，结果存入 `[rsi]`。
+
+**已落 `layout.hpp`**：`kBytesPerWord`、`kByteShiftPerWord`、`kByteLengthCallers`、`kBitsScaleAddend`、`kBytesScaleAddend`、`kSearch*` + **四条 `static_assert`** + 测试 27 条。

@@ -2102,5 +2102,49 @@ int main() {
         CHECK(kWalkEndOffset > kWalkBeginOffset);
     }
 
+    // --- the byte-length sibling and the add-then-shift identities (RE 0xf19e0 and 0xf1ac4) -----------
+    {
+        CHECK(kBytesPerWord == 8);
+        CHECK(kByteShiftPerWord == 3);
+        CHECK(kByteLengthCallers == 50);
+        CHECK(kBitsPerWord == kBytesPerWord * 8);
+        CHECK(1 << kByteShiftPerWord == kBytesPerWord);
+
+        // the same algorithm as the bit version, but answering in bytes
+        const auto byteLength = [](const std::vector<std::uint64_t>& w) {
+            std::size_t n = w.size();
+            while (n > 0 && w[n - 1] == 0) --n;
+            if (n == 0) return 0;
+            std::uint64_t top = w[n - 1];
+            int bits = 0;
+            while (top) { top >>= 1; ++bits; }
+            return static_cast<int>((n - 1) * kBytesPerWord) + (bits + 7) / 8;
+        };
+        CHECK(byteLength({}) == 0);
+        CHECK(byteLength({0}) == 0);
+        CHECK(byteLength({1}) == 1);
+        CHECK(byteLength({0x100}) == 2);
+        CHECK(byteLength({0, 1}) == 9);                  // eight whole bytes plus one
+        CHECK(byteLength({~0ULL}) == 8);
+
+        // the two addends are 2**26 - 1 and 2**29 - 1, and the idioms they implement are (count-1)*64 and
+        // (count-1)*8 in 32-bit arithmetic -- asserted for several counts rather than stated in prose
+        CHECK(kBitsScaleAddend == (1u << 26) - 1);
+        CHECK(kBytesScaleAddend == (1u << 29) - 1);
+        for (std::uint32_t count = 1; count <= 5; ++count) {
+            const std::uint32_t viaAdd = (count + kBitsScaleAddend) << 6;
+            const std::uint32_t direct = (count - 1u) * kBitsPerWord;
+            CHECK(viaAdd == direct);
+            const std::uint32_t viaAddBytes = (count + kBytesScaleAddend) * 8u;
+            const std::uint32_t directBytes = (count - 1u) * kBytesPerWord;
+            CHECK(viaAddBytes == directBytes);
+        }
+
+        CHECK(kSearchHelper == 0x869EF0);
+        CHECK(kLengthHelper == 0x63F238);
+        CHECK(kSearchDefault == -1);
+        CHECK(kSearchCallers == 37);
+    }
+
     return check::finish("test_recovered");
 }
