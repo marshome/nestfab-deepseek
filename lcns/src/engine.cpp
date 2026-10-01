@@ -69,6 +69,7 @@ std::vector<int> StrategyDescriber::cascade() const {
 // NOTE: modes 5..12 in the previous revision of this file were an invention of this reconstruction
 // (the binary has no such modes); they are gone. What the flags append is listed above instead.
 // ---------------------------------------------------------------------------
+LCNS_RECOVERED(engine.strategy_methods);
 LCNS_RECOVERED(engine.strategy_adder);
 std::shared_ptr<Nester> makeStrategy(int mode) {
     switch (mode) {
