@@ -1295,3 +1295,280 @@
 # 桶 C 的**领域类行**（goal round 111）**[每行带类名]**
 
 只列**引用领域类**的函数（共 **0** 个 / 0 字节）；已归为库代码的 **214** 个不在此表。
+
+# 桶 C 的领域类行（恢复版，goal round 111b）**[每行带类名证据]**
+
+上一轮重写时把本批误删了（那使 cited 降 38、领域升 33），现用**全可达集**重扫并只归档**当前仍未引用**者：**73** 个 / 28416 字节。
+
+## `Tiling::Part`—4 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x4dafc0` | 258 | 86 | `Tiling::Part` |
+| `0x4db0d0` | 254 | 71 | `Tiling::Part` |
+| `0x4db1d0` | 254 | 71 | `Tiling::Part` |
+| `0x4daec0` | 249 | 78 | `Tiling::Part` |
+
+## `Multi::DatabaseNester`—3 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x5b100` | 85 | 27 | `Multi::DatabaseNester` |
+| `0x5b1f0` | 83 | 23 | `Multi::DatabaseNester` |
+| `0x5b170` | 77 | 25 | `Multi::DatabaseNester` |
+
+## `Tiling::PackerCache`—3 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x158f60` | 919 | 238 | `Tiling::PackerCache` |
+| `0x158be0` | 895 | 234 | `Tiling::PackerCache` |
+| `0x159480` | 98 | 32 | `Tiling::PackerCache` |
+
+## `Pack::BestNester`—3 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x681ee0` | 157 | 59 | `Pack::BestNester` |
+| `0x681e40` | 149 | 52 | `Pack::BestNester` |
+| `0x15e3b0` | 81 | 17 | `Pack::BestNester` |
+
+## `Tiling::BoxMultiTiler`—3 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x4f4850` | 883 | 203 | `Tiling::BoxMultiTiler` |
+| `0x76b380` | 45 | 13 | `Tiling::BoxMultiTiler` |
+| `0x76b3b0` | 33 | 8 | `Tiling::BoxMultiTiler` |
+
+## `Structure::ClusterObserver`—3 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x7bc0c0` | 191 | 64 | `Structure::ClusterObserver` |
+| `0x7bc000` | 188 | 59 | `Structure::ClusterObserver` |
+| `0x553100` | 75 | 17 | `Structure::ClusterObserver` |
+
+## `Tiling::SqueezeMultiTiler`—3 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x76e440` | 2741 | 518 | `Tiling::SqueezeMultiTiler` |
+| `0x76f0a0` | 427 | 129 | `Tiling::SqueezeMultiTiler` |
+| `0x76ef00` | 416 | 123 | `Tiling::SqueezeMultiTiler` |
+
+## `Engine::EquivalentEngine`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x25a20` | 512 | 129 | `Engine::EquivalentEngine` |
+| `0x24ab0` | 190 | 48 | `Engine::EquivalentEngine` |
+
+## `Multi::NestingNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x32f30` | 73 | 19 | `Multi::NestingNester` |
+| `0x32ee0` | 65 | 17 | `Multi::NestingNester` |
+
+## `Multi::TilingNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x45680` | 99 | 31 | `Multi::TilingNester` |
+| `0x456f0` | 91 | 29 | `Multi::TilingNester` |
+
+## `Multi::RectangleNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x6d3a0` | 193 | 63 | `Multi::RectangleNester` |
+| `0x6d2e0` | 185 | 61 | `Multi::RectangleNester` |
+
+## `N5Multi12TerminalNodeE`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x9c280` | 2731 | 563 | `N5Multi12TerminalNodeE` |
+| `0x9cd30` | 2604 | 546 | `N5Multi12TerminalNodeE` |
+
+## `Utils::LogSink`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x199570` | 2703 | 538 | `Utils::LogSink` |
+| `0x19dd20` | 677 | 160 | `Utils::LogSink` |
+
+## `Tiling::BiModulePattern`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x7e8520` | 757 | 169 | `Tiling::BiModulePattern` |
+| `0x4f2870` | 156 | 41 | `Tiling::BiModulePattern` |
+
+## `Multi::FlipNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x687de0` | 36 | 10 | `Multi::FlipNester` |
+| `0x687e10` | 15 | 3 | `Multi::FlipNester` |
+
+## `Multi::FilterNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x6937a0` | 36 | 10 | `Multi::FilterNester` |
+| `0x6937d0` | 15 | 3 | `Multi::FilterNester` |
+
+## `Multi::NoFillNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x6937e0` | 67 | 19 | `Multi::NoFillNester` |
+| `0x693830` | 59 | 17 | `Multi::NoFillNester` |
+
+## `Multi::WrapObserver`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x695dc0` | 40 | 11 | `Multi::WrapObserver` |
+| `0x695df0` | 19 | 4 | `Multi::WrapObserver` |
+
+## `Multi::CompactNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x695e10` | 36 | 10 | `Multi::CompactNester` |
+| `0x695e40` | 15 | 3 | `Multi::CompactNester` |
+
+## `Multi::LimitedNester`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x695e50` | 48 | 13 | `Multi::LimitedNester` |
+| `0x695e80` | 40 | 11 | `Multi::LimitedNester` |
+
+## `Multi::NoMixSheetSelector`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x69a5d0` | 86 | 25 | `Multi::NoMixSheetSelector` |
+| `0x69a580` | 74 | 22 | `Multi::NoMixSheetSelector` |
+
+## `Utils::BadResponseException`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x6d58d0` | 36 | 10 | `Utils::BadResponseException` |
+| `0x6d5900` | 15 | 3 | `Utils::BadResponseException` |
+
+## `Engine::EquivalentObserver`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x75e0e0` | 76 | 25 | `Engine::EquivalentObserver` |
+| `0x75e130` | 71 | 23 | `Engine::EquivalentObserver` |
+
+## `Tiling::CompositePart`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x76b3e0` | 53 | 15 | `Tiling::CompositePart` |
+| `0x76b420` | 45 | 13 | `Tiling::CompositePart` |
+
+## `Structure::ParseSolutionException`—2 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x7bfe60` | 36 | 10 | `Structure::ParseSolutionException` |
+| `0x7bfe90` | 15 | 3 | `Structure::ParseSolutionException` |
+
+## `Engine::NestingEngine`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x23e70` | 595 | 159 | `Engine::NestingEngine` |
+
+## `Engine::MultiEngine`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x240d0` | 431 | 118 | `Engine::MultiEngine` |
+
+## `Engine::DelayedEngine`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x24b80` | 192 | 50 | `Engine::DelayedEngine` |
+
+## `Engine::CompositeEngine`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x24c40` | 334 | 87 | `Engine::CompositeEngine` |
+
+## `Engine::InfiniteEngine`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x24fd0` | 209 | 53 | `Engine::InfiniteEngine` |
+
+## `Multi::TraceObserver`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x5f000` | 44 | 10 | `Multi::TraceObserver` |
+
+## `Multi::TerminalNode`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x99360` | 1449 | 328 | `Multi::TerminalNode` |
+
+## `Multi::SplitNode`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x99910` | 447 | 119 | `Multi::SplitNode` |
+
+## `N5Multi4NodeE`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x9c060` | 537 | 118 | `N5Multi4NodeE` |
+
+## `Pack::KnapsackNester`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x15d1d0` | 29 | 8 | `Pack::KnapsackNester` |
+
+## `Pack::RecursiveNester`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x162280` | 996 | 210 | `Pack::RecursiveNester` |
+
+## `Tiling::QuantityEvaluator`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x4e81b0` | 551 | 127 | `Tiling::QuantityEvaluator` |
+
+## `Tiling::MultiOrientedPartPattern`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x4f2a30` | 1944 | 409 | `Tiling::MultiOrientedPartPattern` |
+
+## `Tiling::BasicCandidater`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x4f3630` | 19 | 5 | `Tiling::BasicCandidater` |
+
+## `Utils::TimerWinImplementation`—1 个函数
+
+| 函数 | 字节 | 指令 | 证据（引用的类） |
+|---|---:|---:|---|
+| `0x5f47c0` | 112 | 29 | `Utils::TimerWinImplementation` |

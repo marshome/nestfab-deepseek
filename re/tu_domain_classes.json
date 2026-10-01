@@ -1,0 +1,539 @@
+{
+ "0x138a20": [
+  "Row::Squeezer"
+ ],
+ "0x138be0": [
+  "Row::Squeezer"
+ ],
+ "0x138ca0": [
+  "Row::Squeezer"
+ ],
+ "0x158be0": [
+  "Tiling::PackerCache"
+ ],
+ "0x158f60": [
+  "Tiling::PackerCache"
+ ],
+ "0x159480": [
+  "Tiling::PackerCache"
+ ],
+ "0x15d1d0": [
+  "Pack::KnapsackNester"
+ ],
+ "0x15e3b0": [
+  "Pack::BestNester"
+ ],
+ "0x162280": [
+  "Pack::RecursiveNester"
+ ],
+ "0x199570": [
+  "Utils::LogSink"
+ ],
+ "0x19da20": [
+  "Utils::LogSink",
+  "Utils::OstreamSink::<<subst>>"
+ ],
+ "0x19dd20": [
+  "Utils::LogSink",
+  "Utils::OstreamSink::<<subst>>"
+ ],
+ "0x23e70": [
+  "Engine::NestingEngine"
+ ],
+ "0x240d0": [
+  "Engine::MultiEngine"
+ ],
+ "0x24ab0": [
+  "Engine::EquivalentEngine"
+ ],
+ "0x24b80": [
+  "Engine::DelayedEngine"
+ ],
+ "0x24c40": [
+  "Engine::CompositeEngine"
+ ],
+ "0x24fd0": [
+  "Engine::InfiniteEngine"
+ ],
+ "0x25a20": [
+  "Engine::EquivalentEngine"
+ ],
+ "0x261e00": [
+  "Utils::Canceller"
+ ],
+ "0x266e00": [
+  "Compact::Compacter::Implementation"
+ ],
+ "0x267760": [
+  "Coin::CoinLP"
+ ],
+ "0x268a0": [
+  "Engine::CloudEngine"
+ ],
+ "0x30a30": [
+  "Multi::SupervisorCanceller"
+ ],
+ "0x30b60": [
+  "Multi::Supervisor"
+ ],
+ "0x30eb0": [
+  "Multi::Supervisor"
+ ],
+ "0x32700": [
+  "Multi::NestingContextPool",
+  "Multi::NoFitMapCanceller",
+  "Multi::Supervisor"
+ ],
+ "0x32ee0": [
+  "Multi::NestingNester"
+ ],
+ "0x32f30": [
+  "Multi::NestingNester"
+ ],
+ "0x342e0": [
+  "Multi::NestingNester"
+ ],
+ "0x45680": [
+  "Multi::TilingNester"
+ ],
+ "0x456f0": [
+  "Multi::TilingNester"
+ ],
+ "0x45af0": [
+  "Multi::PartUpdaterLimiter",
+  "Multi::TilingNester"
+ ],
+ "0x4aad0": [
+  "Multi::LimitedNester"
+ ],
+ "0x4b570": [
+  "Multi::FlipNester"
+ ],
+ "0x4d9ad0": [
+  "Prc::BoxPriceComputer"
+ ],
+ "0x4d9b00": [
+  "Prc::HullPriceComputer"
+ ],
+ "0x4d9b30": [
+  "Prc::AlphaPriceComputer"
+ ],
+ "0x4d9f80": [
+  "Prc::LinearCombinationPricer"
+ ],
+ "0x4da8e0": [
+  "Utils::Canceller"
+ ],
+ "0x4daec0": [
+  "Tiling::Part"
+ ],
+ "0x4dafc0": [
+  "Tiling::Part"
+ ],
+ "0x4db0d0": [
+  "Tiling::Part"
+ ],
+ "0x4db1d0": [
+  "Tiling::Part"
+ ],
+ "0x4dba70": [
+  "Tiling::CompositePart"
+ ],
+ "0x4dea00": [
+  "N6Tiling13CompositePartE",
+  "N6Tiling4PartE"
+ ],
+ "0x4e8070": [
+  "Tiling::DensityEvaluator"
+ ],
+ "0x4e80a0": [
+  "Tiling::UnlimitedDensityEvaluator"
+ ],
+ "0x4e80d0": [
+  "Tiling::UnlimitedXDensityEvaluator"
+ ],
+ "0x4e8100": [
+  "Tiling::ReusableEvaluator"
+ ],
+ "0x4e81b0": [
+  "Tiling::QuantityEvaluator"
+ ],
+ "0x4e83e0": [
+  "Tiling::OldMultitorchEvaluator"
+ ],
+ "0x4e8410": [
+  "Tiling::MultitorchEvaluator"
+ ],
+ "0x4e8470": [
+  "Tiling::DensityEvaluator"
+ ],
+ "0x4e8540": [
+  "Tiling::DensityEvaluator",
+  "Tiling::ReusableEvaluator"
+ ],
+ "0x4ed480": [
+  "Tiling::WarpCanceller"
+ ],
+ "0x4f2870": [
+  "Tiling::BiModulePattern"
+ ],
+ "0x4f2a30": [
+  "Tiling::MultiOrientedPartPattern"
+ ],
+ "0x4f3630": [
+  "Tiling::BasicCandidater"
+ ],
+ "0x4f4850": [
+  "Tiling::BoxMultiTiler"
+ ],
+ "0x52c440": [
+  "Structure::WidthDimensioner"
+ ],
+ "0x52c4c0": [
+  "Structure::SizeDimensioner"
+ ],
+ "0x52c540": [
+  "Structure::BoxAreaDimensioner"
+ ],
+ "0x553100": [
+  "Structure::ClusterObserver"
+ ],
+ "0x55fc70": [
+  "Utils::Canceller"
+ ],
+ "0x589cc0": [
+  "Utils::Canceller"
+ ],
+ "0x59c560": [
+  "Utils::Canceller"
+ ],
+ "0x59cd10": [
+  "Utils::Canceller"
+ ],
+ "0x59e9d0": [
+  "Utils::Canceller"
+ ],
+ "0x5a2690": [
+  "Utils::Canceller"
+ ],
+ "0x5afb80": [
+  "Utils::Canceller"
+ ],
+ "0x5b100": [
+  "Multi::DatabaseNester"
+ ],
+ "0x5b170": [
+  "Multi::DatabaseNester"
+ ],
+ "0x5b1f0": [
+  "Multi::DatabaseNester"
+ ],
+ "0x5f000": [
+  "Multi::TraceObserver"
+ ],
+ "0x5f47c0": [
+  "Utils::TimerWinImplementation"
+ ],
+ "0x665bf0": [
+  "Utils::Canceller"
+ ],
+ "0x6673f0": [
+  "Utils::Canceller"
+ ],
+ "0x67460": [
+  "Multi::RCompactCanceller"
+ ],
+ "0x674680": [
+  "Utils::Canceller"
+ ],
+ "0x678d90": [
+  "Prc::LinearCombinationPricer"
+ ],
+ "0x678df0": [
+  "Prc::LinearCombinationPricer"
+ ],
+ "0x679db0": [
+  "Coin::CoinLP"
+ ],
+ "0x679e70": [
+  "Coin::CoinLP"
+ ],
+ "0x681e40": [
+  "Pack::BestNester"
+ ],
+ "0x681ee0": [
+  "Pack::BestNester"
+ ],
+ "0x681fa0": [
+  "Pack::RecursiveNester"
+ ],
+ "0x683d80": [
+  "Pack::RecursiveNester"
+ ],
+ "0x687de0": [
+  "Multi::FlipNester"
+ ],
+ "0x687e10": [
+  "Multi::FlipNester"
+ ],
+ "0x6937a0": [
+  "Multi::FilterNester"
+ ],
+ "0x6937d0": [
+  "Multi::FilterNester"
+ ],
+ "0x6937e0": [
+  "Multi::NoFillNester"
+ ],
+ "0x693830": [
+  "Multi::NoFillNester"
+ ],
+ "0x693870": [
+  "Multi::TerminalNode"
+ ],
+ "0x6938e0": [
+  "Multi::TerminalNode"
+ ],
+ "0x695c70": [
+  "Multi::PartUpdaterLimiter"
+ ],
+ "0x695dc0": [
+  "Multi::WrapObserver"
+ ],
+ "0x695df0": [
+  "Multi::WrapObserver"
+ ],
+ "0x695e10": [
+  "Multi::CompactNester"
+ ],
+ "0x695e40": [
+  "Multi::CompactNester"
+ ],
+ "0x695e50": [
+  "Multi::LimitedNester"
+ ],
+ "0x695e80": [
+  "Multi::LimitedNester"
+ ],
+ "0x697100": [
+  "Multi::CompactCanceller"
+ ],
+ "0x697130": [
+  "Multi::CompactCanceller"
+ ],
+ "0x697230": [
+  "Multi::MultiTorchNester"
+ ],
+ "0x697260": [
+  "Multi::MultiTorchNester"
+ ],
+ "0x69a580": [
+  "Multi::NoMixSheetSelector"
+ ],
+ "0x69a5d0": [
+  "Multi::NoMixSheetSelector"
+ ],
+ "0x69a690": [
+  "Multi::SupervisorCanceller"
+ ],
+ "0x69a6d0": [
+  "Multi::SupervisorCanceller"
+ ],
+ "0x6ac250": [
+  "Multi::SplitNode"
+ ],
+ "0x6ac2e0": [
+  "Multi::SplitNode"
+ ],
+ "0x6c9090": [
+  "Utils::LogSink",
+  "Utils::OstreamSink::<<subst>>"
+ ],
+ "0x6c9150": [
+  "Utils::LogSink",
+  "Utils::OstreamSink::<<subst>>"
+ ],
+ "0x6d2e0": [
+  "Multi::RectangleNester"
+ ],
+ "0x6d3a0": [
+  "Multi::RectangleNester"
+ ],
+ "0x6d58d0": [
+  "Utils::BadResponseException"
+ ],
+ "0x6d5900": [
+  "Utils::BadResponseException"
+ ],
+ "0x755000": [
+  "Engine::CloudEngine"
+ ],
+ "0x755970": [
+  "Engine::MultiEngine"
+ ],
+ "0x7559e0": [
+  "Engine::MultiEngine"
+ ],
+ "0x756b20": [
+  "Engine::BestObserver"
+ ],
+ "0x756cf0": [
+  "Engine::BestObserver"
+ ],
+ "0x7571b0": [
+  "Engine::DelayedEngine"
+ ],
+ "0x757200": [
+  "Engine::DelayedEngine"
+ ],
+ "0x757a10": [
+  "Engine::NestingEngine"
+ ],
+ "0x757a70": [
+  "Engine::NestingEngine"
+ ],
+ "0x757ae0": [
+  "Engine::BestObserver"
+ ],
+ "0x759ad0": [
+  "Engine::InfiniteEngine"
+ ],
+ "0x759b20": [
+  "Engine::InfiniteEngine"
+ ],
+ "0x759b70": [
+  "Engine::CompositeObserver"
+ ],
+ "0x75bba0": [
+  "Engine::CompositeEngine"
+ ],
+ "0x75bc30": [
+  "Engine::CompositeEngine"
+ ],
+ "0x75bcc0": [
+  "Engine::EquivalentObserver"
+ ],
+ "0x75cac0": [
+  "Engine::EquivalentEngine"
+ ],
+ "0x75cb40": [
+  "Engine::EquivalentEngine"
+ ],
+ "0x75e0e0": [
+  "Engine::EquivalentObserver"
+ ],
+ "0x75e130": [
+  "Engine::EquivalentObserver"
+ ],
+ "0x76b380": [
+  "Tiling::BoxMultiTiler"
+ ],
+ "0x76b3b0": [
+  "Tiling::BoxMultiTiler"
+ ],
+ "0x76b3e0": [
+  "Tiling::CompositePart"
+ ],
+ "0x76b420": [
+  "Tiling::CompositePart"
+ ],
+ "0x76e440": [
+  "Tiling::SqueezeMultiTiler"
+ ],
+ "0x76ef00": [
+  "Tiling::SqueezeMultiTiler"
+ ],
+ "0x76f0a0": [
+  "Tiling::SqueezeMultiTiler"
+ ],
+ "0x77440": [
+  "Multi::RectangleNester"
+ ],
+ "0x774eb0": [
+  "Compact::Compacter::Implementation"
+ ],
+ "0x774f50": [
+  "Compact::Compacter::Implementation"
+ ],
+ "0x780e0": [
+  "Multi::MultiTorchNester"
+ ],
+ "0x7bc000": [
+  "Structure::ClusterObserver"
+ ],
+ "0x7bc0c0": [
+  "Structure::ClusterObserver"
+ ],
+ "0x7bfe60": [
+  "Structure::ParseSolutionException"
+ ],
+ "0x7bfe90": [
+  "Structure::ParseSolutionException"
+ ],
+ "0x7ca0d0": [
+  "Prc::BoxPriceComputer"
+ ],
+ "0x7ca140": [
+  "Prc::HullPriceComputer"
+ ],
+ "0x7ca1c0": [
+  "Prc::AlphaPriceComputer"
+ ],
+ "0x7ca5c0": [
+  "Prc::LinearCombinationPricer"
+ ],
+ "0x7e8520": [
+  "Tiling::BiModulePattern"
+ ],
+ "0x7ee50": [
+  "Multi::NoFillNester"
+ ],
+ "0x83dc0": [
+  "Multi::WrapObserver",
+  "Structure::Observer"
+ ],
+ "0x8eb40": [
+  "Multi::RowNester"
+ ],
+ "0x8eea0": [
+  "Multi::RowNester"
+ ],
+ "0x8f210": [
+  "Multi::RowNester"
+ ],
+ "0x99360": [
+  "Multi::TerminalNode"
+ ],
+ "0x99910": [
+  "Multi::SplitNode"
+ ],
+ "0x9c060": [
+  "N5Multi4NodeE",
+  "N5Multi9SplitNodeE"
+ ],
+ "0x9c280": [
+  "N5Multi12TerminalNodeE",
+  "N5Multi4NodeE",
+  "N5Multi9SplitNodeE"
+ ],
+ "0x9cd30": [
+  "N5Multi12TerminalNodeE",
+  "N5Multi4NodeE",
+  "N5Multi9SplitNodeE"
+ ],
+ "0xafd60": [
+  "Multi::NoMixSheetSelector"
+ ],
+ "0xb0000": [
+  "Multi::LargestSheetSelector"
+ ],
+ "0xb0040": [
+  "Multi::RandomSheetSelector"
+ ],
+ "0xb0270": [
+  "Multi::CompactNester"
+ ],
+ "0xb3a70": [
+  "Multi::FilterNester"
+ ]
+}
