@@ -3099,3 +3099,24 @@ compacting ... <before_shake> => <after_shake>
 ⇒ **每个步长一个整数计数**，形如 `(int)(value / step + rounding)`；这正是它自带文本里那三个名字的含义。
 
 **已落 `lcns/include/lcns/steps.hpp`**：三个步长 `0.0001`/`0.0003`/`0.0039`、舍入项 `0.5`、倍数 `10`、`n/1e6` 的尺度，以及 `stepCount`/`fineStepCount`/`midStepCount`/`stepScale`，每个常量带加载地址；测试 14 条（含截断边界 `12.5+0.5=13`）。
+
+### 附 84 纪律更正：**字符串靠 `lea`、常量靠解引用**；并据此读出三个计数的去向（goal round 166）
+
+**更正**：round 145 的纪律（“常量只能从**解引用**的指令读”）针对的是**常量**；而**字符串只会以地址传递**，排除 `lea` 就会**漏掉所有字符串位点** —— round 166 的第一版正是这么错的（两个函数都“什么也没找到”）。
+**正确规则：字符串用 `lea` 匹配；常量要求真解引用。**
+
+换用正确规则后立刻读到（`0x1A1810`）：
+
+```
+1A190D  mov rcx,[rip+0x86671C]      ; 一个 ostream
+1A1914  mov r8d,8                   ; ★ 长度 8，正是 len('p.first ')
+1A191A  lea rdx,['p.first ']
+1A1921  call 0x978010               ; ostream::write(ptr, len)
+1A192D  movapd xmm1,xmm9 ; 1A1932 call 0x8688E0    ; << double
+1A1979  mov r8d,0xA                 ; ★ 长度 10，正是 len('nb_strips ')
+1A197F  lea rdx,['nb_strips ']
+1A1986  call 0x978010
+1A1992  mov edx,esi                 ; 算出的步数
+```
+
+⇒ **四个名字是被打印的**（长度与标签**精确一致**）。因此 round 165 落的步数算式**供给一份 `p.first / nb_strips / nb_double_steps / nb_int_steps` 的报告**；`0x978010` 即 `std::ostream::write`，与早前将其识别为 iostream 内部函数一致。
