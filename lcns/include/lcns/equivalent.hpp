@@ -44,5 +44,15 @@ bool isValidReduction(double reduction);
 // apply the weight. Provided so callers can use the recovered shape rather than its parts.
 double reduceFromSource(const double* object, double p);
 
+// RE 0x5C6100 -- transcribed literally, it is four instructions:
+//     mov qword ptr [rcx], 0
+//     mov qword ptr [rcx + 8], 0
+//     mov qword ptr [rcx + 0x10], 0
+//     ret
+// so it zeroes THREE consecutive doubles (24 bytes) and returns nothing. EquivalentSmallerDefects
+// calls it at 0x4BCA51, right after saving x and before the subtraction, i.e. it clears the triple
+// it is about to fill in. Nothing beyond the third double is touched.
+void zeroTriple(double* triple);
+
 }  // namespace equivalent
 }  // namespace lcns

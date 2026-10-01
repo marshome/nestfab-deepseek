@@ -167,6 +167,19 @@ int main() {
         CHECK(composite == 4);
     }
 
+    // --- the 24 byte triple zeroing helper (RE 0x5c6100, four instructions) --------------------
+    {
+        double v[5] = {1.0, 2.0, 3.0, 4.0, 5.0};
+        equivalent::zeroTriple(v);
+        CHECK(v[0] == 0.0);
+        CHECK(v[1] == 0.0);
+        CHECK(v[2] == 0.0);
+        // the original writes exactly 24 bytes: the fourth double must be untouched
+        CHECK(v[3] == 4.0);
+        CHECK(v[4] == 5.0);
+        equivalent::zeroTriple(nullptr);   // the port guards; the original does not
+    }
+
     // --- the recovered 0.99 coverage predicate (RE 0x754ed / 0x75ef3) --------------------------
     {
         // exactly 99% of the reference passes (>=, not >)

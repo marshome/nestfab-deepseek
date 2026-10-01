@@ -18,6 +18,17 @@ bool isValidReduction(double reduction) {
     return reduction > 0.0;
 }
 
+void zeroTriple(double* triple) {
+    // RE 0x5C6100, three 8 byte stores and a ret. Guarded only because this port must not write
+    // through a null pointer; the original has no such check (its caller always passes a live one).
+    if (triple == nullptr) {
+        return;
+    }
+    triple[0] = 0.0;
+    triple[1] = 0.0;
+    triple[2] = 0.0;
+}
+
 double reduceFromSource(const double* object, double p) {
     // RE 0x4F9C30 reads a double at +0x58; the offset is in bytes, so index by bytes / 8.
     if (object == nullptr) {
