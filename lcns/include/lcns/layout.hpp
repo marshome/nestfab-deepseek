@@ -1460,7 +1460,12 @@ inline constexpr bool kReverseLimbCompare = true;            // RE 0xF1B86..0xF1
 inline constexpr int kComparePathCallers = 4;
 // WHAT IS NOT CLAIMED: that this routine returns a sign, or what 0xEF300 computes. Only the descending scan and
 // the call are landed.
-inline constexpr bool kSignResultOpen = true;
+inline constexpr bool kSignResultOpen = false;   // ANSWERED in round 269: it subtracts
+// Rounds 267 and 268 left this open because the caller was unread. Round 269 read it: 0xF1B20 calls the
+// subtraction kernel and then folds the borrow into the TOP limb (`[rcx] -= borrow`), which is what a
+// subtraction does with its borrow -- the mirror of the addition routine's carry into the tail. So the
+// routine is a subtraction, NOT a comparator returning a sign, and the flag becomes false with the
+// reasoning recorded rather than the earlier value dropped.
 static_assert(kCompareKernel != kLimbAdd, "the comparison kernel is not the addition kernel");
 
 
@@ -1487,6 +1492,28 @@ inline constexpr bool kComparisonUsesSubtraction = true;
 inline constexpr std::uintptr_t kKernelAdd = 0xEF280;        // the addition kernel
 inline constexpr std::uintptr_t kKernelSub = 0xEF300;        // the subtraction kernel
 static_assert(kKernelAdd != kKernelSub, "the two kernels are distinct addresses");
+
+
+// --- the subtraction routine 0xF1B20 folds the borrow into the tail (round 269) -------------------------
+//     0xF1C3E dword [rdi+0x20] = 0     ; the tag cleared on completion, as the addition routine does
+//     0xF1C6C call 0xEF300             ; the subtraction kernel of round 268
+//     0xF1C80 movsxd r14,eax           ; the borrow is kept
+//     0xF1C90 call 0x63F2F8            ; the remaining limbs are copied
+//     0xF1C9C/0xF1CA2/0xF1CA5  [rcx] = [rcx] - r14   ; and the borrow is folded into the TOP limb
+inline constexpr std::uintptr_t kSubRoutine = 0xF1B20;       // RE the whole routine
+inline constexpr bool kBorrowIntoTail = true;                // RE 0xF1CA2/0xF1CA5
+inline constexpr bool kSubClearsTag = true;                  // RE 0xF1C3E
+inline constexpr int kSubRoutineCallers = 4;
+inline constexpr int kSubtractionSites = 2;                  // the kernel 0xEF300 and this routine
+// The descending limb scan before the subtraction is CONSISTENT with ordering the operands so the result is
+// non-negative. That is an INFERENCE from the shape, not a reading, and is marked as such.
+inline constexpr bool kOrderingScanInferred = true;
+static_assert(kSubtractionSites == 2, "two routines carry the subtraction");
+static_assert(!kSignResultOpen, "the sign question is settled: the routine does not return a sign");
+
+// --- the family now has two sites for each operation (round 269) ---------------------------------------
+inline constexpr int kAdditionSites = 2;                     // 0xEF280's body and 0xF4830's use of it
+static_assert(kAdditionSites == kSubtractionSites, "addition and subtraction mirror each other");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

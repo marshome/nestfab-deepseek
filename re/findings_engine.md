@@ -5422,3 +5422,24 @@ F48BC  dword [rbx+0x20] = 0    ; ★ 运算完成时**清掉标签**
 ★ **依然开放的不是内核而是调用者**：`0xF1B20` 先从高位扫描、再做这个减法，但**它是否把借位变成符号尚未读到** ⇒ `kSignResultOpen` **保持 true**，而内核身份已记录。
 
 **已落 `layout.hpp`**：`kLimbSub`、`kSubIsSubtraction`、`kKernelPair`、`kLimb*Bytes`、`kComparisonUsesSubtraction`、`kKernelAdd`/`kKernelSub` + **三条 `static_assert`** + 测试 21 条（含借位链的三个手算样本）。
+
+### 附 189 **调用者是减法例程 —— 且答案与函数名暗示相反**（goal round 269）**[已落码]**
+
+rounds 267/268 刻意保留的“符号约定”问题，本轮读到调用者后**给出了否定答案**：
+
+```
+F1C3E  dword [rdi+0x20] = 0        ; ★ 完成时**清掉标签**（与加法例程一致）
+F1C6C  call 0xEF300                ; round 268 的**减法内核**
+F1C80  movsxd r14,eax              ; 保留**借位**
+F1C90  call 0x63F2F8               ; 拷贝剩余字
+F1C9C/0xF1CA2/0xF1CA5  [rcx] = [rcx] − r14   ; ★ **把借位叠入高位字**
+```
+
+⇒ 它**是减法例程，不是返回符号的比较器** —— 正是 `0xF4830` 对待加法进位的**镜像**。因此 `kSignResultOpen` **置为 false**，**并把推理写在旁边**（而非静默丢弃旧值）。
+
+★ **依然标为推断的部分**：它在减法之前先做**降序逐字扫描**，与“为了让结果非负而先定序”**一致**，但那只是**形状推断**（`kOrderingScanInferred`）。
+另：它又一次**清掉 `+0x20` 标签** ⇒ 标签语义第七次目击。
+
+⇒ **族内每个运算现有两个站点**：加法（`0xEF280` 与 `0xF4830`）、减法（`0xEF300` 与 `0xF1B20`）。
+
+**已落 `layout.hpp`**：`kSubRoutine`、`kBorrowIntoTail`、`kSubClearsTag`、`kSubtractionSites`、`kAdditionSites`、`kOrderingScanInferred` + **四条 `static_assert`** + 测试 20 条。

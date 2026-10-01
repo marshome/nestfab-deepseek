@@ -2656,7 +2656,7 @@ int main() {
         CHECK(kCompareKernel == 0xEF300);
         CHECK(kReverseLimbCompare);
         CHECK(kComparePathCallers == 4);
-        CHECK(kSignResultOpen);                         // the sign result is NOT claimed
+        CHECK(!kSignResultOpen);    // settled in round 269: the routine subtracts, it is not a sign                         // the sign result is NOT claimed
         // the two kernels are different addresses
         CHECK(kCompareKernel != kLimbAdd);
         CHECK(kCompareKernel != kWordAllocator);
@@ -2687,7 +2687,7 @@ int main() {
         CHECK(kLimbAddBytes == 114);
         CHECK(kLimbSubBytes < kLimbAddBytes);
         CHECK(kComparisonUsesSubtraction);
-        CHECK(kSignResultOpen);                         // the caller's sign convention is still unread
+        CHECK(!kSignResultOpen);                        // settled in round 269: it subtracts
         CHECK(kKernelAdd == kLimbAdd);
         CHECK(kKernelSub == kCompareKernel);
         CHECK(kKernelAdd != kKernelSub);
@@ -2720,6 +2720,38 @@ int main() {
         CHECK(d3[1] == 0);
         // and the addition kernel's carry chain is the same shape, reversed
         CHECK(kLimbsPerIteration == 2);
+    }
+
+    // --- the subtraction routine and the answered sign question (RE 0xf1b20) -----------------------
+    {
+        CHECK(kSubRoutine == 0xF1B20);
+        CHECK(kBorrowIntoTail);
+        CHECK(kSubClearsTag);
+        CHECK(kSubRoutineCallers == 4);
+        CHECK(kSubtractionSites == 2);
+        CHECK(kAdditionSites == 2);
+        CHECK(kAdditionSites == kSubtractionSites);
+        CHECK(!kSignResultOpen);                        // it is a subtraction, not a sign
+        CHECK(kOrderingScanInferred);                   // the scan's purpose is an inference, and says so
+        CHECK(kLimbSub == 0xEF300);                     // the kernel it calls
+        CHECK(kAddClearsTag);                           // both operations clear the tag
+        CHECK(kSubClearsTag);
+
+        // folding the borrow into the top limb, as the routine does
+        const auto foldBorrow = [](std::uint64_t& top, std::uint64_t borrow) {
+            const std::uint64_t before = top;
+            top = before - borrow;                      // RE 0xF1CA2
+            return top > before;                        // a wrap, i.e. the borrow was not absorbed
+        };
+        std::uint64_t top = 5;
+        CHECK(!foldBorrow(top, 1));
+        CHECK(top == 4);
+        top = 0;
+        CHECK(foldBorrow(top, 1));                      // it wraps
+        CHECK(top == ~0ULL);
+        top = 7;
+        CHECK(!foldBorrow(top, 0));
+        CHECK(top == 7);
     }
 
     return check::finish("test_recovered");
