@@ -1318,3 +1318,18 @@
 * `0x17b740` 352 B / 109 ins / 调用 5 个 / 字符串 0 条 / 常量 无 / 字段 5 个（最远 +0xd8）/ 立即数 24×2, 48×2, 64×1, 72×2
 
 * `0x4bac30` 345 B / 94 ins / 调用 7 个 / 字符串 0 条 / 常量 [0.2] / 字段 4 个（最远 +0x20）/ 立即数 3×2, 24×3, 64×3
+
+## 待办：把恢复出的日志前缀接进策略类**失败过一次**（goal round 39，已回退）
+
+尝试：在 `Nester` 基类加 `virtual const char* tracePrefix()`，在 `FlipNester`/`FilterNester`/`NoFillNester`
+里覆写返回 `kTraceFlip` / `kTraceFilter` / `kTraceNoFill`，并在 `test_recovered` 里断言。
+
+**结果：编译不过** —— `nester.hpp:269/278/286: 'kTraceFlip' was not declared in this scope`，
+即便把 `#include "lcns/engine.hpp"` 移到 `#pragma once` 之后（第 16 行）仍然如此。
+**怀疑原因**：`engine.hpp` 与 `nester.hpp` **互相包含**，`pragma once` 让先进入的那个文件里的定义
+在另一个文件引用时尚未可见（声明顺序问题）。**未证实**（上下文耗尽，没继续查）。
+
+**处置**：`git checkout 8aeb6ec -- lcns/include/lcns/nester.hpp lcns/tests/test_recovered.cpp`
+**回退**，恢复绿灯；接线这件事**留作待办**。下次的正解可能是：
+① 把 `kTrace*` 常量从 `engine.hpp` 移到 `recovery.hpp`（已是两侧都包含的公共头）；
+② 或让 `nester.hpp` 不再包含 `engine.hpp`，改为把常量定义在一个更小的 `trace.hpp` 里。
