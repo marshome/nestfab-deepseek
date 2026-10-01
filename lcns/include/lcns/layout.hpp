@@ -500,4 +500,31 @@ inline constexpr std::size_t kStepsField30 = 0x30;       // RE 0x1BF1D9
 inline constexpr double kStepsDefaultPlus = 1.0;         // RE 0x1BF23D
 inline constexpr double kStepsDefaultMinus = -1.0;       // RE 0x1BF245
 
+
+// --- the machine-kind preset table of 0x7F41C0 (round 225) -------------------------------------------
+// RE 0x7F41DE onward: nine dwords written from one of three variants, chosen by the kind that 0x183F50 returns
+// and compared with the literal 1.0 (rva 0x9BEAB0) then 2.0 (rva 0x9BEAE0).
+//      kind 1: 0x14 0x14 0x64 0x0A 0x0A 0x32 0x14 0x14 0x14   = 20 20 100 10 10 50 20 20 20
+//      kind 2: 0x28 0x14 0x64 0x14 0x0A 0x32 0x14 0x14 0x14   = 40 20 100 20 10 50 20 20 20
+//      other : 0x64 0x14 0x64 0x32 0x0A 0x32 0x14 0x14 0x14   = 100 20 100 50 10 50 20 20 20
+inline constexpr int kPresetCount = 9;
+inline constexpr int kPresetKindOne[kPresetCount] = {20, 20, 100, 10, 10, 50, 20, 20, 20};
+inline constexpr int kPresetKindTwo[kPresetCount] = {40, 20, 100, 20, 10, 50, 20, 20, 20};
+inline constexpr int kPresetOther[kPresetCount] = {100, 20, 100, 50, 10, 50, 20, 20, 20};
+inline constexpr int kPresetStride = 4;                  // RE the `mov dword [rbx+4*n]` forms
+inline constexpr int kPresetKindOneValue = 1;            // RE 0x7F41D2: the literal at rva 0x9BEAB0
+inline constexpr int kPresetKindTwoValue = 2;            // RE 0x7F422F: the literal at rva 0x9BEAE0
+
+// --- the tolerance'd containment test of 0x14F5F0 (round 225) ----------------------------------------
+//     14F5FB movsd xmm6,[1e-6] (rva 0x9BD1B0)
+//     14F61E call 0x5C8F30                     ; the same predicate 0x4B8220 uses
+//     14F623 cmp byte [rbx+0x28],0 ; je
+//     14F63D/14F64C/14F650  compares [rsi+0x10] against the epsilon and against [rbx+0x38] - epsilon
+//     14F668/14F685/14F6A9  the same shape for +0x20, +0x8 and +0x18
+//     14F6C3/14F6C8/14F6CA  and/cmovne combine the four outcomes
+inline constexpr double kContainTolerance = 1e-06;      // RE 0x14F5FB (rva 0x9BD1B0)
+inline constexpr std::size_t kContainFlagOffset = 0x28; // RE 0x14F623
+inline constexpr std::size_t kContainSizeOffset = 0x38; // RE 0x14F64C
+inline constexpr int kContainCoordinateCount = 4;       // RE the four comparisons
+
 }  // namespace lcns

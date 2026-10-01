@@ -1637,5 +1637,43 @@ int main() {
         CHECK(kStepsDefaultMinus == -kStepsDefaultPlus);
     }
 
+    // --- the machine-kind preset table (RE 0x7f41de..0x7f427b) and the 1e-6 test (RE 0x14f5fb) --------
+    {
+        CHECK(kPresetCount == 9);
+        CHECK(kPresetStride == 4);
+        CHECK(kPresetKindOneValue == 1);
+        CHECK(kPresetKindTwoValue == 2);
+        // the hex the instructions write, converted by hand and checked against the arrays
+        CHECK(kPresetKindOne[0] == 0x14);
+        CHECK(kPresetKindOne[2] == 0x64);
+        CHECK(kPresetKindOne[3] == 0x0A);
+        CHECK(kPresetKindOne[5] == 0x32);
+        CHECK(kPresetKindTwo[0] == 0x28);
+        CHECK(kPresetKindTwo[3] == 0x14);
+        CHECK(kPresetOther[0] == 0x64);
+        CHECK(kPresetOther[3] == 0x32);
+        // the tail is shared by all three variants, which is what the jump to 0x7F41F9 means
+        CHECK(kPresetKindOne[4] == kPresetKindTwo[4]);
+        CHECK(kPresetKindTwo[4] == kPresetOther[4]);
+        CHECK(kPresetKindOne[5] == kPresetKindTwo[5]);
+        CHECK(kPresetKindTwo[5] == kPresetOther[5]);
+        for (int i = 6; i < kPresetCount; ++i) {
+            CHECK(kPresetKindOne[i] == kPresetKindTwo[i]);
+            CHECK(kPresetKindTwo[i] == kPresetOther[i]);
+            CHECK(kPresetKindOne[i] == 20);
+        }
+        // and only the first entry differs between the second and third variants at that position
+        CHECK(kPresetKindTwo[1] == kPresetOther[1]);
+        CHECK(kPresetKindOne[1] == kPresetOther[1]);
+
+        CHECK(kContainTolerance == 1e-06);
+        CHECK(kContainTolerance < kElementCompareTolerance);          // smaller than the 0.001 of round 218
+        CHECK(kContainFlagOffset == 0x28);
+        CHECK(kContainSizeOffset == 0x38);
+        CHECK(kContainSizeOffset - kContainFlagOffset == 0x10);
+        CHECK(kContainSizeOffset == kRatioPrimaryOffset);             // the same +0x38 the comparator reads
+        CHECK(kContainCoordinateCount == 4);
+    }
+
     return check::finish("test_recovered");
 }
