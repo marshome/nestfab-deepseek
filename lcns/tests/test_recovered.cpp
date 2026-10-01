@@ -1,3 +1,4 @@
+#include <random>
 // tests/test_recovered.cpp -- ACCEPTANCE TEST for the recovered constants.
 //
 // Every assertion below compares a constant used by the reconstruction with the value read out of
@@ -527,6 +528,29 @@ int main() {
         // truncates to 499949 in IEEE double, and the binary performs these operations in this order
         const double composed = ratioFromAverage(5.0, 100.0);
         CHECK(seedFromRatio(composed) == static_cast<long long>(composed * 1000000.0));
+    }
+
+    // --- the seed runs a std::mt19937 (RE 0x1a3560: 624 words, multiplier 0x6C078965) -------------
+    {
+        CHECK(kMt19937StateWords == 624);
+        CHECK(kMt19937InitMultiplier == 1812433253u);
+        CHECK(kMt19937StateBytes == 2504);
+        CHECK(kMt19937StateBytes == kMt19937StateWords * 4 + 8);   // the allocation is exactly that
+        // the recurrence as the standard defines it for x[0] = seed 5489 (no remembered constants:
+        // the expected value is written as the definition itself)
+        const std::uint32_t seed0 = 5489u;
+        const std::uint32_t expected1 = 1812433253u * (seed0 ^ (seed0 >> 30)) + 1u;
+        CHECK(mt19937InitStep(seed0, 1) == expected1);
+        CHECK(expected1 == 1812433253u * seed0 + 1u);   // 5489 >> 30 is zero
+        // and for a seed where the shift does bite
+        const std::uint32_t big = 0xFFFFFFFFu;
+        CHECK(mt19937InitStep(big, 7) == 1812433253u * (big ^ (big >> 30)) + 7u);
+        // NOTE: 3499211612 is the engine's first OUTPUT after tempering, not a state word -- the
+        // first attempt at this test confused the two, so the distinction is recorded here.
+        {
+            std::mt19937 reference(5489u);
+            CHECK(reference() == 3499211612u);
+        }
     }
 
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------

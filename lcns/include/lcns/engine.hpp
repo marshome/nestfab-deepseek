@@ -221,7 +221,31 @@ inline constexpr int kRatioFloor = 200;                 // RE 0x1A9101 / 0x1A911
 inline long long seedFromRatio(double ratio) {         // RE 0x1A9150
     return static_cast<long long>(ratio * kSeedScale);  // RE 0x1A9159 (1e6) then 0x1A9161 (truncation)
 }
-// RE the tail from 1A90E8 on: with a non-positive threshold the average is returned unchanged.
+
+
+// RE 0x1A3560 (266 B / 66 instructions, one caller: 0x1B33B0 -- the routine that logs 'Using seed ').
+// It stores the seed, two doubles, then allocates and initialises an engine, read instruction by
+// instruction:
+//     1A3567  mov rax,[rdx]                 ; the seed passed as the second argument
+//     1A356E  mov [rcx],rax                 ; kept on the object
+//     1A3574  movsd [rcx+8],xmm2 ; 1A3579 movsd [rcx+0x10],xmm3
+//     1A357E  mov ecx,0x9C8 ; call 0x998500 ; operator new(2504)
+//     1A3590  mov [rax],ebx                 ; state[0] = seed
+//     1A3592  mov edx,r8d ; shr edx,0x1E ; xor edx,r8d ; imul edx,edx,0x6C078965
+//     1A35A1  mov [rax+rcx*4],r8d ; add rcx,1 ; cmp rcx,0x270 ; jne ...
+//     1A35B6  mov qword [rax+0x9C0],0x270   ; the index word is set to the state size
+// 0x6C078965 = 1812433253 is the MT19937 initialisation multiplier, 0x270 = 624 its state size, and
+// 0x9C8 = 2504 is exactly 624 * 4 + 8. So the seed seeds a std::mt19937: the ENGINE is the C++
+// standard library (toolchain, not reversed); only this seeding glue is domain code.
+inline constexpr std::size_t kMt19937StateWords = 624;         // RE 0x1A35AD: cmp rcx,0x270
+inline constexpr std::uint32_t kMt19937InitMultiplier = 1812433253u;   // RE 0x1A359B: 0x6C078965
+inline constexpr std::size_t kMt19937StateBytes = 2504;        // RE 0x1A357E: operator new(0x9C8)
+
+// RE 1A3592..1A35AD: the pure MT19937 initialisation recurrence, transcribed as the binary has it --
+// state[i] = 1812433253 * (state[i-1] ^ (state[i-1] >> 30)) + i, for i in [1, 624).
+inline std::uint32_t mt19937InitStep(std::uint32_t previous, std::uint32_t i) {
+    return kMt19937InitMultiplier * (previous ^ (previous >> 30)) + i;   // RE 0x1A3595..0x1A35A1
+}// RE the tail from 1A90E8 on: with a non-positive threshold the average is returned unchanged.
 inline double ratioFromAverage(double average, double threshold) {
     if (!(threshold > 0.0)) {                 // RE 1A90E8/1A90F1: ucomisd then jbe
         return average;
