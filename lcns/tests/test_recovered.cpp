@@ -1413,5 +1413,39 @@ int main() {
         CHECK((1 << kDequeBlockShift) == static_cast<int>(kDequeBlockSize));
     }
 
+    // --- the tiling cancel guard (RE 0x7d355d) and the negated box centre (RE 0x1dd870) ---------------
+    {
+        CHECK(kTilingCancelThreshold == 0.75);   // RE 0x7D355D: the literal at rva 0x9AF938
+        CHECK(kCancelFlagOffset == 0x10);
+        CHECK(kCancelOuterFlagOffset == 0x348);
+        CHECK(kCancelFlagOffset != kCancelOuterFlagOffset);
+        CHECK(std::string(kTagTilingCancelled) == "Tiling time cancelled !");
+        CHECK(std::string(kTagTilingCancelled)[0] == 'T');                // a domain message, not a symbol
+
+        // the guard's shape: at or below the threshold the other path is taken, above it the cancellation fires
+        const auto overThreshold = [](double progress) { return progress > kTilingCancelThreshold; };
+        CHECK(!overThreshold(0.5));
+        CHECK(!overThreshold(0.75));                                       // the `jbe` keeps 0.75 on the other path
+        CHECK(overThreshold(0.7501));
+
+        CHECK(kBoxCentreHalf == 0.5);
+        CHECK(kBoxCentreHalf == kSharedHalf);                              // the shared block's 0.5
+        CHECK(kSignFlipMask == 0x8000000000000000ULL);
+        CHECK(kSignFlipMask == 1ULL << 63);                                // exactly the sign bit
+        // the two coordinate pairs the routine sums are the box fields of round 202
+        CHECK(kBoxCentreFromBoxFieldA == 0x08);
+        CHECK(kBoxCentreFromBoxFieldC == 0x18);
+        const auto centre = [](const Box2d& b) {
+            return Point2dLike{(b.minY + b.maxY) * kBoxCentreHalf, (b.minX + b.maxX) * kBoxCentreHalf};
+        };
+        const Box2d b{1.0, 3.0, 5.0, 7.0};
+        const Point2dLike c = centre(b);
+        CHECK(c.x == 5.0);
+        CHECK(c.y == 3.0);
+        // and the negation the routine applies afterwards, as the sign bit
+        CHECK((-c.x) == -5.0);
+        CHECK((-c.y) == -3.0);
+    }
+
     return check::finish("test_recovered");
 }

@@ -20,6 +20,10 @@ inline constexpr const char* kTagSegment      = "SEGMENT(";      // RE rva 0x9DF
 inline constexpr const char* kTagOrientation  = "ORIENTATION(";  // RE rva 0x9DF155
 inline constexpr const char* kTagIn           = "' in (";        // RE rva 0x9DF0E4
 
+// RE 0x7D3581: the message this project reports when the tiling time is up. It is domain text like the type
+// table of round 198, recovered in round 217 from 0x7D3530.
+inline constexpr const char* kTagTilingCancelled = "Tiling time cancelled !";
+
 // RE 0x9DF0F6, the address loaded at 0x70C4C1 and passed as the format: a single space between coordinates.
 inline constexpr const char* kCoordinateSeparator = " ";
 

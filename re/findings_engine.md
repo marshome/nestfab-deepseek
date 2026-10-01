@@ -4417,3 +4417,24 @@ README 对 T7 的范围定义是“**先只建立链接能力**”（因为需�
 **（c）`0x5522B0`（175 B）**：`cmp rcx,0x1ff`、`sar rdx,9`、`shl r8,9`、`[rdx + rax*8]` ⇒ **512 字节块索引**；后段 `10.0`（rva `0x9DC228`）乘字段后与另一字段比较 ⇒ **十倍因子测试**。
 
 **已落 `layout.hpp`**：`kRatioCompareMargin`(50)、`kRatio*Offset`、`kComparatorKeyWords`、`kScale095`、`kScaledSumTerms`、`kDequeBlockSize/Mask/Shift`、`kTenfoldFactor` + 测试 20 条（含比值规则的**四条行为验证**与 `kRatioCompareMargin == kSharedFifty`）。
+
+### 附 139 **切片取消守卫（0.75 与领域消息）与取负的包围盒中心**（goal round 217）**[已落码]
+
+**（a）`0x7D3530`（201 B）= “切片时间到了吗”**：
+
+```
+7D353B  dl=[rcx+0x10]；7D3541 je            ; 已停 -> 返回 1
+7D3554  call 0x2FC90                          ; 进度值
+7D355D  ucomisd xmm0,[0.75]（rva 0x9AF938）；7D3565 jbe
+7D356C  cmp byte [rax+0x348],0
+7D3581  lea rdx,[rip+…] ★ STR **'Tiling time cancelled !'**
+7D35B8  byte [rbx+0x10]=1；7D35BC **mfence**             ; 带栅栏置位
+7D35CA  eax = ([rbx+0x10] != 0)
+```
+
+⇒ **领域消息一条**（加入 round 198 的词汇表）+ **0.75 进度阈值** + **带 `mfence` 的取消标志**（`+0x10`）。
+
+**（b）`0x1DD870`（202 B）= 包围盒中心并取负**：把 `[rax+8]+[rax+0x18]` 与 `[rax+0x10]+[rax+0x20]` 各乘 **0.5**（rva `0x9C0590`）得中点，隆后用 **`xorpd` + 符号掩码取负**（`1DD905`/`1DD90F`）。
+四个 double 正是 round 202 的包围盒字段 ⇒ **取盒心、然后取负**；**哪个坐标到哪里本轮不声称**。
+
+**已落**：`layout.hpp`（`kTilingCancelThreshold`、`kCancelFlagOffset`、`kCancelOuterFlagOffset`、`kBoxCentreHalf`、`kSignFlipMask`、`kBoxCentreFromBoxFieldA/C`）与 `text_tags.hpp`（`kTagTilingCancelled`）+ 测试 24 条（含阈值行为、符号位、中心计算）。

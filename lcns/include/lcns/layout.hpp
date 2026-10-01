@@ -346,4 +346,24 @@ inline constexpr std::size_t kDequeBlockMask = 0x1FF;      // RE 0x5522E3
 inline constexpr int kDequeBlockShift = 9;                 // RE 0x5522F5 / 0x55230E
 inline constexpr double kTenfoldFactor = 10.0;             // RE 0x552337 (rva 0x9DC228)
 
+
+// --- the tiling cancellation guard of 0x7D3530 (round 217) ------------------------------------------
+//     7D353B movzx edx,byte [rcx+0x10] ; 7D3541 je      ; the flag at +0x10 means "already stopped"
+//     7D3554 call 0x2FC90                               ; a progress value
+//     7D355D ucomisd xmm0,[0.75] (rva 0x9AF938) ; 7D3565 jbe
+//     7D3581 lea rdx,[rip+...] 'Tiling time cancelled !'
+//     7D35B8 byte [rbx+0x10] = 1 ; 7D35BC mfence        ; set under a fence, so other threads see it
+//     7D35CA eax = ([rbx+0x10] != 0)
+inline constexpr double kTilingCancelThreshold = 0.75;    // RE 0x7D355D (rva 0x9AF938)
+inline constexpr std::size_t kCancelFlagOffset = 0x10;    // RE 0x7D353B and 0x7D35B8
+inline constexpr std::size_t kCancelOuterFlagOffset = 0x348;   // RE 0x7D356C
+
+// --- the negated box centre of 0x1DD870 (round 217) --------------------------------------------------
+//     1DD8A3/1DD8B0 and 1DD8B5/1DD8BA sum the box's coordinate pairs; 1DD8BF loads 0.5 (rva 0x9C0590);
+//     1DD8C7/1DD8CB multiply by it; 1DD905/1DD90F xor with a sign mask, i.e. negate.
+inline constexpr double kBoxCentreHalf = 0.5;             // RE 0x1DD8BF
+inline constexpr std::uint64_t kSignFlipMask = 0x8000000000000000ULL;   // RE 0x1DD905/0x1DD90F (xorpd)
+inline constexpr std::size_t kBoxCentreFromBoxFieldA = 0x08;   // RE 0x1DD8A3 (compare.hpp names it kObjectFieldA)
+inline constexpr std::size_t kBoxCentreFromBoxFieldC = 0x18;   // RE 0x1DD8B0 (compare.hpp names it kObjectFieldC)
+
 }  // namespace lcns
