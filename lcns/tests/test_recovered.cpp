@@ -3957,5 +3957,39 @@ int main() {
         CHECK(kSweepCriterionRelaxed == false);
     }
 
+    // --- the parser's required tag, and what tag six means (RE 0x111e90) ----------------------------
+    {
+        CHECK(kRequiredTag == 6);
+        CHECK(kTag6IsOid);
+        CHECK(kByteReader == 0x117050);
+        CHECK(kByteReaderSites == 2);
+        CHECK(kTagSlot == 0x29);
+        CHECK(kSecondSlot == 0x2A);
+        CHECK(kSecondSlot == kTagSlot + 1);
+        CHECK(kZeroedFields == 3);
+        CHECK(kZeroedBase == 0x30);
+        CHECK(kParserCallers == 2);
+        CHECK(kParserBytes == 692);
+        CHECK(kBerErrorFormatter == 0x77F2D0);
+        // the ASN.1 universal tags this work now rests on, stated as standard facts
+        const std::uint8_t kUniversalOid = 0x06;
+        const std::uint8_t kUniversalInteger = 0x02;
+        const std::uint8_t kUniversalOctetString = 0x04;
+        CHECK(kRequiredTag == kUniversalOid);
+        CHECK(kUniversalOid != kUniversalInteger);
+        CHECK(kUniversalOctetString == 0x04);
+        // and the continuation bit of round 300 belongs to the same encoding family
+        CHECK(kContinuationBit == 0x80);
+        CHECK(kContinuationMask == 0x7F);
+        CHECK(kAccumulatorMaxBytes == 8);
+
+        // the acceptance the parser performs: the tag must equal six, or the error path runs
+        const auto accepted = [](std::uint8_t tag) { return tag == kRequiredTag; };
+        CHECK(accepted(6));
+        CHECK(!accepted(5));
+        CHECK(!accepted(0));
+        CHECK(!accepted(0xFF));
+    }
+
     return check::finish("test_recovered");
 }

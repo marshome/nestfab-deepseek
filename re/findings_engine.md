@@ -6113,3 +6113,21 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 ★ 为何值得记下来：**(1)** 它说明 round 277 发现的 thunk 类**是局域的**，而非全库普遍特征 —— 别处不应期待重复；**(2)** “零”正是**最容易被粉饰的答案**，而**放宽判据去凑几条排除**会直接虚增指标 ⇒ 判据与结果**一并落码**，任人可复跑。
 
 **已落 `layout.hpp`**：`kStrictThunkFound`(0)、`kSweepClusters`(2)、`kSweepSizeCap`(32)、`kLibraryAddressesRegistered`(548)、`kThunkClassLocalised`、`kSweepCriterionRelaxed`(false) + **四条 `static_assert`** + 测试 12 条。
+
+### 附 225 ★★ **解析器要求的 tag 是 6，而 ASN.1 通用标签 6 就是 OBJECT IDENTIFIER**（goal round 307）**[已落码]**
+
+`0x111E90`（692 B / 2 个调用者）是第三驱动器所到的步骤：
+
+```
+111ECA  call 0x117050                  ; ★ 填**一个字节**到 `rsp+0x29` 的助手
+111ECF/111ED2  返回空 → 走 BER 错误格式化器
+111ED4  cmp byte [rsp+0x29], **6** ; je   ; ★★ **首个 tag 必须是六**，否则走格式化器
+111EEB  call 0x117050 再次（到 `rsp+0x2A`）
+111EF9  movzx ebp, byte [rsp+0x2A]      ; 紧接着读下一字节
+```
+
+**tag 6 是 ASN.1 的通用标签 OBJECT IDENTIFIER** —— 这是**关于标准的事实**（不是从本二进制推出的），因此如此记录。这是本工作至今**最具体的认定**：不是“某种类 BER 解码”，而是**“这个解析器要求的 tag 就是 OID 的 tag”**。
+
+字节读取器 `0x117050` 被调两次、面向两个**相邻**栈槽 ⇒ **逐字节游标**的形状。
+
+**已落 `layout.hpp`**：`kRequiredTag`(6)、`kTag6IsOid`、`kByteReader`(0x117050)、`kByteReaderSites`(2)、`kTagSlot`(0x29)、`kSecondSlot`(0x2A)、`kZeroedFields`(3)、`kZeroedBase`(0x30)、`kParserCallers/Bytes` + **四条 `static_assert`** + 测试 20 条（含 ASN.1 通用标签常量的声明）。

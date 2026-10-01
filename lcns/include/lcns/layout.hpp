@@ -2453,6 +2453,28 @@ static_assert(kSweepClusters == 2 && kSweepSizeCap == 32, "two clusters under a 
 static_assert(!kSweepCriterionRelaxed, "the criterion was not relaxed to produce a result");
 static_assert(kLibraryAddressesRegistered > 500, "the registry was already substantial");
 
+
+// --- the parser of 0x111E90, which requires tag 6 (round 307) -------------------------------------------
+//     0x111ECA/0x111EEB call 0x117050   ; a helper that fills ONE BYTE, called against adjacent stack slots
+//     0x111ECF/0x111ED2  a null answer goes to the BER formatter
+//     0x111ED4 cmp byte [rsp+0x29],6 ; je    ; THE FIRST TAG MUST BE SIX
+//     0x111EDB call 0x77F2D0                  ; otherwise the BER error formatter runs
+//     0x111EF9 movzx ebp, byte [rsp+0x2A]     ; and the next byte follows
+inline constexpr std::uint8_t kRequiredTag = 6;              // RE 0x111ED4
+inline constexpr bool kTag6IsOid = true;                     // the ASN.1 standard: universal tag 6 is OBJECT IDENTIFIER
+inline constexpr std::uintptr_t kByteReader = 0x117050;      // RE 0x111ECA and 0x111EEB
+inline constexpr int kByteReaderSites = 2;                   // RE the two calls
+inline constexpr std::size_t kTagSlot = 0x29;                // RE 0x111ED4
+inline constexpr std::size_t kSecondSlot = 0x2A;             // RE 0x111EF9
+inline constexpr int kZeroedFields = 3;                      // RE 0x111EB2/0x111EBE/0x111EC1
+inline constexpr std::size_t kZeroedBase = 0x30;             // RE the three stores
+inline constexpr int kParserCallers = 2;
+inline constexpr int kParserBytes = 692;
+static_assert(kRequiredTag == 6, "the parser requires the OID tag");
+static_assert(kSecondSlot == kTagSlot + 1, "the two slots are adjacent, a byte cursor");
+static_assert(kByteReaderSites == 2, "the reader is called twice here");
+static_assert(kTag6IsOid, "and tag six is OBJECT IDENTIFIER in ASN.1");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
