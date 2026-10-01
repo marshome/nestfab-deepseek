@@ -72,6 +72,15 @@ inline constexpr int kModeShearTooling = 2;                 // RE 0x2CE00 is tha
 // surface step, and the pricer exposes a per-part price array.
 inline constexpr double kEvalSurfaceSlack = 1.05;           // RE 0x81C690 assertion text
 
+// RE 0x9B15E0 -- the double 0.99, referenced twice inside 0x73280 (at 0x754ED and 0x75EF3) in
+// the same shape: two pairs of doubles are differenced and multiplied (an AREA), one branch
+// doubles it, the result is scaled by this constant and compared with `ucomisd` against the
+// other area, with `jbe` skipping when 0.99*X <= area. So the constant is an area-coverage
+// slack of about one percent. The ARITHMETIC is evidence; the NAME is an inference -- no symbol
+// or string states this meaning. Compare the 1.05 upper bound asserted in bucket_manager.hpp:
+// both are area tolerances built the same way.
+inline constexpr double kAreaCoverageSlack = 0.99;   // RE 0x9B15E0 via 0x754ED / 0x75EF3
+
 // RE trace prefixes -- verbatim strings the original writes to its log. They are user visible, so
 // reproducing them exactly is real fidelity, not decoration. Each cites where it was read:
 //   0x4B870  Multi::FlipNester::Run            "Flip "

@@ -131,6 +131,9 @@ int main() {
         for (const std::shared_ptr<Nester>& s : def) CHECK(s != nullptr);
     }
 
+    // the 0.99 area coverage slack (RE 0x9b15e0, used at 0x754ed / 0x75ef3)
+    CHECK(kAreaCoverageSlack == 0.99);
+
     // --- recovered trace strings (verbatim in the original's log) -----------------------------
     {
         CHECK(std::strcmp(kTraceFlip, "Flip ") == 0);                       // RE 0x4b870
