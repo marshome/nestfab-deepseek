@@ -1798,3 +1798,13 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 
 
 **口径**：「地址出现在数据里」是硬事实（指针或嵌入常量）；「它是一张分发表」需要连续且等距才成立。
+
+### 附 18 参数系统的消费方 `0x6D33A0`（goal round 69）**[已读，部分已定]**
+
+* 规模：**188 B / 58 条指令**
+* 字符串（0 条）：无
+* 调用：共 12 次（12 个不同），其中 **十二个处理器占 12 个**
+* 处理器调用顺序：`0x6ca720`(BeamValues) → `0x6ca840`(Off2Weight) → `0x6ca960`(PartRatios) → `0x6caa80`(RepeatSheet) → `0x6caba0`(TilingLimit) → `0x6cacc0`(ODescriptions) → `0x6cade0`(PosDirections) → `0x6caf00`(ODescriptions2) → `0x6cb020`(UseMap) → `0x6cb140`(OPricer) → `0x6cb260`(ZfSizes) → `0x6cb380`(DegSteps)
+* cmp/test 数：0；间接跳转：0
+
+**口径**：「它调用了这些处理器」是硬事实；选择机制如何得看上面的计数与跳转形态。
