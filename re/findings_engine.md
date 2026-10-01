@@ -2993,3 +2993,30 @@ writers of a 32-bit +0x4C among reachable functions: 49 sites
 ```
 
 ⇒ 该分支在**栈上拼出三字段记录**（取负整数、置零字节、×1000 的值）并传出去 ——**与 rounds 147–152 建立的“时间”主题一致**；判断的方向已写明为 `if (eax <= ecx)`。
+
+### 附 77 比较的两侧与记录的消费者（goal round 156）**[入口级读取]**
+
+**`0x1F8300`**（72 B / 10 个调用者）—— 整数计数：
+
+```
+1F8320  mov rax,[rdx+0x140] ; 1F8327 add rdx,0x158     ; 步长 0x158（344 字节）
+1F832E  sub rax,[rdx-0x20] ; 1F8332 sar rax,3 ; 1F8336 imul rax,0xCCCCCCCCCCCCCCCD
+1F833A  add rax,rcx ; 1F8340 mov ecx,eax              ; ★ 跨容器累加
+```
+
+`0xCCCCCCCCCCCCCCCD` 配 `sar 3` 是熟知的 **/10** 魔数 —— **但按我的纪律，待用 round 148 的实验确认，不凭记忆**。
+
+**`0x1F8350`**（132 B / 9 个调用者）—— 浮点总量：用**与 round 154 相同的** `0x82FA0BE82FA0BE83`（`sar 3` 后相乘）算出 `count-1`，随后 `cvtsi2sd` 并 `mulsd xmm6,[rdx-0x158]`（逐元素的一个 double）⇒ **加权求和**。
+⇒ 原来的 `cmp eax,ecx` 是**整数计数 vs 求和后的 `+0x4C` 计数器**。
+
+**`0x1AA890`**（398 B / 112 条 / 3 个调用者）—— 记录消费者的开头：
+
+```
+1AA897  movabs r8,0xAAAAAAAAAAAAAAAB ; 1AA8B1 sub rdx,rcx ; 1AA8B4 sar rdx,4 ; 1AA8B8 imul rdx,r8
+1AA8BC  mov r8d,[rsi+0x28] ; 1AA8C0 cmp rdx,r8 ; 1AA8C3 jb 0x1AA925     ; 计数 vs +0x28 的上限
+1AA8C5  mov eax,[rsi+0x18] ; 1AA8C8 lea rbx,[rax+rax*2]               ; 字段 × 3
+```
+
+⇒ 它对一个 **24 字节步长**的容器做**上限检查**（`sar 4` + `0xAAAA…AB` = /24）。
+
+**待验证清单**：`0xCCCCCCCCCCCCCCCD`(/10?)、`0xAAAAAAAAAAAAAAAB`(/24?)、`0x82FA0BE82FA0BE83`（round 154 已确认为**非除法**，但在 `0x1F8350` 里它同样只取低位）。
