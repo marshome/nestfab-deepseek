@@ -50,6 +50,46 @@ if(WIN32)
   target_link_libraries(lcns_nest PUBLIC ws2_32 iphlpapi)
 endif()
 
+# ---------------------------------------------------------------------------
+# Third party libraries: DOWNLOADED AND LINKED, not reverse engineered.
+# See ../third_party/README.md (evidence table, build recipe, documented deviations).
+# ---------------------------------------------------------------------------
+option(LCNS_WITH_CLP   "link the real COIN-OR Clp/Osi (needs third_party/build-cmake)" ON)
+option(LCNS_WITH_BOOST "use the vendored boost 1.63.0 headers (the version the dump proves)" ON)
+set(LCNS_THIRD_PARTY "${CMAKE_CURRENT_SOURCE_DIR}/../third_party")
+
+# boost 1.63.0, header only. The version is not a guess: the dump contains
+#   0x9AE7A0  'C:\Users\renaud\nest\external\boost_1_63_0/boost/uuid/sha1.hpp'
+# and 0x592870 the same prefix with boost/multiprecision/rational_adaptor.hpp.
+if(LCNS_WITH_BOOST AND EXISTS "${LCNS_THIRD_PARTY}/src/boost_1_63_0/boost/version.hpp")
+  target_include_directories(lcns_flags SYSTEM INTERFACE "${LCNS_THIRD_PARTY}/src/boost_1_63_0")
+  target_compile_definitions(lcns_flags INTERFACE LCNS_HAS_BOOST=1)
+  message(STATUS "lcns: boost headers wired in from third_party/src/boost_1_63_0")
+endif()
+
+# COIN-OR CoinUtils + Osi + Clp, exactly the stack the dump proves it drives
+# (OsiClpSolverInterface at 0x9C31A3). Built by third_party/CMakeLists.txt.
+set(LCNS_COINOR "${LCNS_THIRD_PARTY}/build-cmake")
+if(LCNS_WITH_CLP AND EXISTS "${LCNS_COINOR}/libclp.a")
+  target_sources(lcns_nest PRIVATE src/lp_clp.cpp)
+  target_include_directories(lcns_nest SYSTEM PRIVATE
+    "${LCNS_THIRD_PARTY}/compat"
+    "${LCNS_THIRD_PARTY}/src/clp-1.15.3/Clp/src"
+    "${LCNS_THIRD_PARTY}/src/clp-1.15.3/Clp/src/OsiClp"
+    "${LCNS_THIRD_PARTY}/gen/clp"
+    "${LCNS_THIRD_PARTY}/src/osi-0.107/Osi/src/Osi"
+    "${LCNS_THIRD_PARTY}/gen/osi"
+    "${LCNS_THIRD_PARTY}/src/coinutils-2.10/CoinUtils/src"
+    "${LCNS_THIRD_PARTY}/gen/coinutils")
+  target_compile_definitions(lcns_nest PUBLIC LCNS_HAS_CLP=1)
+  target_compile_definitions(lcns_nest PRIVATE HAVE_CMATH=1)
+  target_link_libraries(lcns_nest PUBLIC
+    "${LCNS_COINOR}/libclp.a" "${LCNS_COINOR}/libosi.a" "${LCNS_COINOR}/libcoinutils.a")
+  message(STATUS "lcns: real COIN-OR Clp/Osi linked from third_party/build-cmake")
+else()
+  message(STATUS "lcns: COIN-OR archives absent -> the built-in Simplex backend is used instead")
+endif()
+
 # --- ordinal loader for a real liblcns.dll (Windows only) ---
 add_library(lcns_api STATIC src/api.cpp)
 target_link_libraries(lcns_api PUBLIC lcns_flags)

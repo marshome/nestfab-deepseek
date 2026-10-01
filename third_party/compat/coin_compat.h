@@ -17,3 +17,8 @@
 #include <string>
 #include <vector>
 #include <limits>
+
+// CoinUtils provides COIN_INT_MAX / COIN_INT_MAX_AS_DOUBLE in CoinFinite.hpp. Clp 1.15.3's
+// CbcOrClpParam.cpp (line 2601) uses COIN_INT_MAX without including that header, which used to work
+// transitively. Pull in CoinUtils' OWN definition rather than inventing a value here.
+#include "CoinFinite.hpp"

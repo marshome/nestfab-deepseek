@@ -269,7 +269,7 @@ const char* toString(SimplexStatus s) {
 }
 
 // ---------------------------------------------------------------------------
-LCNS_SUBSTITUTED(lp.simplex_backend);
+LCNS_SUBSTITUTED(lp.simplex_fallback);
 void Simplex::reserve(std::size_t rows, std::size_t cols) {
     // capacity only: columns are created by addColumn(), rows by addRow()
     a_.reserve(rows);

@@ -249,6 +249,34 @@ python tools\run_benchmarks.py --time 30 --seeds 1
 lcns 当前得 30.0–42.6%，文献 68.6–92.6%。4 倍预算对照实验显示密度**逐位不变**，
 即差距来自"放完即止、缺乏迭代改进"，**不是**时间预算问题 —— 详见 datasets/README §7。
 
+## 第三方库与构建选项（**下载并链接，不逆向**）
+
+二进制里能证明用到的第三方库（boost 1.63.0、COIN-OR CoinUtils/Osi/Clp、
+CryptoPP、JsonCpp）一律**下载后直接引用**，见
+[`../third_party/README.md`](../third_party/README.md)。
+
+| CMake 选项 | 默认 | 作用 |
+|---|---|---|
+| `LCNS_WITH_CLP` | `ON` | 若 `../third_party/build-cmake/lib{clp,osi,coinutils}.a` 存在：编译 `src/lp_clp.cpp`，用**真正的 `OsiClpSolverInterface`** 实现 `LinearProgram`（即原库的 `Coin::CoinLP` 契约），并定义 `LCNS_HAS_CLP` |
+| `LCNS_WITH_BOOST` | `ON` | 把 `../third_party/src/boost_1_63_0` 以 `-isystem` 加入 include 路径，定义 `LCNS_HAS_BOOST` |
+
+**两个 LP 后端**：`lp::ClpLinearProgram`（真 Clp，默认）与
+`lp::SimplexLinearProgram`（零依赖兜底，仅在 `-DLCNS_WITH_CLP=OFF` 或归档缺失时使用）。
+`tests/test_linear_program.cpp` 会让恢复出的驱动 `buildAndSolveLp`(0x7D7200) **同时**跑两者：
+目标值与对偶价必须一致，各自解必须可行并复现自己的目标值（**注意**：
+最优解退化时两个求解器可能给出不同的最优顶点，所以不逐分量比解向量
+—— 这是 LP 的性质，不是保真度问题）。
+
+首次使用需要先构建第三方库：
+
+```powershell
+pwsh ../third_party/fetch.ps1          # curl + git 抓取（Python 直连 HTTPS 在此网络会超时）
+cmake -S ../third_party -B ../third_party/build-cmake -G Ninja `
+      -DCMAKE_CXX_COMPILER=g++ -DCMAKE_MAKE_PROGRAM=ninja
+cmake --build ../third_party/build-cmake
+../third_party/test_osiclp.exe         # 应输出 OSICLP-LINK-OK
+```
+
 ## 逆向状态标记：**没逆向出来的地方，代码里都有标记**
 
 本工程混着四种不同性质的代码，光看源码分不出来，所以每处都打上**可 grep 的 C++ 标记**，

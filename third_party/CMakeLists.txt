@@ -33,7 +33,7 @@ set(TP ${CMAKE_CURRENT_SOURCE_DIR})
 set(GEN ${TP}/gen)
 set(CU_SRC ${TP}/src/coinutils-2.10/CoinUtils/src)
 set(OSI_SRC ${TP}/src/osi-0.107/Osi/src/Osi)
-set(CLP_SRC ${TP}/src/clp-1.15/Clp/src)
+set(CLP_SRC ${TP}/src/clp-1.15.3/Clp/src)
 
 file(GLOB CU_CPP ${CU_SRC}/*.cpp)
 file(GLOB OSI_CPP ${OSI_SRC}/*.cpp)

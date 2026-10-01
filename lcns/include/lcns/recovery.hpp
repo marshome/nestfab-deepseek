@@ -205,10 +205,24 @@ inline constexpr Gap kGaps[] = {
     // ---------------------------------------------------------------- lp / pricing
     {"module.lp", Status::Structural, "Lp::LinearProgram / Coin::CoinLP",
      "the CoinLP slot structure and the 3 parallel vector + COO accumulator layout are recovered"},
-    {"lp.simplex_backend", Status::Substituted, "Coin::CoinLP (Clp 1.15.3)",
-     "the original statically links COIN-OR Clp 1.15.3 through OsiClpSimulatorInterface; Clp is "
-     "not available here, so lp::Simplex (zero dependency, written for this project) is the "
-     "default backend -- an unavoidable, documented divergence"},
+    {"lp.clp_backend", Status::Recovered, "Coin::CoinLP slots 3/4/5/8; OsiClpSolverInterface",
+     "the REAL COIN-OR CoinUtils/Osi/Clp is downloaded (third_party/README.md) and linked: "
+     "third_party/CMakeLists.txt builds the trio with the project's own GCC 13.1, and "
+     "lcns::lp::ClpLinearProgram drives OsiClpSolverInterface through the recovered contract "
+     "(reset/addColumn/addRow/solve/primal/dual) with the recovered storage shape (3 parallel "
+     "per-column vectors + a 16 B triplet list sorted column-major, i.e. 0x7CA830). "
+     "tests/test_linear_program.cpp cross-checks it against the built-in backend on the recovered "
+     "driver buildAndSolveLp (0x7D7200): objective and duals must agree, and each answer must be "
+     "feasible and reproduce its own objective. VERSION IS EVIDENCED, not guessed: the dump "
+     "contains '@C:\\Users\\renaud\\nest\\external\\clp-1.15.3\\Clp\\src\\ClpSimplexDual.cpp' at "
+     "0x9C9E1F and 'Clp-1.15.3\\CoinUtils\\src\\CoinLpIO.cpp' at 0x9D2D30, so Clp is built from the "
+     "exact releases/1.15.3 tag (its configure reports CLP_VERSION \"1.15.3\"); CoinUtils/Osi come "
+     "from the matching stable/2.10 and stable/0.107 branches, whose exact patch levels are NOT "
+     "string proven"},
+    {"lp.simplex_fallback", Status::Substituted, "not in the binary (lcns only)",
+     "the zero dependency Simplex stays as a fallback for builds configured without the COIN-OR "
+     "archives (-DLCNS_WITH_CLP=OFF, or archives absent). It is NOT what the original runs, so any "
+     "build using it must be described as using a substitute backend"},
     {"lp.canonicalise", Status::Recovered, "0x7CA830",
      "in-place sort of the +0x90 triplet accumulator into column-major COO order, then 3-space "
      "text rendering"},

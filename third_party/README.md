@@ -11,17 +11,17 @@
 
 | 库 | 版本 | 版本证据强度 | 判定依据（DLL 内字符串） | 许可 | 在 lcns 里干什么 |
 |---|---|---|---|---|---|
-| **boost** | **1.63.0** | **已证实**（路径串带版本号） | `0x9AE7A0` `C:\Users\renaud\nest\external\boost_1_63_0/boost/uuid/sha1.hpp`；`0x592870` 同前缀的 `boost/multiprecision/rational_adaptor.hpp` | Boost Software License 1.0 | 精确算术（multiprecision）+ sha1/uuid（授权与云路径） |
-| **COIN-OR CoinUtils** | 2.11.12 | **API 时代证据**，版本号未证实 | 与 Osi/Clp 同批 `coin-or` 字符串 | EPL-2.0 | Osi/Clp 的基础库 |
-| **COIN-OR Osi** | 0.108.11 | **API 时代证据** | `0x9C31FC` `OsiSolverInterface`；`0x9C31A3` `OsiClpSolverInterface`；`OsiHintDo/OsiForceDo/OsiColCut` | EPL-2.0 | 原库驱动 LP 的接口层 |
-| **COIN-OR Clp** | 1.17.10 | **API 时代证据**；**原库静态链接的版本是 1.15.3**（前一阶段已记录），此处选 1.17.10 是因为它带 CMake 构建 | `0x9C2E40` `clp`；`0x3716DC` `ClpSolve`；大片 `clpModel->setSpecialOptions(...)` / `cleanupScaling()` / `smallestElementInCut()` 断言文本 | EPL-2.0 | **LP 求解器**：取代 lcns 自研的 `lp::Simplex` 替代层 |
+| **boost** | **1.63.0** | **已证实**（8 条路径串带版本号） | `0x9AE7A0` `...\boost_1_63_0/boost/uuid/sha1.hpp`；**并被证明用到这些头**：`0x9DDCF8` `multiprecision/cpp_int.hpp`、`0x9DC6B8` `cpp_int/checked.hpp`、`0x9DCB68` `cpp_int/divide.hpp`、`0x9DCBE8` `cpp_int/misc.hpp`、`0x9DD768` `multiprecision/rational_adaptor.hpp`、`0x9DD348` `boost/rational.hpp` | Boost Software License 1.0 | 精确算术（**`cpp_int` 大整数 + `rational`/`rational_adaptor`**）+ sha1/uuid（授权与云路径） |
+| **COIN-OR Clp** | **1.15.3** | **已证实**（构建路径串带版本号） | `0x9C9E1F` `@C:\Users\renaud\nest\external\clp-1.15.3\Clp\src\ClpSimplexDual.cpp`；`0x9D2D30` `Clp-1.15.3\CoinUtils\src\CoinLpIO.cpp`；外加大片 `clpModel->setSpecialOptions(...)` / `cleanupScaling()` / `smallestElementInCut()` 断言文本 | EPL-2.0 | **LP 求解器**：经 `OsiClpSolverInterface` 驱动（取代 lcns 自研 `Simplex` 兜底） |
+| **COIN-OR CoinUtils** | 随 Clp 1.15.3 发行包 | **包内位置已证实**，补丁级未证实 | `0x9D2D30` 的路径把 CoinUtils 放在 `Clp-1.15.3\` 之下 | EPL-2.0 | Osi/Clp 的基础库（本次取 `stable/2.10` 波段） |
+| **COIN-OR Osi** | 0.107 波段 | **API 时代证据**，补丁级未证实 | `0x9C31FC` `OsiSolverInterface`；`0x9C31A3` `OsiClpSolverInterface`；`OsiHintDo/OsiForceDo/OsiColCut` | EPL-2.0 | 原库驱动 LP 的接口层（本次取 `stable/0.107` 波段） |
 | **JsonCpp** | 1.9.5 | 版本号未证实（仅键名与读写形态） | `re/findings_*.md` 记录的 problem/solution JSON 键与 `Json::Value` 形态 | MIT | problem/solution 的 JSON 序列化 |
 | **CryptoPP** | 8.9.0 | 版本号未证实（仅类名） | `0x9B8C98` `CryptoPP: invalid group element`；vtable `N8CryptoPP10HexEncoderE` 等 | Boost Software License 1.0（部分公有领域） | 授权与云路径的哈希/加密 |
 | *（工具链）* libstdc++ / MinGW-w64 | 随 CLion 2025.3.3 的 GCC 13.1.0 | — | `[abi:cxx11]` 是 **libstdc++ 的 ABI 标签**，不是 Abseil | GPL+exception / mingw-w64 | C++ 运行时 |
 
 **"API 时代证据"的含义**：字符串证明了**用了这个库与这套 API**（`OsiClpSolverInterface` 就是 Osi→Clp 的桥），
-但没有字符串给出它自己的版本号。所以表中版本列是"**为可构建性选定的版本**"，与前一阶段记录的
-"原库静态链接 Clp 1.15.3"**可能不一致** —— 这种偏差必须显式标注，不能当成等价。
+但**没有**给出它自己的版本号；这类条目的版本列是"为可构建性选定的版本"，必须显式标注。
+**Clp 与 boost 不属此类**：它们的版本号就在构建路径串里（1.15.3 / 1.63.0），因此按该确切版本构建。
 
 ## 2. 获取方式（`fetch.ps1` / `fetch.py`，均可重跑）
 
@@ -59,9 +59,9 @@ third_party/
 |---|---|---|
 | T1 | 第三方库落盘 | 见 §4 |
 | T2 | 用 CMake 构建 CoinUtils → Osi → Clp（MinGW，无 Fortran；Coin-OR 的 CMake 可用） | 待做 |
-| T3 | `lcns` 新增 `-DLCNS_WITH_CLP=ON`：编译 `src/lp_clp.cpp`，以 `OsiClpSolverInterface` 实现 `LinearProgram`，**与 `lp::Simplex` 同接口** | 待做 |
-| T4 | 把 registry 的 `lp.simplex_backend`（`Substituted`）改判为 `Recovered`（真正的 Clp 路径为默认），Simplex 退化为**可选 fallback** 并注明 | 待做 |
-| T5 | boost：`third_party/src/boost_1_63_0` 加入 include 路径，在精确算术路径用 `boost::multiprecision`，并用 `static_assert(BOOST_VERSION == 106300)` 把版本钉住 | 待做 |
+| T3 | `lcns` 新增 `-DLCNS_WITH_CLP=ON`（默认 ON）：编译 `src/lp_clp.cpp`，以 `OsiClpSolverInterface` 实现 `LinearProgram`，**与 `lp::Simplex` 同接口** | ✅ **已完成** |
+| T4 | registry：原 `lp.simplex_backend`（`Substituted`）拆成 **`lp.clp_backend`（`Recovered`）** + **`lp.simplex_fallback`（`Substituted`）**，即「真 Clp 是默认、自研单纯形只是可选兜底」 | ✅ **已完成** |
+| T5 | boost：`third_party/src/boost_1_63_0` 以 `-isystem` 加入 include 路径（`-DLCNS_WITH_BOOST=ON`，默认 ON），并在 `tests/test_recovered.cpp` 用 `static_assert(BOOST_VERSION == 106300)` 把版本**钉在证据上** | ✅ **已完成**（钩子就位；尚未把某个几何路径改写成 `boost::multiprecision`） |
 | T6 | JsonCpp：替换工程自有 JSON 写出器（键名已是恢复值） | 待做 |
 | T7 | CryptoPP：仅在授权/云路径需要；这些路径本身是 `NotReversed`，先只建立链接能力 | 待做 |
 
@@ -71,12 +71,12 @@ third_party/
 
 | 库 | 位置 | 说明 |
 |---|---|---|
-| COIN-OR **CoinUtils 2.10.x** | `src/coinutils-2.10/` | 克隆自 `stable/2.10`；**该分支带 `configure`**（tag 树也带，但 stable 分支与 1.15 时代匹配） |
-| COIN-OR **Osi 0.107.x** | `src/osi-0.107/` | `stable/0.107` |
-| COIN-OR **Clp 1.15.x** | `src/clp-1.15/` | `stable/1.15` —— 与"原库静态链接 Clp 1.15.3"对齐 |
+| COIN-OR **CoinUtils 2.10.x** | `src/coinutils-2.10/` | 克隆自 `stable/2.10`（带 `configure`）；版本落在 `Clp-1.15.3` 发行包的时代波段 |
+| COIN-OR **Osi 0.107.x** | `src/osi-0.107/` | `stable/0.107`；同上 |
+| COIN-OR **Clp 1.15.3**（**确切 tag**） | `src/clp-1.15.3/` | `releases/1.15.3`；其 `AC_INIT([Clp],[1.15.3])`、configure 生成的 `CLP_VERSION "1.15.3"` 与二进制里的路径串 `clp-1.15.3` **三方一致** |
 | **JsonCpp 1.9.5** | `src/jsoncpp/` | 带 `CMakeLists.txt`，可直接 CMake 构建 |
 | **CryptoPP 8.9.0** | `src/cryptopp/` | 含 CMake 支持 |
-| **boost 1.63.0** | `_archives/boost_1_63_0.tar.bz2`（下载中）+ 待解包到 `src/boost_1_63_0/` | 78 MB 官方归档；`curl` 可达（Python urllib 会超时） |
+| **boost 1.63.0** | `_archives/boost_1_63_0.tar.bz2` → 已解包到 `src/boost_1_63_0/` | 78 MB 官方归档；`curl` 可达（Python urllib 会超时）；`BOOST_VERSION == 106300` 已由 `test_recovered` 断言 |
 
 ### 4.2 构建路径（已踩通的坑，逐条记录）
 
@@ -84,7 +84,8 @@ third_party/
 `C:\Program Files\Git\bin\bash.exe`（MSYS2 系）、CLion 的 `mingw32-make.exe` 与 GCC 13.1.0、`cmake`、`ninja`。
 因此：
 
-1. **不能用 git 的 tag 树重建 autotools**（无 autoconf）⇒ 改用 **stable 分支**（自带 `configure`）。
+1. **不能用 git 的 tag 树重建 autotools**（无 autoconf）⇒ 改用**带 `configure` 的分支/tag**。
+   （`releases/1.15.3` 这个 tag 恰好自带 `configure`，所以 Clp 用的是**确切版本**。）
 2. **没有 `make`** ⇒ 在 `_shim/make.exe` 放一份 `mingw32-make.exe`，并把它放到 bash 的 `PATH` 前面。
 3. **`make` 认为 `configure` 过期而想重跑 autotools**，其命令行里含未加引号的
    `C:/Program Files/...` ⇒ 报 `C:/Program: No such file or directory`（Error 127）。
@@ -106,7 +107,9 @@ third_party/
 | **Clp 编译** | ✅ `libclp.a` **2,804 KB**（50 + `OsiClpSolverInterface.cpp`） |
 | boost 归档 | ✅ `_archives/boost_1_63_0.tar.bz2` **78.19 MB** |
 | **链接验证** | ✅ `third_party/test_osiclp.cpp` → **`OSICLP-LINK-OK`**（见 §4.5） |
-| 接入 lcns（`-DLCNS_WITH_CLP=ON`） | ⏳ 下一步 |
+| **接入 lcns** | ✅ `-DLCNS_WITH_CLP=ON` 默认开启；`lcns::lp::ClpLinearProgram` 已在 `lcns_nest` 中编译并链接三个 `.a`；34 TU / 0 warning / `ctest` 15/15 |
+| **双后端交叉验证** | ✅ `tests/test_linear_program.cpp` 让 `buildAndSolveLp`(0x7D7200) **同时**跑两个后端：目标值与对偶价必须一致，各自解必须可行且复现自己的目标值 |
+| boost 接入 | ✅ 头文件路径已接、版本已 `static_assert` 钉住（106300） |
 
 构建方式最终定型为：**configure 只用来生成 Clp 的 `config_clp.h`，编译改用 CMake + Ninja 直接编源码**
 （`third_party/CMakeLists.txt`，产物在 `third_party/build-cmake/`）。
@@ -121,10 +124,12 @@ third_party/
 | 排除 `ClpMain.cpp` | 它是独立可执行程序的 `main` | 无 |
 | 排除 `ClpCholesky{Mumps,Taucs,Ufl,Wssmp,WssmpKKT}.cpp` | 需要外部求解器（MUMPS/TAUCS/UFL/WSSMP）的头文件 | **不影响**：保留自带的 `ClpCholeskyBase`/`ClpCholeskyDense` |
 | 强制预包含 `compat/coin_compat.h` | 老代码依赖标准头的传递包含（如 `CoinFinite.cpp` 用 `DBL_MAX` 却没 include `<cfloat>`） | 第三方源码**保持原样未改** |
+| `compat/coin_compat.h` 里 `#include "CoinFinite.hpp"` | Clp 1.15.3 的 `CbcOrClpParam.cpp:2601` 用了 `COIN_INT_MAX` 却没包含定义它的头（旧版 CoinUtils 会间接带入）。这里引入 **CoinUtils 自己的定义**，不是自编数值 | 精确 |
 | 提供 `compat/endian.h` | MinGW 无 POSIX `<endian.h>`；`CoinAbcCommon.hpp` 只用 `__BYTE_ORDER`/`__LITTLE_ENDIAN` | x86-64 小端，**精确**而非近似 |
 | `-DHAVE_CMATH` | configure 生成的 `config_clp.h` 不带该宏，`ClpHelperFunctions.hpp` 会 `#error` | 与实际环境一致 |
-| Clp 版本 1.15.x（`stable/1.15`）而非 1.17.x | 对齐前一阶段"原库静态链接 **Clp 1.15.3**"的记录 | 更贴近原版；**版本仍非字符串实证**（见 §1） |
-| 未编译 boost（仅下载） | 头文件库，接入时直接加 include 路径 | 待做 |
+| Clp = **确切 1.15.3**（`releases/1.15.3`） | 二进制路径串实证；用该 tag 的 configure 生成 `config_clp.h`（`CLP_VERSION "1.15.3"`） | **无版本偏差** |
+| CoinUtils `stable/2.10` / Osi `stable/0.107` | 二进制只证明它们位于 `Clp-1.15.3\` 包内，未给出补丁级版本 | **补丁级偏差可能存在**，已在 §1 标注为"未证实" |
+| boost 仅接 include 路径 | 头文件库，无需编译 | T5 的钩子已就位；尚未把某个几何路径改写成 `boost::multiprecision` |
 
 ### 4.5 链接验证（可重跑）
 

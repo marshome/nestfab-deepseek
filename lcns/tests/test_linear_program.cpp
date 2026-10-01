@@ -6,8 +6,10 @@
 //                x_s >= 0
 #include "check.hpp"
 #include "lcns/lp.hpp"
+#include "lcns/lp_clp.hpp"
 
 #include <limits>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -416,6 +418,122 @@ int main() {
         CHECK(lp.solve() == 0);
         CHECK_NEAR(lp.objective(), 6.0, 1e-9);
     }
+
+#ifdef LCNS_HAS_CLP
+    // ---------------------------------------------------------------------------------------
+    // The REAL COIN-OR backend (OsiClpSolverInterface, downloaded and linked -- see
+    // third_party/README.md) must agree with the built in Simplex on the same models.
+    // This is the test that makes "the LP layer is the original one" checkable rather than
+    // a claim: both backends go through the SAME recovered driver `buildAndSolveLp` (0x7D7200).
+    // ---------------------------------------------------------------------------------------
+    {
+        // All three sheets cost 1.0 here, so the optimum is DEGENERATE: (2,0,1) and (0,1,2) both
+        // cover the demand at objective 3. Comparing primal vertices across two different solvers
+        // would therefore be wrong; what must agree is the objective and the dual prices, and each
+        // backend's own answer must be feasible and hit its objective.
+        const std::vector<SheetContent> sheets = {
+            {{1, 1}, 1.0}, {{2, 0}, 1.0}, {{0, 2}, 1.0}};
+        const std::vector<int> demand = {2, 4};
+
+        SimplexLinearProgram builtin;
+        const SheetSelectionResult a = buildAndSolveLp(sheets, demand, builtin);
+
+        ClpLinearProgram real;
+        const SheetSelectionResult b = buildAndSolveLp(sheets, demand, real);
+
+        CHECK(a.solved);
+        CHECK(b.solved);
+        CHECK_NEAR(a.objective, b.objective, 1e-7);
+        CHECK_NEAR(a.objective, 3.0, 1e-7);
+        CHECK(a.duals.size() == b.duals.size());
+        CHECK(b.values.size() == sheets.size() + static_cast<std::size_t>(b.slackColumns));
+
+        // each backend's primal must satisfy the demand rows ...
+        for (std::size_t p = 0; p < demand.size(); ++p) {
+            double coveredA = 0.0, coveredB = 0.0;
+            for (std::size_t s = 0; s < sheets.size() && s < a.values.size(); ++s) {
+                if (p < sheets[s].counts.size()) coveredA += sheets[s].counts[p] * a.values[s];
+            }
+            for (std::size_t s = 0; s < sheets.size() && s < b.values.size(); ++s) {
+                if (p < sheets[s].counts.size()) coveredB += sheets[s].counts[p] * b.values[s];
+            }
+            CHECK(coveredA >= static_cast<double>(demand[p]) - 1e-7);
+            CHECK(coveredB >= static_cast<double>(demand[p]) - 1e-7);
+        }
+        // ... and both must reproduce the objective from their own prices (dual feasibility)
+        double costA = 0.0, costB = 0.0;
+        for (std::size_t s = 0; s < sheets.size(); ++s) {
+            if (s < a.values.size()) costA += sheets[s].price * a.values[s];
+            if (s < b.values.size()) costB += sheets[s].price * b.values[s];
+        }
+        CHECK_NEAR(costA, a.objective, 1e-7);
+        CHECK_NEAR(costB, b.objective, 1e-7);
+        CHECK(real.droppedCoefficients() == 0u);
+    }
+    {
+        // A model with a UNIQUE optimum: min 2x+3y s.t. x+y>=4, x+2y>=6 -> x=y=2, obj 10,
+        // duals (1,1). Here the two backends must agree vertex by vertex as well.
+        SimplexLinearProgram builtin;
+        builtin.addColumn(2.0, 0.0, kInf);
+        builtin.addColumn(3.0, 0.0, kInf);
+        const int ix[2] = {0, 1};
+        const double v1[2] = {1.0, 1.0};
+        const double v2[2] = {1.0, 2.0};
+        builtin.addRow(2, ix, v1, 4.0);
+        builtin.addRow(2, ix, v2, 6.0);
+        CHECK(builtin.solve() == static_cast<int>(LpStatus::Optimal));
+
+        ClpLinearProgram real;
+        real.addColumn(2.0, 0.0, kInf);
+        real.addColumn(3.0, 0.0, kInf);
+        real.addRow(2, ix, v1, 4.0);
+        real.addRow(2, ix, v2, 6.0);
+        CHECK(real.solve() == static_cast<int>(LpStatus::Optimal));
+
+        CHECK_NEAR(real.objective(), builtin.objective(), 1e-7);
+        CHECK_NEAR(real.objective(), 10.0, 1e-7);
+        CHECK(real.primal().size() == 2u);
+        CHECK_NEAR(real.primal()[0], 2.0, 1e-6);
+        CHECK_NEAR(real.primal()[1], 2.0, 1e-6);
+        CHECK(real.dual().size() == 2u);
+        CHECK_NEAR(real.dual()[0], 1.0, 1e-6);
+        CHECK_NEAR(real.dual()[1], 1.0, 1e-6);
+    }
+    {
+        // the empty-domain diagnostic is reported, not repaired, by the real backend too
+        ClpLinearProgram lp;
+        lp.addColumn(1.0, 5.0, 1.0);            // lower > upper
+        CHECK(lp.solve() == static_cast<int>(LpStatus::Infeasible));
+        CHECK(lp.columns() == 1u);
+    }
+    {
+        // reset() drops the model, the solution and the diagnostics
+        ClpLinearProgram lp;
+        lp.addColumn(1.0, 0.0, kInf);
+        lp.addColumn(2.0, 0.0, kInf);
+        const int index[2] = {0, 1};
+        const double value[2] = {1.0, 1.0};
+        lp.addRow(2, index, value, 3.0);
+        CHECK(lp.solve() == static_cast<int>(LpStatus::Optimal));
+        CHECK_NEAR(lp.objective(), 3.0, 1e-7);
+        CHECK(lp.primal().size() == 2u);
+        CHECK(lp.dual().size() == 1u);
+        lp.reset();
+        CHECK(lp.columns() == 0u);
+        CHECK(lp.rows() == 0u);
+    }
+    {
+        // the factory hands back the real backend as a LinearProgram
+        std::unique_ptr<LinearProgram> lp = makeClpLinearProgram();
+        CHECK(lp != nullptr);
+        lp->addColumn(1.0, 0.0, kInf);
+        const int index[1] = {0};
+        const double value[1] = {1.0};
+        lp->addRow(1, index, value, 4.0);
+        CHECK(lp->solve() == static_cast<int>(LpStatus::Optimal));
+        CHECK_NEAR(lp->objective(), 4.0, 1e-7);
+    }
+#endif  // LCNS_HAS_CLP
 
     return check::finish("test_linear_program");
 }

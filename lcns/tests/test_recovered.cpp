@@ -19,6 +19,10 @@
 #include "lcns/recovery.hpp"
 #include "lcns/row.hpp"
 
+#ifdef LCNS_HAS_BOOST
+#include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
+#endif
+
 using namespace lcns;
 
 int main() {
@@ -97,6 +101,16 @@ int main() {
     CHECK(kCascadeEarlyOut == 2);                            // RE 0x2CD0B
     CHECK(kCascadeMidThreshold == 4);                        // RE 0x2CD5B
 
+    // --- third party versions are bound to the evidence in the dump ---------------------------
+    // The dump names the exact boost tree it was built against, so the vendored headers are pinned:
+    //   0x9AE7A0  'C:\Users\renaud\nest\external\boost_1_63_0/boost/uuid/sha1.hpp'
+#ifdef LCNS_HAS_BOOST
+    {
+        static_assert(BOOST_VERSION == 106300, "the dump proves boost 1.63.0 (path @0x9AE7A0)");
+        CHECK(BOOST_VERSION == 106300);
+    }
+#endif
+
     // --- the recovery inventory must not silently shrink ------------------------------------
     // include/lcns/recovery.hpp registers every part of the reconstruction that is NOT
     // instruction-level faithful. The counts are asserted here (and the code marks are
@@ -104,8 +118,8 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 59);
-        CHECK(countOf(Status::Recovered) == 6);
+        CHECK(kGapCount == 60);
+        CHECK(countOf(Status::Recovered) == 7);
         CHECK(countOf(Status::Structural) == 14);
         CHECK(countOf(Status::Substituted) == 27);
         CHECK(countOf(Status::NotReversed) == 11);

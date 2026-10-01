@@ -5,7 +5,7 @@
 
 | 状态 | 含义 | 条目数 |
 |---|---|---:|
-| `Recovered`（已恢复） | instruction-level faithful; constants cite RVAs checked by tests | 6 |
+| `Recovered`（已恢复） | instruction-level faithful; constants cite RVAs checked by tests | 7 |
 | `Structural`（结构已恢复） | structure/algorithm skeleton recovered; body re-implemented | 14 |
 | `Substituted`（替代实现） | original uses something unavailable here, or heuristic constants were NOT recovered | 27 |
 | `NotReversed`（**未逆向**） | feature exists in the DLL but has NOT been reverse engineered | 11 |
@@ -23,6 +23,7 @@
 | `geom.orient128` | `0x58E450` | exact orientation predicate; its complete caller set (13) is enumerated in findings_geometry.md | include/lcns/geom.hpp:128 |
 | `module.model` | `-` | Part/Sheet/Order/Nesting/Solution field order and the Set*/Add* landing offsets are recovered from the setters and CreateProblem 0x1EE50 (REPORT section 7.4) | src/model.cpp:8 |
 | `module.row` | `0x134470 0x133DE0 0x136350 0x13A360` | the per-part path was translated instruction by instruction; the 216 B element layout is locked by 15 static_asserts in include/lcns/row.hpp | src/row.cpp:7 |
+| `lp.clp_backend` | `Coin::CoinLP slots 3/4/5/8; OsiClpSolverInterface` | the REAL COIN-OR CoinUtils/Osi/Clp is downloaded (third_party/README.md) and linked: third_party/CMakeLists.txt builds the trio with the project's own GCC 13.1, and lcns::lp::ClpLinearProgram drives OsiClpSolverInterface through the recovered contract (reset/addColumn/addRow/solve/primal/dual) with the recovered storage shape (3 parallel per-column vectors + a 16 B triplet list sorted column-major, i.e. 0x7CA830). tests/test_linear_program.cpp cross-checks it against the built-in backend on the recovered driver buildAndSolveLp (0x7D7200): objective and duals must agree, and each answer must be feasible and reproduce its own objective. VERSION IS EVIDENCED, not guessed: the dump contains '@C:\\Users\\renaud\\nest\\external\\clp-1.15.3\\Clp\\src\\ClpSimplexDual.cpp' at 0x9C9E1F and 'Clp-1.15.3\\CoinUtils\\src\\CoinLpIO.cpp' at 0x9D2D30, so Clp is built from the exact releases/1.15.3 tag (its configure reports CLP_VERSION \"1.15.3\"); CoinUtils/Osi come from the matching stable/2.10 and stable/0.107 branches, whose exact patch levels are NOT string proven | src/lp_clp.cpp:18 |
 | `lp.canonicalise` | `0x7CA830` | in-place sort of the +0x90 triplet accumulator into column-major COO order, then 3-space text rendering | src/lp.cpp:463 |
 
 ## Structural（结构已恢复）
@@ -74,7 +75,7 @@
 | `tiling.eval.reusable` | `-` | scoring formula NOT recovered (weight 0.25 here is ours) | src/tiling.cpp:168 |
 | `tiling.eval.oblique` | `-` | scoring formula NOT recovered | src/tiling.cpp:178 |
 | `tiling.eval.multitorch` | `-` | scoring formula NOT recovered | src/tiling.cpp:188 |
-| `lp.simplex_backend` | `Coin::CoinLP (Clp 1.15.3)` | the original statically links COIN-OR Clp 1.15.3 through OsiClpSimulatorInterface; Clp is not available here, so lp::Simplex (zero dependency, written for this project) is the default backend -- an unavoidable, documented divergence | src/lp.cpp:272 |
+| `lp.simplex_fallback` | `not in the binary (lcns only)` | the zero dependency Simplex stays as a fallback for builds configured without the COIN-OR archives (-DLCNS_WITH_CLP=OFF, or archives absent). It is NOT what the original runs, so any build using it must be described as using a substitute backend | src/lp.cpp:272 |
 
 ## NotReversed（**未逆向**）
 
