@@ -433,3 +433,5 @@ LIBRARY_EVIDENCED = {
     0x991920: ("toolchain", "NSt6locale5facetE"),
     0x9919E0: ("toolchain", "NSt6locale5facetE"),
 }
+
+# --- bucket C library code (goal round 110): every class it references is a library type ---

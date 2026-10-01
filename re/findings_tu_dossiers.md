@@ -1291,3 +1291,769 @@
 |---|---:|---|---|
 | `0x1c1110` | 129 | B2 种子调用者 | `0x20c440` |
 | `0x20c850` | 44 | B1 调用种子 | `0x20c440` |
+
+# 桶 C：无自带文本、但**引用了具名类**（goal round 110）**[每行带类名证据]**
+
+* 引用的类**全属库**（boost/CryptoPP/JsonCpp/libstdc++/dbg）⇒ **库代码**，已登记为排除项：**29** 个 / 10829 字节。
+* 引用了**领域类**⇒ 归档：**286** 个 / 62076 字节。
+
+## `CryptoPP::Exception`—34 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x77fba0` | 454 | `CryptoPP::Exception` |
+| `0x77ff40` | 454 | `CryptoPP::Exception` |
+| `0x78f380` | 438 | `CryptoPP::Exception` |
+| `0x7b1f70` | 226 | `CryptoPP::Exception` |
+| `0xb8930` | 188 | `CryptoPP::Exception` |
+| `0x7b1f20` | 80 | `CryptoPP::Exception` |
+| `0x77ac60` | 57 | `CryptoPP::Exception` |
+| `0x77fd70` | 57 | `CryptoPP::Exception` |
+| `0x780110` | 57 | `CryptoPP::Exception` |
+| `0x780850` | 57 | `CryptoPP::Exception` |
+| `0x780980` | 57 | `CryptoPP::Exception` |
+| `0x7822b0` | 57 | `CryptoPP::Exception` |
+| `0x782630` | 57 | `CryptoPP::Exception` |
+| `0x785d60` | 57 | `CryptoPP::Exception` |
+| `0x78d7b0` | 57 | `CryptoPP::Exception` |
+| `0x78f540` | 57 | `CryptoPP::Exception` |
+| `0x78f5c0` | 57 | `CryptoPP::Exception` |
+| `0x7982b0` | 57 | `CryptoPP::Exception` |
+| `0x799ee0` | 57 | `CryptoPP::Exception` |
+| `0x7b2060` | 57 | `CryptoPP::Exception` |
+| `0x77aca0` | 49 | `CryptoPP::Exception` |
+| `0x77fdb0` | 49 | `CryptoPP::Exception` |
+| `0x780150` | 49 | `CryptoPP::Exception` |
+| `0x780890` | 49 | `CryptoPP::Exception` |
+| `0x7809c0` | 49 | `CryptoPP::Exception` |
+| `0x7822f0` | 49 | `CryptoPP::Exception` |
+| `0x782670` | 49 | `CryptoPP::Exception` |
+| `0x785da0` | 49 | `CryptoPP::Exception` |
+| `0x78d7f0` | 49 | `CryptoPP::Exception` |
+| `0x78f580` | 49 | `CryptoPP::Exception` |
+| `0x78f600` | 49 | `CryptoPP::Exception` |
+| `0x7982f0` | 49 | `CryptoPP::Exception` |
+| `0x799f20` | 49 | `CryptoPP::Exception` |
+| `0x7b20a0` | 49 | `CryptoPP::Exception` |
+
+## `boost::exception`—25 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7da380` | 426 | `boost::exception` |
+| `0x7dab90` | 426 | `boost::exception` |
+| `0x7da970` | 412 | `boost::exception` |
+| `0x7da180` | 258 | `boost::exception` |
+| `0x7da5b0` | 205 | `boost::exception` |
+| `0x6e9e90` | 124 | `boost::exception` |
+| `0x6ea240` | 124 | `boost::exception` |
+| `0x6ea140` | 110 | `boost::exception` |
+| `0x6e9e30` | 85 | `boost::exception` |
+| `0x6e9630` | 76 | `boost::exception` |
+| `0x6e96d0` | 76 | `boost::exception` |
+| `0x6e9810` | 76 | `boost::exception` |
+| `0x6e98b0` | 76 | `boost::exception` |
+| `0x6e9680` | 68 | `boost::exception` |
+| `0x6e9720` | 68 | `boost::exception` |
+| `0x6e9860` | 68 | `boost::exception` |
+| `0x6e9900` | 68 | `boost::exception` |
+| `0x6e9f10` | 65 | `boost::exception` |
+| `0x6e9fa0` | 65 | `boost::exception` |
+| `0x6ea1b0` | 65 | `boost::exception` |
+| `0x6ea2c0` | 65 | `boost::exception` |
+| `0x6e9f60` | 57 | `boost::exception` |
+| `0x6e9ff0` | 57 | `boost::exception` |
+| `0x6ea200` | 57 | `boost::exception` |
+| `0x6ea310` | 57 | `boost::exception` |
+
+## `CryptoPP::Integer`—10 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0xf5020` | 394 | `CryptoPP::Integer` |
+| `0xf3ab0` | 393 | `CryptoPP::Integer` |
+| `0xf4ee0` | 318 | `CryptoPP::Integer` |
+| `0xf4de0` | 243 | `CryptoPP::Integer` |
+| `0xf49e0` | 190 | `CryptoPP::Integer` |
+| `0xf7260` | 152 | `CryptoPP::Integer` |
+| `0xf12c0` | 113 | `CryptoPP::Integer` |
+| `0xf0e90` | 98 | `CryptoPP::Integer` |
+| `0x7b0490` | 57 | `CryptoPP::Integer` |
+| `0x7b04d0` | 36 | `CryptoPP::Integer` |
+
+## `boost::geometry::exception`—10 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x701f70` | 67 | `boost::geometry::exception` |
+| `0x701fc0` | 59 | `boost::geometry::exception` |
+| `0x701270` | 36 | `boost::geometry::exception` |
+| `0x704370` | 36 | `boost::geometry::exception` |
+| `0x7080c0` | 36 | `boost::geometry::exception` |
+| `0x74b970` | 36 | `boost::geometry::exception` |
+| `0x7012a0` | 15 | `boost::geometry::exception` |
+| `0x7043a0` | 15 | `boost::geometry::exception` |
+| `0x7080f0` | 15 | `boost::geometry::exception` |
+| `0x74b9a0` | 15 | `boost::geometry::exception` |
+
+## `boost::bad_rational`—8 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7d9a70` | 427 | `boost::bad_rational` |
+| `0x6e9bb0` | 125 | `boost::bad_rational` |
+| `0x6e93b0` | 86 | `boost::bad_rational` |
+| `0x6e9410` | 78 | `boost::bad_rational` |
+| `0x6e9c30` | 75 | `boost::bad_rational` |
+| `0x6e9c80` | 67 | `boost::bad_rational` |
+| `0x6de860` | 36 | `boost::bad_rational` |
+| `0x6de890` | 15 | `boost::bad_rational` |
+
+## `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToType::<<subst>::ByteOrder>::E>::ELj20ENS_4SHA1ELj0ELb0EEE`—8 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x809f30` | 555 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x79cc80` | 359 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x79cdf0` | 343 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x7f56c0` | 194 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x7a2b00` | 105 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x7acf30` | 105 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x7a2b70` | 100 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+| `0x7acfa0` | 100 | `CryptoPP::IteratedHashWithStaticTransform::<<subst>::EnumToT` |
+
+## `<subst>::__cxx11::messages::<>`—8 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x921970` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921a10` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921b40` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921be0` | 66 | `<subst>::__cxx11::messages::<>` |
+| `0x921a60` | 48 | `<subst>::__cxx11::messages::<>` |
+| `0x921c30` | 48 | `<subst>::__cxx11::messages::<>` |
+| `0x921a90` | 40 | `<subst>::__cxx11::messages::<>` |
+| `0x921c60` | 40 | `<subst>::__cxx11::messages::<>` |
+
+## `CryptoPP::ByteQueue::Walker`—6 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0xc2200` | 607 | `CryptoPP::ByteQueue::Walker` |
+| `0xc2610` | 591 | `CryptoPP::ByteQueue::Walker` |
+| `0xc2860` | 591 | `CryptoPP::ByteQueue::Walker` |
+| `0xc2ec0` | 560 | `CryptoPP::ByteQueue::Walker` |
+| `0xc2110` | 225 | `CryptoPP::ByteQueue::Walker` |
+| `0xc1c80` | 195 | `CryptoPP::ByteQueue::Walker` |
+
+## `CryptoPP::BitBucket`—5 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x1188a0` | 1210 | `CryptoPP::BitBucket` |
+| `0x11a780` | 886 | `CryptoPP::BitBucket` |
+| `0x119110` | 419 | `CryptoPP::BitBucket` |
+| `0x1186c0` | 255 | `CryptoPP::BitBucket` |
+| `0x1187c0` | 224 | `CryptoPP::BitBucket` |
+
+## `boost::asio::basic_streambuf::<>`—5 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6db910` | 553 | `boost::asio::basic_streambuf::<>` |
+| `0x6dd270` | 540 | `boost::asio::basic_streambuf::<>` |
+| `0x6eba90` | 249 | `boost::asio::basic_streambuf::<>` |
+| `0x6ebb90` | 68 | `boost::asio::basic_streambuf::<>` |
+| `0x6ebbe0` | 60 | `boost::asio::basic_streambuf::<>` |
+
+## `CryptoPP::AlgorithmParameters`—4 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x10f220` | 99 | `CryptoPP::AlgorithmParameters` |
+| `0x78fb10` | 46 | `CryptoPP::AlgorithmParameters` |
+| `0x78fb40` | 33 | `CryptoPP::AlgorithmParameters` |
+| `0x10f200` | 23 | `CryptoPP::AlgorithmParameters` |
+
+## `Tiling::Part`—4 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x4dafc0` | 258 | `Tiling::Part` |
+| `0x4db0d0` | 254 | `Tiling::Part` |
+| `0x4db1d0` | 254 | `Tiling::Part` |
+| `0x4daec0` | 249 | `Tiling::Part` |
+
+## `N9__gnu_cxx26__concurrence_unlock_errorE`—4 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x65c5c0` | 307 | `N9__gnu_cxx26__concurrence_unlock_errorE` |
+| `0x65c700` | 264 | `N9__gnu_cxx26__concurrence_unlock_errorE` |
+| `0x998cd0` | 201 | `N9__gnu_cxx26__concurrence_unlock_errorE` |
+| `0x9a0700` | 68 | `N9__gnu_cxx26__concurrence_unlock_errorE` |
+
+## `boost::asio::detail::timer_queue::<<subst>::chrono_time_traits::<<subst>::chrono::_V2::steady_clock>::<subst>::wait_traits::<>>`—4 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6ec760` | 176 | `boost::asio::detail::timer_queue::<<subst>::chrono_time_trai` |
+| `0x6ec6b0` | 170 | `boost::asio::detail::timer_queue::<<subst>::chrono_time_trai` |
+| `0x6f0b40` | 45 | `boost::asio::detail::timer_queue::<<subst>::chrono_time_trai` |
+| `0x6f0b70` | 33 | `boost::asio::detail::timer_queue::<<subst>::chrono_time_trai` |
+
+## `CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>::TF_SignatureSchemeOptions::<<subst>::TF_SS::<<subst>::PSS>::<subst>::SHA1>::<subst>::RSA`—4 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x77edb0` | 222 | `CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>` |
+| `0x78a870` | 222 | `CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>` |
+| `0x77ee90` | 215 | `CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>` |
+| `0x78a950` | 215 | `CryptoPP::TF_ObjectImpl::<<subst>::TF_VerifierBase>::<subst>` |
+
+## `Multi::DatabaseNester`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x5b100` | 85 | `Multi::DatabaseNester` |
+| `0x5b1f0` | 83 | `Multi::DatabaseNester` |
+| `0x5b170` | 77 | `Multi::DatabaseNester` |
+
+## `CryptoPP::ByteQueue`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0xc33f0` | 203 | `CryptoPP::ByteQueue` |
+| `0xc2590` | 108 | `CryptoPP::ByteQueue` |
+| `0xc2510` | 99 | `CryptoPP::ByteQueue` |
+
+## `CryptoPP::MessageQueue`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x100180` | 752 | `CryptoPP::MessageQueue` |
+| `0x77c350` | 178 | `CryptoPP::MessageQueue` |
+| `0x77c410` | 170 | `CryptoPP::MessageQueue` |
+
+## `CryptoPP::BERGeneralDecoder`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x111630` | 303 | `CryptoPP::BERGeneralDecoder` |
+| `0x10f810` | 153 | `CryptoPP::BERGeneralDecoder` |
+| `0x10f770` | 137 | `CryptoPP::BERGeneralDecoder` |
+
+## `CryptoPP::DERGeneralEncoder`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x10fa20` | 191 | `CryptoPP::DERGeneralEncoder` |
+| `0x10fbb0` | 183 | `CryptoPP::DERGeneralEncoder` |
+| `0x111ad0` | 64 | `CryptoPP::DERGeneralEncoder` |
+
+## `Tiling::PackerCache`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x158f60` | 919 | `Tiling::PackerCache` |
+| `0x158be0` | 895 | `Tiling::PackerCache` |
+| `0x159480` | 98 | `Tiling::PackerCache` |
+
+## `Pack::BestNester`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x681ee0` | 157 | `Pack::BestNester` |
+| `0x681e40` | 149 | `Pack::BestNester` |
+| `0x15e3b0` | 81 | `Pack::BestNester` |
+
+## `Tiling::BoxMultiTiler`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x4f4850` | 883 | `Tiling::BoxMultiTiler` |
+| `0x76b380` | 45 | `Tiling::BoxMultiTiler` |
+| `0x76b3b0` | 33 | `Tiling::BoxMultiTiler` |
+
+## `Structure::ClusterObserver`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7bc0c0` | 191 | `Structure::ClusterObserver` |
+| `0x7bc000` | 188 | `Structure::ClusterObserver` |
+| `0x553100` | 75 | `Structure::ClusterObserver` |
+
+## `Tiling::SqueezeMultiTiler`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x76e440` | 2741 | `Tiling::SqueezeMultiTiler` |
+| `0x76f0a0` | 427 | `Tiling::SqueezeMultiTiler` |
+| `0x76ef00` | 416 | `Tiling::SqueezeMultiTiler` |
+
+## `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::RunAllComputations>`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x90a030` | 463 | `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::Run` |
+| `0x8aae70` | 36 | `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::Run` |
+| `0x8aaea0` | 15 | `<subst>::thread::_State_impl::<NoFitMultiThreadComputer::Run` |
+
+## `<subst>::thread::_State_impl::<Tiling::PackerCache::Implementation::PreUpdateTilings>::<subst>::vector::<<subst>::PartUpdaterInformer>`—3 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x90a200` | 463 | `<subst>::thread::_State_impl::<Tiling::PackerCache::Implemen` |
+| `0x8aaee0` | 36 | `<subst>::thread::_State_impl::<Tiling::PackerCache::Implemen` |
+| `0x8aaf10` | 15 | `<subst>::thread::_State_impl::<Tiling::PackerCache::Implemen` |
+
+## `Engine::EquivalentEngine`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x25a20` | 512 | `Engine::EquivalentEngine` |
+| `0x24ab0` | 190 | `Engine::EquivalentEngine` |
+
+## `Multi::NestingNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x32f30` | 73 | `Multi::NestingNester` |
+| `0x32ee0` | 65 | `Multi::NestingNester` |
+
+## `Multi::TilingNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x45680` | 99 | `Multi::TilingNester` |
+| `0x456f0` | 91 | `Multi::TilingNester` |
+
+## `Multi::RectangleNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6d3a0` | 193 | `Multi::RectangleNester` |
+| `0x6d2e0` | 185 | `Multi::RectangleNester` |
+
+## `N5Multi12TerminalNodeE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x9c280` | 2731 | `N5Multi12TerminalNodeE` |
+| `0x9cd30` | 2604 | `N5Multi12TerminalNodeE` |
+
+## `CryptoPP::HashFilter`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0xd2370` | 366 | `CryptoPP::HashFilter` |
+| `0x7781f0` | 145 | `CryptoPP::HashFilter` |
+
+## `Utils::LogSink`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x199570` | 2703 | `Utils::LogSink` |
+| `0x19dd20` | 677 | `Utils::LogSink` |
+
+## `Tiling::BiModulePattern`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7e8520` | 757 | `Tiling::BiModulePattern` |
+| `0x4f2870` | 156 | `Tiling::BiModulePattern` |
+
+## `Json::StyledWriter`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x681a30` | 127 | `Json::StyledWriter` |
+| `0x6019e0` | 89 | `Json::StyledWriter` |
+
+## `Multi::FlipNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x687de0` | 36 | `Multi::FlipNester` |
+| `0x687e10` | 15 | `Multi::FlipNester` |
+
+## `Multi::FilterNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6937a0` | 36 | `Multi::FilterNester` |
+| `0x6937d0` | 15 | `Multi::FilterNester` |
+
+## `Multi::NoFillNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6937e0` | 67 | `Multi::NoFillNester` |
+| `0x693830` | 59 | `Multi::NoFillNester` |
+
+## `Multi::WrapObserver`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x695dc0` | 40 | `Multi::WrapObserver` |
+| `0x695df0` | 19 | `Multi::WrapObserver` |
+
+## `Multi::CompactNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x695e10` | 36 | `Multi::CompactNester` |
+| `0x695e40` | 15 | `Multi::CompactNester` |
+
+## `Multi::LimitedNester`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x695e50` | 48 | `Multi::LimitedNester` |
+| `0x695e80` | 40 | `Multi::LimitedNester` |
+
+## `Multi::NoMixSheetSelector`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x69a5d0` | 86 | `Multi::NoMixSheetSelector` |
+| `0x69a580` | 74 | `Multi::NoMixSheetSelector` |
+
+## `Utils::BadResponseException`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6d58d0` | 36 | `Utils::BadResponseException` |
+| `0x6d5900` | 15 | `Utils::BadResponseException` |
+
+## `boost::detail::sp_counted_impl_p::<<subst>::filesystem::filesystem_error::m_imp>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6de430` | 379 | `boost::detail::sp_counted_impl_p::<<subst>::filesystem::file` |
+| `0x6de2b0` | 374 | `boost::detail::sp_counted_impl_p::<<subst>::filesystem::file` |
+
+## `boost::filesystem::filesystem_error`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6de750` | 143 | `boost::filesystem::filesystem_error` |
+| `0x6de7e0` | 127 | `boost::filesystem::filesystem_error` |
+
+## `N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_12bad_rationalEEEEE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e8450` | 422 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+| `0x7d9c20` | 118 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+
+## `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt11range_errorEEEE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e8600` | 423 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+| `0x7da530` | 118 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+
+## `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt13runtime_errorEEEE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e8960` | 409 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+| `0x7dab10` | 118 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+
+## `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt14overflow_errorEEEE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e8b00` | 423 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+| `0x7dad40` | 118 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+
+## `N5boost16exception_detail10clone_implINS0_19error_info_injectorINS_6system12system_errorEEEEE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e8e90` | 437 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+| `0x7da290` | 237 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+
+## `N5boost16exception_detail10clone_implINS0_19error_info_injectorISt12length_errorEEEE`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e9050` | 305 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+| `0x7da680` | 185 | `N5boost16exception_detail10clone_implINS0_19error_info_injec` |
+
+## `boost::exception_detail::clone_impl::<<subst>::error_info_injector::<<subst>::system::system_error>>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e95c0` | 58 | `boost::exception_detail::clone_impl::<<subst>::error_info_in` |
+| `0x6e9600` | 37 | `boost::exception_detail::clone_impl::<<subst>::error_info_in` |
+
+## `boost::asio::datagram_socket_service::<<subst>::ip::udp>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6ecee0` | 41 | `boost::asio::datagram_socket_service::<<subst>::ip::udp>` |
+| `0x6ecf10` | 21 | `boost::asio::datagram_socket_service::<<subst>::ip::udp>` |
+
+## `boost::asio::detail::win_iocp_io_service`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6f4d80` | 119 | `boost::asio::detail::win_iocp_io_service` |
+| `0x6f4d10` | 111 | `boost::asio::detail::win_iocp_io_service` |
+
+## `boost::system::system_error`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6fdfe0` | 57 | `boost::system::system_error` |
+| `0x6fe020` | 49 | `boost::system::system_error` |
+
+## `Engine::EquivalentObserver`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x75e0e0` | 76 | `Engine::EquivalentObserver` |
+| `0x75e130` | 71 | `Engine::EquivalentObserver` |
+
+## `Tiling::CompositePart`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x76b3e0` | 53 | `Tiling::CompositePart` |
+| `0x76b420` | 45 | `Tiling::CompositePart` |
+
+## `Structure::ParseSolutionException`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7bfe60` | 36 | `Structure::ParseSolutionException` |
+| `0x7bfe90` | 15 | `Structure::ParseSolutionException` |
+
+## `__gnu_cxx::__concurrence_lock_error`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7c4660` | 41 | `__gnu_cxx::__concurrence_lock_error` |
+| `0x7c4690` | 15 | `__gnu_cxx::__concurrence_lock_error` |
+
+## `__gnu_cxx::__concurrence_wait_error`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7c46a0` | 36 | `__gnu_cxx::__concurrence_wait_error` |
+| `0x7c46d0` | 15 | `__gnu_cxx::__concurrence_wait_error` |
+
+## `__gnu_cxx::__concurrence_unlock_error`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7c46e0` | 41 | `__gnu_cxx::__concurrence_unlock_error` |
+| `0x7c4710` | 15 | `__gnu_cxx::__concurrence_unlock_error` |
+
+## `__gnu_cxx::__concurrence_broadcast_error`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7c4a40` | 36 | `__gnu_cxx::__concurrence_broadcast_error` |
+| `0x7c4a70` | 15 | `__gnu_cxx::__concurrence_broadcast_error` |
+
+## `<subst>::thread::_State_impl::<<subst>>::<subst>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x8aac60` | 36 | `<subst>::thread::_State_impl::<<subst>>::<subst>` |
+| `0x8aac90` | 15 | `<subst>::thread::_State_impl::<<subst>>::<subst>` |
+
+## `<subst>::thread::_State_impl::<<subst>::<subst>::<subst>::shared_ptr::<Engine::Engine>>::<subst>::<subst>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x8aacb0` | 91 | `<subst>::thread::_State_impl::<<subst>::<subst>::<subst>::sh` |
+| `0x8aad10` | 76 | `<subst>::thread::_State_impl::<<subst>::<subst>::<subst>::sh` |
+
+## `<subst>::thread::_State_impl::<Engine::Engine>::Structure::Problem`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x8aad90` | 36 | `<subst>::thread::_State_impl::<Engine::Engine>::Structure::P` |
+| `0x8aadc0` | 15 | `<subst>::thread::_State_impl::<Engine::Engine>::Structure::P` |
+
+## `<subst>::thread::_State_impl::<Multi::Supervisor>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x8aadf0` | 36 | `<subst>::thread::_State_impl::<Multi::Supervisor>` |
+| `0x8aae20` | 15 | `<subst>::thread::_State_impl::<Multi::Supervisor>` |
+
+## `<subst>::__cxx11::basic_stringbuf::<>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x91a710` | 168 | `<subst>::__cxx11::basic_stringbuf::<>` |
+| `0x915e70` | 72 | `<subst>::__cxx11::basic_stringbuf::<>` |
+
+## `<subst>::__cxx11::basic_ostringstream::<>`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x91f6f0` | 334 | `<subst>::__cxx11::basic_ostringstream::<>` |
+| `0x91fcf0` | 129 | `<subst>::__cxx11::basic_ostringstream::<>` |
+
+## `<subst>::ios_base::failure`—2 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x9444e0` | 80 | `<subst>::ios_base::failure` |
+| `0x944470` | 72 | `<subst>::ios_base::failure` |
+
+## `Engine::NestingEngine`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x23e70` | 595 | `Engine::NestingEngine` |
+
+## `Engine::MultiEngine`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x240d0` | 431 | `Engine::MultiEngine` |
+
+## `Engine::DelayedEngine`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x24b80` | 192 | `Engine::DelayedEngine` |
+
+## `Engine::CompositeEngine`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x24c40` | 334 | `Engine::CompositeEngine` |
+
+## `Engine::InfiniteEngine`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x24fd0` | 209 | `Engine::InfiniteEngine` |
+
+## `Multi::TraceObserver`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x5f000` | 44 | `Multi::TraceObserver` |
+
+## `Multi::TerminalNode`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x99360` | 1449 | `Multi::TerminalNode` |
+
+## `Multi::SplitNode`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x99910` | 447 | `Multi::SplitNode` |
+
+## `N5Multi4NodeE`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x9c060` | 537 | `N5Multi4NodeE` |
+
+## `CryptoPP::PK_FinalTemplate::<<subst>::TF_VerifierImpl::<<subst>::TF_SignatureSchemeOptions::<<subst>::TF_SS::<<subst>::PSS>::<subst>::SHA1>::<subst>::RSA>>::<subst>::<subst>::PSSR_MEM::<<subst>::P1363_MGF1>::E::`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0xbb070` | 567 | `CryptoPP::PK_FinalTemplate::<<subst>::TF_VerifierImpl::<<sub` |
+
+## `Pack::KnapsackNester`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x15d1d0` | 29 | `Pack::KnapsackNester` |
+
+## `Pack::RecursiveNester`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x162280` | 996 | `Pack::RecursiveNester` |
+
+## `Tiling::QuantityEvaluator`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x4e81b0` | 551 | `Tiling::QuantityEvaluator` |
+
+## `Tiling::MultiOrientedPartPattern`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x4f2a30` | 1944 | `Tiling::MultiOrientedPartPattern` |
+
+## `Tiling::BasicCandidater`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x4f3630` | 19 | `Tiling::BasicCandidater` |
+
+## `Utils::TimerWinImplementation`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x5f47c0` | 112 | `Utils::TimerWinImplementation` |
+
+## `dbg::symlog`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x60b4e0` | 44 | `dbg::symlog` |
+
+## `dbg::file_error`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x679220` | 36 | `dbg::file_error` |
+
+## `boost::exception_detail::error_info_injector::<<subst>::bad_rational>`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e99f0` | 108 | `boost::exception_detail::error_info_injector::<<subst>::bad_` |
+
+## `boost::exception_detail::error_info_injector::<>`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x6e9b40` | 108 | `boost::exception_detail::error_info_injector::<>` |
+
+## `N5boost8geometry31overlay_invalid_input_exceptionE`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x71b540` | 325 | `N5boost8geometry31overlay_invalid_input_exceptionE` |
+
+## `N9__gnu_cxx24__concurrence_lock_errorE`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7c4a80` | 47 | `N9__gnu_cxx24__concurrence_lock_errorE` |
+
+## `N9__gnu_cxx29__concurrence_broadcast_errorE`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x7c4ab0` | 47 | `N9__gnu_cxx29__concurrence_broadcast_errorE` |
+
+## `CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E::`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x81c080` | 153 | `CryptoPP::PSSR_MEM::<<subst>::P1363_MGF1>::E::` |
+
+## `N5boost8geometry18centroid_exceptionE`—1 个函数
+
+| 函数 | 字节 | 引用的类 |
+|---|---:|---|
+| `0x99fe70` | 47 | `N5boost8geometry18centroid_exceptionE` |
