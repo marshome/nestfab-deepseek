@@ -217,4 +217,18 @@ inline constexpr std::size_t kLargeObjectMinBytes = 0x159;     // one past the h
 inline constexpr std::size_t kContainerLastField = 0x40;       // RE 0x5E5CD0
 inline constexpr int kContainerFieldStep = 8;                  // the fields are eight bytes apart
 
+
+// --- two strides appearing in one body (round 203) --------------------------------------------------
+// RE 0x72B6A0, which computes both element addresses:
+//     72B6B9 lea rcx,[rsi+rsi*2] ; 72B6BD shl rcx,4              ; rsi * 48  (0x30)
+//     72B6CE lea rdx,[rbx+rbx*2] ; 72B6D5 lea rax,[rax+rdx*8]     ; rbx * 24  (0x18)
+// so the 48-byte stride of round 159 and the 24-byte stride of round 157 are exercised by the same routine.
+inline constexpr int kNestedStrideCheck = 2;   // the two strides seen together at 0x72B6A0
+
+// RE 0x704400 (the division shape round 183 established, here a ONE-operand imul):
+//     704435 movabs rdx,0xC30C30C30C30C30D ; 704442 imul rdx ; 70444F sar rdx,4 ; 704453 sub rdx,rax
+inline constexpr std::uint64_t kIndexDivMagic = 0xC30C30C30C30C30DULL;
+inline constexpr int kIndexDivShift = 4;
+inline constexpr int kIndexDivisor = 21;   // determined by experiment over 19 samples
+
 }  // namespace lcns

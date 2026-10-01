@@ -1258,5 +1258,19 @@ int main() {
         CHECK(kGeometryDispatchCases == 3);
     }
 
+    // --- the two strides in one body (RE 0x72b6b9/0x72b6bd and 0x72b6ce/0x72b6d5) --------------------
+    {
+        CHECK(kNestedStrideCheck == 2);
+        // the instructions compute n*3 then shift, so the arithmetic is checked rather than the address
+        for (std::size_t n = 0; n < 8; ++n) {
+            CHECK(((n + n * 2) << 4) == n * 48);
+            CHECK(((n + n * 2) << 3) == n * 24);
+        }
+        CHECK(kIndexedRecordStride == 48);
+        CHECK(kSmallRecordStride == 24);
+        CHECK(kIndexDivMagic == 0xC30C30C30C30C30DULL);
+        CHECK(kIndexDivShift == 4);
+    }
+
     return check::finish("test_recovered");
 }

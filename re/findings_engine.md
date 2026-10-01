@@ -3957,3 +3957,28 @@ round 198 找到的标签表是**领域文本**（非库标记），因此**引�
 **另记**：`0x5E7790`（154 B）**按标签分支**（`cmp rax,1`、`cmp rax,2`、`test rax,rax`，满足 3 种），返回 `eax == 1` ⇒ **类型分派谓词**；各分支调 `0x72B6A0`/`0x704400`/`0x700E80`。**本轮不声称哪个数字对应哪种几何类型**。
 
 **已落 `compare.hpp`**：`Box2d`、`kBoundingMaxBits`/`kBoundingMinBits`、四个偏移常量、`boundingBox()`、`kGeometryDispatchCases` + 测试 18 条（含空列表保留初值、单点退化）。
+
+### 附 124 两个步长同体出现；且索引除法用**实验**定除数（goal round 203）**[已落码]
+
+**（a）`0x72B6A0`（75 B / 18 个调用者）同时算两种元素地址**：
+
+```
+72B6B9  lea rcx,[rsi+rsi*2] ; 72B6BD shl rcx,4            ; rsi × 48
+72B6CE  lea rdx,[rbx+rbx*2] ; 72B6D5 lea rax,[rax+rdx*8]   ; rbx × 24
+```
+
+⇒ **round 159 的 48 与 round 157 的 24 在同一例程里被使用** ⇒ 属**交叉验证**（非新声明）。
+另：它在 `72B6C9` 调 **round 191 的 `0x5C5F40`**（`this+0x18` 取值器）。
+
+**（b）`0x704400`（154 B / 19 个调用者）里的除法**：
+
+```
+704435  movabs rdx,0xC30C30C30C30C30D
+704442  imul rdx        ; ★ 单操作数 ⇒ 高位确实产生
+70444F  sar rdx,4 ; 704453 sub rdx,rax   ; 符号修正
+```
+
+实验结果（19 个样本，与**向零截断**对比）：**除数 = /21**。
+同体还有 `0x8618618618618619` 的另一个单操作数 `mul`（待定）。
+
+**已落 `layout.hpp`**：`kNestedStrideCheck`、`kIndexDivMagic`、`kIndexDivShift`、`kIndexDivisor` + 测试 8 条（含“`(n+n*2)<<4 == n*48`”这种**算术而非地址**的断言）。
