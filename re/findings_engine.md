@@ -4450,3 +4450,32 @@ README 对 T7 的范围定义是“**先只建立链接能力**”（因为需�
 **（d） 32 位上限**：`0x62FCB0` 载 **`2.14748e9`**（rva `0xA067E8`）与 **`−2.14748e9`**（`0xA067E0`）（共陪 `0.5`、`1`）；`0x5FCA80` 载 **`4.29497e9`**（rva `0x9E1488`） ⇒ **恰为 `2^31−1` 与 `2^32−1`**（饱和守卫）。
 
 **已落 `layout.hpp`**：`kScanStride120`、`kScanTolerance`、`kScanFlag`、`kRecord48Mul`、`kElementCompareTolerance`、`kInt32MaxExact`、`kUint32MaxExact`、`kSaturationHalves` + 测试 20 条（含 `kUint32MaxExact == 2·kInt32MaxExact + 1` 与四种步长互不相等）。
+
+### 附 141 **取消阈值的三档**、初始化字段与**两个类型锚点**（goal round 219）**[已落码]
+
+**（a）`0x7D34C0`（104 B）= 同一守卫族的另一档**：
+
+```
+7D34D9  call 0x50210 → eax（种类）
+7D34DE  xmm6=[0.5]（rva 0x9AF928）
+7D34E6  cmp eax,3 ; 7D34E9 jbe          ; ★ kind ≤ 3 保留 0.5
+7D34EB  xmm6=[0.3]（rva 0x9AF930）     ; ★ 否则 0.3
+7D34F7  call 0x2FC90 → xmm0（进度）；7D3502 ja
+7D351F  xor eax,1                          ; ★ 布尔取反
+```
+
+⇒ 与 round 217 的 **0.75** 合起来，这一族的**档位是 0.3 / 0.5 / 0.75**，取哪一档由**种类**（与调用点）决定 —— 这是一条**成型的领域规则**。
+
+**（b）`0x1A60B0`（233 B）**：载 **`0.06`**（rva `0x9BEBB0`）给 `0x4D5060`；写 **`dword [rbx+0x138]=1`**（与 round 215 构造器清零的**同一字段**，现由两个函数见证）；栈上写对 **`(0, 0x14)`**；`lea rax,[rax+rax*2]` 配 8 尺度索引 **24 字节表项**，结果存 `[rbx+0x58]`。
+
+**（c）`0x7C68D0`（210 B）= 两次**动态类型检查**：
+
+```
+7C68E5  lea r8,[rip−0x448C] → 0x7C2460
+7C6904  lea r8,[rip−0x449B] → 0x7C2470
+7C68F0  cmp rax,r8；7C690B cmp rdx,r8
+```
+
+⇒ **两个具体类型锚点**（**由位移算出而非猜**）—— 正是目标文本里“vtable 类名”那条通道所需的东西。
+
+**已落 `layout.hpp`**：三个档位、`kCancelKindBoundary`、`kInit*`（含与 `kCtorZeroQwordOffset`、`kSmallRecordStride` 的交叉断言）、`kTypeAnchorA/B/Gap` + 测试 27 条。

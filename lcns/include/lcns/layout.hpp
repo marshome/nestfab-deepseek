@@ -388,4 +388,36 @@ inline constexpr double kInt32MaxExact = 2147483647.0;       // RE rva 0xA067E8
 inline constexpr double kUint32MaxExact = 4294967295.0;      // RE rva 0x9E1488
 inline constexpr std::size_t kSaturationHalves = 2;         // RE 0x62FCB0: 0.5 and 1 accompany the limits
 
+
+// --- the cancel threshold's tiers (round 219) -------------------------------------------------------
+// RE 0x7D34DE/0x7D34E6/0x7D34EB: the kind comes back in eax, `cmp eax,3 ; jbe` keeps 0.5 and anything larger takes
+// 0.3; round 217 recorded 0.75 at 0x7D355D. The family therefore has three tiers, and which one applies depends
+// on the kind and on the call site.
+inline constexpr double kCancelTierLow = 0.3;        // RE 0x7D34EB (rva 0x9AF930)
+inline constexpr double kCancelTierMid = 0.5;        // RE 0x7D34DE (rva 0x9AF928)
+inline constexpr double kCancelTierHigh = 0.75;      // RE 0x7D355D (rva 0x9AF938), round 217
+inline constexpr int kCancelKindBoundary = 3;        // RE 0x7D34E6
+inline constexpr int kCancelKindDefault = 2;         // RE 0x7D34F7's result is inverted at 0x7D351F
+
+// --- the initialiser fields of 0x1A60B0 (round 219) -------------------------------------------------
+//     1A60E7 movsd xmm1,[0.06]      ; rva 0x9BEBB0, handed to 0x4D5060
+//     1A6119 dword [rbx+0x138] = 1  ; the same +0x138 round 215's constructor zeroes
+//     1A613D/1A6145 the pair (0, 0x14) written to [rsp+0x40]/[rsp+0x44]
+//     1A6157 lea rax,[rax+rax*2]    ; times three, with a scale of eight -> 24-byte entries
+//     1A6162 [rbx+0x58] = the table entry
+inline constexpr double kInitConstant006 = 0.06;      // RE 0x1A60E7 (rva 0x9BEBB0)
+inline constexpr std::size_t kInitWord138 = 0x138;    // RE 0x1A6119, cross-checked with kCtorZeroQwordOffset
+inline constexpr std::size_t kInitField58 = 0x58;     // RE 0x1A6162
+inline constexpr int kInitPairFirst = 0;              // RE 0x1A613D
+inline constexpr int kInitPairSecond = 0x14;          // RE 0x1A6145: 20
+inline constexpr std::size_t kInitEntryStride = 24;   // RE 0x1A615B: rax*3 scaled by 8
+
+// --- two concrete type anchors (round 219) -----------------------------------------------------------
+// RE 0x7C68E5 `lea r8,[rip-0x448C]` and 0x7C6904 `lea r8,[rip-0x449B]`, computed from the displacements:
+// 0x7C68E5 + 7 - 0x448C = 0x7C2460 and 0x7C6904 + 7 - 0x449B = 0x7C2470. These are the types 0x7C68D0
+// distinguishes, so they anchor the classes the way the vtable channel does.
+inline constexpr std::uintptr_t kTypeAnchorA = 0x7C2460;   // RE 0x7C68E5
+inline constexpr std::uintptr_t kTypeAnchorB = 0x7C2470;   // RE 0x7C6904
+inline constexpr std::uintptr_t kTypeAnchorGap = 0x10;     // the two are one object apart
+
 }  // namespace lcns

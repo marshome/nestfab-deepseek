@@ -1475,5 +1475,45 @@ int main() {
         CHECK(kScanStride120 != kSizeRecordStride);
     }
 
+    // --- the cancel tiers (RE 0x7d34de/0x7d34e6/0x7d34eb), the initialiser and the type anchors ---------
+    {
+        CHECK(kCancelTierLow == 0.3);
+        CHECK(kCancelTierMid == 0.5);
+        CHECK(kCancelTierHigh == 0.75);
+        CHECK(kCancelKindBoundary == 3);
+        CHECK(kCancelTierLow < kCancelTierMid);
+        CHECK(kCancelTierMid < kCancelTierHigh);
+        // the tier the instructions select, stated as the comparison they perform
+        const auto tierFor = [](int kind) { return kind <= kCancelKindBoundary ? kCancelTierMid : kCancelTierLow; };
+        CHECK(tierFor(0) == kCancelTierMid);
+        CHECK(tierFor(3) == kCancelTierMid);          // the `jbe` keeps the boundary on the 0.5 side
+        CHECK(tierFor(4) == kCancelTierLow);
+        // and the guard fires above the tier, which is the `ja` at 0x7D3502
+        const auto fires = [&](int kind, double progress) { return tierFor(kind) > progress; };
+        CHECK(fires(0, 0.25));
+        CHECK(!fires(0, 0.6));
+        CHECK(fires(9, 0.25));
+        CHECK(!fires(9, 0.4));
+
+        CHECK(kInitConstant006 == 0.06);
+        CHECK(kInitWord138 == 0x138);
+        CHECK(kInitWord138 == kCtorZeroQwordOffset);   // round 215 zeroes the same field
+        CHECK(kInitField58 == 0x58);
+        CHECK(kInitField58 < kInitWord138);
+        CHECK(kInitPairFirst == 0);
+        CHECK(kInitPairSecond == 0x14);
+        CHECK(kInitPairSecond == 20);
+        CHECK(kInitEntryStride == 24);
+        CHECK(kInitEntryStride == kSmallRecordStride); // the 24 of round 157
+        CHECK((3 * 8) == kInitEntryStride);            // `lea rax,[rax+rax*2]` then scaled by eight
+
+        CHECK(kTypeAnchorA == 0x7C2460);
+        CHECK(kTypeAnchorB == 0x7C2470);
+        CHECK(kTypeAnchorB - kTypeAnchorA == kTypeAnchorGap);
+        // both were computed from the two displacements rather than copied
+        CHECK(kTypeAnchorA == 0x7C68E5 + 7 - 0x448C);
+        CHECK(kTypeAnchorB == 0x7C6904 + 7 - 0x449B);
+    }
+
     return check::finish("test_recovered");
 }
