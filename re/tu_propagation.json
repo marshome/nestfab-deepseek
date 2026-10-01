@@ -1,0 +1,1940 @@
+{
+ "kinds": {
+  "a": 190,
+  "b": 246,
+  "c": 38
+ },
+ "labels": {
+  "0x11b880": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x139110": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x13c8d0": [
+   "..\\tiling\\packer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x13f430": [
+   "..\\tiling\\packer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x141f90": [
+   "..\\tiling\\packer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x148e00": [
+   "..\\tiling\\packer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x154690": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x154df0": [
+   "..\\tiling\\packer.cpp",
+   "a: all callers agree"
+  ],
+  "0x155bb0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x15c560": [
+   "..\\tiling\\packer.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x15cd60": [
+   "..\\tiling\\packer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x15ddc0": [
+   "..\\tiling\\packer.cpp",
+   "a: all callers agree"
+  ],
+  "0x15ea80": [
+   "..\\tiling\\packer.cpp",
+   "a: all callers agree"
+  ],
+  "0x15f100": [
+   "..\\tiling\\packer.cpp",
+   "a: all callers agree"
+  ],
+  "0x16c260": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x16ef80": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x16f1f0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x178560": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "a: all callers agree"
+  ],
+  "0x17b740": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x17b9c0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a: all callers agree"
+  ],
+  "0x17e180": [
+   "..\\structure\\stats.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x17e5f0": [
+   "..\\structure\\stats.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x181e80": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1918d0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x19da20": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1a8780": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "a: all callers agree"
+  ],
+  "0x1a8db0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1a93d0": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x1a9450": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1aaa20": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a: all callers agree"
+  ],
+  "0x1aaca0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x1abb20": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x1ac390": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x1adc20": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x1ae990": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x1b0760": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x1b170": [
+   "internal.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1b5a70": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 13 distinctive callees"
+  ],
+  "0x1b7c80": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x1b840": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x1bb10": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x1bc200": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x1c0f10": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x1c12b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x1c1660": [
+   "..\\nesting\\algos\\tree_db.hpp",
+   "a: all callers agree"
+  ],
+  "0x1c2310": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1c25c0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x1c3420": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x1c3f30": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x1c55f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x1c6260": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x1c8960": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a: all callers agree"
+  ],
+  "0x1c8ec0": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a: all callers agree"
+  ],
+  "0x1c9c80": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 9 distinctive callees"
+  ],
+  "0x1cd840": [
+   "internal.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x1cded0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x1ce1c0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x1d70a0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x1d7160": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x1dd950": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x1de3d0": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x1de600": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x1dea50": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x1e010": [
+   "internal.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1e0d0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x1e140": [
+   "internal.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1e2e0": [
+   "internal.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1e3aa0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x1e480": [
+   "internal.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x1e870": [
+   "internal.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x1ec80": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x1eec00": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x1efe50": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x1f0700": [
+   "..\\verify\\equivalent.cpp",
+   "b: 11 distinctive callees"
+  ],
+  "0x1f8580": [
+   "..\\nesting\\ios\\log_ios.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x1fd3b0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x20bec0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x20bf80": [
+   "..\\nesting\\algos\\algo_helpers.hpp",
+   "a: all callers agree"
+  ],
+  "0x20c0c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x20cfe0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x20d0a0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x20e020": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x20e0c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x20e160": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x21faf0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x224aa0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x22da70": [
+   "..\\nesting\\algos\\sheet_optimizer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x233f50": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x234c60": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x236ad0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x236bc0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x239c80": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x243820": [
+   "..\\multi\\float_filler.cpp",
+   "b: 9 distinctive callees"
+  ],
+  "0x24d6f0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x25ca30": [
+   "..\\structure\\svg_io.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x260f20": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x2665f0": [
+   "..\\structure\\svg_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x2e590": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x3b590": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x3c390": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x3d1e0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x3d920": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x3fa50": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x3fd40": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x40bf0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x40cd0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x452f0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x46190": [
+   "..\\multi\\tiling_nester.cpp",
+   "a: all callers agree"
+  ],
+  "0x4b83e0": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4b99b0": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4b9b80": [
+   "..\\verify\\equivalent.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x4b9cf0": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4b9d70": [
+   "..\\verify\\equivalent.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x4ba3e0": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4ba470": [
+   "..\\tiling\\packer_cache.cpp",
+   "a: all callers agree"
+  ],
+  "0x4ba4d0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x4bad90": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4bb9b0": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4bd070": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4c5450": [
+   "..\\verify\\equivalent.cpp",
+   "b: 57 distinctive callees"
+  ],
+  "0x4cbc50": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x4cf000": [
+   "..\\verify\\equivalent.cpp",
+   "b: 13 distinctive callees"
+  ],
+  "0x4d03f0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x4d0950": [
+   "..\\structure\\svg_io.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x4d260": [
+   "..\\multi\\nesting_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4dba70": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4dcd90": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x4df310": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4e0730": [
+   "..\\tiling\\packer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4e5d30": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4e83e0": [
+   "..\\tiling\\packer_cache.cpp",
+   "a: all callers agree"
+  ],
+  "0x4e8870": [
+   "..\\tiling\\optimizer.cpp",
+   "a: all callers agree"
+  ],
+  "0x4e8e50": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x4e93c0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 8 distinctive callees"
+  ],
+  "0x4ea310": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x4ea9c0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4ed2e0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x4edd00": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x4f0c60": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x4f1dc0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4f2a30": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x4f3de0": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4f67e0": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4f7a50": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x4f8a80": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4f8c70": [
+   "..\\structure\\problem.cpp",
+   "a: all callers agree"
+  ],
+  "0x4f9fe0": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4fcc90": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4fd130": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x4ff920": [
+   "..\\structure\\problem.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x4ffc50": [
+   "..\\structure\\problem.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x500390": [
+   "..\\structure\\problem.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x501660": [
+   "..\\structure\\problem.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x5018c0": [
+   "..\\structure\\problem.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x50250": [
+   "..\\multi\\database.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x503b0": [
+   "..\\multi\\database.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x505280": [
+   "..\\structure\\text_io.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x5052c0": [
+   "..\\structure\\text_io.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x505430": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x505780": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x506780": [
+   "..\\structure\\svg_io.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x5069a0": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x50ac80": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x50ffd0": [
+   "..\\structure\\svg_io.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x510a40": [
+   "..\\structure\\svg_io.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x510c90": [
+   "..\\structure\\svg_io.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x515090": [
+   "..\\structure\\svg_io.cpp",
+   "b: 17 distinctive callees"
+  ],
+  "0x515750": [
+   "..\\structure\\svg_io.cpp",
+   "b: 12 distinctive callees"
+  ],
+  "0x516050": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x518910": [
+   "..\\structure\\svg_io.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x51c4b0": [
+   "..\\multi\\tiling_nester.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x51d0e0": [
+   "..\\multi\\marker.cpp",
+   "a: all callers agree"
+  ],
+  "0x51d4c0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x51ecf0": [
+   "..\\multi\\supervisor.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x51f070": [
+   "..\\multi\\supervisor.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x51f6a0": [
+   "..\\structure\\text_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x520770": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x5215d0": [
+   "..\\structure\\stats.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x523100": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x523a40": [
+   "..\\structure\\stats.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x523d0": [
+   "..\\multi\\database.cpp",
+   "a: all callers agree"
+  ],
+  "0x5240b0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x524250": [
+   "..\\structure\\stats.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x524ee0": [
+   "..\\structure\\svg_io.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x52520": [
+   "..\\multi\\database.cpp",
+   "a: all callers agree"
+  ],
+  "0x5257d0": [
+   "..\\structure\\stats.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x526160": [
+   "..\\structure\\stats.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x5266a0": [
+   "..\\structure\\stats.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x5271a0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x5275f0": [
+   "..\\multi\\database.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x527ab0": [
+   "..\\structure\\stats.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x527bf0": [
+   "..\\structure\\stats.cpp",
+   "a: all callers agree"
+  ],
+  "0x52b3d0": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x52be50": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x52c4c0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x52c5e0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 7 distinctive callees"
+  ],
+  "0x52e7e0": [
+   "..\\multi\\nesting_nester.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x531bd0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x531f70": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x533ea0": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x535c60": [
+   "..\\verify\\equivalent.cpp",
+   "b: 14 distinctive callees"
+  ],
+  "0x538fd0": [
+   "..\\structure\\multitorch_eval.cpp",
+   "a: all callers agree"
+  ],
+  "0x53a100": [
+   "..\\multi\\supervisor.cpp",
+   "a: all callers agree"
+  ],
+  "0x53a520": [
+   "..\\multi\\supervisor.cpp",
+   "a: all callers agree"
+  ],
+  "0x53a680": [
+   "..\\structure\\svg_io.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x53c0": [
+   "..\\engine\\cloud_engine.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x53c2c0": [
+   "..\\structure\\multitorch_eval.cpp",
+   "a: all callers agree"
+  ],
+  "0x542f30": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x544600": [
+   "..\\multi\\database.cpp",
+   "a: all callers agree"
+  ],
+  "0x544790": [
+   "..\\tiling\\packer.cpp",
+   "a: all callers agree"
+  ],
+  "0x5448c0": [
+   "..\\multi\\supervisor.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x545220": [
+   "..\\structure\\svg_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5452a0": [
+   "..\\multi\\nesting_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5455a0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x545e50": [
+   "..\\multi\\database.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x5465e0": [
+   "..\\multi\\database.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x547730": [
+   "..\\structure\\svg_io.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x5479d0": [
+   "..\\structure\\svg_io.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x547ad0": [
+   "..\\structure\\svg_io.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x547c10": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x547dc0": [
+   "..\\verify\\equivalent.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x548680": [
+   "..\\verify\\equivalent.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x549650": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x549ab0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x54ac00": [
+   "..\\verify\\equivalent.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x54b600": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x54ba40": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x54bfe0": [
+   "..\\structure\\svg_io.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x54d760": [
+   "..\\verify\\equivalent.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x54e1a0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x54e1c0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x54e270": [
+   "..\\verify\\equivalent.cpp",
+   "b: 7 distinctive callees"
+  ],
+  "0x54f5d0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x54fcb0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x550a80": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x552470": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a: all callers agree"
+  ],
+  "0x553090": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x553230": [
+   "..\\structure\\automatic_cluster.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x555d40": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x555f70": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x557660": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x5584b0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 8 distinctive callees"
+  ],
+  "0x559430": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x55b550": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x55ed00": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x561740": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x56a280": [
+   "..\\tiling\\packer_cache.cpp",
+   "a: all callers agree"
+  ],
+  "0x56ab0": [
+   "..\\multi\\database.cpp",
+   "a: all callers agree"
+  ],
+  "0x56e6b0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x56f990": [
+   "..\\tiling\\packer_cache.cpp",
+   "a: all callers agree"
+  ],
+  "0x589a40": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x597a0": [
+   "..\\multi\\database.cpp",
+   "a: all callers agree"
+  ],
+  "0x5b3500": [
+   "..\\exact\\relinker_internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x5c4140": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5c4610": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x5c5c0": [
+   "..\\structure\\stats.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5c5ff0": [
+   "internal.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x5c830": [
+   "..\\multi\\float_filler.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x5c90a0": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5cac70": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5cb6f0": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5cbf00": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d0500": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d1360": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d1580": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d1c50": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d2370": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d24f0": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d2a60": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5d7070": [
+   "..\\structure\\svg_io.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x5d9350": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x5da140": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x5f9d30": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x5ffe30": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x603010": [
+   "..\\structure\\text_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x603740": [
+   "..\\structure\\text_io.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x604170": [
+   "..\\structure\\text_io.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x64b1c0": [
+   "cns.cpp",
+   "a: all callers agree"
+  ],
+  "0x64c290": [
+   "cns_no_fit.cpp",
+   "a: all callers agree"
+  ],
+  "0x64c480": [
+   "cns_no_fit.cpp",
+   "a: all callers agree"
+  ],
+  "0x64f850": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x653550": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x653670": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x656110": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x65c320": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x65cb60": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x65dbf0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x65e530": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a: all callers agree"
+  ],
+  "0x65f120": [
+   "..\\nesting\\algos\\postop.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x660010": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x669df0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x669e60": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x66fd80": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x671b60": [
+   "internal.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x6742b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x674360": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x677af0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x678f40": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x679f40": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x67d680": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x67dc00": [
+   "cns_no_fit.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x688fa0": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x68a1a0": [
+   "..\\structure\\svg_io.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x69a8f0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x69bd10": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x69be80": [
+   "..\\multi\\float_filler.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x69cb20": [
+   "..\\multi\\float_filler.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x6bbf20": [
+   "..\\multi\\tiling_nester.cpp",
+   "a: all callers agree"
+  ],
+  "0x6bc540": [
+   "..\\multi\\tiling_nester.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x6bd4a0": [
+   "..\\multi\\marker.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x6c78f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x6cbe80": [
+   "..\\nesting\\algos\\algo_parameters.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x6d5b30": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x6d5d80": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x6d5f90": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x6d6680": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x6ddec0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x6de0f0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x6de240": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x70d220": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x70d4e0": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x722a0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x72b7d0": [
+   "cns_no_fit.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x763b10": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x768a60": [
+   "..\\tiling\\packer_cache.cpp",
+   "a: all callers agree"
+  ],
+  "0x76b450": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x76db50": [
+   "..\\tiling\\optimizer.cpp",
+   "a: all callers agree"
+  ],
+  "0x76e210": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x76f340": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 8 distinctive callees"
+  ],
+  "0x76fa20": [
+   "..\\tiling\\packer.cpp",
+   "a: all callers agree"
+  ],
+  "0x772d40": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x7763a0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x786e0": [
+   "..\\multi\\nesting_nester.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x79540": [
+   "..\\multi\\nesting_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x7b53e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x7b6260": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x7ba5f0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x7ba830": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x7bab90": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x7bfea0": [
+   "..\\structure\\problem.cpp",
+   "a: all callers agree"
+  ],
+  "0x7c21c0": [
+   "..\\multi\\float_filler.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x7c4ae0": [
+   "..\\structure\\svg_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x7d3530": [
+   "..\\multi\\tiling_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x7d36e0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x7d5790": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x7e5850": [
+   "..\\tiling\\packer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x7e8520": [
+   "..\\tiling\\packer.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x7e8dd0": [
+   "..\\tiling\\packer.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x7e9580": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x7eb5e0": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x7eb990": [
+   "..\\tiling\\packer_cache.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x7ec460": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x7ec9a0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 8 distinctive callees"
+  ],
+  "0x7ed7c0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x7ee010": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x7eedb0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x7f1b50": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x7f2ae0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x83dc0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x86160": [
+   "..\\verify\\equivalent.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x8642d0": [
+   "..\\engine\\cloud_engine.cpp",
+   "a: all callers agree"
+  ],
+  "0x871b20": [
+   "..\\multi\\marker.cpp",
+   "a: all callers agree"
+  ],
+  "0x8721a0": [
+   "..\\multi\\tiling_nester.cpp",
+   "a: all callers agree"
+  ],
+  "0x873750": [
+   "..\\structure\\problem.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x874270": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x8743a0": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x896dd0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x896f30": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x897650": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x899690": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x89c1a0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x89e2b0": [
+   "..\\structure\\problem.cpp",
+   "a: all callers agree"
+  ],
+  "0x89e5f0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x8ae730": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a: all callers agree"
+  ],
+  "0x8b3d60": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x8b4bb0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x8b8250": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x8b8420": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x8b8650": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x8b9620": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a: all callers agree"
+  ],
+  "0x8ba000": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x8ba380": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a: all callers agree"
+  ],
+  "0x8ba400": [
+   "..\\nesting\\structure_interface_private.hpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x8bf4c0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x8c0570": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x8c1920": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x8c20a0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x8c6fc0": [
+   "..\\tiling\\packer.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x8c8450": [
+   "..\\tiling\\packer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x8cee00": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x8cf220": [
+   "..\\multi\\marker.cpp",
+   "a: all callers agree"
+  ],
+  "0x8d0840": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d0a90": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d0cd0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d0d30": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d0f80": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d11c0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d1220": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d1470": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8d16b0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8e1bd0": [
+   "..\\structure\\text_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x8e7160": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x8e7510": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x8e76a0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x8e7760": [
+   "..\\structure\\automatic_cluster.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x8e77c0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a: all callers agree"
+  ],
+  "0x8e8690": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x8e9840": [
+   "..\\structure\\multitorch_eval.cpp",
+   "a: all callers agree"
+  ],
+  "0x8ea5e0": [
+   "..\\structure\\text_io.cpp",
+   "a: all callers agree"
+  ],
+  "0x8eb110": [
+   "..\\structure\\problem.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x8ed190": [
+   "..\\multi\\float_filler.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0x8f4e40": [
+   "..\\verify\\equivalent.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f5530": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f5840": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f5990": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f5fd0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f69f0": [
+   "..\\nesting\\algos\\compact.hpp",
+   "a: all callers agree"
+  ],
+  "0x8f74a0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f7b80": [
+   "..\\nesting\\algos\\tree_db.hpp",
+   "a: all callers agree"
+  ],
+  "0x8f7ce0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f90f0": [
+   "cns.cpp",
+   "a: all callers agree"
+  ],
+  "0x8f9dc0": [
+   "cns.cpp",
+   "a: all callers agree"
+  ],
+  "0x8fcf20": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x8fe5e0": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x8febe0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x8ff520": [
+   "..\\structure\\problem.cpp",
+   "a: all callers agree"
+  ],
+  "0x8ff620": [
+   "..\\structure\\problem.cpp",
+   "a: all callers agree"
+  ],
+  "0x8ffb20": [
+   "..\\nesting\\algos\\postop.cpp",
+   "a: all callers agree"
+  ],
+  "0x900820": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x900c00": [
+   "..\\nesting\\algos\\bucket_manager.hpp",
+   "a: all callers agree"
+  ],
+  "0x902440": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x9098e0": [
+   "..\\nesting\\ios\\log_ios.cpp",
+   "a: all callers agree"
+  ],
+  "0x922ff0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x923110": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x923360": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x923480": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x9236d0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x9237f0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x92a6d0": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x92af20": [
+   "..\\structure\\problem.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x92efd0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x9313d0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x9314f0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x931e50": [
+   "..\\nesting\\algos\\multinesting_optimizer.cpp",
+   "a: all callers agree"
+  ],
+  "0x931ff0": [
+   "..\\multi\\nesting_context.cpp",
+   "a: all callers agree"
+  ],
+  "0x932780": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x9328f0": [
+   "internal.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x932a60": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x932b80": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x934080": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x93e2c0": [
+   "internal.cpp",
+   "a: all callers agree"
+  ],
+  "0x93e7b0": [
+   "internal.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x93fbb0": [
+   "..\\multi\\nesting_context.cpp",
+   "c: one labelled caller + shared distinctive callee"
+  ],
+  "0x95cdc0": [
+   "..\\tiling\\optimizer.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x96460": [
+   "..\\multi\\tiling_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x96a820": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 4 distinctive callees"
+  ],
+  "0x96b260": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x972ec0": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x97c4a0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0x981ab0": [
+   "..\\structure\\automatic_cluster.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x98d960": [
+   "..\\nesting\\algos\\tree_db.cpp",
+   "a: all callers agree"
+  ],
+  "0x98ef50": [
+   "..\\structure\\automatic_cluster.cpp",
+   "a: all callers agree"
+  ],
+  "0x992c0": [
+   "..\\multi\\nesting_context.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x999af0": [
+   "..\\engine\\cloud_engine.cpp",
+   "a: all callers agree"
+  ],
+  "0x9c280": [
+   "..\\multi\\tiling_nester.cpp",
+   "b: 5 distinctive callees"
+  ],
+  "0x9cd30": [
+   "..\\multi\\tiling_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0x9e1d0": [
+   "..\\multi\\tiling_nester.cpp",
+   "b: 2 distinctive callees"
+  ],
+  "0xa3900": [
+   "..\\multi\\float_filler.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0xa3e10": [
+   "..\\multi\\float_filler.cpp",
+   "b: 7 distinctive callees"
+  ],
+  "0xa53b0": [
+   "..\\multi\\float_filler.cpp",
+   "b: 7 distinctive callees"
+  ],
+  "0xa6950": [
+   "..\\multi\\float_filler.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0xa85d0": [
+   "..\\multi\\float_filler.cpp",
+   "b: 6 distinctive callees"
+  ],
+  "0xadad0": [
+   "..\\verify\\equivalent.cpp",
+   "b: 3 distinctive callees"
+  ],
+  "0xaf7d0": [
+   "..\\multi\\nesting_nester.cpp",
+   "b: 3 distinctive callees"
+  ]
+ },
+ "top_tus": {
+  "..\\engine\\cloud_engine.cpp": 3,
+  "..\\exact\\relinker_internal.cpp": 1,
+  "..\\multi\\database.cpp": 10,
+  "..\\multi\\float_filler.cpp": 11,
+  "..\\multi\\marker.cpp": 4,
+  "..\\multi\\nesting_context.cpp": 54,
+  "..\\multi\\nesting_nester.cpp": 6,
+  "..\\multi\\supervisor.cpp": 5,
+  "..\\multi\\tiling_nester.cpp": 10,
+  "..\\nesting\\algos\\algo_helpers.hpp": 1,
+  "..\\nesting\\algos\\algo_parameters.cpp": 6,
+  "..\\nesting\\algos\\bucket_manager.hpp": 42,
+  "..\\nesting\\algos\\compact.hpp": 16,
+  "..\\nesting\\algos\\multinesting_optimizer.cpp": 14,
+  "..\\nesting\\algos\\postop.cpp": 6,
+  "..\\nesting\\algos\\sheet_optimizer.cpp": 1,
+  "..\\nesting\\algos\\tree_db.cpp": 20,
+  "..\\nesting\\algos\\tree_db.hpp": 2,
+  "..\\nesting\\ios\\log_ios.cpp": 2,
+  "..\\nesting\\structure_interface_private.hpp": 8,
+  "..\\structure\\automatic_cluster.cpp": 21,
+  "..\\structure\\multitorch_eval.cpp": 3,
+  "..\\structure\\problem.cpp": 13,
+  "..\\structure\\stats.cpp": 11,
+  "..\\structure\\svg_io.cpp": 26,
+  "..\\structure\\text_io.cpp": 14,
+  "..\\tiling\\optimizer.cpp": 20,
+  "..\\tiling\\packer.cpp": 18,
+  "..\\tiling\\packer_cache.cpp": 17,
+  "..\\verify\\equivalent.cpp": 47,
+  "cns.cpp": 3,
+  "cns_no_fit.cpp": 16,
+  "internal.cpp": 43
+ }
+}
