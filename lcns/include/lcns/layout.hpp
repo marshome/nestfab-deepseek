@@ -3163,6 +3163,30 @@ static_assert(kZeroedDwords + kZeroedQwords == kPlainDataFields, "the fields add
 static_assert(kQwordBase4B6D80 - (kDwordBase4B6D80 + 4 * kZeroedDwords) == 4,
               "there is a four-byte gap between the dwords and the qwords");
 
+
+// --- a five-byte accessor, and a release keyed on state (round 335) --------------------------------------
+//     0x4DDD10 lea rax,[rcx+0x48] ; ret        ; the address of the field at +0x48
+//     0xF3AB7 cmp dword [rcx+0x20],1 ; je      ; the state, against one
+//     0xF3AC4/0xF3AC0  r10 = [rcx+0x10] ; r8 = [rcx+0x18]   ; and a POINTER to the counter
+//     0xF3AD2 [r8] = rdx-1 ; 0xF3AD5 jb 0xF3B50 ; the decrement and the wrap that leads to the release
+inline constexpr std::uintptr_t kAccessor48 = 0x4DDD10;      // RE the whole routine
+inline constexpr int kAccessor48Callers = 18;
+inline constexpr std::size_t kAccessor48Offset = 0x48;       // RE 0x4DDD10
+inline constexpr bool kAccessor48MatchesLazyInitField = true;  // an agreement with rounds 324 to 330
+inline constexpr std::uintptr_t kReleaseF3AB0 = 0xF3AB0;     // RE the second routine
+inline constexpr int kReleaseF3AB0Callers = 19;
+inline constexpr std::size_t kStateField = 0x20;             // RE 0xF3AB7
+inline constexpr std::int32_t kStateValueOne = 1;            // RE the comparison
+inline constexpr std::size_t kCounterPointerField = 0x18;    // RE 0xF3AC0
+inline constexpr std::size_t kReleaseFieldA = 0x10;          // RE 0xF3AC4
+inline constexpr std::uintptr_t kReleasePathF3B50 = 0xF3B50; // RE 0xF3AD5
+inline constexpr bool kCounterIsIndirect = true;             // the counter is reached through +0x18
+static_assert(kAccessor48Offset == kLazyInitField, "the accessor's offset is the field earlier rounds used");
+static_assert(kStateField == kTagFieldOffset, "and the state field is the tag field round 249 recorded");
+static_assert(kStateValueOne == kTagUnsetValue, "compared against the same value");
+static_assert(kCounterIsIndirect && kCounterPointerField == 0x18, "the counter is indirect");
+static_assert(kReleasePathF3B50 > kReleaseF3AB0, "the release path lies after the entry");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

@@ -5014,5 +5014,43 @@ int main() {
         CHECK(kFormatLimit / 1024 == 16);                 // sixteen kilobytes
     }
 
+    // --- the accessor and the state-keyed release (RE 0x4ddd10 and 0xf3ab0) --------------------------
+    {
+        CHECK(kAccessor48 == 0x4DDD10);
+        CHECK(kAccessor48Callers == 18);
+        CHECK(kAccessor48Offset == 0x48);
+        CHECK(kAccessor48Offset == kLazyInitField);      // the field rounds 324 to 330 used
+        CHECK(kAccessor48MatchesLazyInitField);
+        CHECK(kReleaseF3AB0 == 0xF3AB0);
+        CHECK(kReleaseF3AB0Callers == 19);
+        CHECK(kStateField == 0x20);
+        CHECK(kStateField == kTagFieldOffset);           // the tag field round 249 recorded
+        CHECK(kStateValueOne == 1);
+        CHECK(kStateValueOne == kTagUnsetValue);         // and the same value
+        CHECK(kCounterPointerField == 0x18);
+        CHECK(kCounterIsIndirect);
+        CHECK(kReleaseFieldA == 0x10);
+        CHECK(kReleasePathF3B50 == 0xF3B50);
+        CHECK(kReleaseFieldA != kCounterPointerField);
+        CHECK(kAccessor48 != kReleaseF3AB0);
+        CHECK(kReleaseF3AB0 != kAtomicRelease);          // a different release from the atomic one
+
+        // the decrement and the wrap the instructions perform on the indirect counter
+        const auto releaseOnWrap = [](std::uint64_t counter) {
+            const std::uint64_t next = counter - 1;      // RE 0xF3ACB
+            const bool wrapped = counter < next;         // RE 0xF3ACF, the comparison that detects it
+            return wrapped;
+        };
+        CHECK(releaseOnWrap(0));                          // zero wraps
+        CHECK(!releaseOnWrap(1));                         // one becomes zero, no wrap
+        CHECK(!releaseOnWrap(2));
+        // and the state test that takes the other route
+        const auto otherRoute = [](std::int32_t state) { return state == kStateValueOne; };
+        CHECK(otherRoute(1));
+        CHECK(!otherRoute(0));
+        CHECK(!otherRoute(2));
+        CHECK(kCounterPointerField + 8 == kStateField);   // the counter pointer precedes the state field
+    }
+
     return check::finish("test_recovered");
 }

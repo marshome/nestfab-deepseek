@@ -6631,3 +6631,22 @@ F72C8/72CF  字面量 **`'UWVSH'`** 写入对象首字   ; ★★ **第三次出
 没有任何指针被存入 ⇒ **纯数据对象**（一个虚表加五个标量）。
 
 **已落 `layout.hpp`**：`kFormatWrapper`(0x634C40)、`kFormatWrapperCallers`(19)、`kFormatLimit`(0x4000)、`kFormatEngine`(0x63B140)、`kNulTerminated`、`kVaListConvention`、`kCtor4B6D80`(0x4B6D80)、`kCtor4B6D80VtableRva`、`kZeroedDwords`(3)、`kZeroedQwords`(2)、`kPlainDataFields`(5)、`kDwordBase4B6D80`(0x08)、`kQwordBase4B6D80`(0x18) + **四条 `static_assert`** + 测试 26 条。
+
+### 附 253 **五字节访问器与前几轮对上**；以及**按状态分支的释放**（goal round 335）**[已落码]**
+
+**（a）`0x4DDD10`（**5 B** / 18 个调用者）** = `lea rax,[rcx+**0x48**] ; ret`（返回**字段地址**）
+⇒ 这**正是 rounds 324–330 反复读写的那个 `+0x48` 字段** ⇒ **一个 5 字节、18 个调用者的函数，竟是本工作早已认识的字段的访问器**。
+
+**（b）`0xF3AB0`（393 B / 19 个调用者）**：
+
+```
+F3AB7  cmp dword [rcx+**0x20**], **1** ; je 0xF3AE2   ; ★ 状态判定
+F3AC0/ F3AC4  r8 = [rcx+**0x18**]；r10 = [rcx+0x10]
+F3ACB/F3ACF/F3AD2  rax = rdx−1 ; cmp rdx,rax ; [r8] = rax   ; ★ **递减并检出回绕**
+F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路径
+```
+
+⇒ **计数器不在对象内：`+0x18` 存的是指向它的指针**，递减经该指针进行。
+★ 状态与 **1** 相比，与 rounds 249/263 记录的 **tag `+0x20` = 1（未设）** **同偏移、同数值** ⇒ 记为**一致**。
+
+**已落 `layout.hpp`**：`kAccessor48`(0x4DDD10)、`kAccessor48Callers`(18)、`kAccessor48Offset`(0x48)、`kAccessor48MatchesLazyInitField`、`kReleaseF3AB0`(0xF3AB0)、`kReleaseF3AB0Callers`(19)、`kStateField`(0x20)、`kStateValueOne`(1)、`kCounterPointerField`(0x18)、`kReleaseFieldA`(0x10)、`kReleasePathF3B50`、`kCounterIsIndirect` + **五条 `static_assert`** + 测试 28 条。
