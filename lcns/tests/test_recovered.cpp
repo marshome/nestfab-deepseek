@@ -1876,6 +1876,16 @@ int main() {
         CHECK(kStride152Sightings == 2);
         // round 242: the pairwise loop
         CHECK(kPairwiseCallee == 0x824B40);
+        // round 247: that callee is the container element accessor, with thirty callers
+        CHECK(kAccessorMagic == 0x82FA0BE82FA0BE83ULL);
+        CHECK(kAccessorElementBytes == 0x158);
+        CHECK(kAccessorElementBytes == 344);
+        CHECK(kAccessorElementBytes == kCtorFamilyRecordBytes);   // the same 344 as round 230
+        CHECK(kAccessorElementBytes == kSize158);
+        CHECK(kAccessorElementBytes != kSize148);
+        CHECK(kAccessorShift == 3);
+        CHECK(kAccessorCallers == 30);
+        CHECK(kAccessorCallers > kRatioFamilyTagSites6 + kRatioFamilyTagSites5);
         CHECK(kPairwiseElementStride == 0x10);
         CHECK(kPairwiseElementStride == kPoint2dSize);
         CHECK(kPairwiseCallsPerStep == 2);

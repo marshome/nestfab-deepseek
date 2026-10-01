@@ -652,6 +652,28 @@ inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
 
+// --- the container element accessor 0x824B40, thirty callers (round 247) -------------------------------
+//     824B4B/824B4F/824B53  three pointers at +0x8, +0x10, +0x18 of the iterator/container argument
+//     824B5A/824B5D/824B63  (begin - blockStart) then `sar rdx,3`   -- a pointer difference in words
+//     824B67 imul rdx,rbx   ; the constant 0x82FA0BE82FA0BE83 is multiplied in
+//     824B6B add rdx,r8     ; plus the requested index
+//     824B7E/824B81 r9 = [r10] ; r11 = r9 + 0x158        ; the element and the NEXT one, 0x158 apart
+//     824B8F/824B93        writes the element at +0x8 and its successor at +0x10
+//     824BA0 imul rdx,r8,0x158 ; 824BB3 imul rcx,rdx,0x158   ; the same size on both the positive and the
+//                                                              negative index paths (cf. rounds 204/205)
+// SO: the container whose accessor this is holds 0x158-byte elements, and the accessor has THIRTY callers, so the
+// element size 0x158 (344 -- the same value as round 156's walk stride and round 228's allocation) is the record
+// size of a container used throughout the binary.
+// WHAT IS NOT CLAIMED: the constant 0x82FA0BE82FA0BE83 is recorded as read, NOT interpreted as a division
+// constant. The multiply is the TWO-OPERAND low-64 form (`imul rdx,rbx`), and rounds 183/204 established that only
+// the one-operand form produces the high half a division would need, so calling this a divide-by-21 idiom would
+// repeat exactly the error those rounds retracted.
+inline constexpr std::uint64_t kAccessorMagic = 0x82FA0BE82FA0BE83ULL;   // RE 0x824B41, UNINTERPRETED
+inline constexpr std::size_t kAccessorElementBytes = 0x158;               // RE 0x824B81 and 0x824BA0
+inline constexpr int kAccessorShift = 3;                                  // RE 0x824B63
+inline constexpr int kAccessorCallers = 30;
+static_assert(kAccessorElementBytes == 344, "the element size is 344 bytes");
+
 // --- the pairwise loop of 0x5E8870 (round 242) --------------------------------------------------------
 //     5E8899 add rbx,0x10                       ; the container holds SIXTEEN-byte elements
 //     5E88B1 cmp rbx,[r9+8] ; 5E88C2 je         ; walked until the end pointer
