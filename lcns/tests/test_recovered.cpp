@@ -5175,5 +5175,48 @@ int main() {
         CHECK(kSegmentBytes == 4 * sizeof(double));   // four coordinates
     }
 
+    // --- the affine kernel and its record (RE 0x5cea80) ----------------------------------------------
+    {
+        CHECK(kAffineKernel == 0x5CEA80);
+        CHECK(kAffineKernelCallers == 9);
+        CHECK(kAffineSourceA == 0x00);
+        CHECK(kAffineSourceB == 0x08);
+        CHECK(kAffineSourceC == 0x10);
+        CHECK(kAffineSourceD == 0x18);
+        CHECK(kAffineSourceC - kAffineSourceA == 0x10);
+        CHECK(kAffineSourceD - kAffineSourceB == 0x10);
+        CHECK(kAffineTermA == 0x20);
+        CHECK(kAffineTermB == 0x28);
+        CHECK(kAffineMatrixDoubles == 6);
+        CHECK(kMatrixForm2x3);
+        CHECK(kMulCount == 12);
+        CHECK(kMulCountInWindow == 9);
+        CHECK(kMulCount >= kMulCountInWindow);
+        CHECK(kAddCount == 8);
+        CHECK(kAffineSourceBytes == kSegmentBytes);
+        // the cross-links that make this the same record as round 338's
+        CHECK(kAffineSourceC == kSegmentEndA);
+        CHECK(kAffineSourceD == kSegmentEndB);
+        CHECK(kAffineTermA == kParamA);
+        CHECK(kAffineTermB == kParamB);
+        CHECK(kAffineKernel != kSegmentKernel);
+
+        // the arithmetic a 2x3 affine transform performs on a point
+        const auto applyAffine = [](const double m[6], double x, double y, double& ox, double& oy) {
+            ox = m[0] * x + m[1] * y + m[2];             // RE the crosswise mulsd and the addsd chain
+            oy = m[3] * x + m[4] * y + m[5];
+        };
+        const double identity[6] = {1, 0, 0, 0, 1, 0};
+        double ox = 0, oy = 0;
+        applyAffine(identity, 3.0, 4.0, ox, oy);
+        CHECK(ox == 3.0 && oy == 4.0);
+        const double scale[6] = {2, 0, 1, 0, 2, -1};
+        applyAffine(scale, 3.0, 4.0, ox, oy);
+        CHECK(ox == 7.0);
+        CHECK(oy == 7.0);
+        CHECK(kAffineMatrixDoubles * sizeof(double) == 48u);  // six doubles
+        CHECK(kSegmentBytes == kAffineSourceBytes);
+    }
+
     return check::finish("test_recovered");
 }

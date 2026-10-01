@@ -6707,3 +6707,20 @@ F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路�
 守卫是 `ucomisd xmm7(=0), xmm0 ; jbe`：调用 `0x62FE20` **发生在该比较不成立的路径上**。浮点比较的旗位行为相当微妙 ⇒ **只陈述指令，不编 NaN 的故事**。
 
 **已落 `layout.hpp`**：`kSegmentKernel`(0x55E190)、`kSegmentKernelCallers`(3)、`kSegmentStartA/B`、`kSegmentEndA/B`、`kSegmentBytes`(0x20)、`kLengthViaSqrt`、`kSqrtCount`(3)、`kSqrtGuard`(0x62FE20)、`kParamA/B/C`(0x20/0x28/0x40)、`kMinMaxPairUsed` + **五条 `static_assert`** + 测试 24 条（含三组手算距离：`(0,0)-(3,4) ⇒ 5`）。
+
+### 附 257 ★★ **仿射内核，且用的是 round 338 同一种记录**（goal round 339）**[已落码]**
+
+`0x5CEA80`（269 B / 9 个调用者）：
+
+```
+5CEAAF/5CEAB7/5CEAA5/5CEAAA  下源点的四个 double：`+0x00`、`+0x08`、`+0x10`、`+0x18`
+5CEB20/5CEB08                另外 `+0x20`、`+0x28` 两个 double 作为加项
+5CEAC0/5CEACE/5CEAD9/5CEAE7/5CEB03/5CEB11  从 `r8` 读**六个 double**：`+0x00`…`+0x28`
+窗口内 **9 条 mulsd**，以及将源自身的 `+0x20`/`+0x28` 折入的 `addsd` 链
+```
+
+★ 三个结论：**(1)** 源点的四个 double（`+0x00`、`+0x08`、`+0x10`、`+0x18`）**正是 round 338 记录的那段布局**，而那两个额外项 `+0x20`/`+0x28` **正是该内核拿来缩放的参数字段** ⇒ **很可能是同一种记录**（这是**强互联**，而非仅从形状猜测）；**(2)** 操作数的六个 double 是 **2×3 仿射变换**的形状；**(3)** 交叉乘加正是**对点应用该变换**的样子。
+
+★ round 337 统计本体有 **12 条 mulsd**，而本轮窗口只读到 **9 条** ⇒ **计数取自扫描，窗口的另记**，不把一者当另一者。
+
+**已落 `layout.hpp`**：`kAffineKernel`(0x5CEA80)、`kAffineKernelCallers`(9)、`kAffineSourceA..D`、`kAffineTermA/B`(0x20/0x28)、`kAffineMatrixDoubles`(6)、`kMatrixForm2x3`、`kMulCount`(12)、`kMulCountInWindow`(9)、`kAddCount`(8)、`kAffineSourceBytes` + **五条 `static_assert`** + 测试 26 条（含两组手算仿射：单位矩阵、缩放+平移）。

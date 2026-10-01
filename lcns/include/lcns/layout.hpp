@@ -3275,6 +3275,33 @@ static_assert(kSegmentEndB + 8 == kSegmentBytes, "a segment is four doubles");
 static_assert(kSqrtCount == 3, "three square roots, as the sweep counted");
 static_assert(kLengthViaSqrt && kMinMaxPairUsed, "a length, and a min/max pair");
 
+
+// --- an affine kernel on the same record (round 339) -----------------------------------------------------
+//     0x5CEAAF/0x5CEAB7/0x5CEAA5/0x5CEAAA  the source's four doubles at +0x00, +0x08, +0x10 and +0x18
+//     0x5CEB08/0x5CEB20                    the doubles at +0x20 and +0x28 folded in as addends
+//     0x5CEAC0/0x5CEACE/0x5CEAD9/0x5CEAE7/0x5CEB03/0x5CEB11  six doubles from r8, a 2x3 matrix
+inline constexpr std::uintptr_t kAffineKernel = 0x5CEA80;    // RE the whole routine
+inline constexpr int kAffineKernelCallers = 9;
+inline constexpr std::size_t kAffineSourceA = 0x00;          // RE 0x5CEAAF
+inline constexpr std::size_t kAffineSourceB = 0x08;          // RE 0x5CEAB7
+inline constexpr std::size_t kAffineSourceC = 0x10;          // RE 0x5CEAA5
+inline constexpr std::size_t kAffineSourceD = 0x18;          // RE 0x5CEAAA
+inline constexpr std::size_t kAffineTermA = 0x20;            // RE 0x5CEB20
+inline constexpr std::size_t kAffineTermB = 0x28;            // RE 0x5CEB08
+inline constexpr int kAffineMatrixDoubles = 6;               // RE the six reads from r8
+inline constexpr bool kMatrixForm2x3 = true;                 // six doubles is the 2x3 affine form
+inline constexpr int kMulCount = 12;                         // RE the sweep of round 337
+inline constexpr int kMulCountInWindow = 9;                  // RE the part read here
+inline constexpr int kAddCount = 8;                          // RE the sweep
+inline constexpr std::size_t kAffineSourceBytes = 4 * 8;     // the four doubles
+static_assert(kAffineSourceC - kAffineSourceA == 0x10 && kAffineSourceD - kAffineSourceB == 0x10,
+              "the source's four doubles are the segment layout of round 338");
+static_assert(kAffineTermA == kParamA && kAffineTermB == kParamB,
+              "and its two extra terms are that kernel's parameter fields");
+static_assert(kAffineMatrixDoubles == 6 && kMatrixForm2x3, "six doubles, the 2x3 form");
+static_assert(kMulCount >= kMulCountInWindow, "the sweep counted at least as many as the window shows");
+static_assert(kAffineSourceBytes == kSegmentBytes, "the source is one segment in size");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
