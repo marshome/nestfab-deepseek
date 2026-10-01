@@ -3348,3 +3348,16 @@ lea eax,[rax+rax-1]         ; ★ 把 {0,1} 映为 {-1,+1}
 ⇒ **2D 叉积**：三角形 ABC 的**有向面积**，即标准的方向判定。
 
 **因此孪生比较器比较的是叉积**（带绝对值容差）⇒ 它的参数是**方向量/共线度**，而不是任意标量。已落 `compare.hpp`：`crossProduct2d`、`crossComponentToStore` + 测试 10 条。
+
+### 附 96 `0x7043B0`（全读，17 条）= **相对尺度 `max(1, |v₀..v₃|)`**（goal round 176）**[已落码]
+
+```
+7043B0  movsd xmm1,[0x7FFFFFFFFFFFFFFF]   ; 符号掩码 = fabs
+7043C1  andpd xmm4,xmm1 ; 7043CA andpd xmm0,xmm1 ; 7043CE maxsd xmm4,xmm0
+7043D7  andpd xmm3,xmm1 ; 7043E3 andpd xmm2,xmm1 ; 7043DB maxsd xmm3,xmm4 ; 7043EF maxsd xmm2,xmm3
+7043E7  movsd xmm1,[1.0] ; 7043F3 maxsd xmm1,xmm2   ; ★ max(1, 四个分量的绝对值)
+7043F7  movsd [rcx],xmm1
+```
+
+⇒ 返回**四个分量绝对值的最大者，下限为 1.0**。两个助手把它存在 `r9` 指向的位置，孪生随后用“常量 × 该尺度”作为**相对容差** ⇒ **这就是它们的比较为何具有尺度不变性**。
+全部读自指令，非推断。

@@ -920,5 +920,34 @@ int main() {
         // component because B takes no part in it.
     }
 
+    // --- the relative scale (RE 0x7043b0: max(1, |v0..v3|) under the sign mask) ----------------------
+    {
+        CHECK(kSignMask == 0x7FFFFFFFFFFFFFFFULL);
+        CHECK(relativeScale(0.0, 0.0, 0.0, 0.0) == 1.0);       // the floor
+        CHECK(relativeScale(0.25, 0.0, 0.0, 0.0) == 1.0);      // still below the floor
+        CHECK(relativeScale(4.0, 0.0, 0.0, 0.0) == 4.0);
+        CHECK(relativeScale(-7.0, 1.0, 2.0, 3.0) == 7.0);      // the sign is masked away
+        CHECK(relativeScale(1.0, 2.0, 9.0, 3.0) == 9.0);
+        CHECK(relativeScale(1.0, 2.0, 3.0, -12.0) == 12.0);
+        // what the scale buys is a DIMENSIONLESS cross product, not automatic tolerance:
+        // collinear points have a cross of zero and pass any non-negative tolerance
+        CHECK(crossProduct2d(Point2dLike{0.0, 0.0}, Point2dLike{100.0, 0.0},
+                             Point2dLike{200.0, 0.0}) == 0.0);
+        CHECK(withinTolerance(crossProduct2d(Point2dLike{0.0, 0.0}, Point2dLike{100.0, 0.0},
+                                             Point2dLike{200.0, 0.0}), 0.0));
+        // and cross/scale is dimensionless: the same triangle at two sizes keeps its ratio
+        const double small = crossProduct2d(Point2dLike{0.0, 0.0}, Point2dLike{1.0, 0.0},
+                                            Point2dLike{0.0, 1.0})
+                           / relativeScale(1.0, 1.0, 1.0, 1.0);
+        const double large = crossProduct2d(Point2dLike{0.0, 0.0}, Point2dLike{100.0, 0.0},
+                                            Point2dLike{0.0, 100.0})
+                           / relativeScale(100.0, 100.0, 100.0, 100.0);
+        CHECK(small == 1.0);
+        CHECK(large == 100.0);
+        // a cross that big is NOT inside a tolerance of 100 -- the scale is not a tolerance
+        CHECK(!withinTolerance(crossProduct2d(Point2dLike{0.0, 0.0}, Point2dLike{100.0, 0.0},
+                                              Point2dLike{0.0, 100.0}), 100.0));
+    }
+
     return check::finish("test_recovered");
 }

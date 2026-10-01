@@ -11,6 +11,7 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
 
 namespace lcns {
 
@@ -61,5 +62,28 @@ inline double crossProduct2d(const Point2dLike& a, const Point2dLike& b, const P
 // RE 0x74B40C: one component of the result is written through the fourth argument (r9), and the value stored
 // is c.x - a.x (the [rsp+0x30] slot, i.e. AC.x). B takes no part in that component, so no function is written
 // for it here -- a helper that ignored one of its own parameters would be a warning, not a recovery.
+
+
+// --- the scale the comparator's tolerance is relative to (round 176) ------------------------------
+// RE 0x7043B0 (17 instructions, 6 callers), read whole:
+//     7043B0  movsd xmm1,[0x7FFFFFFFFFFFFFFF]      ; the sign mask, i.e. fabs
+//     7043C1  andpd xmm4,xmm1   ; |v1|      7043CA andpd xmm0,xmm1  ; |v0|
+//     7043CE  maxsd xmm4,xmm0
+//     7043D7  andpd xmm3,xmm1   ; |v2|      7043E3 andpd xmm2,xmm1  ; |v3|
+//     7043DB  maxsd xmm3,xmm4   ; 7043EF maxsd xmm2,xmm3
+//     7043E7  movsd xmm1,[1.0]  ; 7043F3 maxsd xmm1,xmm2           ; max(1, the four magnitudes)
+//     7043F7  movsd [rcx],xmm1
+// So the result is the largest magnitude of the four components, never below 1.0. The two helpers store it
+// through their r9 argument, and the twins then compare a cross product against a constant times this scale:
+// that is what makes their comparison scale-invariant.
+inline constexpr std::uint64_t kSignMask = 0x7FFFFFFFFFFFFFFFULL;   // RE 0x7043B0
+
+inline double relativeScale(double v0, double v1, double v2, double v3) {
+    double m = 1.0;                                   // RE 0x7043E7: the floor
+    m = (std::fabs(v0) > m) ? std::fabs(v0) : m;       // RE 0x7043CA/0x7043CE
+    m = (std::fabs(v1) > m) ? std::fabs(v1) : m;       // RE 0x7043C1
+    m = (std::fabs(v2) > m) ? std::fabs(v2) : m;       // RE 0x7043D7
+    return (std::fabs(v3) > m) ? std::fabs(v3) : m;    // RE 0x7043E3/0x7043F3
+}
 
 }  // namespace lcns
