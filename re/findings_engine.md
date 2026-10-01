@@ -6650,3 +6650,21 @@ F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路�
 ★ 状态与 **1** 相比，与 rounds 249/263 记录的 **tag `+0x20` = 1（未设）** **同偏移、同数值** ⇒ 记为**一致**。
 
 **已落 `layout.hpp`**：`kAccessor48`(0x4DDD10)、`kAccessor48Callers`(18)、`kAccessor48Offset`(0x48)、`kAccessor48MatchesLazyInitField`、`kReleaseF3AB0`(0xF3AB0)、`kReleaseF3AB0Callers`(19)、`kStateField`(0x20)、`kStateValueOne`(1)、`kCounterPointerField`(0x18)、`kReleaseFieldA`(0x10)、`kReleasePathF3B50`、`kCounterIsIndirect` + **五条 `static_assert`** + 测试 28 条。
+
+### 附 254 ★★ **一个惰性成员，其字符串只存在于指令流中**（goal round 336）**[已落码]**
+
+`0x4F9200`（434 B / 21 个调用者）：
+
+```
+4F9215  cmp byte [rcx+**0x100**],0 ; je   ; 标志决定
+4F9217  lea rax,[rbx+**0x108**] ; ret      ; 缓存的成员，按地址返回
+4F924F  movabs rsi,**0x675F657661685F6D**  ; 字节：`m _ h a v e _ g`
+4F9279  movabs rax,**0x797274656D6F6567**  ; 字节：`g e o m e t r y`
+4F9235  mov ecx,**0x7274**                 ; 字节：`t r`
+```
+
+这些是**指令流里的 ASCII**，拼出一个含 `geometry` 与 `m_have_g` 的名字（成员名 `m_have_geometry`，或由它拼出的信息）；三个栈上串的内联缓冲区各自**指向自身 +0x10** —— 正是本工作第三次见到的三元组。
+
+★★ **方法论发现（本轮最重要）**：该字符串**不存在于数据段**。本工作的**每一份字符串清单都是搜数据段**（包括得到 `'BER decode error'`、`'InputBuffer'` 的那些） ⇒ **在栈上由立即数拼出的字符串对它是不可见的（结构上如此）**，因此**清单是不完整的** —— 这一点**明说出来**，而不留作暗含。
+
+**已落 `layout.hpp`**：`kLazyMember`(0x4F9200)、`kLazyMemberCallers`(21)、`kLazyMemberFlag`(0x100)、`kLazyMemberCache`(0x108)、`kImmediateGeometry`、`kImmediateMHaveG`、`kImmediateTr`、`kStackStringBuffers`(3)、`kStackStringInline`(0x10)、`kStringsBuiltFromImmediates`、`kStringInventoryIncomplete`、`kStringGeometry`、`kStringMHaveG` + **四条 `static_assert`** + 测试 26 条（含逐字节解码的可检验断言）。

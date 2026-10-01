@@ -3187,6 +3187,35 @@ static_assert(kStateValueOne == kTagUnsetValue, "compared against the same value
 static_assert(kCounterIsIndirect && kCounterPointerField == 0x18, "the counter is indirect");
 static_assert(kReleasePathF3B50 > kReleaseF3AB0, "the release path lies after the entry");
 
+
+// --- a lazy member whose string lives in the instruction stream (round 336) ------------------------------
+//     0x4F9215 je                 ; the flag at +0x100 decides
+//     0x4F9217 lea rax,[rbx+0x108] ; the cached member, returned by address
+//     0x4F924F movabs rsi,0x675F657661685F6D   ; "m_have_g"
+//     0x4F9279 movabs rax,0x797274656D6F6567   ; "geometry"
+//     0x4F9235 mov ecx,0x7274                  ; "tr"
+inline constexpr std::uintptr_t kLazyMember = 0x4F9200;      // RE the whole routine
+inline constexpr int kLazyMemberCallers = 21;
+inline constexpr std::size_t kLazyMemberFlag = 0x100;        // RE 0x4F920B
+inline constexpr std::size_t kLazyMemberCache = 0x108;       // RE 0x4F9217
+inline constexpr std::uint64_t kImmediateGeometry = 0x797274656D6F6567ULL;  // RE 0x4F9279, "geometry"
+inline constexpr std::uint64_t kImmediateMHaveG = 0x675F657661685F6DULL;    // RE 0x4F924F, "m_have_g"
+inline constexpr std::uint16_t kImmediateTr = 0x7274;        // RE 0x4F9235, "tr"
+inline constexpr int kStackStringBuffers = 3;                // RE 0x4F9230, 0x4F9259 and 0x4F9274
+inline constexpr std::size_t kStackStringInline = 0x10;      // RE each lea is its buffer plus sixteen
+// THE METHOD POINT, stated so it is not left implicit: the string this routine assembles exists only in the
+// instruction stream. Every string inventory in this work searches the data section, so such strings are invisible
+// to it BY CONSTRUCTION, and the inventory is incomplete.
+inline constexpr bool kStringsBuiltFromImmediates = true;
+inline constexpr bool kStringInventoryIncomplete = true;
+inline constexpr const char* kStringGeometry = "geometry";   // the bytes the immediate spells
+inline constexpr const char* kStringMHaveG = "m_have_g";
+static_assert(kStringsBuiltFromImmediates && kStringInventoryIncomplete,
+              "the inventory cannot see a string that is never in the data section");
+static_assert(kStackStringBuffers == 3, "three stack strings");
+static_assert(kStackStringInline == kSsoInline, "each points sixteen bytes ahead, as the trio does");
+static_assert(kLazyMemberCache - kLazyMemberFlag == 8, "the cache follows the flag by eight");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

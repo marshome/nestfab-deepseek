@@ -5052,5 +5052,51 @@ int main() {
         CHECK(kCounterPointerField + 8 == kStateField);   // the counter pointer precedes the state field
     }
 
+    // --- the lazy member and the string that is not in the data section (RE 0x4f9200) ---------------
+    {
+        CHECK(kLazyMember == 0x4F9200);
+        CHECK(kLazyMemberCallers == 21);
+        CHECK(kLazyMemberFlag == 0x100);
+        CHECK(kLazyMemberCache == 0x108);
+        CHECK(kLazyMemberCache - kLazyMemberFlag == 8);
+        CHECK(kImmediateGeometry == 0x797274656D6F6567ULL);
+        CHECK(kImmediateMHaveG == 0x675F657661685F6DULL);
+        CHECK(kImmediateTr == 0x7274);
+        CHECK(kStackStringBuffers == 3);
+        CHECK(kStackStringInline == 0x10);
+        CHECK(kStackStringInline == kSsoInline);
+        CHECK(kStringsBuiltFromImmediates);
+        CHECK(kStringInventoryIncomplete);
+        CHECK(std::string(kStringGeometry) == "geometry");
+        CHECK(std::string(kStringMHaveG) == "m_have_g");
+
+        // the bytes the immediates spell, decoded here so the claim is checkable
+        const auto bytesOf = [](std::uint64_t v) {
+            std::string s;
+            for (int i = 0; i < 8; ++i) {
+                s.push_back(static_cast<char>((v >> (8 * i)) & 0xFF));   // little-endian, low byte first
+            }
+            return s;
+        };
+        CHECK(bytesOf(kImmediateGeometry) == "geometry");
+        CHECK(bytesOf(kImmediateMHaveG) == "m_have_g");
+        CHECK(bytesOf(kImmediateGeometry).size() == 8);
+        CHECK(bytesOf(kImmediateMHaveG).size() == 8);
+        const auto twoBytes = [](std::uint16_t v) {
+            std::string s;
+            s.push_back(static_cast<char>(v & 0xFF));
+            s.push_back(static_cast<char>((v >> 8) & 0xFF));
+            return s;
+        };
+        CHECK(twoBytes(kImmediateTr) == "tr");
+        // and the name the pieces compose
+        const std::string composed = std::string(bytesOf(kImmediateMHaveG)) + std::string(kStringGeometry);
+        CHECK(composed == "m_have_ggeometry");            // as the pieces concatenate, not as a claim about the name
+        // the lazy rule
+        const auto needsInit = [](unsigned char flag) { return flag == 0; };
+        CHECK(needsInit(0));
+        CHECK(!needsInit(1));
+    }
+
     return check::finish("test_recovered");
 }
