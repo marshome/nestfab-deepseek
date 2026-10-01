@@ -10,6 +10,8 @@
 // and with that constant multiplied by the parameter stored at [rsp+0x20] -- a tolerance.
 #pragma once
 
+#include "lcns/recovery.hpp"
+
 #include <cmath>
 #include <cstdint>
 
@@ -290,3 +292,4 @@ inline Box2d boundingBox(const Point2dLike* points, std::size_t count) {
 inline constexpr int kGeometryDispatchCases = 3;
 
 }  // namespace lcns
+LCNS_STRUCTURAL(geom.ratio_family);   // 50.0 margin then the almostEqual-guarded ratio

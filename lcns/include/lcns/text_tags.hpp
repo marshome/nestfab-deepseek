@@ -5,6 +5,8 @@
 // here with the rva each one was found at. This is the project's own text form for its geometry types.
 #pragma once
 
+#include "lcns/recovery.hpp"
+
 namespace lcns {
 
 // RE the contiguous tag table, each at the rva noted.
@@ -34,3 +36,4 @@ inline constexpr const char* kElementSeparator = "), ";
 inline constexpr int kGeometryTagCount = 10;
 
 }  // namespace lcns
+LCNS_STRUCTURAL(io.text_vocabulary);   // type tags, the comma, the cancellation message

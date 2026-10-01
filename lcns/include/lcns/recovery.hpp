@@ -402,6 +402,34 @@ inline constexpr Gap kGaps[] = {
      "the Sentinel HASP / Admin API calls are NOT reproduced: the original loads them dynamically"},
     {"licensing.vendor_code", Status::NotReversed, "-",
      "the vendor code needed for a genuine licence check is deliberately not embedded"},
+    // ---------------------------------------------------------------- geometry / layout (rounds 174-244)
+    {"layout.record_sizes", Status::Recovered, "0x4B82A3 stride 120; 0x1A615B stride 24; 0x7DE230 stride 152; 0x711BDF stride 40; 0x220243 size 0x158; 0x5E5F06 block 504",
+     "the record strides and block sizes landed in rounds 218-241. Every value is a literal or an address "
+     "computation read from the listed instruction, and tests/test_recovered.cpp asserts each one and the "
+     "arithmetic between them (for example 21 * 24 == 504 and 19 * 8 == 152)"},
+    {"layout.sentinel_convention", Status::Recovered, "0x5E63EA / 0x89D3B9 / 0x136C7F / 0x72E1BE / 0x5E88CC",
+     "the no-index convention: three qword -1 values beside one -1.0 double, now with five independent "
+     "sightings (rounds 178, 180, 214, 237 and 242), including stack slots rather than object fields, so it is "
+     "a project wide convention rather than one constructor's choice"},
+    {"geom.ratio_family", Status::Structural, "0x7DB6E0 rule; 0x724E40 / 0x725140 tag 6; 0x72D5B0 / 0x712740 tag 5; 0x7DB7D0 / 0x7DC360",
+     "the ordering rule recovered whole: the primary fields decide only when they differ by at least the 50.0 at "
+     "rva 0x9DFC20, otherwise the two ratios are compared by cross multiplication with almostEqual (0x5E6060) "
+     "guarding that comparison. Each member carries its own primary and ratio offsets, and the field identical "
+     "group splits into two variants by the tag it writes, six or five, with two sites each. The rule and the "
+     "offsets are instruction readings; the surrounding callers are NOT re-implemented here"},
+    {"model.ctor_family", Status::Structural, "0x21F9F0 / 0x220730 / 0x220230 / 0x2204A0; unit literal rva 0x9C1BF0; callee 0x1FD6C0",
+     "four constructors sharing one unit literal and one callee, with paired zeroed word plus byte flag layouts "
+     "0x10 apart (0x138/0x140 and 0x148/0x150), a (0,1,0,0) identity quad laid down twice (0x72E120) and a per "
+     "element allocation of 0x158 bytes (0x2204A0). 0x158 agrees independently with the walk stride of round "
+     "156 and the allocation of round 228"},
+    {"model.hash_table", Status::Structural, "0x1C667E hash field +0x48; 0x1C668B mask 0x7F",
+     "a hash table with 128 buckets of 24 byte entries keyed by the 32 bit field at +0x48, chains at +0x10 and "
+     "atomic reference counts at +8 (0x1C6658). The sign corrected modulo and quotient were reproduced step by "
+     "step in the test against C++ % and / over 87 values"},
+    {"io.text_vocabulary", Status::Structural, "rva 0x9DF0ED..0x9DF155; 0x9DF0F6; 0x7D3581",
+     "the project's own text form: POINT, VECTOR(, MULTIPOINT(, MULTIVECTOR(, Angle(, the degree suffix, "
+     "BOX(empty), BOX(, SEGMENT(, flip, normal, ORIENTATION(, the comma between coordinates and the message "
+     "Tiling time cancelled. These are domain strings read from rodata, not library text"},
 };
 
 inline constexpr std::size_t kGapCount = sizeof(kGaps) / sizeof(kGaps[0]);

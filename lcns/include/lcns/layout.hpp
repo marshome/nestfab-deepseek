@@ -4,6 +4,8 @@
 // numeric experiment over the compiler's magic-multiply sequence. Nothing is inferred from names.
 #pragma once
 
+#include "lcns/recovery.hpp"
+
 #include <cstddef>
 #include <cstdint>
 
@@ -843,3 +845,7 @@ static_assert(kRatioAlmostKeyA > kRatioAlmostKeyB && kRatioAlmostKeyB > kRatioAl
 inline constexpr int kRatioFamilyRuleCases = 3;             // equal by tie test, ordered, or margin
 
 }  // namespace lcns
+LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
+LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
+LCNS_STRUCTURAL(model.ctor_family);   // rva 0x9C1BF0 unit literal, callee 0x1FD6C0
+LCNS_STRUCTURAL(model.hash_table);   // 128 buckets of 24-byte entries, +0x48 key
