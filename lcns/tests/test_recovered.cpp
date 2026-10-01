@@ -1133,5 +1133,23 @@ int main() {
         CHECK(pointAlmostEqual(m, Point2dLike{2.0, 2.0}));
     }
 
+    // --- the gate family means "at least k points" (RE 0x5e37b5 cmp rsi,0x1f) ----------------------
+    {
+        CHECK(kTwoPointSpan == 31);
+        CHECK(kThreePointSpan == 47);
+        CHECK(kTwoPointSpan == kMinSpanForOneRecord - 16);   // 47 - 16 = 31, one more point's worth
+        CHECK(pointsInSpan(0) == 0);
+        CHECK(pointsInSpan(15) == 0);
+        CHECK(pointsInSpan(16) == 1);
+        CHECK(pointsInSpan(31) == 1);                        // 31 bytes is still only one point
+        CHECK(pointsInSpan(32) == 2);
+        CHECK(pointsInSpan(48) == 3);
+        CHECK(!hasAtLeastPoints(31, 2));                     // the `jbe` at 0x5E37B9
+        CHECK(hasAtLeastPoints(32, 2));
+        CHECK(!hasAtLeastPoints(47, 3));
+        CHECK(hasAtLeastPoints(48, 3));
+        CHECK(kPolygonDelimiter == ',');
+    }
+
     return check::finish("test_recovered");
 }

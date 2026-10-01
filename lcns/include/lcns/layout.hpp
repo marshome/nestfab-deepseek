@@ -135,4 +135,27 @@ inline constexpr double kInvalidDoubleSentinel = -1.0;    // RE 0x5E6400 and 0x8
 inline constexpr int kIdentityAccessorCount = 4;      // RE the four `mov rax,rcx ; ret` sites
 inline constexpr std::size_t kGetterFieldOffset = 0x18;   // RE 0x5C5F44, 81 callers
 
+
+// --- the gate family is "at least k points" (round 196) -------------------------------------------
+// Three sites, one pattern:
+//     0x5E37B5  cmp rsi,0x1f   ; 31 = 2*16 - 1   -> more than 31 bytes means at least TWO points
+//     0x5E7939  cmp rbx,0x2f   ; 47 = 3*16 - 1   -> at least THREE points (rounds 179/190)
+// and 0x70C832 repeats the 0x2f form. Since one point is 16 bytes (round 189), the family's meaning is
+// "more than k * 16 - 1 bytes", i.e. "at least k points" -- not "one 48-byte record", which was only one reading
+// of the 47.
+inline constexpr std::size_t kTwoPointSpan = 2 * 16 - 1;     // RE 0x5E37B5: 31
+inline constexpr std::size_t kThreePointSpan = 3 * 16 - 1;   // RE 0x5E7939 / 0x70C832: 47
+
+// RE 0x5E37B5 and 0x5E37C2: a container holds a point per 16 bytes.
+inline std::size_t pointsInSpan(std::size_t spanBytes) { return spanBytes / 16; }
+
+inline bool hasAtLeastPoints(std::size_t spanBytes, std::size_t wanted) {
+    return pointsInSpan(spanBytes) >= wanted;                // RE the `ja`/`jbe` after each comparison
+}
+
+// --- the text serialiser's delimiter (round 196) ---------------------------------------------------
+// RE 0x5E37CB: the eight bytes loaded there are 2C 00 50 4F 4C 59 47 4F -- a comma, a NUL, then "POLYGO..." --
+// so a comma delimiter precedes the word POLYGON. 0x5E3760 passes it to 0x9920C0 and then calls 0x70C480.
+inline constexpr char kPolygonDelimiter = ',';
+
 }  // namespace lcns

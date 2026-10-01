@@ -3810,3 +3810,28 @@ round 194 觉得“形状奇怪”的 `je`+`eax=0`，**正是“否定的 AND”
 **调用者一致**：round 174 的孪生作 `call 0x72DAC0 ; test al,al ; je <继续>` ⇒ 当作**守卫**。
 
 **已落 `compare.hpp`**：`pointAlmostEqual`、`pointsDiffer`、`kPointComparePredicate` + 测试 10 条（含与 `midpoint2d` 的组合）。
+
+### 附 116 **门限族的规律是“至少 k 个点”**；且 `0x5E3760` 是**文本序列化**（goal round 196）**[已落码]
+
+**（a）三个位点、一个规律**：
+
+| 位点 | 阈值 | 含义 |
+|---|---:|---|
+| `0x5E37B5` | `0x1F` = 31 = **2×16−1** | 至少 **两** 个点 |
+| `0x5E7939` | `0x2F` = 47 = **3×16−1** | 至少 **三** 个点（rounds 179/190）|
+| `0x70C832` | `0x2F` | 同上 |
+
+⇒ 族的含义是“**超过 `k×16−1` 字节**”，即“**至少 k 个点**”；round 179 的“48 字节记录”只是**这个一般门的一个实例**。
+
+**（b）`0x5E3760`（84 条）= 点列的文本序列化**：
+
+```
+5E37B5  cmp rsi,0x1f ; jbe <跳过>              ; 至少两个点才做
+5E37BB  lea rdx,[rdi−0x10] ; 5E37C2 call 0x72DAC0   ; 前一点与当前点是否不同
+5E37CB  lea rdx,[rip+0x3fba6e]                     ; ★ 字节 2C 00 'POLYGO…' ⇒ 逗号分隔符
+5E37D5  call 0x9920C0 ; 5E37E0 call 0x70C480        ; 输出坐标
+```
+
+⇒ 它**把点列序列化为逗号分隔的文本**（字符串里出现 **POLYGON**）。
+
+**已落 `layout.hpp`**：`kTwoPointSpan`/`kThreePointSpan`/`pointsInSpan`/`hasAtLeastPoints`/`kPolygonDelimiter`+ 测试 14 条（含“31 字节仍只算一个点”这类边界）。
