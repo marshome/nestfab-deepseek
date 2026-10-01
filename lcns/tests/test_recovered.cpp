@@ -193,6 +193,24 @@ int main() {
         CHECK(geom::kBoundaryPrepStep == 0x64C940);
         CHECK(geom::kBoundaryFinalStep == 0x1BA30);
         CHECK(geom::kHoleFinalStep == 0x5CD5C0);
+        CHECK(geom::kHoleFinalStep == 0x5CD5C0);
+        // RE 0x5ed8c0: six quadrant angles, the last two being the first two plus a full turn
+        CHECK(geom::kQuarterTurnHalfPi == 1.570796);
+        CHECK(geom::kQuarterTurnPi == 3.141593);
+        CHECK(geom::kQuarterTurn3HalfPi == 4.712389);
+        CHECK(geom::kQuarterTurn2Pi == 6.283185);
+        CHECK(geom::kQuarterTurn2PiPlusHalfPi == 7.853982);
+        CHECK(geom::kQuarterTurn2PiPlus3HalfPi == 10.995574);
+        // the reading that these are quadrant angles fits the constants to the digits stored
+        CHECK(std::fabs(geom::kQuarterTurnHalfPi - 3.14159265358979 / 2.0) < 1e-6);
+        CHECK(std::fabs(geom::kQuarterTurn3HalfPi - 3.0 * 3.14159265358979 / 2.0) < 1e-6);
+        CHECK(std::fabs(geom::kQuarterTurn2Pi - 2.0 * 3.14159265358979) < 1e-6);
+        CHECK(std::fabs(geom::kQuarterTurn2PiPlusHalfPi - (geom::kQuarterTurn2Pi + geom::kQuarterTurnHalfPi)) < 1e-6);
+        {
+            double d[4];
+            geom::quarterTurnDirections(d);
+            CHECK(d[0] == geom::kQuarterTurnHalfPi && d[3] == geom::kQuarterTurn2Pi);
+        }
     }
 
     // --- the equivalent-problem / order consistency the no-fit context asserts (RE 0x668f20) ----

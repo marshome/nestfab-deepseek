@@ -346,6 +346,29 @@ inline constexpr unsigned long kBoundaryPrepStep = 0x64C940;    // RE 0x13410 an
 inline constexpr unsigned long kBoundaryFinalStep = 0x1BA30;    // RE 0x13410
 inline constexpr unsigned long kHoleFinalStep = 0x5CD5C0;       // RE 0x13800
 
+// RE 0x5ED8C0 (757 B), the routine only the EXTERNAL BOUNDARY path uses. It loads exactly six
+// doubles, and all six are quadrant angles:
+//     1.570796 = pi/2      3.141593 = pi        4.712389 = 3pi/2      6.283185 = 2pi
+//     7.853982 = 2pi + pi/2                    10.995574 = 2pi + 3pi/2
+// The last two are the first two shifted by a full turn, so the routine walks directions in 90 degree
+// steps and WRAPS PAST A FULL TURN -- which is what a corner arc needs, and it agrees with the
+// 0.292893 = 1 - 1/sqrt(2) corner offset that both the boundary and the hole path load (round 49).
+// The VALUES are recovered; "these are quadrant angles" is the reading, and it fits exactly.
+inline constexpr double kQuarterTurnHalfPi = 1.570796;          // RE 0x5ED8C0
+inline constexpr double kQuarterTurnPi = 3.141593;              // RE 0x5ED8C0
+inline constexpr double kQuarterTurn3HalfPi = 4.712389;         // RE 0x5ED8C0
+inline constexpr double kQuarterTurn2Pi = 6.283185;             // RE 0x5ED8C0
+inline constexpr double kQuarterTurn2PiPlusHalfPi = 7.853982;   // RE 0x5ED8C0
+inline constexpr double kQuarterTurn2PiPlus3HalfPi = 10.995574; // RE 0x5ED8C0
+
+// The four quadrant directions the routine steps through, in the order the constants suggest.
+inline void quarterTurnDirections(double out[4]) {
+    out[0] = kQuarterTurnHalfPi;
+    out[1] = kQuarterTurnPi;
+    out[2] = kQuarterTurn3HalfPi;
+    out[3] = kQuarterTurn2Pi;
+}
+
 // RE order: (x0,y0) -> (x1,y0) -> (x1,y1) -> (x0,y1).
 void rectangleCorners(double x0, double y0, double x1, double y1, RectCorner out[4]);
 
