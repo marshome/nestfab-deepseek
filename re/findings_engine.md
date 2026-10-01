@@ -5275,3 +5275,23 @@ F34F3/F34F6  复制 `+0x20` 的 32 位字段 —— 即 rounds 249/253 的**标�
 ★ **发现差异并如实记下（而不混为一谈）**：**本处计数在 `+0x00`**，而 **round 248 的释放例程在 `+0x10`** 减一 ⇒ **它们是两个不同的引用计数类型**，谁属于哪个类型**本轮未确定**（代码中用 `kCounterOffsetsDiffer` 标记）。
 
 **已落 `layout.hpp`**：`kObject*`、`kSubObject*`、`kIntrusive*`、`kCounterOffsetHere`、`kCounterOffsetsDiffer` + **两条 `static_assert`** + 测试 22 条。
+
+### 附 182 **两字节字符串的增长路径**与**C 串构造**（goal round 262）**[已落码]
+
+**（a）`0x9118C0`（667 B / **49 个调用者**）= **两字节字符的追加/插入路径**：
+
+```
+9118CE  movabs rax,0x3FFFFFFFFFFFFFFF   ; ★ **2**62 − 1**，两字节元素的 max_size
+9118F0  cmp rsi,rax ; ja                ; 溢出保护
+911920  lea r13,[rax+rdx*2]             ; ★ 所有寻址**乘以 2**
+911954/911972  lea r8,[r12+r12] / [rsi+rsi]   ; 字节数 = 元素数 × 2
+91197C  call 0x63F2F8                   ; 拷贝（**与大整数赋值同一个助手**）
+91198A  mov word ptr [rax+rbp*2],dx     ; ★ **写入零终止字**
+911986  [rbx+8] = rbp                   ; 尺寸在 `+0x08`，数据 `+0x00`，容量 `+0x10`
+```
+
+★ **与 round 249 的推断分开记录**：那里推断的三元组是 `+0x00`（尺寸）/`+0x14`（容量）/`+0x18`（数据），与本处 **不同** ⇒ **两个不同的对象**，不合并。
+
+**（b）`0x20C080`（60 B / 32 个调用者）**：将数据指针指向**自身的 `+0x10`（内联缓冲区）**，用 **`0x63F238`**（round 251 已落的长度助手）取长度，终点 = 起点 + 长度，尾调 `0x20BFC0`。
+
+**已落 `layout.hpp`**：`kWide*`、`kMaxSizeWide`、`kMemcpyHelper`、`kFromCString*`、`kSsoInline` + **三条 `static_assert`** + 测试 25 条（含两条跨层断言）。

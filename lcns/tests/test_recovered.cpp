@@ -2443,5 +2443,39 @@ int main() {
         CHECK(!released2);
     }
 
+    // --- the two-byte string path and the C-string constructor (RE 0x9118c0 and 0x20c080) -----------
+    {
+        CHECK(kWideInsert == 0x9118C0);
+        CHECK(kMaxSizeWide == 0x3FFFFFFFFFFFFFFFULL);
+        CHECK(kMaxSizeWide == (1ULL << 62) - 1);
+        CHECK(kWideCharBytes == 2);
+        CHECK(kWideData == 0x00);
+        CHECK(kWideSize == 0x08);
+        CHECK(kWideCapacity == 0x10);
+        CHECK(kWideSize - kWideData == 8);
+        CHECK(kWideCapacity - kWideSize == 8);
+        CHECK(kMemcpyHelper == 0x63F2F8);
+        CHECK(kWideInsertCallers == 49);
+        CHECK(kWideTerminator);
+        // the copier is the one the big-integer assignment uses: one helper, several types
+        CHECK(kMemcpyHelper == kBigIntCopy);
+        // max_size for two-byte elements: the largest count whose byte length fits a signed 64-bit value
+        CHECK(kMaxSizeWide == static_cast<std::uint64_t>((std::numeric_limits<std::int64_t>::max)()) / 2);
+
+        CHECK(kFromCString == 0x20C080);
+        CHECK(kSsoInline == 0x10);
+        CHECK(kSsoInline == kWideCapacity);
+        CHECK(kFromCStringTail == 0x20BFC0);
+        CHECK(kFromCStringCallers == 32);
+        // it calls the length helper round 251 landed
+        CHECK(kLengthHelper == 0x63F238);
+
+        // the addressing scales by two, which is what the lea forms do
+        for (std::uint64_t i = 0; i < 4; ++i) {
+            CHECK(i * kWideCharBytes == i * 2);
+        }
+        CHECK(kWideCharBytes * 8 == 16);
+    }
+
     return check::finish("test_recovered");
 }

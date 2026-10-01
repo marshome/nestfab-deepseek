@@ -1266,6 +1266,38 @@ inline constexpr int kSharedDeallocSightings3 = 5;              // rounds 248, 2
 inline constexpr bool kCounterOffsetsDiffer = true;
 static_assert(kCounterOffsetHere != kReleaseCounterOffset, "the two counters are at different offsets");
 
+
+// --- the two-byte string growth path 0x9118C0, forty-nine callers (round 262) --------------------------
+//     0x9118CE movabs rax,0x3FFFFFFFFFFFFFFF   ; 2**62 - 1, the max_size for two-byte elements
+//     0x9118F0 cmp rsi,rax ; ja                ; the overflow guard
+//     0x911920 lea r13,[rax+rdx*2]             ; all addressing scales by two
+//     0x911954/0x911972 lea r8,[r12+r12] / [rsi+rsi]   ; byte counts are element counts doubled
+//     0x91197C call 0x63F2F8                   ; the copy, the same helper the big-integer assign uses
+//     0x91198A mov word ptr [rax+rbp*2],dx     ; a terminating zero WORD closes the string
+//     0x911986 [rbx+8] = rbp                   ; size at +0x08, with data at +0x00 and capacity at +0x10
+inline constexpr std::uintptr_t kWideInsert = 0x9118C0;      // RE the whole routine
+inline constexpr std::uint64_t kMaxSizeWide = 0x3FFFFFFFFFFFFFFFULL;   // RE 0x9118CE
+inline constexpr std::size_t kWideCharBytes = 2;             // RE 0x911920 and 0x91198A
+inline constexpr std::size_t kWideData = 0x00;               // RE 0x911981
+inline constexpr std::size_t kWideSize = 0x08;               // RE 0x911986
+inline constexpr std::size_t kWideCapacity = 0x10;           // RE 0x911913
+inline constexpr std::uintptr_t kMemcpyHelper = 0x63F2F8;    // RE 0x91197C, also 0xF34EE
+inline constexpr int kWideInsertCallers = 49;
+inline constexpr bool kWideTerminator = true;                // RE 0x91198A
+static_assert(kMaxSizeWide == (1ULL << 62) - 1, "max_size is 2**62 - 1");
+static_assert(kWideSize - kWideData == 8 && kWideCapacity - kWideSize == 8, "the trio steps by eight");
+
+// --- the C-string constructor 0x20C080, thirty-two callers (round 262) ---------------------------------
+//     0x20C08D/0x20C09A  the data pointer is set to the object's own +0x10: the inline buffer
+//     0x20C0A2 call 0x63F238   ; the length helper round 251 landed
+//     0x20C0A7 lea r8,[rbx+rax] ; the end is start plus length
+//     0x20C0B7 jmp 0x20BFC0     ; and the construction is finished there
+inline constexpr std::uintptr_t kFromCString = 0x20C080;     // RE the whole routine
+inline constexpr std::size_t kSsoInline = 0x10;              // RE 0x20C08D
+inline constexpr std::uintptr_t kFromCStringTail = 0x20BFC0; // RE 0x20C0B7
+inline constexpr int kFromCStringCallers = 32;
+static_assert(kSsoInline == kWideCapacity, "both objects keep the inline buffer at 0x10");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
