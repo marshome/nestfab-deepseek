@@ -5116,3 +5116,36 @@ F15AE  test eax,eax ; sete al                 ; 剩余字数为 0 即为零
 ★ 同时也是一条**跨层连接事实**：round 252 那个构造器正是**调用**它来拼字符串的。
 
 **已落 `layout.hpp`**：`kNested*`、`kInnerStride24`、`kOuterStride48`、`kSharedDealloc`、`kSharedDeallocSightings`、`kStdStringConstruct*` + **三条 `static_assert`** + 测试 19 条。
+
+### 附 175 **工具链扫掠及其判据的限度**（goal round 255）
+
+目的：把 round 254 确立的“**引用库自身文本 ⇒ 工具链**”判据系统化。
+
+
+**第一次扫描（宽松）**：未引用领域函数中，**208 个**引用了工具链文本。
+
+★ **但我没有直接采用**：排在前面的是 7,543 B、7,292 B 这类**大函数**，
+它们很可能是**领域函数内联了 STL** —— 把它们整体归为工具链就是**过度声称**。
+
+
+**第二次扫描（收紧）**，判据四条：
+
+1. ≤ 320 字节；
+2. 它引用的**每一个字符串都是**库/编译器文本（无领域文本）；
+
+3. 它**不调用**任何其他未引用领域函数；
+4. **调用者 ≥ 4**（区分库实例化与小型领域 getter）。
+
+
+结果：**39 个候选**，其中 **17 个**同时满足四条。其签名集中于 "
+u"三类：`basic_string::_M_construct null not valid`（152–302 B）、`basic_string::_S_create`（123 B）、`vector::reserve`（246/316 B）。
+
+
+**发现：这 17 个地址已经在 `re/covlib.py` 的 `LIBRARY_EVIDENCED` 里**（早前轮次已批量登记） "
+u"⇒ 本轮**未新增条目**，口径数字不变（`DOMAIN code STILL TO REVERSE: 2,760 fns / 1,536,169 B / 32.9%`）。
+
+
+**本轮的真正产出是判据本身及其限度的书面化**：条件 2、3 只能证明“强候选”，"
+u"**不能证明“必定是库代码”** —— 一个只构造 `std::string`、不做别的事的领域 getter 也会满足它们。"
+u"所以新登记的条目一律写明 **INFERRED from the evidence, not proven**。
+
