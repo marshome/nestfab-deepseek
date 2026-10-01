@@ -4438,3 +4438,15 @@ README 对 T7 的范围定义是“**先只建立链接能力**”（因为需�
 四个 double 正是 round 202 的包围盒字段 ⇒ **取盒心、然后取负**；**哪个坐标到哪里本轮不声称**。
 
 **已落**：`layout.hpp`（`kTilingCancelThreshold`、`kCancelFlagOffset`、`kCancelOuterFlagOffset`、`kBoxCentreHalf`、`kSignFlipMask`、`kBoxCentreFromBoxFieldA/C`）与 `text_tags.hpp`（`kTagTilingCancelled`）+ 测试 24 条（含阈值行为、符号位、中心计算）。
+
+### 附 140 **120 字节步长、两个容差、三处互证与 32 位上限**（goal round 218）**[已落码]
+
+**（a）`0x4B8220`（203 B）**：`add rbx,0x78`（`0x4B82A3`）⇒ **120 字节记录**（**此前未记录的步长**）；同时载 **`0.01`**（rva `0x9D9360`）作为 `xmm3` 与 `r8d=1` 传给 `0x5C8F30`。
+
+**（b）`0x99F470`（135 B）**：比较两个容器的计数，然后用 **`imul rcx,rcx,0x30`**（`0x99F4CE`）遍历 ⇒ **直接乘以 48**（round 159 的记录步长，第二种编码方式）；元素比较用 **`0.001`**（rva `0x9DBD80`）。
+
+**（c）三处互证**（同一队列里读到）：`0x170B00` 同时载 **`1e6`**（rva `0x9BDC38`）、**`0.0003`**（`0x9BDC40`）、`3`（`0x9BDC48`） ⇒ **rounds 171/172 的微米尺度与 round 168 的中步长**；`0x5C2FA0` 载 **`360`**（rva `0x9DE7A8`）与 `6` ⇒ **round 168 的每转度数**；`0x5C2200` 又一处 `360`（`0x9DE748`）。
+
+**（d） 32 位上限**：`0x62FCB0` 载 **`2.14748e9`**（rva `0xA067E8`）与 **`−2.14748e9`**（`0xA067E0`）（共陪 `0.5`、`1`）；`0x5FCA80` 载 **`4.29497e9`**（rva `0x9E1488`） ⇒ **恰为 `2^31−1` 与 `2^32−1`**（饱和守卫）。
+
+**已落 `layout.hpp`**：`kScanStride120`、`kScanTolerance`、`kScanFlag`、`kRecord48Mul`、`kElementCompareTolerance`、`kInt32MaxExact`、`kUint32MaxExact`、`kSaturationHalves` + 测试 20 条（含 `kUint32MaxExact == 2·kInt32MaxExact + 1` 与四种步长互不相等）。

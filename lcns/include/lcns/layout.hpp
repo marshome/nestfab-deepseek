@@ -366,4 +366,26 @@ inline constexpr std::uint64_t kSignFlipMask = 0x8000000000000000ULL;   // RE 0x
 inline constexpr std::size_t kBoxCentreFromBoxFieldA = 0x08;   // RE 0x1DD8A3 (compare.hpp names it kObjectFieldA)
 inline constexpr std::size_t kBoxCentreFromBoxFieldC = 0x18;   // RE 0x1DD8B0 (compare.hpp names it kObjectFieldC)
 
+
+// --- the 120-byte scan of 0x4B8220 (round 218) ------------------------------------------------------
+//     4B82A3 add rbx,0x78        ; a 120-byte record -- a stride not recorded before
+//     4B828F movsd xmm6,[0.01]   ; rva 0x9D9360
+//     4B82C7 call 0x5C8F30       ; with xmm3 = that literal and r8d = 1
+inline constexpr std::size_t kScanStride120 = 0x78;        // RE 0x4B82A3
+inline constexpr double kScanTolerance = 0.01;             // RE 0x4B828F (rva 0x9D9360)
+inline constexpr int kScanFlag = 1;                        // RE 0x4B82C1
+
+// --- the element comparison of 0x99F470 (round 218) --------------------------------------------------
+//     99F4CE imul rcx,rcx,0x30   ; 48 bytes per element, multiplied directly
+//     99F4C6 movsd xmm2,[0.001]  ; rva 0x9DBD80
+inline constexpr std::size_t kRecord48Mul = 0x30;          // RE 0x99F4CE
+inline constexpr double kElementCompareTolerance = 0.001;  // RE 0x99F4C6 (rva 0x9DBD80)
+
+// --- the 32-bit saturation limits (round 218) --------------------------------------------------------
+//     62FCB0 loads 2.14748e9 (rva 0xA067E8) and -2.14748e9 (rva 0xA067E0) alongside 0.5 and 1
+//     5FCA80 loads 4.29497e9 (rva 0x9E1488)
+inline constexpr double kInt32MaxExact = 2147483647.0;       // RE rva 0xA067E8
+inline constexpr double kUint32MaxExact = 4294967295.0;      // RE rva 0x9E1488
+inline constexpr std::size_t kSaturationHalves = 2;         // RE 0x62FCB0: 0.5 and 1 accompany the limits
+
 }  // namespace lcns

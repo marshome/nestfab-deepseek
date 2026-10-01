@@ -1447,5 +1447,33 @@ int main() {
         CHECK((-c.y) == -3.0);
     }
 
+    // --- the 120-byte scan (RE 0x4b82a3), the 48 multiply (RE 0x99f4ce) and the 32-bit limits ---------
+    {
+        CHECK(kScanStride120 == 0x78);
+        CHECK(kScanStride120 == 120);
+        CHECK(kScanTolerance == 0.01);
+        CHECK(kScanFlag == 1);
+        CHECK(kRecord48Mul == 0x30);
+        CHECK(kRecord48Mul == kIndexedRecordStride);          // the 48 of round 159, multiplied directly
+        CHECK(kElementCompareTolerance == 0.001);
+        // the tolerances recorded so far are distinct, which is why each keeps its own constant
+        CHECK(kElementCompareTolerance == kOrientationEpsilon);
+        CHECK(kScanTolerance != kElementCompareTolerance);
+        CHECK(kArrayCompareEpsilon != kElementCompareTolerance);
+
+        CHECK(kInt32MaxExact == 2147483647.0);
+        CHECK(kInt32MaxExact == static_cast<double>(0x7FFFFFFF));
+        CHECK(kUint32MaxExact == 4294967295.0);
+        CHECK(kUint32MaxExact == static_cast<double>(0xFFFFFFFFu));
+        CHECK(kUint32MaxExact == 2.0 * kInt32MaxExact + 1.0);   // 2^32-1 = 2*(2^31-1) + 1
+        CHECK(kSaturationHalves == 2);
+
+        // the two strides seen in this round are different records
+        CHECK(kScanStride120 != kIndexedRecordStride);
+        CHECK(kScanStride120 != kRunRecordStride);
+        CHECK(kScanStride120 != kTimingRecordStride);
+        CHECK(kScanStride120 != kSizeRecordStride);
+    }
+
     return check::finish("test_recovered");
 }
