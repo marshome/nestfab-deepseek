@@ -57,3 +57,6 @@ datasets/bench_run.log
 # --- misc --------------------------------------------------------------------------------------
 b.log
 re/*.bin
+
+push_retry.ps1
+push_retry.log
