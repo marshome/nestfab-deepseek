@@ -379,6 +379,8 @@ def reachable_uncited_domain():
 # Each entry carries the evidence that made it a toolchain routine rather than domain code. Nothing
 # enters this set on a guess, and the size of the set is reported together with its effect.
 LIBSTDCXX_EVIDENCED = {
+    0x910BA0: "the allocation helper _M_construct calls when the length exceeds 15; 1002 callers, so it is reached from string operations all over the binary (round 76)",
+    0x90F310: "std::string::_M_construct: the body carries the literal assertion text 'basic_string::_M_construct null not valid', compares the length against 0xf (the 15 byte small-string capacity of a 32 byte std::string) and calls 0x910BA0 for the heap case (round 76)",
     0x867DF0: "0x8F17B0 sibling: reads the streambuf out of [+0xE8], calls vtable slot +0x30 and "
               "compares the result with -1 (traits::eof()), then sets bit 0 of the state word at "
               "+0x20 -- that is eofbit, i.e. an iostream uflow/underflow path (round 73)",
