@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cmath>
 
+LCNS_STRUCTURAL(tu.packer);
 LCNS_STRUCTURAL(tu.packer_cache);
 LCNS_SUBSTITUTED(module.tiling);
 namespace lcns {
