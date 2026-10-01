@@ -4118,3 +4118,19 @@ round 198 找到的标签表是**领域文本**（非库标记），因此**引�
 但**默认后端已是真库**（`LCNS_WITH_CLP` 默认 `ON`）。
 
 **本轮没有修改代码**（`git status` 干净），因此这是一轮**核实与存证**。
+
+### 附 131 **T6 已接线：真正的 JsonCpp 进入构建并被测试**（goal round 210）**[已落码]
+
+目标要求第三方库“**下载到 `third_party/` 并直接在构建里引用**”。本轮把尚未接线的 JsonCpp 接上：
+
+| 交付 | 内容 |
+|---|---|
+| CMake | `option(LCNS_WITH_JSONCPP … ON)`；从 `third_party/src/jsoncpp/src/lib_json/{json_reader,json_value,json_writer}.cpp` 编成 `lcns_jsoncpp`，链入 `lcns_nest`，定义 `LCNS_HAS_JSONCPP` |
+| 头 | `include/lcns/json_backend.hpp`：`available()` / `write()` / `parse()` / `backendName()` |
+| 桥接 | `src/json_bridge.cpp`：在 `lcns::json::Value`↔`Json::Value` 之间转换；**无 JsonCpp 时退回自有实现并如实报告** `available()==false` |
+| 测试 | `tests/test_json_backend.cpp`：验证真库已链接、往返恢复形状的文档、**与自有写出器互相可读**、pretty 仍可解析、坏文档报错 |
+
+**配置输出作证**：`-- lcns: JsonCpp 1.9.5 built from third_party/src/jsoncpp and linked`；**门禁**：`errors=0 warnings=0`、**ctest 16/16**（新增 `json_backend` 通过）、`check_recovery` OK。
+
+**如实声明的偏离**：第三方翻译单元以 `-w` 编译 —— 项目的**零警告纪律适用于逆向代码**，不适用于下载库；这一点已写进 `third_party/README.md` 的该行。
+待做余部：把 `io.cpp` 的默认写出/读入完全走此后端（现为可选后端）。

@@ -91,6 +91,32 @@ else()
   message(STATUS "lcns: COIN-OR archives absent -> the built-in Simplex backend is used instead")
 endif()
 
+# JsonCpp 1.9.5, built from the vendored sources and linked in, so the recovered key names are written and parsed
+# by the real library instead of the in-house writer. Third-party translation units are compiled with warnings
+# suppressed: the project's zero-warning discipline covers the reconstructed code, not the downloaded library
+# (stated in ../third_party/README.md).
+option(LCNS_WITH_JSONCPP "build and link the vendored JsonCpp 1.9.5" ON)
+set(LCNS_JSONCPP "${LCNS_THIRD_PARTY}/src/jsoncpp")
+if(LCNS_WITH_JSONCPP AND EXISTS "${LCNS_JSONCPP}/include/json/json.h")
+  add_library(lcns_jsoncpp STATIC
+    "${LCNS_JSONCPP}/src/lib_json/json_reader.cpp"
+    "${LCNS_JSONCPP}/src/lib_json/json_value.cpp"
+    "${LCNS_JSONCPP}/src/lib_json/json_writer.cpp")
+  target_include_directories(lcns_jsoncpp SYSTEM PUBLIC "${LCNS_JSONCPP}/include")
+  target_include_directories(lcns_jsoncpp SYSTEM PRIVATE "${LCNS_JSONCPP}/src/lib_json")
+  if(MSVC)
+    target_compile_options(lcns_jsoncpp PRIVATE /w)
+  else()
+    target_compile_options(lcns_jsoncpp PRIVATE -w)
+  endif()
+  target_sources(lcns_nest PRIVATE src/json_bridge.cpp)
+  target_link_libraries(lcns_nest PUBLIC lcns_jsoncpp)
+  target_compile_definitions(lcns_nest PUBLIC LCNS_HAS_JSONCPP=1)
+  message(STATUS "lcns: JsonCpp 1.9.5 built from third_party/src/jsoncpp and linked")
+else()
+  message(STATUS "lcns: JsonCpp sources absent -> the built-in JSON writer is used")
+endif()
+
 # --- ordinal loader for a real liblcns.dll (Windows only) ---
 add_library(lcns_api STATIC src/api.cpp)
 target_link_libraries(lcns_api PUBLIC lcns_flags)
@@ -114,7 +140,7 @@ endif()
 if(LCNS_BUILD_TESTS)
   enable_testing()
   foreach(t exact conv boolean offset nofit nester model tiling io lp linear_program cloud
-            licensing row recovered)
+            licensing row recovered json_backend)
     add_executable(test_${t} tests/test_${t}.cpp)
     target_link_libraries(test_${t} PRIVATE lcns_nest lcns_api)
     add_test(NAME ${t} COMMAND test_${t})
