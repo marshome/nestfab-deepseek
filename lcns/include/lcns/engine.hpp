@@ -21,6 +21,7 @@
 //   "cns_solution.css"; the marks layer is named "__marks__".
 #pragma once
 
+#include <limits>
 #include <cstdint>
 #include <memory>
 #include <mutex>
@@ -134,7 +135,21 @@ inline constexpr double kToleranceLower = 0.999;
 // magnitude tighter than kToleranceUpper (1.001), so it is kept as its own constant rather than folded
 // into that one. RECOVERED: the value and the function that loads it. INFERRED: that it is used as a
 // relative comparison bound -- the comparison itself was not read.
-inline constexpr double kRelativeEpsilon = 1.000001;   // RE 0x3C110   // RE 0x9B1758
+inline constexpr double kRelativeEpsilon = 1.000001;   // RE 0x3C110
+
+// RE 0x3C110, the overflow guard in front of a string enlargement (its own text is 'enlarged_'):
+//     3C1E2  movabs rax, 0x7FFFFFFFFFFFFFFF
+//     3C1EC  sub    rax, [rsp + 0x48]
+//     3C1F1  cmp    rax, 8
+//     3C1F5  jbe    <failure path>
+// The subtraction is INT64_MAX - n and the comparison is `<= 8`, so the failure condition is
+// n >= INT64_MAX - 8. Transcribed as a predicate because that is exactly what the four instructions say.
+inline constexpr std::int64_t kGrowthSlack = 8;   // RE 0x3C1F1
+
+inline bool exceedsGrowthLimit(std::int64_t n) {
+    const std::int64_t room = std::numeric_limits<std::int64_t>::max() - n;   // RE 0x3C1EC
+    return room <= kGrowthSlack;                                             // RE 0x3C1F1/0x3C1F5
+}   // RE 0x9B1758
 
 struct EngineParams {
     int threads = 1;                    // RE: Problem::nb_max_threads

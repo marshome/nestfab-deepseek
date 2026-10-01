@@ -434,6 +434,17 @@ int main() {
         CHECK(kRelativeEpsilon > 1.0);
     }
 
+    // --- the growth overflow guard (RE 0x3c110: INT64_MAX - n <= 8) -------------------------------
+    {
+        CHECK(kGrowthSlack == 8);
+        const auto mx = std::numeric_limits<std::int64_t>::max();
+        CHECK(!exceedsGrowthLimit(0));
+        CHECK(!exceedsGrowthLimit(1024));
+        CHECK(!exceedsGrowthLimit(mx - kGrowthSlack - 1));   // room = 9, still allowed
+        CHECK(exceedsGrowthLimit(mx - kGrowthSlack));        // room = 8, the jbe fires
+        CHECK(exceedsGrowthLimit(mx));                       // room = 0
+    }
+
     // --- twelve Itanium RTTI type names (RE the 0x6ca720 family) --------------
     {
         CHECK(std::strcmp(kTypeInfoNames[0], "10BeamValues") == 0);   // RE 0x6ca720
