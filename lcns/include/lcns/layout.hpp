@@ -591,4 +591,32 @@ inline constexpr std::size_t kStride56 = 7 * 8;            // RE 0x724ED7
 inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
+
+// --- the constructor family of 0x21F9F0 / 0x220730 / 0x220230 (round 228) ---------------------------
+// Shared by all three:
+//     the unit literal at rva 0x9C1BF0: 21FA15 in round 215, 220780 (0x220730) and 22026A (0x220230)
+//     the callee 0x1FD6C0: 21FA22, 220796 and 22029B
+//     a byte flag next to a zeroed qword, eight bytes earlier:
+//         22079B byte [rbx+0x140] = ...   with 2207A9 qword [rbx+0x138] = 0
+//         2202A3 byte [rbx+0x150] = ...   with 2202AD qword [rbx+0x148] = 0
+//         21FA27 byte [rbx+0x140] = ...   with 21FA2E qword [rbx+0x138] = 0   (round 215)
+// so the pair (zero word, flag byte) appears twice, one at 0x138 and one at 0x148, i.e. 0x10 apart.
+inline constexpr std::uintptr_t kCtorFamilyUnitRva = 0x9C1BF0;   // RE 0x220780 and 0x22026A (and 0x21FA15)
+inline constexpr std::uintptr_t kCtorFamilyCallee = 0x1FD6C0;    // RE 0x220796 and 0x22029B (and 0x21FA22)
+inline constexpr std::size_t kCtorPairAWord = 0x138;             // RE 0x2207A9
+inline constexpr std::size_t kCtorPairAFlag = 0x140;             // RE 0x22079B
+inline constexpr std::size_t kCtorPairBWord = 0x148;             // RE 0x2202AD
+inline constexpr std::size_t kCtorPairBFlag = 0x150;             // RE 0x2202A3
+inline constexpr std::size_t kCtorPairSpacing = 0x10;            // the two pairs are this far apart
+inline constexpr std::size_t kCtorFamilyMembers = 3;             // the functions this layout was read from
+
+// --- the allocation size of 0x220230 (round 228) ------------------------------------------------------
+//     220243 mov ecx,0x158 ; 220250 call 0x998500
+// 0x158 is 344, the timing record stride of round 156 -- an independent corroboration of that stride, this time
+// as an allocation size inside a constructor rather than as a walk step.
+inline constexpr std::size_t kSize158 = 0x158;                   // RE 0x220243 (344)
+static_assert(kSize158 == kTimingRecordStride, "the allocation size is the stride of round 156");
+static_assert(kCtorPairAFlag - kCtorPairAWord == 8, "the flag follows its zeroed word");
+static_assert(kCtorPairBWord - kCtorPairAWord == kCtorPairSpacing, "the two pairs are one spacing apart");
+
 }  // namespace lcns

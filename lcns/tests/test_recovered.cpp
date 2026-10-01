@@ -1754,5 +1754,30 @@ int main() {
         CHECK(kSize148 != kFiveFieldRecordBytes);
     }
 
+    // --- the constructor family (RE 0x220780/0x22079b/0x2202a3/0x220243) --------------------------------
+    {
+        CHECK(kCtorFamilyUnitRva == 0x9C1BF0);
+        CHECK(kCtorFamilyCallee == 0x1FD6C0);
+        CHECK(kCtorFamilyMembers == 3);
+        CHECK(kCtorPairAWord == 0x138);
+        CHECK(kCtorPairAFlag == 0x140);
+        CHECK(kCtorPairBWord == 0x148);
+        CHECK(kCtorPairBFlag == 0x150);
+        CHECK(kCtorPairSpacing == 0x10);
+        CHECK(kCtorPairAFlag - kCtorPairAWord == 8);          // the flag follows its zeroed word
+        CHECK(kCtorPairBFlag - kCtorPairBWord == 8);
+        CHECK(kCtorPairBWord - kCtorPairAWord == kCtorPairSpacing);
+        CHECK(kCtorPairBFlag - kCtorPairAFlag == kCtorPairSpacing);
+        // round 215 read the first pair, this round the second, so the layout is confirmed twice
+        CHECK(kCtorFlagByteOffset == kCtorPairAFlag);
+        CHECK(kCtorZeroQwordOffset == kCtorPairAWord);
+        CHECK(kCtorDoubleDefault == 1.0);
+
+        CHECK(kSize158 == 0x158);
+        CHECK(kSize158 == 344);
+        CHECK(kSize158 == kTimingRecordStride);               // the stride of round 156, as an allocation size
+        CHECK(kSize158 != kSize148);                           // and this round's other size is different
+    }
+
     return check::finish("test_recovered");
 }
