@@ -6928,3 +6928,17 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ **该步长是本工作记录到的最大元素**；循环前调的助手 **0x5C8A10** 位于**同一高地址段但在仿射库之下**，**不是该库成员**。
 
 **已落 `layout.hpp`**：`kAccumulate`(0x50FD40)、`kAccumulateCallers`(3)、`kElementStride138`(0x138)、`kAccumulatorFlag`(0x00)、`kAccumulatorA..D`(0x08…0x20)、`kAccumulatorDoubles`(4)、`kElementGetter`(0x51D2F0)、`kElementAccessorA/B`(0x4F8370/0x4F8380)、`kAccessorsPerElement`(2)、`kInit5C8A10`(0x5C8A10)、`kHelperBelowAffine` + **六条 `static_assert`** + 测试 26 条（含步长行走的地址算术与累加器布局验证）。
+
+### 附 268 **链上的三个访问器：被累加的量是什么**（goal round 350）**[已落码]**
+
+| 例程 | 大小 | 调用者 | 内容 |
+|---|---:|---:|---|
+| `0x51D2F0` | 5 B | **102** | `mov rax,[rcx+**0x60**]` —— 指针 getter |
+| `0x4F8370` | 6 B | 74 | `movsd xmm0,[rcx+**0x28**]` |
+| `0x4F8380` | 6 B | 85 | `movsd xmm0,[rcx+**0x30**]` |
+
+⇒ round 349 的循环里，先取元素在 `+0x60` 的**子对象**，再从它取 `+0x28` 与 `+0x30` 的两个 double ⇒ **这就是四 double 累加器收集的两个量**。
+
+★ **两处偏移巧合，记为巧合**：`+0x28`、`+0x30` 在仿射矩阵里是平移的 y 及邻位；`+0x60` 是 round 343 组合例程用的权重。**它们是不同类型、来自不同子系统** ⇒ 记为**偏移重现**，而非“同一对象被看到两次”（自 round 262 起的区分）。
+
+**已落 `layout.hpp`**：`kGetter60`、`kGetter60Callers`(102)、`kGetter60Offset`(0x60)、`kAccessorPair28/30`、`kAccessorPair28/30Callers`(74/85)、`kAccessorPair28/30Offset`(0x28/0x30)、`kQuantitiesAre28And30`、`kChainLength`(3)、`kOffsetsRecur`、`kNotMergedAcrossTypes` + **五条 `static_assert`** + 测试 26 条（含用结构体模拟该链并累加得 6.5 的行为验证）。

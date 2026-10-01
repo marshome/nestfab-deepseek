@@ -5676,5 +5676,49 @@ int main() {
         CHECK(kAccumulatorDoubles * 8 == 32);
     }
 
+    // --- the accessor chain and what it accumulates (RE 0x51d2f0, 0x4f8370, 0x4f8380) --------------
+    {
+        CHECK(kGetter60 == 0x51D2F0);
+        CHECK(kGetter60Callers == 102);
+        CHECK(kGetter60Offset == 0x60);
+        CHECK(kGetter60Offset == kComposeWeightB);        // the same offset as round 343's weight
+        CHECK(kAccessorPair28 == 0x4F8370);
+        CHECK(kAccessorPair28Callers == 74);
+        CHECK(kAccessorPair28Offset == 0x28);
+        CHECK(kAccessorPair30 == 0x4F8380);
+        CHECK(kAccessorPair30Callers == 85);
+        CHECK(kAccessorPair30Offset == 0x30);
+        CHECK(kAccessorPair30Offset - kAccessorPair28Offset == 8);
+        CHECK(kQuantitiesAre28And30);
+        CHECK(kChainLength == 3);
+        CHECK(kOffsetsRecur);
+        CHECK(kNotMergedAcrossTypes);
+        CHECK(kElementGetter == kGetter60);               // the chain round 349 walked
+        CHECK(kElementAccessorA == kAccessorPair28);
+        CHECK(kElementAccessorB == kAccessorPair30);
+        CHECK(kAccessorPair30Callers > kAccessorPair28Callers);
+        CHECK(kGetter60Callers > kAccessorPair30Callers);
+        CHECK(kAccessorPair30Offset == kSegmentEndA + 0x20);   // the offset recurs in other records too
+
+        // the chain, applied to a sub-object with the two quantities in it
+        struct Sub { char pad[0x28]; double q28; double q30; };
+        struct Element { char pad[0x60]; Sub* sub; };
+        Sub sub{};
+        sub.q28 = 2.5;
+        sub.q30 = 4.0;
+        Element el{};
+        el.sub = &sub;
+        const auto get = [](const Element& e) { return e.sub; };
+        CHECK(get(el) == &sub);
+        CHECK(get(el)->q28 == 2.5);
+        CHECK(get(el)->q30 == 4.0);
+        // and the accumulator sums what the two accessors return
+        double acc = 0.0;
+        acc += get(el)->q28;
+        acc += get(el)->q30;
+        CHECK(acc == 6.5);
+        CHECK(kChainLength == 3);
+    }
+
     return check::finish("test_recovered");
 }

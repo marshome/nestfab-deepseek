@@ -3586,6 +3586,32 @@ static_assert(kElementStride138 == 312, "the stride is three hundred and twelve 
 static_assert(kHelperBelowAffine && kInit5C8A10 < kMakeTranslation,
               "the helper sits below the affine library in the same range, without being a member");
 
+
+// --- the three accessors of the accumulator's chain (round 350) ------------------------------------------
+//     0x51D2F0 mov rax,[rcx+0x60]   ; the element's sub-object
+//     0x4F8370 movsd xmm0,[rcx+0x28] ; the first accumulated quantity
+//     0x4F8380 movsd xmm0,[rcx+0x30] ; and the second
+inline constexpr std::uintptr_t kGetter60 = 0x51D2F0;        // RE the whole routine
+inline constexpr int kGetter60Callers = 102;
+inline constexpr std::size_t kGetter60Offset = 0x60;         // RE 0x51D2F0
+inline constexpr std::uintptr_t kAccessorPair28 = 0x4F8370;  // RE the second
+inline constexpr int kAccessorPair28Callers = 74;
+inline constexpr std::size_t kAccessorPair28Offset = 0x28;   // RE 0x4F8370
+inline constexpr std::uintptr_t kAccessorPair30 = 0x4F8380;  // RE the third
+inline constexpr int kAccessorPair30Callers = 85;
+inline constexpr std::size_t kAccessorPair30Offset = 0x30;   // RE 0x4F8380
+inline constexpr bool kQuantitiesAre28And30 = true;          // what the accumulator collects
+inline constexpr int kChainLength = 3;                       // getter, then one accessor
+// THE OFFSETS RECUR IN OTHER TYPES: +0x28 in the affine matrix is its ty, and +0x60 is the weight round 343 composed
+// with. Different types, different subsystems -- recorded as recurring offsets rather than as one object twice.
+inline constexpr bool kOffsetsRecur = true;
+inline constexpr bool kNotMergedAcrossTypes = true;
+static_assert(kAccessorPair30Offset - kAccessorPair28Offset == 8, "the two quantities are one double apart");
+static_assert(kGetter60Callers > kAccessorPair28Callers, "the getter is called most");
+static_assert(kAccessorPair30Callers > kAccessorPair28Callers, "the second accessor slightly more than the first");
+static_assert(kQuantitiesAre28And30 && kChainLength == 3, "three routines, two quantities");
+static_assert(kOffsetsRecur && kNotMergedAcrossTypes, "the same offsets, and no merging");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
