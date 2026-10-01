@@ -5784,3 +5784,30 @@ F74E6  cmp rax,r8 ; jb → 抛出路径        ; ★ **尺寸必须 ≥ ceil(位
 **（b）`0x418BD0`（509 B / 25 个调用者）= 拷贝赋值**：`cmp rcx,rdx ; je`（**自检**）、拷贝 `+0x04` 的 32 位字段、调 **`0x63F258`**（与 round 251 的长度助手 `0x63F238` **同一簇、相差 `0x20`**）、并读 **`+0x14`**（**正是 round 249 记录的容量字段**）。
 
 **已落 `layout.hpp`**：`kInline*`（六个）、`kInlineBufferPairs`(3)、`kRecord*`（四个）、`kCopy*`（五个）、`kHelperClusterStep`(0x20) + **六条 `static_assert`** + 测试 30 条。
+
+### 附 209 **round 249 的 `[推断]` 升级为 `[已证实]`**；且记录有**双引用计数**（goal round 291）**[已落码]**
+
+**（a）证据来自拷贝赋值 `0x418BD0`**：
+
+```
+418C00/418C0B  `+0x14` 字段以 **`js`** 测试 ⇒ **有符号**（容量的形状）
+418C2D  源的 `+0x14` 拷入
+418C43/418C49  以该容量调 **`0x9984E0`（新分配助手）**重新分配
+418C11/418C1D  旧缓冲区 `+0x18` 用 **`0x9984A0`**（备用释放器，**第二次目击**）释放
+418C31  源的有符号 dword 送入 `+0x00`
+```
+
+round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`+0x18` 是数据。妊值现在**释放 `+0x18`、拷贝 `+0x14` 并据此重新分配** ⇒ **推断升级为证据**（`kSsoInference` 置 false、`kSsoConfirmed` 置 true，**并在原处写明理由**）。
+
+**（b）`0x6DE430` 的尾部**：记录被链入外层对象的 `+0x40`/`+0x48`，释放路径为
+
+```
+6DE505  lock sub dword [rdi+8],1     ; 第一个计数器原子减一
+6DE50A  je → 释放
+6DE528  call qword [rax+0x10]        ; ★ 虚表槽 **`+0x10`**（**第十一个槽**）
+6DE52B  lock sub dword [rdi+0xC],1   ; ★ **第二个计数器**
+```
+
+⇒ **记录有两个计数器**（与 round 290 的 `1/1` 对一致），虚表槽**十一个**。
+
+**已落 `layout.hpp`**：`kSsoField*`（五个）、`kSsoAlloc`(0x9984E0)、`kSsoConfirmed`、`kReleaserAltSightings`(2)、`kRecordCounter*`、`kRecordLink*`、`kVtableSlotH`(0x10)、`kVtableSlotsKnown6`(11)、`kRecordFinalCall`、`kRecordCountedTwice` + **六条 `static_assert`** + 测试 30 条。

@@ -937,7 +937,11 @@ inline constexpr std::size_t kSsoSize = 0x00;               // RE 0x4189E0
 inline constexpr std::size_t kSsoData = 0x18;               // RE 0x4189C1
 inline constexpr std::uintptr_t kSsoTailCall = 0x9984A0;    // RE 0x4189D4
 inline constexpr int kSsoCallers = 58;
-inline constexpr bool kSsoInference = true;                 // NOT proven, see the comment above
+inline constexpr bool kSsoInference = false;                // UPGRADED in round 291: proven below
+// Round 249 marked this layout as an inference from the shape of 0x4189B0. The copy assignment 0x418BD0 then
+// released the pointer at +0x18 with 0x9984A0, copied the field at +0x14 and REALLOCATED by it, and tested
+// +0x14 with `js` (so it is signed). That is evidence rather than shape, so the inference flag is cleared
+// and the standing of the layout is recorded as proven.
 
 
 // --- the bit-length algorithm of 0xF1AA0, fifty-five callers (round 250) ------------------------------
@@ -2058,6 +2062,45 @@ inline constexpr int kCopyAssignCallers = 25;
 inline constexpr std::uintptr_t kHelperClusterBase = 0x63F238;  // the length helper of round 251
 static_assert(kCopyHelper == kHelperClusterBase + kHelperClusterStep, "the helper sits one step into the cluster");
 static_assert(kCopyCapacity == kSsoCapacity, "the field round 249 recorded as the capacity");
+
+
+// --- the small-object layout PROVEN by the copy assignment 0x418BD0 (round 291) -------------------------
+//     0x418C00/0x418C0B  the field at +0x14 is tested with `js`: it is SIGNED, which is what a capacity is
+//     0x418C2D  the source's +0x14 is copied into it
+//     0x418C43/0x418C49  that capacity is passed to the allocator 0x9984E0
+//     0x418C11/0x418C1D  the old buffer at +0x18 is released with 0x9984A0
+//     0x418C31  a sign-extended dword from the source goes to +0x00
+inline constexpr bool kSsoConfirmed = true;                  // the round-249 layout, now on evidence
+inline constexpr std::size_t kSsoField00 = 0x00;             // RE 0x418C31, a signed dword
+inline constexpr std::size_t kSsoField04 = 0x04;             // RE 0x418BF8
+inline constexpr std::size_t kSsoField10 = 0x10;             // RE 0x418C08
+inline constexpr std::size_t kSsoField14 = 0x14;             // RE 0x418C2D, the signed capacity
+inline constexpr std::size_t kSsoField18 = 0x18;             // RE 0x418C11, the buffer
+inline constexpr std::uintptr_t kSsoAlloc = 0x9984E0;        // RE 0x418C49
+inline constexpr int kReleaserAltSightings = 2;              // rounds 260 and this one
+inline constexpr int kCopyAssignCallers2 = 25;
+static_assert(kSsoField14 == kSsoCapacity, "the capacity round 249 inferred");
+static_assert(kSsoField18 == kSsoData, "the data pointer round 249 inferred");
+static_assert(kSsoConfirmed && !kSsoInference, "the layout moved from inference to evidence");
+
+// --- the record's dual counters and an eleventh vtable slot (round 291) ---------------------------------
+//     0x6DE505 lock sub dword [rdi+8],1   ; one counter, decremented atomically
+//     0x6DE52B lock sub dword [rdi+0xC],1 ; and a second, four bytes later
+//     0x6DE528 call qword [rax+0x10]      ; the release path goes through vtable slot +0x10
+//     0x6DE4FB/0x6DE4FF  the record is linked into the outer object at +0x40 and +0x48
+inline constexpr std::size_t kRecordCounterA = 0x08;         // RE 0x6DE505
+inline constexpr std::size_t kRecordCounterB = 0x0C;         // RE 0x6DE52B
+inline constexpr int kRecordCounters = 2;                    // RE the two atomic decrements
+inline constexpr std::size_t kRecordLinkA = 0x40;            // RE 0x6DE4FB
+inline constexpr std::size_t kRecordLinkB = 0x48;            // RE 0x6DE4FF
+inline constexpr std::size_t kVtableSlotH = 0x10;            // RE 0x6DE528 -- an ELEVENTH slot
+inline constexpr int kVtableSlotsKnown6 = 11;                // with 0x10 added to the ten of round 288
+inline constexpr std::uintptr_t kRecordFinalCall = 0x9135D0; // RE 0x6DE513
+inline constexpr bool kRecordCountedTwice = true;            // RE the 1/1 pair and the two decrements
+static_assert(kRecordCounters == 2, "two counters");
+static_assert(kRecordCounterB - kRecordCounterA == 4, "the counters are adjacent dwords");
+static_assert(kVtableSlotsKnown6 == kVtableSlotsKnown5 + 1, "one more slot than round 288");
+static_assert(kRecordCountedTwice, "the record is counted twice over");
 
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241

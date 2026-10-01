@@ -2058,7 +2058,7 @@ int main() {
         CHECK(kSsoData == 0x18);
         CHECK(kSsoTailCall == 0x9984A0);
         CHECK(kSsoCallers == 58);
-        CHECK(kSsoInference);                            // it is landed as an inference, not as proof
+        CHECK(!kSsoInference);                           // upgraded in round 291: proven by the assignment
         CHECK(kSsoData > kSsoCapacity);
     }
 
@@ -3374,6 +3374,56 @@ int main() {
         }
         CHECK(pairs[1].buf - pairs[0].buf == 0x10);
         CHECK(pairs[2].buf - pairs[1].buf == 0x20);
+    }
+
+    // --- the layout proven, and the record's two counters (RE 0x418bd0 and 0x6de430) ----------------
+    {
+        CHECK(kSsoConfirmed);
+        CHECK(!kSsoInference);                          // it moved from inference to evidence
+        CHECK(kSsoField00 == 0x00);
+        CHECK(kSsoField04 == 0x04);
+        CHECK(kSsoField10 == 0x10);
+        CHECK(kSsoField14 == 0x14);
+        CHECK(kSsoField18 == 0x18);
+        CHECK(kSsoField14 == kSsoCapacity);
+        CHECK(kSsoField18 == kSsoData);
+        CHECK(kSsoAlloc == 0x9984E0);
+        CHECK(kReleaserAltSightings == 2);
+        CHECK(kReleaserAlt == 0x9984A0);
+        CHECK(kCopyAssignCallers2 == 25);
+        CHECK(kCopyAssignCallers2 == kCopyAssignCallers);
+        // the fields are distinct and ordered as the layout has them
+        CHECK(kSsoField00 < kSsoField04 && kSsoField04 < kSsoField10);
+        CHECK(kSsoField10 < kSsoField14 && kSsoField14 < kSsoField18);
+
+        CHECK(kRecordCounterA == 0x08);
+        CHECK(kRecordCounterB == 0x0C);
+        CHECK(kRecordCounterB - kRecordCounterA == 4);
+        CHECK(kRecordCounters == 2);
+        CHECK(kRecordCountedTwice);
+        CHECK(kRecordCounterA == kRecordWordA);         // the counter round 290 saw set to one
+        CHECK(kRecordCounterB == kRecordWordB);
+        CHECK(kRecordLinkA == 0x40);
+        CHECK(kRecordLinkB == 0x48);
+        CHECK(kVtableSlotH == 0x10);
+        CHECK(kVtableSlotsKnown6 == 11);
+        CHECK(kVtableSlotsKnown6 == kVtableSlotsKnown5 + 1);
+        CHECK(kRecordFinalCall == 0x9135D0);
+
+        // the dual-counter release: each counter is decremented, and zero on either frees
+        const auto release = [](int& strong, int& weak) {
+            --strong;                                    // RE 0x6DE505
+            const bool freed = (strong == 0);
+            --weak;                                      // RE 0x6DE52B
+            return freed;
+        };
+        int strong = 1, weak = 1;
+        CHECK(release(strong, weak));
+        CHECK(strong == 0);
+        CHECK(weak == 0);
+        int strong2 = 2, weak2 = 3;
+        CHECK(!release(strong2, weak2));
+        CHECK(strong2 == 1 && weak2 == 2);
     }
 
     return check::finish("test_recovered");
