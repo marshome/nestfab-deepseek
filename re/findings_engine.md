@@ -3907,3 +3907,22 @@ round 198 找到的标签表是**领域文本**（非库标记），因此**引�
 **另记**：`0x5E5BF0` 用到 **`1e6``**（`0x5E5C1B`）与 **`10000`**（`0x5E5C44`，写入静态 double），属于 rounds 171/172 的**微米度单位族**（待读完）。
 
 **已落 `layout.hpp`**：`kBoxCornerCount`、`kBoxCornerBytes`、`cornerIndex`、`kContainerBlockBytes`、`kContainerFieldLow/High` + 测试 15 条。
+
+### 附 121 已识别地址带内剩余小函数的一轮清点（goal round 201）
+
+按 round 200 的**地址带邻近性**策略，一次读完剩余小函数，逐个记下**常量 / 字段偏移 / 调用 / 文本**（恒等访问器调用已剔除）：
+
+```
+0x5e5bd0    22 B | consts: - | fields: +0x8,+0x10 | calls: - | text: -
+0x5e5c90    27 B | consts: - | fields: +0x8 | calls: - | text: -
+0x5e5cd0   208 B | consts: - | fields: +0x8,+0x10,+0x18,+0x20,+0x28,+0x30,+0x38,+0x40 | calls: 0x998500,0x979e70 | text: -
+0x5e60f0   111 B | consts: - | fields: +0x8,+0x10,+0x18,+0x20 | calls: - | text: -
+0x5e6200   112 B | consts: - | fields: +0x10,+0x20,+0x28,+0x30,+0xb8,+0xbd,+0x150,+0x155,+0x158 | calls: 0x5e6255 | text: -
+0x5e62d0    48 B | consts: - | fields: +0x8 | calls: - | text: -
+0x5e7350    98 B | consts: - | fields: +0x18,+0x28,+0xc0 | calls: 0x824b40 | text: -
+0x5e7790   154 B | consts: - | fields: +0x8,+0x10,+0x18,+0x20 | calls: 0x72b6a0,0x700e80,0x704400,0x5e77c8,0x5e77b1 | text: -
+0x74b930    51 B | consts: - | fields: +0x8,+0x10,+0x18 | calls: - | text: -
+0x74b970    36 B | consts: - | fields: - | calls: 0x9465c0,0x9984b0 | text: -
+```
+
+⇒ 这是**下一轮选择与落码的原料**；带内函数与已识别几何核心同属一片，因此它们的常量与字段最有可能与已落码的结论相接。
