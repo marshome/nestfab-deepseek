@@ -230,8 +230,8 @@ inline constexpr Gap kGaps[] = {
      "0x1A89D0, NG3 0x16E140 -- plus one recovered numeric constant, the surface slack 1.05 in "
      "'eval.m_c >= 0 && eval.m_c <= max_surface * 1.05'. NOT transcribed: the bodies (0x215720 11.9 KB, "
      "the two InsertAllNext instantiations, 0x23B420 16.4 KB) and the four Equiv* comparison rules"},
-    {"tu.packer", Status::Structural, "0x770D10 Packer::Run, ..\tiling\packer.cpp",
-     "the tiling packer TU: 381 functions / 397,869 bytes. Its entry point is identified by its own inlined strings -- ..\tiling\packer.cpp, Run, and the precondition availables.size() == m_problem.GetNumberOfParts() -- at 0x770d10, 8230 bytes / 1641 instructions, with 65 callees. It consumes what the Compute*Tilings family produces (see tus.packer_cache for the 16 pattern keys) and shares the packer cache thread pool. NOT transcribed: the main loop and how it binds availables to m_problem"},
+    {"tu.packer", Status::Structural, "0x770D10 Packer::Run, ..\\tiling\\packer.cpp",
+     "the tiling packer TU: 381 functions / 397,869 bytes. Its entry point is identified by its own inlined strings -- ..\\tiling\\packer.cpp, Run, and the precondition availables.size() == m_problem.GetNumberOfParts() -- at 0x770d10, 8230 bytes / 1641 instructions, with 65 callees. It consumes what the Compute*Tilings family produces (see tus.packer_cache for the 16 pattern keys) and shares the packer cache thread pool. NOT transcribed: the main loop and how it binds availables to m_problem"},
     {"tu.packer_cache", Status::Structural, "0x765460, 0x769410, 0x763ee0, 0x158810",
      "the tiling pattern computation and cache TU is identified: 276 functions / 278,386 bytes. Its "
      "16 pattern keys are on record (box, box_min_dist, cc_matrix, cc_mono, cc_specific, "
