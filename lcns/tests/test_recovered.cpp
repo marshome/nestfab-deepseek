@@ -145,6 +145,10 @@ int main() {
     }
 
     // --- third party versions are bound to the evidence in the dump ---------------------------
+    // The border/structure TU asserts TWO quality domains at 0x1ee50 / 0x7bf0c0; they are different
+    // sets in the same model, so both are bound here.
+    CHECK(kQualityLevelsPart == 100);          // RE 'quality >= 0 && quality < 100'
+    CHECK(kQualityLevelsLeatherLayer == 9);    // RE 'quality >= 0 && quality < 9'
     // The beam-tree/bucket TU (..\nesting\algos\bucket_manager.hpp) asserts a surface slack; it is a
     // recovered constant, quoted by the three ComputeNodeIndex instantiations.
     CHECK_NEAR(kEvalSurfaceSlack, 1.05, 0.0);                  // RE 0x81C690 assertion text
@@ -164,9 +168,9 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 66);
+        CHECK(kGapCount == 67);
         CHECK(countOf(Status::Recovered) == 8);
-        CHECK(countOf(Status::Structural) == 18);
+        CHECK(countOf(Status::Structural) == 19);
         CHECK(countOf(Status::NotReversed) == 12);
         CHECK(countOf(Status::Substituted) == 27);
         CHECK(countOf(Status::NotInBinary) == 1);

@@ -22,8 +22,15 @@ namespace lcns {
 // --------------------------------------------------------------------------
 // properties (field order == the original serialiser's order)
 // --------------------------------------------------------------------------
-struct CommonCutProperties {
-    int allowed = 0;                        // +0x00
+// RE ..\structure\border_property.hpp -- the two quality domains the original asserts, at 0x1C980 /
+// 0x1EE50 / 0x7BF0C0:
+//     'quality >= 0 && quality < 100'   parts
+//     'quality >= 0 && quality < 9'     leather layers
+// They are different sets in the same model, which is why they are two constants and not one.
+inline constexpr int kQualityLevelsPart = 100;          // RE 0x1EE50 assertion text
+inline constexpr int kQualityLevelsLeatherLayer = 9;    // RE 0x1EE50 / 0x7BF0C0 assertion text
+
+struct CommonCutProperties {    int allowed = 0;                        // +0x00
     double gap = 0.0;                       // +0x08
     double originalPartGap = 0.0;           // +0x10
     double cuttingCostPerUnit = 0.0;        // +0x18
@@ -270,6 +277,12 @@ struct Order {
     bool markMode = false;              // +0xE8 / +0xF0
     double markSize = 0.0;
     double markInterDistance = 0.0;
+    // RE ..\structure\border_property.hpp (re/findings_border_property.md): the original models
+    // leather as LAYERS with a per-layer quality index -- IsLeather(p), GetLeatherLayer,
+    // GetLayerLeatherPart/Sheet, GetLayerRestrictedZonePart/Sheet -- and it asserts TWO different
+    // quality domains: [0,100) for parts and [0,9) for leather layers. lcns has only this single
+    // flag plus Sheet::restrictedZones, so its leather support is a DOCUMENTED SIMPLIFICATION,
+    // not an equivalent. The two recovered domains are kept below so the difference is visible.
     bool leatherMode = false;
 
     // --- data ---

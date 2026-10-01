@@ -85,6 +85,7 @@ std::shared_ptr<Nester> makeStrategy(int mode) {
 // documented (re/findings_equivalent.md) but lcns has NO equivalent-problem reduction at all, so
 // this stays NotReversed rather than claiming a re-implementation exists.
 LCNS_NOT_REVERSED(tu.equivalent);
+LCNS_STRUCTURAL(tu.border_property);
 LCNS_STRUCTURAL(tu.nesting_context);
 LCNS_STRUCTURAL(tu.bucket_manager);
 LCNS_NOT_REVERSED(engine.beam_tree);

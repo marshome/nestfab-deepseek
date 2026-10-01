@@ -267,6 +267,24 @@ inline constexpr Gap kGaps[] = {
      "GetOriginalNesting requires multiplicity == 1, and the original itself refuses the grain mode "
      "('internal error mode not yet supported with grain'). NOT reversed: lcns has NO equivalent "
      "problem reduction at all, and the defect-reduction and used-surface formulas are unread"},
+    {"tu.border_property", Status::Structural, "0x1EE50 (15305 B), 0x1C980, 0x22E40, 0x668F20",
+     "the border/structure TU cluster is identified: 196 functions / 132,394 bytes spanning THREE "
+     "source files -- ../structure/border_property.hpp, internal.cpp and cns_no_fit.cpp. API on "
+     "record: CreateProblem / ComputeSheetGeometryRowMode / GetCommonCutProperties / "
+     "GetMultitorchProperties / GetLayerLeatherPart / GetLayerLeatherSheet / "
+     "GetLayerRestrictedZonePart / GetLayerRestrictedZoneSheet at 0x1ee50 and 0x1c980, ArcToPoints "
+     "and the element check at 0x22e40, ComputeNoHoleRings 0x1e900, GetLeatherLayer and IsLeather "
+     "at 0x7bc180, CNS_NoFitContext 0x668f20 and DeleteNoFitContext 0x9cc0. Hard facts from the "
+     "assertions: TWO quality domains in one model, 'quality >= 0 && quality < 100' for parts and "
+     "'quality >= 0 && quality < 9' for leather layers (kQualityLevelsPart / "
+     "kQualityLevelsLeatherLayer); external_rings.size() == 1u and poly.inners().empty() for the "
+     "ring computation; two option maps named all_settings and boost keyed by "
+     "common_cut_safety_preference and multitorch_cutting_preference; and cns_no_fit.cpp asserts "
+     "that its equivalent problem has exactly the order's part and sheet counts, tying this TU to "
+     "tu.equivalent. DOCUMENTED DIVERGENCE: lcns models leather as one bool plus Sheet::"
+     "restrictedZones, while the original has layers with a per-layer quality index. NOT "
+     "transcribed: the 15.3 KB CreateProblem body, the leather layer structure and the quality "
+     "semantics"},
     {"module.engine", Status::Structural, "0x827F0 / 0x2DF60 / 0x2CCF0",
      "the supervisor/cascade structure and the cancel gate (elapsed / Problem[+0x408] > 1.0) are "
      "recovered; the per-strategy budget bookkeeping here is a re-implementation"},
