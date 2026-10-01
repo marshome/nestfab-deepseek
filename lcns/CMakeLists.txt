@@ -117,6 +117,33 @@ else()
   message(STATUS "lcns: JsonCpp sources absent -> the built-in JSON writer is used")
 endif()
 
+# CryptoPP 8.9.0, built from the vendored sources and linked in. third_party/README.md scopes this item to the
+# link capability only: the licensing and cloud paths that use CryptoPP are themselves NotReversed, so no CryptoPP
+# code is reverse engineered here. The library ships as a flat set of 202 sources without a top level CMakeLists,
+# so they are globbed, its own test and benchmark programs are excluded, and the translation units are compiled
+# with warnings suppressed (the same documented deviation as JsonCpp: the zero-warning discipline covers the
+# reconstructed code, not the downloaded library).
+option(LCNS_WITH_CRYPTOPP "build and link the vendored CryptoPP 8.9.0" ON)
+set(LCNS_CRYPTOPP "${LCNS_THIRD_PARTY}/src/cryptopp")
+if(LCNS_WITH_CRYPTOPP AND EXISTS "${LCNS_CRYPTOPP}/cryptlib.cpp")
+  file(GLOB LCNS_CRYPTOPP_SOURCES "${LCNS_CRYPTOPP}/*.cpp")
+  list(FILTER LCNS_CRYPTOPP_SOURCES EXCLUDE REGEX "/(test|bench1|bench2|bench3|datatest|regtest|validat[0-9]|fipstest|fipsalgt|dlltest)\\.cpp$")
+  add_library(lcns_cryptopp STATIC ${LCNS_CRYPTOPP_SOURCES})
+  target_include_directories(lcns_cryptopp SYSTEM PUBLIC "${LCNS_CRYPTOPP}")
+  if(MSVC)
+    target_compile_options(lcns_cryptopp PRIVATE /w)
+  else()
+    target_compile_options(lcns_cryptopp PRIVATE -w)
+  endif()
+  target_compile_definitions(lcns_cryptopp PRIVATE CRYPTOPP_DISABLE_ASM=1)
+  target_sources(lcns_nest PRIVATE src/crypto_bridge.cpp)
+  target_link_libraries(lcns_nest PUBLIC lcns_cryptopp)
+  target_compile_definitions(lcns_nest PUBLIC LCNS_HAS_CRYPTOPP=1)
+  message(STATUS "lcns: CryptoPP 8.9.0 built from third_party/src/cryptopp and linked")
+else()
+  message(STATUS "lcns: CryptoPP sources absent -> the crypto backend reports itself unavailable")
+endif()
+
 # --- ordinal loader for a real liblcns.dll (Windows only) ---
 add_library(lcns_api STATIC src/api.cpp)
 target_link_libraries(lcns_api PUBLIC lcns_flags)
@@ -140,7 +167,7 @@ endif()
 if(LCNS_BUILD_TESTS)
   enable_testing()
   foreach(t exact conv boolean offset nofit nester model tiling io lp linear_program cloud
-            licensing row recovered json_backend)
+            licensing row recovered json_backend crypto_backend)
     add_executable(test_${t} tests/test_${t}.cpp)
     target_link_libraries(test_${t} PRIVATE lcns_nest lcns_api)
     add_test(NAME ${t} COMMAND test_${t})

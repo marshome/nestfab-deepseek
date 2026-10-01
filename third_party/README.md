@@ -63,7 +63,7 @@ third_party/
 | T4 | registry：原 `lp.simplex_backend`（`Substituted`）拆成 **`lp.clp_backend`（`Recovered`）** + **`lp.simplex_fallback`（`Substituted`）**，即「真 Clp 是默认、自研单纯形只是可选兜底」 | ✅ **已完成** |
 | T5 | boost：`third_party/src/boost_1_63_0` 以 `-isystem` 加入 include 路径（`-DLCNS_WITH_BOOST=ON`，默认 ON），并在 `tests/test_recovered.cpp` 用 `static_assert(BOOST_VERSION == 106300)` 把版本**钉在证据上** | ✅ **已完成**（钩子就位；尚未把某个几何路径改写成 `boost::multiprecision`） |
 | T6 | JsonCpp：替换工程自有 JSON 写出器（键名已是恢复值） | **已接线**：`LCNS_WITH_JSONCPP`（默认 ON）从 `src/jsoncpp` 编译成 `lcns_jsoncpp` 并链入 `lcns_nest`；`src/json_bridge.cpp` + `include/lcns/json_backend.hpp` 提供 `available()/write()/parse()/backendName()`；`tests/test_json_backend.cpp` 验证真库已链接、往返恢复形状、与自有写出器**互相可读**。第三方 TU 以 `-w` 编译（**遮蔽说明**：零警告纪律适用于逆向代码，不适用于下载库）。待做余部：把 `io.cpp` 内部写出器完全改为默认走此后端 |
-| T7 | CryptoPP：仅在授权/云路径需要；这些路径本身是 `NotReversed`，先只建立链接能力 | 待做 |
+| T7 | CryptoPP：仅在授权/云路径需要；这些路径本身是 `NotReversed`，先只建立链接能力 | **已建立**：`LCNS_WITH_CRYPTOPP`（默认 ON）将 `src/cryptopp/*.cpp`（202 个，排除其自带 test/bench/validat）编成 `lcns_cryptopp` 并链入 `lcns_nest`（`CRYPTOPP_DISABLE_ASM=1`）；`src/crypto_bridge.cpp` + `include/lcns/crypto_backend.hpp` 提供 `available()/backendName()/sha1Hex()`；`tests/test_crypto_backend.cpp` 用**算法定义的已知值**验证 SHA-1（空串、`abc`、1000 字节）。**未逆向任何 CryptoPP 代码**。第三方 TU 以 `-w` 编译（同 T6 的遮蔽说明）|
 
 ## 4. 落盘结果与构建进展（每轮更新，**不得留空**）
 

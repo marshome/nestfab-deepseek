@@ -4134,3 +4134,21 @@ round 198 找到的标签表是**领域文本**（非库标记），因此**引�
 
 **如实声明的偏离**：第三方翻译单元以 `-w` 编译 —— 项目的**零警告纪律适用于逆向代码**，不适用于下载库；这一点已写进 `third_party/README.md` 的该行。
 待做余部：把 `io.cpp` 的默认写出/读入完全走此后端（现为可选后端）。
+
+### 附 132 **T7 已完成：CryptoPP 链接能力已建立并可调用**（goal round 211）**[已落码]
+
+README 对 T7 的范围定义是“**先只建立链接能力**”（因为需要它的授权/云路径本身 `NotReversed`）。本轮按此定义交付：
+
+| 交付 | 内容 |
+|---|---|
+| CMake | `option(LCNS_WITH_CRYPTOPP … ON)`；`file(GLOB src/cryptopp/*.cpp)` **202 个**，排除自带 `test/bench*/datatest/regtest/validat*`，编成 `lcns_cryptopp` 链入 `lcns_nest`，`CRYPTOPP_DISABLE_ASM=1` |
+| 头 | `include/lcns/crypto_backend.hpp`：`available()` / `backendName()` / `sha1Hex()` |
+| 桥接 | `src/crypto_bridge.cpp`：真库在则用 `CryptoPP::SHA1`+`HashFilter`+`HexEncoder`；不在则**如实报告** `available()==false` 并返回空串（不用自写摘要冒充）|
+| 测试 | `tests/test_crypto_backend.cpp`：以**算法定义的已知值**验证（空串 `da39a3ee…`、`abc` `a9993e36…`、1000 字节输入）|
+
+**配置作证**：`-- lcns: CryptoPP 8.9.0 built from third_party/src/cryptopp and linked`；**门禁**：`errors=0 warnings=0`、**ctest 17/17**（新增 `crypto_backend` 通过）、`check_recovery` OK。
+
+**一次失败与修正**：初版写成 `#include <cryptopp/hex.h>`，而 CryptoPP 的头是**平铺**的（`hex.h`、`sha.h` 就在源目录根）⇒ 改为 `<hex.h>`/`<sha.h>` 后通过。
+
+**第三方账（目标文本明列的四项）**：**COIN-OR Clp/Osi ✅ 已链接并被测试**（round 209）、**boost 1.63.0 ✅ 头文件已接**、**JsonCpp 1.9.5 ✅ 已接线并被测试**（round 210）、**CryptoPP 8.9.0 ✅ 本轮建立链接能力并被测试**。
+⇒ **目标里“第三方库不逆向、下载到 `third_party/` 并直接在构建里引用”这一条已全部兑现**。
