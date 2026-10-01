@@ -1781,3 +1781,12 @@ round 97 一轮移动 928 KB 且深度 5 仍未收敛 —— 这是**逃逸的�
 ⇒ **两个工具用的是不同的“已引用”定义**（`g_coverage` 自己扫文件得到 cited，`covlib` 的 `cited_set()` 排除清单不同），所以**它们报的桶不可直接比较**。这是**我自己工具链的缺陷**，不是数据的问题。
 
 **处置**：下一步**统一定义**（让 `g_coverage` 直接用 `covlib.cited_set()`，或让两边的排除清单一致），并在统一后**重报一次基线数字**。在统一之前，我**只引用 `g_coverage` 的数字**（它是判据的口径），并明记 covlib 的分类只用于内部排序。
+
+## 统一“已引用”定义（goal round 123）
+
+`covlib.SKIP_NAMES` 现为**单一来源**（两份清单的**并集**，共 24 项），`g_coverage.py` 直接引用它，不再自带一份。
+
+* 仅 g_coverage 有的项：cited、shape only
+* 仅 covlib 有的项：STRATEGY_METHODS.md、TU_MAP.md、VTABLE_SLOTS.md、covlib.py、g_strategy_methods.py、g_tu_map.py、g_vtable_slots.py、vtable_slots_summary.json
+
+统一后两个工具的桶**直接可比**。前后四个数字见本轮输出。

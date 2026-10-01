@@ -94,17 +94,8 @@ print("reachable from the exports: %d functions, %d bytes (%.1f%% of all code)"
 # ---------------------------------------------------------------- cited set
 # IMPORTANT: never let this metric count its own output. The raw data tables and the generated
 # reports are excluded, otherwise listing a function as "not covered" would mark it as covered.
-SKIP_NAMES = {"exports_table.csv", "exports_table.json", "exports_table.md",
-              "UNCOVERED_RANKED.md", "RECOVERY_STATUS.md", "vtables.json", "prof2.pkl",
-              "g_coverage.py", "results.csv",
-              # IDENTIFIED.md is a GENERATED INVENTORY (re/g_identify.py). It records provenance and
-              # shape for functions whose bodies nobody has read, and 80% of its rows carry no
-              # identity at all ("shape only"). Letting it count as "cited" would move this metric
-              # from ~32% to ~90% while nothing was actually reversed, so it is excluded here and
-              # reported as its own, clearly weaker tier further down.
-              "IDENTIFIED.md", "identified_summary.json", "g_identify.py",
-              # the shape-level sweep is tier C by construction (re/SWEEP.md)
-              "SWEEP.md", "g_sweep.py"}
+from covlib import SKIP_NAMES as covlib_skip_names  # noqa: E402
+SKIP_NAMES = set(covlib_skip_names)   # single source of truth (round 123)
 addr_re = re.compile(r"0x([0-9A-Fa-f]{3,8})")
 cited = Counter()
 files = []

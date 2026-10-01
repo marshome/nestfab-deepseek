@@ -82,19 +82,32 @@ def reachable():
 
 # Files that must NEVER count as citations: the raw data tables and anything this toolchain
 # generates. Otherwise "listing a function as uncovered" would itself mark it covered.
-SKIP_NAMES = {
-              # Generated inventories and the tooling that writes them. They list thousands
-              # of addresses that carry no identity (re/IDENTIFIED.md is 80% 'shape only'),
-              # so counting them as 'cited' would inflate every number -- which is exactly
-              # what happened to re/TU_MAP.md before this fix (90.3% 'cited' for the own TUs).
-              # g_coverage.py already applied this rule; now the TU tooling inherits it too.
-              "IDENTIFIED.md", "identified_summary.json", "g_identify.py",
-              "VTABLE_SLOTS.md", "vtable_slots_summary.json", "g_vtable_slots.py",
-              "STRATEGY_METHODS.md", "g_strategy_methods.py",
-              # same rule for the shape-level sweep: it is tier C by construction
-              "SWEEP.md", "g_sweep.py","exports_table.csv", "exports_table.json", "exports_table.md",
-              "UNCOVERED_RANKED.md", "RECOVERY_STATUS.md", "TU_MAP.md", "vtables.json",
-              "prof2.pkl", "g_coverage.py", "g_tu_map.py", "covlib.py", "results.csv"}
+SKIP_NAMES = {   # single source of truth (round 123): the union of both lists
+    "IDENTIFIED.md",
+    "RECOVERY_STATUS.md",
+    "STRATEGY_METHODS.md",
+    "SWEEP.md",
+    "TU_MAP.md",
+    "UNCOVERED_RANKED.md",
+    "VTABLE_SLOTS.md",
+    "cited",
+    "covlib.py",
+    "exports_table.csv",
+    "exports_table.json",
+    "exports_table.md",
+    "g_coverage.py",
+    "g_identify.py",
+    "g_strategy_methods.py",
+    "g_sweep.py",
+    "g_tu_map.py",
+    "g_vtable_slots.py",
+    "identified_summary.json",
+    "prof2.pkl",
+    "results.csv",
+    "shape only",
+    "vtable_slots_summary.json",
+    "vtables.json",
+}
 ADDR_RE = re.compile(r"0x([0-9A-Fa-f]{3,8})")
 
 
