@@ -17,6 +17,7 @@
 #include "lcns/engine.hpp"
 #include "lcns/budget.hpp"
 #include "lcns/layout.hpp"
+#include "lcns/steps.hpp"
 #include "lcns/geom.hpp"
 #include "lcns/nester.hpp"
 #include "lcns/nfp.hpp"
@@ -810,6 +811,30 @@ int main() {
         CHECK(kRecordValueOffset == kTripledFieldOffset);
         CHECK(kRecordFlagOffset == kSmallRecordLimitOffset);
         CHECK(std::strstr(kElementsContainerAssert, "m_elements") != nullptr);
+    }
+
+    // --- the step counts of 0x1a1810 (RE 0x1a184f/0x1a1857/0x1a1881/0x1a1894/0x1a18ba) ------------
+    {
+        CHECK(kStepFine == 0.0001);
+        CHECK(kStepMid == 0.0003);
+        CHECK(kStepCoarse == 0.0039);
+        CHECK(kStepRoundTerm == 0.5);
+        CHECK(kStepTens == 10.0);
+        CHECK(kStepTickScale == 1e6);
+        // value / 0.0001 + 0.5, truncated: the fine step count
+        CHECK(fineStepCount(0.00123) == 12);          // 12.3 + 0.5 = 12.8 -> 12
+        CHECK(fineStepCount(0.00125) == 13);          // 12.5 + 0.5 = 13.0 -> 13
+        CHECK(fineStepCount(0.0) == 0);
+        // the mid step takes its scale from the caller (RE 0x1a1890 divides by n/1e6)
+        // the scale IS the step here, so 0.003 over a step of 1.0 is 0.0033 and truncates to 0
+        CHECK(midStepCount(0.003, stepScale(1000000)) == 0);
+        // and with a step of 0.001 the quotient is about 1
+        CHECK(stepScale(1000) == 0.001);
+        CHECK(midStepCount(0.001, stepScale(1000)) == 1);
+        CHECK(stepScale(1000000) == 1.0);
+        CHECK(stepScale(500000) == 0.5);
+        CHECK(kStepCoarse > kStepMid);
+        CHECK(kStepMid > kStepFine);
     }
 
     return check::finish("test_recovered");
