@@ -5267,5 +5267,53 @@ int main() {
         CHECK(!looksZero(infHigh, 0));
     }
 
+    // --- the in-place transform and the orientation determinant (RE 0x5cfd80 and 0x24b440) ----------
+    {
+        CHECK(kAffineInPlace == 0x5CFD80);
+        CHECK(kAffineInPlaceCallers == 4);
+        CHECK(kMatrixA == 0x00 && kMatrixB == 0x08);
+        CHECK(kMatrixC == 0x10 && kMatrixD == 0x18);
+        CHECK(kMatrixTx == 0x20 && kMatrixTy == 0x28);
+        CHECK(kMatrixDoubles2 == 6);
+        CHECK(kMatrixDoubles2 == kAffineMatrixDoubles);
+        CHECK(kMatrixTx == kAffineTermA);
+        CHECK(kMatrixTy == kAffineTermB);
+        CHECK(kMatrixLayoutConfirmed);
+        CHECK(kPointX == 0x00 && kPointY == 0x08);
+        CHECK(kInPlaceTransform);
+        CHECK(kAffineInPlace != kAffineKernel);
+        CHECK(kCrossProduct == 0x24B440);
+        CHECK(kCrossProductCallers == 2);
+        CHECK(kCrossA == 0x00);
+        CHECK(kCrossC == 0x10);
+        CHECK(kCrossC - kCrossA == 0x10);
+        CHECK(kSignIsOrientation);
+        CHECK(std::string(kCrossProductForm) == "(Cx-Ax)(By-Ay) - (Bx-Ax)(Cy-Ay)");
+
+        // the transform the instructions perform, written out so the arithmetic is unambiguous
+        // written out plainly instead, so the arithmetic is unambiguous
+        const auto apply = [](const double m[6], double x, double y, double& ox, double& oy) {
+            ox = m[0] * x + m[1] * y + m[2];
+            oy = m[3] * x + m[4] * y + m[5];
+        };
+        const double identity2[6] = {1, 0, 0, 0, 1, 0};
+        double x = 3.0, y = 4.0, ox = 0, oy = 0;
+        apply(identity2, x, y, ox, oy);
+        CHECK(ox == 3.0 && oy == 4.0);
+        const double half[6] = {0.5, 0, 0, 0, 0.5, 0};
+        apply(half, x, y, ox, oy);
+        CHECK(ox == 1.5 && oy == 2.0);
+
+        // the orientation determinant, on three cases by hand
+        const auto cross = [](double ax, double ay, double bx, double by, double cx, double cy) {
+            return (cx - ax) * (by - ay) - (bx - ax) * (cy - ay);   // RE the two products and the subtraction
+        };
+        // CORRECTED in 341c: with (C-A)x(B-A), this triple gives -1, not +1
+        CHECK(cross(0, 0, 1, 0, 0, 1) == -1.0);
+        CHECK(cross(0, 0, 0, 1, 1, 0) == 1.0);           // the other turn, and so the other sign
+        CHECK(cross(0, 0, 1, 1, 2, 2) == 0.0);            // collinear, so zero either way
+        CHECK(cross(0, 0, 2, 0, 0, 2) == -4.0);          // CORRECTED in 341c: magnitude four, sign negative
+    }
+
     return check::finish("test_recovered");
 }

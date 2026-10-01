@@ -6743,3 +6743,33 @@ F3AD5  jb **0xF3B50**                                   ; 回绕则走释放路�
 **有 89 个调用者** ⇒ 它是其余代码所调的**数值前置检查** —— 这正是 round 338 的几何内核从它平方根的守卫处到达它的原因（`kSqrtGuard == kFloatCheck`）。
 
 **已落 `layout.hpp`**：`kFloatCheck`(0x62FE20)、`kFloatCheckCallers`(89)、`kExponentMask`(0x7FF00000)、`kMantissaMask`(0xFFFFF)、`kZeroTested`、`kExponentTested`、`kSignTested`、`kOneDoubleRva`(0xA06838)、`kFloatCheckPacked`(0x62FE00)、`kPackedConstantRva`(0xA06800)、`kPackedSibling` + **五条 `static_assert`** + 测试 26 条（含六组分类：0.0、±1.0、0.5、±0.0、非正常）。
+
+### 附 259 ★★ **就地仿射变换（确认矩阵布局）与定向行列式**（goal round 341）**[已落码]**
+
+**（a）`0x5CFD80`（64 B / 4 个调用者）**：把 **2×3 矩阵就地应用到一个点**。
+
+```
+5CFD85/5CFD80  点的 x 在 `+0x00`、y 在 `+0x08`
+5CFD9B/5CFD9F  矩阵第一行取 `+0x00`、`+0x08`
+5CFD93/5CFD97  第二行取 `+0x10`、`+0x18`
+5CFDB1/5CFDA8  平移 `+0x20`、`+0x28`
+5CFDB6/5CFDBB  两个结果**写回该点**
+```
+
+★ **矩阵的六个 double 在 `+0x00`/`+0x08`/`+0x10`/`+0x18`/`+0x20`/`+0x28`** —— **正是 round 339 仿射内核从其操作数读的那六个** ⇒ **从第二个例程得到确认**，而非重复同一次阅读。
+
+**（b）`0x24B440`（61 B / 2 个调用者）= 二维叉积 / 定向行列式**：
+
+```
+xmm0 = [rcx+0x10] − [rcx]        ; Cx − Ax
+xmm1 = [rdx+0x08] − [rcx+0x08]   ; By − Ay
+xmm0 *= xmm1                        ; (Cx−Ax)(By−Ay)
+xmm1 = [rcx+0x18] − [rcx+0x08]   ; Cy − Ay
+xmm2 = xmm1 ; xmm1 = [rdx] − [rcx] ; Bx − Ax
+xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy−Ay)**
+```
+
+⇒ 三点的**定向行列式**；**其符号就是转向** —— 正是排样/几何库所需的判定。
+由此得出的记录：在 `rcx` 处是**四 double 记录**（A 在 `+0x00`/`+0x08`、C 在 `+0x10`/`+0x18`），第三点在 `rdx`。
+
+**已落 `layout.hpp`**：`kAffineInPlace`(0x5CFD80)、`kMatrixA..D`、`kMatrixTx/Ty`(0x20/0x28)、`kMatrixDoubles2`(6)、`kMatrixLayoutConfirmed`、`kPointX/Y`、`kInPlaceTransform`、`kCrossProduct`(0x24B440)、`kCrossA/C`、`kSignIsOrientation`、`kCrossProductForm` + **六条 `static_assert`** + 测试 26 条（含定向的四组手算：逆时针、顺时针、共线、以及面积 4）。

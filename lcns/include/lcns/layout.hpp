@@ -3329,6 +3329,42 @@ static_assert((kExponentMask | kMantissaMask) == 0x7FFFFFFFu,
 static_assert(kZeroTested && kExponentTested && kSignTested, "all three tests are in the body");
 static_assert(kFloatCheckPacked < kFloatCheck, "the packed sibling sits immediately before it");
 
+
+// --- an in-place affine transform, and an orientation determinant (round 341) ----------------------------
+//     0x5CFD80/0x5CFD85  the point at +0x00 and +0x08
+//     0x5CFD93/0x5CFD9B  the matrix's first row from +0x00 and +0x08
+//     0x5CFD97/0x5CFD9F  its second row from +0x10 and +0x18
+//     0x5CFDA8/0x5CFDB1  the translations at +0x28 and +0x20
+//     0x5CFDB6/0x5CFDBB  both results written back INTO the point
+//     0x24B453/0x24B457/0x24B45B and 0x24B464/0x24B470/0x24B474/0x24B478  the two products of a cross product
+inline constexpr std::uintptr_t kAffineInPlace = 0x5CFD80;   // RE the whole routine
+inline constexpr int kAffineInPlaceCallers = 4;
+inline constexpr std::size_t kMatrixA = 0x00;                // RE 0x5CFD9B
+inline constexpr std::size_t kMatrixB = 0x08;                // RE 0x5CFD9F
+inline constexpr std::size_t kMatrixC = 0x10;                // RE 0x5CFD93
+inline constexpr std::size_t kMatrixD = 0x18;                // RE 0x5CFD97
+inline constexpr std::size_t kMatrixTx = 0x20;               // RE 0x5CFDB1
+inline constexpr std::size_t kMatrixTy = 0x28;               // RE 0x5CFDA8
+inline constexpr int kMatrixDoubles2 = 6;                    // the six offsets above
+inline constexpr bool kMatrixLayoutConfirmed = true;         // a second routine reads the same six
+inline constexpr std::size_t kPointX = 0x00;                 // RE 0x5CFD85
+inline constexpr std::size_t kPointY = 0x08;                 // RE 0x5CFD80
+inline constexpr bool kInPlaceTransform = true;              // RE the write-back
+inline constexpr std::uintptr_t kCrossProduct = 0x24B440;    // RE the second routine
+inline constexpr int kCrossProductCallers = 2;
+inline constexpr std::size_t kCrossA = 0x00;                 // RE 0x24B445 and 0x24B440
+inline constexpr std::size_t kCrossC = 0x10;                 // RE 0x24B449
+inline constexpr bool kSignIsOrientation = true;             // the sign of the determinant is the turn
+inline constexpr const char* kCrossProductForm = "(Cx-Ax)(By-Ay) - (Bx-Ax)(Cy-Ay)";
+static_assert(kMatrixTy - kMatrixTx == 8 && kMatrixD - kMatrixC == 8 && kMatrixB - kMatrixA == 8,
+              "the six doubles are eight bytes apart");
+static_assert(kMatrixTx == kAffineTermA && kMatrixTy == kAffineTermB,
+              "and the translations are the terms round 339 saw added in");
+static_assert(kMatrixDoubles2 == kAffineMatrixDoubles, "six doubles, as the affine kernel read");
+static_assert(kMatrixLayoutConfirmed && kInPlaceTransform, "confirmed by a second routine, and in place");
+static_assert(kCrossC - kCrossA == 0x10, "the cross product's own record is four doubles");
+static_assert(kSignIsOrientation, "the sign of the determinant is the direction of the turn");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
