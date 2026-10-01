@@ -35,4 +35,22 @@ inline std::int64_t midStepCount(double value, double scale) {
 // RE 0x1A1890: the scale that both later sites divide by, `n / 1e6`.
 inline double stepScale(std::int64_t n) { return static_cast<double>(n) / kStepTickScale; }
 
+
+// RE 0x24C4CF, 0x5C23D7 and 0x5D29D2 -- THREE independent functions (237 B, 210 B and 125 B) each do
+//     divsd  by 6.283185307 ; addsd 0.5 ; cvttsd2si
+// Three separate sites dividing by that value is what makes it 2*pi here, and round(value / 2pi) is a count
+// of whole turns. The arithmetic is the same three-step shape as the step counts above.
+inline constexpr double kTwoPiRounded = 6.283185307;    // RE 0x24C4CF / 0x5C23D7 / 0x5D29D2
+
+inline std::int64_t turnCount(double value) {
+    return stepCount(value, kTwoPiRounded, kStepRoundTerm);     // RE the three sites above
+}
+
+// RE 0x21B85F (inside 0x21B7C0, 4008 B) and 0x17E1F8 (inside 0x17E180, 752 B): the same idiom dividing by 360.
+inline constexpr double kDegreesPerTurn = 360.0;        // RE 0x21B85F / 0x17E1F8
+
+inline std::int64_t degreeTurnCount(double value) {
+    return stepCount(value, kDegreesPerTurn, kStepRoundTerm);   // RE the two sites above
+}
+
 }  // namespace lcns

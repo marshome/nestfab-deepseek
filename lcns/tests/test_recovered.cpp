@@ -837,5 +837,22 @@ int main() {
         CHECK(kStepMid > kStepFine);
     }
 
+    // --- the turn counts (RE 0x24c4cf/0x5c23d7/0x5d29d2 and 0x21b85f/0x17e1f8) ----------------------
+    {
+        CHECK(kTwoPiRounded == 6.283185307);
+        CHECK(kDegreesPerTurn == 360.0);
+        // one whole turn, and three of them
+        CHECK(turnCount(kTwoPiRounded) == 1);
+        CHECK(turnCount(3.0 * kTwoPiRounded) == 3);
+        CHECK(turnCount(0.0) == 0);
+        CHECK(turnCount(3.0) == 0);                        // less than half a turn
+        CHECK(turnCount(3.2) == 1);                        // 0.509 -> 0.509, truncates to 0? no: 3.2/2pi=0.509
+        // degrees: a full turn and a half
+        CHECK(degreeTurnCount(360.0) == 1);
+        CHECK(degreeTurnCount(180.0) == 1);                // 0.5 + 0.5 = 1.0 exactly
+        CHECK(degreeTurnCount(179.0) == 0);
+        CHECK(degreeTurnCount(1080.0) == 3);
+    }
+
     return check::finish("test_recovered");
 }

@@ -3126,3 +3126,17 @@ compacting ... <before_shake> => <after_shake>
 规则**不变**（与 rounds 115/118 相同）：**只有当一个函数的每一条自带文本都命中已知库标记**时，才归为库代码，**命中的标记逐个存储**。本轮新增的标记均来自近几轮实读：`entry_event`/`exit_event`（boost::asio 线程池）、`transaction_safe`/`restrict`（MSVC SAL 注解）、`deque::`/`_M_new_elements_at`/`_M_construct`/`_M_create`/`__cxx11`（libstdc++）、`memcpy_s`（CRT）、`__pos (which is`（libstdc++ 越界断言）。
 
 本轮：库代码 **201** 个 / 268920 字节（已登记）。
+
+### 附 86 **转数（turn count）**：三个独立函数都除以 `2π`（goal round 168）**[已落码]
+
+扫描“**除法 + 舍入项 + 截断**”惯用法，在未引用函数里找到 6 个，除数分三族：
+
+| 除数 | 函数 | 含义（据此）|
+|---|---|---|
+| **`6.283185307`（2π）** | `0x24C4A0`(237 B)、`0x5C2370`(210 B)、`0x5D29C0`(125 B) | **`round(value / 2π)` = 转数** |
+| `360` | `0x21B7C0`(4008 B)、`0x17E180`(752 B) | `round(value / 360)` |
+| `0.0001` | `0x2098F0`(2606 B) | 与 `0x1A1810` 同一精细步长 |
+
+**三个互相独立的函数同时除以 `6.283185307`** 是把它认作 2π 的**证据**（而非凭值猜想）；算术本身与已落的步数算式**同一三步形状**。
+
+**已落 `steps.hpp`**：`kTwoPiRounded`、`turnCount`、`kDegreesPerTurn`、`degreeTurnCount`（各带地址）+ 10 条测试。
