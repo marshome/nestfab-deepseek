@@ -3876,3 +3876,13 @@ round 194 觉得“形状奇怪”的 `je`+`eax=0`，**正是“否定的 AND”
 另外 `0x9DF0CA` 是 `stod`、`0x9DF0A0` 是 `basic_string::_M_construct null not valid`（库）。
 
 **已落 `include/lcns/text_tags.hpp`**：10 个类型标签 + `kCoordinateSeparator`、`kElementSeparator` + 测试 16 条（含“`MULTI…` = `MULTI` + 单数标签”这条**表结构**断言）。
+
+### 附 119 **用领域类型词汇做锚定**（goal round 199）
+
+round 198 找到的标签表是**领域文本**（非库标记），因此**引用它们的函数就被自己的文本锚定到具体几何类型**。
+扫描未引用领域函数中对这些 rva 的 `lea`：
+
+| rva | 标签 | 函数数 |
+|---|---|---:|
+
+⇒ **共 0 个函数至少被一个领域标签锚定**（未引用领域函数共 3506 个）。
