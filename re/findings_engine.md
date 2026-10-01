@@ -5069,3 +5069,13 @@ F1B0B        `add eax,r10d` ⇒ 加上跳过的整字
 `0x86B6B0`（67 B / 37 个调用者）：默认 −1，先调长度助手 `0x63F238`，再调搜索 `0x869EF0`，结果存入 `[rsi]`。
 
 **已落 `layout.hpp`**：`kBytesPerWord`、`kByteShiftPerWord`、`kByteLengthCallers`、`kBitsScaleAddend`、`kBytesScaleAddend`、`kSearch*` + **四条 `static_assert`** + 测试 27 条。
+
+### 附 172 **新领域字符串 `BER decode error`**与受检查的取值字段块（goal round 252）**[已落码]
+
+**（a）`0x77F2D0`（215 B / **43 个调用者**）= 错误文本构造器**：分配 **0x30（48）字节**（`0x77F2D7`），通过 `0xC71D0` 两次拼接文本，其中一个字面量是 **`'BER decode error'`**（rva 0x77F2F7 处的 `lea`），并设置三个虚表指针（`rip+0x2D39DC`、`+0x2C2F49`、`+0x2BFA55`），最后用 **`0x9984B0`** 释放 —— 正是 round 248 原子释放所尾调的**同一个释放器**。
+⇒ 新字符串已入 **`text_tags.hpp`**：`kTagBerDecodeError`。
+
+**（b）`0x945370`（169 B / **42 个调用者**）= “先检查、再取值”的字段块**：`0x990540`（检查）→ `0x9916E0`（取值）存入 **`+0xF0`**；`0x990840` → `0x9919E0` 存入 **`+0xF8`**；再 `0x990780`…
+⇒ 字段以 **8 字节步长**排列，起点 `+0xF0`。
+
+**已落**：`text_tags.hpp` 的 `kTagBerDecodeError`；`layout.hpp` 的 `kFormatter*`、`kGetter*` + **两条 `static_assert`** + 测试 23 条。

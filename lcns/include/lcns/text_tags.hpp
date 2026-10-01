@@ -37,3 +37,6 @@ inline constexpr int kGeometryTagCount = 10;
 
 }  // namespace lcns
 LCNS_STRUCTURAL(io.text_vocabulary);   // type tags, the comma, the cancellation message
+
+// RE 0x77F2F7: the error text an encoder/decoder formatter builds (round 252).
+inline constexpr const char* kTagBerDecodeError = "BER decode error";

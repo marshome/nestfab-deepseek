@@ -998,6 +998,39 @@ inline constexpr std::uintptr_t kLengthHelper = 0x63F238;       // RE 0x86B6D0
 inline constexpr std::int64_t kSearchDefault = -1;              // RE 0x86B6BC
 inline constexpr int kSearchCallers = 37;
 
+
+// --- the error formatter of 0x77F2D0, forty-three callers (round 252) ---------------------------------
+//     0x77F2D7 mov ecx,0x30 ; 0x77F2DC call 0x9988C0     ; a forty-eight byte buffer
+//     0x77F2F7 lea rdx,[rip+0x233C92]                    ; the literal 'BER decode error'
+//     0x77F303 and 0x77F332 call 0xC71D0                 ; the text building helper, twice
+//     0x77F30D/0x77F340/0x77F354 three vtable pointers: rip+0x2D39DC, rip+0x2C2F49, rip+0x2BFA55
+//     0x77F34F/0x77F3A0 call 0x9984B0                    ; release, the same deallocator as round 248's
+inline constexpr std::size_t kFormatterAlloc = 0x30;         // RE 0x77F2D7 (48)
+inline constexpr std::uintptr_t kFormatterTextHelper = 0xC71D0;   // RE 0x77F303
+inline constexpr std::uintptr_t kFormatterRelease = 0x9984B0;     // RE 0x77F34F
+inline constexpr std::uintptr_t kFormatterVtableA = 0x2D39DC;     // RE 0x77F30D, a vtable RVA
+inline constexpr std::uintptr_t kFormatterVtableB = 0x2C2F49;     // RE 0x77F340
+inline constexpr std::uintptr_t kFormatterVtableC = 0x2BFA55;     // RE 0x77F354
+inline constexpr int kFormatterCallers = 43;
+static_assert(kFormatterAlloc == 48, "forty-eight bytes");
+
+// --- the gated getter block of 0x945370, forty-two callers (round 252) --------------------------------
+//     0x94537F/0x945384 call 0x990540 ; test al,al ; je    ; a check
+//     0x94538B call 0x9916E0 ; 0x945393 [rsi+0xF0] = rax  ; the get, landing at +0xF0
+//     0x94539A/0x9453A1 the next check 0x990840
+//     0x9453A6 call 0x9919E0 ; 0x9453AE [rsi+0xF8] = rax  ; and the next field, eight bytes on
+//     0x9453B5 call 0x990780                               ; the pattern repeats
+inline constexpr std::size_t kGetterFieldA = 0xF0;           // RE 0x945393
+inline constexpr std::size_t kGetterFieldB = 0xF8;           // RE 0x9453AE
+inline constexpr std::size_t kGetterStep = 8;                // the fields step by eight
+inline constexpr std::uintptr_t kGetterCheckA = 0x990540;    // RE 0x94537F
+inline constexpr std::uintptr_t kGetterGetA = 0x9916E0;      // RE 0x94538B
+inline constexpr std::uintptr_t kGetterCheckB = 0x990840;    // RE 0x94539A
+inline constexpr std::uintptr_t kGetterGetB = 0x9919E0;      // RE 0x9453A6
+inline constexpr std::uintptr_t kGetterCheckC = 0x990780;    // RE 0x9453B5
+inline constexpr int kGetterCallers = 42;
+static_assert(kGetterFieldB - kGetterFieldA == kGetterStep, "the two fields are one step apart");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

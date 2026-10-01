@@ -2146,5 +2146,36 @@ int main() {
         CHECK(kSearchCallers == 37);
     }
 
+    // --- the formatter and the gated getter block (RE 0x77f2d0 and 0x945370) -------------------------
+    {
+        CHECK(kFormatterAlloc == 0x30);
+        CHECK(kFormatterAlloc == 48);
+        CHECK(kFormatterTextHelper == 0xC71D0);
+        CHECK(kFormatterRelease == 0x9984B0);
+        CHECK(kFormatterRelease == kReleaseDealloc);     // the same deallocator round 248 found
+        CHECK(kFormatterVtableA == 0x2D39DC);
+        CHECK(kFormatterVtableB == 0x2C2F49);
+        CHECK(kFormatterVtableC == 0x2BFA55);
+        CHECK(kFormatterVtableA != kFormatterVtableB);
+        CHECK(kFormatterVtableB != kFormatterVtableC);
+        CHECK(kFormatterCallers == 43);
+        // the domain string this formatter builds
+        CHECK(std::string(kTagBerDecodeError) == "BER decode error");
+        CHECK(std::string(kTagBerDecodeError).size() == 16);
+
+        CHECK(kGetterFieldA == 0xF0);
+        CHECK(kGetterFieldB == 0xF8);
+        CHECK(kGetterStep == 8);
+        CHECK(kGetterFieldB - kGetterFieldA == kGetterStep);
+        CHECK(kGetterCheckA == 0x990540);
+        CHECK(kGetterGetA == 0x9916E0);
+        CHECK(kGetterCheckB == 0x990840);
+        CHECK(kGetterGetB == 0x9919E0);
+        CHECK(kGetterCheckC == 0x990780);
+        CHECK(kGetterCheckA != kGetterCheckB);
+        CHECK(kGetterGetA != kGetterGetB);
+        CHECK(kGetterCallers == 42);
+    }
+
     return check::finish("test_recovered");
 }
