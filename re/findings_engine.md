@@ -6131,3 +6131,18 @@ round 249 读 `0x4189B0` 时**推断** `+0x14` 是容量、`+0x00` 是尺寸、`
 字节读取器 `0x117050` 被调两次、面向两个**相邻**栈槽 ⇒ **逐字节游标**的形状。
 
 **已落 `layout.hpp`**：`kRequiredTag`(6)、`kTag6IsOid`、`kByteReader`(0x117050)、`kByteReaderSites`(2)、`kTagSlot`(0x29)、`kSecondSlot`(0x2A)、`kZeroedFields`(3)、`kZeroedBase`(0x30)、`kParserCallers/Bytes` + **四条 `static_assert`** + 测试 20 条（含 ASN.1 通用标签常量的声明）。
+
+### 附 226 ★ **孪生访问器，以及它解释的驱动器差异**（goal round 308）**[已落码]**
+
+`0x117050`（92 B / 13 个调用者）与 `0x1170B0`（92 B / 3 个调用者）是**同一个例程的两个槽号版本**：
+
+```
+0x117050：call [rax+**0x158**]×2 → r8 = [rdx+**0xA0**] → `jmp r8`；空路径取 [rax+**0xA8**]
+0x1170B0：call [rax+**0x160**]×2 → r8 = [rdx+**0xB0**] → `jmp r8`
+```
+
+★★ **这正是 rounds 301/302 从外部测到的东西**：`0x10FD40` 经 `0x1170B0` 取首字节（其**尾调落在 `+0xB0`**），而 `0x110B00` **直接调 `+0xB0`** ⇒ 两驱动器的差异**不是异常，而是在两个只差槽号的访问器之间的选择**。
+
+★ 空路径上出现的 **`+0xA8`** 是**第十五个槽**。
+
+**已落 `layout.hpp`**：`kByteReaderTwin`(0x1170B0)、`kTwinDelta`(0x60)、`kTwinBytes`(92)、`kByteReaderStep`(0x158)、`kTwinStep`(0x160)、`kByteReaderTail`(0xA0)、`kTwinTail`(0xB0)、`kByteReaderNull`(0xA8)、`kVtableSlotsKnown10`(15)、`kTailCallsThroughSlot`、`kHelpersMirrorDrivers` + **五条 `static_assert`** + 测试 24 条。

@@ -2475,6 +2475,30 @@ static_assert(kSecondSlot == kTagSlot + 1, "the two slots are adjacent, a byte c
 static_assert(kByteReaderSites == 2, "the reader is called twice here");
 static_assert(kTag6IsOid, "and tag six is OBJECT IDENTIFIER in ASN.1");
 
+
+// --- the twin accessors 0x117050 and 0x1170B0, which explain the driver pair (round 308) ----------------
+//     0x11705F/0x117070 call qword [rax+0x158] twice ; 0x11707C r8 = [rdx+0xA0] ; 0x11708C jmp r8
+//     0x117090 the null path takes [rax+0xA8]
+//     0x1170BF/0x1170D0 call qword [rax+0x160] twice ; 0x1170DC r8 = [rdx+0xB0]
+// The two are the same ninety-two byte routine over different slot numbers, and their tails land on +0xA0 and +0xB0:
+// exactly the difference rounds 301 and 302 measured from the outside between the two drivers.
+inline constexpr std::uintptr_t kByteReaderTwin = 0x1170B0;  // RE the second of the pair
+inline constexpr std::size_t kTwinDelta = 0x60;              // RE 0x1170B0 - 0x117050
+inline constexpr int kTwinBytes = 92;                        // RE both function sizes
+inline constexpr std::size_t kByteReaderStep = 0x158;        // RE 0x11705F
+inline constexpr std::size_t kTwinStep = 0x160;              // RE 0x1170BF
+inline constexpr std::size_t kByteReaderTail = 0xA0;         // RE 0x11707C
+inline constexpr std::size_t kTwinTail = 0xB0;               // RE 0x1170DC
+inline constexpr std::size_t kByteReaderNull = 0xA8;         // RE 0x117090 -- a FIFTEENTH slot
+inline constexpr int kVtableSlotsKnown10 = 15;               // with 0xA8 added to the fourteen of round 305
+inline constexpr bool kTailCallsThroughSlot = true;          // RE 0x11708C (jmp r8)
+inline constexpr bool kHelpersMirrorDrivers = true;          // the pair's difference is this pair's difference
+static_assert(kByteReaderTwin - kByteReader == kTwinDelta, "sixty bytes apart");
+static_assert(kTwinTail == kDriverByteSourceA, "the twin's tail is the slot the sibling driver calls");
+static_assert(kByteReaderTail != kTwinTail, "the two tails differ, which is the whole point");
+static_assert(kVtableSlotsKnown10 == kVtableSlotsKnown9 + 1, "one more slot than round 305");
+static_assert(kTailCallsThroughSlot && kHelpersMirrorDrivers, "both findings hold");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double

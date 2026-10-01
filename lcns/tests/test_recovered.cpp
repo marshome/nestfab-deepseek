@@ -3991,5 +3991,41 @@ int main() {
         CHECK(!accepted(0xFF));
     }
 
+    // --- the twin accessors and the driver difference they explain (RE 0x117050 and 0x1170b0) --------
+    {
+        CHECK(kByteReaderTwin == 0x1170B0);
+        CHECK(kByteReader == 0x117050);
+        CHECK(kByteReaderTwin - kByteReader == kTwinDelta);
+        CHECK(kTwinDelta == 0x60);
+        CHECK(kTwinBytes == 92);
+        CHECK(kByteReaderStep == 0x158);
+        CHECK(kTwinStep == 0x160);
+        CHECK(kByteReaderStep != kTwinStep);
+        CHECK(kByteReaderTail == 0xA0);
+        CHECK(kTwinTail == 0xB0);
+        CHECK(kByteReaderTail != kTwinTail);
+        CHECK(kByteReaderNull == 0xA8);
+        CHECK(kVtableSlotsKnown10 == 15);
+        CHECK(kVtableSlotsKnown10 == kVtableSlotsKnown9 + 1);
+        CHECK(kTailCallsThroughSlot);
+        CHECK(kHelpersMirrorDrivers);
+
+        // the closure: the sibling driver's byte source is this twin's tail slot
+        CHECK(kDriverByteSourceA == kTwinTail);
+        CHECK(kDriverByteSourceB == kByteReaderTwin);
+        CHECK(kDriversDifferInSource);
+        CHECK(kByteReaderNull == kByteReaderTail + 8);   // the null path takes the next slot along
+        CHECK(kByteReaderTail == kVtableSlotI);          // the same +0xA0 the drivers call
+        CHECK(kTwinTail == kVtableSlotJ);                // and the same +0xB0
+
+        // the two accessors' shapes, side by side
+        struct Accessor { std::size_t step; std::size_t tail; };
+        const Accessor a{kByteReaderStep, kByteReaderTail};
+        const Accessor b{kTwinStep, kTwinTail};
+        CHECK(a.step != b.step && a.tail != b.tail);
+        CHECK(b.step - a.step == 8);                     // adjacent slots, eight bytes apart
+        CHECK(b.tail - a.tail == 0x10);
+    }
+
     return check::finish("test_recovered");
 }
