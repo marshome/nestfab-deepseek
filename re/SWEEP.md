@@ -1373,3 +1373,53 @@
 **下轮正解**：插测试块**不要**用"某个 `}` 之后"当锚点，改用**函数级唯一文本**（例如
 `CHECK(kGapCount ==` 那一组之前），或先读回插入点上下文再插。
 `cornerEdges` / `CornerEdges` 的 **hpp 部分本身是对的**（三个已证实原语的组装），只需把测试接对。
+
+## 长度前缀命名的全库探针（goal round 79）**[已证实为字符串事实]**
+
+* 镜像里是否存在 `7strip_x`：****否****
+* 全库符合 `<len><name>` 且长度真实的字符串：**198 条**
+
+前 40 条（本文件已在引用扫描排除名单中，所以这份清单**不会**提高“已引用”数）：
+
+* `01e`  → name `e`
+* `10BeamValues`  → name `BeamValues`
+* `10CoinSosSet`  → name `CoinSosSet`
+* `10Off2Weight`  → name `Off2Weight`
+* `10OsiAuxInfo`  → name `OsiAuxInfo`
+* `10OsiLotsize`  → name `OsiLotsize`
+* `10OsiObject2`  → name `OsiObject2`
+* `10OsiRowCut2`  → name `OsiRowCut2`
+* `10PartRatios`  → name `PartRatios`
+* `11ClpPresolve`  → name `ClpPresolve`
+* `11NestingView`  → name `NestingView`
+* `11PartPolygon`  → name `PartPolygon`
+* `11PosComputer`  → name `PosComputer`
+* `11RealPolygon`  → name `RealPolygon`
+* `11RepeatSheet`  → name `RepeatSheet`
+* `11TilingLimit`  → name `TilingLimit`
+* `12ClpHashValue`  → name `ClpHashValue`
+* `12ClpNodeStuff`  → name `ClpNodeStuff`
+* `12ClpObjective`  → name `ClpObjective`
+* `12CoinRelFltEq`  → name `CoinRelFltEq`
+* `12NestablePart`  → name `NestablePart`
+* `12OsiBabSolver`  → name `OsiBabSolver`
+* `12PolygonProxy`  → name `PolygonProxy`
+* `13ClpMatrixBase`  → name `ClpMatrixBase`
+* `13ClusterToPart`  → name `ClusterToPart`
+* `13CoinBaseModel`  → name `CoinBaseModel`
+* `13CoinFileInput`  → name `CoinFileInput`
+* `13CoinWarmStart`  → name `CoinWarmStart`
+* `13MaxXEvaluator`  → name `MaxXEvaluator`
+* `13ODescriptions`  → name `ODescriptions`
+* `13PosDirections`  → name `PosDirections`
+* `13dupcol_action`  → name `dupcol_action`
+* `13duprow_action`  → name `duprow_action`
+* `13gubrow_action`  → name `gubrow_action`
+* `14CoinFileIOBase`  → name `CoinFileIOBase`
+* `14CoinFileOutput`  → name `CoinFileOutput`
+* `14ODescriptions2`  → name `ODescriptions2`
+* `14SheetOptimizer`  → name `SheetOptimizer`
+* `14TilingComputer`  → name `TilingComputer`
+* `14twoxtwo_action`  → name `twoxtwo_action`
+
+**口径**：这是字符串层面的事实；「它们都是选项名」是推论，需要逐个看引用者。
