@@ -83,6 +83,16 @@ inline constexpr double kEvalSurfaceSlack = 1.05;           // RE 0x81C690 asser
 // both are area tolerances built the same way.
 inline constexpr double kAreaCoverageSlack = 0.99;   // RE 0x9B15E0 via 0x754ED / 0x75EF3
 
+// RE 0x754ED..0x754F9 and 0x75EF3..0x75EFF -- the two reference sites have the SAME shape:
+//     xmm1 = (a - c) * (b - d)            ; a candidate AREA
+//     xmm0 = (e - f) * (g - h) [*2]       ; the reference AREA, doubled on one branch
+//     xmm0 = xmm0 * kAreaCoverageSlack    ; scale the reference by 0.99
+//     ucomisd xmm0, xmm1 ; jbe <skip>     ; branch away when 0.99*reference <= candidate
+// so the code takes its action when the candidate area reaches 0.99 of the reference, i.e. the
+// candidate must COVER the reference to within one percent. That is the predicate below; the branch
+// polarity is the one the instruction sequence has, not a guess.
+bool coversReference(double candidateArea, double referenceArea);
+
 
 
 // RE 0x7BCC0 (MultiTorchNester::Run) -- the tolerance family this binary uses. Its own

@@ -8,6 +8,14 @@
 #include <thread>
 
 LCNS_STRUCTURAL(tu.structure_interface);
+
+// RE 0x754ED / 0x75EF3: the candidate area is compared against 0.99 * the reference area, and the
+// caller skips when 0.99*reference <= candidate. Expressed as a predicate on the surviving side.
+namespace lcns {
+bool coversReference(double candidateArea, double referenceArea) {
+    return candidateArea >= kAreaCoverageSlack * referenceArea;
+}
+}  // namespace lcns
 LCNS_STRUCTURAL(module.engine);
 namespace lcns {
 namespace {

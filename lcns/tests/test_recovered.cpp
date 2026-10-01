@@ -167,6 +167,19 @@ int main() {
         CHECK(composite == 4);
     }
 
+    // --- the recovered 0.99 coverage predicate (RE 0x754ed / 0x75ef3) --------------------------
+    {
+        // exactly 99% of the reference passes (>=, not >)
+        CHECK(coversReference(0.99, 1.0));
+        CHECK(coversReference(1.0, 1.0));
+        // just below 99% fails -- this is the branch the jbe takes
+        CHECK(!coversReference(0.9899, 1.0));
+        CHECK(coversReference(9.9, 10.0));
+        CHECK(!coversReference(9.89, 10.0));
+        // a zero reference is covered by anything non-negative
+        CHECK(coversReference(0.0, 0.0));
+    }
+
     // --- the recovered log prefixes are wired into the classes that print them ------------------
     {
         CHECK(std::strcmp(FlipNester().tracePrefix(), kTraceFlip) == 0);        // RE 0x4b870
