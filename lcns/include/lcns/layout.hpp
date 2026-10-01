@@ -627,6 +627,31 @@ inline constexpr std::size_t kSize148 = 0x148;             // RE 0x18052A (328)
 static_assert(kStride56 == 56, "seven words per element");
 
 
+// --- the record container joined against the tree, in 0x71FFB0 (round 239) ---------------------------
+//     71FFE0 r14 = [rcx+0x10]   ; the container's begin
+//     71FFEB rdx = [rcx+0x30]   ; its end
+//     72000A cmp r14,rdx ; 72000D je            ; walk it
+//     720030 cmp byte [r14+0x20],0 ; jne        ; a flag byte at +0x20 of each record
+//     720048 lea r13,[r14+0x30]                 ; and a key tuple starting at +0x30
+//     720057/72005B/72005F/720066  four qwords: [r13], [r13+8], [r13+0x10], [r13+0x18]
+//     72006A/720070/720076  three doubles: [r13+0x28], [r13+0x30], [r13+0x38]  -> +0x58, +0x60, +0x68
+//     72009C/7200A0/7200A3  rdx = [rax+0x20] ; cmp r8,rdx ; setg cl   ; then a tree walk on the node key
+//     720093 mov rax,[rax+0x10]                                     ; descending the tree's child
+// so the routine walks one container and, for each record, looks the record's key tuple up in the tree whose
+// layout round 178 recorded. The record's own offsets are what is landed here; the tree offsets are already
+// constants from that earlier round and are deliberately not re-asserted as if they were new.
+inline constexpr std::size_t kJoinBeginOffset = 0x10;    // RE 0x71FFE0
+inline constexpr std::size_t kJoinEndOffset = 0x30;      // RE 0x71FFEB
+inline constexpr std::size_t kJoinRecordFlag = 0x20;     // RE 0x720030, a byte
+inline constexpr std::size_t kJoinRecordKey = 0x30;      // RE 0x720048
+inline constexpr int kJoinKeyWords = 4;                  // RE the four qword loads
+inline constexpr std::size_t kJoinRecordDoubleA = 0x58;  // RE 0x72006A (r13+0x28)
+inline constexpr std::size_t kJoinRecordDoubleB = 0x60;  // RE 0x720070
+inline constexpr std::size_t kJoinRecordDoubleC = 0x68;  // RE 0x720076
+static_assert(kJoinRecordDoubleB - kJoinRecordDoubleA == 8, "three consecutive doubles");
+static_assert(kJoinRecordDoubleC - kJoinRecordDoubleB == 8, "three consecutive doubles");
+static_assert(kJoinRecordDoubleA - kJoinRecordKey == 0x28, "the doubles follow the key tuple");
+
 // --- the two-allocation wrapper of 0x21C770 (round 236) ---------------------------------------------
 //     21C792 mov ecx,0x50 ; 21C79D call 0x998500        ; allocate 80 bytes
 //     21C7AA..21C7DA zero qwords at +0x08, +0x10, +0x18, +0x20, +0x28, +0x30, +0x38

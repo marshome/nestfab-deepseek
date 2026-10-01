@@ -1817,6 +1817,20 @@ int main() {
         CHECK(kWrapperBody == 0x48);
         CHECK(kWrapperBody - kWrapperSource == 8);
         CHECK(kWrapperZeroedQwords == 7);
+        // round 239: the record container joined against the tree
+        CHECK(kJoinBeginOffset == 0x10);
+        CHECK(kJoinEndOffset == 0x30);
+        CHECK(kJoinRecordFlag == 0x20);
+        CHECK(kJoinRecordKey == 0x30);
+        CHECK(kJoinKeyWords == 4);
+        CHECK(kJoinRecordDoubleA == 0x58);
+        CHECK(kJoinRecordDoubleB == 0x60);
+        CHECK(kJoinRecordDoubleC == 0x68);
+        CHECK(kJoinRecordDoubleB - kJoinRecordDoubleA == 8);
+        CHECK(kJoinRecordDoubleC - kJoinRecordDoubleB == 8);
+        CHECK(kJoinRecordDoubleA - kJoinRecordKey == 0x28);
+        CHECK(kJoinEndOffset > kJoinBeginOffset);
+        CHECK(kJoinRecordFlag < kJoinRecordKey);
         CHECK(kWrapperSource - kWrapperFirstField == 0x38);
         CHECK(kAlloc0x1B8 != kSize158);
         CHECK(kAlloc0x50 != kSize148);

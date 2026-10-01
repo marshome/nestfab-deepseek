@@ -4883,3 +4883,20 @@ round 199 的**文本**锚在未引用代码里 0 命中；但**类型地址**�
 另：本成员在规则之前**先比三个键字**（降序偏移）。
 
 **已落 `layout.hpp`**：`kRatioAlmostPrimary`、`kRatioAlmostKey*`、`kRatioAlmostKeyWords` + `static_assert` + 测试 12 条。
+
+### 附 161 **记录容器与树的联接**（`0x71FFB0`，goal round 239）**[已落码]
+
+```
+71FFE0  r14=[rcx+0x10]                     ; 容器 begin
+71FFEB  rdx=[rcx+0x30]                     ; 容器 end
+72000A/72000D  cmp r14,rdx ; je            ; 遍历
+720030  cmp byte [r14+0x20],0 ; jne        ; ★ 记录内 **+0x20 标志字节**
+720048  lea r13,[r14+0x30]                 ; ★ **+0x30 起四个 qword 键元组**
+72006A/720070/720076  [r13+0x28]/[r13+0x30]/[r13+0x38]  ; ★ 三个 double 在 +0x58/+0x60/+0x68
+72009C/7200A0/7200A3  cmp r8,[rax+0x20] ; setg  ; 随后按节点键（+0x20）走树
+720093  rax=[rax+0x10]                     ; 沿树孩子下行
+```
+
+⇒ 它**遍历一个容器**，对每条记录把其**键元组**拿到树里查（树布局已由 round 178 落码，**本轮不重复声明为新发现**）。
+
+**已落 `layout.hpp`**：`kJoinBeginOffset`、`kJoinEndOffset`、`kJoinRecord*`、`kJoinKeyWords` + **三条 `static_assert`** + 测试 13 条。
