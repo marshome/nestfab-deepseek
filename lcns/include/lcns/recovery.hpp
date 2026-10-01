@@ -232,12 +232,21 @@ inline constexpr Gap kGaps[] = {
      "family Largest/Random/NoMixSheetSelector (0xB0000/0xB0040/0xAFD60) is documented for the "
      "first time here. lcns::makeStrategy/makeDefaultStrategies follow this table; test_nester and "
      "test_recovered assert it (the earlier invented modes 5..12 are gone)"},
+    {"engine.mode2_shear_route", Status::Structural, "0x2CE00 (1055 B)",
+     "mode 2 of the dispatcher 0x2DF60 is the SHEAR/TOOLING route: it reads Pb[+0xC8] (via the "
+     "address accessor 0x4FC2C0), then Pb[+0xC9] -- the tooling switch -- and a bool from "
+     "0x5223A0, and it carries an inline built assertion '!is_tooling && \"Normal shear is "
+     "incompatible with ... contact ...\"' plus a string 'AddShear' and the TU ..\\multi\\... . The "
+     "route, its switches and that message are recovered; the three branch bodies themselves are "
+     "NOT transcribed. Also from this round: 0x2D650 is the function EPILOGUE of 0x2D330, not a "
+     "gate, and the four extra schedule routes are mode 1 + the Flip flag (0x2DA32), mode 0 via "
+     "0x2BE50 + cascade (0x2DAC1), mode 2 (0x2DC60) and the 0x2D7E1 branch"},
     {"engine.advanced_strategist", Status::NotReversed, "0x2DF60",
      "the DISPATCHER and the 40 B descriptor layout are fully decoded, and 0x2D330's default "
      "schedule (8 mode-1 steps differing in the six enable flags, gated by the options object) is "
-     "tabulated. NOT transcribed: the mode-2 body 0x2CE00 (1055 B) and the gate bodies "
-     "0x2DA00/0x2DA20/0x2DA32/0x2DAC1/0x2DC60/0x2D7E1/0x2D650 -- the mode/flags -> nester table "
-     "itself is recovered in engine.strategy_adder"},
+     "tabulated. NOT transcribed: the three branch bodies inside 0x2CE00 and the cpuid probe branch "
+     "at 0x2DA00 -- the mode/flags -> nester table is recovered in engine.strategy_adder, and the "
+     "mode-2 route plus the four extra schedule routes are in engine.mode2_shear_route"},
     {"engine.beam_tree", Status::NotReversed, "0x22CCA0 / 0x1C1650 / 0x974F0",
      "tree_db preparation and node scoring (leaf value at +0x48, internal at +0x50) are located; "
      "the beam tree is not reconstructed here"},

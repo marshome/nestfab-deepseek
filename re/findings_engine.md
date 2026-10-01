@@ -644,3 +644,72 @@ Add 的尾部按 `options[+0x2C4]`、`options[+0x2C0]` 与 `0x4FC250(Pb)` 的结
   `test_nester.cpp` 的 8 条旧断言改为实证表；
 * 登记表新增 **`engine.strategy_adder`（已恢复）**，并把 `engine.advanced_strategist` 的
   "未译"清单缩小为 **`0x2CE00`(1055 B) + 7 个闸体**。
+
+---
+
+## 附 5：`0x2CE00`（mode-2 体）与 `0x2D330` 的其余路线 —— **新功能概念：tooling / shear** **[本轮，已证实]**
+
+### 附 5.1 `0x2CE00`（1055 B / 208 条指令）：模式 2 = **shear / tooling 路线**
+
+结构（无任何 rodata 字符串引用，字符串是**内联拼**出来的）：
+
+```
+2CE23  call 0x2C2B0                 ; prepare（与 0x2DF60 各 mode 分支同一预备调用）
+2CE28  rax = [rbx+0x10]             ; Pb
+2CE2C  call 0x5223A0                ; 返回一个 bool（edi）
+2CE37  call 0x4FC2C0                ; ★ 取 &Pb[0xC8]（就是选 mode 2 的那个字节的地址）
+2CE3C  cmp byte [rax+1], 0          ; ★ 再看 Pb[0xC9]（紧跟其后的第二个字节）
+2CE40  jne 0x2D0E0                  ;   非 0 -> 另一条支路
+2CE46  test dil, dil ; je 0x2D048   ;   bool == 0 -> 另一条支路
+2CE54..2CEDF  内联拼一条 74 (0x4A) 字节的断言串
+```
+
+**内联拼出的断言串**（`movabs` 逐 8 字节写入，按存储顺序）**[已证实]**：
+
+| 片段 | RVA |
+|---|---|
+| `'!is_tool'` | `0x2CE9B` |
+| `'ing && "'` | `0x2CEA8` |
+| `'Normal s'` | `0x2CEB6` |
+| `'hear is '` | `0x2CEC4` |
+| `'incompat'` | `0x2CED2` |
+| `'ible wit'` | `0x2CEE0` |
+| `'g contac'` | `0x2CEEE` |
+
+拼起来即 **`!is_tooling && "Normal shear is incompatible with ... contact ..."`**
+（前段与 `Normal shear is incompatible with` 是确定的；尾部 `g contac…` 之后还有片段，说明整串更长，
+此处只声明已读出的部分）。同一函数里另有 `'AddShear'`(`0x2CF69`) 与源路径 `'..\\multi'`(`0x2CFD5`)。
+
+⇒ **这是两个此前完全没有记录的功能概念**：
+* **`tooling`**（工装/接触判据，`is_tooling` 是布尔谓词）——而 `Pb[0xC9]` 是它的开关字节；
+* **`shear`**（剪切/斜切）——并有名为 **`AddShear…`** 的函数；"Normal shear" 与 tooling 互斥（由断言保证）。
+
+二者与工程已知的 `shear*` 选项键、`Pb+0xC8` 区域的开关是同一套东西；
+**模式 2 就是这条路线**（`0x2DF60` 用 `Pb[0xC8]` 选它）。
+
+### 附 5.2 `0x2D330` 的七个"闸体"：四个是**新步骤**，一个是**函数尾声**
+
+| 地址 | 实际是什么 | 证据 |
+|---|---|---|
+| `0x2DA00` | `cpuid` 探针后读 `options[+0x1E8]`，非 0 则 `prepare(0x2C2B0)` 再回主流程 | `2DA00 xor eax,eax / cpuid / 2DA06 jne 0x2DCF0`；`2DA10 movzx ebp,[rax+0x1E8]`；`2DA28 call 0x2C2B0`；`2DA2D jmp 0x2D383` |
+| `0x2DA20` | 同上的 `[+0x1E8]` 支路：`prepare` 后回主流程 | `2DA28 call 0x2C2B0` |
+| `0x2DA32` | **新步骤**：mode 1 + **`+0x04 = 1`（Flip 标志）**，`+0x18 = options[+0x110]` | `2DA41 [rsp+0x80]=1`；`2DAA3 [rsp+0x84]=1`；`2DA5C [rsp+0x98]=[rax+0x110]`；`2DAB3 call 0x2D220` |
+| `0x2DAC1` | **新步骤**：mode **0**，先 `0x2BE50` 造描述符对象，把 `options[+0x60]` 写进 `[obj+0x18]`，再 `cascade` | `2DAC5 ebp=[rax+0x60]`；`2DB56 call 0x2BE50`；`2DB64 [rax+0x18]=ebp`；`2DB67 call 0x2CCF0` |
+| `0x2DC60` | **新步骤**：mode **2**（即 shear/tooling 路线） | `2DC69 [rsp+0x80]=2` |
+| `0x2D7E1` | **新步骤**：`0xAD5E0(x) == 1` 且 `Pb+0x1C8`（共边参数块）为 0 时，mode 1 | `2D7E4 call 0xAD5E0`；`2D7E9 cmp eax,1`；`2D7F6 call 0x4FC310`；`2D80C [rsp+0x80]=1` |
+| **`0x2D650`** | **不是闸体，是函数尾声** | `2D650 movaps xmm6,[rsp+0xb0] … 2D67A ret` |
+
+紧随 `0x2D680` 又是一段 mode 1 的步骤构造（`+0x8C = r12d`、`+0x18 = [r13+0x150]`）。
+
+**结论**：`0x2D330` 的默认调度 = 我此前列出的 **8 个 mode-1 步**（附 3.3）
+**加上**这里的四个附加路线（mode 1 + Flip 标志、mode 0、mode 2、mode 1 带 `[r13+0x150]`），
+各自的开关来自选项对象的不同字节（`+0x1E8`、`+0x58/0x59`、`+0x80`、`+0x138`、`+0x110`、`+0x150`、`+0x60`、`+0x168`、`+0x2C0/0x2C4`）。
+
+### 附 5.3 落到工程与登记表
+
+* `engine.hpp` 新增：`kPbToolingByte = 0xC9`（tooling 开关，紧跟选 mode2 的 `+0xC8`）、
+  `kPbShearSelectorByte = 0xC8`、`kPbMode2Route = 2`；并在注释里写明 **mode 2 = shear/tooling 路线**、
+  "Normal shear 与 tooling 互斥"、
+  以及 `0x2D650` 是尾声而非闸体这一事实（避免后人再把它当步骤去读）。
+* 登记表新增 **`engine.mode2_shear_route`**（`Structural`：路线与开关已定、断言串已读出，**函数体未转写**）；
+  `engine.advanced_strategist` 的剩余项收敛为"`0x2CE00` 的三条支路体 + `0x2DA00` 的 `cpuid` 探针分支"。

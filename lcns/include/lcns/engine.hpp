@@ -50,6 +50,19 @@ inline constexpr int kStrategyModeCount = 5;            // modes 0..4; >= 5 asse
 //   Multi::LargestSheetSelector 0xB0000, Multi::RandomSheetSelector 0xB0040,
 //   Multi::NoMixSheetSelector   0xAFD60, driven by options[+0x2C0] / options[+0x2C4] and 0x4FC250.
 
+// RE 0x2CE00 (1055 B) -- the route the dispatcher 0x2DF60 takes when Pb[+0xC8] != 0, i.e. MODE 2.
+// It reads the byte AFTER that selector (Pb[+0xC9]) and a bool returned by 0x5223A0, then flags an
+// incompatibility it builds inline as an assertion message:
+//     '!is_tool' 'ing && "' 'Normal s' 'hear is ' 'incompat' 'ible wit' 'g contac'
+//   =  !is_tooling && "Normal shear is incompatible with ... contact ..."
+// so the engine has TWO feature concepts the earlier notes did not have:
+//   * tooling -- an is_tooling predicate, switched by Pb[+0xC9];
+//   * shear   -- with a function literally named AddShear (string at 0x2CF69, TU ..\multi\...),
+//                and "Normal shear" is mutually exclusive with tooling (the assertion above).
+inline constexpr std::size_t kPbMode2SelectorByte = 0xC8;   // RE 0x4FC260 / 0x4FC2C0
+inline constexpr std::size_t kPbToolingByte = 0xC9;         // RE 0x2CE3C cmp byte [rax+1],0
+inline constexpr int kModeShearTooling = 2;                 // RE 0x2CE00 is that mode's body
+
 struct EngineParams {
     int threads = 1;                    // RE: Problem::nb_max_threads
     std::uint32_t seed = 0;             // RE: Problem::seed (read at 0x24A80)

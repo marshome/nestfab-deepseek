@@ -25,6 +25,11 @@ double solutionScore(const Solution& s) {
 // ---------------------------------------------------------------------------
 // RE 0x2CCF0: cascade the budget
 // ---------------------------------------------------------------------------
+// RE 0x2CE00: mode 2 is the shear/tooling route; its switches and the assertion it carries are
+// recovered (see engine.hpp's kPbToolingByte block and re/findings_engine.md appendix 5), the three
+// branch bodies inside it are not. Marked here rather than in the header so the inventory's
+// "code marks == registry" rule keeps the header itself out of the scan.
+LCNS_STRUCTURAL(engine.mode2_shear_route);
 LCNS_NOT_REVERSED(engine.advanced_strategist);
 std::vector<int> StrategyDescriber::cascade() const {
     std::vector<int> out;
