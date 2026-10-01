@@ -2916,5 +2916,28 @@ int main() {
         CHECK(kFromCStringSites == 2 && kSsoInline == 0x10);
     }
 
+    // --- the alias map and the deallocator's real scale (RE the round-277 sweep) --------------------
+    {
+        CHECK(kDeallocTarget == 0x9984B0);
+        CHECK(kDeallocTarget == kSharedDealloc);
+        CHECK(kDeallocCallers == 5721);
+        CHECK(kDeallocAliasCount == 34);
+        CHECK(kDeallocCallers > kBigIntAssignCallers);      // far more called than the copy assignment
+        CHECK(kDeallocCallers > kAccessorCallers);
+        CHECK(kTinyAliasCount == 39);
+        CHECK(kTinyAliasTargets == 6);
+        CHECK(kDeallocAliasCount < kTinyAliasCount);        // most aliases, but not all of them
+        CHECK(kAliasTarget991F20 == 0x991F20);
+        CHECK(kAliasTarget991F20Callers == 10);
+        CHECK(kAliasTarget998CB0 == 0x998CB0);
+        CHECK(kAliasTarget5860 == 0x5860);
+        // the three alias targets are distinct from each other and from the deallocator
+        CHECK(kAliasTarget991F20 != kAliasTarget998CB0);
+        CHECK(kAliasTarget998CB0 != kAliasTarget5860);
+        CHECK(kAliasTarget5860 != kDeallocTarget);
+        CHECK(kDeallocEntryPoints2 == 36);
+        CHECK(kDeallocAliasCount + 2 == kDeallocEntryPoints2);   // the routine plus its aliases
+    }
+
     return check::finish("test_recovered");
 }

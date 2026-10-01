@@ -5534,3 +5534,22 @@ round 263 把它叫作“`0x8774F0` 的兄弟（另一个五字节跳板）”�
 另：`0x7B1F20` 通过 **round 254 认定的 `std::string::_M_construct`**（`0xC71D0`）构造；`0xD0670` 使长度助手 **`0x63F238` 升至三次目击**。
 
 **已落 `layout.hpp`**：`kDeallocAlias`、`kAliasCallers`、`kForwarderF0F00`、`kForwardTarget`、`kStringView*`、`kFromCString2*`、`kLengthHelperSightings`、`kFromCStringSites` + **四条 `static_assert`** + 测试 24 条。
+
+### 附 195 **别名图与释放器的真实规模**（一次扫描，goal round 277）**[已落码]**
+
+扫描了**所有 ≤ 8 字节、且体内只有一条跳转的未引用函数**：**39 个**，指向**仅 6 个目标**。
+
+| 目标 | 别名数 | 目标自身调用者 |
+|---|---:|---:|
+| **`0x9984B0`** | **34** | **5721** |
+| `0x991F20`（82 B）| 1（经 `0x979FD0`，10 个调用者）| 3 |
+| `0x998CB0`（12 B）| 1 | 9 |
+| `0x5860`（666 B）| 1 | 2 |
+| `0x63F718`、`0x63F3B0` | 各 1 | —（**round 274 的导入桩块内**）|
+
+★ **重要修正**：我此前把 `0x9984B0` 描述为“共享释放器，**六次目击**”。它实际有 **5,721 个直接调用者**与 **34 个五字节别名**，是全库**调用最多**的例程之一 —— 与**全局 `operator delete`** 相符。
+
+★ **这 34 个别名是编译器生成的 deleting thunk**（跳进工具链例程），**不是手写代码** ⇒ 已**逐条登记为工具链证据**（条目内写明“单条 `jmp`，目标已是工具链例程”）。
+另：`0x63F718`、`0x63F3B0` 两个目标**落在 round 274 发现的导入桩块内** ⇒ 互相印证。
+
+**已落 `layout.hpp`**：`kDeallocTarget`、`kDeallocCallers`(5721)、`kDeallocAliasCount`(34)、`kDeallocEntryPoints2`、`kTinyAliasCount`(39)、`kTinyAliasTargets`(6)、`kAliasTarget*` + **三条 `static_assert`** + 测试 22 条；`re/covlib.py` 新增动态数量的工具链条目。

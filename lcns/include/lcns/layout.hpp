@@ -1664,6 +1664,27 @@ inline constexpr int kFromCStringSites = 2;                   // 0x20C080 and 0x
 static_assert(kFromCStringSites == 2, "two sites build from a C string");
 static_assert(kStringViewInline > kStringViewObject, "the inline buffer follows the string object");
 
+
+// --- the alias map of round 277, and the deallocator's real scale -------------------------------------------------
+// The sweep collected every un-cited function of at most eight bytes that is a single jump: 39 of them, aimed at only
+// SIX targets. 0x9984B0 turned out to have 5,721 DIRECT callers and THIRTY-FOUR five-byte aliases jumping to it, so
+// "the shared deallocator with six sightings" substantially understated it: it is one of the most called routines in
+// the binary, which fits the global operator delete. The aliases are the compiler's deleting thunks, generated rather
+// than written, and are registered as toolchain evidence one by one.
+inline constexpr std::uintptr_t kDeallocTarget = 0x9984B0;   // RE the targets of 34 aliases
+inline constexpr int kDeallocCallers = 5721;                 // RE the profile's caller count
+inline constexpr int kDeallocAliasCount = 34;                // RE the sweep
+inline constexpr int kDeallocEntryPoints2 = 36;              // the routine plus its thirty-five entry paths
+inline constexpr int kTinyAliasCount = 39;                   // RE the sweep: single-jump functions under nine bytes
+inline constexpr int kTinyAliasTargets = 6;                  // RE the sweep: the distinct targets
+inline constexpr std::uintptr_t kAliasTarget991F20 = 0x991F20;  // RE 0x979FD0's jump, 82 bytes
+inline constexpr int kAliasTarget991F20Callers = 10;         // RE the caller count of 0x979FD0
+inline constexpr std::uintptr_t kAliasTarget998CB0 = 0x998CB0;  // RE 0x998CC0's jump, 12 bytes
+inline constexpr std::uintptr_t kAliasTarget5860 = 0x5860;   // RE 0x1BE60's jump, 666 bytes
+static_assert(kDeallocAliasCount == 34, "thirty-four aliases jump to the deallocator");
+static_assert(kTinyAliasTargets == 6, "the aliases aim at six targets");
+static_assert(kDeallocCallers > kBigIntAssignCallers, "the deallocator is the most called routine seen");
+
 }  // namespace lcns
 LCNS_RECOVERED(layout.record_sizes);   // strides and block sizes, rounds 218-241
 LCNS_RECOVERED(layout.sentinel_convention);   // three -1 qwords beside one -1.0 double
