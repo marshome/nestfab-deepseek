@@ -2333,3 +2333,35 @@ round 64 发现两个**成员等距排列**的族（0x6CA720 一族 12 个、0x9
 本批：库代码 **188** 个 / 263623 字节；剩余“领域文本” **178** 个 / 108435 字节。
 
 使用的证据前几：`vector::`(97)、`basic_string`(82)、`PK_`(4)、`AllocatorBase`(3)、`Clp`(1)、`IteratedHashBase`(1)
+
+### 附 45 桶 A 剩余部分：线程生命周期与其他（goal round 119）
+
+#### `0x1cc0`（427 B / 116 条，调用者 2，被调用者 9）
+
+* 自带文本：`// LocalCancel waiting for threads termination`
+* 浮点常量：无
+* 调用序（前 10）：`0x63f6c0` `0x63f6b8` `0x63f6c0` `0x63f6b8` `0x64aea0` `0x63f6c0` `0x8ab100` `0x63f6c0` `0x9984b0` `0x63f6b8`
+
+#### `0x5d90`（427 B / 117 条，调用者 2，被调用者 10）
+
+* 自带文本：`// LocalTerminate waiting for threads termination`
+* 浮点常量：无
+* 调用序（前 10）：`0x63f6c0` `0x63f6b8` `0x63f6c0` `0x63f6b8` `0x64aea0` `0x63f6c0` `0x8ab100` `0x63f6c0` `0x9984b0` `0x63f6b8`
+
+#### `0x86160`（1234 B / 305 条，调用者 3，被调用者 17）
+
+* 自带文本：`__small_mark__`、`__big_mark__`
+* 浮点常量：`0.5`
+* 调用序（前 10）：`0x504ef0` `0x4fc1f0` `0x97a040` `0x54cbb0` `0x4f7740` `0x54cbb0` `0x4f7770` `0x4f7630` `0x97a040` `0x5c3d90`
+
+#### `0xbafd0`（150 B / 39 条，调用者 3，被调用者 7）
+
+* 自带文本：`PK_MessageEncodingMethod: this signature scheme does not support messa`
+* 浮点常量：无
+* 调用序（前 10）：`0x9988c0` `0xbaf30` `0x7b1f70` `0x9984b0` `0x999030` `0x998c70` `0x62f280` `0x9984b0`
+
+#### `0x12abd0`（467 B / 120 条，调用者 2，被调用者 6）
+
+* 自带文本：`GetOd`、`_GetOd@4`
+* 浮点常量：无
+* 调用序（前 10）：`0x12a990` `0x12a710` `0x7c30c0` `0x9984b0` `0x910af0` `0x9984b0` `0x62f280`
