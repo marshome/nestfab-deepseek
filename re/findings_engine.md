@@ -3120,3 +3120,9 @@ compacting ... <before_shake> => <after_shake>
 ```
 
 ⇒ **四个名字是被打印的**（长度与标签**精确一致**）。因此 round 165 落的步数算式**供给一份 `p.first / nb_strips / nb_double_steps / nb_int_steps` 的报告**；`0x978010` 即 `std::ostream::write`，与早前将其识别为 iostream 内部函数一致。
+
+### 附 85 用**新学到的库标记**重新过一遍同一条规则（goal round 167）
+
+规则**不变**（与 rounds 115/118 相同）：**只有当一个函数的每一条自带文本都命中已知库标记**时，才归为库代码，**命中的标记逐个存储**。本轮新增的标记均来自近几轮实读：`entry_event`/`exit_event`（boost::asio 线程池）、`transaction_safe`/`restrict`（MSVC SAL 注解）、`deque::`/`_M_new_elements_at`/`_M_construct`/`_M_create`/`__cxx11`（libstdc++）、`memcpy_s`（CRT）、`__pos (which is`（libstdc++ 越界断言）。
+
+本轮：库代码 **201** 个 / 268920 字节（已登记）。
