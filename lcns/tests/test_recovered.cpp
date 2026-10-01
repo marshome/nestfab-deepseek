@@ -796,5 +796,21 @@ int main() {
         CHECK(kSmallSpanNetDivisor == 384);
     }
 
+    // --- round 159's confirmations (RE 0x1aa8c8/0x1aa8cc, 0x1aa8fb, 0x6d6510) ----------------------
+    {
+        CHECK(kIndexedRecordStride == 48);
+        CHECK(kIndexedRecordStride != kRunRecordStride);
+        CHECK(kIndexedRecordStride != kTimingRecordStride);
+        CHECK(kRecordValueOffset == 0x18);
+        CHECK(kRecordWideOffset == 0x20);
+        CHECK(kRecordFlagOffset == 0x28);
+        CHECK(kRecordValueOffset < kRecordWideOffset);
+        CHECK(kRecordWideOffset < kRecordFlagOffset);
+        // the three fields are the ones round 155 assembled on the stack
+        CHECK(kRecordValueOffset == kTripledFieldOffset);
+        CHECK(kRecordFlagOffset == kSmallRecordLimitOffset);
+        CHECK(std::strstr(kElementsContainerAssert, "m_elements") != nullptr);
+    }
+
     return check::finish("test_recovered");
 }

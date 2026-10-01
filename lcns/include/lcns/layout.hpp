@@ -52,4 +52,23 @@ inline constexpr int kSmallSpanDivisor = 24;                 // confirmed by exp
 inline constexpr int kCountNetDivisor = (1 << kCountShift) * kCountDivisor;            // 80
 inline constexpr int kSmallSpanNetDivisor = (1 << kSmallSpanShift) * kSmallSpanDivisor; // 384
 
+
+// --- confirmed in round 159 ----------------------------------------------------------------------
+// RE 0x1AA8C5 `mov eax,[rsi+0x18]` ; 0x1AA8C8 `lea rbx,[rax+rax*2]` ; 0x1AA8CC `shl rbx,4`:
+// the indexed records are field*48 bytes apart. That is a THIRD stride, distinct from kRunRecordStride
+// (240), kTimingRecordStride (344) and the /24 count of round 157; all four are kept side by side rather
+// than one being made to overwrite another.
+inline constexpr std::size_t kIndexedRecordStride = 48;
+
+// RE 0x1AA8FB..0x1AA910: the record copied into the container has a dword at +0x18, a qword at +0x20 and a
+// byte at +0x28 -- and round 155 read the same three fields being ASSEMBLED ON THE STACK at [rsp+0x748],
+// [rsp+0x750], [rsp+0x758] before being passed on. Two independent functions, one layout.
+inline constexpr std::size_t kRecordValueOffset = 0x18;   // dword
+inline constexpr std::size_t kRecordWideOffset = 0x20;    // qword
+inline constexpr std::size_t kRecordFlagOffset = 0x28;    // byte
+
+// RE 0x6D6510 carries the assertion text '!m_elements.empty()', which names the container this insert
+// helper works on: m_elements.
+inline constexpr const char* kElementsContainerAssert = "!m_elements.empty()";   // RE 0x6D6510
+
 }  // namespace lcns
