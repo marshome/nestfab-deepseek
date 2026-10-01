@@ -2967,3 +2967,29 @@ round 138 根据“两个 38 字节访问器调 `0x5CD800` 后相减两个 doubl
 而 **`0xF0`（240 字节）与 round 141（`0x1A9060`）用的步长相同** ⇒ **两处在遍历同一种记录**（记录大小 240 字节）。
 
 这也**与 round 125 的更正不矛盾**：当时纠正的是“`0x12ABD0` 里的 `+0x4C` 是栈位而非字段”，而本轮读到的是**另一处、确实是对象字段**的 `+0x4C`。
+
+### 附 76 `+0x4C` 有 **49 个写入点**；“和 vs 计数”分支构造**时间限额记录**（goal round 155）
+
+**用 `covlib.field_writes_scan(0x4C, 可达集, width=4, is_float=False)` 测得**（该助手会**考虑基址寄存器**，因此 `[rsp+0x4C]` 这类栈位不会被当成字段，即 round 125 的错）：
+
+```
+writers of a 32-bit +0x4C among reachable functions: 49 sites
+```
+
+其中最小的几个是**纯 setter**（`0x178560` 4 B、`0x170940` 22 B、`0x468110` 121 B、`0x40BF0`/`0x40CD0` 各 223 B），最大的 `0x3D8E50` 3504 B；其中 `0x1C0750`（604 B）带 **vector 越界断言**。
+⇒ `+0x4C` 是**一个被广泛写入、并会被求和比较的逐记录 dword**。
+
+**分支目标 `0x1B4760`**（条件为 `if (eax <= ecx) goto`）：
+
+```
+1B4760  mov rcx,r12 ; 1B4763 call 0x1F8350
+1B4768  movsd xmm6,[1000] ; 1B4773 mulsd xmm6,xmm0     ; 某值 × 1000
+1B4777  call 0x1F8300 ; 1B477C neg eax ; 1B4784 mov r13d,eax   ; 返回的整数取负
+1B4787  cvttsd2si rax,xmm6 ; 1B478C mov [rsp+0x50],rax
+1B47A1  mov dword [rsp+0x748],r13d   ; 取负后的整数
+1B47A9  mov byte  [rsp+0x758],0      ; 一个置零的字节
+1B47B1  mov qword [rsp+0x750],rax    ; ×1000 后的值
+1B47B9  call 0x1AA890
+```
+
+⇒ 该分支在**栈上拼出三字段记录**（取负整数、置零字节、×1000 的值）并传出去 ——**与 rounds 147–152 建立的“时间”主题一致**；判断的方向已写明为 `if (eax <= ecx)`。
