@@ -191,11 +191,38 @@ def classify_identity(a):
             return "toolchain"
     if any(VENDOR_PATH_PAT.search(s) for s in strs):
         return "third_party"
+    if is_coin_internal(a):
+        return "third_party"
     if strs:
         lib = [s for s in strs if TOOLCHAIN_PAT.search(s) or THIRD_PARTY_PAT.search(s)]
         if len(lib) == len(strs):
             return "toolchain" if not any(THIRD_PARTY_PAT.search(s) for s in strs) else "third_party"
     return "domain"
+
+
+# --- COIN-OR internals recognised by their own message text (goal round 38) --------------------
+# The biggest un-cited "domain" functions turned out to be Clp / CoinUtils / Osi internals whose
+# strings are their own log and assertion messages -- 'Presolve', 'CoinPresolve initial state',
+# 'bad fscanf', 'scalingFlag_', 'maxDelta < tolerance', 'Objective offset is', 'Time to decompose'.
+# None of those contain the word Clp, so the earlier patterns missed them and megabytes of third
+# party code sat in the "still to reverse" bucket. Per the human instruction a third party library
+# is downloaded and linked, NOT reversed, so this evidence excludes them -- and it is evidence, not
+# a guess: these are verbatim COIN-OR log strings.
+CLP_INTERNAL_PAT = re.compile(
+    r"(Presolve|CoinPresolve|presolve|bad fscanf|scalingFlag|maxDelta|Objective offset is|"
+    r"Time to decompose|dual infeasible|saying infeasible|small drop|lastobj|fixing %d|"
+    r"empty rows and|CoinLpIO|CoinMpsIO|CoinPackedMatrix|row_%d|theta %g|"
+    r"xsize   =|CoinMessageHandler|OsiSolverInterface|number of rows|ClpSimplex|ClpModel)",
+    re.I)
+
+
+def is_coin_internal(a):
+    """True when the function's own strings are COIN-OR log/assertion text."""
+    f = PROF[a]
+    strs = []
+    for s in (f.get("strings") or []):
+        strs.append(str(s[1]) if isinstance(s, (tuple, list)) and len(s) == 2 else str(s))
+    return any(CLP_INTERNAL_PAT.search(s) for s in strs if s)
 
 
 def has_identity_evidence(a):
