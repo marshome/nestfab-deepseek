@@ -171,7 +171,7 @@ VENDOR_PATH_PAT = re.compile(
 
 
 def classify_identity(a):
-    if addr in LIBSTDCXX_EVIDENCED:
+    if a in LIBSTDCXX_EVIDENCED:
         return "toolchain"
     """Same three names as classify(), but only on identity evidence (see the note above)."""
     f = PROF[a]
