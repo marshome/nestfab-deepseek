@@ -1507,12 +1507,18 @@ int main() {
         CHECK(kInitEntryStride == kSmallRecordStride); // the 24 of round 157
         CHECK((3 * 8) == kInitEntryStride);            // `lea rax,[rax+rax*2]` then scaled by eight
 
-        CHECK(kTypeAnchorA == 0x7C2460);
-        CHECK(kTypeAnchorB == 0x7C2470);
-        CHECK(kTypeAnchorB - kTypeAnchorA == kTypeAnchorGap);
+        CHECK(kDefaultStubA == 0x7C2460);
+        CHECK(kDefaultStubB == 0x7C2470);
+        CHECK(kDefaultStubB - kDefaultStubA == kDefaultStubGap);
         // both were computed from the two displacements rather than copied
-        CHECK(kTypeAnchorA == 0x7C68E5 + 7 - 0x448C);
-        CHECK(kTypeAnchorB == 0x7C6904 + 7 - 0x449B);
+        CHECK(kDefaultStubA == 0x7C68E5 + 7 - 0x448C);
+        CHECK(kDefaultStubB == 0x7C6904 + 7 - 0x449B);
+        // and the bytes there are a stub that returns zero, which is why these are NOT type anchors
+        CHECK(kDefaultStubEncoding == 0x9090909090C3C031ULL);
+        CHECK(static_cast<std::uint8_t>(kDefaultStubEncoding) == 0x31);          // xor
+        CHECK(static_cast<std::uint8_t>(kDefaultStubEncoding >> 8) == 0xC0);     // eax
+        CHECK(static_cast<std::uint8_t>(kDefaultStubEncoding >> 16) == 0xC3);    // ret
+        CHECK(static_cast<std::uint8_t>(kDefaultStubEncoding >> 24) == 0x90);    // nop
     }
 
     // --- the hash table of 0x1c65b0 (RE 0x1c667e/0x1c668b/0x1c669b/0x1c66a7) -------------------------

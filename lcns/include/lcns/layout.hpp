@@ -412,13 +412,19 @@ inline constexpr int kInitPairFirst = 0;              // RE 0x1A613D
 inline constexpr int kInitPairSecond = 0x14;          // RE 0x1A6145: 20
 inline constexpr std::size_t kInitEntryStride = 24;   // RE 0x1A615B: rax*3 scaled by 8
 
-// --- two concrete type anchors (round 219) -----------------------------------------------------------
-// RE 0x7C68E5 `lea r8,[rip-0x448C]` and 0x7C6904 `lea r8,[rip-0x449B]`, computed from the displacements:
-// 0x7C68E5 + 7 - 0x448C = 0x7C2460 and 0x7C6904 + 7 - 0x449B = 0x7C2470. These are the types 0x7C68D0
-// distinguishes, so they anchor the classes the way the vtable channel does.
-inline constexpr std::uintptr_t kTypeAnchorA = 0x7C2460;   // RE 0x7C68E5
-inline constexpr std::uintptr_t kTypeAnchorB = 0x7C2470;   // RE 0x7C6904
-inline constexpr std::uintptr_t kTypeAnchorGap = 0x10;     // the two are one object apart
+// --- two DEFAULT method stubs, not type anchors (round 219, corrected in round 223) --------------------
+// RE 0x7C68E5 `lea r8,[rip-0x448C]` and 0x7C6904 `lea r8,[rip-0x449B]`: 0x7C68E5 + 7 - 0x448C = 0x7C2460 and
+// 0x7C6904 + 7 - 0x449B = 0x7C2470. Round 219 called these "type anchors" and round 221 repeated it; reading the
+// bytes at those addresses settles the matter:
+//     0x7C2460: 31 C0 C3 90 90 90 90 90   =   xor eax,eax ; ret ; nops
+//     0x7C2470: 31 C0 C3 90 90 90 90 90   =   the same tiny stub
+// They are CODE in .text, so they are not vtables or typeinfo. What the comparisons test is whether an object's
+// function pointer at +0x10 / +0x18 is STILL the default stub, i.e. whether a callback has been overridden. The
+// offsets landed in round 221 keep their meaning; only the naming and the "type" claim are withdrawn.
+inline constexpr std::uintptr_t kDefaultStubA = 0x7C2460;   // RE 0x7C68E5
+inline constexpr std::uintptr_t kDefaultStubB = 0x7C2470;   // RE 0x7C6904
+inline constexpr std::uintptr_t kDefaultStubGap = 0x10;     // the stubs are one object apart
+inline constexpr std::uint64_t kDefaultStubEncoding = 0x9090909090C3C031ULL;   // `xor eax,eax ; ret` + nops
 
 
 // --- the hash table of 0x1C65B0 (round 220) ---------------------------------------------------------
