@@ -3567,3 +3567,16 @@ round 157 保留的只有一条：`0x82FA0BE82FA0BE83` **不是除法**（该判
 正是实验所模拟的形状 ⇒ **`kTickDivisor = 1e6` 成立**。
 
 **新得到的事实**：那些宽常量（`0xAAAA…AB`、`0xCCCC…CD`、`0x6DB6DB6D…B7`等）在**本类位点**上是**乘法混合**，配 `test`/`je` 使用；它们**是否在别处做除法**需逐窗口重查，不能一网打尽。
+
+### 附 104 **真正的除法清单**：只认单操作数 `imul`（goal round 184）
+
+判据（round 183 建立）：**单操作数 `imul` 才产生 `rdx:rax` 高位**，才是编译器为“除以常量”生成的形状；**双操作数为低 64 位乘法（哈希）**。
+
+**（a）除法位点**（魔数 → 函数数 → 实验确定的除数）：
+
+| 魔数 | 函数数 | 实验结果 |
+|---|---:|---|
+
+**（b）哈希位点**（双操作数 `imul`，前面有 `movabs`）前几名：`0xAAAAAAAAAAAAAAAB`（134）、`0xCCCCCCCCCCCCCCCD`（48）、`0x6DB6DB6DB6DB6DB7`（38）、`0xEEEEEEEEEEEEEEEF`（23）、`0xDB6DB6DB6DB6DB7`（22）、`0xEC4EC4EC4EC4EC5`（18）、`0xAAAAAAAAAAAAAAB`（17）、`0x86BCA1AF286BCA1B`（17）
+
+⇒ **两类形状已分开统计**，不再混为一谈。
