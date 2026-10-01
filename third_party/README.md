@@ -158,4 +158,20 @@ g++ -std=gnu++11 -O2 -w -include third_party\compat\coin_compat.h -DHAVE_CMATH `
 
 ⇒ **"下载并直接引用第三方库"这条指示已经落地**：Clp/Osi/CoinUtils 都是真库、真编译、真能解 LP。
 
+## Independent confirmation from the binary itself (goal round 117)
 
+The DLL carries absolute build paths for the external libraries and NONE for the project's own sources
+(those are relative, e.g. `..\multi\supervisor.cpp`). Two external names appear, with counts:
+
+| name in the image | hits | what third_party/ pins |
+|---|---:|---|
+| `Clp-1.15.3` | 15 | Clp 1.15.3, checked out at the `releases/1.15.3` tag |
+| `boost_1_63_0` | 10 | boost 1.63.0 headers, pinned by `static_assert(BOOST_VERSION == 106300)` |
+
+So the versions used here are not guesses: the binary names them. The paths look like
+`C:\Users\renaud\nest\external\boost_1_63_0/boost/multiprecision/cpp_int/checked.hpp`, i.e. the
+original build root was `C:\Users\renaud\nest\` with the libraries under `external\`.
+
+That also explains the layout of the recovery documents: the application's own translation units are
+only ever named by relative paths (`..\multi\supervisor.cpp`), which is why TU attribution in re/ keys
+off absolute paths only for third-party code.
