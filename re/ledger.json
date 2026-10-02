@@ -1238,6 +1238,30 @@
    "round": 615,
    "subject": "collapse.is-small-on-the-working-set",
    "witness": "20761 bytes over 75 addresses becomes 17675 over 64 for ordinal 55; the module total falls from 20200987 to 19492231; the duplicates are concentrated in layers the exports do not reach, and the stat path holds only eleven collapsed duplicates"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "0x2AB0 is 2134 bytes, 491 instructions, 93 calls over 45 distinct targets, in eight phases",
+   "round": 616,
+   "subject": "LaunchLocalComputation.phases",
+   "witness": "logging 0x1BF00/0x63F6C0/0x1BF40 x2/0x978010 x3; preparation 0x8688E0/0x867BF0/0x867DF0; arguments 0x944530/0x9454D0 x2/0x87EDF0/0x87D590/0x9456A0 x2; computation 0x1EE50; serialisation 0x5070E0; construction 0x9445E0 x2/0x998500/0x22E30/0x5F3960; teardown 0x92ECB0 x4/0x9308C0/0x5007C0 x3; unwind 46 frees + 4 throws + 4 registrations"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "about fifty of the ninety-three calls are cleanup, so the routine's own logic is roughly forty calls",
+   "round": 616,
+   "subject": "LaunchLocalComputation.half-is-cleanup",
+   "witness": "46 of the calls are 0x9984B0 (free), 4 are 0x62F280 (throw) and 4 are 0x63F6D0 (unwind registration); a call count overstates the work by more than a factor of two, the same overstatement the ledger records for byte counts and closure sizes"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the chain release 0x92ECB0, implemented as lcns/releaseDeepChain, appears FOUR times inside the objective's own target",
+   "round": 616,
+   "subject": "releaseDeepChain.used-in-the-target",
+   "witness": "calls at 0x2DE5, 0x2E57, 0x2FBF and 0x3027 of 0x2AB0; this is the first time a recovered body has been located INSIDE the target rather than beside it"
   }
  ]
 }
