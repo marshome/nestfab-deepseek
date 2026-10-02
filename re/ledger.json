@@ -350,6 +350,30 @@
    "round": 559,
    "subject": "thunk.63F228-resolved",
    "witness": "IAT slot 0xB28F1C reads 0x7FF998BDD6F0 in the dump, which is runtime; correcting my earlier note that liblcns_52 was the callee, since 0x63F228 is not 0x2AB0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "403 bytes, 103 instructions, 54 callers: a logging function gated by a global switch it reads at rva 0xB1F018",
+   "round": 560,
+   "subject": "logger.64AEA0.shape",
+   "witness": "movzx eax,[rip+0x4d416b] then test al,al then je; the switch byte lives at 0x6B4C0000+0xB1F018"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the logger writes rax at six places, so 'no effect on the return' is true for a DIFFERENT reason: every caller overwrites rax itself",
+   "round": 560,
+   "subject": "logger.does-not-preserve-rax",
+   "witness": "0xB470 calls it at 0xB47B and loads rax at 0xB480 before reading it; the 51 other callers must be checked rather than assumed"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "the project classified 0x64AEA0 as a logger with no effect on a return value, and that classification was neither read nor verified for all 54 callers",
+   "round": 560,
+   "subject": "logger.classification-unchecked",
+   "witness": "one caller checked in full: 0xB470 ignores the return. The claim in re/CATEGORIES.md stands for that caller and is unverified for the rest"
   }
  ]
 }
