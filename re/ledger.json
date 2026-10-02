@@ -1230,6 +1230,14 @@
    "round": 614,
    "subject": "planning.886-not-2997",
    "witness": "the four stat exports' 75-function layer may shrink by a similar proportion once the groups are applied"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "collapsing the identical groups saves 15 percent on the cheapest export and only 3.5 percent across all unforwarded exports",
+   "round": 615,
+   "subject": "collapse.is-small-on-the-working-set",
+   "witness": "20761 bytes over 75 addresses becomes 17675 over 64 for ordinal 55; the module total falls from 20200987 to 19492231; the duplicates are concentrated in layers the exports do not reach, and the stat path holds only eleven collapsed duplicates"
   }
  ]
 }
