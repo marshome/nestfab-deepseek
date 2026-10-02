@@ -2102,6 +2102,30 @@
    "round": 662,
    "subject": "fields.size-must-be-known-to-assert-past-it",
    "witness": "RE 0x34388 lea rcx,[rbx+0xa00] says a sub-object begins there and nothing about its length; two attempts to derive an offset past it failed their static_asserts"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "86 files hold 7418 hex constants against 2100 RE witnesses, and layout.hpp alone is 2986 constants with zero types in 3745 lines",
+   "round": 663,
+   "subject": "fake-reverse.measured",
+   "witness": "re/g_fake_reverse.py: most constant-heavy are layout.hpp 2986/873, row.hpp 479/45, virtual_methods.hpp 388/2, recovery.hpp 261/0, class_definitions.hpp 256/0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "layout.hpp's 0x60 byte record and its 0xF0 stride record are structs in lcns/records.hpp, each member carrying its instruction",
+   "round": 663,
+   "subject": "records-as-structs",
+   "witness": "0x6DE4F5 places the vtable at +0, 0x6DE4E7 and 0x6DE4EE the two dwords, 0x6DE4D0 the 0x60 size; the wordB-wordA==4 arithmetic the old file asserted is free in a struct"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a check on this subject should NAME the file that is a data dump rather than threshold a ratio, because four attempts at a ratio each flagged correct code",
+   "round": 663,
+   "subject": "tooling.named-debt-beats-thresholds",
+   "witness": "boxmerge.hpp's function declarations read as empty to a member pattern; kNestingNesterSeedP grouped as 'kN'; field_accessors.hpp's 100 functions counted as nothing"
   }
  ]
 }

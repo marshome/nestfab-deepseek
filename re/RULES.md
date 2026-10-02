@@ -152,6 +152,12 @@ feeling of compliance.
   "where": "re/g_round_output.py",
   "since": "round 642"},
 
+{"id": "c-constexpr-c",
+  "rule": "不要在 C++ 里堆地址偏移量：一组同前缀的 constexpr 偏移量就是一张偏移表，它的存在说明类型没写出来。每个类的字段、构造函数、方法都要写成真正的 C++ 类型，偏移只作为证据放在成员旁边的注释里。",
+  "check": "re/g_no_offset_tables.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
