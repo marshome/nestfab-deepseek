@@ -68,6 +68,11 @@ int main() {
         if (b.status == emb::Status::Callable) {
             ++callables;
             CHECK(b.reason != nullptr && b.reason[0] == '\0');   // a callable block has no excuse to record
+        } else if (b.status == emb::Status::Data) {
+            // Evidence, not code: no reason and no symbol, but the bytes must still be there and usable.
+            CHECK(b.reason != nullptr);
+            CHECK(b.symbol != nullptr);
+            CHECK(b.bytes != nullptr);
         } else {
             CHECK(b.reason != nullptr && b.reason[0] != '\0');   // a comment-only block must say why
         }
@@ -259,6 +264,36 @@ int main() {
         }
     }
 #endif  // LCNS_HAS_EMBEDDED_ASM
+
+    // ------------------------------- the evidence behind a toolchain exclusion, read from the project's own bytes
+    // Round 340 read 0x62FE20 as a floating-point classification guard. Round 356 identified it as libm's sqrt from its
+    // error path: the eight bytes at rva 0xA06820 spell "sqrt", and the code stores EDOM (0x21) through the pointer a
+    // helper returns before calling a reporter. Those thirty-two bytes are embedded as a data block, so the claim can be
+    // checked from the project rather than from a note, and check_embeddings.py keeps them equal to the DLL's.
+    {
+        const emb::Block* d = emb::find(0xA06820u);
+        CHECK(d != nullptr);
+        if (d != nullptr) {
+            CHECK(d->status == emb::Status::Data);
+            CHECK(d->size == 32);
+            char name[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+            std::memcpy(name, d->bytes, 4);
+            CHECK(std::string(name) == "sqrt");
+            std::uint64_t minusZero = 0;
+            std::uint64_t plusInf = 0;
+            std::uint64_t one = 0;
+            std::memcpy(&minusZero, d->bytes + 0x08, 8);
+            std::memcpy(&plusInf, d->bytes + 0x10, 8);
+            std::memcpy(&one, d->bytes + 0x18, 8);
+            CHECK(minusZero == 0x8000000000000000ULL);   // the -0.0 the zero path returns
+            CHECK(plusInf == 0x7FF0000000000000ULL);     // the +inf the infinite path returns
+            CHECK(one == 0x3FF0000000000000ULL);         // the 1.0 the denormal path compares against
+            // the routine that reads them is still carried as code, and still cannot be executed from the copy
+            CHECK(emb::find(0x62FE20u) != nullptr);
+            CHECK(emb::statusOf(0x62FE20u) == emb::Status::CommentOnly);
+            CHECK(emb::originalOf(0x62FE20u) == nullptr);
+        }
+    }
 
     return check::finish("embedded");
 }

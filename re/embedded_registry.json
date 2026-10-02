@@ -145,7 +145,7 @@
     "symbol": "lcns_orig_62fe20",
     "status": "comment_only",
     "reason": "call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)",
-    "note": "floating-point classification and range guard, 89 callers",
+    "note": "libm sqrt: the C library square root, identified in round 356 from its own error path (the name string \"sqrt\" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects",
     "callers": 89,
     "sha256": "92ba45ca52d125e32af5d8f222dee28c09d4134141b999a3588aff4c0d76180f"
   },
@@ -208,5 +208,15 @@
     "note": "head of the largest routine here (15,524 bytes): geometry entry",
     "callers": 3,
     "sha256": "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"
+  },
+  {
+    "rva": 10512416,
+    "size": 32,
+    "symbol": "",
+    "status": "data",
+    "reason": "",
+    "note": "libm sqrt's constant cluster: the name string \"sqrt\" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code",
+    "callers": 0,
+    "sha256": "b1c990bc7b38a93d330fd06165bb4db14befc5e958457165d7a036b8c48eaf2d"
   }
 ]

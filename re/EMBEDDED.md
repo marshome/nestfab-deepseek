@@ -24,15 +24,16 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x5ce7b0` | 50 | comment_only | 32 | builds a translation matrix (identity basis + point) |
 | `0x5ced50` | 196 | comment_only | 24 | inverse of a 2x3 affine matrix |
 | `0x55e190` | 258 | comment_only | 3 | segment length pair, min and max, with a square-root guard |
-| `0x62fe20` | 270 | comment_only | 89 | floating-point classification and range guard, 89 callers |
+| `0x62fe20` | 270 | comment_only | 89 | libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects |
 | `0x50fd40` | 270 | comment_only | 3 | accumulator over a range of 312-byte elements |
 | `0x24dd40` | 238 | comment_only | 1 | composition of two transformed fields with weights |
 | `0x4b81d0` | 78 | comment_only | 4 | builds the object whose first member is the 0.01 tolerance |
 | `0x24c610` | 138 | comment_only | 4 | four-stage geometry chain over the packed +0x70 point |
 | `0x111ad0` | 64 | comment_only | 21 | constructor of the twins' object (two vtables) |
 | `0x243820` | 15524 | comment_only | 3 | head of the largest routine here (15,524 bytes): geometry entry |
+| `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-21 blocks, 11 callable, 10 comment-only, 18200 bytes of original code embedded.
+22 blocks, 11 callable, 11 comment-only, 18232 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -518,7 +519,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 0055e291  ret 
 ```
 
-## `0x62fe20` -- floating-point classification and range guard, 89 callers
+## `0x62fe20` -- libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects
 
 - size 270 bytes, 89 callers, status **comment_only**
 - not callable because: call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)
@@ -3798,5 +3799,14 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 002474ba  call 0x9984b0
 002474bf  jmp 0x247297
 ... listing truncated ...
+```
+
+## `0xa06820` -- libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code
+
+- size 32 bytes, 0 callers, status **data**
+- sha256 `b1c990bc7b38a93d330fd06165bb4db14befc5e958457165d7a036b8c48eaf2d`
+
+```
+; data block, 32 bytes; first bytes as hex: 73 71 72 74 00 00 00 00 00 00 00 00 00 00 00 80
 ```
 

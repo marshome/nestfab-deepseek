@@ -3303,7 +3303,13 @@ static_assert(kMulCount >= kMulCountInWindow, "the sweep counted at least as man
 static_assert(kAffineSourceBytes == kSegmentBytes, "the source is one segment in size");
 
 
-// --- the floating-point classification guard 0x62FE20, eighty-nine callers (round 340) -------------------
+// --- CORRECTED in round 356: 0x62FE20 is libm's sqrt, not a classification guard ---------------------------
+// Round 340 read the masks and tests below as a floating-point class/range check. They are the guts of the C library's
+// sqrt: the exponent and mantissa masks separate zero, denormal, normal, infinite and NaN; the "1.0" is the constant the
+// denormal path compares against; and the error path stores EDOM (0x21) through the pointer 0x63F4D8 returns before
+// calling the reporter 0x63FA50 with the name string "sqrt" (rva 0xA06820, embedded as a data block). The constants and
+// their offsets stand as measurements; the interpretation is withdrawn, and the routine is registered as toolchain in
+// re/covlib.py. Its eighty-nine callers are geometry code taking square roots. ---------------------------------------
 //     0x62FE30 and eax,0x7FF00000   ; the exponent field of the high dword
 //     0x62FE35 and edx,0xFFFFF      ; the mantissa field
 //     0x62FE41 or ecx,eax ; je      ; everything zero means the operand is zero

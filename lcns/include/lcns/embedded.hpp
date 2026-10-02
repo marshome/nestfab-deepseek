@@ -39,7 +39,8 @@ using RawFn = void (*)();
 
 enum class Status {
     Callable,     // position-independent: an executable copy exists in gen_orig.S
-    CommentOnly,  // bytes embedded as data; the reason says why it cannot be executed
+    CommentOnly,  // code whose bytes are embedded; the reason says why it cannot be executed
+    Data,         // read-only data whose bytes are themselves evidence for a classification or an exclusion
 };
 
 struct Block {

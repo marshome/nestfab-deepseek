@@ -7023,3 +7023,34 @@ xmm1 *= xmm2 ; xmm0 −= xmm1       ; ★ **(Cx−Ax)(By−Ay) − (Bx−Ax)(Cy�
 ★ 分配器 `0x998500` 在早前轮次仅由调用点登记；**此处首次可见它被要求的尺寸** ⇒ **第七次目击，且比前六次更强**。
 
 **已落 `layout.hpp`**：`kToleranceOwner`(0x4B81D0)、`kToleranceOwnerCallers`(4)、`kToleranceObjectBytes`(0x38)、`kToleranceField`(0x00)、`kObjectFlag10`、`kObjectZeroA/B`、`kRangeBegin/End`(0x20/0x28)、`kEmptyRangePair`、`kEmptyRangeBase`、`kAllocator998500Used`、`kAllocatorSightings7`(7)、`kAllocatorSizeVisible`、`kInlineBufferSightings2`(4) + **六条 `static_assert`** + 测试 26 条（含“空区间即 begin == end”的行为验证）。
+
+### 附 273 **重新归类：0x62FE20 不是领域代码，而是 libm 的 sqrt**（goal round 356）**[已落码]**
+
+round 340 把 `0x62FE20`（89 调用者）读作"浮点分类/范围守卫"。**这个解释是错的**，本轮从它自己的错误路径把它认了出来：
+
+```
+62FE20..62FE43  exponent = 高字 & 0x7FF00000 ; mantissa = (高字 & 0xFFFFF) | 低字
+                两者或为零 ⇒ 该值是 ±0.0
+62FE45/62FE47   exponent != 0 ⇒ 正常/无穷/NaN 路径
+62FE56          与 [rip->0xA06838] = 1.0 比较      ; 次正规路径的阈值
+62FE66/62FE6C/62FE70/62FE72  x87: fld / fsqrt / fstp   ; ★ 真正的开方
+62FE85          零路径：返回 [rip->0xA06828] = -0.0（负数零）或 +0.0
+62FF10/62FF21   指数全 1 且尾数 0 ⇒ 返回 [rip->0xA06830] = +inf
+62FEC4          错误路径：call 0x63F4D8 → dword [rax] = 0x21 (★ EDOM=33)
+                 lea rdx,[rip->0xA06820]（★ ASCII "sqrt"）→ call 0x63FA50（__math_invalid 形状）
+```
+
+★ 关键证据是**它自己带的字符串**：rva `0xA06820` 的 8 字节原始值 `0x0000000074727173` ⇒ 小端字节 `73 71 72 74` = **`"sqrt"`**；
+同一处 0x20 字节簇里还有 `-0.0`（`0xA06828`）、`+inf`（`0xA06830`）、`1.0`（`0xA06838`）—— 正是一个开方实现所需的全部常量。
+`dword [rax] = 0x21` 即 **errno = EDOM**，与 C 库在定义域错误时的行为一致。
+
+⇒ 按目标「libstdc++/MinGW 属工具链，不逆向」，本轮：
+
+1. 在 `re/covlib.py` 里把 `0x62FE20`、`0x62FE00`（打包版）与错误路径助手 `0x63F4D8`（`__errno`）、`0x63FA50` 登记为 **toolchain**，理由写明证据；
+2. **把证据字节嵌入工程**：生成器新增 **data 块**（`status: "data"`，有字节无符号），`0xA06820` 的 32 字节以数据块入册，
+   `re/check_embeddings.py` 逐字节校验、`tests/test_embedded.cpp` 断言它就是 `"sqrt"` + `-0.0`/`+inf`/`1.0`；
+3. **修正 round 340 的解释**：`lcns/include/lcns/layout.hpp` 里该块的开头注释改为正确说明（常量与偏移作为测量保留，解释撤回）；
+4. `re/CATEGORIES.md` 新增「Excluded: toolchain」一节。
+
+★ 连带结论：`0x55E190` 记录的障碍「call to 0x62FE20 outside the block」**根本不是领域依赖** —— 段内核调用的是 C 库的平方根，
+这正是一个长度计算该做的事（round 338 早就看到它的 `sqrtsd` 后面跟着这个守卫）。

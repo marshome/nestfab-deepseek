@@ -35,6 +35,7 @@ def main():
 
     bad = 0
     callable_n = 0
+    data_n = 0
     for e in registry:
         rva = e["rva"]
         size = e["size"]
@@ -64,14 +65,20 @@ def main():
             if e["symbol"] not in tab:
                 print("FAIL 0x%x: %s is missing from the pointer table" % (rva, e["symbol"]))
                 bad += 1
+        elif e["status"] == "data":
+            # Evidence carried as bytes: no symbol and no excuse, but the bytes and the hash are checked like any other.
+            data_n += 1
+            if e["symbol"]:
+                print("FAIL 0x%x: a data block must not claim a symbol" % rva)
+                bad += 1
         else:
             if not e["reason"]:
                 print("FAIL 0x%x: comment-only without a reason" % rva)
                 bad += 1
 
     total = sum(e["size"] for e in registry)
-    print("embedded blocks: %d (%d callable, %d comment-only), %d bytes"
-          % (len(registry), callable_n, len(registry) - callable_n, total))
+    print("embedded blocks: %d (%d callable, %d comment-only, %d data), %d bytes"
+          % (len(registry), callable_n, len(registry) - callable_n - data_n, data_n, total))
     print("checked against libcns_dump_64.dll: %s" % ("all match" if bad == 0 else "%d MISMATCHES" % bad))
     return 0 if bad == 0 else 1
 

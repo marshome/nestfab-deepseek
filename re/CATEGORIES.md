@@ -27,7 +27,7 @@ These are read, registered and now embedded, but the project does not execute th
 
 | Category | Routines | Why not callable |
 |---|---|---|
-| Floating-point class/range guard | `0x62FE20` (89 callers) | RIP-relative constants (the exponent mask path compares against 1.0 at rva 0xA06838) |
+| ~~Floating-point class/range guard~~ -> **excluded as toolchain, see below** | `0x62FE20` | identified in round 356 as libm's sqrt |
 | Segment length pair and min/max | `0x55E190` | a relative call to the guard above leaves the block |
 | Accumulator over 312-byte elements | `0x50FD40` | relative calls to three helpers outside the block |
 | Composition of two fields with weights | `0x24DD40` | relative calls to two helpers |
@@ -49,3 +49,22 @@ An earlier version of this work counted "addresses cited anywhere in `lcns/` or 
 satisfies without any behaviour existing — it is a proxy that can be satisfied by annotation, and it was rejected for
 that reason. The implemented column above is therefore an explicit list, each row naming the routines and the test that
 pins them. If the list is wrong, it is wrong in a way a reader can check by running one executable.
+
+## Excluded: toolchain, with the evidence in the project
+
+The objective excludes MinGW/libstdc++ from reverse engineering. Round 356 moved a block across that line, on evidence
+rather than on convenience:
+
+| Address | What it is | Evidence |
+|---|---|---|
+| `0x62FE20` (89 callers) | libm's `sqrt` | its own error path: the name string `"sqrt"` at rva `0xA06820`, `EDOM` (0x21) stored through the pointer `0x63F4D8` returns, then a call to the `__math_invalid`-shaped reporter `0x63FA50`; plus the standard shape of the routine (exponent/mantissa masks separating zero, denormal, normal, inf and NaN, an x87 `fsqrt`, and `+/-0.0`, `+inf` and `1.0` as its only constants) |
+| `0x62FE00` | the packed sibling | it operates on the same constant cluster with `subps`/`xorpd` |
+| `0x63F4D8` | `__errno` | returns the pointer that `sqrt`'s error path writes `EDOM` through |
+| `0x63FA50` | libm's domain-error reporter | called from that path with the name string and the argument |
+
+The evidence is not only written down: the thirty-two bytes at `0xA06820` are embedded in `lcns/` as a **data block**,
+`re/check_embeddings.py` keeps them byte-identical to the DLL's, and `tests/test_embedded.cpp` asserts that they spell
+`"sqrt"` and hold `-0.0`, `+inf` and `1.0`. A reader can therefore check the exclusion without opening the binary.
+
+Consequence for the work: `0x55E190`'s recorded obstacle ("call to 0x62FE20 outside the block") is not a domain
+dependency at all -- the segment kernel calls the C library's square root, which is what a length computation does.

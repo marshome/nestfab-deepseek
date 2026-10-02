@@ -449,6 +449,14 @@ LIBRARY_EVIDENCED = {
 
 # --- bucket C library code (goal round 110): every class it references is a library type ---
 # --- bucket C, corrected rule (round 110c): all referenced classes are library types ---
+# libm's square root and the machinery of its error path, identified in round 356 from the routine's own bytes:
+# the name string "sqrt" at rva 0xA06820, EDOM (0x21) stored through the pointer returned by 0x63F4D8, and an
+# __math_invalid-shaped reporter at 0x63FA50. The objective excludes MinGW/libstdc++ as toolchain, and this is libm, so
+# 0x55E190's "call to 0x62FE20 outside the block" was never a domain dependency to chase: it is the C library's sqrt.
+LIBRARY_EVIDENCED[0x62FE20] = ("toolchain", "libm sqrt (name string 'sqrt' at 0xA06820, EDOM through 0x63F4D8)")
+LIBRARY_EVIDENCED[0x62FE00] = ("toolchain", "libm sqrt, packed sibling (subps/xorpd on the same constant cluster)")
+LIBRARY_EVIDENCED[0x63F4D8] = ("toolchain", "__errno, used by libm's error paths")
+LIBRARY_EVIDENCED[0x63FA50] = ("toolchain", "__math_invalid-style libm domain-error reporter, called from sqrt")
 LIBRARY_EVIDENCED[0xB8930] = ("third_party", "CryptoPP::Exception")
 LIBRARY_EVIDENCED[0xBB070] = ("third_party", "CryptoPP::PK_FinalTemplate::<<subst>::TF_VerifierImpl::<")
 LIBRARY_EVIDENCED[0xC1C80] = ("third_party", "CryptoPP::ByteQueue::Walker")
