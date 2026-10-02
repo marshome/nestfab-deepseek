@@ -40,6 +40,7 @@
 #include "lcns/engine_defaults.hpp"
 #include "lcns/option_keys.hpp"
 #include "lcns/miplib_names.hpp"
+#include "lcns/engines.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6477,6 +6478,73 @@ int main() {
                 CHECK(std::string(names[i]) != keys[k].name);
             }
         }
+    }
+
+
+    // ---------------------------------------------------------------- InfiniteEngine (RE 0x759A80)
+    //
+    // The one Engine subclass whose body has been read. RE 0x759A80 is a DECORATOR with a sentinel: a time limit of exactly -1.0 means
+    // nest until done, and any other limit goes to the inner engine at this+0x10.
+    {
+        lcns::InfiniteEngine engine;
+        CHECK(engine.inner() == nullptr);
+        CHECK(lcns::kRunInfiniteEngine == 0x759A80);
+        CHECK(lcns::kNestingEngineRun == 0x757AE0);
+        CHECK(lcns::kEngineRunSlot == 0x10);           // RE 0x2516E: call qword ptr [rax + 0x10]
+        CHECK(lcns::kUnlimitedTime == -1.0);           // the double at rva 0x9AE740
+        CHECK(lcns::kUnlimitedTimeConstant == 0x9AE740);
+
+        // the seven slots are seven distinct addresses
+        const std::uintptr_t slots[7] = {lcns::kRunMultiEngine, lcns::kRunDelayedEngine, lcns::kRunNestingEngine,
+                                         lcns::kRunInfiniteEngine, lcns::kRunCompositeEngine, lcns::kRunEquivalentEngine,
+                                         lcns::kRunCloudEngine};
+        for (int i = 0; i < 7; ++i) {
+            for (int j = i + 1; j < 7; ++j) {
+                CHECK(slots[i] != slots[j]);
+            }
+        }
+
+        // THE DECISION, driven with two markers so which arm ran is visible rather than assumed
+        int unlimitedRan = 0;
+        int delegatedRan = 0;
+        void* result = reinterpret_cast<void*>(0x1234);
+
+        void* out = engine.dispatch(lcns::kUnlimitedTime, result,
+                                    [&](void*) -> void* { ++unlimitedRan; return result; },
+                                    [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
+        CHECK(unlimitedRan == 1);
+        CHECK(delegatedRan == 0);
+        CHECK(out == result);                          // RE 0x759A9E: mov rax, rbx
+
+        // any other limit delegates
+        unlimitedRan = delegatedRan = 0;
+        out = engine.dispatch(10.0, result,
+                              [&](void*) -> void* { ++unlimitedRan; return result; },
+                              [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
+        CHECK(unlimitedRan == 0);
+        CHECK(delegatedRan == 1);
+        CHECK(out == result);                          // RE 0x759AC7
+
+        // AND A NaN DELEGATES, because 0x759A90 is `jp` -- so "unlimited" is exactly -1.0 and not "any special value"
+        unlimitedRan = delegatedRan = 0;
+        const double nan = std::numeric_limits<double>::quiet_NaN();
+        out = engine.dispatch(nan, result,
+                              [&](void*) -> void* { ++unlimitedRan; return result; },
+                              [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
+        CHECK(unlimitedRan == 0);
+        CHECK(delegatedRan == 1);
+        CHECK(out == result);
+
+        // zero is a limit and not the sentinel, which is the distinction the comparison makes
+        unlimitedRan = delegatedRan = 0;
+        engine.dispatch(0.0, result,
+                        [&](void*) -> void* { ++unlimitedRan; return result; },
+                        [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
+        CHECK(delegatedRan == 1 && unlimitedRan == 0);
+
+        // the member at +0x10 is settable, which is the offset RE 0x759AB0 reads
+        engine.setInner(nullptr);
+        CHECK(engine.inner() == nullptr);
     }
 
     return check::finish("test_recovered");

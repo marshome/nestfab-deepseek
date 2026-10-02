@@ -66,7 +66,7 @@ add_library(lcns_model STATIC src/model.cpp src/nfp.cpp src/tiling.cpp src/row.c
 target_link_libraries(lcns_model PUBLIC lcns_geom)
 
 # --- search / strategies / engine / reporting ---
-add_library(lcns_nest STATIC src/nester.cpp src/engine.cpp src/io.cpp src/cloud.cpp
+add_library(lcns_nest STATIC src/nester.cpp src/engine.cpp src/engines.cpp src/io.cpp src/cloud.cpp
                              src/licensing.cpp src/lp.cpp src/lp_column_generation.cpp
                              src/lp_nesting.cpp)
 target_link_libraries(lcns_nest PUBLIC lcns_model)

@@ -1806,6 +1806,22 @@
    "round": 648,
    "subject": "fold.why-the-build-path-exists",
    "witness": "0x5C8C73 ucomisd xmm1,xmm0 compares the BOX against the ELEMENT with jbe skipping the store, so the first element must be installed rather than compared"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the Engine family's Run is slot 2 with the signature (problem, timeLimit, observer, result) and returns the buffer it was given",
+   "round": 649,
+   "subject": "Engine.interface",
+   "witness": "0x2516E calls [rax+0x10] with rdx the object, xmm3 the double, r8 an observer, rcx a buffer at rsp+0x70, and 0x25171 reads that buffer back; every recovered Run ends with mov rax, rbx"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "InfiniteEngine holds an inner engine at +0x10 and either runs the nesting engine directly or delegates to that inner engine",
+   "round": 649,
+   "subject": "InfiniteEngine.is-a-decorator",
+   "witness": "0x759A99 calls 0x757AE0 when the limit is exactly -1.0, and 0x759AB0 loads [rdx+0x10] and 0x759AC4 calls its slot 2 otherwise; 0x759A90 is a jp so a NaN delegates"
   }
  ]
 }
