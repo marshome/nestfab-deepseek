@@ -97,6 +97,21 @@ void mergeBoxInto(void* dstBase, const void* srcBase) {
     boxMergeWorker(static_cast<unsigned char*>(dstBase), static_cast<const unsigned char*>(srcBase));
 }
 
+
+double windowSpanLength(const lcns::dll::WindowSlots& window, bool hasGeometry) {
+    if (!hasGeometry) {
+        return 0.0;   // RE 0x526264
+    }
+    return window.slot18 - window.slot38;   // RE 0x526227 and RE 0x52624D
+}
+
+double windowSpanHeight(const lcns::dll::WindowSlots& window, bool hasGeometry) {
+    if (!hasGeometry) {
+        return 0.0;   // RE 0x5267B0
+    }
+    return window.slot20 - window.slot40;   // RE 0x526767 and RE 0x526790
+}
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll

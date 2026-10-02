@@ -254,5 +254,26 @@ int main() {
     }
 #endif
 
+    // ------------------------------------- the two window spans behind GetLength and GetHeight
+    {
+        // Hand computed so that the two answers differ and a mix-up between them cannot pass: 30 - 4 = 26 and 17 - 2 = 15.
+        lcns::dll::WindowSlots window{};
+        window.slot18 = 30.0;
+        window.slot38 = 4.0;
+        window.slot20 = 17.0;
+        window.slot40 = 2.0;
+        CHECK(lcns::dll::exports::impl::windowSpanLength(window, true) == 26.0);
+        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, true) == 15.0);
+        CHECK(lcns::dll::exports::impl::windowSpanLength(window, false) == 0.0);
+        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, false) == 0.0);
+        // the pairs these spans must not read are set far away, so reading the wrong pair fails loudly
+        window.slot08 = 1000.0;
+        window.slot48 = -1000.0;
+        window.slot10 = 1000.0;
+        window.slot50 = -1000.0;
+        CHECK(lcns::dll::exports::impl::windowSpanLength(window, true) == 26.0);
+        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, true) == 15.0);
+    }
+
     return check::finish("boxacc");
 }
