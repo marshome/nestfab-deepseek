@@ -1974,6 +1974,38 @@
    "round": 657,
    "subject": "tooling.read-the-producers-answer",
    "witness": "the consumer now reads what the generator stated rather than re-deriving it -- the same lesson as the unindexed archive"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the address point is NULL at +0, the typeinfo at +8, and the first slot's ADDRESS at vtable_rva+0x10; slot values are the code addresses",
+   "round": 658,
+   "subject": "vtable.layout",
+   "witness": "dumped at 0xA3CFC0: 0xA3CFD0 is zero, 0xA3CFD8 is 0x6BED90F0, 0xA3CFE0 is 0x6BC19B20 which is 0x759B20, and 0x759AD6 loads 0xA3CFE0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a class's constructor is a function that references its vtable's slot-0 ADDRESS, which is vtable_rva+0x10; 555 such references exist across 399 vtables",
+   "round": 658,
+   "subject": "constructors.found-by-slot-0",
+   "witness": "0x342E0 references 0xA3B6A0 and is Multi::NestingNester's constructor, calling base 0xB4470 then storing the vtable at +0; 0x759AD0 and 0x759B20 also reference it because a destructor installs the same address"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::NestingNester's constructor is 0x342E0 (422 B, 19 calls) and Engine::InfiniteEngine's is 0x24FD0 (209 B, 7 calls), which allocates 0x30 bytes and clears a byte at +8",
+   "round": 658,
+   "subject": "ctors.fields",
+   "witness": "0x342F5 call 0xb4470 then 0x342FA lea vtable then 0x34308 mov [rbx],rax; 0x24FDA mov ecx,0x30, 0x24FEE call 0x998500, 0x24FFC mov byte [rax+8],0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a vtable index must be keyed on slot ADDRESSES and not slot values, and offsets computed from base+0x10",
+   "round": 658,
+   "subject": "tooling.address-vs-value",
+   "witness": "an earlier version keyed on values and computed from the base, and reported zero vtables referenced; the dump at 0xA3CFC0 is what ended three rounds of reasoning"
   }
  ]
 }
