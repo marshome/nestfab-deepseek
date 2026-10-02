@@ -788,5 +788,38 @@ int main() {
         CHECK(kTwoPointRecord == 0x20);                      // RE: 0x135A37..0x135A4B
     }
 
+
+    // --- Squeezer::insert, RE 0x13A360 ---
+    //
+    // The routine walks the lookup tree at impl + 0x250 and inserts into the one at impl + 0x240, comparing the LOWER key first
+    // (0x13A394) and the upper one second (0x13A399). So the pair (lo, hi) IS the identity of an entry, and a second insert with the same pair
+    // updates rather than adds -- which is what the walk's found-branch does.
+    {
+        Squeezer sq;
+        CHECK(sq.size() == 0);
+
+        sq.insert(0x2000, 0x2100, 5.0);          // RE 0x13A3EB: the insert into the tree at +0x240
+        CHECK(sq.size() == 1);
+
+        // the same pair again: the module found the node and updates it, so the count stays at one
+        sq.insert(0x2000, 0x2100, 7.0);
+        CHECK(sq.size() == 1);
+
+        // A DIFFERENT LOWER KEY IS A DIFFERENT NODE, because 0x13A394 compares it FIRST
+        sq.insert(0x2001, 0x2100, 9.0);
+        CHECK(sq.size() == 2);
+
+        // and a different upper key with the same lower one also has to be a different node, because 0x13A399 compares the second too. **IF
+        // ONLY THE LOWER KEY WERE THE IDENTITY, THIS WOULD UPDATE THE FIRST ENTRY INSTEAD OF ADDING**, so the count is what distinguishes the
+        // two readings of the walk.
+        sq.insert(0x2000, 0x2101, 11.0);
+        CHECK(sq.size() == 3);
+
+        sq.clear();
+        CHECK(sq.size() == 0);
+        CHECK(sq.hits() == 0);
+        CHECK(sq.misses() == 0);
+    }
+
     return check::finish("test_row");
 }

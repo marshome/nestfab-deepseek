@@ -954,10 +954,25 @@ double directionSine(double ux, double uy);
      *  +0x10 or +0x18 of the Squeezer object itself.
      */
     struct Impl {
-        bool enabled = true;              // inner +0x08, RE 0x138A6B
-        double coeff = 0.0;               // inner +0x00, RE 0x138A72 -- the constructor's second argument
-        double threshold = 0.0;           // inner +0x10, RE 0x138A79 -- its third
+        bool enabled = true;              // +0x08, RE 0x138A6B, and 0x1380D0 tests it with `cmp byte [rdx + 8], 0`
+        double coeff = 0.0;               // +0x00, RE 0x138A72 -- the constructor's second argument
+        double threshold = 0.0;           // +0x10, RE 0x138A79 -- its third
         double twiceMaxExtent = 0.0;      // RE 0x138A8F: addsd xmm7, xmm6, handed to 0x2530D0
+
+        /** THE NODE OF BOTH TREES, RE 0x13A390 through 0x13A3A4: `{link @0x18, lowerKey @0x20, upperKey @0x28}`. **Two 64 bit keys per node**,
+         *  which is a bounding box -- and it is the very `lo`/`hi` pair `cost` below already takes. */
+        struct Node {
+            Node* link = nullptr;         // +0x18, RE 0x13A3A4: mov rax, [rax + 0x18]
+            std::uintptr_t lowerKey = 0;  // +0x20, RE 0x13A390: mov rdx, [rax + 0x20]
+            std::uintptr_t upperKey = 0;  // +0x28, RE 0x13A399: cmp rsi, [rax + 0x28]
+        };
+
+        /** **TWO TREES, and the two instructions that read their heads are four bytes apart.**
+         *  RE 0x13A379: `lea r8, [rdi + 0x248]` is the head a walk starts from, with the root at +0x250 by 0x13A36C.
+         *  RE 0x13A3EB: `lea rdx, [rdi + 0x240]` is the tree the insert goes INTO. */
+        Node* lookupHead = nullptr;       // +0x248, RE 0x13A379
+        Node* lookupRoot = nullptr;       // +0x250, RE 0x13A36C
+        Node* cacheTree = nullptr;        // +0x240, RE 0x13A3EB
     };
 
     /** RE 0xA3B1F0, three slots. **ITS OWN STATE IS ONE POINTER.** The constructor installs the vtable at +0, allocates the 0x270 byte Impl and
