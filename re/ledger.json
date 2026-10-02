@@ -998,6 +998,22 @@
    "round": 600,
    "subject": "work.has-two-kinds",
    "witness": "the exports with a four-function blocking graph are done or deliberately held back, so the remaining work is a layer rather than a routine"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "173 unread functions have 25 or more callers and the top twenty account for 5095 caller edges",
+   "round": 601,
+   "subject": "fanout.ranking",
+   "witness": "re/g_fanout.py ranks by distinct caller count: 0xFE240 has 740 callers, 0x97A830 571, 0x8AA8B0 398, 0x943890 375 with 2008 bytes, 0x944070 375, 0x910AF0 345"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "seven of the top nine are tiny leaves, so a raw caller count ranks plumbing above substance and needs a minimum body size",
+   "round": 601,
+   "subject": "fanout.needs-a-size-filter",
+   "witness": "0xFE240 is 5 bytes with 740 callers and 0x8AA8B0 is 1 byte with 398; 0x9984B0 is 5 bytes and is the classified allocator's free, the same shape"
   }
  ]
 }
