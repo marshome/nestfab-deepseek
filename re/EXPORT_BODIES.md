@@ -1087,3 +1087,27 @@ window or range object rather than computing a bare number.
 
 The second half (0x52988A to 0x529B2C), with its loop and its 0x62F280 and 0x9984B0 calls, is where the ratio itself
 and the cleanup live, and it is what must be read next before this export can be implemented.
+
+## GetFillRatio implementer 0x5297C0, calculation skeleton (round 411)
+
+The calculation is short; the rest of the 175 instructions are stack object construction, string building and logging on
+the error paths.
+
+    529892  xmm3 = [rip + 0x4B237E]      ; one RIP-relative constant
+    5298C1  edx = 1                      ; second argument
+    5298E6  call 0x528D10                ; the numerator comes back in xmm0
+    5298EB  ucomisd xmm0, xmm6           ; xmm6 was cleared, so this compares with zero
+    5298F3  jp  0x529920                 ; NaN goes to the division path
+    5298F9  jne 0x529920                 ; non-zero goes to the division path, zero returns xmm0 as it stands
+    529920  mov rcx, rbx ; call 0x523A40 ; the denominator
+    529928  divsd xmm0, xmm7             ; the ratio
+    52992C  jmp 0x5298FB                 ; the shared epilogue
+
+So GetFillRatio is a quotient of two calls on the same container, and a zero (or NaN) numerator returns zero without
+dividing. The null-sub-object branch at 0x529930 builds a five-character string whose bytes are 0x65656873 and 0x74 --
+sheet -- plus a longer literal that begins GetLastUsedFra, and hands it to 0x910BA0, which is the logging or throwing
+helper that appears in the cleanup paths of several functions read earlier. That is consistent with round 369: these are
+diagnostic paths, not part of the value returned.
+
+Next: read 0x528D10 (the numerator) and 0x523A40 (the denominator). Both are small, and with them GetFillRatio can be
+implemented and tested behaviourally, since the original cannot execute from the embedded copy.
