@@ -558,6 +558,30 @@
    "round": 571,
    "subject": "LaunchingOrder.parts-and-sheets",
    "witness": "RE 0x9AC698: m_equivalent_problem->GetNumberOfParts() == order->parts.size(); RE 0x9AC6D8 the same for sheets"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "common_cut_safety_preference at +0x6C and multitorch_cutting_preference at +0x9C are proved twice over: a setter stores them and an assertion names them",
+   "round": 572,
+   "subject": "LaunchingOrder.two-names-proved",
+   "witness": "RE 0xEA09/0xEA0D write +0x68/+0x6C for SetCommonCutSafetyPreference (150) and RE 0xF225/0xF233 write +0x98/+0x9C for SetMultiTorchCuttingPreference (176); the assertion strings at 0x9ADE98 and 0x9ADEE8 name the same two fields in snake_case"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "the order holds a parts container and a sheets container, named by an assertion, with NO offset confirmed",
+   "round": 572,
+   "subject": "Order.parts-and-sheets-offsets",
+   "witness": "RE 0x9AC698 and 0x9AC6D8 name order->parts and order->sheets; nothing has tied either to a position in the 0x2C0 object, and an assertion can be stale"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "an assertion string may describe code that has since changed, so it is a lead and not a proof",
+   "round": 572,
+   "subject": "assertion.staleness-risk",
+   "witness": "this project's own instance: the comment in launching_order.hpp quoting a constant at 0x9DE958, an address that does not exist in the module"
   }
  ]
 }

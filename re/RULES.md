@@ -109,6 +109,19 @@ feeling of compliance.
   "where": "re/g_ask.py",
   "since": "round 558"},
 
+ {"id": "assertions-are-leads",
+  "rule": "断言里的信息可能和实际代码不一致——代码更新了断言没更新，所以断言只作线索，不作证明",
+  "check": "every claim whose witness is an assertion STRING must also carry an INSTRUCTION witness for the offset it names; re/g_stale.py lists the ones that do not",
+  "where": "re/g_stale.py, and re/LEDGER.md's grade table",
+  "since": "round 572",
+},
+
+ {"id": "oracle-needs-instruction",
+  "rule": "名字可以从 oracle 来，但字段的偏移必须另有指令级见证",
+  "check": "re/g_stale.py compares each ORACLE name against the instruction witnesses in the ledger",
+  "where": "re/g_stale.py",
+  "since": "round 572"},
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
