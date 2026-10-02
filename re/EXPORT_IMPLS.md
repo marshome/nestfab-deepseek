@@ -120,3 +120,26 @@ What these bytes settle, and what they do NOT:
 * and the outstanding contradiction is recorded rather than resolved: hand-checking the model against ALL ten of
   these rows says it matches every one, so round 380's single failure is more likely a defect in the test harness
   (fixture plumbing) than in the model. The next run must print BOTH sides per fixture to decide.
+
+## 0x5C8C50 randomised cross-check: the mismatch is localised (round 386)
+
+A probe compared the model with the original over 5000 deterministic pseudo-random boxes. **521 disagreed**, and the
+printed cases localise the fault to one place: **maxX**. In every printed case the original keeps a maxX that is the
+larger of what was there and the source''s max corner, while the model ends with a smaller value -- the source''s minX, or
+a value derived from it:
+
+```
+case  0  src maxX=1.5    model maxX=-0.0   original maxX=1.5
+case 13  src maxX=100    model maxX=1.5    original maxX=100
+case 19  src maxX=7      model maxX=0.0    original maxX=7
+```
+
+So the reading error is in the instruction at `0x5C8C88` (`ucomisd xmm0, [rcx+0x18]` followed by the conditional store at
+`0x5C8C8F`), which the model implements as "maxX = max(maxX, src.minX)". Either the operand it compares is not
+`src.minX` at that point, or the store is guarded by an earlier branch''s register state that the model does not
+reproduce. The ten fixed fixtures did not expose it; 5000 random ones did, and the differential comparison is what found
+it -- the same mechanism that caught the signed-zero error in the affine inverse in round 359.
+
+Next step is narrow: dump `0x5C8C50`''s first twelve instructions again, trace `xmm0` at `0x5C8C88` through BOTH entry
+branches, correct the model, and re-run this probe until it reports zero mismatches of 5000. Only then is the model moved
+into `lcns/src/boxmerge.cpp`.
