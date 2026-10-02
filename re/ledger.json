@@ -1302,6 +1302,30 @@
    "round": 618,
    "subject": "assert.154-and-176-are-two-functions",
    "witness": "the self-check caught it by asking 0x526160 alone for both numbers and getting only one"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the module has 680 functions calling the reporter and 1083 assertion sites, all with line numbers",
+   "round": 619,
+   "subject": "assert.map",
+   "witness": "re/g_assert_map.py decodes every site; the self-check reproduces 154 from 0x526160 and 176 from 0x5266A0; the map is written to re/assert_map.json"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a function asserting at the SAME line repeatedly is asserting inside a macro or a loop, so its sites are one belief checked many times",
+   "round": 619,
+   "subject": "assert.repeated-lines-are-macros",
+   "witness": "0x2403A0 names line 35 eight times, 0x226E10 six times, 0x93FD50 alternates 46 and 47; a site count alone would call these eight, six and six beliefs"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x765460 has 14 assertion sites spread over lines 100 to 1050 with eight of them between 928 and 1050",
+   "round": 619,
+   "subject": "0x765460.assertion-cluster",
+   "witness": "a long routine whose guarded decisions cluster in its last fifth"
   }
  ]
 }
