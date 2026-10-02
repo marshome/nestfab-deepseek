@@ -1,0 +1,748 @@
+{
+ "classes": [
+  {
+   "candidates": 3,
+   "class": "Tiling::SqueezeMultiTiler",
+   "constructor": "0x76E440",
+   "fields": 32,
+   "functions_writing": 3,
+   "vtable": "0xA3D2D0"
+  },
+  {
+   "candidates": 7,
+   "class": "Utils::LogSink",
+   "constructor": "0x199570",
+   "fields": 27,
+   "functions_writing": 6,
+   "vtable": "0xA3BD40"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::WarpCanceller",
+   "constructor": "0x4ED480",
+   "fields": 15,
+   "functions_writing": 1,
+   "vtable": "0xA3D160"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::SplitNode",
+   "constructor": "0x99910",
+   "fields": 11,
+   "functions_writing": 3,
+   "vtable": "0xA3BB70"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::TerminalNode",
+   "constructor": "0x99360",
+   "fields": 10,
+   "functions_writing": 3,
+   "vtable": "0xA3B570"
+  },
+  {
+   "candidates": 2,
+   "class": "Engine::CloudEngine",
+   "constructor": "0x268A0",
+   "fields": 9,
+   "functions_writing": 2,
+   "vtable": "0xA3CED0"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::AdvancedStrategist",
+   "constructor": "0x2EC50",
+   "fields": 8,
+   "functions_writing": 1,
+   "vtable": "0xA3B970"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::LimitedNester",
+   "constructor": "0x4AAD0",
+   "fields": 7,
+   "functions_writing": 3,
+   "vtable": "0xA3B650"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::NestingNester",
+   "constructor": "0x342E0",
+   "fields": 7,
+   "functions_writing": 3,
+   "vtable": "0xA3B690"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::TraceObserver",
+   "constructor": "0x5F000",
+   "fields": 6,
+   "functions_writing": 1,
+   "vtable": "0xA3B700"
+  },
+  {
+   "candidates": 3,
+   "class": "Structure::ClusterObserver",
+   "constructor": "0x553100",
+   "fields": 6,
+   "functions_writing": 3,
+   "vtable": "0xA53420"
+  },
+  {
+   "candidates": 26,
+   "class": "Utils::Canceller",
+   "constructor": "0x68AB50",
+   "fields": 6,
+   "functions_writing": 8,
+   "vtable": "0xA3BD70"
+  },
+  {
+   "candidates": 4,
+   "class": "Multi::CompactNester",
+   "constructor": "0xB0270",
+   "fields": 5,
+   "functions_writing": 4,
+   "vtable": "0xA3B610"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::SupervisorCanceller",
+   "constructor": "0x30A30",
+   "fields": 5,
+   "functions_writing": 3,
+   "vtable": "0xA3BA90"
+  },
+  {
+   "candidates": 3,
+   "class": "Tiling::CompositePart",
+   "constructor": "0x4DBA70",
+   "fields": 5,
+   "functions_writing": 3,
+   "vtable": "0xA3D140"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::NoMixSheetSelector",
+   "constructor": "0xAFD60",
+   "fields": 4,
+   "functions_writing": 3,
+   "vtable": "0xA3B9D0"
+  },
+  {
+   "candidates": 1,
+   "class": "Pack::KnapsackNester",
+   "constructor": "0x15D1D0",
+   "fields": 4,
+   "functions_writing": 1,
+   "vtable": "0xA3B430"
+  },
+  {
+   "candidates": 3,
+   "class": "Pack::RecursiveNester",
+   "constructor": "0x162280",
+   "fields": 4,
+   "functions_writing": 3,
+   "vtable": "0xA3B460"
+  },
+  {
+   "candidates": 6,
+   "class": "Tiling::Part",
+   "constructor": "0x4DB0D0",
+   "fields": 4,
+   "functions_writing": 6,
+   "vtable": "0xA3D420"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::QuantityEvaluator",
+   "constructor": "0x4E81B0",
+   "fields": 4,
+   "functions_writing": 1,
+   "vtable": "0xA3D270"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::NestingEngine",
+   "constructor": "0x23E70",
+   "fields": 3,
+   "functions_writing": 3,
+   "vtable": "0xA3CFA0"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::FilterNester",
+   "constructor": "0xB3A70",
+   "fields": 3,
+   "functions_writing": 3,
+   "vtable": "0xA3B4F0"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::FlipNester",
+   "constructor": "0x4B570",
+   "fields": 3,
+   "functions_writing": 3,
+   "vtable": "0xA3B490"
+  },
+  {
+   "candidates": 3,
+   "class": "Pack::BestNester",
+   "constructor": "0x15E3B0",
+   "fields": 3,
+   "functions_writing": 3,
+   "vtable": "0xA3B400"
+  },
+  {
+   "candidates": 2,
+   "class": "Tiling::BiModulePattern",
+   "constructor": "0x7E8520",
+   "fields": 3,
+   "functions_writing": 2,
+   "vtable": "0xA3D1C0"
+  },
+  {
+   "candidates": 4,
+   "class": "Utils::OstreamSink::<<subst>>",
+   "constructor": "0x19DA20",
+   "fields": 3,
+   "functions_writing": 3,
+   "vtable": "0xA3BBA0"
+  },
+  {
+   "candidates": 8,
+   "class": "dbg::file_error",
+   "constructor": "0x60C160",
+   "fields": 3,
+   "functions_writing": 6,
+   "vtable": "0xA3B210"
+  },
+  {
+   "candidates": 1,
+   "class": "dbg::symlog",
+   "constructor": "0x60B4E0",
+   "fields": 3,
+   "functions_writing": 1,
+   "vtable": "0xA3B240"
+  },
+  {
+   "candidates": 2,
+   "class": "Engine::CompositeObserver",
+   "constructor": "0x8D4500",
+   "fields": 2,
+   "functions_writing": 1,
+   "vtable": "0xA3D060"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::CompactCanceller",
+   "constructor": "0x68A6E0",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3B870"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::DatabaseNester",
+   "constructor": "0x5B1F0",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3B740"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::MultiTorchNester",
+   "constructor": "0x780E0",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3B8A0"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::NoFillNester",
+   "constructor": "0x7EE50",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3B530"
+  },
+  {
+   "candidates": 2,
+   "class": "Multi::PartUpdaterLimiter",
+   "constructor": "0x695C70",
+   "fields": 2,
+   "functions_writing": 1,
+   "vtable": "0xA3BA00"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::RectangleNester",
+   "constructor": "0x77440",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3B800"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::RowNester",
+   "constructor": "0x8F210",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3BB30"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::WrapObserver",
+   "constructor": "0x83DC0",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3B5E0"
+  },
+  {
+   "candidates": 1,
+   "class": "Structure::Observer",
+   "constructor": "0x83DC0",
+   "fields": 2,
+   "functions_writing": 1,
+   "vtable": "0xA53550"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::BasicCandidater",
+   "constructor": "0x4F3630",
+   "fields": 2,
+   "functions_writing": 1,
+   "vtable": "0xA3D190"
+  },
+  {
+   "candidates": 3,
+   "class": "Tiling::DensityEvaluator",
+   "constructor": "0x4E8470",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3D210"
+  },
+  {
+   "candidates": 2,
+   "class": "Tiling::ReusableEvaluator",
+   "constructor": "0x4E8540",
+   "fields": 2,
+   "functions_writing": 2,
+   "vtable": "0xA3D2A0"
+  },
+  {
+   "candidates": 6,
+   "class": "Utils::BadResponseException",
+   "constructor": "0x2B660",
+   "fields": 2,
+   "functions_writing": 3,
+   "vtable": "0xA3BC80"
+  },
+  {
+   "candidates": 3,
+   "class": "Coin::CoinLP",
+   "constructor": "0x267760",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3B270"
+  },
+  {
+   "candidates": 3,
+   "class": "Compact::Compacter::Implementation",
+   "constructor": "0x266E00",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3D470"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::BestObserver",
+   "constructor": "0x756B20",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3CF30"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::CompositeEngine",
+   "constructor": "0x24C40",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3D000"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::DelayedEngine",
+   "constructor": "0x24B80",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3CF70"
+  },
+  {
+   "candidates": 5,
+   "class": "Engine::EquivalentEngine",
+   "constructor": "0x24AB0",
+   "fields": 1,
+   "functions_writing": 5,
+   "vtable": "0xA3D030"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::EquivalentObserver",
+   "constructor": "0x75E0E0",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3D0A0"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::InfiniteEngine",
+   "constructor": "0x24FD0",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3CFD0"
+  },
+  {
+   "candidates": 3,
+   "class": "Engine::MultiEngine",
+   "constructor": "0x240D0",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3CF00"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::AllSheetSelector",
+   "constructor": "0xB00E0",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3B840"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::LargestSheetSelector",
+   "constructor": "0xB0000",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3BAC0"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::NestingContextPool",
+   "constructor": "0x32700",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3B9A0"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::NoFitMapCanceller",
+   "constructor": "0x32700",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3B8E0"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::RandomSheetSelector",
+   "constructor": "0xB0040",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3BA60"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::Supervisor",
+   "constructor": "0x30B60",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3B4D0"
+  },
+  {
+   "candidates": 3,
+   "class": "Multi::TilingNester",
+   "constructor": "0x45680",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3B5A0"
+  },
+  {
+   "candidates": 2,
+   "class": "Prc::AlphaPriceComputer",
+   "constructor": "0x4D9B30",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3B130"
+  },
+  {
+   "candidates": 2,
+   "class": "Prc::BoxPriceComputer",
+   "constructor": "0x4D9AD0",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3B0B0"
+  },
+  {
+   "candidates": 2,
+   "class": "Prc::HullPriceComputer",
+   "constructor": "0x4D9B00",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3B0F0"
+  },
+  {
+   "candidates": 6,
+   "class": "Prc::LinearCombinationPricer",
+   "constructor": "0x4D9CD0",
+   "fields": 1,
+   "functions_writing": 6,
+   "vtable": "0xA3B170"
+  },
+  {
+   "candidates": 1,
+   "class": "Row::BasicDistancer",
+   "constructor": "0x136AE0",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3B1B0"
+  },
+  {
+   "candidates": 4,
+   "class": "Row::Squeezer",
+   "constructor": "0x138A20",
+   "fields": 1,
+   "functions_writing": 4,
+   "vtable": "0xA3B1E0"
+  },
+  {
+   "candidates": 4,
+   "class": "Structure::ParseProblemException",
+   "constructor": "0x50CF70",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA534F0"
+  },
+  {
+   "candidates": 4,
+   "class": "Structure::ParseSolutionException",
+   "constructor": "0x50FA10",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA53520"
+  },
+  {
+   "candidates": 4,
+   "class": "Tiling::BoxMultiTiler",
+   "constructor": "0x4F4850",
+   "fields": 1,
+   "functions_writing": 4,
+   "vtable": "0xA3D100"
+  },
+  {
+   "candidates": 2,
+   "class": "Tiling::MultiOrientedPartPattern",
+   "constructor": "0x4F2910",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3D370"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::MultitorchEvaluator",
+   "constructor": "0x4E8410",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3D310"
+  },
+  {
+   "candidates": 3,
+   "class": "Tiling::ObliqueEvaluator",
+   "constructor": "0x4E8170",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3D240"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::OldMultitorchEvaluator",
+   "constructor": "0x4E83E0",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3D340"
+  },
+  {
+   "candidates": 3,
+   "class": "Tiling::PackerCache",
+   "constructor": "0x158BE0",
+   "fields": 1,
+   "functions_writing": 3,
+   "vtable": "0xA3D0E0"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::UnlimitedDensityEvaluator",
+   "constructor": "0x4E80A0",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3D3C0"
+  },
+  {
+   "candidates": 1,
+   "class": "Tiling::UnlimitedXDensityEvaluator",
+   "constructor": "0x4E80D0",
+   "fields": 1,
+   "functions_writing": 1,
+   "vtable": "0xA3D3F0"
+  },
+  {
+   "candidates": 4,
+   "class": "Utils::ConnectException",
+   "constructor": "0x6D3240",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3BBF0"
+  },
+  {
+   "candidates": 4,
+   "class": "Utils::ResolveException",
+   "constructor": "0x6D3280",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3BC20"
+  },
+  {
+   "candidates": 4,
+   "class": "Utils::TimeoutException",
+   "constructor": "0x6D32C0",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3BC50"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__class_type_info",
+   "constructor": "0x656310",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3AD90"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__enum_type_info",
+   "constructor": "0x6562D0",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3AD50"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__fundamental_type_info",
+   "constructor": "0x656470",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3AF80"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__pbase_type_info",
+   "constructor": "0x656350",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3ADF0"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__pointer_type_info",
+   "constructor": "0x6563B0",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3AE70"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__si_class_type_info",
+   "constructor": "0x6563F0",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3AEC0"
+  },
+  {
+   "candidates": 2,
+   "class": "__cxxabiv1::__vmi_class_type_info",
+   "constructor": "0x656430",
+   "fields": 1,
+   "functions_writing": 2,
+   "vtable": "0xA3AF20"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::NestingObserver",
+   "constructor": "0x378E0",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA3B7C0"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::RCompactCanceller",
+   "constructor": "0x67460",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA3B910"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::StrategyBasicAdder",
+   "constructor": "0xAF750",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA3BA30"
+  },
+  {
+   "candidates": 1,
+   "class": "Multi::StrategyDescriber",
+   "constructor": "0xAF720",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA3B940"
+  },
+  {
+   "candidates": 1,
+   "class": "RCompact::RotateLogger",
+   "constructor": "0x24A1C0",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA533D0"
+  },
+  {
+   "candidates": 2,
+   "class": "Structure::BoxAreaDimensioner",
+   "constructor": "0x5247F0",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA534C0"
+  },
+  {
+   "candidates": 2,
+   "class": "Structure::SizeDimensioner",
+   "constructor": "0x5247D0",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA53460"
+  },
+  {
+   "candidates": 3,
+   "class": "Structure::WidthDimensioner",
+   "constructor": "0x5247B0",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA53490"
+  },
+  {
+   "candidates": 1,
+   "class": "Utils::TimerWinImplementation",
+   "constructor": "0x5F47C0",
+   "fields": 0,
+   "functions_writing": 0,
+   "vtable": "0xA3BCB0"
+  }
+ ]
+}

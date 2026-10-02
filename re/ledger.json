@@ -2030,6 +2030,30 @@
    "round": 659,
    "subject": "tooling.base-register-reassignment",
    "witness": "0x33100 sets rbp from rcx at 0x3311F and reassigns it from a return value at 0x3392B; ignoring that reported offsets for a register whose value had been replaced"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "93 classes have a constructor candidate and 84 of them write at least one field; the richest is Tiling::SqueezeMultiTiler with 32 positions",
+   "round": 660,
+   "subject": "constructors.population",
+   "witness": "found by joining re/g_find_ctors.py's slot-0 references to re/g_class_fields.py's stores; Utils::Canceller has 26 candidates because a canceller is copied in many places"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::SplitNode's constructor is 0x99910 with 11 fields and Multi::TerminalNode's is 0x99360 with 10",
+   "round": 660,
+   "subject": "SplitNode.and.TerminalNode.have-ctors",
+   "witness": "two of the seventeen classes named-but-undeclared by re/g_defined_classes.py; their constructors were found by slot-0 reference rather than by name"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the field count is a count of DISTINCT OFFSETS, so NestingNester's two writes at 0x30 make one position",
+   "round": 660,
+   "subject": "fields.count-positions-not-stores",
+   "witness": "0x34328 zeroes +0x30 and 0x343E3 sets it from xmm6, which is also the evidence that the field holds a double"
   }
  ]
 }
