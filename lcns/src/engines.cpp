@@ -1,25 +1,39 @@
-// lcns/src/engines.cpp -- InfiniteEngine::run, the one Engine subclass whose body has been read.
+// lcns/src/engines.cpp -- InfiniteEngine::run, and the six engines whose bodies have not been read.
 #include "lcns/engines.hpp"
 
 namespace lcns {
 
-void* InfiniteEngine::run(const void* /*problem*/, double timeLimit, void*, void* result) {
-    // The routine's own content is the DECISION, and it lives in dispatch() so a test can drive both branches without an engine to call.
-    // Here the two branches are the module's: the unlimited case enters the nesting engine at 0x757AE0, and the other delegates to the
-    // inner engine's Run slot. Neither of those is implemented yet, so this says so rather than pretending.
-    //
-    // RE 0x759A80's two arms:
-    //     0x759A94  mov r9, [rsp + 0x60] / 0x759A99 call 0x757AE0      ; unlimited
-    //     0x759AB0  mov rdx, [rdx + 0x10] / 0x759AC4 call [rax + 0x10] ; otherwise, through the inner engine's vtable
-    return dispatch(timeLimit, result,
-                    [](void* r) -> void* {
-                        (void)r;                      // the buffer would be filled by RE 0x757AE0, which has not been read
-                        return nullptr;               // so the unlimited arm is RECORDED and not implemented, and returns nothing
-                    },
-                    [](EngineBase* inner, void* r) -> void* {
-                        (void)inner;
-                        return r;                    // the delegating arm returns the buffer, which is what 0x759AC7 does
-                    });
+// RE 0x759A80, the whole 80 bytes. It is a DECISION and nothing else:
+//
+//     0x759A8D  mov rbx, rcx              ; `this`, and rbx is how the result comes back
+//     0x759A85  ucomisd xmm3, [0x9AE740]  ; the time limit against -1.0
+//     0x759A90  jp  0x759AB0              ; A NaN TAKES THE DELEGATING PATH
+//     0x759A92  jne 0x759AB0              ; and so does any limit that is not exactly -1.0
+//     0x759A94  mov r9, [rsp + 0x60]      ; the stack argument
+//     0x759A99  call 0x757AE0             ; the NESTING ENGINE'S ENTRY, called directly rather than through a vtable
+//     0x759A9E  mov rax, rbx / ret        ; the result
+//     0x759AB0  mov rdx, [rdx + 0x10]     ; OTHERWISE: the engine found at +0x10 of THE PROBLEM -- **`rdx` is the SECOND argument, which this
+//                                         ;   slot receives as `problem`, NOT as `this`**
+//     0x759AB9  mov rax, [rdx]            ; that engine's vtable
+//     0x759ABC  mov [rsp + 0x20], rcx     ; the stack argument again
+//     0x759AC1  mov rcx, rbx              ; ITS `this` is the RESULT BUFFER, so the callee writes the result in place
+//     0x759AC4  call qword ptr [rax + 0x10]   ; ITS Run, slot 2
+//
+// **THE EARLIER READING WAS WRONG AND THE CLASS CARRIED IT FOR SEVERAL ROUNDS.** `[rdx + 0x10]` was recorded as "the inner engine at
+// this + 0x10", and in slot 2 `rdx` is the problem. That produced an `inner_` member and a `setInner` that no instruction supports, and a
+// `dispatch` template whose delegate had to be passed in because there was nothing in the object to delegate to.
+void* InfiniteEngine::run(const void* problem, double timeLimit, void*, void* result) {
+    if (timeLimit == kUnlimitedTime) {
+        // RE 0x759A99. 0x757AE0 is the nesting engine's entry and its body has not been read, so this arm is RECORDED and returns the buffer
+        // rather than pretending to have nested anything.
+        return result;
+    }
+    // RE 0x759AB0: the engine lives at +0x10 of the PROBLEM, and is called through its own vtable with the result buffer as its `this`.
+    const auto* holder = static_cast<const ProblemView*>(problem);
+    if (holder == nullptr || holder->engine == nullptr) {
+        return result;
+    }
+    return holder->engine->run(problem, timeLimit, nullptr, result);
 }
 
 // The other six. Each is UNREAD beyond what its declaration records, and each says so at its own body rather than in a comment elsewhere

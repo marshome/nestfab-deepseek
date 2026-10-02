@@ -63,58 +63,24 @@ public:
     virtual void* run(const void* problem, double timeLimit, void* observer, void* result) = 0;
 };
 
-/** RE 0x759A80 (80 bytes): either run the nesting engine for ever, or hand the work to a nested engine.
- *
- * The whole body:
- *
- *     0x759A85  ucomisd xmm3, [rip + 0x254cb3]   ; the time limit against -1.0, rva 0x9AE740
- *     0x759A90  jp  0x759AB0                     ; a NaN time limit takes the delegating path
- *     0x759A92  jne 0x759AB0                     ; and so does any limit that is not exactly -1.0
- *     0x759A94  mov r9, [rsp + 0x60]             ; the stack argument
- *     0x759A99  call 0x757AE0                    ; NESTING ENGINE'S RUN, called directly
- *     0x759A9E  mov rax, rbx                     ; rbx is the result buffer from rcx
- *     0x759AA6  ret
- *     0x759AB0  mov rdx, [rdx + 0x10]            ; OTHERWISE: the INNER ENGINE at this + 0x10
- *     0x759AB4  mov rcx, [rsp + 0x60]            ; the stack argument
- *     0x759AB9  mov rax, [rdx]                   ; the inner engine's vtable
- *     0x759ABC  mov [rsp + 0x20], rcx
- *     0x759AC1  mov rcx, rbx                     ; the same result buffer
- *     0x759AC4  call qword ptr [rax + 0x10]      ; AND ITS RUN, slot 2
- *     0x759AC7  mov rax, rbx / ret
- *
- * so the class is a DECORATOR with a sentinel: `-1.0` means "no limit, nest until done", and any other limit means the nested engine
- * should decide. The two branches return the same buffer, which is why the routine reads as one decision rather than two behaviours.
- *
- * THE MEMBER IS AT +0x10, which is the offset RE 0x759AB0 reads, and it is the only field the routine touches -- so the class has one
- * member and one virtual method, and the padding before +0x10 belongs to the vtable pointer at +0.
- */
+/** What RE 0x759AB0 reads out of the SECOND argument: the engine it delegates to sits at +0x10 of the problem. */
+struct ProblemView {
+    std::byte header[0x10]{};
+    EngineBase* engine = nullptr;      // RE 0x759AB0: mov rdx, [rdx + 0x10]
+};
+
 class InfiniteEngine : public EngineBase {
 public:
-
     InfiniteEngine() = default;
 
-    /** The inner engine, RE 0x759AB0: `mov rdx, [rdx + 0x10]`. */
-    void setInner(EngineBase* inner) { inner_ = inner; }
-    EngineBase* inner() const { return inner_; }
-
-    /** RE 0x759A80's decision, as the instructions express it. `delegate` does what calling the inner engine's Run does, and
-     *  `runUnlimited` does what RE 0x757AE0 does; both are parameters because neither the inner engine nor 0x757AE0 is part of what this
-     *  routine determines, and the routine's own content is WHICH of them runs.
+    /** **THE CLASS HAS NO MEMBER THAT AN INSTRUCTION SUPPORTS.** RE 0x759A80 reads `this` only in order to return it -- `mov rbx, rcx` at
+     *  0x759A8D and `mov rax, rbx` at 0x759A9E -- and the engine it delegates to comes from the PROBLEM's +0x10, because in slot 2 `rdx` is
+     *  the second argument and NOT `this`. An earlier `inner_` member at +0x10 was a misreading of that, and `setInner`, `inner` and the
+     *  `dispatch` template existed only to serve it; they are deleted rather than left looking recovered.
      *
-     *  A NaN limit takes the delegating path, because 0x759A90 is `jp` -- so "unlimited" is exactly -1.0 and not "any special value".
-     */
-    template <typename RunUnlimited, typename Delegate>
-    void* dispatch(double timeLimit, void* result, RunUnlimited runUnlimited, Delegate delegate) const {
-        if (timeLimit == kUnlimitedTime) {          // RE 0x759A85, 0x759A90 jp, 0x759A92 jne
-            return runUnlimited(result);            // RE 0x759A99 call 0x757AE0
-        }
-        return delegate(inner_, result);            // RE 0x759AB0 through 0x759AC4
-    }
-
+     *  The class's whole content is the DECISION: unlimited time enters the nesting engine at 0x757AE0 directly, and anything else -- a NaN
+     *  included, because the branch is a `jp` -- goes through the engine the problem carries. */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
-
-private:
-    EngineBase* inner_ = nullptr;                   // +0x10
 };
 
 // ------------------------------------------------------------------------------------------------

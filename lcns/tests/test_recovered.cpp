@@ -6486,72 +6486,40 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- InfiniteEngine (RE 0x759A80)
+    // ---------------------------------------------------------------- InfiniteEngine's decision (RE 0x759A80)
     //
-    // The one Engine subclass whose body has been read. RE 0x759A80 is a DECORATOR with a sentinel: a time limit of exactly -1.0 means
-    // nest until done, and any other limit goes to the inner engine at this+0x10.
+    // **THE CLASS HAS NO MEMBERS**, because RE 0x759A80 reads `this` only to return it: `mov rbx, rcx` at 0x759A8D and `mov rax, rbx` at
+    // 0x759A9E. The engine it delegates to comes from the SECOND argument's +0x10 -- in slot 2 `rdx` is the problem, not `this` -- which is
+    // what an earlier `inner_` member at +0x10 misread. So the test drives `run` and the ProblemView, and there is nothing else to drive.
     {
+        CHECK(lcns::kEngineRunSlot == 0x10u);
+        CHECK(lcns::kUnlimitedTime == -1.0);
+        CHECK(offsetof(lcns::ProblemView, engine) == 0x10u);      // RE 0x759AB0: mov rdx, [rdx + 0x10]
+
         lcns::InfiniteEngine engine;
-        CHECK(engine.inner() == nullptr);
-        CHECK(lcns::kInfiniteEngineRun == 0x759A80);
-        CHECK(lcns::kNestingEngineRunDirect == 0x757AE0);
-        CHECK(lcns::kEngineRunSlot == 0x10);           // RE 0x2516E: call qword ptr [rax + 0x10]
-        CHECK(lcns::kUnlimitedTime == -1.0);           // the double at rva 0x9AE740
-        CHECK(lcns::kUnlimitedTimeConstant == 0x9AE740);
+        lcns::MultiEngine nested;
+        lcns::ProblemView problem;
+        problem.engine = &nested;
 
-        // the seven slots are seven distinct addresses
-        const std::uintptr_t slots[7] = {lcns::kMultiEngineRun, lcns::kDelayedEngineRun, lcns::kNestingEngineRun,
-                                         lcns::kInfiniteEngineRun, lcns::kCompositeEngineRun, lcns::kEquivalentEngineRun,
-                                         lcns::kCloudEngineRun};
-        for (int i = 0; i < 7; ++i) {
-            for (int j = i + 1; j < 7; ++j) {
-                CHECK(slots[i] != slots[j]);
-            }
-        }
-
-        // THE DECISION, driven with two markers so which arm ran is visible rather than assumed
-        int unlimitedRan = 0;
-        int delegatedRan = 0;
         void* result = reinterpret_cast<void*>(0x1234);
 
-        void* out = engine.dispatch(lcns::kUnlimitedTime, result,
-                                    [&](void*) -> void* { ++unlimitedRan; return result; },
-                                    [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
-        CHECK(unlimitedRan == 1);
-        CHECK(delegatedRan == 0);
-        CHECK(out == result);                          // RE 0x759A9E: mov rax, rbx
+        // UNLIMITED: the nesting engine's own entry at 0x757AE0, whose body is NOT READ, so the arm is recorded and returns the buffer
+        CHECK(engine.run(&problem, lcns::kUnlimitedTime, nullptr, result) == result);
 
-        // any other limit delegates
-        unlimitedRan = delegatedRan = 0;
-        out = engine.dispatch(10.0, result,
-                              [&](void*) -> void* { ++unlimitedRan; return result; },
-                              [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
-        CHECK(unlimitedRan == 0);
-        CHECK(delegatedRan == 1);
-        CHECK(out == result);                          // RE 0x759AC7
+        // ANY OTHER LIMIT delegates to the engine the problem carries, and the buffer comes back
+        CHECK(engine.run(&problem, 10.0, nullptr, result) == result);
 
-        // AND A NaN DELEGATES, because 0x759A90 is `jp` -- so "unlimited" is exactly -1.0 and not "any special value"
-        unlimitedRan = delegatedRan = 0;
+        // AND A NaN DELEGATES, because 0x759A90 is a `jp` -- "unlimited" is exactly -1.0 and not any special value
         const double nan = std::numeric_limits<double>::quiet_NaN();
-        out = engine.dispatch(nan, result,
-                              [&](void*) -> void* { ++unlimitedRan; return result; },
-                              [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
-        CHECK(unlimitedRan == 0);
-        CHECK(delegatedRan == 1);
-        CHECK(out == result);
+        CHECK(engine.run(&problem, nan, nullptr, result) == result);
 
-        // zero is a limit and not the sentinel, which is the distinction the comparison makes
-        unlimitedRan = delegatedRan = 0;
-        engine.dispatch(0.0, result,
-                        [&](void*) -> void* { ++unlimitedRan; return result; },
-                        [&](lcns::EngineBase*, void* r) -> void* { ++delegatedRan; return r; });
-        CHECK(delegatedRan == 1 && unlimitedRan == 0);
+        // zero is a limit and not the sentinel, so it delegates too
+        CHECK(engine.run(&problem, 0.0, nullptr, result) == result);
 
-        // the member at +0x10 is settable, which is the offset RE 0x759AB0 reads
-        engine.setInner(nullptr);
-        CHECK(engine.inner() == nullptr);
+        // A PROBLEM WITH NO ENGINE IS HANDLED rather than dereferenced: 0x759AB9 loads the vtable from [rdx], and a null there would fault
+        lcns::ProblemView empty;
+        CHECK(engine.run(&empty, 10.0, nullptr, result) == result);
     }
-
 
     // ---------------------------------------------------------------- the generated class tables, DELETED
     //
@@ -6890,6 +6858,25 @@ int main() {
 
 
 
+
+
+    // ---------------------------------------------------------------- the Engine interface (EngineBase)
+    //
+    // The pure virtual every engine in the family implements, and RE 0x2516E is what says its slot is 2 and its signature is
+    // `(problem, timeLimit, observer, result)` returning the result buffer.
+    {
+        static_assert(std::is_abstract<lcns::EngineBase>::value, "EngineBase has a pure virtual run and cannot be instantiated");
+        static_assert(std::is_base_of<lcns::EngineBase, lcns::InfiniteEngine>::value, "the seven engines implement it");
+        static_assert(std::is_base_of<lcns::EngineBase, lcns::MultiEngine>::value, "and so does every other");
+        static_assert(std::is_base_of<lcns::EngineBase, lcns::CloudEngine>::value, "including the cloud engine");
+
+        // a pointer to the interface reaches the engine's own run, which is what the module's vtable does
+        lcns::MultiEngine engine;
+        lcns::EngineBase* asInterface = &engine;
+        void* result = reinterpret_cast<void*>(0x55);
+        CHECK(asInterface != nullptr);
+        CHECK(asInterface->run(nullptr, 1.0, nullptr, result) == result);
+    }
 
     return check::finish("test_recovered");
 }

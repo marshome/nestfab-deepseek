@@ -2382,6 +2382,30 @@
    "round": 674,
    "subject": "a-check-that-flags-correct-code-gets-switched-off",
    "witness": "geom.hpp, variant.hpp and licensing.cpp cite mov [rsp + ...] as the evidence for something the stack holds, which is legitimate; re/g_prove_full_audit.py now plants each shape and requires failure"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Engine::InfiniteEngine has no data member that any instruction supports; its run reads this only to return it, and delegates to the engine at +0x10 of the PROBLEM",
+   "round": 675,
+   "subject": "InfiniteEngine.has-no-members",
+   "witness": "0x759A8D mov rbx,rcx and 0x759A9E mov rax,rbx are the only uses of this; 0x759AB0 mov rdx,[rdx+0x10] uses rdx, which in slot 2 is the second argument"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the field scan paired a class with the function that writes the most fields, without checking that the function is a constructor of that class",
+   "round": 675,
+   "subject": "ctor-pairing-was-never-checked",
+   "witness": "0x24FD0 was paired with Engine::InfiniteEngine and allocates a 0x30 and a 0x18 byte object at its own +0 and +8, so it builds another class; re/g_find_real_ctor.py now reports each candidate with its allocation, its [this+0] stores and its tail call"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an API member that exists only so a caller can supply what a wrapper lacks is a sign the wrapper's real source was misread",
+   "round": 675,
+   "subject": "a-wrapper-member-can-be-a-misread-argument",
+   "witness": "setInner and the dispatch template existed to serve inner_ at +0x10, which was the PROBLEM's +0x10 read as an offset from this"
   }
  ]
 }
