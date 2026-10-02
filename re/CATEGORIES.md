@@ -1,8 +1,8 @@
 # Category accounting
 
 Required by C1 and C3: every category of reachable domain code is either **implemented** in `lcns/` with tests that pin
-its behaviour, or **carried** — its original bytes embedded in the project, with the reason it is not callable recorded
-in the code — or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
+its behaviour, or **carried** 鈥?its original bytes embedded in the project, with the reason it is not callable recorded
+in the code 鈥?or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
 "addresses mentioned" is the metric this work already rejected once, because writing an address is not implementing
 anything.
 
@@ -12,8 +12,8 @@ Counts are stated per category, not summed into a single progress number, so tha
 
 | Category | Routines | Where | Evidence |
 |---|---|---:|---|
-| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` (862 checks) — **all six routines compared bit for bit with the original**: compose over 36 matrix pairs, the three apply forms over 6 matrices x 5 points, the builder over 5 points, and the inverse over every non-singular matrix in the set; the inverse comparison found a **signed-zero** difference that a property test cannot see (appendix 274). Properties remain only for what has no oracle (singular rejection) |
-| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` — bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
+| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` (862 checks) 鈥?**all six routines compared bit for bit with the original**: compose over 36 matrix pairs, the three apply forms over 6 matrices x 5 points, the builder over 5 points, and the inverse over every non-singular matrix in the set; the inverse comparison found a **signed-zero** difference that a property test cannot see (appendix 274). Properties remain only for what has no oracle (singular rejection) |
+| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` 鈥?bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
 | **Box accumulator pair** | `0x5C8A10` init-or-extend one pair, `0x50FD40` the box over a range of 312-byte elements | `lcns/include/lcns/boxacc.hpp`, `lcns/src/boxacc.cpp` | `tests/test_boxacc.cpp` -- the whole 0x28-byte box compared **byte for byte** (the flag included) against both originals over seven element sets and ten single-pair cases |
 | **Segment threshold kernel** | `0x55E190` | `lcns/include/lcns/segcost.hpp`, `lcns/src/segcost.cpp` | `tests/test_segcost.cpp` -- compared against the original over **3072 segment/parameter combinations**, with both outcomes exercised; properties pin the operand order (which length takes which weight), the strictness of the comparison and zero-length degeneracies |
 | **Angle transform readers** (pre-existing) | `0x5D38C0`'s transform, `0x5CEE50` angle -> transform | `lcns/include/lcns/row.hpp` | held to the original bytes by `tests/test_affine.cpp`: `transformX`/`transformY`/`transformDet` compared with `0x5CFD80` over 6 matrices x 5 points |
@@ -48,7 +48,7 @@ measurement. `re/g_coverage.py` prints it; this file does not repeat it as a cla
 ## How this is counted, and why not mechanically
 
 An earlier version of this work counted "addresses cited anywhere in `lcns/` or `re/`", which a constant in a header
-satisfies without any behaviour existing — it is a proxy that can be satisfied by annotation, and it was rejected for
+satisfies without any behaviour existing 鈥?it is a proxy that can be satisfied by annotation, and it was rejected for
 that reason. The implemented column above is therefore an explicit list, each row naming the routines and the test that
 pins them. If the list is wrong, it is wrong in a way a reader can check by running one executable.
 
@@ -141,3 +141,26 @@ The affine library (six routines, 862 checks, including a signed-zero difference
 orientation determinant, the segment threshold kernel (3,072 combinations), the box accumulator pair (whole 0x28-byte box,
 byte for byte), and the box merge `0x5C8C50` -- whose differential test is written and whose model agreed on nine of ten
 fixtures in round 380, with the tenth left open and the original's ten outputs recorded in `re/EXPORT_IMPLS.md`.
+
+## Gate defects found in this session, and their fixes
+
+Three defects were found in the checks this work runs before committing. They are recorded here because each one produced
+a false signal at least once, and a false green is worse than a red.
+
+1. A stale test binary made a failed build look green. The build had failed, so the test executables were never relinked,
+   and ctest then ran the OLD executables and reported 22 of 22. Fix: delete build/test_*.exe before building and before
+   running ctest. This is now done in every gate run.
+
+2. A commit was reported when nothing had been committed. The commit branch tested only the build, ctest and registry, not
+   whether the tree had actually changed, so nothing-to-commit still printed COMMITTED. Fix: require a non-empty change set
+   before reporting a commit.
+
+3. git status cannot see ignored files, so it cannot be the change test for them. The rule .gitignore line 71 re/g_*.py was
+   silently hiding sixteen generator scripts, including the one that produces the embedded bytes and the one that produces
+   the 168 C ABI definitions. git add -A skipped them, and git status --porcelain reported a clean tree, so the commit
+   branch never ran. Fix: for any path that may match an ignore rule, run git add -f with explicit paths and then verify with
+   git ls-files. Never rely on git status for that question.
+
+The third defect also invalidated commit messages from earlier rounds that named such scripts: the message claimed a file
+   the commit did not contain. Those scripts are now tracked, which is what makes the generated documents reproducible from
+   a clone.
