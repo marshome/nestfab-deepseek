@@ -458,3 +458,49 @@ module by re/check_embeddings.py.
 ... (truncated in this document; the bytes are embedded in the project)
 ```
 
+## 0x62F280 -- 171 bytes, 5209 callers (round 374)
+
+The highest-leverage internal function left: the three box routines behind GetLength, GetHeight and GetFillRatio all
+end by calling it, and re/EXPORT_QUEUE.md counts it as the blocker of 100 unimplemented entries. It is not itself an
+export, so it is read as a part rather than as an entry point.
+
+```asm
+0062f280  push rbp
+0062f281  push rdi
+0062f282  push rsi
+0062f283  push rbx
+0062f284  sub rsp, 0x688
+0062f28b  xor eax, eax
+0062f28d  lea rsi, [rsp + 0x30]
+0062f292  mov rbx, rcx
+0062f295  mov ecx, 0x13
+0062f29a  mov dword ptr [rsp + 0x1e0], 0x10001f
+0062f2a5  lea rbp, [rsp + 0xd0]
+0062f2ad  mov rdi, rsi
+0062f2b0  rep stosq qword ptr [rdi], rax
+0062f2b3  mov ecx, 0x1b
+0062f2b8  mov rdi, rbp
+0062f2bb  mov qword ptr [rsp + 0x50], rbx
+0062f2c0  rep stosq qword ptr [rdi], rax
+0062f2c3  mov rax, qword ptr [rbx + 0x18]
+0062f2c7  lea rdi, [rsp + 0x1b0]
+0062f2cf  mov dword ptr [rsp + 0x30], 0x20474343
+0062f2d7  mov rcx, rdi
+0062f2da  mov dword ptr [rsp + 0x34], 1
+0062f2e2  mov dword ptr [rsp + 0x48], 4
+0062f2ea  mov qword ptr [rsp + 0x58], rax
+0062f2ef  mov rax, qword ptr [rbx + 0x20]
+0062f2f3  mov qword ptr [rsp + 0x60], rax
+0062f2f8  mov rax, qword ptr [rbx + 0x28]
+0062f2fc  mov qword ptr [rsp + 0x68], rax
+0062f301  call qword ptr [rip + 0x4f9815]
+0062f307  mov rdx, qword ptr [rbx + 0x20]
+0062f30b  mov r9, rbx
+0062f30e  mov r8, rsi
+0062f311  mov rcx, qword ptr [rbx + 0x18]
+0062f315  mov qword ptr [rsp + 0x28], rbp
+0062f31a  mov qword ptr [rsp + 0x20], rdi
+0062f31f  call qword ptr [rip + 0x4f9807]
+0062f325  call 0x63f420
+0062f32a  nop 
+```
