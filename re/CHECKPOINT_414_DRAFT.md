@@ -60,3 +60,32 @@ reports its call and returns the documented neutral value, with its original byt
 
 Total: 14 of 168 entry points implemented. The remaining 154 fail loudly; the work queue in re/EXPORT_QUEUE.md
 orders them by structural cost, and re/EXPORT_IMPLS.md records why the ones deliberately left alone are left alone.
+
+## What pins each implemented item (round 403)
+
+C6 asks every implemented entry point to have a differential test where the original can be executed and a
+behavioural one where it cannot. The distinction is the point of the table: a differential test runs the
+original and compares, a behavioural test checks the decoded field offsets and instruction sequence against
+hand-computed expectations because the original reads a RIP-relative label string and cannot execute from the
+embedded copy.
+
+| entry or routine | kind | evidence |
+|---|---|---|
+| ordinal 25/26 -- GetNumberOfNestings | **behavioural** | tests/test_exports.cpp: container of 312-byte elements, stride derived from the element size |
+| ordinal 23/24 -- GetNumberOfNestedParts | **behavioural** | tests/test_exports.cpp: container at sub+0x28, 120-byte elements |
+| ordinal 17/18 -- GetMultiplicity | **behavioural** | tests/test_exports.cpp: 32-bit field at sub+0x20, not sign extended |
+| ordinal 27/28 -- GetPartUserString | **behavioural** | tests/test_exports.cpp: pointer at part+0x1B8 |
+| ordinal 33/34 -- GetSolution | **behavioural** | tests/test_exports.cpp: identity, no memory touched, null included |
+| ordinal 210/211 -- sub_16CF0 | **behavioural** | tests/test_exports.cpp: the same field as GetPartUserString without the logger call |
+| ordinal 288/289 -- sub_AFF0 | **behavioural** | tests/test_exports.cpp: byte = (arg != 0), 256 stores 1, neighbours untouched |
+| ordinal 286/287 -- sub_B000 | **behavioural** | tests/test_exports.cpp: double at +0x100 and flag at +0xF9 |
+| ordinals 146/188/222/304/76/84 -- the six int setters | **behavioural** | tests/test_exports.cpp: 32-bit store, -2 stored as 0xFFFFFFFE |
+| not an export -- affine library, six routines | **DIFFERENTIAL** | tests/test_affine.cpp: 862 checks, bit for bit; the inverse comparison found a signed-zero difference |
+| not an export -- orientation determinant 0x24B440 | **DIFFERENTIAL** | tests/test_affine.cpp: bit-exact over four operand sets plus sign semantics |
+| not an export -- segment threshold kernel 0x55E190 | **DIFFERENTIAL** | tests/test_segcost.cpp: 3072 segment and parameter combinations, both outcomes |
+| not an export -- box accumulator pair 0x5C8A10 and 0x50FD40 | **DIFFERENTIAL** | tests/test_boxacc.cpp: the whole 0x28-byte box byte for byte |
+| not an export -- box merge 0x5C8C50 | **DIFFERENTIAL** | tests/test_boxacc.cpp: 2000 random boxes with the destination flag randomised, the INIT path included |
+
+Two things this table makes visible: every entry point in the list is pinned by a test, and the four verified
+routines that are NOT entry points (the affine library, the determinant, the segment kernel and the two box
+routines) are pinned by differential comparison, which is the stronger of the two kinds.
