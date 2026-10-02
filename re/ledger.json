@@ -526,6 +526,14 @@
    "round": 570,
    "subject": "LaunchingOrder.vectorAt1D0",
    "witness": "the push_back at RE 0x2D7F..0x2D8B increments the end by 8; the constructor and the destructor both touch +0x1D0, which is the containment check"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x22E30 and 0x22A20 are ONE function with two entries; it allocates 0x1C8, stores the order at +0x00, and takes (object, order, objective-double, flag)",
+   "round": 570,
+   "subject": "candidate.constructor",
+   "witness": "0x22E30: movzx r9d,r9b / jmp 0x22A20 (9 bytes). 0x22A20: mov rbx,rcx / mov rdi,rdx / movapd xmm6,xmm2 / mov [rbx],rdx, then 1037 bytes with 0x1C8 allocated and the mode read"
   }
  ]
 }
