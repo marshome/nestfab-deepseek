@@ -2006,6 +2006,30 @@
    "round": 658,
    "subject": "tooling.address-vs-value",
    "witness": "an earlier version keyed on values and computed from the base, and reported zero vtables referenced; the dump at 0xA3CFC0 is what ended three rounds of reasoning"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::NestingNester's constructor 0x342E0 writes seven distinct offsets: 0, 0x18, 0x20, 0x28, 0x30, 0x38 and 0x9F8",
+   "round": 659,
+   "subject": "NestingNester.ctor-fields",
+   "witness": "0x342EC mov rbx,rcx and 0x343F1 pop rbx with nothing writing rbx between, so every store through rbx is into the object; +0x30 is written twice and the second is from xmm6 so it holds a double, and +0x9F8 is set to 0x270"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the main packing routine 0x378E0 writes none of NestingNester's fields; the only registers it stores through at 8+ distinct offsets are rsp and registers below +0x28",
+   "round": 659,
+   "subject": "0x378E0.writes-no-own-fields",
+   "witness": "scanned over all seven of the class's functions; 0x378E0's 2841 instructions contribute no offset, so the archive's 132 recorded offsets for it are into OTHER objects"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a base register holds an object only until it is reassigned, so stores through it afterwards are not fields",
+   "round": 659,
+   "subject": "tooling.base-register-reassignment",
+   "witness": "0x33100 sets rbp from rcx at 0x3311F and reassigns it from a return value at 0x3392B; ignoring that reported offsets for a register whose value had been replaced"
   }
  ]
 }

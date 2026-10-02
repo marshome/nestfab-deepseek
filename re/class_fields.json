@@ -1,0 +1,113 @@
+{
+ "class": "Multi::NestingNester",
+ "distinct_offsets": {
+  "0x0": 5,
+  "0x10": 2,
+  "0x18": 2,
+  "0x20": 1,
+  "0x28": 1,
+  "0x30": 2,
+  "0x38": 1,
+  "0x9F8": 1
+ },
+ "functions": {
+  "0x32EE0": [
+   {
+    "address": "0x32EEF",
+    "instruction": "mov qword ptr [rcx], rax",
+    "offset": 0,
+    "width": "qword"
+   }
+  ],
+  "0x32F30": [
+   {
+    "address": "0x32F3F",
+    "instruction": "mov qword ptr [rcx], rax",
+    "offset": 0,
+    "width": "qword"
+   }
+  ],
+  "0x33100": [
+   {
+    "address": "0x335F3",
+    "instruction": "mov qword ptr [rbp], rdx",
+    "offset": 0,
+    "width": "qword"
+   },
+   {
+    "address": "0x33607",
+    "instruction": "mov qword ptr [rbp], rcx",
+    "offset": 0,
+    "width": "qword"
+   },
+   {
+    "address": "0x3360F",
+    "instruction": "mov qword ptr [rbp + 0x10], rcx",
+    "offset": 16,
+    "width": "qword"
+   },
+   {
+    "address": "0x337ED",
+    "instruction": "mov qword ptr [rbp + 0x10], r9",
+    "offset": 16,
+    "width": "qword"
+   },
+   {
+    "address": "0x337F1",
+    "instruction": "mov qword ptr [rbp + 0x18], r10",
+    "offset": 24,
+    "width": "qword"
+   }
+  ],
+  "0x342E0": [
+   {
+    "address": "0x34308",
+    "instruction": "mov qword ptr [rbx], rax",
+    "offset": 0,
+    "width": "qword"
+   },
+   {
+    "address": "0x3430E",
+    "instruction": "mov qword ptr [rbx + 0x20], rdx",
+    "offset": 32,
+    "width": "qword"
+   },
+   {
+    "address": "0x34312",
+    "instruction": "mov qword ptr [rbx + 0x18], rax",
+    "offset": 24,
+    "width": "qword"
+   },
+   {
+    "address": "0x34328",
+    "instruction": "mov qword ptr [rbx + 0x30], 0",
+    "offset": 48,
+    "width": "qword"
+   },
+   {
+    "address": "0x34335",
+    "instruction": "mov dword ptr [rbx + 0x38], 1",
+    "offset": 56,
+    "width": "dword"
+   },
+   {
+    "address": "0x34341",
+    "instruction": "mov dword ptr [rbx + 0x28], eax",
+    "offset": 40,
+    "width": "dword"
+   },
+   {
+    "address": "0x3436D",
+    "instruction": "mov qword ptr [rbx + 0x9f8], 0x270",
+    "offset": 2552,
+    "width": "qword"
+   },
+   {
+    "address": "0x343E3",
+    "instruction": "movsd qword ptr [rbx + 0x30], xmm6",
+    "offset": 48,
+    "width": "qword"
+   }
+  ]
+ }
+}
