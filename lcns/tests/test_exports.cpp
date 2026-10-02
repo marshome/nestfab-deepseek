@@ -425,6 +425,16 @@ int main() {
         CHECK(sizeof(lcns::dll::Element216) == 216);
         CHECK(lcns::dll::modularInverse(27) == 0x84BDA12F684BDA13ull);
 
+        CHECK(offsetof(lcns::dll::WindowSlots, slot08) == 0x08);   // the four pairs GetLength and GetHeight subtract
+        CHECK(offsetof(lcns::dll::WindowSlots, slot10) == 0x10);
+        CHECK(offsetof(lcns::dll::WindowSlots, slot18) == 0x18);
+        CHECK(offsetof(lcns::dll::WindowSlots, slot20) == 0x20);
+        CHECK(offsetof(lcns::dll::WindowSlots, slot38) == 0x38);
+        CHECK(offsetof(lcns::dll::WindowSlots, slot40) == 0x40);
+        CHECK(offsetof(lcns::dll::WindowSlots, slot48) == 0x48);
+        CHECK(offsetof(lcns::dll::WindowSlots, slot50) == 0x50);
+        CHECK(lcns::dll::kWindowStatusOffset == 0x98);             // read from the code, writer not yet traced
+
     return check::finish("exports");
 }
 

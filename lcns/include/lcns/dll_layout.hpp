@@ -157,5 +157,37 @@ struct Element216 {
 static_assert(sizeof(Element216) == 216, "RE 0x4F73E0");
 static_assert(modularInverse(27) == 0x84BDA12F684BDA13ull, "the constant 0x4F73E0 multiplies by");
 
+/**
+ * The window object that GetLength and GetHeight read.
+ *
+ * Both implementers build it through 0x4F9200 and 0x5CD800, then subtract one of four pairs of these fields. The pairs are
+ * 0x10 apart inside a pair and the four pairs sit at 0x08, 0x10, 0x18, 0x20 on the low side and 0x38, 0x40, 0x48, 0x50 on
+ * the high side, so the window holds two dimension records. Each assertion below names the instruction that produces the
+ * read it pins.
+ */
+struct WindowSlots {
+    unsigned char opaque00[0x08];
+    double slot08;   // 0x526230 and 0x526770 (status false in both implementers)
+    double slot10;   // 0x526770 minus, the low side of the second record
+    double slot18;   // 0x526227 (0x526160, status true) and rsi+0x18 of the first record
+    double slot20;   // 0x526767 (0x5266A0, status true) and rsi+0x20
+    unsigned char opaque28[0x10];
+    double slot38;   // 0x52624D (0x526160, status true)
+    double slot40;   // 0x526767 (0x5266A0, status true)
+    double slot48;   // 0x526227 (0x526160, status false)
+    double slot50;   // 0x526767 (0x5266A0, status false)
+};
+static_assert(offsetof(WindowSlots, slot08) == 0x08, "RE 0x526230");
+static_assert(offsetof(WindowSlots, slot10) == 0x10, "RE 0x526770");
+static_assert(offsetof(WindowSlots, slot18) == 0x18, "RE 0x526227");
+static_assert(offsetof(WindowSlots, slot20) == 0x20, "RE 0x526767");
+static_assert(offsetof(WindowSlots, slot38) == 0x38, "RE 0x52624D");
+static_assert(offsetof(WindowSlots, slot40) == 0x40, "RE 0x526767");
+static_assert(offsetof(WindowSlots, slot48) == 0x48, "RE 0x526227");
+static_assert(offsetof(WindowSlots, slot50) == 0x50, "RE 0x526767");
+
+/** Where the status test in the two implementers reads its operand, as read from the code but NOT yet traced to a writer. */
+constexpr std::size_t kWindowStatusOffset = 0x98;   // rsp+0x108 with rsi = rsp+0x70; the writer is still to be read
+
 }  // namespace dll
 }  // namespace lcns
