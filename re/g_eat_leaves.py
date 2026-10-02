@@ -35,6 +35,7 @@ import g_toolchain as T         # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
 ROOT = L.ROOT
+PROFILE = load_prof()   # used by classify() to look through a tail-call target
 HDR = os.path.join(ROOT, "lcns", "include", "lcns", "field_accessors.hpp")
 TEST = os.path.join(ROOT, "lcns", "tests", "test_boxacc.cpp")
 TOOLCHAIN = os.path.join(ROOT, "re", "g_toolchain.py")
@@ -134,6 +135,26 @@ def classify(body):
         mm = re.match(r"dwordptr\[rcx\+0x([0-9a-f]+)\],eax", ins[1][1])
         if mm:
             return ("copyoff", int(mm.group(1), 16), None)
+    # an initialiser: stores a constant in one field and returns the object itself
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0] == ("mov", "rax,rcx"):
+        mm = re.match(r"dwordptr\[rcx\+0x([0-9a-f]+)\],(0x[0-9a-f]+|\d+)", ins[1][1])
+        if mm:
+            return ("init", int(mm.group(1), 16), (4, int(mm.group(2), 0)))
+        mm = re.match(r"dwordptr\[rcx\],(0x[0-9a-f]+|\d+)", ins[1][1])
+        if mm:
+            return ("init", 0, (4, int(mm.group(1), 0)))
+        mm = re.match(r"byteptr\[rcx\+0x([0-9a-f]+)\],(0x[0-9a-f]+|\d+)", ins[1][1])
+        if mm:
+            return ("init", int(mm.group(1), 16), (1, int(mm.group(2), 0)))
+    # a member loaded and handed to a simple accessor: the two compose into one accessor
+    if len(ins) == 2 and ins[1][0] == "jmp" and ins[0][0] == "mov" and ins[0][1].startswith("rcx,qwordptr[rcx+0x"):
+        off = int(ins[0][1][len("rcx,qwordptr[rcx+0x"):-1], 16)
+        target = int(ins[1][1], 16)
+        tsize = (PROFILE.get(target) or {}).get("size") or 0
+        tbody = [i for i in disasm(target) if i.address < target + tsize] if tsize else []
+        inner = classify(tbody) if tbody else None
+        if inner is not None and inner[0] in ("addr", "getd", "get", "setd"):
+            return ("compose", off, inner)
     # a member loaded and then handed to another function: a getter when that function is the identity
     # a field of the object the first member points at
     if len(ins) == 3 and ins[2][0] == "ret" and ins[0] == ("mov", "rax,qwordptr[rcx]"):
@@ -204,7 +225,8 @@ def main(argv):
 
     books = {"identity": [], "zero": [], "get": [], "set": [], "addr": [], "copy": [], "getd": [], "setd": [],
              "const": [], "global": [], "twolvl": [], "ptradd": [], "nullpred": [], "twobytes": [], "dwordpred": [],
-             "globaddr": [], "globptr": [], "copyoff": [], "memberget": [], "iget": [], "iset": [], "unknown": []}
+             "globaddr": [], "globptr": [], "copyoff": [], "memberget": [], "iget": [], "iset": [],
+             "init": [], "compose": [], "unknown": []}
     for a in leaves:
         size = (profile.get(a) or {}).get("size") or 0
         body = [i for i in disasm(a) if i.address < a + size]
@@ -377,6 +399,55 @@ def main(argv):
                      " lcns::dll::accessors::%s(outer, 0x%Xull); std::uint%d_t got = 0;"
                      " std::memcpy(&got, inner + 0x%02X, sizeof(got)); CHECK(got == 0x%Xull); }   // RE 0x%X"
                      % (name, probe, bits, off, probe, a))
+    for a, off, spec in books["init"][:limit]:
+        width, value = spec
+        bits = width * 8
+        name = "init%02X_%X" % (off, a)
+        gen.append("/** RE 0x%X: stores 0x%X in the %d-bit field at +0x%02X and returns the object. */"
+                   % (a, value, bits, off))
+        gen.append("inline void* %s(void* object) {" % name)
+        gen.append("    const std::uint%d_t value = 0x%X;" % (bits, value))
+        gen.append("    std::memcpy(static_cast<unsigned char*>(object) + 0x%02X, &value, sizeof(value));" % off)
+        gen.append("    return object;")
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        tests.append("        { std::memset(object, 0xA5, sizeof(object)); CHECK(lcns::dll::accessors::%s(object) == object);"
+                     " std::uint%d_t got = 0; std::memcpy(&got, object + 0x%02X, sizeof(got));"
+                     " CHECK(got == 0x%X); }   // RE 0x%X" % (name, bits, off, value, a))
+    for a, off, inner in books["compose"][:limit]:
+        kind = inner[0]
+        ioff = inner[1] or 0
+        name = "compose%02X_%02X_%X" % (off, ioff, a)
+        if kind == "addr":
+            gen.append("/** RE 0x%X: takes the member at +0x%02X and returns the address of its +0x%02X. */" % (a, off, ioff))
+            gen.append("inline void* %s(void* object) {" % name)
+            gen.append("    void* member = nullptr;")
+            gen.append("    std::memcpy(&member, object, sizeof(member));")
+            gen.append("    return static_cast<unsigned char*>(member) + 0x%02X;" % ioff)
+            gen.append("}")
+            implemented.append(a)
+            tests.append("        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject));"
+                         " unsigned char outer[8]; void* p = innerObject; std::memcpy(outer, &p, sizeof(p));"
+                         " CHECK(lcns::dll::accessors::%s(outer) == innerObject + 0x%02X); }   // RE 0x%X"
+                         % (name, ioff, a))
+        elif kind == "getd":
+            gen.append("/** RE 0x%X: takes the member at +0x%02X and reads the double at its +0x%02X. */" % (a, off, ioff))
+            gen.append("inline double %s(const void* object) {" % name)
+            gen.append("    const unsigned char* member = nullptr;")
+            gen.append("    std::memcpy(&member, object, sizeof(member));")
+            gen.append("    double value = 0.0;")
+            gen.append("    std::memcpy(&value, member + 0x%02X, sizeof(value));" % ioff)
+            gen.append("    return value;")
+            gen.append("}")
+            implemented.append(a)
+            tests.append("        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject));"
+                         " const double put = 4.5; std::memcpy(innerObject + 0x%02X, &put, sizeof(put));"
+                         " unsigned char outer[8]; const void* p = innerObject; std::memcpy(outer, &p, sizeof(p));"
+                         " CHECK(lcns::dll::accessors::%s(outer) == put); }   // RE 0x%X" % (ioff, name, a))
+        else:
+            continue
+        gen.append("")
     if gen:
         io.open(HDR, "w", encoding="utf-8", newline="\n").write(h.replace(anchor, "\n".join(gen) + anchor, 1))
         print("field_accessors.hpp  %d functions generated" % len(implemented))

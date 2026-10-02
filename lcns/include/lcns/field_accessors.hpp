@@ -532,6 +532,44 @@ inline void iset1E8_4FC330(void* object, std::uint8_t value) {
     std::memcpy(&inner, object, sizeof(inner));
     std::memcpy(inner + 0x1E8, &value, sizeof(value));
 }
+/** RE 0x54CBC0: stores 0x0 in the 32-bit field at +0x00 and returns the object. */
+inline void* init00_54CBC0(void* object) {
+    const std::uint32_t value = 0x0;
+    std::memcpy(static_cast<unsigned char*>(object) + 0x00, &value, sizeof(value));
+    return object;
+}
+
+/** RE 0x4F7690: takes the member at +0x70 and returns the address of its +0x90. */
+inline void* compose70_90_4F7690(void* object) {
+    void* member = nullptr;
+    std::memcpy(&member, object, sizeof(member));
+    return static_cast<unsigned char*>(member) + 0x90;
+}
+
+/** RE 0x4F7660: takes the member at +0x70 and reads the double at its +0x58. */
+inline double compose70_58_4F7660(const void* object) {
+    const unsigned char* member = nullptr;
+    std::memcpy(&member, object, sizeof(member));
+    double value = 0.0;
+    std::memcpy(&value, member + 0x58, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7640: takes the member at +0x70 and reads the double at its +0x48. */
+inline double compose70_48_4F7640(const void* object) {
+    const unsigned char* member = nullptr;
+    std::memcpy(&member, object, sizeof(member));
+    double value = 0.0;
+    std::memcpy(&value, member + 0x48, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7680: takes the member at +0x70 and returns the address of its +0x68. */
+inline void* compose70_68_4F7680(void* object) {
+    void* member = nullptr;
+    std::memcpy(&member, object, sizeof(member));
+    return static_cast<unsigned char*>(member) + 0x68;
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

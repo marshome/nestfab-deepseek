@@ -641,5 +641,16 @@ int main() {
         { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); lcns::dll::accessors::iset1E8_4FC330(outer, 0x5Aull); std::uint8_t got = 0; std::memcpy(&got, inner + 0x1E8, sizeof(got)); CHECK(got == 0x5Aull); }   // RE 0x4FC330
     }
 
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];   // the largest field offset an accessor touches
+        std::memset(object, 0xA5, sizeof(object));
+        { std::memset(object, 0xA5, sizeof(object)); CHECK(lcns::dll::accessors::init00_54CBC0(object) == object); std::uint32_t got = 0; std::memcpy(&got, object + 0x00, sizeof(got)); CHECK(got == 0x0); }   // RE 0x54CBC0
+        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject)); unsigned char outer[8]; void* p = innerObject; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::compose70_90_4F7690(outer) == innerObject + 0x90); }   // RE 0x4F7690
+        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject)); const double put = 4.5; std::memcpy(innerObject + 0x58, &put, sizeof(put)); unsigned char outer[8]; const void* p = innerObject; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::compose70_58_4F7660(outer) == put); }   // RE 0x4F7660
+        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject)); const double put = 4.5; std::memcpy(innerObject + 0x48, &put, sizeof(put)); unsigned char outer[8]; const void* p = innerObject; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::compose70_48_4F7640(outer) == put); }   // RE 0x4F7640
+        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject)); unsigned char outer[8]; void* p = innerObject; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::compose70_68_4F7680(outer) == innerObject + 0x68); }   // RE 0x4F7680
+    }
+
     return check::finish("boxacc");
 }
