@@ -256,5 +256,20 @@ struct HoleForceCarrier {
 static_assert(offsetof(HoleForceCarrier, insideHole) == 0x20A, "RE 0xC627");
 static_assert(offsetof(HoleForceCarrier, something) == 0x20B, "RE 0xC62E");
 
+/**
+ * The two bytes and the thread count that SetLocalEngine and SetLocalMaximumThreads write, at RE 0xD390, RE 0xD3A0 and
+ * RE 0xD3D5 / RE 0xD3E7.
+ */
+struct LocalEngineCarrier {
+    unsigned char opaque00[0x1F8];
+    std::uint32_t maxThreads;   // +0x1F8, RE 0xD3D5 and RE 0xD3E7
+    unsigned char opaque1FC[0x04];
+    unsigned char engineLo;     // +0x200, RE 0xD390, the complement of the argument low bit
+    unsigned char engineHi;     // +0x201, RE 0xD3A0, the complement of bit one
+};
+static_assert(offsetof(LocalEngineCarrier, maxThreads) == 0x1F8, "RE 0xD3D5");
+static_assert(offsetof(LocalEngineCarrier, engineLo) == 0x200, "RE 0xD390");
+static_assert(offsetof(LocalEngineCarrier, engineHi) == 0x201, "RE 0xD3A0");
+
 }  // namespace dll
 }  // namespace lcns

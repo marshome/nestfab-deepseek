@@ -6,6 +6,7 @@
 
 #include "lcns/exports_impl.hpp"
 #include <cstring>
+#include <thread>
 
 namespace lcns {
 namespace dll {
@@ -111,6 +112,36 @@ std::size_t noFitGetNumberOfExternalPolygons(const void* owner) {
     const std::uint64_t units = static_cast<std::uint64_t>(end - begin) >> 4;   // RE 0x89F8: sar 4
     // RE 0x89EB multiplies by 0xAAAAAAAAAAAAAAAB, which is the modular inverse of three: 48-byte elements.
     return static_cast<std::size_t>(units * lcns::dll::modularInverse(3));
+}
+
+void setLocalEngine(void* object, int value) {
+    LocalEngineCarrier* carrier = static_cast<LocalEngineCarrier*>(object);
+    const unsigned int bits = static_cast<unsigned int>(value);
+    // RE 0xD38B: not, then RE 0xD399: and 1 -- the complement of the low bit, stored as a byte
+    carrier->engineLo = static_cast<unsigned char>((~bits) & 1u);
+    // RE 0xD389: shr 1, RE 0xD38D: xor 1, RE 0xD396: and 1 -- the complement of bit one
+    carrier->engineHi = static_cast<unsigned char>(((bits >> 1) ^ 1u) & 1u);
+}
+
+unsigned platformConcurrency() {
+    // RE 0x8AB0E0 calls the import stub 0x63F6B0 and clamps a negative result to zero. The stub is the platform, so this
+    // is where the platform is asked, and it is the only platform number in these two exports.
+    const unsigned int value = std::thread::hardware_concurrency();
+    return value;   // hardware_concurrency returns zero when the value is unknown, which matches the stub contract
+}
+
+unsigned clampMaximumThreads(unsigned platformValue, int requested) {
+    // RE 0xB5B79: if the count is zero use one. Both helpers do this, so it applies to either branch.
+    const unsigned int floored = (platformValue == 0u) ? 1u : platformValue;
+    if (requested == 0) {
+        return floored;                                    // RE 0xD3E2: the branch that ignores the argument
+    }
+    const unsigned int want = static_cast<unsigned int>(requested);
+    return (floored > want) ? want : floored;               // RE 0xD3D2: cmova takes the smaller of the two
+}
+
+void setLocalMaximumThreads(void* object, int value) {
+    static_cast<LocalEngineCarrier*>(object)->maxThreads = clampMaximumThreads(platformConcurrency(), value);
 }
 
 void setShearMode(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field44 = value; }

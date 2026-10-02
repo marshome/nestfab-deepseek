@@ -16,6 +16,8 @@ const Forwarding kForwarding[] = {
     {288, reinterpret_cast<void*>(&lcns::dll::exports::impl::setByteAtF8)},         // sub_AFF0 (no label)
     {286, reinterpret_cast<void*>(&lcns::dll::exports::impl::setDoubleAndFlag)},    // sub_B000 (no label)
     {33, reinterpret_cast<void*>(&lcns::dll::exports::impl::getSolutionIdentity)},  // GetSolution
+    {73, reinterpret_cast<void*>(&lcns::dll::exports::impl::setLocalEngine)},
+    {82, reinterpret_cast<void*>(&lcns::dll::exports::impl::setLocalMaximumThreads)},
     {316, reinterpret_cast<void*>(&lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast)},
     {336, reinterpret_cast<void*>(&lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin)},
     {338, reinterpret_cast<void*>(&lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin)},

@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 27u);
+        CHECK(ex::forwardedCount() == 29u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,7 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -518,6 +518,43 @@ int main() {
         std::memcpy(owner + 8, &end, sizeof(end));
         CHECK(lcns::dll::exports::impl::noFitGetNumberOfExternalPolygons(owner) == 3u);
         CHECK(lcns::dll::modularInverse(3) == 0xAAAAAAAAAAAAAAABull);   // the multiplier in RE 0x89EB
+    }
+
+    // ------------------- SetLocalEngine and SetLocalMaximumThreads, both read whole
+    {
+        lcns::dll::LocalEngineCarrier local{};
+        std::memset(&local, 0x5A, sizeof(local));
+        lcns::dll::exports::impl::setLocalEngine(&local, 0);
+        CHECK(local.engineLo == 1);                     // bit zero is 0, so its complement is 1 (RE 0xD38B)
+        CHECK(local.engineHi == 1);                     // bit one is 0 too
+        lcns::dll::exports::impl::setLocalEngine(&local, 1);
+        CHECK(local.engineLo == 0);                     // bit zero is 1, complement 0
+        CHECK(local.engineHi == 1);
+        lcns::dll::exports::impl::setLocalEngine(&local, 2);
+        CHECK(local.engineLo == 1);
+        CHECK(local.engineHi == 0);                     // bit one is 1, complement 0
+        lcns::dll::exports::impl::setLocalEngine(&local, 3);
+        CHECK(local.engineLo == 0);
+        CHECK(local.engineHi == 0);
+        CHECK(offsetof(lcns::dll::LocalEngineCarrier, engineLo) == 0x200);
+        CHECK(offsetof(lcns::dll::LocalEngineCarrier, engineHi) == 0x201);
+
+        // the recovered logic around the platform number, over a grid: floor at one, then the smaller of the two
+        CHECK(lcns::dll::exports::impl::clampMaximumThreads(0u, 0) == 1u);      // zero becomes one (RE 0xB5B79)
+        CHECK(lcns::dll::exports::impl::clampMaximumThreads(0u, 4) == 1u);      // min(1, 4)
+        CHECK(lcns::dll::exports::impl::clampMaximumThreads(8u, 0) == 8u);      // the argument-zero branch (RE 0xD3E2)
+        CHECK(lcns::dll::exports::impl::clampMaximumThreads(8u, 3) == 3u);      // min(8, 3), RE 0xD3D2
+        CHECK(lcns::dll::exports::impl::clampMaximumThreads(8u, 12) == 8u);     // min(8, 12) keeps the platform value
+        CHECK(lcns::dll::exports::impl::clampMaximumThreads(1u, 1) == 1u);
+        for (unsigned hw = 0; hw <= 16u; ++hw) {
+            for (int want = 0; want <= 16; ++want) {
+                const unsigned expected = (want == 0) ? ((hw == 0u) ? 1u : hw)
+                                                      : ((((hw == 0u) ? 1u : hw) > static_cast<unsigned>(want))
+                                                             ? static_cast<unsigned>(want)
+                                                             : ((hw == 0u) ? 1u : hw));
+                CHECK(lcns::dll::exports::impl::clampMaximumThreads(hw, want) == expected);
+            }
+        }
     }
 
     return check::finish("exports");

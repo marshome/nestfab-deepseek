@@ -52,6 +52,15 @@ void setShearGap(void* options, double gap);
 /** RE 0x89D0 (ordinal 238): counts the 48-byte elements of the container at +0 and +8. */
 std::size_t noFitGetNumberOfExternalPolygons(const void* owner);
 
+/** RE 0xD370 (ordinal 73): +0x200 and +0x201 become the complements of bit zero and bit one. */
+void setLocalEngine(void* object, int value);
+/** RE 0x8AB0E0: the platform concurrency count, through the import stub 0x63F6B0, negatives clamped to zero. */
+unsigned platformConcurrency();
+/** RE 0xB5B70 with RE 0xB5B79, and RE 0xD3B0: floor at one, then the requested value or the minimum of the two. */
+unsigned clampMaximumThreads(unsigned platformValue, int requested);
+/** RE 0xD3B0 (ordinal 82): stores clampMaximumThreads(platformConcurrency(), value) at +0x1F8. */
+void setLocalMaximumThreads(void* object, int value);
+
 void setShearMode(void* order, int value);         // RE 0x0DDC0 -> +0x44
 void setNoMixPreference(void* order, int value);   // RE 0x0D310 -> +0x18
 void setNoSheetMixPreference(void* order, int value);   // RE 0x0D340 -> +0x1C
