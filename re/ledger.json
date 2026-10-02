@@ -238,6 +238,30 @@
    "round": 550,
    "subject": "subobject.witness",
    "witness": "the +0x40 candidate from round 539 was a SHAPE with 15 functions; the +0x50 embedding is proven by two subtractions that agree"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a MultitorchProperties-shaped run of 7 fields sits at +0x218, anchored by a 4-byte field at +0x240",
+   "round": 551,
+   "subject": "LaunchingOrder.multitorchAt218",
+   "witness": "re/g_compose.py --prove 0x218: nbTorches 4 B at +0x218, five 8-byte fields, verticalTorches 4 B at +0x240 which is the ledger-named automaticStop"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a run of same-width fields cannot be located by arithmetic alone",
+   "round": 551,
+   "subject": "Anchor.allZeroRun",
+   "witness": "RE 0x14800..0x148A2 writes 8-byte zero to +0x178 through +0x1F0; AngleTransform at +0x178 matches 6/6 and the same struct matches at +0x180, +0x188, +0x190 and +0x198"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an embedding needs a width ANCHOR: at least one field whose width the host distinguishes",
+   "round": 551,
+   "subject": "Embedding.rule",
+   "witness": "the anchor at +0x50 and +0x98 is a 4-byte field (noHoles, nbTorches); the AngleTransform candidates have no anchor, so all five remain SHAPE"
   }
  ]
 }
