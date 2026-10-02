@@ -1694,6 +1694,22 @@
    "round": 641,
    "subject": "parent-0x40.element-field",
    "witness": "the same offset the priority list has ranked first as parent+0x40.subobject, so this is the first evidence about what that sub-object is FOR"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "rounds 500-549 filed 27 claims while layout.hpp's 3744 lines came from rounds 141-173, so the recent rate is about 8 lines of C++ per round against a claimed 1.7",
+   "round": 642,
+   "subject": "rate.claims-versus-code",
+   "witness": "measured from git log over lcns/ and from the ledger's round field; the human noticed the drift before the ledger did because the ledger counts claims and not code"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RE 0x4E5B0 initialises the object 0x4EC00 fills with five doubles (0.0001, 0.01, 0.1, 0.001, 0.5), four counts and three flags, and writes 15 at +0x350",
+   "round": 642,
+   "subject": "0x4E5B0.defaults",
+   "witness": "each value is the immediate of its instruction or the double its movsd loads, from 0x4E5FE through 0x4E637"
   }
  ]
 }

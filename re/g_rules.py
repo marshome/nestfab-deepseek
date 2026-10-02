@@ -375,6 +375,31 @@ def check_counts_need_consistent_rows():
                     "visible to this check")
 
 
+def check_rounds_must_land_code():
+    """A window of recent rounds must be landing C++ under lcns/, not only analysis.
+
+    The human said "the recovered C++ is so little, where are you stuck", and the measurement agreed: rounds 500-549 filed 27 ledger
+    claims while layout.hpp's 3744 lines were committed around rounds 141-173, and the recent fifty rounds filed 87 claims against about
+    1500 lines. **The measurement infrastructure had grown until it consumed the product.** A rule is the response because that is this
+    project's only mechanism that works.
+
+    What this can measure is the window, not the round: it runs after a commit and cannot know which round that commit belongs to. The
+    check prints that limitation rather than implying a per-round guarantee.
+    """
+    code, out, _err = run([sys.executable, os.path.join(HERE, "g_round_output.py")])
+    landed = None
+    for line in out.split("\n"):
+        m = re.search(r"commits that landed C\+\+ under lcns/:\s*(\d+) of\s*(\d+)", line)
+        if m:
+            landed = (int(m.group(1)), int(m.group(2)))
+    if landed is None:
+        return "FAIL", "the round-output check did not report a count, so it cannot be trusted"
+    if code != 0:
+        return "FAIL", "%d of the last %d commits landed C++ under lcns/, below the floor of 4" % landed
+    return "PASS", ("%d of the last %d commits landed C++ under lcns/; this measures a WINDOW and not whether any given round wrote "
+                    "code" % landed)
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -492,6 +517,7 @@ CHECKS = [
     ("report-density", "每 30 轮汇报一次，中间每轮回一行", check_report_density),
     ("goal-drives-continuation", "用持久化目标驱动连续推进", check_goal_drives_continuation),
     ("counts-need-consistent-rows", "计数需要行一致", check_counts_need_consistent_rows),
+    ("rounds-must-land-code", "每轮必须落地代码", check_rounds_must_land_code),
     ("extractor-self-check", "提取器必须自带对照输入", check_extractor_self_check),
 ]
 

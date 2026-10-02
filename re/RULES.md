@@ -146,6 +146,12 @@ feeling of compliance.
   "where": "re/g_set_consistency.py",
   "since": "round 627"},
 
+ {"id": "rounds-must-land-code",
+  "rule": "一轮不能只有分析；窗口内的提交必须落地 lcns/ 下的 C++",
+  "check": "re/g_round_output.py exits 1 when fewer than four of the last twelve commits touched lcns/. It measures a WINDOW and not a round, because it runs after a commit and cannot know which round it belongs to -- and it says so",
+  "where": "re/g_round_output.py",
+  "since": "round 642"},
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
