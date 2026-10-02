@@ -1278,6 +1278,30 @@
    "round": 617,
    "subject": "0x1EE50.assertion-heavy",
    "witness": "0x60A620 x7 in a routine with 109 distinct callees; the ledger already records 680 such call sites whose line numbers have never been used, and this one function holds seven of them"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the seven assertion sites in 0x1EE50 name source lines 18, 45, 433, 896, 39, 649 and 608",
+   "round": 618,
+   "subject": "0x1EE50.assertion-lines",
+   "witness": "decoded by re/g_assert_sites.py at 0x2083C, 0x208C9, 0x20ABD, 0x20C2C, 0x20F78, 0x21FCC and 0x2264E; the line is the last value left in the reporter's integer argument"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x1B130 constructs a std::string by its small-string optimisation, so 0x60A620's first argument is a std::string object",
+   "round": 618,
+   "subject": "0x1B130.is-a-std-string-ctor",
+   "witness": "0x1B13D lea rax,[rcx+0x10] and 0x1B14A mov [rcx],rax -- the pointer points at the object's own +0x10 buffer; 0x526160 assembles into that storage and 0x1EE50 calls the constructor for a file name"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "line 154 belongs to 0x526160 and line 176 to its twin 0x5266A0; an earlier round attributed both to the first",
+   "round": 618,
+   "subject": "assert.154-and-176-are-two-functions",
+   "witness": "the self-check caught it by asking 0x526160 alone for both numbers and getting only one"
   }
  ]
 }
