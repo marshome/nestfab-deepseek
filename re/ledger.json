@@ -2566,6 +2566,22 @@
    "round": 684,
    "subject": "Squeezer.comment-contradicted-its-own-declaration",
    "witness": "nothing writes +0x08, +0x10 or +0x18 of the Squeezer object, which is why the support audit reported the class unsupported"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Tiling::PackerCache is {vptr @0, impl* @8}: its constructor installs the vtable, allocates a 0x1E0 byte object, constructs it with 0x76A130 and stores it at +8",
+   "round": 685,
+   "subject": "PackerCache.holds-one-pointer",
+   "witness": "0x15948F installs the vtable, 0x159495 allocates 0x1E0, 0x1594BC calls 0x76A130 with (this, rdx, r8d, r9b) and 0x1594C1 stores the result at [rsi+8]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "three of the corrected classes are handles whose declaration put the INNER object's fields on the handle: Supervisor at +8 to 0x530, Squeezer at +8 to 0x270, PackerCache at +8 to 0x1E0",
+   "round": 685,
+   "subject": "handle-field-one-level-down",
+   "witness": "in all three the offsets the declaration used are real and belong one level down, which is why the support audit reported the class as unsupported"
   }
  ]
 }

@@ -56,6 +56,16 @@ struct PatternCell {
 };
 
 // RE Tiling::PackerCache: memoises one computed pattern per (sheet, part, orientation) key.
+/** RE 0xA3D0E0, two slots. **ITS OWN STATE IS ONE POINTER AT +8.** RE 0x159480, 98 bytes:
+ *
+ *      0x15948F  mov [rcx], rax                    ; the vtable at +0
+ *      0x159495  mov ecx, 0x1E0 / call 0x998500     ; AN INNER OBJECT of 0x1E0 bytes
+ *      0x1594BC  call 0x76A130                      ; constructed from (this, rdx, r8d, r9b)
+ *      0x1594C1  mov [rsi + 8], rbx                 ; AND STORED AT PackerCache + 8
+ *
+ *  so this class is `{vptr @0, impl* @8}`, and the inner object at 0x76A130 is what actually caches. The two arguments the constructor
+ *  forwards are an **int** and a **bool**: they are saved as `r8d` and `r9d` and reloaded as `r8d` and a zero-extended `r9b`.
+ */
 class PackerCache {
 public:
     void clear();
@@ -63,7 +73,15 @@ public:
     void store(const std::string& key);
     bool contains(const std::string& key) const;
 
+    /** RE 0x1594C1: the object at +8 that this handle owns and forwards to. */
+    void* impl() const { return impl_; }
+
 private:
+    // RE 0x15948F: the vtable is at +0, so this is a polymorphic handle.
+    void* impl_ = nullptr;             // +8, RE 0x1594C1: mov [rsi + 8], rbx
+
+    // **THE MODEL'S OWN STORAGE, NOT THE MODULE'S.** The module caches inside the 0x1E0 byte object; this keeps a vector and says so, because
+    // 0x76A130 -- the routine that fills that object -- has not been read.
     std::vector<std::string> keys_;
     std::size_t entries_ = 0;
 };
