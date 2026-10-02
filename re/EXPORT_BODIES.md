@@ -1207,3 +1207,34 @@ mapping is a question of fact that a behavioural test settles, not one to write 
 
 The 48-byte element family now has three independent sightings: the modular inverse of three in 0x8C4530, the literal
 add r12, 0x30 in 0x524EE0, and add rbx, 0x30 here.
+
+## The two implementers compared side by side, and the mapping settled (rounds 463 to 465)
+
+GetLength and GetHeight have the same shape and differ in exactly two things: the status function they call, and
+which pair of window slots each of their two branches subtracts.
+
+| | 0x526160, the implementer behind GetLength (ordinal 96) | 0x5266A0, behind GetHeight (ordinal 100) |
+|---|---|---|
+| element stride | 0x78, that is 120 | the same |
+| each iteration | call 0x524EE0 to clean up, then call 0x5C8C50 to merge the box | the same |
+| sub object | call 0x51D2F0 on [order+8] | the same |
+| window | 0x4F9200 then 0x5CD800 | the same |
+| status test | 0x52F810 | 0x52F830 |
+| status true | [rsp+0x88] - [rsp+0xA8] | [rsp+0x90] - [rsp+0xB0] |
+| status false | [rsp+0xB8] - [rsp+0x78] | [rsp+0xC0] - [rsp+0x80] |
+| empty container | returns zero | returns zero |
+| diagnostic line number | 154 | 176 |
+
+With rsi as the window base, which is rsp+0x70, the slots become window fields. GetLength returns
+rsi[+0x18] - rsi[+0x38] when the status test is true and rsi[+0x48] - rsi[+0x08] when it is false. GetHeight returns
+rsi[+0x20] - rsi[+0x40] when true and rsi[+0x50] - rsi[+0x10] when false.
+
+Two observations worth keeping. First, the slot pair a branch uses is not the negation of the other branch: the
+window holds two dimension records and the status test selects between them, which is why this mapping had to be read
+from the instructions rather than guessed. Second, both implementers call the box merge this project already
+implements and holds to the original over 2000 random boxes, so the arithmetic left to reproduce is four
+subtractions, two status tests and the zero for an empty container.
+
+Both entry points are comment-only in the embedded registry, so neither can be differentially tested: the behavioural
+test is the strongest evidence available for these two, and the reason is recorded in re/EXPORT_IMPLS.md rather than
+left implicit.
