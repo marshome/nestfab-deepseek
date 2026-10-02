@@ -138,3 +138,16 @@ The three data sources that are open but not finished:
 > Continue the reverse engineering. Read `re/RESUME.md` first, then use the tools under `re/`. Work continuously without
 > reporting every round, keep the gate green, commit locally, and do not push. The current objective is
 > `re/LAUNCH_LOCAL_COMPUTATION.md`.
+
+## READ THE FINDINGS ARCHIVE BEFORE DERIVING ANYTHING
+
+
+e/findings_*.md holds fourteen files and about 1064 KB of finished, confidence-labelled analysis organised by translation unit --
+indings_engine.md alone is 595 KB. **No ledger claim cites them and nothing else pointed at them**, which is how a session can
+faithfully follow these instructions and still re-derive what is already written down.
+
+So before choosing a subject, grep the archive for its address or name:
+
+    Select-String -Path re/findings_*.md -Pattern '0x1EE50'
+
+A finding there is NOT automatically true -- check its evidence as any claim -- but it is a starting point rather than a blank page.

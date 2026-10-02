@@ -1518,6 +1518,22 @@
    "round": 632,
    "subject": "tooling.optimistic-threshold-again",
    "witness": "the first version branched on a merely non-zero count; it now branches on whether all are typed"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "14 findings files holding 1064 KB of analysis are referenced by no ledger claim, and neither re/RESUME.md nor re/AGENT.md mentions them",
+   "round": 633,
+   "subject": "archive.unindexed",
+   "witness": "findings_engine.md 594.9 KB, findings_lp_use.md 178.6, findings_tu_dossiers.md 74.1 and eleven more; re/g_prioritize.py chooses from a ledger that does not know they exist"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Engine::InfiniteEngine::Run at 0x759A80 is 80 bytes and treats -1.0 as the sentinel for unbounded time, otherwise delegating to the inner engine at [rdx+0x10]",
+   "round": 633,
+   "subject": "InfiniteEngine.Run.verified",
+   "witness": "0x759A85 ucomisd xmm3,[rip+0x254cb3] where the target rva 0x9AE740 is -1.0; 0x759A94 call 0x757AE0 for the equal case; 0x759AB0 mov rdx,[rdx+0x10] then 0x759AC4 call qword ptr [rax+0x10]"
   }
  ]
 }
