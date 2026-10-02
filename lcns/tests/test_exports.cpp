@@ -262,14 +262,75 @@ int main() {
             CHECK(obj[0xF8] == 0xAAu);
         }
 
-        // The eight are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 8u);
+        // SetShearMode (offset 0x44)
+        {
+            std::vector<unsigned char> obj(0x300, 0xAA);
+            ex::impl::setShearMode(obj.data(), 0x12345678);
+            std::uint32_t got = 0;
+            std::memcpy(&got, obj.data() + 0x44, 4);
+            CHECK(got == 0x12345678u);
+            ex::impl::setShearMode(obj.data(), -2);
+            std::memcpy(&got, obj.data() + 0x44, 4);
+            CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
+        }
+
+        // CNS_SetNoMixPreference (offset 0x18)
+        {
+            std::vector<unsigned char> obj(0x300, 0xAA);
+            ex::impl::setNoMixPreference(obj.data(), 0x12345678);
+            std::uint32_t got = 0;
+            std::memcpy(&got, obj.data() + 0x18, 4);
+            CHECK(got == 0x12345678u);
+            ex::impl::setNoMixPreference(obj.data(), -2);
+            std::memcpy(&got, obj.data() + 0x18, 4);
+            CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
+        }
+
+        // CNS_SetNoSheetMixPreference (offset 0x1C)
+        {
+            std::vector<unsigned char> obj(0x300, 0xAA);
+            ex::impl::setNoSheetMixPreference(obj.data(), 0x12345678);
+            std::uint32_t got = 0;
+            std::memcpy(&got, obj.data() + 0x1C, 4);
+            CHECK(got == 0x12345678u);
+            ex::impl::setNoSheetMixPreference(obj.data(), -2);
+            std::memcpy(&got, obj.data() + 0x1C, 4);
+            CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
+        }
+
+        // SetShearRepulseFromBorders (offset 0x58)
+        {
+            std::vector<unsigned char> obj(0x300, 0xAA);
+            ex::impl::setShearRepulseFromBorders(obj.data(), 0x12345678);
+            std::uint32_t got = 0;
+            std::memcpy(&got, obj.data() + 0x58, 4);
+            CHECK(got == 0x12345678u);
+            ex::impl::setShearRepulseFromBorders(obj.data(), -2);
+            std::memcpy(&got, obj.data() + 0x58, 4);
+            CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
+        }
+
+        // UnLockLaunchingOrder (offset 0x244)
+        {
+            std::vector<unsigned char> obj(0x300, 0xAA);
+            ex::impl::unlockLaunchingOrder(obj.data(), 0x12345678);
+            std::uint32_t got = 0;
+            std::memcpy(&got, obj.data() + 0x244, 4);
+            CHECK(got == 0x12345678u);
+            ex::impl::unlockLaunchingOrder(obj.data(), -2);
+            std::memcpy(&got, obj.data() + 0x244, 4);
+            CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
+        }
+        // The thirteen are exactly the entries the hand-written map forwards to.
+        CHECK(ex::forwardedCount() == 13u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
                                   sameName(e->name, "GetMultiplicity") || sameName(e->name, "GetPartUserString") ||
                                   sameName(e->name, "GetSolution") ||
-                                  e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286;
+                                  e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
+                                  e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
+                                  e->ordinal0 == 304 || e->ordinal0 == 76;
             CHECK(ex::forwards(i) == expected);
         }
     }

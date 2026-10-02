@@ -55,6 +55,17 @@ void setByteAtF8(void* object, int value);    // RE 0x0AFF0 (288/289): byte +0xF
 void setDoubleAndFlag(void* object, int flag, double value);   // RE 0x0B000 (286/287): double +0x100, byte +0xF9
 void* getSolutionIdentity(void* handle);      // RE 0x0B0A0 (33/34): returns its argument, touches no memory
 
+/** The int-setter family (RE 0x0DDC0, 0x0D310, 0x0D340, 0x0DE20, 0x0D430): `mov dword ptr [rsi+OFF], ebx`.
+ *  Each stores the second argument, unchanged, as a 32-bit value at its own offset; the harness in which that
+ *  store sits is identical for all five (push rsi/rbx, the argument pair, a logger call, the store, ret).
+ *  Established by: behavioural test. */
+void setIntField(void* object, int value, std::size_t offset);
+void setShearMode(void* object, int value);   // RE SetShearMode: offset 0x44
+void setNoMixPreference(void* object, int value);   // RE CNS_SetNoMixPreference: offset 0x18
+void setNoSheetMixPreference(void* object, int value);   // RE CNS_SetNoSheetMixPreference: offset 0x1C
+void setShearRepulseFromBorders(void* object, int value);   // RE SetShearRepulseFromBorders: offset 0x58
+void unlockLaunchingOrder(void* object, int value);   // RE UnLockLaunchingOrder: offset 0x244
+
 const char* getPartUserString(void* part);
 
 }  // namespace impl

@@ -67,6 +67,21 @@ void* getSolutionIdentity(void* handle) {
     return handle;   // the body is `mov rax, rbx; ret` after the logger call: no memory is touched
 }
 
+void setIntField(void* object, int value, std::size_t offset) {
+    // The store is a 32-bit one: `mov dword ptr [rsi + OFF], ebx`. Nothing else in these functions touches memory.
+    std::memcpy(static_cast<unsigned char*>(object) + offset, &value, sizeof(value));
+}
+
+void setShearMode(void* object, int value) { setIntField(object, value, 0x44); }   // SetShearMode
+
+void setNoMixPreference(void* object, int value) { setIntField(object, value, 0x18); }   // CNS_SetNoMixPreference
+
+void setNoSheetMixPreference(void* object, int value) { setIntField(object, value, 0x1C); }   // CNS_SetNoSheetMixPreference
+
+void setShearRepulseFromBorders(void* object, int value) { setIntField(object, value, 0x58); }   // SetShearRepulseFromBorders
+
+void unlockLaunchingOrder(void* object, int value) { setIntField(object, value, 0x244); }   // UnLockLaunchingOrder
+
 const char* getPartUserString(void* part) {
     return static_cast<const char*>(loadPointer(part, 0x1B8));
 }
