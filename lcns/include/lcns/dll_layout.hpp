@@ -189,5 +189,19 @@ static_assert(offsetof(WindowSlots, slot50) == 0x50, "RE 0x526767");
 /** Where the status test in the two implementers reads its operand, as read from the code but NOT yet traced to a writer. */
 // The status the two implementers test is their SECOND ARGUMENT. RE 0x526170 saves edx at rsp+0x108 and RE 0x526216 passes that address to the status function, so it is not a window field, and both entry points call with zero.
 
+/**
+ * The cached box that 0x4F9200 returns. RE 0x4F920B tests the byte at +0x100 and RE 0x4F9217 returns rcx+0x108, so the
+ * object carries an initialisation byte and then a box. The box bytes follow the same layout as this project's box model:
+ * flag, minX, minY, maxX, maxY, each eight bytes apart after the flag.
+ */
+struct CachedBoxCarrier {
+    unsigned char opaque00[0x100];
+    unsigned char initialised;   // +0x100, RE 0x4F920B (the same field UnknownFlagCarrier calls value100)
+    unsigned char opaque01[0x07];
+    unsigned char box[0x28];     // +0x108, RE 0x4F9217: flag, minX, minY, maxX, maxY
+};
+static_assert(offsetof(CachedBoxCarrier, initialised) == 0x100, "RE 0x4F920B");
+static_assert(offsetof(CachedBoxCarrier, box) == 0x108, "RE 0x4F9217");
+
 }  // namespace dll
 }  // namespace lcns

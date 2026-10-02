@@ -435,6 +435,9 @@ int main() {
         CHECK(offsetof(lcns::dll::WindowSlots, slot50) == 0x50);
              // read from the code, writer not yet traced
 
+        CHECK(offsetof(lcns::dll::CachedBoxCarrier, initialised) == 0x100);   // RE 0x4F920B
+        CHECK(offsetof(lcns::dll::CachedBoxCarrier, box) == 0x108);           // RE 0x4F9217
+
     return check::finish("exports");
 }
 
