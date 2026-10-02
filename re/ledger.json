@@ -1838,6 +1838,22 @@
    "round": 650,
    "subject": "classes.namespaces-are-the-architecture",
    "witness": "Multi 30 classes including FlipNester, FilterNester, NoFillNester, TilingNester, CompactNester, LimitedNester, NestingNester, DatabaseNester, RectangleNester, MultiTorchNester and RowNester"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the module's 96 own classes have 384 virtual slots, and the Nester family is eleven classes of six slots each",
+   "round": 651,
+   "subject": "virtual.slots-384",
+   "witness": "generated from re/vtables.json's slot lists; Engine::InfiniteEngine's vtable 0xA3CFD0 holds 0x759B20, 0x759AD0 and 0x759A80 in slots 0, 1 and 2"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "eleven Multi nester classes share one six-slot interface, differing only in where the slots point",
+   "round": 651,
+   "subject": "virtual.strategy-interface",
+   "witness": "FlipNester FilterNester NoFillNester TilingNester CompactNester LimitedNester NestingNester DatabaseNester RectangleNester MultiTorchNester RowNester, six slots each -- the bottleneck the archive named, now a shape rather than a word"
   }
  ]
 }
