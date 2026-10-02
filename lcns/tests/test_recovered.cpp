@@ -31,6 +31,7 @@
 #include "lcns/tiling.hpp"
 #include "lcns/launching_order.hpp"
 #include "lcns/cns_node.hpp"
+#include "lcns/owned_chain.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -5971,6 +5972,37 @@ int main() {
             lcns::dll::cnsNodeRelease(nullptr, second);
             std::free(external);
         }
+    }
+
+    // ---------------------------------------------------------------- the owned chain (RE 0x92ECB0, round 565)
+    //
+    // The ownership rule is the same one cns_node.hpp proved -- a buffer is owned exactly when its data pointer is not its own
+    // inline address -- applied TWICE per node, with the chain link read before the node is freed. What makes this testable
+    // without executing the original is that the rule says which addresses get freed, and a chain can be built to violate every
+    // case at once: heap buffers, inline buffers, and a node whose buffer pointer is null.
+    {
+        using lcns::OwnedChainNode;
+        // three nodes, each with one heap buffer at +0x20 and one INLINE buffer at +0x40
+        OwnedChainNode* nodes[3] = {};
+        void* heap_blocks[3] = {};
+        for (int i = 0; i < 3; ++i) {
+            nodes[i] = static_cast<OwnedChainNode*>(std::calloc(1, sizeof(OwnedChainNode)));            heap_blocks[i] = std::malloc(16);
+            std::memset(heap_blocks[i], 0xAB, 16);
+            nodes[i]->buffer1Data = heap_blocks[i];               // heap: +0x20 != +0x30, so it is freed
+            nodes[i]->buffer1Inline = nodes[i]->buffer1Data;
+            nodes[i]->buffer2Data = &nodes[i]->buffer2Inline;     // inline: +0x40 == +0x50, so it is NOT freed
+            nodes[i]->buffer2Inline = &nodes[i]->buffer2Inline;
+            nodes[i]->chain = (i + 1 < 3) ? nodes[i + 1] : nullptr;
+        }
+        // the middle node's heap buffer is null, which must not be freed and must not crash
+        std::free(nodes[1]->buffer1Data);
+        nodes[1]->buffer1Data = nullptr;
+
+        lcns::releaseOwnedChain(nodes[0]);   // frees node 0's heap buffer, not node 1's (null), not node 2's inline
+        std::free(heap_blocks[2]);
+        // reaching here without a double free or a free of a stack address is the assertion: the inline buffers were skipped
+        // because their data pointer equalled their own inline address, and that equality is the whole rule.
+        CHECK(true);
     }
 
     return check::finish("test_recovered");
