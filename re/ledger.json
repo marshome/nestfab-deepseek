@@ -454,6 +454,14 @@
    "round": 564,
    "subject": "0x92ECB0.sites-in-target",
    "witness": "0x2DE5, 0x2E57, 0x2FBF, 0x3027 and four more, each preceded by 0x9984B0 the allocator free"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x5007C0 is four member destructors, sixteen frees, one helper and one thunk -- seven distinct targets, not 716 bytes of work",
+   "round": 566,
+   "subject": "order.destructor.decomposition",
+   "witness": "re/g_dtor_report.py: 22 calls; 0x9984B0 x16, 0x92B340 x1 (605 B, 147 callers), 0x92B940 x1 (597 B, 118 callers), 0x92BBA0 x1 (687 B), 0x92ECB0 x1 (791 B, implemented), 0x531F20 x1 (71 B), 0x63F6D0 x1 a thunk"
   }
  ]
 }
