@@ -58,7 +58,7 @@ if(LCNS_HAVE_ASM)
 endif()
 
 # --- exact geometry kernel  (mirrors ..\exact\* and ..\geom\* of the original) ---
-add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp src/segcost.cpp src/boxacc.cpp)
+add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp src/segcost.cpp src/boxacc.cpp src/boxmerge.cpp)
 target_link_libraries(lcns_geom PUBLIC lcns_flags)
 
 # --- problem model + NFP map + tiling patterns + row distance/squeeze ---
@@ -206,6 +206,7 @@ if(Python3_Interpreter_FOUND)
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "Regenerating include/lcns/detail/api_table.inc from ../re/exports_table.json")
 endif()
+
 
 
 
