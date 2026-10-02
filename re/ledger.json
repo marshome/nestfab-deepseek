@@ -2230,6 +2230,22 @@
    "round": 667,
    "subject": "benchmark-names-are-not-vocabulary",
    "witness": "the first generator ignored re/param_split.json's parameters/data split and emitted void* air03 and void* bell5 as members of Tiling::SqueezeMultiTiler"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "every class's constructor address is now a kConstructor constant INSIDE the class, and the table keyed by class name is deleted",
+   "round": 668,
+   "subject": "class-constructors-folded-in",
+   "witness": "43 classes got kConstructor and kVtable; the table's other columns were the vtable (already per-class), a field count (countable from the declared fields) and two statistics about the scanner rather than the module"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a generated file must not report how the generator works: candidates and functionsWriting measure the scanner, not the module",
+   "round": 668,
+   "subject": "generator-statistics-are-not-facts",
+   "witness": "the ClassConstructor table's two such columns were dropped when the address was folded into the classes"
   }
  ]
 }

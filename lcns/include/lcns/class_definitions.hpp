@@ -145,6 +145,10 @@ class Implementation {
 public:
     virtual ~Implementation() = default;
 
+    /** RE 0x266E00: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x266E00;
+    static constexpr std::uintptr_t kVtable = 0xA3D470;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x266E55: mov qword ptr [rbp + 0x10], 0
     void*          at_0018      = {}; // +0x18, RE 0x266E5D: mov qword ptr [rbp + 0x18], 0
@@ -170,6 +174,10 @@ class CompositeObserver {
 public:
     virtual ~CompositeObserver() = default;
 
+    /** RE 0x8D4500: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x8D4500;
+    static constexpr std::uintptr_t kVtable = 0xA3D060;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x8D45A8: mov qword ptr [rax + 0x10], r8
     void*          at_0018      = {}; // +0x18, RE 0x8D45B7: mov qword ptr [rax + 0x18], r9
@@ -189,6 +197,10 @@ public:
 class EquivalentObserver {
 public:
     virtual ~EquivalentObserver() = default;
+
+    /** RE 0x75E0E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x75E0E0;
+    static constexpr std::uintptr_t kVtable = 0xA3D0A0;
 
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x75E11A: lock sub dword ptr [rbx + 0xc], 1
@@ -243,6 +255,10 @@ class AdvancedStrategist {
 public:
     virtual ~AdvancedStrategist() = default;
 
+    /** RE 0x2EC50: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x2EC50;
+    static constexpr std::uintptr_t kVtable = 0xA3B970;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x2ED6E: mov qword ptr [rax + 0x10], rsi
     std::uint16_t  at_0018      = {}; // +0x18, RE 0x2ED72: mov word ptr [rax + 0x18], dx
@@ -278,6 +294,10 @@ public:
 class AllSheetSelector {
 public:
     virtual ~AllSheetSelector() = default;
+
+    /** RE 0xB00E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0xB00E0;
+    static constexpr std::uintptr_t kVtable = 0xA3B840;
 };
 
 /** Multi::CompactCanceller -- vtable 0xA3B870, 3 virtual slot(s).
@@ -289,6 +309,10 @@ public:
 class CompactCanceller {
 public:
     virtual ~CompactCanceller() = default;
+
+    /** RE 0x68A6E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x68A6E0;
+    static constexpr std::uintptr_t kVtable = 0xA3B870;
 
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x68AA62: lock sub dword ptr [rbx + 0xc], 1
@@ -322,6 +346,10 @@ public:
 class LargestSheetSelector {
 public:
     virtual ~LargestSheetSelector() = default;
+
+    /** RE 0xB0000: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0xB0000;
+    static constexpr std::uintptr_t kVtable = 0xA3BAC0;
 };
 
 /** Multi::NestingContextPool -- vtable 0xA3B9A0, 3 virtual slot(s).
@@ -333,6 +361,10 @@ public:
 class NestingContextPool {
 public:
     virtual ~NestingContextPool() = default;
+
+    /** RE 0x32700: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x32700;
+    static constexpr std::uintptr_t kVtable = 0xA3B9A0;
 
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x329DA: mov dword ptr [rax + 0xc], 1
@@ -398,6 +430,10 @@ public:
 class NestingObserver {
 public:
     virtual ~NestingObserver() = default;
+
+    /** RE 0x378E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x378E0;
+    static constexpr std::uintptr_t kVtable = 0xA3B7C0;
 
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x39A92: lock sub dword ptr [rsi + 0xc], 1
@@ -583,6 +619,10 @@ class NoFitMapCanceller {
 public:
     virtual ~NoFitMapCanceller() = default;
 
+    /** RE 0x32700: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x32700;
+    static constexpr std::uintptr_t kVtable = 0xA3B8E0;
+
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x329DA: mov dword ptr [rax + 0xc], 1
     void*          at_0010      = {}; // +0x10, RE 0x3274E: mov qword ptr [rbx + 0x10], rdi
@@ -648,6 +688,10 @@ class NoMixSheetSelector {
 public:
     virtual ~NoMixSheetSelector() = default;
 
+    /** RE 0xAFD60: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0xAFD60;
+    static constexpr std::uintptr_t kVtable = 0xA3B9D0;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     std::uint32_t  at_0010      = {}; // +0x10, RE 0xAFD94: mov dword ptr [rbx + 0x10], r12d
     std::byte unplaced_0014[0x4]{};   // +0x14 .. +0x18: no instruction places a field here
@@ -682,6 +726,10 @@ class PartUpdaterLimiter {
 public:
     virtual ~PartUpdaterLimiter() = default;
 
+    /** RE 0x695C70: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x695C70;
+    static constexpr std::uintptr_t kVtable = 0xA3BA00;
+
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x695D62: lock sub dword ptr [rbp + 0xc], 1
     std::byte unplaced_0010[0x28]{};   // +0x10 .. +0x38: no instruction places a field here
@@ -701,6 +749,10 @@ public:
 class RCompactCanceller {
 public:
     virtual ~RCompactCanceller() = default;
+
+    /** RE 0x67460: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x67460;
+    static constexpr std::uintptr_t kVtable = 0xA3B910;
 
     std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
     std::uint32_t  at_000c      = {}; // +0xC, RE 0x67DCC: mov dword ptr [rax + 0xc], 1
@@ -883,6 +935,10 @@ class RandomSheetSelector {
 public:
     virtual ~RandomSheetSelector() = default;
 
+    /** RE 0xB0040: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0xB0040;
+    static constexpr std::uintptr_t kVtable = 0xA3BA60;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     std::uint32_t  at_0010      = {}; // +0x10, RE 0xB006C: mov dword ptr [rbx + 0x10], ebp
     std::uint8_t   at_0014      = {}; // +0x14, RE 0xB0077: mov byte ptr [rbx + 0x14], al
@@ -900,6 +956,10 @@ public:
 class SplitNode {
 public:
     virtual ~SplitNode() = default;
+
+    /** RE 0x99910: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x99910;
+    static constexpr std::uintptr_t kVtable = 0xA3BB70;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x999AA: mov qword ptr [rsi + 0x10], rax
@@ -925,6 +985,10 @@ class StrategyBasicAdder {
 public:
     virtual ~StrategyBasicAdder() = default;
 
+    /** RE 0xAF750: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0xAF750;
+    static constexpr std::uintptr_t kVtable = 0xA3BA30;
+
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     void*          at_0020      = {}; // +0x20, RE 0xAF76B: mov qword ptr [rsp + 0x20], r9
     std::uint32_t  at_0028      = {}; // +0x28, RE 0xAF762: mov dword ptr [rsp + 0x28], edx
@@ -941,6 +1005,10 @@ public:
 class SupervisorCanceller {
 public:
     virtual ~SupervisorCanceller() = default;
+
+    /** RE 0x30A30: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x30A30;
+    static constexpr std::uintptr_t kVtable = 0xA3BA90;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x30A50: mov qword ptr [rbx + 0x10], rcx
@@ -959,6 +1027,10 @@ public:
 class TerminalNode {
 public:
     virtual ~TerminalNode() = default;
+
+    /** RE 0x99360: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x99360;
+    static constexpr std::uintptr_t kVtable = 0xA3B570;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x993B4: mov qword ptr [rdi + 0x10], rax
@@ -995,6 +1067,10 @@ class TraceObserver {
 public:
     virtual ~TraceObserver() = default;
 
+    /** RE 0x5F000: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x5F000;
+    static constexpr std::uintptr_t kVtable = 0xA3B700;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     std::uint8_t   at_0010      = {}; // +0x10, RE 0x5F012: mov byte ptr [rcx + 0x10], r8b
     std::uint8_t   at_0011      = {}; // +0x11, RE 0x5F016: mov byte ptr [rcx + 0x11], r9b
@@ -1012,6 +1088,10 @@ public:
 class WrapObserver {
 public:
     virtual ~WrapObserver() = default;
+
+    /** RE 0x83DC0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x83DC0;
+    static constexpr std::uintptr_t kVtable = 0xA3B5E0;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x8418E: mov qword ptr [r13 + 0x10], rax
@@ -1061,6 +1141,10 @@ class AlphaPriceComputer {
 public:
     virtual ~AlphaPriceComputer() = default;
 
+    /** RE 0x4D9B30: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4D9B30;
+    static constexpr std::uintptr_t kVtable = 0xA3B130;
+
     std::byte unplaced_0008[0x20]{};   // +0x8 .. +0x28: no instruction places a field here
     double         at_0028      = {}; // +0x28, RE 0x4D9B3D: movsd qword ptr [rsp + 0x28], xmm1
 };
@@ -1074,6 +1158,10 @@ public:
 class BoxPriceComputer {
 public:
     virtual ~BoxPriceComputer() = default;
+
+    /** RE 0x4D9AD0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4D9AD0;
+    static constexpr std::uintptr_t kVtable = 0xA3B0B0;
 };
 
 /** Prc::HullPriceComputer -- vtable 0xA3B0F0, 5 virtual slot(s).
@@ -1085,6 +1173,10 @@ public:
 class HullPriceComputer {
 public:
     virtual ~HullPriceComputer() = default;
+
+    /** RE 0x4D9B00: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4D9B00;
+    static constexpr std::uintptr_t kVtable = 0xA3B0F0;
 };
 
 /** Prc::LinearCombinationPricer -- vtable 0xA3B170, 5 virtual slot(s).
@@ -1096,6 +1188,10 @@ public:
 class LinearCombinationPricer {
 public:
     virtual ~LinearCombinationPricer() = default;
+
+    /** RE 0x4D9CD0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4D9CD0;
+    static constexpr std::uintptr_t kVtable = 0xA3B170;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x4D9D23: mov qword ptr [rbx + 0x10], 0
@@ -1118,6 +1214,10 @@ namespace RCompact {
 class RotateLogger {
 public:
     virtual ~RotateLogger() = default;
+
+    /** RE 0x24A1C0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x24A1C0;
+    static constexpr std::uintptr_t kVtable = 0xA533D0;
 
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     double         at_0020      = {}; // +0x20, RE 0x24A604: movsd qword ptr [rsp + 0x20], xmm8
@@ -1192,6 +1292,10 @@ class BasicDistancer {
 public:
     virtual ~BasicDistancer() = default;
 
+    /** RE 0x136AE0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x136AE0;
+    static constexpr std::uintptr_t kVtable = 0xA3B1B0;
+
     std::byte unplaced_0008[0x20]{};   // +0x8 .. +0x28: no instruction places a field here
     double         at_0028      = {}; // +0x28, RE 0x136AED: movsd qword ptr [rsp + 0x28], xmm1
 };
@@ -1209,6 +1313,10 @@ class BoxAreaDimensioner {
 public:
     virtual ~BoxAreaDimensioner() = default;
 
+    /** RE 0x5247F0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x5247F0;
+    static constexpr std::uintptr_t kVtable = 0xA534C0;
+
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     void*          at_0020      = {}; // +0x20, RE 0x524800: mov qword ptr [rsp + 0x20], rax
 };
@@ -1222,6 +1330,10 @@ public:
 class ClusterObserver {
 public:
     virtual ~ClusterObserver() = default;
+
+    /** RE 0x553100: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x553100;
+    static constexpr std::uintptr_t kVtable = 0xA53420;
 
     std::byte unplaced_0008[0x50]{};   // +0x8 .. +0x58: no instruction places a field here
     std::uint8_t   at_0058      = {}; // +0x58, RE 0x553122: mov byte ptr [rbx + 0x58], 0
@@ -1240,6 +1352,10 @@ public:
 class Observer {
 public:
     virtual ~Observer() = default;
+
+    /** RE 0x83DC0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x83DC0;
+    static constexpr std::uintptr_t kVtable = 0xA53550;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x8418E: mov qword ptr [r13 + 0x10], rax
@@ -1286,6 +1402,10 @@ class ParseProblemException {
 public:
     virtual ~ParseProblemException() = default;
 
+    /** RE 0x50CF70: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x50CF70;
+    static constexpr std::uintptr_t kVtable = 0xA534F0;
+
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     void*          at_0020      = {}; // +0x20, RE 0x50CFCA: mov qword ptr [rsp + 0x20], rax
     double         at_0028      = {}; // +0x28, RE 0x50CFC4: movsd qword ptr [rsp + 0x28], xmm0
@@ -1306,6 +1426,10 @@ class ParseSolutionException {
 public:
     virtual ~ParseSolutionException() = default;
 
+    /** RE 0x50FA10: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x50FA10;
+    static constexpr std::uintptr_t kVtable = 0xA53520;
+
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     void*          at_0020      = {}; // +0x20, RE 0x50FA6B: mov qword ptr [rsp + 0x20], rdx
     void*          at_0028      = {}; // +0x28, RE 0x50FACB: mov qword ptr [rsp + 0x28], 0
@@ -1324,6 +1448,10 @@ class SizeDimensioner {
 public:
     virtual ~SizeDimensioner() = default;
 
+    /** RE 0x5247D0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x5247D0;
+    static constexpr std::uintptr_t kVtable = 0xA53460;
+
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     void*          at_0020      = {}; // +0x20, RE 0x5247E0: mov qword ptr [rsp + 0x20], rax
 };
@@ -1337,6 +1465,10 @@ public:
 class WidthDimensioner {
 public:
     virtual ~WidthDimensioner() = default;
+
+    /** RE 0x5247B0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x5247B0;
+    static constexpr std::uintptr_t kVtable = 0xA53490;
 
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     void*          at_0020      = {}; // +0x20, RE 0x5247C0: mov qword ptr [rsp + 0x20], rax
@@ -1355,6 +1487,10 @@ class BasicCandidater {
 public:
     virtual ~BasicCandidater() = default;
 
+    /** RE 0x4F3630: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4F3630;
+    static constexpr std::uintptr_t kVtable = 0xA3D190;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x4F363E: mov qword ptr [rcx + 0x10], rdx
 };
@@ -1368,6 +1504,10 @@ public:
 class OldMultitorchEvaluator {
 public:
     virtual ~OldMultitorchEvaluator() = default;
+
+    /** RE 0x4E83E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4E83E0;
+    static constexpr std::uintptr_t kVtable = 0xA3D340;
 };
 
 /** Tiling::WarpCanceller -- vtable 0xA3D160, 3 virtual slot(s).
@@ -1379,6 +1519,10 @@ public:
 class WarpCanceller {
 public:
     virtual ~WarpCanceller() = default;
+
+    /** RE 0x4ED480: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x4ED480;
+    static constexpr std::uintptr_t kVtable = 0xA3D160;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x4ED7F9: mov qword ptr [rbp + 0x10], rdx
@@ -1432,6 +1576,10 @@ class BadResponseException {
 public:
     virtual ~BadResponseException() = default;
 
+    /** RE 0x2B660: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x2B660;
+    static constexpr std::uintptr_t kVtable = 0xA3BC80;
+
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     std::uint32_t  at_0010      = {}; // +0x10, RE 0x2B81E: mov dword ptr [rdi + 0x10], r14d
     std::uint32_t  at_0014      = {}; // +0x14, RE 0x2B822: mov dword ptr [rdi + 0x14], eax
@@ -1479,6 +1627,10 @@ public:
 class ConnectException {
 public:
     virtual ~ConnectException() = default;
+
+    /** RE 0x6D3240: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x6D3240;
+    static constexpr std::uintptr_t kVtable = 0xA3BBF0;
 };
 
 /** Utils::ResolveException -- vtable 0xA3BC20, 3 virtual slot(s).
@@ -1490,6 +1642,10 @@ public:
 class ResolveException {
 public:
     virtual ~ResolveException() = default;
+
+    /** RE 0x6D3280: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x6D3280;
+    static constexpr std::uintptr_t kVtable = 0xA3BC20;
 };
 
 /** Utils::TimeoutException -- vtable 0xA3BC50, 3 virtual slot(s).
@@ -1501,6 +1657,10 @@ public:
 class TimeoutException {
 public:
     virtual ~TimeoutException() = default;
+
+    /** RE 0x6D32C0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x6D32C0;
+    static constexpr std::uintptr_t kVtable = 0xA3BC50;
 };
 
 /** Utils::TimerWinImplementation -- vtable 0xA3BCB0, 3 virtual slot(s).
@@ -1512,6 +1672,10 @@ public:
 class TimerWinImplementation {
 public:
     virtual ~TimerWinImplementation() = default;
+
+    /** RE 0x5F47C0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x5F47C0;
+    static constexpr std::uintptr_t kVtable = 0xA3BCB0;
 };
 }  // namespace
 
@@ -1526,6 +1690,10 @@ namespace dbg {
 class file_error {
 public:
     virtual ~file_error() = default;
+
+    /** RE 0x60C160: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x60C160;
+    static constexpr std::uintptr_t kVtable = 0xA3B210;
 
     std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
     std::uint32_t  at_0020      = {}; // +0x20, RE 0x60C190: mov dword ptr [rsp + 0x20], 3
@@ -1549,6 +1717,10 @@ public:
 class symlog {
 public:
     virtual ~symlog() = default;
+
+    /** RE 0x60B4E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
+    static constexpr std::uintptr_t kConstructor = 0x60B4E0;
+    static constexpr std::uintptr_t kVtable = 0xA3B240;
 
     std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
     void*          at_0010      = {}; // +0x10, RE 0x60B503: mov qword ptr [rcx + 0x10], r8

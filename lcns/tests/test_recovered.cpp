@@ -50,7 +50,6 @@
 #include "lcns/records.hpp"
 #include "lcns/small_buffer.hpp"
 #include "lcns/named_members.hpp"
-#include "lcns/class_constructors.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -7052,72 +7051,22 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- every class's constructor (generated)
+    // ---------------------------------------------------------------- every class's constructor, AS A MEMBER
     //
-    // A constructor is found by the vtable slot-0 ADDRESS it installs, and a field by a store through a register shown to hold the object.
-    // The count is of DISTINCT OFFSETS, so Multi::NestingNester's two writes at 0x30 make one position.
+    // A `ClassConstructor` TABLE stood here: six columns keyed by class name, of which ONE was a fact about the module -- the address of the
+    // function that builds each class. The others were the vtable (already a constant in each class), a field COUNT (countable from the
+    // declared fields), and two statistics about MY SCAN, which are not facts about the module at all. **The address is now `kConstructor`
+    // inside each class**, which is C++; the same number in a row keyed by a string is a registry, and this project has the registries it
+    // needs.
     {
-        std::size_t count = 0;
-        const lcns::ClassConstructor* ctors = lcns::classConstructors(count);
-        CHECK(count == lcns::kClassesWithConstructor);
-        CHECK(count >= 90u);
-        CHECK(lcns::kClassesWritingFields >= 80u);
-        CHECK(lcns::kClassesWritingFields <= count);
-
-        std::size_t withCtor = 0;
-        std::size_t writing = 0;
-        for (std::size_t i = 0; i < count; ++i) {
-            CHECK(ctors[i].qualified != nullptr);
-            CHECK(ctors[i].vtable >= 0xA00000u);
-            CHECK(ctors[i].candidates >= 1u);
-            CHECK(ctors[i].functionsWriting <= ctors[i].candidates);
-            if (ctors[i].constructor != 0u) {
-                ++withCtor;
-                CHECK(ctors[i].constructor >= 0x1000u);
-                CHECK(ctors[i].constructor < 0x9C0000u);
-            }
-            if (ctors[i].fields > 0u) {
-                ++writing;
-            }
-        }
-        CHECK(writing == lcns::kClassesWritingFields);
-        CHECK(withCtor >= 90u);
-
-        // THE TWO CLASSES THE COVERAGE CHECK FOUND NAMED AND UNDECLARED now have constructors
-        bool sawSplit = false, sawTerminal = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            if (std::string(ctors[i].qualified) == "Multi::SplitNode") {
-                sawSplit = true;
-                CHECK(ctors[i].constructor == 0x99910u);
-                CHECK(ctors[i].fields == 11u);
-            }
-            if (std::string(ctors[i].qualified) == "Multi::TerminalNode") {
-                sawTerminal = true;
-                CHECK(ctors[i].constructor == 0x99360u);
-                CHECK(ctors[i].fields == 10u);
-            }
-        }
-        CHECK(sawSplit);
-        CHECK(sawTerminal);
-
-        bool sawNesting = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            if (std::string(ctors[i].qualified) == "Multi::NestingNester") {
-                sawNesting = true;
-                CHECK(ctors[i].constructor == 0x342E0u);
-                CHECK(ctors[i].fields == 7u);      // seven positions from eight stores
-            }
-        }
-        CHECK(sawNesting);
-
-        const lcns::ClassConstructor* richest = &ctors[0];
-        for (std::size_t i = 1; i < count; ++i) {
-            if (ctors[i].fields > richest->fields) {
-                richest = &ctors[i];
-            }
-        }
-        CHECK(richest->fields >= 30u);
-        CHECK(std::string(richest->qualified) == "Tiling::SqueezeMultiTiler");
+        using lcns::Multi::SplitNode;
+        using lcns::Multi::TerminalNode;
+        CHECK(SplitNode::kConstructor == 0x99910u);       // RE the slot-0 reference that finds it
+        CHECK(SplitNode::kVtable == 0xA3BB70u);
+        CHECK(TerminalNode::kConstructor == 0x99360u);
+        CHECK(TerminalNode::kVtable == 0xA3B570u);
+        // a class whose constructor writes no field still knows its constructor, which the table could state only as a row
+        CHECK(SplitNode::kConstructor != TerminalNode::kConstructor);
     }
 
 
