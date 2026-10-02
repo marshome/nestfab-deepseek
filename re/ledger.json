@@ -726,6 +726,22 @@
    "round": 585,
    "subject": "variant.tail-targets",
    "witness": "0x132E0 is 176 B with 3 callers and serves TWO of the five; 0xC1A0 is 241 B; 0x10CE0 is 584 B; 0x14A60 is 678 B with 2 callers"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the shared variant target is recursive and computes two axis extents, compares them, and scales by the larger one",
+   "round": 586,
+   "subject": "variant.132E0",
+   "witness": "0x13315 lea rdx,[rbx+0x50] / 0x13319 call 0x5CD5C0 / 0x13327 jne (invalid box skips) / 0x13335 subsd from [rsp+0x60] and 0x1333B from [rsp+0x58] give the two extents / 0x13341 ucomisd xmm3,xmm0 / 0x13345 jbe to 0x13382 / 0x13347 mulsd by [rip+0x99a679] / 0x13382 mulsd by [rip+0x99a63e]; then 0x23BF0 with [rbx+0x208] and [rbx+0x68]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the variant target reads +0x50, +0x68 and +0x208 of its object, three offsets the launch order's layout already declares",
+   "round": 586,
+   "subject": "variant.offsets",
+   "witness": "+0x50 is where the ledger PROVED CommonCutProperties is embedded; +0x208 and +0x68 are constructor-written fields of the 0x2C0 object; so the variant path operates on the launch order itself"
   }
  ]
 }
