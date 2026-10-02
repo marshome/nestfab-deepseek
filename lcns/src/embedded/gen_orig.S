@@ -1037,6 +1037,46 @@ lcns_orig_547620:
     .byte 0xc3
     /* end lcns_orig_547620 */
 
+/* nineteen-byte accessor: copies the pair at +0x38 and +0x40 of the element into the destination  rva 0x5203d0, 19 bytes, 45 callers
+ * sha256 91bd4944a3ac0e3439f10f88f8f212e2c2a42676681b9339bac9dcacdfeaee07
+ *   005203d0  mov r9, qword ptr [rdx + 0x38]
+ *   005203d4  mov r10, qword ptr [rdx + 0x40]
+ *   005203d8  mov rax, rcx
+ *   005203db  mov qword ptr [rcx], r9
+ *   005203de  mov qword ptr [rcx + 8], r10
+ *   005203e2  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_5203d0
+lcns_orig_5203d0:
+    .byte 0x4c, 0x8b, 0x4a, 0x38
+    .byte 0x4c, 0x8b, 0x52, 0x40
+    .byte 0x48, 0x89, 0xc8
+    .byte 0x4c, 0x89, 0x09
+    .byte 0x4c, 0x89, 0x51, 0x08
+    .byte 0xc3
+    /* end lcns_orig_5203d0 */
+
+/* nineteen-byte accessor: copies the pair at +0x28 and +0x30 of the element into the destination  rva 0x5203f0, 19 bytes, 33 callers
+ * sha256 cecfe101ac6dc102dbf3e0ba5e8ec9474d581c46fb8407127f9fad5a3cb51452
+ *   005203f0  mov r9, qword ptr [rdx + 0x28]
+ *   005203f4  mov r10, qword ptr [rdx + 0x30]
+ *   005203f8  mov rax, rcx
+ *   005203fb  mov qword ptr [rcx], r9
+ *   005203fe  mov qword ptr [rcx + 8], r10
+ *   00520402  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_5203f0
+lcns_orig_5203f0:
+    .byte 0x4c, 0x8b, 0x4a, 0x28
+    .byte 0x4c, 0x8b, 0x52, 0x30
+    .byte 0x48, 0x89, 0xc8
+    .byte 0x4c, 0x89, 0x09
+    .byte 0x4c, 0x89, 0x51, 0x08
+    .byte 0xc3
+    /* end lcns_orig_5203f0 */
+
 /* merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight  rva 0x5c8c50, 255 bytes, 56 callers
  * sha256 d8758387497387c58502f9d8e53a217c10e968dd78489723b318c27dcb816f92
  *   005c8c50  cmp byte ptr [rdx], 0
@@ -1323,6 +1363,8 @@ lcns_orig_table:
     .quad lcns_orig_50fd40
     .quad lcns_orig_5203c0
     .quad lcns_orig_547620
+    .quad lcns_orig_5203d0
+    .quad lcns_orig_5203f0
     .quad lcns_orig_5c8c50
     .quad lcns_orig_5c8a10
     .quad lcns_orig_16cf0

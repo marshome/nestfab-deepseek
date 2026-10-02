@@ -565,6 +565,22 @@ alignas(16) const unsigned char kBytes_5266a0[759] = {
     0x00, 0xeb, 0xb7,
 };
 
+// 0x5203d0  19 bytes  nineteen-byte accessor: copies the pair at +0x38 and +0x40 of the element into the destination
+// status: callable
+// sha256: 91bd4944a3ac0e3439f10f88f8f212e2c2a42676681b9339bac9dcacdfeaee07
+alignas(16) const unsigned char kBytes_5203d0[19] = {
+    0x4c, 0x8b, 0x4a, 0x38, 0x4c, 0x8b, 0x52, 0x40, 0x48, 0x89, 0xc8, 0x4c,
+    0x89, 0x09, 0x4c, 0x89, 0x51, 0x08, 0xc3,
+};
+
+// 0x5203f0  19 bytes  nineteen-byte accessor: copies the pair at +0x28 and +0x30 of the element into the destination
+// status: callable
+// sha256: cecfe101ac6dc102dbf3e0ba5e8ec9474d581c46fb8407127f9fad5a3cb51452
+alignas(16) const unsigned char kBytes_5203f0[19] = {
+    0x4c, 0x8b, 0x4a, 0x28, 0x4c, 0x8b, 0x52, 0x30, 0x48, 0x89, 0xc8, 0x4c,
+    0x89, 0x09, 0x4c, 0x89, 0x51, 0x08, 0xc3,
+};
+
 // 0x5c8c50  255 bytes  merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight
 // status: callable
 // sha256: d8758387497387c58502f9d8e53a217c10e968dd78489723b318c27dcb816f92
@@ -594,7 +610,7 @@ alignas(16) const unsigned char kBytes_5c8c50[255] = {
 };
 
 // 0x524ee0  1054 bytes  the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented
-// status: comment_only  -- call to 0x4F73E0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block; call to 0x520440 outside the block (+10 more)
+// status: comment_only  -- call to 0x4F73E0 outside the block; call to 0x520440 outside the block; call to 0x5C6BE0 outside the block; call to 0x5CD800 outside the block (+8 more)
 // sha256: 6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070
 alignas(16) const unsigned char kBytes_524ee0[1054] = {
     0x41, 0x55, 0x41, 0x54, 0x55, 0x57, 0x56, 0x53, 0x48, 0x81, 0xec, 0x08,
@@ -873,7 +889,7 @@ alignas(16) const unsigned char kBytes_111ad0[64] = {
 };
 
 // 0x243820  15524 bytes  head of the largest routine here (15,524 bytes): geometry entry
-// status: comment_only  -- call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+74 more)
+// status: comment_only  -- call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+72 more)
 // sha256: ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae
 alignas(16) const unsigned char kBytes_243820[15524] = {
     0x41, 0x57, 0x41, 0x56, 0x41, 0x55, 0x41, 0x54, 0x55, 0x57, 0x56, 0x53,
@@ -2847,7 +2863,7 @@ alignas(16) const unsigned char kBytes_b100[34] = {
 };
 
 // 0xd460  688 bytes  export GetNestedPart (ordinals 19,20)
-// status: comment_only  -- call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block (+8 more)
+// status: comment_only  -- call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x520440 outside the block; call to 0x5C4CD0 outside the block (+6 more)
 // sha256: abcbdc2901627aae53bc8bda1ffcd667a7886f1415774c65e862e153d9222fc0
 alignas(16) const unsigned char kBytes_d460[688] = {
     0x41, 0x57, 0x41, 0x56, 0x41, 0x55, 0x41, 0x54, 0x55, 0x57, 0x56, 0x53,
@@ -9302,8 +9318,10 @@ const Block kBlocks[] = {
     {0x5c6be0u, 65u, "lcns_orig_5c6be0", Status::CommentOnly, "call to 0x62F280 outside the block; call to 0x8C4530 outside the block; call to 0x8C5090 outside the block", "65 bytes, 46 callers, reached from 0x524EE0", kBytes_5c6be0, "213123586aab2df6d4d2a81bb752ae4b7d48e0a3f6bfc973c8dffd23f7880374"},
     {0x526160u, 757u, "lcns_orig_526160", Status::CommentOnly, "call to 0x4F9200 outside the block; call to 0x51D0C0 outside the block; call to 0x524EE0 outside the block; call to 0x52F810 outside the block (+5 more)", "the implementer behind GetLength: walks 120-byte elements, merges boxes with 0x5C8C50, returns one of two box differences or zero", kBytes_526160, "b5c2c864658c15d2efd064ea6d706039d812c6b9f25355a47f8406289c6b4a19"},
     {0x5266a0u, 759u, "lcns_orig_5266a0", Status::CommentOnly, "call to 0x4F9200 outside the block; call to 0x51D0C0 outside the block; call to 0x524EE0 outside the block; call to 0x52F830 outside the block (+5 more)", "the implementer behind GetHeight: differs from 0x526160 in one callee of the 0x52F8xx family", kBytes_5266a0, "4bdd47f664099c5f9147678f8e369d7ccb73d13671b3a4ba908cbd5c1ef30055"},
+    {0x5203d0u, 19u, "lcns_orig_5203d0", Status::Callable, "", "nineteen-byte accessor: copies the pair at +0x38 and +0x40 of the element into the destination", kBytes_5203d0, "91bd4944a3ac0e3439f10f88f8f212e2c2a42676681b9339bac9dcacdfeaee07"},
+    {0x5203f0u, 19u, "lcns_orig_5203f0", Status::Callable, "", "nineteen-byte accessor: copies the pair at +0x28 and +0x30 of the element into the destination", kBytes_5203f0, "cecfe101ac6dc102dbf3e0ba5e8ec9474d581c46fb8407127f9fad5a3cb51452"},
     {0x5c8c50u, 255u, "lcns_orig_5c8c50", Status::Callable, "", "merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight", kBytes_5c8c50, "d8758387497387c58502f9d8e53a217c10e968dd78489723b318c27dcb816f92"},
-    {0x524ee0u, 1054u, "lcns_orig_524ee0", Status::CommentOnly, "call to 0x4F73E0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block; call to 0x520440 outside the block (+10 more)", "the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented", kBytes_524ee0, "6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070"},
+    {0x524ee0u, 1054u, "lcns_orig_524ee0", Status::CommentOnly, "call to 0x4F73E0 outside the block; call to 0x520440 outside the block; call to 0x5C6BE0 outside the block; call to 0x5CD800 outside the block (+8 more)", "the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented", kBytes_524ee0, "6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070"},
     {0x4f9200u, 434u, "lcns_orig_4f9200", Status::CommentOnly, "call to 0x60A620 outside the block; call to 0x62F280 outside the block; call to 0x910BA0 outside the block; call to 0x9984B0 outside the block", "lazily initialised object: checks the byte at +0x100 and returns [rcx+0x108] when it is set, else constructs. 434 bytes, 97 instructions, 21 callers", kBytes_4f9200, "89cf114a758b4030a61a1d50f61151cec0d40937f597316d35f22b6d83ab612a"},
     {0x5cd800u, 610u, "lcns_orig_5cd800", Status::CommentOnly, "call to 0x5C5260 outside the block; call to 0x5C5F30 outside the block; call to 0x5C61D0 outside the block; call to 0x5CD360 outside the block (+4 more)", "container construction that itself merges boxes through 0x5C8C50: 610 bytes, 145 instructions, 112 callers", kBytes_5cd800, "07ad72bded390701cbc00ca615d0fd86eb1dccaec19277d433bf3810205c5761"},
     {0x5c8a10u, 114u, "lcns_orig_5c8a10", Status::Callable, "", "the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it", kBytes_5c8a10, "11fd0141b88c0c13259995daf85e6f5fc382eb89ffd328c4a08f89464cee9e0c"},
@@ -9311,7 +9329,7 @@ const Block kBlocks[] = {
     {0x4b81d0u, 78u, "lcns_orig_4b81d0", Status::CommentOnly, "call to 0x998500 outside the block", "builds the object whose first member is the 0.01 tolerance", kBytes_4b81d0, "31b092b0bf261d80450ce3783f7583863fd71e1a6f8eba5f6379769db10628e3"},
     {0x24c610u, 138u, "lcns_orig_24c610", Status::CommentOnly, "call to 0x24C4A0 outside the block", "four-stage geometry chain over the packed +0x70 point", kBytes_24c610, "50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc"},
     {0x111ad0u, 64u, "lcns_orig_111ad0", Status::CommentOnly, "call to 0xC33F0 outside the block", "constructor of the twins' object (two vtables)", kBytes_111ad0, "e3f1487d0f779a0a9152c745741974bce0afbab0ed9852cc0d6f3be90aca9c55"},
-    {0x243820u, 15524u, "lcns_orig_243820", Status::CommentOnly, "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+74 more)", "head of the largest routine here (15,524 bytes): geometry entry", kBytes_243820, "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"},
+    {0x243820u, 15524u, "lcns_orig_243820", Status::CommentOnly, "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+72 more)", "head of the largest routine here (15,524 bytes): geometry entry", kBytes_243820, "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"},
     {0x16420u, 490u, "lcns_orig_16420", Status::CommentOnly, "call to 0x23BF0 outside the block; call to 0x5CD5C0 outside the block; call to 0x62F280 outside the block; call to 0x64AEA0 outside the block (+3 more)", "export AddPolygonHoleToPart (ordinals 1,2)", kBytes_16420, "7d232688b858fa0c764b12557dcc00b84a5dee1395a05be9f0d023c5c862c570"},
     {0x162b0u, 353u, "lcns_orig_162b0", Status::CommentOnly, "call to 0x14D10 outside the block; call to 0x62F280 outside the block; call to 0x64AEA0 outside the block; call to 0x8ADF30 outside the block (+1 more)", "export AddPolygonPart (ordinals 3,4)", kBytes_162b0, "1296639fb79e78899b3684dbe9dee4e40fe1f8f8ae0e53d5ba78d20815b9b5a3"},
     {0x15bf0u, 1717u, "lcns_orig_15bf0", Status::CommentOnly, "call to 0x1BF40 outside the block; call to 0x5C9330 outside the block; call to 0x62D860 outside the block; call to 0x62F280 outside the block (+23 more)", "export AddSheet (ordinals 5,6)", kBytes_15bf0, "f761bd629fd63f513d37322eada6ca413683021a6dc3c70433025b0c5028e554"},
@@ -9321,7 +9339,7 @@ const Block kBlocks[] = {
     {0xb8d0u, 378u, "lcns_orig_b8d0", Status::CommentOnly, "call to 0x1EE50 outside the block; call to 0x4FD2E0 outside the block; call to 0x5007C0 outside the block; call to 0x5070E0 outside the block (+10 more)", "export GenerateLaunchingOrderProblem (ordinals 13,14)", kBytes_b8d0, "692bfb9a67b71571b3e9f4b79e4a94248d87a40255c3be881fe2cf21ffecc1a4"},
     {0x107e0u, 155u, "lcns_orig_107e0", Status::CommentOnly, "call to 0x1BE20 outside the block; call to 0x62F280 outside the block; call to 0x64ACE0 outside the block; call to 0x64B040 outside the block (+2 more)", "export GetComputationStatus (ordinals 15,16)", kBytes_107e0, "a63a7eb363597fbccd81b388654680ad6da913e98153ea7851392856446af209"},
     {0xb100u, 34u, "lcns_orig_b100", Status::CommentOnly, "call to 0x64AEA0 outside the block; jmp to 0x51D090 outside the block", "export GetMultiplicity (ordinals 17,18)", kBytes_b100, "8fc8d6a77d78a57b4164f4153aeca6ae7cad83552239b05f44a93ed92a3e5373"},
-    {0xd460u, 688u, "lcns_orig_d460", Status::CommentOnly, "call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block (+8 more)", "export GetNestedPart (ordinals 19,20)", kBytes_d460, "abcbdc2901627aae53bc8bda1ffcd667a7886f1415774c65e862e153d9222fc0"},
+    {0xd460u, 688u, "lcns_orig_d460", Status::CommentOnly, "call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x520440 outside the block; call to 0x5C4CD0 outside the block (+6 more)", "export GetNestedPart (ordinals 19,20)", kBytes_d460, "abcbdc2901627aae53bc8bda1ffcd667a7886f1415774c65e862e153d9222fc0"},
     {0x10f30u, 490u, "lcns_orig_10f30", Status::CommentOnly, "call to 0x60A620 outside the block; call to 0x62F280 outside the block; call to 0x64AEA0 outside the block; call to 0x8F90F0 outside the block (+3 more)", "export GetNesting (ordinals 21,22)", kBytes_10f30, "58232e9edfa342e19402ba5ff5fbf312ce7a815012dfaa29ce725c54a270f8d7"},
     {0xb190u, 63u, "lcns_orig_b190", Status::CommentOnly, "call to 0x51D0C0 outside the block; call to 0x64AEA0 outside the block", "export GetNumberOfNestedParts (ordinals 23,24)", kBytes_b190, "902ceb23f801532fa21a6a81f4300d195a2336cfc68a4b4c0de2c0b27a3cf875"},
     {0xb0c0u, 52u, "lcns_orig_b0c0", Status::CommentOnly, "call to 0x64AEA0 outside the block", "export GetNumberOfNestings (ordinals 25,26)", kBytes_b0c0, "37382bbf1bd53b83949979154abb40902deb5548fe660fb9f6402897a94a8808"},

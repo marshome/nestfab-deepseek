@@ -23,6 +23,8 @@ void lcns_orig_55e190();
 void lcns_orig_50fd40();
 void lcns_orig_5203c0();
 void lcns_orig_547620();
+void lcns_orig_5203d0();
+void lcns_orig_5203f0();
 void lcns_orig_5c8c50();
 void lcns_orig_5c8a10();
 void lcns_orig_16cf0();
@@ -52,6 +54,8 @@ const RawFn kOrigTable[] = {
     &lcns_orig_50fd40,  // 0x50fd40  accumulator over a range of 312-byte elements
     &lcns_orig_5203c0,  // 0x5203c0  four-byte accessor: mov eax, dword ptr [rcx + 0x20]; 20 callers
     &lcns_orig_547620,  // 0x547620  five-byte accessor: lea rax, [rcx + 0x18]; 4 callers
+    &lcns_orig_5203d0,  // 0x5203d0  nineteen-byte accessor: copies the pair at +0x38 and +0x40 of the element into the destination
+    &lcns_orig_5203f0,  // 0x5203f0  nineteen-byte accessor: copies the pair at +0x28 and +0x30 of the element into the destination
     &lcns_orig_5c8c50,  // 0x5c8c50  merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight
     &lcns_orig_5c8a10,  // 0x5c8a10  the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it
     &lcns_orig_16cf0,  // 0x16cf0  export sub_16CF0 (ordinals 210,211)

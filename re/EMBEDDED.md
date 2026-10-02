@@ -34,6 +34,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x5c6be0` | 65 | comment_only | 46 | 65 bytes, 46 callers, reached from 0x524EE0 |
 | `0x526160` | 757 | comment_only | 3 | the implementer behind GetLength: walks 120-byte elements, merges boxes with 0x5C8C50, returns one of two box differences or zero |
 | `0x5266a0` | 759 | comment_only | 2 | the implementer behind GetHeight: differs from 0x526160 in one callee of the 0x52F8xx family |
+| `0x5203d0` | 19 | callable | 45 | nineteen-byte accessor: copies the pair at +0x38 and +0x40 of the element into the destination |
+| `0x5203f0` | 19 | callable | 33 | nineteen-byte accessor: copies the pair at +0x28 and +0x30 of the element into the destination |
 | `0x5c8c50` | 255 | callable | 56 | merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight |
 | `0x524ee0` | 1054 | comment_only | 22 | the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented |
 | `0x4f9200` | 434 | comment_only | 21 | lazily initialised object: checks the byte at +0x100 and returns [rcx+0x108] when it is set, else constructs. 434 bytes, 97 instructions, 21 callers |
@@ -214,7 +216,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0xe1f0` | 111 | comment_only | 0 | export UnLockLaunchingOrderOxy (ordinals 342,343) |
 | `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-203 blocks, 22 callable, 181 comment-only, 95495 bytes of original code embedded.
+205 blocks, 24 callable, 181 comment-only, 95533 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -1542,6 +1544,34 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 00526995  jmp 0x52694e
 ```
 
+## `0x5203d0` -- nineteen-byte accessor: copies the pair at +0x38 and +0x40 of the element into the destination
+
+- size 19 bytes, 45 callers, status **callable**
+- sha256 `91bd4944a3ac0e3439f10f88f8f212e2c2a42676681b9339bac9dcacdfeaee07`
+
+```asm
+005203d0  mov r9, qword ptr [rdx + 0x38]
+005203d4  mov r10, qword ptr [rdx + 0x40]
+005203d8  mov rax, rcx
+005203db  mov qword ptr [rcx], r9
+005203de  mov qword ptr [rcx + 8], r10
+005203e2  ret 
+```
+
+## `0x5203f0` -- nineteen-byte accessor: copies the pair at +0x28 and +0x30 of the element into the destination
+
+- size 19 bytes, 33 callers, status **callable**
+- sha256 `cecfe101ac6dc102dbf3e0ba5e8ec9474d581c46fb8407127f9fad5a3cb51452`
+
+```asm
+005203f0  mov r9, qword ptr [rdx + 0x28]
+005203f4  mov r10, qword ptr [rdx + 0x30]
+005203f8  mov rax, rcx
+005203fb  mov qword ptr [rcx], r9
+005203fe  mov qword ptr [rcx + 8], r10
+00520402  ret 
+```
+
 ## `0x5c8c50` -- merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight
 
 - size 255 bytes, 56 callers, status **callable**
@@ -1615,7 +1645,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x524ee0` -- the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented
 
 - size 1054 bytes, 22 callers, status **comment_only**
-- not callable because: call to 0x4F73E0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block; call to 0x520440 outside the block (+10 more)
+- not callable because: call to 0x4F73E0 outside the block; call to 0x520440 outside the block; call to 0x5C6BE0 outside the block; call to 0x5CD800 outside the block (+8 more)
 - sha256 `6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070`
 
 ```asm
@@ -2328,7 +2358,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x243820` -- head of the largest routine here (15,524 bytes): geometry entry
 
 - size 15524 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+74 more)
+- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+72 more)
 - sha256 `ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae`
 
 ```asm
@@ -7191,7 +7221,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0xd460` -- export GetNestedPart (ordinals 19,20)
 
 - size 688 bytes, 0 callers, status **comment_only**
-- not callable because: call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block (+8 more)
+- not callable because: call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x520440 outside the block; call to 0x5C4CD0 outside the block (+6 more)
 - sha256 `abcbdc2901627aae53bc8bda1ffcd667a7886f1415774c65e862e153d9222fc0`
 
 ```asm
