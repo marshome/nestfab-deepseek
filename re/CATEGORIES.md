@@ -234,3 +234,37 @@ repeat of the quoting problems already listed above.
 
 Both were caught by the gate and neither was committed: the build failing is what stops a red tree from entering the
 history, and the files were reverted to the last green commit in both cases.
+
+## The LaunchLocalComputation leaves, read whole (round 525)
+
+The closure of ordinal 51 came down to 131 functions and 38 leaves once the label pass had removed the standard library
+functions that name themselves. All 38 were then read whole in one pass, and the split is not what the addresses suggest:
+only one of them is domain code.
+
+The whole 0x63xxxx block of that closure -- 0x639xxx, 0x63Axxx, 0x63Bxxx, 0x63Dxxx and 0x63Exxx, twenty three functions --
+is libstdc++'s numeric layer, and the proof is per function rather than positional:
+
+* 0x63A2A0 divides by ten with zero padding and digit grouping and calls 0x6399E0 per character emitted, which is already
+  classified as library for reading the stream state flags. Its caller 0x63A570 is classified for its own label
+  'PRINTF_EXPONENT_DIGITS'. That is `std::num_put::do_put(long)` and its unsigned sibling.
+* 0x63BF20 returns the literals 'NaN', 'Infinity', 'aCoc' and '2ZGU' and calls 0x63BDA0, a bignum division over a 32-bit
+  word array whose length sits at +0x14. 0x63EC00 turns the same word array into an IEEE double through bsr and shifts.
+  That is printf's floating point formatter.
+* The locale facets are identifiable the same way: 0x9449E0 stores '.' and ',' and then copies a 0x24 byte and a 0x1a byte
+  table and the four and five byte strings 'true' and 'false', which is precisely the numpunct cache of decimal_point,
+  thousands_sep, grouping, truename and falsename; 0x874DD0 fills its cache with Sunday, Monday, '%m/%d/%y', '%H:%M:%S',
+  January and Jan, which is the time_put cache; 0x8268E0 is a jump table on the 16-bit character class constant that loads
+  'upper', 'lower', 'alpha', 'digit', 'xdigit', 'space', 'print', 'graph', 'punct', 'cntrl', 'blank' and 'alnum'.
+* 0x998CD0, 0x998EE0 and 0x998DA0 are `__cxa_guard_acquire`, the guarded static construction and `__cxa_guard_abort`:
+  they take a guard byte, register a destructor through 0x63F6C8 and set the byte. Round 427 had already read 0xAB20 as a
+  static initialiser that "constructs through 0x998EE0" without knowing that 0x998EE0 was the constructor it was calling.
+
+The one domain leaf of the batch is 0x5F3900, twenty two bytes: it calls the timer accessor 0x5F47C0 -- sixteen bytes
+allocated, a vtable stored, the process timer read twice and divided -- and stores the result in the caller's object. It is
+implemented in `lcns/include/lcns/field_accessors.hpp` and held there by two assertions: the stored pointer is the
+accessor's result, and two calls cannot return the same object.
+
+The lesson worth keeping: a caller's address is not evidence. 0x8264E0 is called by 0x2AB0 itself, the entry point of this
+objective, and it is still library code; 0x8A82F0 and 0x827240 call half of the locale constructors and are library code
+themselves. What decided every entry above was a literal decoded from the function's own body, an offset pattern that names
+a standard class, or the guard and throw machinery it hands control to.

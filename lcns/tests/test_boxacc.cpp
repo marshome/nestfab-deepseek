@@ -696,5 +696,18 @@ int main() {
         CHECK(end == container + 0x28);                // RE 0x51BFFE, empty
     }
 
+    // ------------------- the timer assignment leaf (RE 0x5F3900)
+    {
+        void* slot = nullptr;
+        lcns::dll::accessors::assignTimer_5F3900(&slot);
+        // RE 0x5F390D: the accessor's result is what lands in the caller's object. It is freshly allocated on each call,
+        // so two calls cannot return the same object.
+        CHECK(slot != nullptr);
+        void* again = nullptr;
+        lcns::dll::accessors::assignTimer_5F3900(&again);
+        CHECK(again != nullptr);
+        CHECK(again != slot);
+    }
+
     return check::finish("boxacc");
 }

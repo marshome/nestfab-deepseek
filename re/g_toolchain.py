@@ -86,6 +86,51 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x63A2A0,  # long division by ten with zero padding and digit grouping, 0x6399E0 called per digit: std::num_put do_put(long)
+    0x63A8E0,  # the same with the character taken from the argument and base 8, 16 or 10: the unsigned num_put sibling
+    0x63BDA0,  # bignum division over the 32-bit word array at +0x18 with its length at +0x14: printf's floating point core
+    0x63BF20,  # returns 'NaN', 'Infinity', 'aCoc' and '2ZGU', calls 0x63BDA0: printf's double formatter
+    0x63AC50,  # the same family, returning 'Inf' and 'NaN'
+    0x63E650,  # word array arithmetic: calls 0x63E430, the same bignum family
+    0x63E430,  # word array arithmetic: calls 0x63E310, the same bignum family
+    0x63E310,  # dispatches on a global mode and walks a word array: bignum arithmetic
+    0x63BCD0,  # compares an exponent against 0x1b and returns one of two constants: the printf exponent bound
+    0x63BD00,  # the same 0x1b bound over a word array: bignum exponent handling
+    0x63E530,  # tests a word array against 9 then calls into the same family
+    0x63DDB0,  # walks the word array at +0x18 with the length at +0x14: bignum arithmetic
+    0x63EC00,  # shifts a 32-bit word array into an IEEE double: exponent from bsr, mantissa by shifting
+    0x63E5A0,  # reads the word count at +0x14 and works on the array: the same bignum family
+    0x63E930,  # the same bignum family as 0x63E5A0
+    0x63E680,  # the same bignum family as 0x63E5A0
+    0x63EA80,  # the same word array arithmetic, reading the count at +0x14
+    0x63E7B0,  # the same bignum family, seven internal calls
+    0x9449E0,  # stores '.' and ',' then copies 0x24 and 0x1a byte tables and the 4 and 5 byte 'true' and 'false': a numpunct cache
+    0x944D40,  # the wide numpunct cache: the same two characters as 16-bit words and sign extended tables
+    0x921CC0,  # stores '.' at +0x48 and ',' at +0x49, four and five byte 'true' and 'false', 0x24 and 0x1a byte tables: a numpunct cache
+    0x922020,  # the wide twin of 0x921CC0: 16-bit characters and sign extended tables, 0xd0 byte cache
+    0x90DE20,  # the same numpunct cache construction with a 0x70 byte cache
+    0x90E1A0,  # the same numpunct cache construction with a 0x70 byte cache
+    0x90E520,  # the same numpunct cache construction with an 0x80 byte cache
+    0x90E8D0,  # the same numpunct cache construction with an 0x80 byte cache
+    0x86F110,  # stores 0x2e and 0x2c at +0x21 and +0x22 and copies an 11 byte table to +0x64: a numpunct cache
+    0x86F490,  # the same numpunct cache construction as 0x86F110
+    0x86F810,  # the wide numpunct cache: the two separators as 16-bit words and a sign extended 26 byte table
+    0x86FBC0,  # the same wide numpunct cache construction as 0x86F810
+    0x874DD0,  # fills a cache with Sunday, Monday, '%m/%d/%y', '%H:%M:%S', January, Jan and the rest: the narrow time_put cache
+    0x875640,  # the wide time_put cache, the same names as 16-bit characters
+    0x8264E0,  # zeroes 0x100 bytes on the stack, calls 0x63F2F8 and 0x63F300 on it and stores 1 then 2 at +0x38: the string comparison buffer
+    0x8AA690,  # walks three pointer arrays decrementing a count at +8 and calling the vtable entry at +8: the shared_ptr array deleter
+    0x8268E0,  # a jump table on the 16-bit character class loading 'upper', 'lower', 'alpha', 'digit', 'space', 'print', 'punct', 'cntrl', 'blank' and jumping to 0x630F70: the ctype name table
+    0x630DA0,  # takes the narrow character in edx and calls 0x630D20 through the same conversion: the narrow to wide character conversion
+    0x97A7B0,  # allocates, builds a string through 0x86B6B0, stores the vtable from 0x944470 and reaches the throw entry 0x999030: the exception construction path
+    0x97ABF0,  # the throw entry itself: allocate 0x20 bytes, store a vtable, register, decrement the refcount and throw
+    0x9983E0,  # clears members at +0x58, +0x90, +0x79 and +0x7a, sets +8, +0x10 and +0x18 alike and copies +0x5c to +0x60 and +0x64: a stream buffer reset
+    0x62FF90,  # converts a narrow character, returns 1, 2, -1 or -2 and sets errno to 0x2a: the codecvt narrow conversion
+    0x65C810,  # a jump table on (ecx & 0x3d) returning the addresses of 'a+b', 'r+b' and 'w+b': the fopen mode parser behind 0x877160
+    0x9228D0,  # stores the vtable at 0x9A76A5, whether the second argument was null at +8 and the result of 0x8AA7E0 at +0x10: an ABI constructor
+    0x998CD0,  # takes a guard byte through 0x63F6C0 and 0x63F720, registers 0x7C4A80 and sets the byte: __cxa_guard_acquire
+    0x998EE0,  # constructs under the guard taken by 0x998CD0 and registers the destructor through 0x63F6C8: the guarded static construction
+    0x998DA0,  # reads the guard byte at +0, takes it through 0x63F6B8 and sets it: __cxa_guard_abort and release
     0x65C940,  # loads a global and calls a library routine with the caller arguments
     0x87D4E0,  # frees the member at +0x68 when the flag at +0x78 is set: conditional destruction
     0x5F47C0,  # allocates sixteen bytes, stores a vtable, makes two import calls and divides: the ratio singleton read in round 447
@@ -324,6 +369,7 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x5F3900,   # batch seven, lcns/field_accessors.hpp
     0x51BFC0,   # batch six, lcns/field_accessors.hpp
     0x4FBE70, 0x822590,   # batch five, lcns/field_accessors.hpp
     0x8774E0,   # eaten by g_eat_leaves.py

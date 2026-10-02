@@ -603,6 +603,25 @@ inline void initEmptyContainer_51BFC0(void* object) {
     std::memcpy(base + 0x40, &buffer, sizeof(buffer));
 }
 
+/** RE 0x5F47C0: allocates the sixteen byte object 0x5F3900 stores. Its first member is the vtable at 0xA3BCC0, which
+ * is an address inside the original image and cannot be reproduced here; its second member is the double the boilerplate
+ * computes from the process timer. The allocation and the member layout are what 0x5F3900 depends on, so they are kept and
+ * the vtable slot is left null with this note rather than invented. */
+inline void* timerObject_5F47C0() {
+    unsigned char* object = new unsigned char[0x10];
+    std::memset(object, 0, 0x10);
+    double ratio = 0.0;
+    std::memcpy(object + 0x08, &ratio, sizeof(ratio));   // RE 0x5F4810: the double lands at +8
+    return object;
+}
+
+/** RE 0x5F3900: stores the pointer that 0x5F47C0 returned at [object]. */
+inline void assignTimer_5F3900(void* object) {
+    // RE 0x5F3905: rbx is the caller's object.
+    void* value = timerObject_5F47C0();
+    std::memcpy(static_cast<unsigned char*>(object), &value, sizeof(value));
+}
+
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns
