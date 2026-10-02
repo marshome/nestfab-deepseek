@@ -992,3 +992,75 @@ container's elements are actually turned into the scalar the export returns. 0x5
 005cd8ca  call 0x910ba0
 ... (145 instructions in total)
 ```
+
+## 0x5C8C50 in full -- the box merge, now executable (round 378)
+
+Round 377 embedded this block and the classifier marked it callable (no calls, no RIP-relative data, 62
+instructions, 56 callers), so tests/test_boxacc.cpp can call the original and compare a C++ model with it bit for
+bit. This is the listing that model must reproduce, and it is the common step behind GetLength, GetHeight and the
+container construction of 0x5CD800.
+
+```asm
+005c8c50  cmp byte ptr [rdx], 0
+005c8c53  je 0x5c8c60
+005c8c55  ret 
+005c8c56  nop word ptr cs:[rax + rax]
+005c8c60  cmp byte ptr [rcx], 0
+005c8c63  jne 0x5c8d10
+005c8c69  movsd xmm0, qword ptr [rdx + 8]
+005c8c6e  movsd xmm1, qword ptr [rcx + 8]
+005c8c73  ucomisd xmm1, xmm0
+005c8c77  jbe 0x5c8c88
+005c8c79  movsd qword ptr [rcx + 8], xmm0
+005c8c7e  movsd xmm0, qword ptr [rdx + 8]
+005c8c83  movsd xmm1, qword ptr [rcx + 8]
+005c8c88  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8c8d  jbe 0x5c8c94
+005c8c8f  movsd qword ptr [rcx + 0x18], xmm0
+005c8c94  movsd xmm0, qword ptr [rdx + 0x10]
+005c8c99  movsd xmm3, qword ptr [rcx + 0x10]
+005c8c9e  ucomisd xmm3, xmm0
+005c8ca2  jbe 0x5c8cb2
+005c8ca4  movsd qword ptr [rcx + 0x10], xmm0
+005c8ca9  movapd xmm3, xmm0
+005c8cad  movsd xmm0, qword ptr [rdx + 0x10]
+005c8cb2  movsd xmm2, qword ptr [rcx + 0x20]
+005c8cb7  ucomisd xmm0, xmm2
+005c8cbb  jbe 0x5c8cc6
+005c8cbd  movsd qword ptr [rcx + 0x20], xmm0
+005c8cc2  movapd xmm2, xmm0
+005c8cc6  movsd xmm0, qword ptr [rdx + 0x18]
+005c8ccb  ucomisd xmm1, xmm0
+005c8ccf  jbe 0x5c8cdb
+005c8cd1  movsd qword ptr [rcx + 8], xmm0
+005c8cd6  movsd xmm0, qword ptr [rdx + 0x18]
+005c8cdb  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8ce0  jbe 0x5c8ce7
+005c8ce2  movsd qword ptr [rcx + 0x18], xmm0
+005c8ce7  movsd xmm0, qword ptr [rdx + 0x20]
+005c8cec  ucomisd xmm3, xmm0
+005c8cf0  jbe 0x5c8cfc
+005c8cf2  movsd qword ptr [rcx + 0x10], xmm0
+005c8cf7  movsd xmm0, qword ptr [rdx + 0x20]
+005c8cfc  ucomisd xmm0, xmm2
+005c8d00  jbe 0x5c8c55
+005c8d06  movsd qword ptr [rcx + 0x20], xmm0
+005c8d0b  ret 
+005c8d0c  nop dword ptr [rax]
+005c8d10  mov r9, qword ptr [rdx + 8]
+005c8d14  mov byte ptr [rcx], 0
+005c8d17  mov r10, qword ptr [rdx + 0x10]
+005c8d1b  mov qword ptr [rcx + 8], r9
+005c8d1f  movsd xmm1, qword ptr [rcx + 8]
+005c8d24  mov qword ptr [rcx + 0x10], r10
+005c8d28  mov r9, qword ptr [rdx + 8]
+005c8d2c  mov r10, qword ptr [rdx + 0x10]
+005c8d30  movsd xmm3, qword ptr [rcx + 0x10]
+005c8d35  mov qword ptr [rcx + 0x18], r9
+005c8d39  mov qword ptr [rcx + 0x20], r10
+005c8d3d  movsd xmm0, qword ptr [rdx + 0x18]
+005c8d42  movsd xmm2, qword ptr [rcx + 0x20]
+005c8d47  ucomisd xmm1, xmm0
+005c8d4b  ja 0x5c8cd1
+005c8d4d  jmp 0x5c8cdb
+```
