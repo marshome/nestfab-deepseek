@@ -77,3 +77,56 @@ candidates and for checking that a claimed member set is plausible, but the mome
 authority: one function that writes every field in order gives the size, the field boundaries and the widths at once. The
 order to work in is therefore to look for the constructor FIRST -- `NewLaunchingOrder` was already in the recovered name list
 from the assertion channel before either round began.
+
+
+## Embedded sub-objects and record arrays, and how each is found (round 539)
+
+A large structure contains smaller ones by value, and both levels say so in the instructions. Two detectors were built; the
+method that works is the second.
+
+### A sub-object is a member whose ADDRESS is derived
+
+    lea rbx, [rcx + 0x120]      ; rbx is the ADDRESS of the member at +0x120 -- a sub-object, not a scalar
+    mov eax, [rbx + 0x8]        ; its field
+    mov [rbx + 0xC], edx
+
+`re/g_embedded_structs.py` follows those derivations and reports what the derived register touches. Candidates, with the
+number of functions that agree on the shape:
+
+| parent | functions | the sub-object's fields |
+|---|---:|---|
+| `+0x40` | 15 | `+0x10 +0x18 +0x20 +0x28 +0x30 +0x38`, all 8 bytes |
+| `+0x38` | 11 | `+0x10 .. +0x30`, all 8 bytes |
+| `+0x68` | 6 | eleven 8-byte fields, `+0x10` to `+0x60` |
+| `+0x78` | 5 | thirteen 8-byte fields, `+0x10` to `+0x70` |
+| `+0x30` | 8 | `+0x10 .. +0x28` |
+
+A shape that twenty functions agree on is a type; one that differs every time is a local. These are the first two levels of
+the module's composition, and each can be declared on its own.
+
+### An array of records is found through the COMPUTED element size
+
+The element size is not written anywhere, it is computed where an element address is needed:
+
+    lea rdi, [rax + rax*4]      ; rax * 5
+    shl rdi, 3                  ; * 8 = rax * 40 = 0x50
+
+and the container's end pointer uses the same arithmetic:
+
+    lea rax, [rcx + 0x28]       ; the inline buffer
+    sub rdx, rax
+    shr rdx, 3                  ; the element count
+    lea r14, [rsi + rdx*8 + 0x50]   ; begin + count * 8 + 0x50
+
+So `lea reg, [a + b*4] ; shl reg, 3` is the marker for "elements of 0x50 bytes", and 57 functions contain it.
+`re/g_element_50.py` reports them and aggregates the fields reached through the element register: `+0x10`, `+0x18` and
+`+0x20`, all 8 bytes, which is the same triple the launch order's constructor writes at those offsets -- so the element begins
+with the same container header shape.
+
+Two earlier attempts are recorded because each looked reasonable and was wrong: matching any scaled memory reference grouped
+the stack with the arrays (44 functions at stride 8 were mostly `[rsp+N]`), and looking for the stride in a displacement
+(`lea rdx, [rcx + rax*1 + 0x50]`) found 57 functions and no fields, because this compiler does not write it that way.
+
+**The method is the deliverable**: a type whose size is written nowhere becomes visible the moment the size is computed, and
+the computation is a two-instruction shape. The same shape finds 0x10 (`lea r,X*2 ; shl`), 0x30 (`X*3 ; shl 3`), 0x48
+(`X*9 ; shl 3`) and any other element size.
