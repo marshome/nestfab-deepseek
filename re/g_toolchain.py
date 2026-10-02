@@ -86,6 +86,12 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x944470,  # installs a vtable from the image then copies a shared_ptr member: ABI and library
+    0x943840,  # loads the member at +0x28 and decrements its refcount atomically: a release path
+    0x9227C0,  # a constructor that also calls the runtime initialiser 0x8AA7E0 and stores its result
+    0x9437A0,  # loads the member at +0x28 and works on its refcount: the same release family
+    0x6399E0,  # reads the stream state flags and compares two counters: iostream internals
+    0x630F70,  # walks a table of string pairs sixteen bytes apart: a locale or ctype table
     0x921970,  # installs a vtable from the image and stores whether the argument was null: ABI, and the vtable address cannot be reproduced
     0x921B40,  # the same constructor shape as 0x921970
     0x944690,  # the same constructor shape as 0x921970
