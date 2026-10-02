@@ -232,5 +232,27 @@ int main() {
     }
 #endif
 
+    // ------------------- the two accessors behind 0x524EE0, against the original
+#if defined(LCNS_HAS_EMBEDDED_ASM)
+    {
+        // Both were embedded in round 444 and classified callable, so the original can be called and its answer compared
+        // with the field access decoded from its own instructions. Four and five byte functions are the bottom of the
+        // dependency chain that leads to GetLength and GetHeight.
+        auto get20 = reinterpret_cast<std::uint32_t (*)(const void*)>(emb::originalOf(0x5203C0u));
+        auto at18 = reinterpret_cast<void* (*)(void*)>(emb::originalOf(0x547620u));
+        CHECK(get20 != nullptr);
+        CHECK(at18 != nullptr);
+        if (get20 != nullptr && at18 != nullptr) {
+            std::vector<unsigned char> obj(0x40, 0);
+            const std::uint32_t vals[4] = {0u, 1u, 0x12345678u, 0xFEDCBA98u};
+            for (int i = 0; i < 4; ++i) {
+                std::memcpy(obj.data() + 0x20, &vals[i], 4);
+                CHECK(get20(obj.data()) == vals[i]);   // mov eax, dword ptr [rcx + 0x20]
+            }
+            CHECK(at18(obj.data()) == obj.data() + 0x18);   // lea rax, [rcx + 0x18]
+        }
+    }
+#endif
+
     return check::finish("boxacc");
 }
