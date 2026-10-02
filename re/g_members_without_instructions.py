@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Make the support audit count READS as well as writes, and treat a constructor that was NOT found as a separate verdict.
+"""Teach the support audit to follow a HANDLE to the object it allocates.
 
-TWO DEFECTS IN THE AUDIT, both found by running it on a class that had just been corrected:
+THE BLINDNESS, and it produced four false entries in a row. The audit asked "does the function paired with this class touch offsets OF THE OBJECT",
+and for a handle class the answer is legitimately NO: `MultitorchEvaluator` is `{impl* @0}`, `PackerCache` is `{impl* @8}`, `Squeezer` is
+`{impl* @8}`, and their fields are inside the object the constructor ALLOCATES and stores.
 
-  1. IT ONLY COUNTED WRITES. `BestObserver::sink_` at +0x10 IS placed by an instruction -- `0x755A40 mov rcx, [rcx + 0x10]` READS it and jumps
-     into its vtable -- and the audit called the class unsupported because its constructor is a destructor pair that only writes the vtable.
-     **A member proven by a read is as supported as one proven by a write**, and the tool was reporting the class as one of the seven.
-  2. IT DID NOT SEPARATE "the constructor was not found" FROM "the constructor does not place them". Those are different findings: the first is a
-     gap in the scan, the second is a defect in the declaration. `re/g_find_real_ctor.py` decides which.
+**A MEMBER INSIDE THE OBJECT A HANDLE POINTS AT IS AS SUPPORTED AS ONE ON THE HANDLE**, so the audit now follows the pointer: when a constructor
+allocates a block and stores it at +0 or +8, the offsets written to that BLOCK are the class's fields too.
 
-    python g_members_without_instructions.py [--class X]
+    python g_members_without_instructions.py
 """
 import argparse
 import glob
@@ -26,8 +25,54 @@ sys.path.insert(0, HERE)
 from lib import disasm, load_prof  # noqa: E402
 
 FREE = 0x9984B0
+ALLOCATOR = 0x998500
 ACCESS = re.compile(r"\[(\w+)(?: \+ (0x[0-9a-f]+))?\]")
 MEMBER = re.compile(r"^ {4,}([\w:<>,\s\*&]+?)\s+(\w+)\s*(?:\{\})?\s*(?:=\s*[^;]*)?;", re.M)
+ALLOC_SIZE = re.compile(r"^ecx, 0x([0-9a-f]+)$")
+
+
+def walk(function, profile):
+    """The offsets the function writes to `this`, AND the offsets it writes to a block it ALLOCATES.
+
+    `this` is a register loaded from rcx; the allocated block is whatever the allocator returned. **The two are kept apart and both reported**,
+    because which one a member lives in is exactly the distinction the handle classes turned on.
+    """
+    size = (profile.get(function) or {}).get("size") or 0
+    if not size:
+        return set(), set(), 0
+    holds = {"rcx"}
+    blocks = set()
+    pending = None
+    on_this, on_block = set(), set()
+    for instruction in disasm(function):
+        if instruction.address >= function + size:
+            break
+        text = instruction.op_str
+        if instruction.mnemonic == "mov":
+            m = ALLOC_SIZE.match(text)
+            if m:
+                pending = int(m.group(1), 16)
+        if instruction.mnemonic == "call":
+            if text.strip() == "0x%x" % ALLOCATOR and pending:
+                blocks.add("__alloc__")
+                pending = None
+        for match in ACCESS.finditer(text):
+            base, offset = match.group(1), match.group(2)
+            if offset is None:
+                continue
+            value = int(offset, 16)
+            if base in holds:
+                on_this.add(value)
+            elif base in ("rax", "rbx") and blocks:
+                on_block.add(value)
+        copy = re.match(r"^(\w+), (\w+)$", text)
+        if instruction.mnemonic == "mov" and copy:
+            destination, source = copy.group(1), copy.group(2)
+            if source in holds:
+                holds.add(destination)
+            elif destination in holds:
+                holds.discard(destination)
+    return on_this, on_block, len(blocks)
 
 
 def is_destructor(function, profile):
@@ -38,29 +83,6 @@ def is_destructor(function, profile):
         if instruction.mnemonic == "jmp" and instruction.op_str.strip() == "0x%x" % FREE:
             return True
     return False
-
-
-def accessed_offsets(function, profile):
-    """Every offset touched through a register loaded from rcx, read OR written -- because a read places a member too."""
-    size = (profile.get(function) or {}).get("size") or 0
-    if not size:
-        return set()
-    holds = {"rcx"}
-    offsets = set()
-    for instruction in disasm(function):
-        if instruction.address >= function + size:
-            break
-        for match in ACCESS.finditer(instruction.op_str):
-            if match.group(1) in holds and match.group(2):
-                offsets.add(int(match.group(2), 16))
-        copy = re.match(r"^(\w+), (\w+)$", instruction.op_str)
-        if instruction.mnemonic == "mov" and copy:
-            destination, source = copy.group(1), copy.group(2)
-            if source in holds:
-                holds.add(destination)
-            elif destination in holds:
-                holds.discard(destination)
-    return offsets
 
 
 def main(argv):
@@ -80,35 +102,39 @@ def main(argv):
             short = match.group(1)
             if short not in by_short:
                 continue
-            members = [(m.group(1).strip(), m.group(2)) for m in MEMBER.finditer(match.group("body")) if "static" not in m.group(1)]
+            members = [(m.group(1).strip(), m.group(2)) for m in MEMBER.finditer(match.group("body"))
+                       if "static" not in m.group(1) and "//" not in m.group(1)]
             if not members:
                 continue
             function = by_short[short]
-            offsets = accessed_offsets(function, profile)
-            # AND THE CLASS'S OWN SLOTS, because a forwarder proves a member its constructor never touches
+            on_this, on_block, blocks = walk(function, profile)
             for slot in (profile.get(function) or {}).get("callers") or []:
-                offsets |= accessed_offsets(slot, profile)
-            rows.append((name, short, function, is_destructor(function, profile), offsets, members))
+                more_this, more_block, more_blocks = walk(slot, profile)
+                on_this |= more_this
+                on_block |= more_block
+                blocks += more_blocks
+            # A HANDLE IS SUPPORTED IF EITHER SIDE TOUCHES ANYTHING: the member may be on the object or inside the block it allocates
+            supported = bool(on_this or on_block)
+            rows.append((name, short, function, is_destructor(function, profile), on_this, on_block, blocks, members, supported))
 
     if args.owner:
         rows = [r for r in rows if r[1] == args.owner]
 
-    print("%-22s %-16s %-10s %-9s %-12s %s" % ("class", "header", "fn", "kind", "offsets seen", "declared members"))
+    print("%-22s %-10s %-8s %-22s %-22s %s" % ("class", "fn", "kind", "offsets ON THE OBJECT", "offsets IN THE BLOCK", "members"))
     unsupported = 0
-    for name, short, function, destructor, offsets, members in rows:
-        kind = "DESTRUCTOR" if destructor else "constructor"
-        if not offsets and destructor:
-            kind = "NOT FOUND"
-        if not offsets:
+    for name, short, function, destructor, on_this, on_block, blocks, members, supported in rows:
+        kind = "NOT FOUND" if (destructor and not on_this) else ("DESTRUCTOR" if destructor else "constructor")
+        if not supported:
             unsupported += 1
-        print("%-22s %-16s 0x%-8X %-9s %-12s %s"
-              % (short[:22], name[:16], function, kind,
-                 " ".join("+0x%X" % o for o in sorted(offsets)[:4]) or "-- none --",
-                 ", ".join(m[1] for m in members)[:36]))
+        print("%-22s 0x%-8X %-8s %-22s %-22s %s"
+              % (short[:22], function, kind,
+                 " ".join("+0x%X" % o for o in sorted(on_this)[:4]) or "-- none --",
+                 ("%d block(s): %s" % (blocks, " ".join("+0x%X" % o for o in sorted(on_block)[:4]))) if blocks else "--",
+                 ", ".join(m[1] for m in members)[:26]))
     print("")
-    print("classes where NO offset of the object is touched by the function the field scan paired with them, nor by its callers: %d" % unsupported)
-    print("**AND `NOT FOUND` IS A DIFFERENT FINDING FROM AN UNSUPPORTED MEMBER**: it means the scan did not locate the class's constructor, so")
-    print("nothing can be concluded about the members either way. re/g_find_real_ctor.py settles which case a class is in.")
+    print("classes where NEITHER the object NOR any block the paired function allocates is touched: %d" % unsupported)
+    print("**THE TWO COLUMNS ARE THE POINT**: a handle class legitimately touches nothing on itself, and its fields are one level down. Four")
+    print("classes were reported unsupported in a row before this was written, and all four were handles.")
     return 0
 
 

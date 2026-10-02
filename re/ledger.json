@@ -2598,6 +2598,14 @@
    "round": 686,
    "subject": "MultitorchEvaluator.is-a-stack-handle",
    "witness": "0x766DBA lea rbx,[rsp+0xd0] then 0x766DCF call 0x4E8410; inside, 0x4E8454 stores the allocated object at [rbx]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a member inside the object a handle class allocates is as supported as one on the handle, so a support audit must follow the pointer",
+   "round": 687,
+   "subject": "members-can-be-one-level-down",
+   "witness": "the audit asked only about offsets of the object itself and reported four handle classes in a row as unsupported; MultitorchEvaluator is {impl* @0}, PackerCache and Squeezer are {impl* @8} and Supervisor {state* @8}"
   }
  ]
 }
