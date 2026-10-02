@@ -670,6 +670,14 @@
    "round": 579,
    "subject": "stat.accumulator",
    "witness": "0x5261A7 mov rbx,[rax] (begin) / 0x5261B9 mov rdi,[rax+8] (end) / 0x5261DA add rbx,0x78 / 0x5261DE call 0x524EE0 / 0x5261E9 call 0x5C8C50 / 0x5261EE cmp rdi,rbx jne / 0x526227 movsd xmm0,[rsp+0xb8] / 0x526230 subsd xmm0,[rsp+0x78]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x5C8C50 folds an element into a bounding box: an element whose flag byte is zero is skipped, and each dimension has a min and a max",
+   "round": 580,
+   "subject": "stat.fold",
+   "witness": "0x5C8C50 cmp byte [rdx],0 / je return; 0x5C8C60 cmp byte [rcx],0; 0x5C8C6E movsd xmm1,[rcx+8]; 0x5C8C73 ucomisd / jbe; 0x5C8C79 movsd [rcx+8],xmm0; 0x5C8C88 ucomisd xmm0,[rcx+0x18]; 0x5C8C8F movsd [rcx+0x18],xmm0; then the same pair at +0x10 and +0x20"
   }
  ]
 }
