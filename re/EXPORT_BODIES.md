@@ -1254,3 +1254,34 @@ So the status is the implementer second argument, saved once and read once. The 
     GetHeight, ordinal 100, 0x5266A0:  rsi[+0x20] - rsi[+0x40]
 
 with zero returned for an empty container. The status-false branches are unreachable from these two entry points but are kept in the implementation, because the implementer is shared and takes the status as a parameter.
+
+## The spans explained: two boxes, and the status decides which side holds the maximum
+
+Round 474 found that 0x526160 sets rsi to rsp+0xA0 and takes its container view through 0x51D0C0, while the box it
+merges into sits at rsp+0x70. With those two bases, the four return forms read as follows, each with the instruction
+that produces it.
+
+| branch | form | meaning |
+|---|---|---|
+| GetLength, status true (RE 0x526244 + 0x52624D) | box[+0x18] - window[+0x08] | box maxX minus window low X |
+| GetLength, status false (RE 0x526227 + 0x526230) | window[+0x18] - box[+0x08] | window maxX minus box low X |
+| GetHeight, status true (RE 0x526790 + 0x5267A2) | box[+0x20] - window[+0x10] | box maxY minus window low Y |
+| GetHeight, status false (RE 0x526767 + 0x526770) | window[+0x20] - box[+0x10] | window maxY minus box low Y |
+
+The status is the implementer second argument, saved at rsp+0x108 by RE 0x526170 and read by RE 0x526216, and both
+entry points pass zero, so the true branch is the one they take. The status function is cmp dword ptr [rcx], 1 with
+setbe, so zero makes it true. The false branches are unreachable from these two ordinals but stay in the implementation
+because the implementer is shared.
+
+The shape this gives is worth stating plainly, because it explains the code: both branches compute the same quantity, a
+span of max minus min, and the status only decides WHICH of the two boxes holds the maximum and which holds the
+minimum. That is why the implementer builds two boxes rather than one, and it is consistent with 0x5CD800, read whole in
+round 459: it walks 48-byte elements, folds each through 0x5CD360, and merges with 0x5C8C50, which this project already
+implements and holds to the original over 2000 random boxes.
+
+Box +0x18 and +0x20 are maxX and maxY in the boxacc model (flag at +0x00, minX +0x08, minY +0x10, maxX +0x18,
+maxY +0x20), so the two objects are both boxes in the same layout and the arithmetic needs no new structure.
+
+What remains before ordinals 96 and 100 can be forwarded is the production of those two boxes: which of 0x4F9200 and
+0x5CD800 supplies the maximum side and which the minimum. That is one read of 0x4F9200 (434 bytes) and the opening of
+0x5CD800, and it is deliberately not guessed here.
