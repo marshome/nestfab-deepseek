@@ -53,6 +53,28 @@ void* getPartWithBadGeometry(void* object) {
     return carrier->geometry;
 }
 
+void setFillLastNestingStrategy(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag40 = (value != 0) ? 1 : 0;   // RE 0xDDA9: setne
+}
+
+void setPartCommonCutMode(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag1C = (value != 0) ? 1 : 0;   // RE 0xDE69: setne
+}
+
+void setFloatingMode(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag20 = (value != 0) ? 1 : 0;   // RE 0xDD49: setne
+}
+
+void setOriginPackingMode(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag21 = (value != 0) ? 1 : 0;   // RE 0xDD79: setne
+}
+
+void setPartialShearMode(void* object, int value) {
+    OptionFlagCarrier* carrier = static_cast<OptionFlagCarrier*>(object);
+    carrier->field48 = static_cast<std::uint32_t>(value);   // RE 0xDE07
+    carrier->field44 = static_cast<std::uint32_t>(value);   // RE 0xDE0A, the same field setShearMode writes
+}
+
 void setShearMode(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field44 = value; }
 void setNoMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field18 = value; }
 void setNoSheetMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field1C = value; }

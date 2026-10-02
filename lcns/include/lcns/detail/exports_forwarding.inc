@@ -16,6 +16,11 @@ const Forwarding kForwarding[] = {
     {288, reinterpret_cast<void*>(&lcns::dll::exports::impl::setByteAtF8)},         // sub_AFF0 (no label)
     {286, reinterpret_cast<void*>(&lcns::dll::exports::impl::setDoubleAndFlag)},    // sub_B000 (no label)
     {33, reinterpret_cast<void*>(&lcns::dll::exports::impl::getSolutionIdentity)},  // GetSolution
+    {144, reinterpret_cast<void*>(&lcns::dll::exports::impl::setFillLastNestingStrategy)},  // SetFillLastNestingStrategy
+    {166, reinterpret_cast<void*>(&lcns::dll::exports::impl::setPartCommonCutMode)},  // SetPartCommonCutMode
+    {182, reinterpret_cast<void*>(&lcns::dll::exports::impl::setFloatingMode)},  // CNS_SetFloatingMode
+    {312, reinterpret_cast<void*>(&lcns::dll::exports::impl::setOriginPackingMode)},  // CNS_SetOriginPackingMode
+    {330, reinterpret_cast<void*>(&lcns::dll::exports::impl::setPartialShearMode)},  // SetPartialShearMode
     {29, reinterpret_cast<void*>(&lcns::dll::exports::impl::getPartWithBadGeometry)},  // GetPartWithBadGeometry
     {84, reinterpret_cast<void*>(&lcns::dll::exports::impl::setInt_1FC)},   // SetLocalMaximumIterations, offset 0x1FC
     {146, reinterpret_cast<void*>(&lcns::dll::exports::impl::setShearMode)}, // SetShearMode, offset 0x44

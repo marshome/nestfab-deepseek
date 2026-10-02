@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 15u);
+        CHECK(ex::forwardedCount() == 20u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,7 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84 || e->ordinal0 == 29;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -437,6 +437,44 @@ int main() {
 
         CHECK(offsetof(lcns::dll::CachedBoxCarrier, initialised) == 0x100);   // RE 0x4F920B
         CHECK(offsetof(lcns::dll::CachedBoxCarrier, box) == 0x108);           // RE 0x4F9217
+
+    // ------------------- the five mode setters, each against its own decoded offset
+    {
+        lcns::dll::OptionFlagCarrier option{};
+        std::memset(&option, 0x5A, sizeof(option));   // noise, so a write to the wrong byte shows up
+
+        lcns::dll::exports::impl::setFillLastNestingStrategy(&option, 7);
+        CHECK(option.flag40 == 1);                    // RE 0xDDA9 stores the truth value, not the number
+        lcns::dll::exports::impl::setFillLastNestingStrategy(&option, 0);
+        CHECK(option.flag40 == 0);
+
+        lcns::dll::exports::impl::setPartCommonCutMode(&option, -1);
+        CHECK(option.flag1C == 1);
+        lcns::dll::exports::impl::setPartCommonCutMode(&option, 0);
+        CHECK(option.flag1C == 0);
+
+        lcns::dll::exports::impl::setFloatingMode(&option, 3);
+        CHECK(option.flag20 == 1);
+        lcns::dll::exports::impl::setFloatingMode(&option, 0);
+        CHECK(option.flag20 == 0);
+
+        lcns::dll::exports::impl::setOriginPackingMode(&option, 1);
+        CHECK(option.flag21 == 1);
+        lcns::dll::exports::impl::setOriginPackingMode(&option, 0);
+        CHECK(option.flag21 == 0);
+
+        lcns::dll::exports::impl::setPartialShearMode(&option, 12345);
+        CHECK(option.field44 == 12345u);              // RE 0xDE0A
+        CHECK(option.field48 == 12345u);              // RE 0xDE07: both fields take the value, not its truth value
+        // and the neighbours the four flag setters must not touch
+        CHECK(option.flag1C != 0x5A || option.flag20 != 0x5A || option.flag21 != 0x5A || option.flag40 != 0x5A);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag1C) == 0x1C);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag20) == 0x20);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag21) == 0x21);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag40) == 0x40);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, field44) == 0x44);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, field48) == 0x48);
+    }
 
     return check::finish("exports");
 }

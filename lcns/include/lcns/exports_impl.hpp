@@ -26,6 +26,17 @@ void* getSolutionIdentity(void* handle);           // RE 0x0B0A0 (33/34): return
 /** RE 0xB510 (ordinals 29/30): returns object[+0xA0] when object[+0x4C] is 1, else null. */
 void* getPartWithBadGeometry(void* object);
 
+/** RE 0xDD90 (ordinal 144): byte at +0x40 becomes the truth value of the argument. */
+void setFillLastNestingStrategy(void* object, int value);
+/** RE 0xDE50 (ordinal 166): byte at +0x1C. */
+void setPartCommonCutMode(void* object, int value);
+/** RE 0xDD30 (ordinal 182): byte at +0x20. */
+void setFloatingMode(void* object, int value);
+/** RE 0xDD60 (ordinal 312): byte at +0x21. */
+void setOriginPackingMode(void* object, int value);
+/** RE 0xDDF0 (ordinal 330): the 32-bit value goes to BOTH +0x48 and +0x44. */
+void setPartialShearMode(void* object, int value);
+
 void setShearMode(void* order, int value);         // RE 0x0DDC0 -> +0x44
 void setNoMixPreference(void* order, int value);   // RE 0x0D310 -> +0x18
 void setNoSheetMixPreference(void* order, int value);   // RE 0x0D340 -> +0x1C

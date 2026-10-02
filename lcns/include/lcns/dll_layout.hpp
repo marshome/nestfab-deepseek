@@ -203,5 +203,29 @@ struct CachedBoxCarrier {
 static_assert(offsetof(CachedBoxCarrier, initialised) == 0x100, "RE 0x4F920B");
 static_assert(offsetof(CachedBoxCarrier, box) == 0x108, "RE 0x4F9217");
 
+/**
+ * The option object the mode setters write. Offsets come from the exports themselves: RE 0xDE69 writes +0x1C,
+ * RE 0xDD49 writes +0x20, RE 0xDD79 writes +0x21, RE 0xDDA9 writes +0x40, and RE 0xDE07 with RE 0xDE0A write +0x48 and
+ * +0x44 as 32-bit values.
+ */
+struct OptionFlagCarrier {
+    unsigned char opaque00[0x1C];
+    unsigned char flag1C;      // +0x1C, RE 0xDE69, SetPartCommonCutMode (ordinal 166)
+    unsigned char opaque1D[0x03];
+    unsigned char flag20;      // +0x20, RE 0xDD49, CNS_SetFloatingMode (ordinal 182)
+    unsigned char flag21;      // +0x21, RE 0xDD79, CNS_SetOriginPackingMode (ordinal 312)
+    unsigned char opaque22[0x1E];
+    unsigned char flag40;      // +0x40, RE 0xDDA9, SetFillLastNestingStrategy (ordinal 144)
+    unsigned char opaque41[0x03];
+    std::uint32_t field44;     // +0x44, RE 0xDE0A, SetPartialShearMode (ordinal 330) and the existing setShearMode
+    std::uint32_t field48;     // +0x48, RE 0xDE07, SetPartialShearMode (ordinal 330)
+};
+static_assert(offsetof(OptionFlagCarrier, flag1C) == 0x1C, "RE 0xDE69");
+static_assert(offsetof(OptionFlagCarrier, flag20) == 0x20, "RE 0xDD49");
+static_assert(offsetof(OptionFlagCarrier, flag21) == 0x21, "RE 0xDD79");
+static_assert(offsetof(OptionFlagCarrier, flag40) == 0x40, "RE 0xDDA9");
+static_assert(offsetof(OptionFlagCarrier, field44) == 0x44, "RE 0xDE0A");
+static_assert(offsetof(OptionFlagCarrier, field48) == 0x48, "RE 0xDE07");
+
 }  // namespace dll
 }  // namespace lcns
