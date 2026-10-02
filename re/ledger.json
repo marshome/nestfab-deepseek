@@ -2198,6 +2198,38 @@
    "round": 666,
    "subject": "serialisers-need-a-self-check",
    "witness": "re/g_audit_cpp.py's first member pattern reported 0 members for records.hpp, which has 14; the script now asserts that file's counts first and refuses to report if they disagree"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "202 class members across 24 classes are named by option keys the module ANSWERS TO, paired with the offset the lookup result is stored into",
+   "round": 667,
+   "subject": "members.named-by-vocabulary",
+   "witness": "re/g_gen_named_members.py joins re/param_fields2.json's 105 name-plus-offset sites to re/all_class_fields.json's constructor stores, excluding the 51 MIPLIB benchmark names that re/param_split.json separates"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a field with no oracle name does not belong in a class; the offset stays in a table and becomes a named unplaced region, because at_0010 is a position wearing a name-shaped label",
+   "round": 667,
+   "subject": "no-oracle-no-member",
+   "witness": "the standard is lcns/docs/WHAT_IS_NORMAL_CPP.md, comparing model.hpp's Order with the generated at_XXXX members; both carry offsets and only one is C++"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a member's type is the name's semantics over the store's width: nb_* and enable_* are unsigned integers, *ratio is a double, and a qword copy is NOT a pointer",
+   "round": 667,
+   "subject": "type-follows-the-name",
+   "witness": "mov qword ptr [rcx+0x38], r9 copies eight bytes from a source object and says nothing about whether they are an address, so void* would be a claim the instruction does not support"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the module CONTAINS 51 MIPLIB benchmark names and ANSWERS TO 108 option names; only the second is an oracle",
+   "round": 667,
+   "subject": "benchmark-names-are-not-vocabulary",
+   "witness": "the first generator ignored re/param_split.json's parameters/data split and emitted void* air03 and void* bell5 as members of Tiling::SqueezeMultiTiler"
   }
  ]
 }

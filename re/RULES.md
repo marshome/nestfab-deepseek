@@ -164,6 +164,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "oracle-unplaced-lcns-docs-what-is-norma",
+  "rule": "类成员必须有 oracle 命名（模块自己回答的选项名），并与同一条指令的偏移配对；没有名字的偏移只作为具名 unplaced 区段。标准见 lcns/docs/WHAT_IS_NORMAL_CPP.md，检查见 re/g_gen_named_members.py。",
+  "check": "re/g_gen_named_members.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
