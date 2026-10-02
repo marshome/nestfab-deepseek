@@ -494,6 +494,22 @@
    "round": 568,
    "subject": "teardown.parser-defect",
    "witness": "a call operand of qword ptr [rax + 0x10] yielded a callee of 0x10; requiring the operand to be exactly 0x<hex> fixed it, and 0x237A00 went from 26 targets to 23 while the eight template instances stayed at 45 frees, 2 targets, 27 chain reads"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the orchestration is a data pipeline: geometry -> JSON -> teardown, and the geometry object is allocated at 0x1C8",
+   "round": 569,
+   "subject": "LaunchLocalComputation.pipeline",
+   "witness": "0x2C9C mov rdx,rbp (order) / 0x2C9F mov rcx,r15 (buffer) / 0x2CA2 call 0x1EE50 ComputeSheetGeometryRowMode; then 0x2CA7 mov rdx,r15 (the geometry) / 0x2CAA mov rcx,rbx (the engine) / 0x2CAD call 0x5070E0 the JSON serialiser; then 0x2CB9 call 0x5007C0 the order destructor; then 0x2D31 mov ecx,0x1C8 / 0x2D36 call 0x998500"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the 0x1C8 allocation in the target is the candidate object the ledger already sized at 0x1C8",
+   "round": 569,
+   "subject": "LaunchLocalComputation.1C8",
+   "witness": "RE 0x2D31 mov ecx,0x1C8 then call 0x998500, the same allocator the constructor uses; the ledger records 0x22A20 allocating 0x1C8 and reading the order's mode at +0x240"
   }
  ]
 }
