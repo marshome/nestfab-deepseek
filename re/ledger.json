@@ -198,6 +198,22 @@
    "round": 547,
    "subject": "Order.names",
    "witness": "24 searched, 0 found; multitorch appears only inside the library's multitorch_infos"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the JSON vocabulary holds the names for the unnamed offsets: shear, shear_corner, shear_repulse_from_borders, shear_gap, shear_thickness, row_shear_gap, used_surface_min_offcut_dimension, used_surface_min_offcut_area, used_surface_usable_offcut_ratio",
+   "round": 549,
+   "subject": "LaunchingOrder.field-names",
+   "witness": "re/g_strings_all.py: 24571 printable strings, 15 match shear and 8 match offcut, loaded by 0x506C10, 0x5070E0 and 0x5091B0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the pairing fails because the rule has no boundary and no object identity",
+   "round": 549,
+   "subject": "key-pairing.gap",
+   "witness": "re/g_json_fields.py pairs 16 offsets but +0x10 receives four different keys; the 13 serialisers act on different objects"
   }
  ]
 }
