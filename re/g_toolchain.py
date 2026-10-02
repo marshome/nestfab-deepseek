@@ -86,6 +86,12 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x65C940,  # loads a global and calls a library routine with the caller arguments
+    0x87D4E0,  # frees the member at +0x68 when the flag at +0x78 is set: conditional destruction
+    0x5F47C0,  # allocates sixteen bytes, stores a vtable, makes two import calls and divides: the ratio singleton read in round 447
+    0x630EF0,  # builds a buffer on the stack and calls the import stub 0x63F508: library formatting
+    0x89EA40,  # stores whether the argument was null, clears two members and loads a global: a constructor
+    0x630D20,  # checks a bound against 0xff and stores one byte: narrow character conversion
     0x944470,  # installs a vtable from the image then copies a shared_ptr member: ABI and library
     0x943840,  # loads the member at +0x28 and decrements its refcount atomically: a release path
     0x9227C0,  # a constructor that also calls the runtime initialiser 0x8AA7E0 and stores its result
