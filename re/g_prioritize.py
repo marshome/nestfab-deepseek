@@ -120,8 +120,14 @@ def main(argv):
 
     # 1. contradictions. Two claims that cannot both hold: an offset with two widths, a subject with two different predicates
     # at the same grade, a layout whose stated size is smaller than an offset inside it.
+    #
+    # A claim marked `superseded_by` is SKIPPED: it records that a question was once open and answered, not a live belief, so it
+    # cannot contradict anything. Without this the first CONTRADICT would be the same resolved item for every future round -- which is
+    # exactly what happened before re/g_supersede.py existed.
     by_subject = {}
     for claim in data["claims"]:
+        if claim.get("superseded_by"):
+            continue
         by_subject.setdefault(claim["subject"], []).append(claim)
     for subject, claims in by_subject.items():
         predicates = {}

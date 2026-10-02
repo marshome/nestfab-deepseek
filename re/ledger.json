@@ -134,6 +134,11 @@
    "predicate": "the bottleneck is that only methods have a first-argument type, and 355 of 18614 functions are methods",
    "round": 544,
    "subject": "type-propagation",
+   "superseded_by": {
+    "grade": "INSTRUCTION",
+    "round": 545,
+    "why": "the next round's tool propagated the type and measured it on 4486 functions, so the open question this claim recorded was answered"
+   },
    "witness": "a callee's first argument is the caller's class when the call is through a vtable; nothing propagates that yet"
   },
   {
@@ -1342,6 +1347,14 @@
    "round": 620,
    "subject": "assert.file-names-are-open",
    "witness": "0x526397 mov edx,0x7070 then 0x52639C mov word [rax+0x14],dx then 0x5263BA mov edx,0x9a; a backwards walk stopping at the first line-register assignment loses the two movabs pieces"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a claim whose question has been answered is marked superseded with a pointer to the winner, and the prioritizer skips it",
+   "round": 621,
+   "subject": "tooling.supersession-not-deletion",
+   "witness": "re/g_supersede.py marks the weaker of two live claims and refuses when there are not exactly two, or when they share a grade, so a real conflict is not resolved by fiat"
   }
  ]
 }
