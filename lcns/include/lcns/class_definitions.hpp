@@ -135,403 +135,1424 @@ constexpr std::size_t kDeclaredIn_dbg = 2;
 
 namespace Compact { namespace Compacter {
 
-/** Compact::Compacter::Implementation -- vtable 0xA3D470, 3 virtual slot(s). */
+/** Compact::Compacter::Implementation -- vtable 0xA3D470, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x266E00, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7F4140 -- 115 bytes, read.. */
 class Implementation {
 public:
     virtual ~Implementation() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7F4140 -- 115 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x266E55: mov qword ptr [rbp + 0x10], 0
+    void*          at_0018      = {}; // +0x18, RE 0x266E5D: mov qword ptr [rbp + 0x18], 0
+    void*          at_0020      = {}; // +0x20, RE 0x266E65: mov qword ptr [rbp + 0x20], 0
+    void*          at_0028      = {}; // +0x28, RE 0x266E6D: mov qword ptr [rbp + 0x28], 0
+    void*          at_0030      = {}; // +0x30, RE 0x266E75: mov qword ptr [rbp + 0x30], 0
+    void*          at_0038      = {}; // +0x38, RE 0x266E7D: mov qword ptr [rbp + 0x38], 0
+    void*          at_0040      = {}; // +0x40, RE 0x266E89: mov qword ptr [rbp + 0x40], rdi
+    double         at_0048      = {}; // +0x48, RE 0x266EE4: movsd qword ptr [rbp + 0x48], xmm8
 };
 }  // namespace
 }  // namespace
 
 namespace EngineNS {
 
-/** Engine::CompositeObserver -- vtable 0xA3D060, 6 virtual slot(s). */
+/** Engine::CompositeObserver -- vtable 0xA3D060, 6 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x8D4500, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x75CBC0 -- 193 bytes, read.. */
 class CompositeObserver {
 public:
     virtual ~CompositeObserver() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x75CBC0 -- 193 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x8D45A8: mov qword ptr [rax + 0x10], r8
+    void*          at_0018      = {}; // +0x18, RE 0x8D45B7: mov qword ptr [rax + 0x18], r9
+    std::uint32_t  at_0020      = {}; // +0x20, RE 0x8D45BB: mov dword ptr [rax + 0x20], r11d
+    std::byte unplaced_0024[0x1C]{};   // +0x24 .. +0x40: no instruction places a field here
+    void*          at_0040      = {}; // +0x40, RE 0x8D46B7: mov qword ptr [rsp + 0x40], rax
+    std::byte unplaced_0048[0x18]{};   // +0x48 .. +0x60: no instruction places a field here
+    void*          at_0060      = {}; // +0x60, RE 0x8D4693: mov qword ptr [rsp + 0x60], rax
 };
 
-/** Engine::EquivalentObserver -- vtable 0xA3D0A0, 6 virtual slot(s). */
+/** Engine::EquivalentObserver -- vtable 0xA3D0A0, 6 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x75E0E0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x75DDD0 -- 11 bytes, read.. */
 class EquivalentObserver {
 public:
     virtual ~EquivalentObserver() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x75DDD0 -- 11 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x75E11A: lock sub dword ptr [rbx + 0xc], 1
 };
 }  // namespace
 
 namespace Json {
 
-/** Json::DefaultValueAllocator -- vtable 0xA3B390, 6 virtual slot(s). */
+/** Json::DefaultValueAllocator -- vtable 0xA3B390, 6 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x681B40 -- 98 bytes, read.. */
 class DefaultValueAllocator {
 public:
     virtual ~DefaultValueAllocator() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x681B40 -- 98 bytes, read.
 };
 
-/** Json::FastWriter -- vtable 0xA3B2F0, 3 virtual slot(s). */
+/** Json::FastWriter -- vtable 0xA3B2F0, 3 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x602BE0 -- 268 bytes, read.. */
 class FastWriter {
 public:
     virtual ~FastWriter() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x602BE0 -- 268 bytes, read.
 };
 
-/** Json::StyledWriter -- vtable 0xA3B320, 3 virtual slot(s). */
+/** Json::StyledWriter -- vtable 0xA3B320, 3 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x604020 -- 332 bytes, read.. */
 class StyledWriter {
 public:
     virtual ~StyledWriter() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x604020 -- 332 bytes, read.
 };
 }  // namespace
 
 namespace Multi {
 
-/** Multi::AdvancedStrategist -- vtable 0xA3B970, 3 virtual slot(s). */
+/** Multi::AdvancedStrategist -- vtable 0xA3B970, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x2EC50, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x2DF60 -- 481 bytes, read.. */
 class AdvancedStrategist {
 public:
     virtual ~AdvancedStrategist() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x2DF60 -- 481 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x2ED6E: mov qword ptr [rax + 0x10], rsi
+    std::uint16_t  at_0018      = {}; // +0x18, RE 0x2ED72: mov word ptr [rax + 0x18], dx
+    std::uint8_t   at_001a      = {}; // +0x1A, RE 0x2ED76: mov byte ptr [rax + 0x1a], 0x66
+    std::byte unplaced_001E[0x2]{};   // +0x1E .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x2EE24: mov qword ptr [rsp + 0x20], rax
+    void*          at_0028      = {}; // +0x28, RE 0x2EE5E: mov qword ptr [rsp + 0x28], rax
+    void*          at_0030      = {}; // +0x30, RE 0x2EFDB: mov qword ptr [rbp + 0x30], 0
+    std::uint8_t   at_0038      = {}; // +0x38, RE 0x2ECE8: cmp byte ptr [rbx + 0x38], 0
+    std::byte unplaced_003C[0x4]{};   // +0x3C .. +0x40: no instruction places a field here
+    void*          at_0040      = {}; // +0x40, RE 0x2ED28: mov qword ptr [rsp + 0x40], rax
+    void*          at_0048      = {}; // +0x48, RE 0x2ED84: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x2ED49: mov qword ptr [rsp + 0x50], rdx
+    std::byte unplaced_0058[0x8]{};   // +0x58 .. +0x60: no instruction places a field here
+    void*          at_0060      = {}; // +0x60, RE 0x2EE13: mov qword ptr [rsp + 0x60], rbx
+    void*          at_0068      = {}; // +0x68, RE 0x2EE7D: mov qword ptr [rsp + 0x68], 0
+    void*          at_0070      = {}; // +0x70, RE 0x2EE8F: mov qword ptr [rsp + 0x70], 0
+    std::byte unplaced_0078[0x18]{};   // +0x78 .. +0x90: no instruction places a field here
+    void*          at_0090      = {}; // +0x90, RE 0x2F01D: mov qword ptr [rsp + 0x90], 0
+    void*          at_0098      = {}; // +0x98, RE 0x2F02D: mov qword ptr [rsp + 0x98], rax
+    void*          at_00a0      = {}; // +0xA0, RE 0x2F035: mov qword ptr [rsp + 0xa0], rax
+    void*          at_00a8      = {}; // +0xA8, RE 0x2F045: mov qword ptr [rsp + 0xa8], 0
+    std::byte unplaced_00B0[0x29E]{};   // +0xB0 .. +0x34E: no instruction places a field here
+    std::uint8_t   at_034e      = {}; // +0x34E, RE 0x2EC8E: cmp byte ptr [rax + 0x34e], 0
 };
 
-/** Multi::AllSheetSelector -- vtable 0xA3B840, 4 virtual slot(s). */
+/** Multi::AllSheetSelector -- vtable 0xA3B840, 4 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7D2500 -- 217 bytes, read.. */
 class AllSheetSelector {
 public:
     virtual ~AllSheetSelector() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7D2500 -- 217 bytes, read.
 };
 
-/** Multi::CompactCanceller -- vtable 0xA3B870, 3 virtual slot(s). */
+/** Multi::CompactCanceller -- vtable 0xA3B870, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x68A6E0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D2610 -- 991 bytes, read.. */
 class CompactCanceller {
 public:
     virtual ~CompactCanceller() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D2610 -- 991 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x68AA62: lock sub dword ptr [rbx + 0xc], 1
+    std::byte unplaced_0010[0x18]{};   // +0x10 .. +0x28: no instruction places a field here
+    std::uint32_t  at_0028      = {}; // +0x28, RE 0x68A717: mov dword ptr [rsp + 0x28], eax
+    std::uint32_t  at_002c      = {}; // +0x2C, RE 0x68A753: mov dword ptr [rsp + 0x2c], eax
+    std::byte unplaced_0030[0x70]{};   // +0x30 .. +0xA0: no instruction places a field here
+    void*          at_00a0      = {}; // +0xA0, RE 0x68A9DF: mov qword ptr [rsp + 0xa0], r13
+    void*          at_00a8      = {}; // +0xA8, RE 0x68A9E7: mov qword ptr [rsp + 0xa8], rax
+    std::uint8_t   at_00b0      = {}; // +0xB0, RE 0x68A9D3: mov byte ptr [rsp + 0xb0], r14b
+    std::byte unplaced_00B4[0xC]{};   // +0xB4 .. +0xC0: no instruction places a field here
+    void*          at_00c0      = {}; // +0xC0, RE 0x68A831: mov qword ptr [rsp + 0xc0], r13
+    void*          at_00c8      = {}; // +0xC8, RE 0x68A839: mov qword ptr [rsp + 0xc8], rax
+    std::uint8_t   at_00cb      = {}; // +0xCB, RE 0x68A9A8: mov byte ptr [rsp + 0xcb], 1
+    std::byte unplaced_00CF[0x1]{};   // +0xCF .. +0xD0: no instruction places a field here
+    std::uint8_t   at_00d0      = {}; // +0xD0, RE 0x68A81E: mov byte ptr [rsp + 0xd0], r14b
+    std::byte unplaced_00D4[0xC]{};   // +0xD4 .. +0xE0: no instruction places a field here
+    void*          at_00e0      = {}; // +0xE0, RE 0x68A7F8: mov qword ptr [rsp + 0xe0], rax
+    void*          at_00e8      = {}; // +0xE8, RE 0x68A800: mov qword ptr [rsp + 0xe8], rdx
+    std::uint8_t   at_00e9      = {}; // +0xE9, RE 0x68A80A: mov byte ptr [rsp + 0xe9], 1
+    std::byte unplaced_00ED[0x2F5]{};   // +0xED .. +0x3E2: no instruction places a field here
+    std::uint8_t   at_03e2      = {}; // +0x3E2, RE 0x68A7F1: cmp byte ptr [rbx + 0x3e2], 0
 };
 
-/** Multi::LargestSheetSelector -- vtable 0xA3BAC0, 4 virtual slot(s). */
+/** Multi::LargestSheetSelector -- vtable 0xA3BAC0, 4 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7D3C50 -- 136 bytes, read.. */
 class LargestSheetSelector {
 public:
     virtual ~LargestSheetSelector() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7D3C50 -- 136 bytes, read.
 };
 
-/** Multi::NestingContextPool -- vtable 0xA3B9A0, 3 virtual slot(s). */
+/** Multi::NestingContextPool -- vtable 0xA3B9A0, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x32700, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D2E20 -- 176 bytes, read.. */
 class NestingContextPool {
 public:
     virtual ~NestingContextPool() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D2E20 -- 176 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x329DA: mov dword ptr [rax + 0xc], 1
+    void*          at_0010      = {}; // +0x10, RE 0x3274E: mov qword ptr [rbx + 0x10], rdi
+    void*          at_0018      = {}; // +0x18, RE 0x32755: mov qword ptr [rbx + 0x18], r13
+    void*          at_0020      = {}; // +0x20, RE 0x32BA8: mov qword ptr [rbx + 0x20], rax
+    void*          at_0028      = {}; // +0x28, RE 0x327EB: mov qword ptr [rsp + 0x28], rax
+    void*          at_0030      = {}; // +0x30, RE 0x32877: mov qword ptr [rsp + 0x30], rdi
+    void*          at_0038      = {}; // +0x38, RE 0x328DE: mov qword ptr [rsp + 0x38], rax
+    void*          at_0040      = {}; // +0x40, RE 0x328FB: mov qword ptr [rsp + 0x40], rax
+    void*          at_0048      = {}; // +0x48, RE 0x32A0E: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x32A44: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x32A5A: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x32AF0: mov qword ptr [rsp + 0x60], rax
+    std::byte unplaced_0068[0x2D8]{};   // +0x68 .. +0x340: no instruction places a field here
+    std::uint8_t   at_0340      = {}; // +0x340, RE 0x3296D: cmp byte ptr [rsi + 0x340], 0
+    std::byte unplaced_0344[0xB4]{};   // +0x344 .. +0x3F8: no instruction places a field here
+    void*          at_03f8      = {}; // +0x3F8, RE 0x327B0: mov qword ptr [rbx + 0x3f8], 0
+    std::uint32_t  at_0400      = {}; // +0x400, RE 0x327BB: mov dword ptr [rbx + 0x400], 0
+    std::byte unplaced_0404[0x4]{};   // +0x404 .. +0x408: no instruction places a field here
+    void*          at_0408      = {}; // +0x408, RE 0x327C8: mov qword ptr [rbx + 0x408], 0
+    std::uint32_t  at_0410      = {}; // +0x410, RE 0x327D3: mov dword ptr [rbx + 0x410], 0
+    std::uint8_t   at_0414      = {}; // +0x414, RE 0x327DD: mov byte ptr [rbx + 0x414], 0
+    std::uint8_t   at_0415      = {}; // +0x415, RE 0x327E4: mov byte ptr [rbx + 0x415], 0
+    std::byte unplaced_0419[0x7]{};   // +0x419 .. +0x420: no instruction places a field here
+    void*          at_0420      = {}; // +0x420, RE 0x32806: mov qword ptr [rbx + 0x420], 0
+    void*          at_0428      = {}; // +0x428, RE 0x32811: mov qword ptr [rbx + 0x428], 0
+    void*          at_0430      = {}; // +0x430, RE 0x3281F: mov qword ptr [rbx + 0x430], 0
+    void*          at_0438      = {}; // +0x438, RE 0x3282A: mov qword ptr [rbx + 0x438], 0
+    void*          at_0440      = {}; // +0x440, RE 0x32835: mov qword ptr [rbx + 0x440], 0
+    void*          at_0448      = {}; // +0x448, RE 0x32840: mov qword ptr [rbx + 0x448], 0
+    void*          at_0450      = {}; // +0x450, RE 0x3284B: mov qword ptr [rbx + 0x450], 0
+    void*          at_0458      = {}; // +0x458, RE 0x32856: mov qword ptr [rbx + 0x458], 0
+    void*          at_0460      = {}; // +0x460, RE 0x32861: mov qword ptr [rbx + 0x460], 0
+    void*          at_0468      = {}; // +0x468, RE 0x3286C: mov qword ptr [rbx + 0x468], 0
+    std::byte unplaced_0470[0x8]{};   // +0x470 .. +0x478: no instruction places a field here
+    void*          at_0478      = {}; // +0x478, RE 0x32900: mov qword ptr [rbx + 0x478], rdi
+    std::byte unplaced_0480[0x8]{};   // +0x480 .. +0x488: no instruction places a field here
+    void*          at_0488      = {}; // +0x488, RE 0x32918: mov qword ptr [rbx + 0x488], 0
+    void*          at_0490      = {}; // +0x490, RE 0x32923: mov qword ptr [rbx + 0x490], 0
+    void*          at_0498      = {}; // +0x498, RE 0x3292E: mov qword ptr [rbx + 0x498], 0
+    void*          at_04a0      = {}; // +0x4A0, RE 0x32939: mov qword ptr [rbx + 0x4a0], 0
+    void*          at_04a8      = {}; // +0x4A8, RE 0x32944: mov qword ptr [rbx + 0x4a8], 0
+    void*          at_04b0      = {}; // +0x4B0, RE 0x3294F: mov qword ptr [rbx + 0x4b0], 0
+    void*          at_04b8      = {}; // +0x4B8, RE 0x32961: mov qword ptr [rbx + 0x4b8], r13
+    void*          at_04c0      = {}; // +0x4C0, RE 0x32999: mov qword ptr [rbx + 0x4c0], r14
+    void*          at_04c8      = {}; // +0x4C8, RE 0x329A5: mov qword ptr [rbx + 0x4c8], 0
+    std::byte unplaced_04D0[0x8]{};   // +0x4D0 .. +0x4D8: no instruction places a field here
+    std::uint32_t  at_04d8      = {}; // +0x4D8, RE 0x32A13: mov dword ptr [rbx + 0x4d8], 0
+    std::byte unplaced_04DC[0x4]{};   // +0x4DC .. +0x4E0: no instruction places a field here
+    void*          at_04e0      = {}; // +0x4E0, RE 0x32A1D: mov qword ptr [rbx + 0x4e0], 0
+    void*          at_04e8      = {}; // +0x4E8, RE 0x329F6: mov qword ptr [rbx + 0x4e8], rax
+    void*          at_04f0      = {}; // +0x4F0, RE 0x329FD: mov qword ptr [rbx + 0x4f0], rax
+    void*          at_04f8      = {}; // +0x4F8, RE 0x32A28: mov qword ptr [rbx + 0x4f8], 0
 };
 
-/** Multi::NestingObserver -- vtable 0xA3B7C0, 6 virtual slot(s). */
+/** Multi::NestingObserver -- vtable 0xA3B7C0, 6 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x378E0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x697060 -- 66 bytes, read.. */
 class NestingObserver {
 public:
     virtual ~NestingObserver() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x697060 -- 66 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x39A92: lock sub dword ptr [rsi + 0xc], 1
+    std::uint8_t   at_0010      = {}; // +0x10, RE 0x38A14: mov byte ptr [rax + 0x10], 0
+    std::byte unplaced_0014[0x4]{};   // +0x14 .. +0x18: no instruction places a field here
+    void*          at_0018      = {}; // +0x18, RE 0x3A059: mov qword ptr [rbp + 0x18], rax
+    std::uint8_t   at_001c      = {}; // +0x1C, RE 0x38124: cmp byte ptr [rbx + 0x1c], 0
+    std::uint8_t   at_001d      = {}; // +0x1D, RE 0x37A18: cmp byte ptr [rbx + 0x1d], 0
+    std::uint8_t   at_001e      = {}; // +0x1E, RE 0x381A8: cmp byte ptr [rbx + 0x1e], 0
+    void*          at_0020      = {}; // +0x20, RE 0x38266: mov qword ptr [rsp + 0x20], rax
+    double         at_0028      = {}; // +0x28, RE 0x383D3: movsd qword ptr [rsp + 0x28], xmm7
+    void*          at_0030      = {}; // +0x30, RE 0x38890: mov qword ptr [rsp + 0x30], rax
+    std::byte unplaced_0038[0x8]{};   // +0x38 .. +0x40: no instruction places a field here
+    void*          at_0040      = {}; // +0x40, RE 0x37A1C: mov qword ptr [rsp + 0x40], rax
+    void*          at_0048      = {}; // +0x48, RE 0x37A06: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x38E11: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x37957: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x37980: mov qword ptr [rsp + 0x60], rax
+    std::uint32_t  at_0068      = {}; // +0x68, RE 0x38285: mov dword ptr [rsp + 0x68], 2
+    std::byte unplaced_006C[0x4]{};   // +0x6C .. +0x70: no instruction places a field here
+    double         at_0070      = {}; // +0x70, RE 0x3825B: movq qword ptr [rsp + 0x70], xmm6
+    void*          at_0078      = {}; // +0x78, RE 0x38261: mov qword ptr [rsp + 0x78], rsi
+    void*          at_0080      = {}; // +0x80, RE 0x379FE: mov qword ptr [rsp + 0x80], rsi
+    void*          at_0088      = {}; // +0x88, RE 0x379EE: mov qword ptr [rsp + 0x88], rax
+    std::byte unplaced_0090[0x60]{};   // +0x90 .. +0xF0: no instruction places a field here
+    void*          at_00f0      = {}; // +0xF0, RE 0x38F11: mov qword ptr [rsp + 0xf0], 0
+    std::uint8_t   at_00f4      = {}; // +0xF4, RE 0x398FD: cmp byte ptr [rax + 0xf4], 0
+    void*          at_00f8      = {}; // +0xF8, RE 0x38F1D: mov qword ptr [rsp + 0xf8], 0
+    void*          at_0100      = {}; // +0x100, RE 0x38F29: mov qword ptr [rsp + 0x100], 0
+    std::byte unplaced_0108[0x310]{};   // +0x108 .. +0x418: no instruction places a field here
+    void*          at_0418      = {}; // +0x418, RE 0x38A27: cmp qword ptr [rsp + 0x418], rax
+    std::byte unplaced_0420[0x148]{};   // +0x420 .. +0x568: no instruction places a field here
+    void*          at_0568      = {}; // +0x568, RE 0x39488: mov qword ptr [rsp + 0x568], 0
+    void*          at_0570      = {}; // +0x570, RE 0x394A4: mov qword ptr [rsp + 0x570], 0
+    void*          at_0578      = {}; // +0x578, RE 0x394C0: mov qword ptr [rsp + 0x578], 0
+    std::byte unplaced_0580[0x190]{};   // +0x580 .. +0x710: no instruction places a field here
+    void*          at_0710      = {}; // +0x710, RE 0x37AC9: mov qword ptr [rsp + 0x710], rax
+    void*          at_0718      = {}; // +0x718, RE 0x37AD9: mov qword ptr [rsp + 0x718], 0
+    void*          at_0720      = {}; // +0x720, RE 0x37AD1: mov qword ptr [rsp + 0x720], rcx
+    std::byte unplaced_0728[0x8]{};   // +0x728 .. +0x730: no instruction places a field here
+    void*          at_0730      = {}; // +0x730, RE 0x37AF8: mov qword ptr [rsp + 0x730], 0
+    void*          at_0738      = {}; // +0x738, RE 0x37B14: mov qword ptr [rsp + 0x738], 0
+    void*          at_0740      = {}; // +0x740, RE 0x37B33: mov qword ptr [rsp + 0x740], 0
+    void*          at_0748      = {}; // +0x748, RE 0x37BA5: mov qword ptr [rsp + 0x748], rax
+    void*          at_0750      = {}; // +0x750, RE 0x37BB5: mov qword ptr [rsp + 0x750], 0
+    void*          at_0758      = {}; // +0x758, RE 0x37BAD: mov qword ptr [rsp + 0x758], rcx
+    std::byte unplaced_0760[0x8]{};   // +0x760 .. +0x768: no instruction places a field here
+    void*          at_0768      = {}; // +0x768, RE 0x37BD4: mov qword ptr [rsp + 0x768], 0
+    void*          at_0770      = {}; // +0x770, RE 0x37BF0: mov qword ptr [rsp + 0x770], 0
+    void*          at_0778      = {}; // +0x778, RE 0x37C0F: mov qword ptr [rsp + 0x778], 0
+    std::byte unplaced_0780[0x30]{};   // +0x780 .. +0x7B0: no instruction places a field here
+    void*          at_07b0      = {}; // +0x7B0, RE 0x37D1C: mov qword ptr [rsp + 0x7b0], rax
+    void*          at_07b8      = {}; // +0x7B8, RE 0x37D2C: mov qword ptr [rsp + 0x7b8], 0
+    void*          at_07c0      = {}; // +0x7C0, RE 0x37D24: mov qword ptr [rsp + 0x7c0], rcx
+    std::byte unplaced_07C8[0x8]{};   // +0x7C8 .. +0x7D0: no instruction places a field here
+    void*          at_07d0      = {}; // +0x7D0, RE 0x37D4B: mov qword ptr [rsp + 0x7d0], 0
+    void*          at_07d8      = {}; // +0x7D8, RE 0x37D67: mov qword ptr [rsp + 0x7d8], 0
+    void*          at_07e0      = {}; // +0x7E0, RE 0x37D86: mov qword ptr [rsp + 0x7e0], 0
+    void*          at_07e8      = {}; // +0x7E8, RE 0x37DF8: mov qword ptr [rsp + 0x7e8], rax
+    void*          at_07f0      = {}; // +0x7F0, RE 0x37E08: mov qword ptr [rsp + 0x7f0], 0
+    void*          at_07f8      = {}; // +0x7F8, RE 0x37E00: mov qword ptr [rsp + 0x7f8], rcx
+    std::byte unplaced_0800[0x8]{};   // +0x800 .. +0x808: no instruction places a field here
+    void*          at_0808      = {}; // +0x808, RE 0x37E27: mov qword ptr [rsp + 0x808], 0
+    void*          at_0810      = {}; // +0x810, RE 0x37E43: mov qword ptr [rsp + 0x810], 0
+    void*          at_0818      = {}; // +0x818, RE 0x37E62: mov qword ptr [rsp + 0x818], 0
+    std::byte unplaced_0820[0xA0]{};   // +0x820 .. +0x8C0: no instruction places a field here
+    double         at_08c0      = {}; // +0x8C0, RE 0x396D7: movsd qword ptr [rsp + 0x8c0], xmm8
+    std::byte unplaced_08C8[0x98]{};   // +0x8C8 .. +0x960: no instruction places a field here
+    void*          at_0960      = {}; // +0x960, RE 0x389C0: mov qword ptr [rsp + 0x960], rdx
+    void*          at_0968      = {}; // +0x968, RE 0x389FB: mov qword ptr [rsp + 0x968], rcx
+    void*          at_0970      = {}; // +0x970, RE 0x389E4: mov qword ptr [rsp + 0x970], rcx
+    void*          at_0978      = {}; // +0x978, RE 0x3A013: mov qword ptr [rsp + 0x978], rbx
+    std::byte unplaced_0980[0x28]{};   // +0x980 .. +0x9A8: no instruction places a field here
+    void*          at_09a8      = {}; // +0x9A8, RE 0x3908C: mov qword ptr [rsp + 0x9a8], 0
+    void*          at_09b0      = {}; // +0x9B0, RE 0x390A8: mov qword ptr [rsp + 0x9b0], 0
+    void*          at_09b8      = {}; // +0x9B8, RE 0x390C4: mov qword ptr [rsp + 0x9b8], 0
+    std::byte unplaced_09C0[0x70]{};   // +0x9C0 .. +0xA30: no instruction places a field here
+    void*          at_0a30      = {}; // +0xA30, RE 0x39215: mov qword ptr [rsp + 0xa30], 0
+    void*          at_0a38      = {}; // +0xA38, RE 0x39231: mov qword ptr [rsp + 0xa38], 0
+    void*          at_0a40      = {}; // +0xA40, RE 0x3924D: mov qword ptr [rsp + 0xa40], 0
+    std::byte unplaced_0A48[0x38]{};   // +0xA48 .. +0xA80: no instruction places a field here
+    void*          at_0a80      = {}; // +0xA80, RE 0x38A56: mov qword ptr [rsp + 0xa80], rdx
+    void*          at_0a88      = {}; // +0xA88, RE 0x38A8E: mov qword ptr [rsp + 0xa88], rcx
+    void*          at_0a90      = {}; // +0xA90, RE 0x38A7A: mov qword ptr [rsp + 0xa90], rcx
+    void*          at_0a98      = {}; // +0xA98, RE 0x39FF6: mov qword ptr [rsp + 0xa98], r10
+    void*          at_0aa0      = {}; // +0xAA0, RE 0x3A0C1: mov qword ptr [rsp + 0xaa0], 0
+    void*          at_0aa8      = {}; // +0xAA8, RE 0x3A0CD: mov qword ptr [rsp + 0xaa8], 0
+    void*          at_0ab0      = {}; // +0xAB0, RE 0x3A0D9: mov qword ptr [rsp + 0xab0], 0
+    std::byte unplaced_0AB8[0x10]{};   // +0xAB8 .. +0xAC8: no instruction places a field here
+    void*          at_0ac8      = {}; // +0xAC8, RE 0x384B8: mov qword ptr [rsp + 0xac8], 0
+    void*          at_0ad0      = {}; // +0xAD0, RE 0x384D4: mov qword ptr [rsp + 0xad0], 0
+    void*          at_0ad8      = {}; // +0xAD8, RE 0x384F0: mov qword ptr [rsp + 0xad8], 0
+    std::byte unplaced_0AE0[0x70]{};   // +0xAE0 .. +0xB50: no instruction places a field here
+    void*          at_0b50      = {}; // +0xB50, RE 0x38641: mov qword ptr [rsp + 0xb50], 0
+    void*          at_0b58      = {}; // +0xB58, RE 0x3865D: mov qword ptr [rsp + 0xb58], 0
+    void*          at_0b60      = {}; // +0xB60, RE 0x38679: mov qword ptr [rsp + 0xb60], 0
+    std::byte unplaced_0B68[0x68]{};   // +0xB68 .. +0xBD0: no instruction places a field here
+    double         at_0bd0      = {}; // +0xBD0, RE 0x39876: movsd qword ptr [rsp + 0xbd0], xmm0
+    std::uint32_t  at_0bd8      = {}; // +0xBD8, RE 0x3986B: mov dword ptr [rsp + 0xbd8], 5
+    std::byte unplaced_0BDC[0xC]{};   // +0xBDC .. +0xBE8: no instruction places a field here
+    void*          at_0be8      = {}; // +0xBE8, RE 0x380FC: mov qword ptr [rsp + 0xbe8], rdx
+    std::byte unplaced_0BF0[0x10]{};   // +0xBF0 .. +0xC00: no instruction places a field here
+    double         at_0c00      = {}; // +0xC00, RE 0x398DE: movsd qword ptr [rsp + 0xc00], xmm6
+    double         at_0c08      = {}; // +0xC08, RE 0x398E7: movsd qword ptr [rsp + 0xc08], xmm3
+    std::byte unplaced_0C10[0x50]{};   // +0xC10 .. +0xC60: no instruction places a field here
+    void*          at_0c60      = {}; // +0xC60, RE 0x37AAB: mov qword ptr [rsp + 0xc60], rdx
+    std::byte unplaced_0C68[0x18]{};   // +0xC68 .. +0xC80: no instruction places a field here
+    void*          at_0c80      = {}; // +0xC80, RE 0x37B04: mov qword ptr [rsp + 0xc80], rax
+    void*          at_0c88      = {}; // +0xC88, RE 0x37B23: mov qword ptr [rsp + 0xc88], rax
+    void*          at_0c90      = {}; // +0xC90, RE 0x37B3F: mov qword ptr [rsp + 0xc90], rax
+    void*          at_0c98      = {}; // +0xC98, RE 0x37B87: mov qword ptr [rsp + 0xc98], rdx
+    std::byte unplaced_0CA0[0x18]{};   // +0xCA0 .. +0xCB8: no instruction places a field here
+    void*          at_0cb8      = {}; // +0xCB8, RE 0x37BE0: mov qword ptr [rsp + 0xcb8], rax
+    void*          at_0cc0      = {}; // +0xCC0, RE 0x37BFF: mov qword ptr [rsp + 0xcc0], rax
+    void*          at_0cc8      = {}; // +0xCC8, RE 0x37C1B: mov qword ptr [rsp + 0xcc8], rax
+    std::uint32_t  at_0cd0      = {}; // +0xCD0, RE 0x39884: mov dword ptr [rsp + 0xcd0], eax
+    std::uint32_t  at_0cd4      = {}; // +0xCD4, RE 0x38200: mov dword ptr [rsp + 0xcd4], 0x64
+    std::byte unplaced_0CD8[0x8]{};   // +0xCD8 .. +0xCE0: no instruction places a field here
+    std::uint32_t  at_0ce0      = {}; // +0xCE0, RE 0x38149: mov dword ptr [rsp + 0xce0], esi
+    std::uint32_t  at_0ce4      = {}; // +0xCE4, RE 0x38150: mov dword ptr [rsp + 0xce4], eax
+    std::uint32_t  at_0ce8      = {}; // +0xCE8, RE 0x39D63: mov dword ptr [rsp + 0xce8], eax
+    std::uint32_t  at_0cec      = {}; // +0xCEC, RE 0x3818D: mov dword ptr [rsp + 0xcec], 3
+    std::uint8_t   at_0cf0      = {}; // +0xCF0, RE 0x38198: mov byte ptr [rsp + 0xcf0], 0
+    std::uint8_t   at_0cf1      = {}; // +0xCF1, RE 0x381A0: mov byte ptr [rsp + 0xcf1], 1
+    std::uint32_t  at_0cf4      = {}; // +0xCF4, RE 0x38182: mov dword ptr [rsp + 0xcf4], 1
+    std::byte unplaced_0CF8[0x30]{};   // +0xCF8 .. +0xD28: no instruction places a field here
+    void*          at_0d28      = {}; // +0xD28, RE 0x38417: mov qword ptr [rsp + 0xd28], rax
+    void*          at_0d30      = {}; // +0xD30, RE 0x3842A: mov qword ptr [rsp + 0xd30], rax
+    void*          at_0d38      = {}; // +0xD38, RE 0x3843A: mov qword ptr [rsp + 0xd38], rax
+    void*          at_0d40      = {}; // +0xD40, RE 0x3844A: mov qword ptr [rsp + 0xd40], rax
+    void*          at_0d48      = {}; // +0xD48, RE 0x3845A: mov qword ptr [rsp + 0xd48], rax
+    void*          at_0d50      = {}; // +0xD50, RE 0x3846A: mov qword ptr [rsp + 0xd50], rax
+    void*          at_0d58      = {}; // +0xD58, RE 0x3847A: mov qword ptr [rsp + 0xd58], rax
+    void*          at_0d60      = {}; // +0xD60, RE 0x3848A: mov qword ptr [rsp + 0xd60], rax
+    std::uint32_t  at_0d68      = {}; // +0xD68, RE 0x38499: mov dword ptr [rsp + 0xd68], eax
+    std::uint16_t  at_0d6c      = {}; // +0xD6C, RE 0x384A8: mov word ptr [rsp + 0xd6c], ax
+    void*          at_0d70      = {}; // +0xD70, RE 0x384C4: mov qword ptr [rsp + 0xd70], rax
+    void*          at_0d78      = {}; // +0xD78, RE 0x384E0: mov qword ptr [rsp + 0xd78], rax
+    void*          at_0d80      = {}; // +0xD80, RE 0x384FC: mov qword ptr [rsp + 0xd80], rax
+    std::uint32_t  at_0d88      = {}; // +0xD88, RE 0x38527: mov dword ptr [rsp + 0xd88], eax
+    std::uint8_t   at_0d8c      = {}; // +0xD8C, RE 0x3855B: mov byte ptr [rsp + 0xd8c], al
+    std::uint8_t   at_0d8d      = {}; // +0xD8D, RE 0x3856A: mov byte ptr [rsp + 0xd8d], al
+    double         at_0d90      = {}; // +0xD90, RE 0x38536: movsd qword ptr [rsp + 0xd90], xmm0
+    std::byte unplaced_0D98[0x10]{};   // +0xD98 .. +0xDA8: no instruction places a field here
+    double         at_0da8      = {}; // +0xDA8, RE 0x385A7: movsd qword ptr [rsp + 0xda8], xmm0
+    void*          at_0db0      = {}; // +0xDB0, RE 0x38597: mov qword ptr [rsp + 0xdb0], rax
+    void*          at_0db8      = {}; // +0xDB8, RE 0x385B3: mov qword ptr [rsp + 0xdb8], rax
+    void*          at_0dc0      = {}; // +0xDC0, RE 0x385C3: mov qword ptr [rsp + 0xdc0], rax
+    void*          at_0dc8      = {}; // +0xDC8, RE 0x385D3: mov qword ptr [rsp + 0xdc8], rax
+    void*          at_0dd0      = {}; // +0xDD0, RE 0x385E3: mov qword ptr [rsp + 0xdd0], rax
+    void*          at_0dd8      = {}; // +0xDD8, RE 0x385F3: mov qword ptr [rsp + 0xdd8], rax
+    void*          at_0de0      = {}; // +0xDE0, RE 0x38603: mov qword ptr [rsp + 0xde0], rax
+    void*          at_0de8      = {}; // +0xDE8, RE 0x38613: mov qword ptr [rsp + 0xde8], rax
+    std::uint32_t  at_0df0      = {}; // +0xDF0, RE 0x38622: mov dword ptr [rsp + 0xdf0], eax
+    std::uint16_t  at_0df4      = {}; // +0xDF4, RE 0x38631: mov word ptr [rsp + 0xdf4], ax
+    void*          at_0df8      = {}; // +0xDF8, RE 0x3864D: mov qword ptr [rsp + 0xdf8], rax
+    void*          at_0e00      = {}; // +0xE00, RE 0x38669: mov qword ptr [rsp + 0xe00], rax
+    void*          at_0e08      = {}; // +0xE08, RE 0x38685: mov qword ptr [rsp + 0xe08], rax
+    std::uint32_t  at_0e10      = {}; // +0xE10, RE 0x386B0: mov dword ptr [rsp + 0xe10], eax
+    std::uint8_t   at_0e14      = {}; // +0xE14, RE 0x386E4: mov byte ptr [rsp + 0xe14], al
+    std::uint8_t   at_0e15      = {}; // +0xE15, RE 0x386F3: mov byte ptr [rsp + 0xe15], al
+    double         at_0e18      = {}; // +0xE18, RE 0x386BF: movsd qword ptr [rsp + 0xe18], xmm0
+    std::byte unplaced_0E20[0x10]{};   // +0xE20 .. +0xE30: no instruction places a field here
+    double         at_0e30      = {}; // +0xE30, RE 0x3871C: movsd qword ptr [rsp + 0xe30], xmm0
+    std::byte unplaced_0E38[0x10]{};   // +0xE38 .. +0xE48: no instruction places a field here
+    void*          at_0e48      = {}; // +0xE48, RE 0x37A0B: mov qword ptr [rsp + 0xe48], rax
+    std::byte unplaced_0E50[0x40]{};   // +0xE50 .. +0xE90: no instruction places a field here
+    std::uint8_t   at_0e90      = {}; // +0xE90, RE 0x3882D: mov byte ptr [rsp + 0xe90], al
+    std::byte unplaced_0E94[0xCC]{};   // +0xE94 .. +0xF60: no instruction places a field here
+    void*          at_0f60      = {}; // +0xF60, RE 0x37939: mov qword ptr [rsp + 0xf60], rcx
+    std::byte unplaced_0F68[0x8]{};   // +0xF68 .. +0xF70: no instruction places a field here
+    void*          at_0f70      = {}; // +0xF70, RE 0x37949: mov qword ptr [rsp + 0xf70], r8
+    void*          at_0f78      = {}; // +0xF78, RE 0x3795C: mov qword ptr [rsp + 0xf78], r9
 };
 
-/** Multi::NoFitMapCanceller -- vtable 0xA3B8E0, 3 virtual slot(s). */
+/** Multi::NoFitMapCanceller -- vtable 0xA3B8E0, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x32700, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D29F0 -- 698 bytes, read.. */
 class NoFitMapCanceller {
 public:
     virtual ~NoFitMapCanceller() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D29F0 -- 698 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x329DA: mov dword ptr [rax + 0xc], 1
+    void*          at_0010      = {}; // +0x10, RE 0x3274E: mov qword ptr [rbx + 0x10], rdi
+    void*          at_0018      = {}; // +0x18, RE 0x32755: mov qword ptr [rbx + 0x18], r13
+    void*          at_0020      = {}; // +0x20, RE 0x32BA8: mov qword ptr [rbx + 0x20], rax
+    void*          at_0028      = {}; // +0x28, RE 0x327EB: mov qword ptr [rsp + 0x28], rax
+    void*          at_0030      = {}; // +0x30, RE 0x32877: mov qword ptr [rsp + 0x30], rdi
+    void*          at_0038      = {}; // +0x38, RE 0x328DE: mov qword ptr [rsp + 0x38], rax
+    void*          at_0040      = {}; // +0x40, RE 0x328FB: mov qword ptr [rsp + 0x40], rax
+    void*          at_0048      = {}; // +0x48, RE 0x32A0E: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x32A44: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x32A5A: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x32AF0: mov qword ptr [rsp + 0x60], rax
+    std::byte unplaced_0068[0x2D8]{};   // +0x68 .. +0x340: no instruction places a field here
+    std::uint8_t   at_0340      = {}; // +0x340, RE 0x3296D: cmp byte ptr [rsi + 0x340], 0
+    std::byte unplaced_0344[0xB4]{};   // +0x344 .. +0x3F8: no instruction places a field here
+    void*          at_03f8      = {}; // +0x3F8, RE 0x327B0: mov qword ptr [rbx + 0x3f8], 0
+    std::uint32_t  at_0400      = {}; // +0x400, RE 0x327BB: mov dword ptr [rbx + 0x400], 0
+    std::byte unplaced_0404[0x4]{};   // +0x404 .. +0x408: no instruction places a field here
+    void*          at_0408      = {}; // +0x408, RE 0x327C8: mov qword ptr [rbx + 0x408], 0
+    std::uint32_t  at_0410      = {}; // +0x410, RE 0x327D3: mov dword ptr [rbx + 0x410], 0
+    std::uint8_t   at_0414      = {}; // +0x414, RE 0x327DD: mov byte ptr [rbx + 0x414], 0
+    std::uint8_t   at_0415      = {}; // +0x415, RE 0x327E4: mov byte ptr [rbx + 0x415], 0
+    std::byte unplaced_0419[0x7]{};   // +0x419 .. +0x420: no instruction places a field here
+    void*          at_0420      = {}; // +0x420, RE 0x32806: mov qword ptr [rbx + 0x420], 0
+    void*          at_0428      = {}; // +0x428, RE 0x32811: mov qword ptr [rbx + 0x428], 0
+    void*          at_0430      = {}; // +0x430, RE 0x3281F: mov qword ptr [rbx + 0x430], 0
+    void*          at_0438      = {}; // +0x438, RE 0x3282A: mov qword ptr [rbx + 0x438], 0
+    void*          at_0440      = {}; // +0x440, RE 0x32835: mov qword ptr [rbx + 0x440], 0
+    void*          at_0448      = {}; // +0x448, RE 0x32840: mov qword ptr [rbx + 0x448], 0
+    void*          at_0450      = {}; // +0x450, RE 0x3284B: mov qword ptr [rbx + 0x450], 0
+    void*          at_0458      = {}; // +0x458, RE 0x32856: mov qword ptr [rbx + 0x458], 0
+    void*          at_0460      = {}; // +0x460, RE 0x32861: mov qword ptr [rbx + 0x460], 0
+    void*          at_0468      = {}; // +0x468, RE 0x3286C: mov qword ptr [rbx + 0x468], 0
+    std::byte unplaced_0470[0x8]{};   // +0x470 .. +0x478: no instruction places a field here
+    void*          at_0478      = {}; // +0x478, RE 0x32900: mov qword ptr [rbx + 0x478], rdi
+    std::byte unplaced_0480[0x8]{};   // +0x480 .. +0x488: no instruction places a field here
+    void*          at_0488      = {}; // +0x488, RE 0x32918: mov qword ptr [rbx + 0x488], 0
+    void*          at_0490      = {}; // +0x490, RE 0x32923: mov qword ptr [rbx + 0x490], 0
+    void*          at_0498      = {}; // +0x498, RE 0x3292E: mov qword ptr [rbx + 0x498], 0
+    void*          at_04a0      = {}; // +0x4A0, RE 0x32939: mov qword ptr [rbx + 0x4a0], 0
+    void*          at_04a8      = {}; // +0x4A8, RE 0x32944: mov qword ptr [rbx + 0x4a8], 0
+    void*          at_04b0      = {}; // +0x4B0, RE 0x3294F: mov qword ptr [rbx + 0x4b0], 0
+    void*          at_04b8      = {}; // +0x4B8, RE 0x32961: mov qword ptr [rbx + 0x4b8], r13
+    void*          at_04c0      = {}; // +0x4C0, RE 0x32999: mov qword ptr [rbx + 0x4c0], r14
+    void*          at_04c8      = {}; // +0x4C8, RE 0x329A5: mov qword ptr [rbx + 0x4c8], 0
+    std::byte unplaced_04D0[0x8]{};   // +0x4D0 .. +0x4D8: no instruction places a field here
+    std::uint32_t  at_04d8      = {}; // +0x4D8, RE 0x32A13: mov dword ptr [rbx + 0x4d8], 0
+    std::byte unplaced_04DC[0x4]{};   // +0x4DC .. +0x4E0: no instruction places a field here
+    void*          at_04e0      = {}; // +0x4E0, RE 0x32A1D: mov qword ptr [rbx + 0x4e0], 0
+    void*          at_04e8      = {}; // +0x4E8, RE 0x329F6: mov qword ptr [rbx + 0x4e8], rax
+    void*          at_04f0      = {}; // +0x4F0, RE 0x329FD: mov qword ptr [rbx + 0x4f0], rax
+    void*          at_04f8      = {}; // +0x4F8, RE 0x32A28: mov qword ptr [rbx + 0x4f8], 0
 };
 
-/** Multi::NoMixSheetSelector -- vtable 0xA3B9D0, 4 virtual slot(s). */
+/** Multi::NoMixSheetSelector -- vtable 0xA3B9D0, 4 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0xAFD60, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D2ED0 -- 1299 bytes, read.. */
 class NoMixSheetSelector {
 public:
     virtual ~NoMixSheetSelector() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D2ED0 -- 1299 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    std::uint32_t  at_0010      = {}; // +0x10, RE 0xAFD94: mov dword ptr [rbx + 0x10], r12d
+    std::byte unplaced_0014[0x4]{};   // +0x14 .. +0x18: no instruction places a field here
+    void*          at_0018      = {}; // +0x18, RE 0xAFDAB: mov qword ptr [rbx + 0x18], rax
+    std::uint8_t   at_001a      = {}; // +0x1A, RE 0xAFED1: mov byte ptr [rax + 0x1a], 0x70
+    std::uint16_t  at_001c      = {}; // +0x1C, RE 0xAFE10: mov word ptr [r12 + 0x1c], r8w
+    std::uint8_t   at_001e      = {}; // +0x1E, RE 0xAFE33: mov byte ptr [r12 + 0x1e], 0x72
+    void*          at_0020      = {}; // +0x20, RE 0xAFE46: mov qword ptr [rsp + 0x20], 0x12
+    void*          at_0028      = {}; // +0x28, RE 0xAFEB3: mov qword ptr [rsp + 0x28], 0x1b
+    void*          at_0030      = {}; // +0x30, RE 0xAFEAE: mov qword ptr [rsp + 0x30], rax
+    void*          at_0038      = {}; // +0x38, RE 0xAFF19: mov qword ptr [rsp + 0x38], rax
+    void*          at_0040      = {}; // +0x40, RE 0xAFED8: mov qword ptr [rsp + 0x40], rdx
+    std::byte unplaced_0048[0x8]{};   // +0x48 .. +0x50: no instruction places a field here
+    void*          at_0050      = {}; // +0x50, RE 0xAFE39: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0xAFE9C: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0xAFE6B: mov qword ptr [rsp + 0x60], rdx
+    std::byte unplaced_0068[0x8]{};   // +0x68 .. +0x70: no instruction places a field here
+    void*          at_0070      = {}; // +0x70, RE 0xAFE19: mov qword ptr [rsp + 0x70], rax
+    void*          at_0078      = {}; // +0x78, RE 0xAFDF5: mov qword ptr [rsp + 0x78], 0xf
+    void*          at_0080      = {}; // +0x80, RE 0xAFE03: mov qword ptr [rsp + 0x80], rdx
+    std::byte unplaced_0088[0x7]{};   // +0x88 .. +0x8F: no instruction places a field here
+    std::uint8_t   at_008f      = {}; // +0x8F, RE 0xAFE3E: mov byte ptr [rsp + 0x8f], 0
 };
 
-/** Multi::PartUpdaterLimiter -- vtable 0xA3BA00, 4 virtual slot(s). */
+/** Multi::PartUpdaterLimiter -- vtable 0xA3BA00, 4 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x695C70, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D3530 -- 201 bytes, read.. */
 class PartUpdaterLimiter {
 public:
     virtual ~PartUpdaterLimiter() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D3530 -- 201 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x695D62: lock sub dword ptr [rbp + 0xc], 1
+    std::byte unplaced_0010[0x28]{};   // +0x10 .. +0x38: no instruction places a field here
+    void*          at_0038      = {}; // +0x38, RE 0x695C89: cmp qword ptr [rbx + 0x38], 0
+    std::uint32_t  at_0040      = {}; // +0x40, RE 0x695C90: cmp dword ptr [rbx + 0x40], esi
+    std::byte unplaced_0044[0x4]{};   // +0x44 .. +0x48: no instruction places a field here
+    void*          at_0048      = {}; // +0x48, RE 0x695CCD: mov qword ptr [rsp + 0x48], rax
+    std::uint8_t   at_0050      = {}; // +0x50, RE 0x695CBA: mov byte ptr [rsp + 0x50], 0
 };
 
-/** Multi::RCompactCanceller -- vtable 0xA3B910, 3 virtual slot(s). */
+/** Multi::RCompactCanceller -- vtable 0xA3B910, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x67460, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D2CB0 -- 9 bytes, read.. */
 class RCompactCanceller {
 public:
     virtual ~RCompactCanceller() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D2CB0 -- 9 bytes, read.
+    std::byte unplaced_0008[0x4]{};   // +0x8 .. +0xC: no instruction places a field here
+    std::uint32_t  at_000c      = {}; // +0xC, RE 0x67DCC: mov dword ptr [rax + 0xc], 1
+    void*          at_0010      = {}; // +0x10, RE 0x678E7: mov qword ptr [rcx + 0x10], r8
+    std::uint8_t   at_0014      = {}; // +0x14, RE 0x68D30: mov byte ptr [r13 + 0x14], 0x74
+    void*          at_0018      = {}; // +0x18, RE 0x678EF: mov qword ptr [rcx + 0x18], r8
+    std::uint8_t   at_001a      = {}; // +0x1A, RE 0x68E42: mov byte ptr [rax + 0x1a], 0x70
+    std::byte unplaced_001E[0x2]{};   // +0x1E .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x678F7: mov qword ptr [rcx + 0x20], r8
+    void*          at_0028      = {}; // +0x28, RE 0x678FF: mov qword ptr [rcx + 0x28], r8
+    void*          at_0030      = {}; // +0x30, RE 0x67907: mov qword ptr [rcx + 0x30], r8
+    void*          at_0038      = {}; // +0x38, RE 0x6790F: mov qword ptr [rcx + 0x38], r8
+    void*          at_0040      = {}; // +0x40, RE 0x67917: mov qword ptr [rcx + 0x40], r8
+    void*          at_0048      = {}; // +0x48, RE 0x6791F: mov qword ptr [rcx + 0x48], r8
+    void*          at_0050      = {}; // +0x50, RE 0x6749E: mov qword ptr [rsp + 0x50], rax
+    std::uint32_t  at_0054      = {}; // +0x54, RE 0x686FD: mov dword ptr [rbx + 0x54], eax
+    void*          at_0058      = {}; // +0x58, RE 0x675BC: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x675C9: mov qword ptr [rsp + 0x60], rax
+    void*          at_0068      = {}; // +0x68, RE 0x68790: mov qword ptr [rbx + 0x68], rax
+    std::uint32_t  at_006c      = {}; // +0x6C, RE 0x67499: mov dword ptr [rsp + 0x6c], r9d
+    void*          at_0070      = {}; // +0x70, RE 0x67EF9: mov qword ptr [rsp + 0x70], rax
+    void*          at_0078      = {}; // +0x78, RE 0x67F03: mov qword ptr [rsp + 0x78], rdx
+    void*          at_0080      = {}; // +0x80, RE 0x67C6A: mov qword ptr [rsp + 0x80], r15
+    void*          at_0088      = {}; // +0x88, RE 0x6810D: mov qword ptr [rbp + 0x88], rdx
+    void*          at_0090      = {}; // +0x90, RE 0x67EA0: mov qword ptr [rsp + 0x90], rax
+    std::uint32_t  at_0098      = {}; // +0x98, RE 0x681A6: mov dword ptr [rbp + 0x98], eax
+    std::uint8_t   at_009c      = {}; // +0x9C, RE 0x681C7: mov byte ptr [rbp + 0x9c], al
+    std::uint8_t   at_00a0      = {}; // +0xA0, RE 0x681D5: mov byte ptr [rbp + 0xa0], al
+    std::uint8_t   at_00a1      = {}; // +0xA1, RE 0x681E3: mov byte ptr [rbp + 0xa1], al
+    std::uint32_t  at_00a4      = {}; // +0xA4, RE 0x681F0: mov dword ptr [rbp + 0xa4], eax
+    double         at_00a8      = {}; // +0xA8, RE 0x681B7: movlpd qword ptr [rbp + 0xa8], xmm0
+    double         at_00b0      = {}; // +0xB0, RE 0x681BF: movhpd qword ptr [rbp + 0xb0], xmm0
+    void*          at_00b8      = {}; // +0xB8, RE 0x6820A: mov qword ptr [rbp + 0xb8], rax
+    void*          at_00c0      = {}; // +0xC0, RE 0x68225: mov qword ptr [rbp + 0xc0], rax
+    void*          at_00c8      = {}; // +0xC8, RE 0x68240: mov qword ptr [rbp + 0xc8], rax
+    std::uint32_t  at_00d0      = {}; // +0xD0, RE 0x68265: mov dword ptr [rbp + 0xd0], eax
+    std::byte unplaced_00D4[0x4]{};   // +0xD4 .. +0xD8: no instruction places a field here
+    double         at_00d8      = {}; // +0xD8, RE 0x68272: movsd qword ptr [rbp + 0xd8], xmm0
+    std::uint32_t  at_00e0      = {}; // +0xE0, RE 0x6828F: mov dword ptr [rbp + 0xe0], eax
+    std::byte unplaced_00E4[0x4]{};   // +0xE4 .. +0xE8: no instruction places a field here
+    double         at_00e8      = {}; // +0xE8, RE 0x6829C: movlpd qword ptr [rbp + 0xe8], xmm0
+    double         at_00f0      = {}; // +0xF0, RE 0x682A4: movhpd qword ptr [rbp + 0xf0], xmm0
+    std::uint32_t  at_00f8      = {}; // +0xF8, RE 0x682AC: mov dword ptr [rbp + 0xf8], eax
+    std::byte unplaced_00FC[0x4]{};   // +0xFC .. +0x100: no instruction places a field here
+    void*          at_0100      = {}; // +0x100, RE 0x682C6: mov qword ptr [rbp + 0x100], rax
+    void*          at_0108      = {}; // +0x108, RE 0x682E1: mov qword ptr [rbp + 0x108], rax
+    std::uint8_t   at_010e      = {}; // +0x10E, RE 0x67BD0: cmp byte ptr [rax + 0x10e], 0
+    void*          at_0110      = {}; // +0x110, RE 0x682FC: mov qword ptr [rbp + 0x110], rax
+    std::uint32_t  at_0118      = {}; // +0x118, RE 0x67C2B: mov dword ptr [rsp + 0x118], 0
+    std::byte unplaced_011C[0x4]{};   // +0x11C .. +0x120: no instruction places a field here
+    void*          at_0120      = {}; // +0x120, RE 0x67C1F: mov qword ptr [rsp + 0x120], 0
+    void*          at_0128      = {}; // +0x128, RE 0x67C3A: mov qword ptr [rsp + 0x128], r8
+    void*          at_0130      = {}; // +0x130, RE 0x67C42: mov qword ptr [rsp + 0x130], r8
+    void*          at_0138      = {}; // +0x138, RE 0x67C4E: mov qword ptr [rsp + 0x138], 0
+    std::byte unplaced_0140[0x40]{};   // +0x140 .. +0x180: no instruction places a field here
+    void*          at_0180      = {}; // +0x180, RE 0x67766: mov qword ptr [rsp + 0x180], rcx
+    void*          at_0188      = {}; // +0x188, RE 0x67CFA: mov qword ptr [rsp + 0x188], 0
+    void*          at_0190      = {}; // +0x190, RE 0x67D16: mov qword ptr [rsp + 0x190], 0
+    void*          at_0198      = {}; // +0x198, RE 0x67D22: mov qword ptr [rsp + 0x198], 0
+    void*          at_01a0      = {}; // +0x1A0, RE 0x67D2E: mov qword ptr [rsp + 0x1a0], 0
+    void*          at_01a8      = {}; // +0x1A8, RE 0x67D3A: mov qword ptr [rsp + 0x1a8], rsi
+    void*          at_01b0      = {}; // +0x1B0, RE 0x67D42: mov qword ptr [rsp + 0x1b0], rax
+    void*          at_01b8      = {}; // +0x1B8, RE 0x67D4A: mov qword ptr [rsp + 0x1b8], r14
+    void*          at_01c0      = {}; // +0x1C0, RE 0x674AB: mov qword ptr [rsp + 0x1c0], rax
+    void*          at_01c8      = {}; // +0x1C8, RE 0x67502: mov qword ptr [rsp + 0x1c8], rbx
+    void*          at_01d0      = {}; // +0x1D0, RE 0x687FB: mov qword ptr [rsp + 0x1d0], rdx
+    std::byte unplaced_01D8[0x8]{};   // +0x1D8 .. +0x1E0: no instruction places a field here
+    std::uint32_t  at_01e0      = {}; // +0x1E0, RE 0x67550: mov dword ptr [rsp + 0x1e0], eax
+    std::byte unplaced_01E4[0x4]{};   // +0x1E4 .. +0x1E8: no instruction places a field here
+    void*          at_01e8      = {}; // +0x1E8, RE 0x6751F: mov qword ptr [rsp + 0x1e8], 0
+    void*          at_01f0      = {}; // +0x1F0, RE 0x6752F: mov qword ptr [rsp + 0x1f0], 0
+    void*          at_01f8      = {}; // +0x1F8, RE 0x6753E: mov qword ptr [rsp + 0x1f8], 0
+    void*          at_0200      = {}; // +0x200, RE 0x6764D: mov qword ptr [rsp + 0x200], 0
+    void*          at_0208      = {}; // +0x208, RE 0x6765D: mov qword ptr [rsp + 0x208], 0
+    void*          at_0210      = {}; // +0x210, RE 0x67669: mov qword ptr [rsp + 0x210], 0
+    std::byte unplaced_0218[0x18]{};   // +0x218 .. +0x230: no instruction places a field here
+    std::uint32_t  at_0230      = {}; // +0x230, RE 0x6770C: mov dword ptr [rsp + 0x230], 0
+    std::byte unplaced_0234[0x4]{};   // +0x234 .. +0x238: no instruction places a field here
+    void*          at_0238      = {}; // +0x238, RE 0x67721: mov qword ptr [rsp + 0x238], 0
+    void*          at_0240      = {}; // +0x240, RE 0x67748: mov qword ptr [rsp + 0x240], r8
+    void*          at_0248      = {}; // +0x248, RE 0x67750: mov qword ptr [rsp + 0x248], r8
+    void*          at_0250      = {}; // +0x250, RE 0x6772D: mov qword ptr [rsp + 0x250], 0
+    std::uint32_t  at_0258      = {}; // +0x258, RE 0x6780D: mov dword ptr [rsp + 0x258], eax
+    std::uint8_t   at_025c      = {}; // +0x25C, RE 0x6783B: mov byte ptr [rsp + 0x25c], al
+    std::uint8_t   at_0260      = {}; // +0x260, RE 0x67849: mov byte ptr [rsp + 0x260], al
+    std::uint8_t   at_0261      = {}; // +0x261, RE 0x67857: mov byte ptr [rsp + 0x261], al
+    std::uint32_t  at_0264      = {}; // +0x264, RE 0x67864: mov dword ptr [rsp + 0x264], eax
+    double         at_0268      = {}; // +0x268, RE 0x67826: movlpd qword ptr [rsp + 0x268], xmm0
+    double         at_0270      = {}; // +0x270, RE 0x67832: movhpd qword ptr [rsp + 0x270], xmm0
+    void*          at_0278      = {}; // +0x278, RE 0x677D3: mov qword ptr [rsp + 0x278], 0
+    void*          at_0280      = {}; // +0x280, RE 0x677E6: mov qword ptr [rsp + 0x280], 0
+    void*          at_0288      = {}; // +0x288, RE 0x677F9: mov qword ptr [rsp + 0x288], 0
+    std::uint32_t  at_0290      = {}; // +0x290, RE 0x679D0: mov dword ptr [rsp + 0x290], eax
+    std::byte unplaced_0294[0x4]{};   // +0x294 .. +0x298: no instruction places a field here
+    double         at_0298      = {}; // +0x298, RE 0x679DD: movsd qword ptr [rsp + 0x298], xmm0
+    std::uint32_t  at_02a0      = {}; // +0x2A0, RE 0x679FC: mov dword ptr [rsp + 0x2a0], eax
+    std::byte unplaced_02A4[0x4]{};   // +0x2A4 .. +0x2A8: no instruction places a field here
+    double         at_02a8      = {}; // +0x2A8, RE 0x67A09: movlpd qword ptr [rsp + 0x2a8], xmm0
+    double         at_02b0      = {}; // +0x2B0, RE 0x67A12: movhpd qword ptr [rsp + 0x2b0], xmm0
+    std::uint32_t  at_02b8      = {}; // +0x2B8, RE 0x67A1B: mov dword ptr [rsp + 0x2b8], eax
+    std::byte unplaced_02BC[0x4]{};   // +0x2BC .. +0x2C0: no instruction places a field here
+    void*          at_02c0      = {}; // +0x2C0, RE 0x6799D: mov qword ptr [rsp + 0x2c0], 0
+    void*          at_02c8      = {}; // +0x2C8, RE 0x679B0: mov qword ptr [rsp + 0x2c8], 0
+    void*          at_02d0      = {}; // +0x2D0, RE 0x679C4: mov qword ptr [rsp + 0x2d0], 0
+    std::uint8_t   at_02d8      = {}; // +0x2D8, RE 0x67B03: mov byte ptr [rsp + 0x2d8], al
+    std::byte unplaced_02DC[0x4]{};   // +0x2DC .. +0x2E0: no instruction places a field here
+    void*          at_02e0      = {}; // +0x2E0, RE 0x67AD2: mov qword ptr [rsp + 0x2e0], 0
+    void*          at_02e8      = {}; // +0x2E8, RE 0x67AE5: mov qword ptr [rsp + 0x2e8], 0
+    void*          at_02f0      = {}; // +0x2F0, RE 0x67AF1: mov qword ptr [rsp + 0x2f0], 0
+    std::byte unplaced_02F8[0x8]{};   // +0x2F8 .. +0x300: no instruction places a field here
+    void*          at_0300      = {}; // +0x300, RE 0x67FBE: mov qword ptr [rsp + 0x300], rax
+    void*          at_0308      = {}; // +0x308, RE 0x67FCE: mov qword ptr [rsp + 0x308], 0
+    void*          at_0310      = {}; // +0x310, RE 0x67FC6: mov qword ptr [rsp + 0x310], rcx
+    std::byte unplaced_0318[0x10]{};   // +0x318 .. +0x328: no instruction places a field here
+    void*          at_0328      = {}; // +0x328, RE 0x67FFF: mov qword ptr [rsp + 0x328], 0
+    void*          at_0330      = {}; // +0x330, RE 0x6801A: mov qword ptr [rsp + 0x330], 0
+    void*          at_0338      = {}; // +0x338, RE 0x68032: mov qword ptr [rsp + 0x338], 0
+    void*          at_0340      = {}; // +0x340, RE 0x6808A: mov qword ptr [rsp + 0x340], 0
+    void*          at_0348      = {}; // +0x348, RE 0x680A6: mov qword ptr [rsp + 0x348], 0
+    void*          at_0350      = {}; // +0x350, RE 0x680C1: mov qword ptr [rsp + 0x350], 0
+    std::byte unplaced_0358[0x20]{};   // +0x358 .. +0x378: no instruction places a field here
+    void*          at_0378      = {}; // +0x378, RE 0x68167: mov qword ptr [rsp + 0x378], 0
+    void*          at_0380      = {}; // +0x380, RE 0x6814F: mov qword ptr [rsp + 0x380], rax
+    void*          at_0388      = {}; // +0x388, RE 0x68157: mov qword ptr [rsp + 0x388], rax
+    void*          at_0390      = {}; // +0x390, RE 0x68173: mov qword ptr [rsp + 0x390], 0
+    std::byte unplaced_0398[0x20]{};   // +0x398 .. +0x3B8: no instruction places a field here
+    void*          at_03b8      = {}; // +0x3B8, RE 0x681FE: mov qword ptr [rsp + 0x3b8], 0
+    void*          at_03c0      = {}; // +0x3C0, RE 0x68219: mov qword ptr [rsp + 0x3c0], 0
+    void*          at_03c8      = {}; // +0x3C8, RE 0x68234: mov qword ptr [rsp + 0x3c8], 0
+    std::byte unplaced_03D0[0x30]{};   // +0x3D0 .. +0x400: no instruction places a field here
+    void*          at_0400      = {}; // +0x400, RE 0x682BA: mov qword ptr [rsp + 0x400], 0
+    void*          at_0408      = {}; // +0x408, RE 0x682D5: mov qword ptr [rsp + 0x408], 0
+    void*          at_0410      = {}; // +0x410, RE 0x682F0: mov qword ptr [rsp + 0x410], 0
+    std::byte unplaced_0418[0x8]{};   // +0x418 .. +0x420: no instruction places a field here
+    void*          at_0420      = {}; // +0x420, RE 0x68327: mov qword ptr [rsp + 0x420], 0
+    void*          at_0428      = {}; // +0x428, RE 0x68345: mov qword ptr [rsp + 0x428], 0
+    void*          at_0430      = {}; // +0x430, RE 0x68360: mov qword ptr [rsp + 0x430], 0
+    std::byte unplaced_0438[0x8]{};   // +0x438 .. +0x440: no instruction places a field here
+    void*          at_0440      = {}; // +0x440, RE 0x674D8: mov qword ptr [rsp + 0x440], rbx
+    void*          at_0448      = {}; // +0x448, RE 0x68D44: mov qword ptr [rsp + 0x448], 5
+    std::uint32_t  at_0450      = {}; // +0x450, RE 0x68CFD: mov dword ptr [rsp + 0x450], 0x65656873
+    std::byte unplaced_0454[0x1]{};   // +0x454 .. +0x455: no instruction places a field here
+    std::uint8_t   at_0455      = {}; // +0x455, RE 0x68D3C: mov byte ptr [rsp + 0x455], 0
+    std::byte unplaced_0459[0xF]{};   // +0x459 .. +0x468: no instruction places a field here
+    void*          at_0468      = {}; // +0x468, RE 0x68FA7: mov qword ptr [rsp + 0x468], 0
+    void*          at_0470      = {}; // +0x470, RE 0x68FC5: mov qword ptr [rsp + 0x470], 0
+    void*          at_0478      = {}; // +0x478, RE 0x68FDD: mov qword ptr [rsp + 0x478], 0
+    void*          at_0480      = {}; // +0x480, RE 0x69030: mov qword ptr [rsp + 0x480], 0
+    void*          at_0488      = {}; // +0x488, RE 0x6904C: mov qword ptr [rsp + 0x488], 0
+    void*          at_0490      = {}; // +0x490, RE 0x69067: mov qword ptr [rsp + 0x490], 0
+    std::byte unplaced_0498[0x20]{};   // +0x498 .. +0x4B8: no instruction places a field here
+    void*          at_04b8      = {}; // +0x4B8, RE 0x6910C: mov qword ptr [rsp + 0x4b8], 0
+    void*          at_04c0      = {}; // +0x4C0, RE 0x690F4: mov qword ptr [rsp + 0x4c0], rax
+    void*          at_04c8      = {}; // +0x4C8, RE 0x690FC: mov qword ptr [rsp + 0x4c8], rax
+    void*          at_04d0      = {}; // +0x4D0, RE 0x69118: mov qword ptr [rsp + 0x4d0], 0
+    std::byte unplaced_04D8[0x20]{};   // +0x4D8 .. +0x4F8: no instruction places a field here
+    void*          at_04f8      = {}; // +0x4F8, RE 0x691A3: mov qword ptr [rsp + 0x4f8], 0
+    void*          at_0500      = {}; // +0x500, RE 0x691BE: mov qword ptr [rsp + 0x500], 0
+    void*          at_0508      = {}; // +0x508, RE 0x691D9: mov qword ptr [rsp + 0x508], 0
+    std::byte unplaced_0510[0x30]{};   // +0x510 .. +0x540: no instruction places a field here
+    void*          at_0540      = {}; // +0x540, RE 0x6925F: mov qword ptr [rsp + 0x540], 0
+    void*          at_0548      = {}; // +0x548, RE 0x6927A: mov qword ptr [rsp + 0x548], 0
+    void*          at_0550      = {}; // +0x550, RE 0x69295: mov qword ptr [rsp + 0x550], 0
+    std::byte unplaced_0558[0x8]{};   // +0x558 .. +0x560: no instruction places a field here
+    void*          at_0560      = {}; // +0x560, RE 0x692CC: mov qword ptr [rsp + 0x560], 0
+    void*          at_0568      = {}; // +0x568, RE 0x692EA: mov qword ptr [rsp + 0x568], 0
+    void*          at_0570      = {}; // +0x570, RE 0x69305: mov qword ptr [rsp + 0x570], 0
+    std::byte unplaced_0578[0x98]{};   // +0x578 .. +0x610: no instruction places a field here
+    void*          at_0610      = {}; // +0x610, RE 0x674B9: mov qword ptr [rsp + 0x610], rcx
+    void*          at_0618      = {}; // +0x618, RE 0x68B13: mov qword ptr [rsp + 0x618], rbp
 };
 
-/** Multi::RandomSheetSelector -- vtable 0xA3BA60, 4 virtual slot(s). */
+/** Multi::RandomSheetSelector -- vtable 0xA3BA60, 4 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0xB0040, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D36E0 -- 1316 bytes, read.. */
 class RandomSheetSelector {
 public:
     virtual ~RandomSheetSelector() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D36E0 -- 1316 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    std::uint32_t  at_0010      = {}; // +0x10, RE 0xB006C: mov dword ptr [rbx + 0x10], ebp
+    std::uint8_t   at_0014      = {}; // +0x14, RE 0xB0077: mov byte ptr [rbx + 0x14], al
+    std::uint32_t  at_0018      = {}; // +0x18, RE 0xB0084: mov dword ptr [rbx + 0x18], 1
+    std::byte unplaced_001C[0x9BC]{};   // +0x1C .. +0x9D8: no instruction places a field here
+    void*          at_09d8      = {}; // +0x9D8, RE 0xB00B7: mov qword ptr [rbx + 0x9d8], 0x270
 };
 
-/** Multi::SplitNode -- vtable 0xA3BB70, 4 virtual slot(s). */
+/** Multi::SplitNode -- vtable 0xA3BB70, 4 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x99910, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x97510 -- 6 bytes, read.. */
 class SplitNode {
 public:
     virtual ~SplitNode() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x97510 -- 6 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x999AA: mov qword ptr [rsi + 0x10], rax
+    void*          at_0018      = {}; // +0x18, RE 0x999B3: mov qword ptr [rsi + 0x18], rax
+    std::uint8_t   at_0020      = {}; // +0x20, RE 0x99935: mov byte ptr [rsp + 0x20], 1
+    std::byte unplaced_0024[0x4]{};   // +0x24 .. +0x28: no instruction places a field here
+    double         at_0028      = {}; // +0x28, RE 0x9993A: movsd qword ptr [rsp + 0x28], xmm6
+    double         at_0030      = {}; // +0x30, RE 0x99948: movsd qword ptr [rsp + 0x30], xmm6
+    double         at_0038      = {}; // +0x38, RE 0x9994E: movsd qword ptr [rsp + 0x38], xmm6
+    double         at_0040      = {}; // +0x40, RE 0x99954: movsd qword ptr [rsp + 0x40], xmm6
+    void*          at_0048      = {}; // +0x48, RE 0x999A2: mov qword ptr [rsi + 0x48], 0
+    double         at_0050      = {}; // +0x50, RE 0x99A56: movsd qword ptr [rsi + 0x50], xmm6
+    double         at_0058      = {}; // +0x58, RE 0x99A5B: movsd qword ptr [rsi + 0x58], xmm6
 };
 
-/** Multi::StrategyBasicAdder -- vtable 0xA3BA30, 3 virtual slot(s). */
+/** Multi::StrategyBasicAdder -- vtable 0xA3BA30, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0xAF750, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D3600 -- 214 bytes, read.. */
 class StrategyBasicAdder {
 public:
     virtual ~StrategyBasicAdder() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D3600 -- 214 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0xAF76B: mov qword ptr [rsp + 0x20], r9
+    std::uint32_t  at_0028      = {}; // +0x28, RE 0xAF762: mov dword ptr [rsp + 0x28], edx
+    std::byte unplaced_002C[0x4]{};   // +0x2C .. +0x30: no instruction places a field here
+    void*          at_0030      = {}; // +0x30, RE 0xAF770: mov qword ptr [rsp + 0x30], r8
 };
 
-/** Multi::SupervisorCanceller -- vtable 0xA3BA90, 3 virtual slot(s). */
+/** Multi::SupervisorCanceller -- vtable 0xA3BA90, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x30A30, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x30030 -- 485 bytes, read.. */
 class SupervisorCanceller {
 public:
     virtual ~SupervisorCanceller() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x30030 -- 485 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x30A50: mov qword ptr [rbx + 0x10], rcx
+    void*          at_0018      = {}; // +0x18, RE 0x30A89: mov qword ptr [rbx + 0x18], rsi
+    void*          at_0020      = {}; // +0x20, RE 0x30ABD: mov qword ptr [rbx + 0x20], rax
+    void*          at_0028      = {}; // +0x28, RE 0x30A74: mov qword ptr [rsp + 0x28], rsi
+    std::uint8_t   at_0030      = {}; // +0x30, RE 0x30A91: mov byte ptr [rbx + 0x30], 0
 };
 
-/** Multi::TerminalNode -- vtable 0xA3B570, 4 virtual slot(s). */
+/** Multi::TerminalNode -- vtable 0xA3B570, 4 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x99360, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x974F0 -- 6 bytes, read.. */
 class TerminalNode {
 public:
     virtual ~TerminalNode() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x974F0 -- 6 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x993B4: mov qword ptr [rdi + 0x10], rax
+    std::uint8_t   at_0014      = {}; // +0x14, RE 0x99667: mov byte ptr [rax + 0x14], 0x70
+    void*          at_0018      = {}; // +0x18, RE 0x993C0: mov qword ptr [rdi + 0x18], rax
+    void*          at_0020      = {}; // +0x20, RE 0x993CC: mov qword ptr [rdi + 0x20], rax
+    void*          at_0028      = {}; // +0x28, RE 0x993D8: mov qword ptr [rdi + 0x28], rax
+    void*          at_0030      = {}; // +0x30, RE 0x993F5: mov qword ptr [rdi + 0x30], 0
+    void*          at_0038      = {}; // +0x38, RE 0x993FD: mov qword ptr [rdi + 0x38], 0
+    void*          at_0040      = {}; // +0x40, RE 0x99405: mov qword ptr [rdi + 0x40], 0
+    double         at_0048      = {}; // +0x48, RE 0x99504: movsd qword ptr [rdi + 0x48], xmm6
+    double         at_0050      = {}; // +0x50, RE 0x99509: movsd qword ptr [rdi + 0x50], xmm6
+    std::uint32_t  at_0054      = {}; // +0x54, RE 0x99735: mov dword ptr [rbx + 0x54], eax
+    void*          at_0058      = {}; // +0x58, RE 0x9972D: mov qword ptr [rbx + 0x58], rcx
+    void*          at_0060      = {}; // +0x60, RE 0x994D8: mov qword ptr [rbx + 0x60], rbp
+    void*          at_0068      = {}; // +0x68, RE 0x99605: mov qword ptr [rsp + 0x68], 0xc
+    std::byte unplaced_0070[0xC]{};   // +0x70 .. +0x7C: no instruction places a field here
+    std::uint8_t   at_007c      = {}; // +0x7C, RE 0x9960E: mov byte ptr [rsp + 0x7c], 0
+    void*          at_0080      = {}; // +0x80, RE 0x994B4: mov qword ptr [rsp + 0x80], rbp
+    void*          at_0088      = {}; // +0x88, RE 0x995F1: mov qword ptr [rsp + 0x88], 9
+    std::byte unplaced_0090[0x9]{};   // +0x90 .. +0x99: no instruction places a field here
+    std::uint8_t   at_0099      = {}; // +0x99, RE 0x995FD: mov byte ptr [rsp + 0x99], 0
+    std::byte unplaced_009D[0x7B]{};   // +0x9D .. +0x118: no instruction places a field here
+    void*          at_0118      = {}; // +0x118, RE 0x99386: mov qword ptr [rsp + 0x118], rdx
 };
 
-/** Multi::TraceObserver -- vtable 0xA3B700, 6 virtual slot(s). */
+/** Multi::TraceObserver -- vtable 0xA3B700, 6 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x5F000, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7C2460 -- 3 bytes, read.. */
 class TraceObserver {
 public:
     virtual ~TraceObserver() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7C2460 -- 3 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    std::uint8_t   at_0010      = {}; // +0x10, RE 0x5F012: mov byte ptr [rcx + 0x10], r8b
+    std::uint8_t   at_0011      = {}; // +0x11, RE 0x5F016: mov byte ptr [rcx + 0x11], r9b
+    std::uint8_t   at_0012      = {}; // +0x12, RE 0x5F01A: mov byte ptr [rcx + 0x12], al
+    std::uint32_t  at_0014      = {}; // +0x14, RE 0x5F01D: mov dword ptr [rcx + 0x14], 0
+    std::uint32_t  at_0018      = {}; // +0x18, RE 0x5F024: mov dword ptr [rcx + 0x18], 0
 };
 
-/** Multi::WrapObserver -- vtable 0xA3B5E0, 3 virtual slot(s). */
+/** Multi::WrapObserver -- vtable 0xA3B5E0, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x83DC0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D2160 -- 55 bytes, read.. */
 class WrapObserver {
 public:
     virtual ~WrapObserver() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D2160 -- 55 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x8418E: mov qword ptr [r13 + 0x10], rax
+    std::byte unplaced_0018[0x8]{};   // +0x18 .. +0x20: no instruction places a field here
+    double         at_0020      = {}; // +0x20, RE 0x841FF: movsd qword ptr [rsp + 0x20], xmm6
+    double         at_0028      = {}; // +0x28, RE 0x841F8: movsd qword ptr [rsp + 0x28], xmm11
+    std::uint32_t  at_0030      = {}; // +0x30, RE 0x84205: mov dword ptr [rsp + 0x30], eax
+    std::byte unplaced_0034[0x4]{};   // +0x34 .. +0x38: no instruction places a field here
+    void*          at_0038      = {}; // +0x38, RE 0x841E6: mov qword ptr [rsp + 0x38], r13
+    std::byte unplaced_0040[0x8]{};   // +0x40 .. +0x48: no instruction places a field here
+    void*          at_0048      = {}; // +0x48, RE 0x83EA0: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x83FFE: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x8402F: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x83E2F: mov qword ptr [rsp + 0x60], rax
+    std::byte unplaced_0068[0x4]{};   // +0x68 .. +0x6C: no instruction places a field here
+    std::uint32_t  at_006c      = {}; // +0x6C, RE 0x83E57: mov dword ptr [rsp + 0x6c], eax
+    std::byte unplaced_0070[0x1F]{};   // +0x70 .. +0x8F: no instruction places a field here
+    std::uint8_t   at_008f      = {}; // +0x8F, RE 0x83F88: mov byte ptr [rsp + 0x8f], al
+    std::byte unplaced_0093[0xD]{};   // +0x93 .. +0xA0: no instruction places a field here
+    void*          at_00a0      = {}; // +0xA0, RE 0x83F9E: mov qword ptr [rsp + 0xa0], rax
+    std::byte unplaced_00A8[0x8]{};   // +0xA8 .. +0xB0: no instruction places a field here
+    void*          at_00b0      = {}; // +0xB0, RE 0x83FC5: mov qword ptr [rsp + 0xb0], rax
+    std::byte unplaced_00B8[0x38]{};   // +0xB8 .. +0xF0: no instruction places a field here
+    std::uint8_t   at_00f0      = {}; // +0xF0, RE 0x83F07: mov byte ptr [rsp + 0xf0], 0
+    std::byte unplaced_00F4[0x4]{};   // +0xF4 .. +0xF8: no instruction places a field here
+    void*          at_00f8      = {}; // +0xF8, RE 0x83F38: mov qword ptr [rsp + 0xf8], rax
+    void*          at_0100      = {}; // +0x100, RE 0x83F40: mov qword ptr [rsp + 0x100], rdx
+    std::byte unplaced_0108[0x8]{};   // +0x108 .. +0x110: no instruction places a field here
+    void*          at_0110      = {}; // +0x110, RE 0x83F0F: mov qword ptr [rsp + 0x110], 0
+    void*          at_0118      = {}; // +0x118, RE 0x83FEF: mov qword ptr [rsp + 0x118], 0
+    void*          at_0120      = {}; // +0x120, RE 0x84003: mov qword ptr [rsp + 0x120], 0
+    std::byte unplaced_0128[0x210]{};   // +0x128 .. +0x338: no instruction places a field here
+    std::uint8_t   at_0338      = {}; // +0x338, RE 0x83EDC: cmp byte ptr [r12 + 0x338], 0
+    std::uint8_t   at_0339      = {}; // +0x339, RE 0x83EEB: cmp byte ptr [r12 + 0x339], 0
 };
 }  // namespace
 
 namespace Prc {
 
-/** Prc::AlphaPriceComputer -- vtable 0xA3B130, 5 virtual slot(s). */
+/** Prc::AlphaPriceComputer -- vtable 0xA3B130, 5 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x4D9B30, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7CA1B0 -- 6 bytes, read.. */
 class AlphaPriceComputer {
 public:
     virtual ~AlphaPriceComputer() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7CA1B0 -- 6 bytes, read.
+    std::byte unplaced_0008[0x20]{};   // +0x8 .. +0x28: no instruction places a field here
+    double         at_0028      = {}; // +0x28, RE 0x4D9B3D: movsd qword ptr [rsp + 0x28], xmm1
 };
 
-/** Prc::BoxPriceComputer -- vtable 0xA3B0B0, 5 virtual slot(s). */
+/** Prc::BoxPriceComputer -- vtable 0xA3B0B0, 5 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7C9D90 -- 822 bytes, read.. */
 class BoxPriceComputer {
 public:
     virtual ~BoxPriceComputer() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7C9D90 -- 822 bytes, read.
 };
 
-/** Prc::HullPriceComputer -- vtable 0xA3B0F0, 5 virtual slot(s). */
+/** Prc::HullPriceComputer -- vtable 0xA3B0F0, 5 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7CA130 -- 6 bytes, read.. */
 class HullPriceComputer {
 public:
     virtual ~HullPriceComputer() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7CA130 -- 6 bytes, read.
 };
 
-/** Prc::LinearCombinationPricer -- vtable 0xA3B170, 5 virtual slot(s). */
+/** Prc::LinearCombinationPricer -- vtable 0xA3B170, 5 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x4D9CD0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7CA370 -- 578 bytes, read.. */
 class LinearCombinationPricer {
 public:
     virtual ~LinearCombinationPricer() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7CA370 -- 578 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x4D9D23: mov qword ptr [rbx + 0x10], 0
+    void*          at_0018      = {}; // +0x18, RE 0x4D9D2B: mov qword ptr [rbx + 0x18], 0
+    std::byte unplaced_0020[0x8]{};   // +0x20 .. +0x28: no instruction places a field here
+    double         at_0028      = {}; // +0x28, RE 0x4D9CE5: movsd qword ptr [rsp + 0x28], xmm2
+    void*          at_0030      = {}; // +0x30, RE 0x4D9D4A: mov qword ptr [rsp + 0x30], 0
+    double         at_0038      = {}; // +0x38, RE 0x4D9D0B: movsd qword ptr [rsp + 0x38], xmm2
 };
 }  // namespace
 
 namespace RCompact {
 
-/** RCompact::RotateLogger -- vtable 0xA533D0, 8 virtual slot(s). */
+/** RCompact::RotateLogger -- vtable 0xA533D0, 8 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x24A1C0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7B3030 -- 1 bytes, read.. */
 class RotateLogger {
 public:
     virtual ~RotateLogger() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7B3030 -- 1 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    double         at_0020      = {}; // +0x20, RE 0x24A604: movsd qword ptr [rsp + 0x20], xmm8
+    void*          at_0028      = {}; // +0x28, RE 0x24A5F8: mov qword ptr [rsp + 0x28], r14
+    void*          at_0030      = {}; // +0x30, RE 0x24A61A: mov qword ptr [rsp + 0x30], rax
+    std::uint32_t  at_0038      = {}; // +0x38, RE 0x24A60E: mov dword ptr [rsp + 0x38], eax
+    std::byte unplaced_003C[0xC]{};   // +0x3C .. +0x48: no instruction places a field here
+    void*          at_0048      = {}; // +0x48, RE 0x24A5AD: mov qword ptr [rsp + 0x48], rax
+    std::byte unplaced_0050[0x4]{};   // +0x50 .. +0x54: no instruction places a field here
+    std::uint32_t  at_0054      = {}; // +0x54, RE 0x24A350: mov dword ptr [rsp + 0x54], eax
+    void*          at_0058      = {}; // +0x58, RE 0x24A3B6: mov qword ptr [rsp + 0x58], rax
+    std::uint32_t  at_0060      = {}; // +0x60, RE 0x24A359: mov dword ptr [rsp + 0x60], eax
+    std::uint32_t  at_0064      = {}; // +0x64, RE 0x24A33D: mov dword ptr [rsp + 0x64], 0
+    void*          at_0068      = {}; // +0x68, RE 0x24A374: mov qword ptr [rsp + 0x68], rax
+    void*          at_0070      = {}; // +0x70, RE 0x24A384: mov qword ptr [rsp + 0x70], rax
+    void*          at_0078      = {}; // +0x78, RE 0x24A364: mov qword ptr [rsp + 0x78], rax
+    void*          at_0080      = {}; // +0x80, RE 0x24A31E: mov qword ptr [rsp + 0x80], rax
+    void*          at_0088      = {}; // +0x88, RE 0x24A306: mov qword ptr [rsp + 0x88], rax
+    std::byte unplaced_0090[0x10]{};   // +0x90 .. +0xA0: no instruction places a field here
+    void*          at_00a0      = {}; // +0xA0, RE 0x24A28C: mov qword ptr [rsp + 0xa0], rax
+    std::uint32_t  at_00a8      = {}; // +0xA8, RE 0x24A278: mov dword ptr [rsp + 0xa8], 0
+    std::byte unplaced_00AC[0x4]{};   // +0xAC .. +0xB0: no instruction places a field here
+    void*          at_00b0      = {}; // +0xB0, RE 0x24A2A5: mov qword ptr [rsp + 0xb0], 0
+    void*          at_00b8      = {}; // +0xB8, RE 0x24A2B1: mov qword ptr [rsp + 0xb8], 0
+    void*          at_00c0      = {}; // +0xC0, RE 0x24A2C8: mov qword ptr [rsp + 0xc0], 0
+    std::byte unplaced_00C8[0x8]{};   // +0xC8 .. +0xD0: no instruction places a field here
+    void*          at_00d0      = {}; // +0xD0, RE 0x24A5A1: mov qword ptr [rsp + 0xd0], 0
+    void*          at_00d8      = {}; // +0xD8, RE 0x24A5BA: mov qword ptr [rsp + 0xd8], 0
+    void*          at_00e0      = {}; // +0xE0, RE 0x24A5CE: mov qword ptr [rsp + 0xe0], 0
+    std::byte unplaced_00E8[0x8]{};   // +0xE8 .. +0xF0: no instruction places a field here
+    void*          at_00f0      = {}; // +0xF0, RE 0x24A634: mov qword ptr [rsp + 0xf0], 0
+    void*          at_00f8      = {}; // +0xF8, RE 0x24A648: mov qword ptr [rsp + 0xf8], 0
+    void*          at_0100      = {}; // +0x100, RE 0x24A65C: mov qword ptr [rsp + 0x100], 0
+    std::byte unplaced_0108[0x98]{};   // +0x108 .. +0x1A0: no instruction places a field here
+    void*          at_01a0      = {}; // +0x1A0, RE 0x24A431: mov qword ptr [rsp + 0x1a0], rbx
+    void*          at_01a8      = {}; // +0x1A8, RE 0x24A491: mov qword ptr [rsp + 0x1a8], rax
+    std::byte unplaced_01B0[0x38]{};   // +0x1B0 .. +0x1E8: no instruction places a field here
+    std::uint32_t  at_01e8      = {}; // +0x1E8, RE 0x24A4A9: mov dword ptr [rsp + 0x1e8], 0x10
+    std::byte unplaced_01EC[0x4]{};   // +0x1EC .. +0x1F0: no instruction places a field here
+    void*          at_01f0      = {}; // +0x1F0, RE 0x24A4DF: mov qword ptr [rsp + 0x1f0], rax
+    void*          at_01f8      = {}; // +0x1F8, RE 0x24A4C0: mov qword ptr [rsp + 0x1f8], 0
+    std::uint8_t   at_0200      = {}; // +0x200, RE 0x24A4B8: mov byte ptr [rsp + 0x200], 0
+    std::byte unplaced_0204[0xC]{};   // +0x204 .. +0x210: no instruction places a field here
+    void*          at_0210      = {}; // +0x210, RE 0x24A3E6: mov qword ptr [rsp + 0x210], rax
+    std::byte unplaced_0218[0xD0]{};   // +0x218 .. +0x2E8: no instruction places a field here
+    void*          at_02e8      = {}; // +0x2E8, RE 0x24A3D2: mov qword ptr [rsp + 0x2e8], 0
+    std::uint8_t   at_02f0      = {}; // +0x2F0, RE 0x24A3CA: mov byte ptr [rsp + 0x2f0], 0
+    std::uint8_t   at_02f1      = {}; // +0x2F1, RE 0x24A3DE: mov byte ptr [rsp + 0x2f1], 0
+    std::byte unplaced_02F5[0x3]{};   // +0x2F5 .. +0x2F8: no instruction places a field here
+    void*          at_02f8      = {}; // +0x2F8, RE 0x24A3F5: mov qword ptr [rsp + 0x2f8], 0
+    void*          at_0300      = {}; // +0x300, RE 0x24A401: mov qword ptr [rsp + 0x300], 0
+    void*          at_0308      = {}; // +0x308, RE 0x24A40D: mov qword ptr [rsp + 0x308], 0
+    void*          at_0310      = {}; // +0x310, RE 0x24A419: mov qword ptr [rsp + 0x310], 0
+    std::byte unplaced_0318[0xD8]{};   // +0x318 .. +0x3F0: no instruction places a field here
+    void*          at_03f0      = {}; // +0x3F0, RE 0x24A24C: mov qword ptr [rsp + 0x3f0], rcx
+    std::byte unplaced_03F8[0x10]{};   // +0x3F8 .. +0x408: no instruction places a field here
+    std::uint32_t  at_0408      = {}; // +0x408, RE 0x24A260: mov dword ptr [rsp + 0x408], r9d
+    std::byte unplaced_040C[0x14]{};   // +0x40C .. +0x420: no instruction places a field here
+    void*          at_0420      = {}; // +0x420, RE 0x24A283: cmp qword ptr [rsp + 0x420], 0
 };
 }  // namespace
 
 namespace Row {
 
-/** Row::BasicDistancer -- vtable 0xA3B1B0, 3 virtual slot(s). */
+/** Row::BasicDistancer -- vtable 0xA3B1B0, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x136AE0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7CA810 -- 6 bytes, read.. */
 class BasicDistancer {
 public:
     virtual ~BasicDistancer() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7CA810 -- 6 bytes, read.
+    std::byte unplaced_0008[0x20]{};   // +0x8 .. +0x28: no instruction places a field here
+    double         at_0028      = {}; // +0x28, RE 0x136AED: movsd qword ptr [rsp + 0x28], xmm1
 };
 }  // namespace
 
 namespace Structure {
 
-/** Structure::BoxAreaDimensioner -- vtable 0xA534C0, 3 virtual slot(s). */
+/** Structure::BoxAreaDimensioner -- vtable 0xA534C0, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x5247F0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x81E1E0 -- 333 bytes, read.. */
 class BoxAreaDimensioner {
 public:
     virtual ~BoxAreaDimensioner() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x81E1E0 -- 333 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x524800: mov qword ptr [rsp + 0x20], rax
 };
 
-/** Structure::ClusterObserver -- vtable 0xA53420, 6 virtual slot(s). */
+/** Structure::ClusterObserver -- vtable 0xA53420, 6 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x553100, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7C2460 -- 3 bytes, read.. */
 class ClusterObserver {
 public:
     virtual ~ClusterObserver() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7C2460 -- 3 bytes, read.
+    std::byte unplaced_0008[0x50]{};   // +0x8 .. +0x58: no instruction places a field here
+    std::uint8_t   at_0058      = {}; // +0x58, RE 0x553122: mov byte ptr [rbx + 0x58], 0
+    std::uint32_t  at_005c      = {}; // +0x5C, RE 0x553126: mov dword ptr [rbx + 0x5c], 0xffffffff
+    void*          at_0060      = {}; // +0x60, RE 0x55312D: mov qword ptr [rbx + 0x60], 0
+    void*          at_0068      = {}; // +0x68, RE 0x553135: mov qword ptr [rbx + 0x68], 0
+    void*          at_0070      = {}; // +0x70, RE 0x55313D: mov qword ptr [rbx + 0x70], 0
 };
 
-/** Structure::Observer -- vtable 0xA53550, 6 virtual slot(s). */
+/** Structure::Observer -- vtable 0xA53550, 6 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x83DC0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7C2460 -- 3 bytes, read.. */
 class Observer {
 public:
     virtual ~Observer() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7C2460 -- 3 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x8418E: mov qword ptr [r13 + 0x10], rax
+    std::byte unplaced_0018[0x8]{};   // +0x18 .. +0x20: no instruction places a field here
+    double         at_0020      = {}; // +0x20, RE 0x841FF: movsd qword ptr [rsp + 0x20], xmm6
+    double         at_0028      = {}; // +0x28, RE 0x841F8: movsd qword ptr [rsp + 0x28], xmm11
+    std::uint32_t  at_0030      = {}; // +0x30, RE 0x84205: mov dword ptr [rsp + 0x30], eax
+    std::byte unplaced_0034[0x4]{};   // +0x34 .. +0x38: no instruction places a field here
+    void*          at_0038      = {}; // +0x38, RE 0x841E6: mov qword ptr [rsp + 0x38], r13
+    std::byte unplaced_0040[0x8]{};   // +0x40 .. +0x48: no instruction places a field here
+    void*          at_0048      = {}; // +0x48, RE 0x83EA0: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x83FFE: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x8402F: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x83E2F: mov qword ptr [rsp + 0x60], rax
+    std::byte unplaced_0068[0x4]{};   // +0x68 .. +0x6C: no instruction places a field here
+    std::uint32_t  at_006c      = {}; // +0x6C, RE 0x83E57: mov dword ptr [rsp + 0x6c], eax
+    std::byte unplaced_0070[0x1F]{};   // +0x70 .. +0x8F: no instruction places a field here
+    std::uint8_t   at_008f      = {}; // +0x8F, RE 0x83F88: mov byte ptr [rsp + 0x8f], al
+    std::byte unplaced_0093[0xD]{};   // +0x93 .. +0xA0: no instruction places a field here
+    void*          at_00a0      = {}; // +0xA0, RE 0x83F9E: mov qword ptr [rsp + 0xa0], rax
+    std::byte unplaced_00A8[0x8]{};   // +0xA8 .. +0xB0: no instruction places a field here
+    void*          at_00b0      = {}; // +0xB0, RE 0x83FC5: mov qword ptr [rsp + 0xb0], rax
+    std::byte unplaced_00B8[0x38]{};   // +0xB8 .. +0xF0: no instruction places a field here
+    std::uint8_t   at_00f0      = {}; // +0xF0, RE 0x83F07: mov byte ptr [rsp + 0xf0], 0
+    std::byte unplaced_00F4[0x4]{};   // +0xF4 .. +0xF8: no instruction places a field here
+    void*          at_00f8      = {}; // +0xF8, RE 0x83F38: mov qword ptr [rsp + 0xf8], rax
+    void*          at_0100      = {}; // +0x100, RE 0x83F40: mov qword ptr [rsp + 0x100], rdx
+    std::byte unplaced_0108[0x8]{};   // +0x108 .. +0x110: no instruction places a field here
+    void*          at_0110      = {}; // +0x110, RE 0x83F0F: mov qword ptr [rsp + 0x110], 0
+    void*          at_0118      = {}; // +0x118, RE 0x83FEF: mov qword ptr [rsp + 0x118], 0
+    void*          at_0120      = {}; // +0x120, RE 0x84003: mov qword ptr [rsp + 0x120], 0
+    std::byte unplaced_0128[0x210]{};   // +0x128 .. +0x338: no instruction places a field here
+    std::uint8_t   at_0338      = {}; // +0x338, RE 0x83EDC: cmp byte ptr [r12 + 0x338], 0
+    std::uint8_t   at_0339      = {}; // +0x339, RE 0x83EEB: cmp byte ptr [r12 + 0x339], 0
 };
 
-/** Structure::ParseProblemException -- vtable 0xA534F0, 3 virtual slot(s). */
+/** Structure::ParseProblemException -- vtable 0xA534F0, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x50CF70, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x81ED10 -- 8 bytes, read.. */
 class ParseProblemException {
 public:
     virtual ~ParseProblemException() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x81ED10 -- 8 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x50CFCA: mov qword ptr [rsp + 0x20], rax
+    double         at_0028      = {}; // +0x28, RE 0x50CFC4: movsd qword ptr [rsp + 0x28], xmm0
+    void*          at_0030      = {}; // +0x30, RE 0x50CFF6: mov qword ptr [rsp + 0x30], rdx
+    void*          at_0038      = {}; // +0x38, RE 0x50D056: mov qword ptr [rsp + 0x38], 0
+    void*          at_0040      = {}; // +0x40, RE 0x50CFFF: mov qword ptr [rsp + 0x40], rax
+    std::byte unplaced_0048[0xB8]{};   // +0x48 .. +0x100: no instruction places a field here
+    void*          at_0100      = {}; // +0x100, RE 0x50CFE7: mov qword ptr [rsp + 0x100], rax
 };
 
-/** Structure::ParseSolutionException -- vtable 0xA53520, 3 virtual slot(s). */
+/** Structure::ParseSolutionException -- vtable 0xA53520, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x50FA10, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x81ED20 -- 8 bytes, read.. */
 class ParseSolutionException {
 public:
     virtual ~ParseSolutionException() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x81ED20 -- 8 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x50FA6B: mov qword ptr [rsp + 0x20], rdx
+    void*          at_0028      = {}; // +0x28, RE 0x50FACB: mov qword ptr [rsp + 0x28], 0
+    void*          at_0030      = {}; // +0x30, RE 0x50FA74: mov qword ptr [rsp + 0x30], rax
+    std::byte unplaced_0038[0xB8]{};   // +0x38 .. +0xF0: no instruction places a field here
+    void*          at_00f0      = {}; // +0xF0, RE 0x50FA5C: mov qword ptr [rsp + 0xf0], rax
 };
 
-/** Structure::SizeDimensioner -- vtable 0xA53460, 3 virtual slot(s). */
+/** Structure::SizeDimensioner -- vtable 0xA53460, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x5247D0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x81DF30 -- 381 bytes, read.. */
 class SizeDimensioner {
 public:
     virtual ~SizeDimensioner() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x81DF30 -- 381 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x5247E0: mov qword ptr [rsp + 0x20], rax
 };
 
-/** Structure::WidthDimensioner -- vtable 0xA53490, 3 virtual slot(s). */
+/** Structure::WidthDimensioner -- vtable 0xA53490, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x5247B0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x81E0B0 -- 297 bytes, read.. */
 class WidthDimensioner {
 public:
     virtual ~WidthDimensioner() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x81E0B0 -- 297 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x5247C0: mov qword ptr [rsp + 0x20], rax
 };
 }  // namespace
 
 namespace Tiling {
 
-/** Tiling::BasicCandidater -- vtable 0xA3D190, 3 virtual slot(s). */
+/** Tiling::BasicCandidater -- vtable 0xA3D190, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x4F3630, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x4F4600 -- 340 bytes, read.. */
 class BasicCandidater {
 public:
     virtual ~BasicCandidater() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x4F4600 -- 340 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x4F363E: mov qword ptr [rcx + 0x10], rdx
 };
 
-/** Tiling::OldMultitorchEvaluator -- vtable 0xA3D340, 4 virtual slot(s). */
+/** Tiling::OldMultitorchEvaluator -- vtable 0xA3D340, 4 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7EB320 -- 699 bytes, read.. */
 class OldMultitorchEvaluator {
 public:
     virtual ~OldMultitorchEvaluator() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7EB320 -- 699 bytes, read.
 };
 
-/** Tiling::WarpCanceller -- vtable 0xA3D160, 3 virtual slot(s). */
+/** Tiling::WarpCanceller -- vtable 0xA3D160, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x4ED480, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7E80E0 -- 19 bytes, read.. */
 class WarpCanceller {
 public:
     virtual ~WarpCanceller() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7E80E0 -- 19 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x4ED7F9: mov qword ptr [rbp + 0x10], rdx
+    void*          at_0018      = {}; // +0x18, RE 0x4ED80D: mov qword ptr [rbp + 0x18], rax
+    double         at_0020      = {}; // +0x20, RE 0x4ED5B2: movsd qword ptr [rsp + 0x20], xmm1
+    void*          at_0028      = {}; // +0x28, RE 0x4ED596: mov qword ptr [rsp + 0x28], rsi
+    void*          at_0030      = {}; // +0x30, RE 0x4ED815: mov qword ptr [rbp + 0x30], rdx
+    void*          at_0038      = {}; // +0x38, RE 0x4ED842: mov qword ptr [rbp + 0x38], rax
+    double         at_0040      = {}; // +0x40, RE 0x4ED82B: movsd qword ptr [rbp + 0x40], xmm0
+    double         at_0048      = {}; // +0x48, RE 0x4ED83D: movsd qword ptr [rbp + 0x48], xmm0
+    void*          at_0050      = {}; // +0x50, RE 0x4ED4E0: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x4ED84D: mov qword ptr [rbp + 0x58], 0
+    void*          at_0060      = {}; // +0x60, RE 0x4ED859: mov qword ptr [rbp + 0x60], 0
+    void*          at_0068      = {}; // +0x68, RE 0x4ED925: mov qword ptr [rbp + 0x68], rax
+    void*          at_0070      = {}; // +0x70, RE 0x4ED96E: mov qword ptr [rbp + 0x70], rbx
+    void*          at_0078      = {}; // +0x78, RE 0x4EDBBA: mov qword ptr [rbp + 0x78], rdx
+    std::byte unplaced_0080[0x18]{};   // +0x80 .. +0x98: no instruction places a field here
+    void*          at_0098      = {}; // +0x98, RE 0x4ED94A: mov qword ptr [rsp + 0x98], rbx
+    void*          at_00a0      = {}; // +0xA0, RE 0x4ED561: mov qword ptr [rsp + 0xa0], 0
+    void*          at_00a8      = {}; // +0xA8, RE 0x4ED56D: mov qword ptr [rsp + 0xa8], 0
+    void*          at_00b0      = {}; // +0xB0, RE 0x4ED57C: mov qword ptr [rsp + 0xb0], 0
+    std::byte unplaced_00B8[0x28]{};   // +0xB8 .. +0xE0: no instruction places a field here
+    void*          at_00e0      = {}; // +0xE0, RE 0x4ED9BB: mov qword ptr [rsp + 0xe0], 0
+    void*          at_00e8      = {}; // +0xE8, RE 0x4ED9C7: mov qword ptr [rsp + 0xe8], 0
+    void*          at_00f0      = {}; // +0xF0, RE 0x4ED9D6: mov qword ptr [rsp + 0xf0], 0
+    std::byte unplaced_00F8[0x8]{};   // +0xF8 .. +0x100: no instruction places a field here
+    void*          at_0100      = {}; // +0x100, RE 0x4EDA39: mov qword ptr [rsp + 0x100], 0
+    void*          at_0108      = {}; // +0x108, RE 0x4EDA45: mov qword ptr [rsp + 0x108], 0
+    void*          at_0110      = {}; // +0x110, RE 0x4EDA25: mov qword ptr [rsp + 0x110], 0
+    std::byte unplaced_0118[0x8]{};   // +0x118 .. +0x120: no instruction places a field here
+    void*          at_0120      = {}; // +0x120, RE 0x4ED6F2: mov qword ptr [rsp + 0x120], 0
+    void*          at_0128      = {}; // +0x128, RE 0x4ED6FE: mov qword ptr [rsp + 0x128], 0
+    void*          at_0130      = {}; // +0x130, RE 0x4ED70D: mov qword ptr [rsp + 0x130], 0
+    std::byte unplaced_0138[0x40]{};   // +0x138 .. +0x178: no instruction places a field here
+    std::uint32_t  at_0178      = {}; // +0x178, RE 0x4ED527: mov dword ptr [rsp + 0x178], 1
+    std::uint8_t   at_017c      = {}; // +0x17C, RE 0x4ED4FA: mov byte ptr [rsp + 0x17c], r13b
+    std::uint8_t   at_017d      = {}; // +0x17D, RE 0x4ED50C: mov byte ptr [rsp + 0x17d], r13b
+    std::uint8_t   at_017e      = {}; // +0x17E, RE 0x4ED51F: mov byte ptr [rsp + 0x17e], 0
 };
 }  // namespace
 
 namespace Utils {
 
-/** Utils::BadResponseException -- vtable 0xA3BC80, 3 virtual slot(s). */
+/** Utils::BadResponseException -- vtable 0xA3BC80, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x2B660, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7D7940 -- 8 bytes, read.. */
 class BadResponseException {
 public:
     virtual ~BadResponseException() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7D7940 -- 8 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    std::uint32_t  at_0010      = {}; // +0x10, RE 0x2B81E: mov dword ptr [rdi + 0x10], r14d
+    std::uint32_t  at_0014      = {}; // +0x14, RE 0x2B822: mov dword ptr [rdi + 0x14], eax
+    std::byte unplaced_0018[0x8]{};   // +0x18 .. +0x20: no instruction places a field here
+    void*          at_0020      = {}; // +0x20, RE 0x2B6A9: mov qword ptr [rsp + 0x20], rdi
+    void*          at_0028      = {}; // +0x28, RE 0x2B696: mov qword ptr [rsp + 0x28], rbp
+    double         at_0030      = {}; // +0x30, RE 0x2B6C2: movsd qword ptr [rsp + 0x30], xmm0
+    std::uint32_t  at_0034      = {}; // +0x34, RE 0x2BB68: lock xadd dword ptr [rbp + 0x34], edx
+    std::byte unplaced_0038[0x10]{};   // +0x38 .. +0x48: no instruction places a field here
+    void*          at_0048      = {}; // +0x48, RE 0x2B95B: mov qword ptr [rsp + 0x48], rax
+    void*          at_0050      = {}; // +0x50, RE 0x2B6F3: mov qword ptr [rsp + 0x50], rax
+    void*          at_0058      = {}; // +0x58, RE 0x2B751: mov qword ptr [rsp + 0x58], rax
+    void*          at_0060      = {}; // +0x60, RE 0x2B689: mov qword ptr [rsp + 0x60], rax
+    void*          at_0068      = {}; // +0x68, RE 0x2B6BD: mov qword ptr [rsp + 0x68], rax
+    std::byte unplaced_0070[0xC]{};   // +0x70 .. +0x7C: no instruction places a field here
+    std::uint32_t  at_007c      = {}; // +0x7C, RE 0x2B786: mov dword ptr [rsp + 0x7c], 0
+    void*          at_0080      = {}; // +0x80, RE 0x2B71A: mov qword ptr [rsp + 0x80], 0
+    std::byte unplaced_0088[0x8]{};   // +0x88 .. +0x90: no instruction places a field here
+    void*          at_0090      = {}; // +0x90, RE 0x2B924: mov qword ptr [rbp + 0x90], 0
+    void*          at_0098      = {}; // +0x98, RE 0x2B92F: mov qword ptr [rbp + 0x98], 0
+    void*          at_00a0      = {}; // +0xA0, RE 0x2B790: mov qword ptr [rsp + 0xa0], 0
+    void*          at_00a8      = {}; // +0xA8, RE 0x2B79C: mov qword ptr [rsp + 0xa8], 0
+    std::uint32_t  at_00b0      = {}; // +0xB0, RE 0x2B6CD: mov dword ptr [rsp + 0xb0], 0
+    std::byte unplaced_00B4[0x4]{};   // +0xB4 .. +0xB8: no instruction places a field here
+    void*          at_00b8      = {}; // +0xB8, RE 0x2B6E7: mov qword ptr [rsp + 0xb8], rax
+    void*          at_00c0      = {}; // +0xC0, RE 0x2B91C: mov qword ptr [rsp + 0xc0], rbx
+    void*          at_00c8      = {}; // +0xC8, RE 0x2B93A: mov qword ptr [rsp + 0xc8], rax
+    std::uint32_t  at_00d0      = {}; // +0xD0, RE 0x2B7F8: mov dword ptr [rsp + 0xd0], r14d
+    std::byte unplaced_00D4[0x4]{};   // +0xD4 .. +0xD8: no instruction places a field here
+    void*          at_00d8      = {}; // +0xD8, RE 0x2B809: mov qword ptr [rsp + 0xd8], rax
+    std::byte unplaced_00E0[0x20]{};   // +0xE0 .. +0x100: no instruction places a field here
+    void*          at_0100      = {}; // +0x100, RE 0x2B70C: mov qword ptr [rsp + 0x100], rbp
+    void*          at_0108      = {}; // +0x108, RE 0x2B726: mov qword ptr [rsp + 0x108], rax
+    void*          at_0110      = {}; // +0x110, RE 0x2B734: mov qword ptr [rsp + 0x110], rax
+    std::byte unplaced_0118[0x1F8]{};   // +0x118 .. +0x310: no instruction places a field here
+    std::uint8_t   at_0310      = {}; // +0x310, RE 0x2BC21: cmp byte ptr [rsp + 0x310], 0
 };
 
-/** Utils::ConnectException -- vtable 0xA3BBF0, 3 virtual slot(s). */
+/** Utils::ConnectException -- vtable 0xA3BBF0, 3 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7D7910 -- 8 bytes, read.. */
 class ConnectException {
 public:
     virtual ~ConnectException() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7D7910 -- 8 bytes, read.
 };
 
-/** Utils::ResolveException -- vtable 0xA3BC20, 3 virtual slot(s). */
+/** Utils::ResolveException -- vtable 0xA3BC20, 3 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7D7920 -- 8 bytes, read.. */
 class ResolveException {
 public:
     virtual ~ResolveException() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7D7920 -- 8 bytes, read.
 };
 
-/** Utils::TimeoutException -- vtable 0xA3BC50, 3 virtual slot(s). */
+/** Utils::TimeoutException -- vtable 0xA3BC50, 3 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x7D7930 -- 8 bytes, read.. */
 class TimeoutException {
 public:
     virtual ~TimeoutException() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x7D7930 -- 8 bytes, read.
 };
 
-/** Utils::TimerWinImplementation -- vtable 0xA3BCB0, 3 virtual slot(s). */
+/** Utils::TimerWinImplementation -- vtable 0xA3BCB0, 3 virtual slot(s).
+ *
+ *  **NO MEMBER IS PLACED YET**: no constructor candidate writes a field at this class's own offsets, so the body below is a
+ *  declaration and NOT a claim that the class is empty. An empty class and one whose fields are unknown look the same in C++
+ *  and are different claims, which is why this says so.
+ *  Slot 2, the first DECLARED virtual, is 0x6D5910 -- 67 bytes, read.. */
 class TimerWinImplementation {
 public:
     virtual ~TimerWinImplementation() = default;
-
-    // Slot 2, the first DECLARED virtual, is 0x6D5910 -- 67 bytes, read.
 };
 }  // namespace
 
 namespace dbg {
 
-/** dbg::file_error -- vtable 0xA3B210, 3 virtual slot(s). */
+/** dbg::file_error -- vtable 0xA3B210, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x60C160, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x7CA820 -- 5 bytes, read.. */
 class file_error {
 public:
     virtual ~file_error() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x7CA820 -- 5 bytes, read.
+    std::byte unplaced_0008[0x18]{};   // +0x8 .. +0x20: no instruction places a field here
+    std::uint32_t  at_0020      = {}; // +0x20, RE 0x60C190: mov dword ptr [rsp + 0x20], 3
+    std::byte unplaced_0024[0x4]{};   // +0x24 .. +0x28: no instruction places a field here
+    std::uint32_t  at_0028      = {}; // +0x28, RE 0x60C173: mov dword ptr [rsp + 0x28], 0x80
+    std::byte unplaced_002C[0x4]{};   // +0x2C .. +0x30: no instruction places a field here
+    void*          at_0030      = {}; // +0x30, RE 0x60C183: mov qword ptr [rsp + 0x30], 0
+    std::byte unplaced_0038[0x14]{};   // +0x38 .. +0x4C: no instruction places a field here
+    std::uint32_t  at_004c      = {}; // +0x4C, RE 0x60C21E: mov dword ptr [rsp + 0x4c], 0
+    std::byte unplaced_0050[0x1FC0]{};   // +0x50 .. +0x2010: no instruction places a field here
+    void*          at_2010      = {}; // +0x2010, RE 0x60C1B1: mov qword ptr [rbx + 0x2010], rdi
+    void*          at_2018      = {}; // +0x2018, RE 0x60C1B8: mov qword ptr [rbx + 0x2018], 0
 };
 
-/** dbg::symlog -- vtable 0xA3B240, 3 virtual slot(s). */
+/** dbg::symlog -- vtable 0xA3B240, 3 virtual slot(s).
+ *
+ *  THE MEMBERS ARE PLACED BY ITS CONSTRUCTOR 0x60B4E0, each with the store that puts it there and the width that types it.
+ *  An offset no store reaches is a named `unplaced` region, because **an offset with no instruction is not a field**.
+ *
+ *  Slot 2, the first DECLARED virtual, is 0x60B330 -- 418 bytes, read.. */
 class symlog {
 public:
     virtual ~symlog() = default;
 
-    // Slot 2, the first DECLARED virtual, is 0x60B330 -- 418 bytes, read.
+    std::byte unplaced_0008[0x8]{};   // +0x8 .. +0x10: no instruction places a field here
+    void*          at_0010      = {}; // +0x10, RE 0x60B503: mov qword ptr [rcx + 0x10], r8
+    void*          at_0018      = {}; // +0x18, RE 0x60B507: mov qword ptr [rcx + 0x18], r9
 };
 }  // namespace
 

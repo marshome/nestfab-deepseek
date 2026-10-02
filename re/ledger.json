@@ -2174,6 +2174,30 @@
    "round": 665,
    "subject": "offsetof-needs-pointer-arithmetic-here",
    "witness": "the gate refuses a warning, and a pointer difference is stronger: it is taken on a constructed instance rather than from the type alone"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "of 57 headers, class_definitions.hpp held 46 placeholder classes, 6 files have neither state nor behaviour and 4 are pure tables; after the fix 12 placeholders remain",
+   "round": 666,
+   "subject": "cpp.audit",
+   "witness": "re/g_audit_cpp.py, which self-checks against records.hpp before reporting: its first version counted 0 members for a file containing 14 because its member pattern could not match a pointer-typed member"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an empty class and a class whose fields are unknown look the same in C++ and are different claims, so a placeholder must say which it is",
+   "round": 666,
+   "subject": "placeholder-vs-unknown",
+   "witness": "the 12 classes whose constructor writes no field keep a two line body with a comment stating that NO MEMBER IS PLACED YET, while the 34 with placed members declare them"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a measuring script must exercise itself on a file whose content is known before it reports, because a broken measurement produces confident nonsense",
+   "round": 666,
+   "subject": "serialisers-need-a-self-check",
+   "witness": "re/g_audit_cpp.py's first member pattern reported 0 members for records.hpp, which has 14; the script now asserts that file's counts first and refuses to report if they disagree"
   }
  ]
 }

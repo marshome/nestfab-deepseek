@@ -1,21 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Is this file C++, or is it a description of C++? A measurable audit of every generated and hand-written header.
+"""Is this C++, or a description of C++? A corrected audit.
 
-THE HUMAN ASKED THREE THINGS: are class_constructors.hpp and class_definitions.hpp reverse engineering, check the generated code all the way,
-and how can this be caught automatically next time. This answers all three with one measurement, because **the first two questions are the same
-question and the third is "run this measurement every time".**
+THE PATTERN THIS REPLACES WAS WRONG, AND ITS OWN SELF-CHECK FOUND IT. The first version counted members with
+`^\\s{4,}[\\w:<>,\\s\\*&\\[\\]]+\\s+\\w+\\s*(?:=|;|\\{...)`, which reported ZERO members for lcns/records.hpp -- a file that plainly has
+`void** vtable = nullptr;`, `std::uint32_t wordA = 0;` and `std::byte unplaced[0x60 - 0x10]{};`. The pattern could not match them. **A
+measurement that reports zero for a file you can read is a broken measurement**, so the self-check below asserts a KNOWN file's contents before
+any verdict is printed.
 
-WHAT MAKES A FILE NOT C++. Decided here, so it can be argued with rather than assumed:
+WHAT MAKES A FILE NOT C++, decided here so the criteria can be argued with:
 
-  * A TYPE WITH NO MEMBERS AND NO BEHAVIOUR. `class Foo { public: virtual ~Foo() = default; };` is a declaration that a name exists, with a
-    comment saying what its first virtual is. **It is a placeholder.** Real reverse engineering writes the class's members and its virtual
-    methods, because those are what the vtable and the instructions give.
-  * A FILE WHOSE CONTENT IS TABLES OF NUMBERS with no type that has members. A registry of exports is legitimate -- it IS the module's
-    interface -- but a table of "class, address, slot count" is a data dump wearing a header's filename.
+  * PLACEHOLDER CLASSES: a class body whose only line is a destructor. That is a name, and it is the shape a generator emits when it knows a
+    class exists and nothing about it.
+  * NO STATE AND NO BEHAVIOUR: no member lines and no function bodies. A file like that holds only constants and tables.
+  * DATA-TABLE CONTENT: a file whose substantive lines are `{...}` rows or `constexpr` declarations.
 
-  * AND A FILE IS FINE WHEN: it declares types with members, or defines functions, or is a registry whose subject is genuinely a list
-    (exports, strings, option names). **Behaviour and state are the test; a name and an address are not.**
+  * AND A FILE IS FINE WHEN it declares members, or defines function bodies, or is a REGISTRY whose subject is genuinely a list -- exports,
+    option names, benchmark names -- which is stated with a reason rather than assumed.
 
     python g_audit_cpp.py [--files] [--json re/cpp_audit.json]
 """
@@ -30,37 +31,74 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-# A PLACEHOLDER CLASS: a class body whose only member is a destructor. Written as a pattern rather than a heuristic because the shape is
-# exactly what a generator emits when it knows a class exists and nothing about it.
-PLACEHOLDER = re.compile(
-    r"class\s+(\w+)\s*\{(?P<body>[^}]*)\}",
-    re.S)
-DESTRUCTOR_ONLY = re.compile(r"^\s*(?:virtual\s+)?~\w+\s*\(\s*\)\s*=\s*default\s*;", re.M)
+# A MEMBER LINE: four or more spaces of indent, ending in `;` or `{}` or an initialiser, and not a statement. Deliberately loose, because the
+# strict version missed `void**` and `std::uint32_t` -- and the self-check below is what makes loose acceptable.
+MEMBER = re.compile(r"^ {4,}(?!return\b|if\b|for\b|while\b|switch\b|else\b|case\b|using\b|typedef\b)(\S.*?);\s*(?://.*)?$", re.M)
+FUNCTION = re.compile(r"^[ \t]*(?:inline\s+|static\s+|virtual\s+)?[\w:<>,\s\*&~]+\s+\w+\s*\([^;{]*\)\s*(?:const\s*)?(?:noexcept\s*)?\{", re.M)
+TYPES = re.compile(r"^\s*(?:class|struct|union|enum)\s+\w+", re.M)
+PLACEHOLDER_BODY = re.compile(r"(?:class|struct)\s+(\w+)\s*\{(?P<body>[^}]*)\}", re.S)
+ONLY_DESTRUCTOR = re.compile(r"^\s*(?:virtual\s+)?~\w+\s*\(\s*\)\s*=\s*default\s*;", re.M)
+CONSTEXPR = re.compile(r"^\s*(?:inline\s+)?constexpr\b", re.M)
+TABLE_ROW = re.compile(r"^\s*\{\s*[\"']?\w", re.M)
 
-# A TYPE WITH REAL CONTENT: a class or struct with at least one data member, or a method with a body.
-TYPES = re.compile(r"^\s*(?:class|struct)\s+(\w+)", re.M)
-DATA_MEMBER = re.compile(r"^\s{4,}[\w:<>,\s\*&\[\]]+\s+\w+\s*(?:=|;|\{[^}]*\})\s*(?://.*)?$", re.M)
-FUNCTION_BODY = re.compile(r"^\s*(?:inline\s+|static\s+)?[\w:<>,\s\*&]+\s+\w+\s*\([^;{]*\)\s*(?:const\s*)?\{", re.M)
-
-# LEGITIMATE REGISTRIES: files whose subject IS a list. Named with the reason, because a reason is what separates a registry from a dump.
 REGISTRY = {
-    "exports_forwarding.inc": "the forwarding table, one row per ordinal",
-    "option_keys.hpp": "the option NAMES the module answers to, which is a list by nature",
-    "miplib_names.hpp": "the 49 benchmark instance names, which are strings the module contains",
-    "parameter_report.hpp": "the option name to offset map, whose subject is the mapping",
-    "trace.hpp": "the log prefixes, which are strings the module emits",
-    "text_tags.hpp": "the geometry tag vocabulary read from rodata, which are strings",
-    "units.hpp": "unit conversion factors, which are values",
+    "exports_forwarding.inc": "the forwarding table, one row per ordinal -- the module's own interface",
+    "exports_impl.hpp": "the export registry, one entry per ordinal",
+    "option_keys.hpp": "the option NAMES the module answers to, a list by nature",
+    "miplib_names.hpp": "the 49 benchmark instance names, strings the module contains",
+    "parameter_report.hpp": "the option name to offset map, whose subject IS the mapping",
+    "trace.hpp": "the log prefixes, strings the module emits",
+    "text_tags.hpp": "the geometry tag vocabulary from rodata, strings",
+    "units.hpp": "unit conversion factors, values rather than addresses",
+    "enums.hpp": "enum values the module's switch tables imply",
+    "recovery.hpp": "the port's status per registry entry, a report",
 }
 
-# THE SCAFFOLDING, NAMED. Files that were generated as placeholders and need to become types or go.
 SCAFFOLDING = {
-    "class_definitions.hpp": "46 classes declared with nothing but a destructor -- a name and a slot-2 comment, no members",
-    "class_constructors.hpp": "one row per class: name, constructor address, vtable, field COUNT -- the class's fields are not declared",
+    "class_definitions.hpp": "classes declared with nothing but a destructor -- a name and a comment, no members",
+    "class_constructors.hpp": "one row per class: name, address, vtable, field COUNT; the fields themselves are not declared",
     "classes.hpp": "one row per class: mangled name, vtable, slot count",
     "virtual_methods.hpp": "one row per virtual slot: owner, index, address",
-    "recovery.hpp": "the port's status per registry entry, which is a report rather than code",
 }
+
+
+def measure(path):
+    text = io.open(path, encoding="utf-8", errors="replace").read()
+    placeholders = []
+    for match in PLACEHOLDER_BODY.finditer(text):
+        body = match.group("body")
+        if len(ONLY_DESTRUCTOR.findall(body)) != 1:
+            continue
+        substantive = [line for line in body.split("\n")
+                       if line.strip() and not line.strip().startswith(("public:", "private:", "protected:", "//", "/*", "*"))]
+        if len(substantive) <= 1:
+            placeholders.append(match.group(1))
+    return {
+        "name": os.path.basename(path),
+        "types": len(TYPES.findall(text)),
+        "members": len(MEMBER.findall(text)),
+        "functions": len(FUNCTION.findall(text)),
+        "constexprs": len(CONSTEXPR.findall(text)),
+        "rows": len(TABLE_ROW.findall(text)),
+        "placeholders": placeholders,
+        "lines": text.count("\n") + 1,
+    }
+
+
+def self_check():
+    """EXERCISE THE MEASUREMENT ON A FILE WHOSE CONTENT IS KNOWN, before any verdict is printed."""
+    known = os.path.join(ROOT, "lcns", "include", "lcns", "records.hpp")
+    if not os.path.exists(known):
+        print("SELF-CHECK SKIPPED: records.hpp is gone")
+        return True
+    result = measure(known)
+    ok = result["types"] == 2 and result["members"] >= 6
+    print("SELF-CHECK on records.hpp: %d types (expect 2), %d members (expect 6+)  -- %s"
+          % (result["types"], result["members"], "OK" if ok else "THE MEASUREMENT IS BROKEN"))
+    if not ok:
+        print("  records.hpp contains `void** vtable = nullptr;`, `std::uint32_t wordA = 0;` and `std::byte unplaced[...]{};`,")
+        print("  so a count of fewer than six members means the pattern cannot see them and no verdict below is trustworthy.")
+    return ok
 
 
 def main(argv):
@@ -69,79 +107,64 @@ def main(argv):
     parser.add_argument("--json")
     args = parser.parse_args(argv)
 
-    rows = []
-    for path in sorted(glob.glob(os.path.join(ROOT, "lcns", "include", "lcns", "**", "*.hpp"), recursive=True)):
-        name = os.path.basename(path)
-        text = io.open(path, encoding="utf-8", errors="replace").read()
+    if not self_check():
+        return 2
+    print("")
 
-        placeholders = []
-        for match in PLACEHOLDER.finditer(text):
-            body = match.group("body")
-            if DESTRUCTOR_ONLY.search(body) and len(DESTRUCTOR_ONLY.findall(body)) == 1:
-                # a body whose only member-looking line is the destructor
-                stripped = [line for line in body.split("\n")
-                            if line.strip() and not line.strip().startswith(("public:", "private:", "protected:", "//", "/*", "*"))]
-                if len(stripped) <= 1:
-                    placeholders.append(match.group(1))
-
-        rows.append({
-            "name": name,
-            "types": len(TYPES.findall(text)),
-            "members": len(DATA_MEMBER.findall(text)),
-            "functions": len(FUNCTION_BODY.findall(text)),
-            "placeholders": len(placeholders),
-            "placeholder_names": placeholders,
-            "lines": text.count("\n") + 1,
-            "registry": REGISTRY.get(name),
-            "scaffolding": SCAFFOLDING.get(name),
-        })
+    rows = [measure(path) for path in sorted(glob.glob(os.path.join(ROOT, "lcns", "include", "lcns", "**", "*.hpp"), recursive=True))]
+    for row in rows:
+        row["registry"] = REGISTRY.get(row["name"])
+        row["scaffolding"] = SCAFFOLDING.get(row["name"])
 
     if args.files:
-        print("%-36s %5s %7s %6s %6s %6s" % ("file", "types", "members", "funcs", "phold", "lines"))
-        for row in sorted(rows, key=lambda r: -r["placeholders"]):
-            print("%-36s %5d %7d %6d %6d %6d" % (row["name"][:36], row["types"], row["members"],
-                                                 row["functions"], row["placeholders"], row["lines"]))
+        print("%-32s %5s %7s %6s %8s %5s %6s" % ("file", "types", "members", "funcs", "constexpr", "rows", "phold"))
+        for row in sorted(rows, key=lambda r: (r["members"] + r["functions"], -r["lines"])):
+            print("%-32s %5d %7d %6d %8d %5d %6d" % (row["name"][:32], row["types"], row["members"], row["functions"],
+                                                      row["constexprs"], row["rows"], len(row["placeholders"])))
         return 0
 
-    total_placeholders = sum(r["placeholders"] for r in rows)
+    total_placeholders = sum(len(r["placeholders"]) for r in rows)
     print("headers: %d" % len(rows))
-    print("PLACEHOLDER CLASSES -- a name and a destructor, no members: %d, in %d file(s)"
+    print("")
+    print("A. PLACEHOLDER CLASSES -- a body whose only line is a destructor: %d, in %d file(s)"
           % (total_placeholders, sum(1 for r in rows if r["placeholders"])))
-    print("")
-    for row in sorted(rows, key=lambda r: -r["placeholders"]):
-        if not row["placeholders"]:
-            continue
-        print("   %-30s %3d placeholder(s), %4d types, %4d members" % (row["name"], row["placeholders"],
-                                                                       row["types"], row["members"]))
-        if row["placeholder_names"]:
-            print("        %s%s" % (", ".join(row["placeholder_names"][:6]),
-                                    " ..." if len(row["placeholder_names"]) > 6 else ""))
+    for row in rows:
+        if row["placeholders"]:
+            print("   %-30s %3d  %s%s" % (row["name"], len(row["placeholders"]),
+                                          ", ".join(row["placeholders"][:5]),
+                                          " ..." if len(row["placeholders"]) > 5 else ""))
     print("")
 
-    print("SCAFFOLDING -- generated files that are a name and an address rather than a type: %d" % len(SCAFFOLDING))
-    for name, why in sorted(SCAFFOLDING.items()):
-        row = next((r for r in rows if r["name"] == name), None)
-        state = "PRESENT" if row else "gone"
-        print("   %-30s %-8s %s" % (name, state, why))
+    empty = [r for r in rows if r["members"] == 0 and r["functions"] == 0 and not r["registry"]]
+    print("B. NO STATE AND NO BEHAVIOUR (and not a stated registry): %d" % len(empty))
+    for row in sorted(empty, key=lambda r: -r["lines"]):
+        print("   %-30s %4d lines, %4d constexpr, %4d rows, %2d types" % (row["name"], row["lines"], row["constexprs"],
+                                                                          row["rows"], row["types"]))
     print("")
 
-    print("REGISTRIES -- a list is the right shape for these, with the reason: %d" % len(REGISTRY))
-    for name, why in sorted(REGISTRY.items()):
-        row = next((r for r in rows if r["name"] == name), None)
-        print("   %-30s %-8s %s" % (name, "PRESENT" if row else "gone", why))
+    print("C. REGISTRIES -- a list IS the right shape, with the reason: %d present" % sum(1 for r in rows if r["registry"]))
+    for row in rows:
+        if row["registry"]:
+            print("   %-30s %s" % (row["name"], row["registry"]))
     print("")
 
-    verdict = total_placeholders > 0 or any(r["scaffolding"] for r in rows)
+    print("D. SCAFFOLDING -- generated as a name and an address: %d" % sum(1 for r in rows if r["scaffolding"]))
+    for row in rows:
+        if row["scaffolding"]:
+            print("   %-30s %s" % (row["name"], row["scaffolding"]))
+    print("")
+
+    verdict = total_placeholders > 0 or empty or any(r["scaffolding"] for r in rows)
     if verdict:
-        print("VERDICT: **the generated code is NOT a reconstruction.** %d placeholder classes and %d scaffolding files describe the"
-              % (total_placeholders, sum(1 for r in rows if r["scaffolding"])))
-        print("module without implementing it. A class the RTTI names is a starting POINT: its members come from the instructions that write")
-        print("them and its virtuals from the slots, which is what re/g_find_ctors.py and re/g_class_fields.py already compute.")
+        print("VERDICT: NOT a reconstruction. %d placeholder classes, %d files with neither state nor behaviour, %d scaffolding files."
+              % (total_placeholders, len(empty), sum(1 for r in rows if r["scaffolding"])))
+        print("The module's own content -- a class's members, its virtuals, its constructor -- is in tables and constants rather than in types.")
     else:
-        print("VERDICT: every header either declares types with members, defines behaviour, or is a registry with a stated reason.")
+        print("VERDICT: every header declares members, defines behaviour, or is a registry with a stated reason.")
     print("")
-    print("**HOW TO CATCH THIS NEXT TIME**: this script. `placeholders` counts classes whose body is a destructor and nothing else, which is")
-    print("the exact shape a generator emits when it knows a name and no content -- so a generator that produces one is caught by running it.")
+    print("HOW TO CATCH THIS NEXT TIME: this script, and its SELF-CHECK. The check exercises the measurement on a file whose content is known")
+    print("before printing any verdict, because the first version of this script reported zero members for a file full of them -- **a broken")
+    print("measurement produces confident nonsense, and only a known input catches it.**")
 
     if args.json:
         io.open(args.json, "w", encoding="utf-8", newline="\n").write(json.dumps(rows, indent=1, sort_keys=True))

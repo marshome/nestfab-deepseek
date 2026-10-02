@@ -158,6 +158,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "c-re-g-audit-cpp-py",
+  "rule": "生成出来的头文件必须是 C++：类要有成员（由指令放置）或行为；类体只有一个析构函数就是占位符，不算重建。审计器 re/g_audit_cpp.py 在给出判决前先在已知文件上自检。",
+  "check": "re/g_audit_cpp.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
