@@ -982,6 +982,22 @@
    "round": 599,
    "subject": "variant.family-no-return",
    "witness": "0x14A60 ends with stack restoration, 0xC1A0 ends after its stores, 0x10CE0 throws rather than returning"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the four ready stat exports are blocked by shared library primitives, not by their own logic",
+   "round": 600,
+   "subject": "stat.blocked-by-primitives",
+   "witness": "0x524EE0 has 16 direct callees and 12 unknown, including 0x5D3EA0 (2155 B, 27 callers), 0x5CD800 (610 B, 113 callers), 0x4F73E0 (530 B, 13), 0x520440 (479 B, 56), 0x8C5090 (147 B, 133), 0x5F4340 (140 B, 67)"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "what remains divides into a shared primitive layer many exports depend on, and exports whose own logic is large; the first is the better investment because 0x5CD800 alone is reached from 113 places",
+   "round": 600,
+   "subject": "work.has-two-kinds",
+   "witness": "the exports with a four-function blocking graph are done or deliberately held back, so the remaining work is a layer rather than a routine"
   }
  ]
 }
