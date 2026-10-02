@@ -822,6 +822,22 @@
    "round": 591,
    "subject": "variant.ready",
    "witness": "the path is 0x16D00/0x16D40 -> 0x132E0 (read) -> 0x5CD5C0 (read) -> 0x5C8C50 (implemented in stat.hpp); the constants are at 0x99A679 and 0x99A63E by address and their values are unread"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "both arms of RE 0x132E0 load the SAME double at 0x9AD9C8, which is 0.0001",
+   "round": 592,
+   "subject": "variant.scale-value",
+   "witness": "raw bytes: 0x13347 f2 0f 59 1d 79 a6 99 00 disp 10069625 and 0x13382 f2 0f 59 05 3e a6 99 00 disp 10069566, both resolving to 0x9AD9C8 where the double is 0.0001"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a rip-relative DISPLACEMENT is not the address it resolves to; two different displacements can be one address",
+   "round": 592,
+   "subject": "displacement-not-address",
+   "witness": "the previous round recorded 0x99A679 and 0x99A63E as two scale constants, which made the branch look substantive; the correction: the branch selects which extent is multiplied, not the factor"
   }
  ]
 }

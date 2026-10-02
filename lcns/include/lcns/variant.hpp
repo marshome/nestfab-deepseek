@@ -42,24 +42,38 @@ constexpr std::size_t kVariantSource = 0x50;    // RE 0x13315: lea rdx, [rbx+0x5
 constexpr std::size_t kVariantTargetA = 0x68;   // RE 0x13366: add rbx, 0x68
 constexpr std::size_t kVariantTargetB = 0x208;  // RE 0x1335F: lea rax, [rbx+0x208]
 
-/** RE 0x13347 and RE 0x13382: the two scale constants, by the address each is loaded from. */
-constexpr std::uintptr_t kVariantScaleLong = 0x99A679;   // the branch taken when one extent exceeds the other
-constexpr std::uintptr_t kVariantScaleShort = 0x99A63E;  // the branch taken otherwise
-
-/** RE 0x132E0's rule, as the instructions express it: the larger extent selects the factor, and an invalid box scales nothing.
+/** RE 0x13347 and RE 0x13382: the scale constant, and BOTH branches load the SAME one.
  *
- * `extentA` and `extentB` are the two extents the routine computes with `subsd` at 0x13335 and 0x1333B, `longer` and `shorter`
- * are the two constants, and `valid` is the box flag tested at 0x1331E. Returning zero for the invalid case is the routine's own
- * behaviour: it jumps past both `mulsd` instructions.
+ * The instructions are:
+ *
+ *     0x13347  f2 0f 59 1d 79 a6 99 00   mulsd xmm3, [rip + 0x99a679]   disp 10069625 -> 0x9AD9C8
+ *     0x13382  f2 0f 59 05 3e a6 99 00   mulsd xmm0, [rip + 0x99a63e]   disp 10069566 -> 0x9AD9C8
+ *
+ * two different displacements that resolve to the SAME address, where the double is 0.0001. So the branch that compares the two
+ * extents exists in the code and its two arms compute the same product: **the scale is `extent * 0.0001` on either path.**
+ *
+ * An earlier record of this called the two constants by their DISPLACEMENTS (0x99A679 and 0x99A63E) as if they were addresses, and
+ * therefore reported them as two different factors. Two displacements are not two values, and the correction is here rather than
+ * only in the ledger because a header with the wrong constants in it is worse than a header with none.
  */
-inline double variantScale(bool valid, double extentA, double extentB, double longer, double shorter) {
-    if (!valid) {                                     // RE 0x13327: jne past the scaling
+constexpr std::uintptr_t kVariantScaleConstant = 0x9AD9C8;   // both mulsd instructions land here
+constexpr double kVariantScale = 0.0001;                     // the double at 0x9AD9C8
+
+/** RE 0x132E0's rule: multiply the extent by the scale, and scale nothing when the box is invalid.
+ *
+ * The extents are computed with `subsd` at 0x13335 and 0x1333B and compared at 0x13341; the comparison selects which arm runs, and
+ * both arms multiply by kVariantScale, so the comparison does not change the RESULT. What it does change is which extent is
+ * multiplied when they differ -- `extentA * scale` on one arm and `extentB * scale` on the other -- so a caller that cares which
+ * dimension was the larger still gets that, and a caller that only wants the scaled value gets `max(extentA, extentB) * 0.0001`.
+ */
+inline double variantScale(bool valid, double extentA, double extentB, double scale) {
+    if (!valid) {                                     // RE 0x13327: jne past both multiplies
         return 0.0;
     }
     if (extentA > extentB) {                          // RE 0x13341 and 0x13345
-        return extentA * longer;                      // RE 0x13347
+        return extentA * scale;                       // RE 0x13347
     }
-    return extentB * shorter;                         // RE 0x13382
+    return extentB * scale;                           // RE 0x13382
 }
 
 static_assert(kVariantSource == 0x50, "RE 0x13315");
