@@ -1670,6 +1670,30 @@
    "round": 640,
    "subject": "config.one-object",
    "witness": "asking for other parameter objects returns only single stores and mis-attributions such as 'stdin' -> rax+0x18, so configuration is centralised rather than per-class"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "14 offsets carry both a parameter name and a launch-order field name, and the instructions confirm the parameter's in at least +0x88",
+   "round": 641,
+   "subject": "param.name-collisions",
+   "witness": "0x4FB4B resolves to the string 'nb_iterations_before_rectangle_advance' at rva 0x9B0360 and 0x4FB68 stores eax there; the layout calls the same offset commonCutCuttingPreferenceGiven; +0x1B8 is userString in the layout and cut_nesting_probabilty in the module"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x4EC00 reads a value from [rdi+0x40] and stores it under a parameter name, so it reports rather than configures",
+   "round": 641,
+   "subject": "0x4EC00.direction",
+   "witness": "0x4EC2C mov rsi,rcx; 0x4EC34 mov rdi,[rdx+0x18] with a container walk at 0x4EC38; 0x4ED1C movsd xmm6,[rdi+0x40]; 0x4FB3B cvttsd2si; 0x4FB68 mov [rsi+0x88],eax"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the container element 0x4EC00 walks carries the sub-object at [rdi+0x40] and this routine reads its fields",
+   "round": 641,
+   "subject": "parent-0x40.element-field",
+   "witness": "the same offset the priority list has ranked first as parent+0x40.subobject, so this is the first evidence about what that sub-object is FOR"
   }
  ]
 }
