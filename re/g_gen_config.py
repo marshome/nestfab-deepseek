@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Generate lcns/include/lcns/config_parameters.hpp from re/param_names.json.
+"""Generate lcns/include/lcns/parameter_report.hpp from re/param_names.json.
 
 Every field here has a NAME from the module's own string and an OFFSET from the instruction that stores it: RE 0x4EC00 asks the lookup
 RE 0x82A3E0 for a named parameter and, when it is found, writes the value into a field of the object in rsi. So the name is ORACLE grade
@@ -22,9 +22,16 @@ from lib import rva2off
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-OUT = os.path.join(ROOT, "lcns", "include", "lcns", "config_parameters.hpp")
+OUT = os.path.join(ROOT, "lcns", "include", "lcns", "parameter_report.hpp")
 
-HEADER = '''// lcns/include/lcns/config_parameters.hpp -- the nesting engine's parameters, each with the name the module uses.
+HEADER = '''// lcns/include/lcns/parameter_report.hpp -- the 107 fields RE 0x4EC00 writes, each under a name the module uses.
+//
+// NAMED FOR WHAT THE EVIDENCE SUPPORTS, and renamed once already. The first version called this a configuration with "parameters", which
+// was an INFERENCE: the names and the offsets are the module's, but the direction is a REPORT. RE 0x4EC00 initialises an object by
+// calling RE 0x4E5B0, walks a container reached at [rdx+0x18], and for each element reads a value at [rdi+0x40] and stores it into the
+// object under a name. So it records values against the module's labels rather than applying settings.
+//
+// The offsets and the strings stand as recorded; only the interpretation changed, and this file name says which is which.
 //
 // GENERATED from re/param_names.json by re/g_gen_config.py. Do not edit by hand; rerun the generator.
 //
@@ -51,23 +58,23 @@ HEADER = '''// lcns/include/lcns/config_parameters.hpp -- the nesting engine's p
 namespace lcns {
 
 /** The offsets RE 0x4EC00 writes, in the module's own parameter vocabulary. */
-namespace config {
+namespace parameters {
 
 %(constants)s
 /** The count of parameters this parser names, for a test to assert rather than repeat. */
-constexpr std::size_t kConfigParameterCount = %(count)d;
+constexpr std::size_t kParameterReportCount = %(count)d;
 
-}  // namespace config
+}  // namespace parameters
 
 /** A record of what each offset IS, for the reconstruction. It is deliberately not a struct with those members laid out: the point is
  *  to carry the module's names and offsets, and a laid-out struct would depend on the compiler's padding to agree with them. */
-struct ConfigParameter {
+struct ParameterReportEntry {
     std::size_t offset;
     const char* name;
 };
 
-inline const ConfigParameter* configParameters(std::size_t& count) {
-    static const ConfigParameter table[] = {
+inline const ParameterReportEntry* parameterReport(std::size_t& count) {
+    static const ParameterReportEntry table[] = {
 %(table)s    };
     count = sizeof(table) / sizeof(table[0]);
     return table;
@@ -111,7 +118,7 @@ def main():
         table.append('        {0x%X, "%s"},\n' % (offset, name))
     asserts = []
     for offset, name in rows:
-        asserts.append('static_assert(config::k%s == 0x%X, "RE 0x4EC00 stores %s at +0x%X");'
+        asserts.append('static_assert(parameters::k%s == 0x%X, "RE 0x4EC00 stores %s at +0x%X");'
                        % (name, offset, name, offset))
 
     gaps = 0
