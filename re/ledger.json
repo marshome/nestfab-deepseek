@@ -486,6 +486,14 @@
    "round": 567,
    "subject": "teardown.237A00",
    "witness": "re/g_teardowns.py: the largest teardown in the module; 6636 is exactly the byte count re/LAUNCH_LOCAL_COMPUTATION.md gives for the LaunchLocalComputation closure"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the teardown tool counted INDIRECT calls as callees until it was fixed, so its target counts were slightly wrong",
+   "round": 568,
+   "subject": "teardown.parser-defect",
+   "witness": "a call operand of qword ptr [rax + 0x10] yielded a callee of 0x10; requiring the operand to be exactly 0x<hex> fixed it, and 0x237A00 went from 26 targets to 23 while the eight template instances stayed at 45 frees, 2 targets, 27 chain reads"
   }
  ]
 }

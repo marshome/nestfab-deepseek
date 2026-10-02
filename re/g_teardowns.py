@@ -37,6 +37,26 @@ from lib import disasm, load_prof  # noqa: E402
 FREE = 0x9984B0
 
 
+DIRECT_CALL = re.compile(r"^0x([0-9a-f]+)$")
+
+
+def direct_calls(body):
+    """The targets of DIRECT calls only.
+
+    The first version searched for `0x...` anywhere in the operand, so an indirect call -- `call qword ptr [rax + 0x10]` --
+    contributed a target of 0x10, and 0x18, and so on. Those are not callees and they made every count in this tool slightly
+    wrong. A direct call's operand is exactly `0x<hex>` and nothing else, which is what this requires.
+    """
+    out = []
+    for ins in body:
+        if ins.mnemonic != "call":
+            continue
+        m = DIRECT_CALL.match(ins.op_str.strip())
+        if m:
+            out.append(int(m.group(1), 16))
+    return out
+
+
 def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("--top", type=int, default=30)
@@ -49,14 +69,7 @@ def main(argv):
         if size < 80:
             continue
         body = [i for i in disasm(address) if i.address < address + size]
-        calls = []
-        for ins in body:
-            if ins.mnemonic != "call":
-                continue
-            m = re.search(r"0x([0-9a-f]+)", ins.op_str)
-            if m:
-                calls.append(int(m.group(1), 16))
-        counted = collections.Counter(calls)
+        counted = collections.Counter(direct_calls(body))
         self_calls = counted.get(address, 0)
         frees = counted.get(FREE, 0)
         chain = sum(1 for ins in body for m in [re.search(r"\[r[a-z0-9]+ \+ 0x18\]", ins.op_str)] if m)
