@@ -1,0 +1,16 @@
+{
+ "blockers": [
+  {
+   "at": "2026-10-02T11:25:27Z",
+   "id": "key->offset pairing",
+   "reason": "the serialisers' signatures are unknown, so an offset cannot be attributed to an object; every attempt has produced contradictions rather than pairs",
+   "resolved": null,
+   "round": 575,
+   "tried": [
+    "window of N instructions after the key (g_json_fields.py): four keys onto +0x10",
+    "comparison-bounded span (g_keys_bound.py): 96 pairs, 0 agreeing with the layout",
+    "span + first-argument register tracking + nested-serialiser cut + contradiction drop (g_pair2.py): 13 keys survive, 4 offsets claimed by several keys"
+   ]
+  }
+ ]
+}

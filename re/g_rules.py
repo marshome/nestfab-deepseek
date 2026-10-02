@@ -285,6 +285,26 @@ def check_assertions_are_leads():
     return "PASS", "every ORACLE claim carries an instruction or an address"
 
 
+def check_report_density():
+    """Reports happen every thirty rounds, and a round does not report at all.
+
+    The human asked for this twice, and the second time named the reason it was not happening: a rule that says "report every
+    thirty rounds" was being implemented as "report after every round", which is a different rule. What this check can see is the
+    DENSITY: the counter, and whether a round's own commit message is a report or a line. What it cannot see is how much work a
+    round contains, because one turn is one reply -- thirty rounds inside one turn needs a workflow fanning out subagents, and
+    that is recorded in the rule's own text rather than pretended at here.
+    """
+    code, out, err = run([sys.executable, os.path.join(HERE, "g_rounds.py")])
+    if code == 4:
+        return "FAIL", "a sync is due: %s" % (out.strip().splitlines()[0] if out.strip() else "")
+    rounds = 0
+    for line in out.split("\n"):
+        m = re.search(r"rounds since the last sync:\s*(\d+)", line)
+        if m:
+            rounds = int(m.group(1))
+    return "PASS", "%d rounds since the last sync, so no report is due for %d more" % (rounds, 30 - rounds)
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -399,6 +419,7 @@ CHECKS = [
     ("decide-required-decisions", "需要决策也要先给判断再问", check_no_asking),
     ("assertions-are-leads", "断言只作线索，不作证明", check_assertions_are_leads),
     ("oracle-needs-instruction", "字段的偏移必须另有指令级见证", check_assertions_are_leads),
+    ("report-density", "每 30 轮汇报一次，中间每轮回一行", check_report_density),
 ]
 
 

@@ -74,10 +74,10 @@ feeling of compliance.
   "since": "round 548"}
 
 {"id": "continuous-work",
-  "rule": "授权连续推进，只在每 30 轮或遇到阻塞时汇报",
-  "check": "re/g_rounds.py --check exits 4 at thirty rounds without a sync",
-  "where": "re/RULES.md, added 2026-10-02",
-  "since": "round 548"}
+  "rule": "授权连续推进；每 30 轮才做一次详细汇报，中间每轮回一行状态",
+  "check": "re/g_rounds.py --check exits 4 at thirty rounds without a sync. That measures REPORTING DENSITY and not how much work a round contains: one turn is one reply, so thirty rounds inside one turn needs a workflow fanning out subagents.",
+  "where": "re/g_rounds.py for the density; a workflow for actual fan-out",
+  "since": "round 548, corrected in 580"}
 
  {"id": "four-conditions-exit-nonzero",
   "rule": "规则要以会失败的程序存在，不是文档里的句子",
@@ -122,7 +122,7 @@ feeling of compliance.
   "where": "re/g_conflict.py, re/g_stale.py",
   "since": "round 572, refined in 573"},
 
-{"id": "30",
+{"id": "report-density",
   "rule": "不用每轮都停下来汇报，跑满 30 轮再停",
   "check": "re/g_rounds.py --check exits 4 at thirty rounds; re/g_selfcheck.py refuses a report that is not due",
   "where": "re/RULES.md, added 2026-10-02",
