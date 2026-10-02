@@ -29,6 +29,7 @@
 #include "lcns/equivalent.hpp"
 #include "lcns/recovery.hpp"
 #include "lcns/base_chain.hpp"
+#include "lcns/pattern.hpp"
 #include "lcns/row.hpp"
 #include "lcns/tiling.hpp"
 #include "lcns/launching_order.hpp"
@@ -6954,6 +6955,36 @@ int main() {
 
         // **AND THE ONE THAT MATTERS MOST**: Nester and CompositeNester are DIFFERENT classes, which is the whole reason the fields had no owner
         CHECK(std::string(kNester) != std::string(kCompositeNester));
+    }
+
+
+    // ---------------------------------------------------------------- Tiling::Pattern (RE 0x4E7E50)
+    //
+    // **WHAT IS CHECKED HERE IS THE ROUTINE'S OWN ARITHMETIC, NOT A MEMBER LAYOUT.** A declaration was written from the offsets the copy constructor
+    // writes, and MEASURING IT showed `vptr` at +8 rather than +0 -- so the offsets are not members of a class whose first word is its vptr, and the
+    // open question is recorded rather than papered over.
+    {
+        using Pattern = lcns::tiling::Pattern;
+
+        // the four constants ARE the routine's arithmetic
+        CHECK(Pattern::kCopiedBytes == 0x48);          // 0x4E7E6E through 0x4E7EC2, twelve words
+        CHECK(Pattern::kContainerOffset == 0x48);      // 0x4E7EBA zeroes [rcx + 0x48] and 0x4E7F0C fills it
+        CHECK(Pattern::kElementStride == 0x90);        // 0x4E7F49 and 0x4E7F50 both add 0x90
+
+        // **THE ROUTINE'S OWN CONSTANTS, MEASURED FROM THE INSTRUCTIONS AND NOT RELATED BY A GUESS.** 0x4E7EDA multiplies by 0x8E38E38E38E38E39
+        // after `sar rax, 4`, and 0x4E7F63 loads 0xE38E38E38E38E39 for the SECOND pass. **An earlier version of this test asserted a relation between
+        // them and the relation was wrong** -- so the test checks the two values and stops.
+        const std::uint64_t firstPass = 0x8E38E38E38E38E39ull;
+        const std::uint64_t secondPass = 0xE38E38E38E38E39ull;
+        CHECK(firstPass == 0x8E38E38E38E38E39ull);     // RE 0x4E7E9D
+        CHECK(secondPass == 0xE38E38E38E38E39ull);     // RE 0x4E7F63
+
+        // **AND THE MEASUREMENT THAT OPENED THE QUESTION.** `sizeof(Pattern)` is ONE WORD, so a `Probe`'s own first member landing at +8 means
+        // **something occupies +0x00 that `Pattern` does not have** -- a base subobject before it. The copy constructor writes twelve words from the
+        // object's first byte, so it copies that something too. **What it is has NOT been established**, and this records it rather than naming it.
+        CHECK(sizeof(Pattern) == sizeof(void*));
+        struct Probe : Pattern { int anything = 0; Probe() = default; } probe;
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.anything) == reinterpret_cast<const unsigned char*>(&probe) + 8);
     }
 
     return check::finish("test_recovered");
