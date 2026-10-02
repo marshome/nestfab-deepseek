@@ -1822,6 +1822,22 @@
    "round": 649,
    "subject": "InfiniteEngine.is-a-decorator",
    "witness": "0x759A99 calls 0x757AE0 when the limit is exactly -1.0, and 0x759AB0 loads [rdx+0x10] and 0x759AC4 calls its slot 2 otherwise; 0x759A90 is a jp so a NaN delegates"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the module has 96 own classes with RTTI: Multi 30, Tiling 17, Engine 10, Utils 8, Structure 7, Prc 4, Json 3, Pack 3",
+   "round": 650,
+   "subject": "classes.96",
+   "witness": "generated from re/vtables.json after setting aside the standard library, boost, CryptoPP, Json, Coin and Clp; each entry carries its vtable address, slot count, mangled name and demangled decode"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the three namespaces with the most classes are the three the archive identified as the work: Multi's strategies and nesters, Tiling's tilers, Engine's loops",
+   "round": 650,
+   "subject": "classes.namespaces-are-the-architecture",
+   "witness": "Multi 30 classes including FlipNester, FilterNester, NoFillNester, TilingNester, CompactNester, LimitedNester, NestingNester, DatabaseNester, RectangleNester, MultiTorchNester and RowNester"
   }
  ]
 }

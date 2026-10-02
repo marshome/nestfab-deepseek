@@ -41,6 +41,7 @@
 #include "lcns/option_keys.hpp"
 #include "lcns/miplib_names.hpp"
 #include "lcns/engines.hpp"
+#include "lcns/classes.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6545,6 +6546,53 @@ int main() {
         // the member at +0x10 is settable, which is the offset RE 0x759AB0 reads
         engine.setInner(nullptr);
         CHECK(engine.inner() == nullptr);
+    }
+
+
+    // ---------------------------------------------------------------- the module's own classes (from its RTTI)
+    //
+    // 96 classes with their vtable addresses and slot counts, generated from re/vtables.json. The assertions are about the HIERARCHY:
+    // that the count agrees, that the namespaces are the ones the module uses, and that the addresses are distinct.
+    {
+        std::size_t count = 0;
+        const lcns::ClassInfo* table = lcns::moduleClasses(count);
+        CHECK(count == 96u);
+
+        // the namespaces, which are the module's shape
+        CHECK(lcns::kClassesIn_Multi == 30u);        // the strategy/nester family
+        CHECK(lcns::kClassesIn_Tiling == 17u);
+        CHECK(lcns::kClassesIn_Engine == 10u);
+        CHECK(lcns::kClassesIn_Structure == 7u);
+        CHECK(lcns::kClassesIn_Prc == 4u);
+        CHECK(lcns::kClassesIn_Pack == 3u);
+
+        // InfiniteEngine is in the table, which is what the human's question was about
+        bool sawInfinite = false;
+        bool sawNesting = false;
+        for (std::size_t i = 0; i < count; ++i) {
+            if (std::string(table[i].qualified) == "Engine::InfiniteEngine") {
+                sawInfinite = true;
+                CHECK(table[i].vtable == 0xA3CFD0u);
+            }
+            if (std::string(table[i].qualified) == "Engine::NestingEngine") {
+                sawNesting = true;
+            }
+            // every entry carries its mangled name, which is the primary evidence and not a decode
+            CHECK(table[i].mangled != nullptr);
+            CHECK(std::string(table[i].mangled).size() > 4u);
+            CHECK(table[i].qualified != nullptr);
+            CHECK(table[i].vtable >= 0xA00000u);      // all vtables are in the module's data range
+            CHECK(table[i].slots >= 1u);
+        }
+        CHECK(sawInfinite);
+        CHECK(sawNesting);
+
+        // the vtables are distinct, which is what makes them identifiers
+        for (std::size_t i = 0; i < count; ++i) {
+            for (std::size_t j = i + 1; j < count; ++j) {
+                CHECK(table[i].vtable != table[j].vtable);
+            }
+        }
     }
 
     return check::finish("test_recovered");
