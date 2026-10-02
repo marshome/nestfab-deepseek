@@ -254,25 +254,27 @@ int main() {
     }
 #endif
 
-    // ------------------------------------- the two window spans behind GetLength and GetHeight
+    // ------------------------- the two window spans behind GetLength and GetHeight, box max minus window low
     {
-        // Hand computed so that the two answers differ and a mix-up between them cannot pass: 30 - 4 = 26 and 17 - 2 = 15.
+        // Hand computed so that a mix-up cannot pass: 30 - 4 = 26 for the length and 17 - 2 = 15 for the height.
+        unsigned char box[0x28];
+        std::memset(box, 0, sizeof(box));
+        double maxX = 30.0;
+        double maxY = 17.0;
+        std::memcpy(box + 0x18, &maxX, sizeof(maxX));
+        std::memcpy(box + 0x20, &maxY, sizeof(maxY));
         lcns::dll::WindowSlots window{};
-        window.slot18 = 30.0;
-        window.slot38 = 4.0;
-        window.slot20 = 17.0;
-        window.slot40 = 2.0;
-        CHECK(lcns::dll::exports::impl::windowSpanLength(window, true) == 26.0);
-        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, true) == 15.0);
-        CHECK(lcns::dll::exports::impl::windowSpanLength(window, false) == 0.0);
-        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, false) == 0.0);
-        // the pairs these spans must not read are set far away, so reading the wrong pair fails loudly
-        window.slot08 = 1000.0;
-        window.slot48 = -1000.0;
-        window.slot10 = 1000.0;
-        window.slot50 = -1000.0;
-        CHECK(lcns::dll::exports::impl::windowSpanLength(window, true) == 26.0);
-        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, true) == 15.0);
+        window.slot08 = 4.0;
+        window.slot10 = 2.0;
+        CHECK(lcns::dll::exports::impl::windowSpanLength(window, box, true) == 26.0);
+        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, box, true) == 15.0);
+        CHECK(lcns::dll::exports::impl::windowSpanLength(window, box, false) == 0.0);   // no geometry returns zero
+        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, box, false) == 0.0);
+        // the slots these spans must not read are moved far away, so reading the wrong pair fails loudly
+        window.slot18 = 1000.0;
+        window.slot20 = -1000.0;
+        CHECK(lcns::dll::exports::impl::windowSpanLength(window, box, true) == 26.0);
+        CHECK(lcns::dll::exports::impl::windowSpanHeight(window, box, true) == 15.0);
     }
 
     return check::finish("boxacc");

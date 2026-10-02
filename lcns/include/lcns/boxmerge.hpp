@@ -17,8 +17,8 @@ void mergeBoxInto(void* dstBase, const void* srcBase);
  * geometry (RE 0x526264, RE 0x5267B0). The status argument that selects these branches is the implementer's second
  * argument (RE 0x526170 saves it, RE 0x526216 reads it) and both entry points pass zero, so this is the branch they take.
  */
-double windowSpanLength(const lcns::dll::WindowSlots& window, bool hasGeometry);
-double windowSpanHeight(const lcns::dll::WindowSlots& window, bool hasGeometry);
+double windowSpanLength(const lcns::dll::WindowSlots& window, const void* boxBase, bool hasGeometry);
+double windowSpanHeight(const lcns::dll::WindowSlots& window, const void* boxBase, bool hasGeometry);
 
 
 }  // namespace impl

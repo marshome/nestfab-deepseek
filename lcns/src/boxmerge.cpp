@@ -98,18 +98,24 @@ void mergeBoxInto(void* dstBase, const void* srcBase) {
 }
 
 
-double windowSpanLength(const lcns::dll::WindowSlots& window, bool hasGeometry) {
+double windowSpanLength(const lcns::dll::WindowSlots& window, const void* boxBase, bool hasGeometry) {
     if (!hasGeometry) {
         return 0.0;   // RE 0x526264
     }
-    return window.slot18 - window.slot38;   // RE 0x526227 and RE 0x52624D
+    // RE 0x526244 with RE 0x52624D: the merged box maxX minus the window low value.
+    double maxX = 0.0;
+    std::memcpy(&maxX, static_cast<const unsigned char*>(boxBase) + 0x18, sizeof(maxX));
+    return maxX - window.slot08;
 }
 
-double windowSpanHeight(const lcns::dll::WindowSlots& window, bool hasGeometry) {
+double windowSpanHeight(const lcns::dll::WindowSlots& window, const void* boxBase, bool hasGeometry) {
     if (!hasGeometry) {
         return 0.0;   // RE 0x5267B0
     }
-    return window.slot20 - window.slot40;   // RE 0x526767 and RE 0x526790
+    // RE 0x526790 with RE 0x5267A2: the merged box maxY minus the window low value.
+    double maxY = 0.0;
+    std::memcpy(&maxY, static_cast<const unsigned char*>(boxBase) + 0x20, sizeof(maxY));
+    return maxY - window.slot10;
 }
 
 }  // namespace impl
