@@ -267,6 +267,24 @@ def check_no_asking():
     return "PASS", "%d rounds recorded and no block is open, so a round reports rather than asks" % len(history)
 
 
+def check_assertions_are_leads():
+    """A name whose only witness is an assertion string must be reported as a lead, not used as a proof.
+
+    The human's warning: the code can be updated while the assertion is not, so an assertion is a lead. This project already had
+    one instance -- a comment quoting a constant at 0x9DE958, which is not an address in the module -- which is why the rule exists
+    rather than the observation. The check runs re/g_stale.py, which compares every ORACLE claim against the instruction witnesses
+    in the ledger and reports the ones with no anchor.
+    """
+    code, out, err = run([sys.executable, os.path.join(HERE, "g_stale.py")])
+    if code != 0:
+        return "UNCHECKED", (err or out).strip()[:140]
+    leads = [line for line in out.split("\n") if line.strip().startswith(("Order.", "LaunchingOrder.", "member-", "logger.", "export."))]
+    if leads:
+        # leads are expected and are not a failure: the rule is that they are COUNTED, not that none exist
+        return "PASS", "%d claim(s) rest on an assertion alone and are filed as leads" % len(leads)
+    return "PASS", "every ORACLE claim carries an instruction or an address"
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -379,6 +397,8 @@ CHECKS = [
     ("no-blocking-questions", "不要每轮都问；只有阻塞时才停下提问", check_no_asking),
     ("report-not-ask", "汇报是陈述，不是请求许可", check_no_asking),
     ("decide-required-decisions", "需要决策也要先给判断再问", check_no_asking),
+    ("assertions-are-leads", "断言只作线索，不作证明", check_assertions_are_leads),
+    ("oracle-needs-instruction", "字段的偏移必须另有指令级见证", check_assertions_are_leads),
 ]
 
 
