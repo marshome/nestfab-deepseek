@@ -146,3 +146,364 @@ implementing them, and the note under each is a claim to be checked by the test 
 0001087a  nop 
 ```
 
+## The implementers behind GetLength and GetHeight (round 371)
+
+GetLength (0xB130) and GetHeight (0xB160) both take the sub-object at [order+0x08] with edx = 0 and tail-call one of
+these. Their bodies are the actual geometry, so they are what has to be read before the two exports can be
+implemented.
+
+### 0x526160 (GetLength) -- 757 bytes, 171 instructions
+
+```asm
+00526160  push r12
+00526162  push rbp
+00526163  push rdi
+00526164  push rsi
+00526165  push rbx
+00526166  sub rsp, 0xd0
+0052616d  mov r12, rcx
+00526170  mov dword ptr [rsp + 0x108], edx
+00526177  call 0x51d0c0
+0052617c  mov rdi, qword ptr [rax + 8]
+00526180  cmp qword ptr [rax], rdi
+00526183  je 0x526264
+00526189  lea rsi, [rsp + 0xa0]
+00526191  mov rcx, r12
+00526194  call 0x51d0c0
+00526199  lea rbp, [rsp + 0x70]
+0052619e  pxor xmm0, xmm0
+005261a2  mov byte ptr [rsp + 0x70], 1
+005261a7  mov rbx, qword ptr [rax]
+005261aa  movsd qword ptr [rsp + 0x78], xmm0
+005261b0  movsd qword ptr [rsp + 0x80], xmm0
+005261b9  mov rdi, qword ptr [rax + 8]
+005261bd  movsd qword ptr [rsp + 0x88], xmm0
+005261c6  movsd qword ptr [rsp + 0x90], xmm0
+005261cf  cmp rbx, rdi
+005261d2  je 0x5261f3
+005261d4  mov rdx, rbx
+005261d7  mov rcx, rsi
+005261da  add rbx, 0x78
+005261de  call 0x524ee0
+005261e3  mov rdx, rsi
+005261e6  mov rcx, rbp
+005261e9  call 0x5c8c50
+005261ee  cmp rdi, rbx
+005261f1  jne 0x5261d4
+005261f3  mov rcx, r12
+005261f6  call 0x51d2f0
+005261fb  test rax, rax
+005261fe  mov rbx, rax
+00526201  je 0x526280
+00526203  mov rcx, rbx
+00526206  call 0x4f9200
+0052620b  mov rcx, rsi
+0052620e  mov rdx, rax
+00526211  call 0x5cd800
+00526216  lea rcx, [rsp + 0x108]
+0052621e  call 0x52f810
+00526223  test al, al
+00526225  jne 0x526244
+00526227  movsd xmm0, qword ptr [rsp + 0xb8]
+00526230  subsd xmm0, qword ptr [rsp + 0x78]
+00526236  add rsp, 0xd0
+0052623d  pop rbx
+0052623e  pop rsi
+0052623f  pop rdi
+00526240  pop rbp
+00526241  pop r12
+00526243  ret 
+00526244  movsd xmm0, qword ptr [rsp + 0x88]
+0052624d  subsd xmm0, qword ptr [rsp + 0xa8]
+00526256  add rsp, 0xd0
+0052625d  pop rbx
+0052625e  pop rsi
+0052625f  pop rdi
+00526260  pop rbp
+00526261  pop r12
+00526263  ret 
+00526264  pxor xmm0, xmm0
+00526268  add rsp, 0xd0
+0052626f  pop rbx
+00526270  pop rsi
+00526271  pop rdi
+00526272  pop rbp
+00526273  pop r12
+00526275  ret 
+00526276  nop word ptr cs:[rax + rax]
+00526280  lea rdi, [rsp + 0x50]
+00526285  xor r8d, r8d
+00526288  mov rcx, rsi
+0052628b  mov qword ptr [rsp + 0x50], 0x1b
+00526294  lea rax, [rsi + 0x10]
+00526298  mov rdx, rdi
+0052629b  mov qword ptr [rsp + 0xa0], rax
+005262a3  lea rbp, [rsp + 0x30]
+005262a8  call 0x910ba0
+005262ad  mov rdx, qword ptr [rsp + 0x50]
+005262b2  mov ecx, 0x2e67
+005262b7  mov r8d, 0x586e
+005262bd  mov qword ptr [rsp + 0xa0], rax
+005262c5  mov qword ptr [rsp + 0xb0], rdx
+005262cd  movabs rdx, 0x2626207465656873
+005262d7  mov qword ptr [rax], rdx
+005262da  movabs rdx, 0x6e756f626e752220
+005262e4  mov qword ptr [rax + 8], rdx
+005262e8  movabs rdx, 0x6e697473656e2064
+005262f2  mov word ptr [rax + 0x18], cx
+005262f6  mov rcx, rbp
+005262f9  mov qword ptr [rax + 0x10], rdx
+005262fd  mov byte ptr [rax + 0x1a], 0x22
+00526301  mov rax, qword ptr [rsp + 0x50]
+00526306  mov rdx, qword ptr [rsp + 0xa0]
+0052630e  mov qword ptr [rsp + 0xa8], rax
+00526316  mov byte ptr [rdx + rax], 0
+0052631a  lea rax, [rdi + 0x10]
+0052631e  movabs rdx, 0x6f69736e656d6944
+00526328  mov qword ptr [rsp + 0x50], rax
+0052632d  lea rax, [rbp + 0x10]
+00526331  mov qword ptr [rsp + 0x60], rdx
+00526336  lea rdx, [rsp + 0x28]
+0052633b  mov word ptr [rdi + 0x18], r8w
+00526340  xor r8d, r8d
+00526343  mov qword ptr [rsp + 0x58], 0xa
+0052634c  mov byte ptr [rsp + 0x6a], 0
+00526351  mov qword ptr [rsp + 0x30], rax
+00526356  mov qword ptr [rsp + 0x28], 0x16
+0052635f  call 0x910ba0
+00526364  mov rdx, qword ptr [rsp + 0x28]
+00526369  mov qword ptr [rsp + 0x30], rax
+0052636e  mov r9, rsi
+00526371  mov r8, rdi
+00526374  mov rcx, rbp
+00526377  mov qword ptr [rsp + 0x40], rdx
+0052637c  movabs rdx, 0x63757274735c2e2e
+00526386  mov qword ptr [rax], rdx
+00526389  movabs rdx, 0x6174735c65727574
+00526393  mov qword ptr [rax + 8], rdx
+00526397  mov edx, 0x7070
+0052639c  mov word ptr [rax + 0x14], dx
+005263a0  mov rdx, qword ptr [rsp + 0x30]
+005263a5  mov dword ptr [rax + 0x10], 0x632e7374
+005263ac  mov rax, qword ptr [rsp + 0x28]
+005263b1  mov qword ptr [rsp + 0x38], rax
+005263b6  mov byte ptr [rdx + rax], 0
+005263ba  mov edx, 0x9a
+005263bf  call 0x60a620
+005263c4  mov rcx, qword ptr [rsp + 0x30]
+005263c9  add rbp, 0x10
+005263cd  cmp rcx, rbp
+005263d0  je 0x5263d7
+005263d2  call 0x9984b0
+005263d7  mov rcx, qword ptr [rsp + 0x50]
+005263dc  add rdi, 0x10
+005263e0  cmp rcx, rdi
+005263e3  je 0x5263ea
+005263e5  call 0x9984b0
+005263ea  mov rcx, qword ptr [rsp + 0xa0]
+005263f2  lea rax, [rsi + 0x10]
+005263f6  cmp rcx, rax
+005263f9  je 0x526203
+005263ff  call 0x9984b0
+00526404  jmp 0x526203
+00526409  mov rbx, rax
+0052640c  mov rcx, qword ptr [rsp + 0x50]
+00526411  add rdi, 0x10
+00526415  cmp rcx, rdi
+00526418  je 0x52641f
+0052641a  call 0x9984b0
+0052641f  mov rcx, qword ptr [rsp + 0xa0]
+00526427  add rsi, 0x10
+0052642b  cmp rcx, rsi
+0052642e  je 0x526435
+00526430  call 0x9984b0
+00526435  mov rcx, rbx
+00526438  call 0x62f280
+0052643d  mov rcx, qword ptr [rsp + 0x30]
+00526442  add rbp, 0x10
+00526446  mov rbx, rax
+00526449  cmp rcx, rbp
+0052644c  je 0x52640c
+0052644e  call 0x9984b0
+00526453  jmp 0x52640c
+```
+
+Shape: NOT a simple double difference (it has calls or branches), so it is recorded, not implemented.
+
+### 0x5266A0 (GetHeight) -- 759 bytes, 171 instructions
+
+```asm
+005266a0  push r12
+005266a2  push rbp
+005266a3  push rdi
+005266a4  push rsi
+005266a5  push rbx
+005266a6  sub rsp, 0xd0
+005266ad  mov r12, rcx
+005266b0  mov dword ptr [rsp + 0x108], edx
+005266b7  call 0x51d0c0
+005266bc  mov rdi, qword ptr [rax + 8]
+005266c0  cmp qword ptr [rax], rdi
+005266c3  je 0x5267b0
+005266c9  lea rsi, [rsp + 0xa0]
+005266d1  mov rcx, r12
+005266d4  call 0x51d0c0
+005266d9  lea rbp, [rsp + 0x70]
+005266de  pxor xmm0, xmm0
+005266e2  mov byte ptr [rsp + 0x70], 1
+005266e7  mov rbx, qword ptr [rax]
+005266ea  movsd qword ptr [rsp + 0x78], xmm0
+005266f0  movsd qword ptr [rsp + 0x80], xmm0
+005266f9  mov rdi, qword ptr [rax + 8]
+005266fd  movsd qword ptr [rsp + 0x88], xmm0
+00526706  movsd qword ptr [rsp + 0x90], xmm0
+0052670f  cmp rbx, rdi
+00526712  je 0x526733
+00526714  mov rdx, rbx
+00526717  mov rcx, rsi
+0052671a  add rbx, 0x78
+0052671e  call 0x524ee0
+00526723  mov rdx, rsi
+00526726  mov rcx, rbp
+00526729  call 0x5c8c50
+0052672e  cmp rdi, rbx
+00526731  jne 0x526714
+00526733  mov rcx, r12
+00526736  call 0x51d2f0
+0052673b  test rax, rax
+0052673e  mov rbx, rax
+00526741  je 0x5267c2
+00526743  mov rcx, rbx
+00526746  call 0x4f9200
+0052674b  mov rcx, rsi
+0052674e  mov rdx, rax
+00526751  call 0x5cd800
+00526756  lea rcx, [rsp + 0x108]
+0052675e  call 0x52f830
+00526763  test al, al
+00526765  jne 0x526790
+00526767  movsd xmm0, qword ptr [rsp + 0xc0]
+00526770  subsd xmm0, qword ptr [rsp + 0x80]
+00526779  add rsp, 0xd0
+00526780  pop rbx
+00526781  pop rsi
+00526782  pop rdi
+00526783  pop rbp
+00526784  pop r12
+00526786  ret 
+00526787  nop word ptr [rax + rax]
+00526790  movsd xmm0, qword ptr [rsp + 0x90]
+00526799  subsd xmm0, qword ptr [rsp + 0xb0]
+005267a2  add rsp, 0xd0
+005267a9  pop rbx
+005267aa  pop rsi
+005267ab  pop rdi
+005267ac  pop rbp
+005267ad  pop r12
+005267af  ret 
+005267b0  pxor xmm0, xmm0
+005267b4  add rsp, 0xd0
+005267bb  pop rbx
+005267bc  pop rsi
+005267bd  pop rdi
+005267be  pop rbp
+005267bf  pop r12
+005267c1  ret 
+005267c2  lea rdi, [rsp + 0x50]
+005267c7  xor r8d, r8d
+005267ca  mov rcx, rsi
+005267cd  mov qword ptr [rsp + 0x50], 0x1b
+005267d6  lea rax, [rsi + 0x10]
+005267da  mov rdx, rdi
+005267dd  mov qword ptr [rsp + 0xa0], rax
+005267e5  lea rbp, [rsp + 0x30]
+005267ea  call 0x910ba0
+005267ef  mov rdx, qword ptr [rsp + 0x50]
+005267f4  mov ecx, 0x2e67
+005267f9  mov r8d, 0x596e
+005267ff  mov qword ptr [rsp + 0xa0], rax
+00526807  mov qword ptr [rsp + 0xb0], rdx
+0052680f  movabs rdx, 0x2626207465656873
+00526819  mov qword ptr [rax], rdx
+0052681c  movabs rdx, 0x6e756f626e752220
+00526826  mov qword ptr [rax + 8], rdx
+0052682a  movabs rdx, 0x6e697473656e2064
+00526834  mov word ptr [rax + 0x18], cx
+00526838  mov rcx, rbp
+0052683b  mov qword ptr [rax + 0x10], rdx
+0052683f  mov byte ptr [rax + 0x1a], 0x22
+00526843  mov rax, qword ptr [rsp + 0x50]
+00526848  mov rdx, qword ptr [rsp + 0xa0]
+00526850  mov qword ptr [rsp + 0xa8], rax
+00526858  mov byte ptr [rdx + rax], 0
+0052685c  lea rax, [rdi + 0x10]
+00526860  movabs rdx, 0x6f69736e656d6944
+0052686a  mov qword ptr [rsp + 0x50], rax
+0052686f  lea rax, [rbp + 0x10]
+00526873  mov qword ptr [rsp + 0x60], rdx
+00526878  lea rdx, [rsp + 0x28]
+0052687d  mov word ptr [rdi + 0x18], r8w
+00526882  xor r8d, r8d
+00526885  mov qword ptr [rsp + 0x58], 0xa
+0052688e  mov byte ptr [rsp + 0x6a], 0
+00526893  mov qword ptr [rsp + 0x30], rax
+00526898  mov qword ptr [rsp + 0x28], 0x16
+005268a1  call 0x910ba0
+005268a6  mov rdx, qword ptr [rsp + 0x28]
+005268ab  mov qword ptr [rsp + 0x30], rax
+005268b0  mov r9, rsi
+005268b3  mov r8, rdi
+005268b6  mov rcx, rbp
+005268b9  mov qword ptr [rsp + 0x40], rdx
+005268be  movabs rdx, 0x63757274735c2e2e
+005268c8  mov qword ptr [rax], rdx
+005268cb  movabs rdx, 0x6174735c65727574
+005268d5  mov qword ptr [rax + 8], rdx
+005268d9  mov edx, 0x7070
+005268de  mov word ptr [rax + 0x14], dx
+005268e2  mov rdx, qword ptr [rsp + 0x30]
+005268e7  mov dword ptr [rax + 0x10], 0x632e7374
+005268ee  mov rax, qword ptr [rsp + 0x28]
+005268f3  mov qword ptr [rsp + 0x38], rax
+005268f8  mov byte ptr [rdx + rax], 0
+005268fc  mov edx, 0xb0
+00526901  call 0x60a620
+00526906  mov rcx, qword ptr [rsp + 0x30]
+0052690b  add rbp, 0x10
+0052690f  cmp rcx, rbp
+00526912  je 0x526919
+00526914  call 0x9984b0
+00526919  mov rcx, qword ptr [rsp + 0x50]
+0052691e  add rdi, 0x10
+00526922  cmp rcx, rdi
+00526925  je 0x52692c
+00526927  call 0x9984b0
+0052692c  mov rcx, qword ptr [rsp + 0xa0]
+00526934  lea rax, [rsi + 0x10]
+00526938  cmp rcx, rax
+0052693b  je 0x526743
+00526941  call 0x9984b0
+00526946  jmp 0x526743
+0052694b  mov rbx, rax
+0052694e  mov rcx, qword ptr [rsp + 0x50]
+00526953  add rdi, 0x10
+00526957  cmp rcx, rdi
+0052695a  je 0x526961
+0052695c  call 0x9984b0
+00526961  mov rcx, qword ptr [rsp + 0xa0]
+00526969  add rsi, 0x10
+0052696d  cmp rcx, rsi
+00526970  je 0x526977
+00526972  call 0x9984b0
+00526977  mov rcx, rbx
+0052697a  call 0x62f280
+0052697f  mov rcx, qword ptr [rsp + 0x30]
+00526984  add rbp, 0x10
+00526988  mov rbx, rax
+0052698b  cmp rcx, rbp
+0052698e  je 0x52694e
+00526990  call 0x9984b0
+00526995  jmp 0x52694e
+```
+
+Shape: NOT a simple double difference (it has calls or branches), so it is recorded, not implemented.
