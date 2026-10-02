@@ -39,6 +39,8 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 | 548 | the human authorised continuous work with a report every thirty rounds or on a block | round 548, recorded in re/DECISIONS.md and as a rule in re/RULES.md |
 | 548 | backups are a verified local bundle plus a tar of the inputs, never a push | re/g_backup.py produced a 7.23 MB bundle of 552 commits and a 25.03 MB tar, and a test clone from the bundle reproduced HEAD |
 | 578 | from round 578 the cadence is thirty rounds of continuous work with no per-round summary | the human asked twice; the earlier grant said report every thirty rounds and rounds were still being summarised one at a time |
+| 600 | the 30-round period 2 delivered five C++ headers and four forwarded exports; forwardedCount 43 to 47 | commits 609, ledger 125 claims (81 INSTRUCTION, 14 ORACLE, 15 MEASURED, 13 SHAPE), 20 rules all green, one blocker |
+
 
 
 
