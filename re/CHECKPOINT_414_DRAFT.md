@@ -99,3 +99,33 @@ The additions are not textual churn: they are the object model (dll_layout.hpp),
 (affine.cpp, segcost.cpp, boxacc.cpp, boxmerge.cpp), the C ABI layer (168 definitions in api_exports.cpp,
 generated) and its mechanism (exports.cpp), of which the affinely verified parts are held to the original by
 differential tests rather than by inspection.
+
+## Handover for the 414 round (written at round 408, from this session measured facts)
+
+The three exports to attempt next, in order, with what is already known about each. All three pass the already
+modelled objects (NestingOwner, SubObject in lcns/include/lcns/dll_layout.hpp), and all three are behind a box
+step that is implemented and tested (lcns/src/boxmerge.cpp, 2000 random boxes per run).
+
+| export | ordinals | entry rva | entry size | implementer | implementer size | calls |
+|---|---:|---:|---:|---:|---:|---:|
+| GetFillRatio | 168/169 | 0xB4B0 | 34 | 0x5297C0 | 175 instructions | 20 |
+| GetLength | 96/97 | 0xB130 | 36 | 0x526160 | 171 instructions | 18 |
+| GetHeight | 100/101 | 0xB160 | 36 | 0x5266A0 | 171 instructions | 18 |
+
+What the entries already show (all three read in re/EXPORT_BODIES.md):
+
+* GetFillRatio hands the NESTING CONTAINER to its implementer: rcx = order + 0x50, which is exactly
+  NestingOwner::nestings, then jumps;
+* GetLength and GetHeight each hand the SUB-OBJECT with edx = 0: rcx = [order + 0x08], and they differ only in one
+  callee of the 0x52F8xx family (0x52F810 against 0x52F830), which is where length and height part company;
+* all three call 0x62F280, which round 374 identified as a platform stub going through the IAT, so it is a
+  toolchain boundary rather than domain code, and its presence does not make the exports unimplementable.
+
+Method to use, unchanged from this session: read the implementer whole, model its fields with offsetof
+assertions, implement, then test. Where the original can be executed (the relocatable blocks) compare bit for
+bit; where it cannot (it logs through a RIP-relative label string), test behaviourally and say so in
+re/EXPORT_IMPLS.md. forwardedCount() rises by one per export and never by assertion.
+
+Two things the 414 report must still do: recompute the lcns/src window at the then-current HEAD, and state
+forwardedCount() as the only progress number, with the 154 unimplemented entry points described by their
+embedded bytes and their reasons rather than by omission.
