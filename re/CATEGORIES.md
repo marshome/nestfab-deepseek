@@ -112,3 +112,32 @@ What this buys, and what it does not:
 The original exports by **ordinal** (`NumberOfNames = 0`); its "names" are the labels the functions log, which is why two
 entries can share a label. The table keeps the label as evidence and uses the ordinal as the identity -- including as the
 key of the forwarding map.
+
+## State at round 385 (measured, not asserted)
+
+Recorded here so the round-414 checkpoint finds the numbers in the tree. Every figure below was measured in round 384
+with freshly linked binaries -- the stale `test_*.exe` files were deleted before `ctest` ran, which is the lesson from
+round 380, where a stale binary made a failed build look green.
+
+| Measure | Value | How it was obtained |
+|---|---|---|
+| Exported entry points implemented (`forwardedCount()`) | **14 of 168** | rows in `lcns/include/lcns/detail/exports_forwarding.inc`, which is hand-written so regeneration cannot erase one |
+| Entry points defined in the C ABI layer | **168 of 168** | `lcns/src/api_exports.cpp`, generated from `re/exports_table.json` |
+| Entry points whose original bytes are embedded and verified | **168 of 168** | `re/g_embed.py` reads the whole export table; `re/check_embeddings.py` compares them with the module |
+| Embedded blocks / bytes | **195 / 92,861** (20 executable) | `re/check_embeddings.py`: "checked against libcns_dump_64.dll: all match" |
+| `tests/test_exports` checks | **?** | its own output |
+| Build | 0 errors, 0 warnings | `cmake --build build` |
+| Tests | 22 of 22 | `ctest` after deleting stale binaries |
+| Domain code still to reverse | 2,490 functions / 1,449,418 bytes / 31.0% | `re/g_coverage.py` |
+
+A not-reversed entry point is not silent: its definition calls `lcns::dll::exports::notReversed()`, which records the call
+and identifies the export, and it returns the documented neutral value for its return type (0, null or NaN). The number
+`forwardedCount()` is the only figure this work treats as progress, and it is monotonic: 0, 4, 8, 13, 14 over rounds 360
+to 364.
+
+### What is verified by differential comparison rather than by property
+
+The affine library (six routines, 862 checks, including a signed-zero difference the property tests could not see), the
+orientation determinant, the segment threshold kernel (3,072 combinations), the box accumulator pair (whole 0x28-byte box,
+byte for byte), and the box merge `0x5C8C50` -- whose differential test is written and whose model agreed on nine of ten
+fixtures in round 380, with the tenth left open and the original's ten outputs recorded in `re/EXPORT_IMPLS.md`.
