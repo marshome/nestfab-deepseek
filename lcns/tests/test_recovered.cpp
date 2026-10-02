@@ -6891,13 +6891,17 @@ int main() {
     // places any of them -- the two functions that could construct the object are the destructor pair and write only the vtable. A member
     // nothing places is not a member.
     {
-        // the interface the forwarders reach, whose vtable at 0xA55FB0 has NULL in slots 0 and 1: a pure interface
-        struct Sink : lcns::ObserverSink {
+        // **THE INTERFACE THE FORWARDERS REACH IS `Structure::Observer`**, whose chain is
+        // `N6Engine12BestObserverE -> N9Structure8ObserverE` and whose three deriving classes each have SIX slots. Two of those slots are the base's
+        // own placeholders -- `0x7C2460` and `0x7C2470` are `xor eax, eax; ret`, which is what a compiler emits for a pure virtual.
+        struct Sink : lcns::Structure_Observer {
             int offers = 0;
             bool finished = false;
-            void offer(const lcns::Solution&, double) override { ++offers; }
-            bool hasSolution() const override { return offers > 0; }
-            void notify(bool done, int) override { finished = done; }
+            int slot4Calls = 0;
+            void offer(const lcns::Solution&, double) override { ++offers; }   // slot 2, RE 0x755A47: jmp [rax + 0x10]
+            bool hasSolution() const override { return offers > 0; }           // slot 3, RE 0x755A57: jmp [rax + 0x18]
+            void slot4() override { ++slot4Calls; }                            // slot 4, NOT forwarded by BestObserver
+            void notify(bool done, int) override { finished = done; }          // slot 5, RE 0x755A6F: jmp [rax + 0x28]
         } sink;
 
         lcns::BestObserver observer;
@@ -6914,9 +6918,15 @@ int main() {
         sink.notify(true, 3);
         CHECK(sink.finished);
 
-        // ObserverSink is an interface: abstract, with the three methods the forwarders reach
-        static_assert(std::is_abstract<lcns::ObserverSink>::value, "a pure interface");
-        CHECK(sizeof(lcns::BestObserver) == sizeof(void*));      // RE 0x755A40: the class holds ONE pointer, at +0x10
+        // Structure_Observer is an interface: abstract, with the three methods the forwarders reach
+        static_assert(std::is_abstract<lcns::Structure_Observer>::value, "a pure interface");
+
+        // **SIXTEEN, NOT EIGHT.** The class has a BASE -- `N6Engine12BestObserverE -> N9Structure8ObserverE` -- so it carries its own vtable pointer
+        // at +0 and `sink_` at +0x10. **THAT IS WHY THE FORWARDERS READ +0x10 AND NOT +8**: the first eight bytes are the base's vptr, and an
+        // earlier assertion of `sizeof(void*)` was a statement about a model that had no base at all.
+        CHECK(sizeof(lcns::BestObserver) == 2 * sizeof(void*));
+        static_assert(std::is_base_of<lcns::Structure_Observer, lcns::BestObserver>::value,
+                      "the module's typeinfo chain says so");
     }
 
 

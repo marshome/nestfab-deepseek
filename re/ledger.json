@@ -2766,6 +2766,30 @@
    "round": 697,
    "subject": "both-nester-bases-have-six-virtuals",
    "witness": "Nester's slot 2 at 0xB4430 is shared by four of its five derived classes; CompositeNester's slot 2 at 0xB4440 is shared by four of its six and its slot 4 at 0xB46F0 by three"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the interface Engine::BestObserver forwards to is Structure::Observer, whose name string is at 0xA311C0 and whose typeinfo is at 0xA1DEE0",
+   "round": 698,
+   "subject": "ObserverSink-was-Structure-Observer",
+   "witness": "the module's own typeinfo chain is N6Engine12BestObserverE at 0xA19090 pointing at N9Structure8ObserverE; ObserverSink was a name invented in this tree"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "Structure::Observer has six slots, of which slots 2 and 3 at 0x7C2460 and 0x7C2470 are its own pure-virtual placeholders",
+   "round": 698,
+   "subject": "Structure-Observer-has-six-virtuals",
+   "witness": "the three deriving classes Engine::CompositeObserver at 0xA3D060, Multi::TraceObserver at 0xA3B700 and Multi::NestingObserver at 0xA3B7C0 each have six slots, and two of them carry 0x7C2460 and 0x7C2470 whose bodies are xor eax,eax then ret"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "layout",
+   "predicate": "a class with a base carries a vtable pointer at +0, so BestObserver is two words and its sink_ sits at +0x10 rather than +8",
+   "round": 698,
+   "subject": "a-base-changes-the-size",
+   "witness": "the three forwarders read [rcx + 0x10]; declaring the base made sizeof(BestObserver) assert of one word fail, which is the assertion working"
   }
  ]
 }

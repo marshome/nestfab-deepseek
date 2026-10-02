@@ -123,17 +123,31 @@ struct Observers {
     std::function<void(const Solution&)> newNestingFound;               // v5
 };
 
-/** The interface `Engine::BestObserver` forwards to, RE 0x755A40 through 0x755A6F.
+/** **THE MODULE'S OWN NAME FOR THE INTERFACE `Engine::BestObserver` FORWARDS TO.** The chain is
+ *  `N6Engine12BestObserverE -> N9Structure8ObserverE`, read from the module's typeinfo, so this class IS `Structure::Observer`: its name string is
+ *  at 0xA311C0 and its typeinfo at 0xA1DEE0. **An earlier version of this declaration called it `ObserverSink`, a name invented here** -- which is
+ *  the placeholder `re/g_base_chain.py` exists to prevent.
  *
- *  Its vtable is at 0xA55FB0 and has NULL in slots 0 and 1 -- **a pure interface** -- and the three forwarders reach its slots 2, 3 and 5
- *  through [rax + 0x10], [rax + 0x18] and [rax + 0x28].
- */
-class ObserverSink {
+ *  **SIX VIRTUALS, MEASURED FROM THE THREE CLASSES THAT DERIVE FROM IT** (`Engine::CompositeObserver`, `Multi::TraceObserver` and
+ *  `Multi::NestingObserver`, tables at 0xA3D060, 0xA3B700 and 0xA3B7C0, every one with six slots):
+ *
+ *      slot 0   one per class, 1 byte             the deleting destructor
+ *      slot 1   one per class, 5 bytes            the destructor
+ *      slot 2   0x7C2460 in TWO of the three      `xor eax, eax` then `ret` -- THE BASE'S PLACEHOLDER FOR A PURE VIRTUAL
+ *      slot 3   0x7C2470 in TWO of the three      the same
+ *      slot 4   one per class, up to 4111 bytes
+ *      slot 5   0x7C2480 in ONE of the three      `ret`
+ *
+ *  **AND THE THREE FORWARDERS FIT THAT EXACTLY**: they read the object at +0x10 and jump through `[rax + 0x10]`, `[rax + 0x18]` and `[rax + 0x28]`
+ *  -- slots 2, 3 and 5. **An earlier version declared only three methods, and three methods cannot have a gap at slot 4.** The two this project
+ *  does not forward are simply not forwarded, and the second is named for its slot rather than guessed at. */
+class Structure_Observer {
 public:
-    virtual ~ObserverSink() = default;
-    virtual void offer(const Solution& solution, double score) = 0;
-    virtual bool hasSolution() const = 0;
-    virtual void notify(bool finished, int offers) = 0;
+    virtual ~Structure_Observer() = default;
+    virtual void offer(const Solution& solution, double score) = 0;   // slot 2, RE 0x755A47: jmp [rax + 0x10]
+    virtual bool hasSolution() const = 0;                             // slot 3, RE 0x755A57: jmp [rax + 0x18]
+    virtual void slot4() = 0;                                         // slot 4, NOT forwarded by BestObserver
+    virtual void notify(bool finished, int offers) = 0;               // slot 5, RE 0x755A6F: jmp [rax + 0x28]
 };
 
 /** RE 0xA3CF30. **IT HOLDS ONE POINTER AT +0x10 AND FORWARDS ITS WHOLE INTERFACE TO IT.** Three of its six slots are 11, 11 and 18 bytes:
@@ -150,14 +164,19 @@ public:
  *  checking that `rcx` still holds `this` reported that slot 4 at 0x755A80 writes `+0x10` through `+0x60`, and **the routine writes none of
  *  them** -- `rcx` is reloaded with other pointers inside it. **An offset is evidence only if the base register is the object.**
  */
-class BestObserver {
+class BestObserver : public Structure_Observer {   // RE the typeinfo chain: N6Engine12BestObserverE -> N9Structure8ObserverE
 public:
-    void offer(const Solution& s, double score);      // RE 0x755A40
-    bool hasSolution() const;                          // RE 0x755A50
-    void notify(bool finished, int offers);            // RE 0x755A60
+    // slot 2, slot 3 and slot 5, each forwarding to the object at +0x10
+    void offer(const Solution& s, double score) override;      // RE 0x755A40
+    bool hasSolution() const override;                          // RE 0x755A50
+    void notify(bool finished, int offers) override;            // RE 0x755A60
+
+    /** **SLOT 4 IS NOT FORWARDED BY THIS CLASS** -- the module's own table has it, and RE 0x755A80 is the 4242 byte routine at that slot. Its body
+     *  has not been read, so this says so rather than inventing one. */
+    void slot4() override {}
 
 private:
-    ObserverSink* sink_ = nullptr;                     // +0x10, RE 0x755A40: mov rcx, [rcx + 0x10]
+    Structure_Observer* sink_ = nullptr;             // +0x10, RE 0x755A40: mov rcx, [rcx + 0x10]
 };
 
 // ---------------------------------------------------------------------------
