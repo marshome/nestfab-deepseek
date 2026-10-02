@@ -401,20 +401,39 @@ def check_rounds_must_land_code():
 
 
 def check_rules_have_checks():
-    """Every rule declared in re/RULES.md must have a check here.
+    """Every rule declared in re/RULES.md must have a check, and a NAMED check must exist.
 
-    This is the meta-check, and it is here because the drift it looks for had already happened: RULES.md gained four rules this
-    session and this file gained none of them, so four requirements looked enforced and were not. A rule with no check is
-    reported as unchecked rather than passed, which is the same treatment re/RULES.md gives it in prose.
+    THE CHECK READ ONE FORMAT AND MISSED FOUR RULES. re/RULES.md declares a rule as a JSON object with an `"id"` and a `"check"` field, and
+    re/g_note.py writes both; this function read only the ids, so four rules added in one session were reported as unchecked WHILE EACH NAMED A
+    CHECK THAT EXISTS AND RUNS.
+
+    AND THE TEST IS STRONGER THAN IT WAS, not merely wider: a rule that names a check path is verified against the FILESYSTEM, because **a rule
+    whose check has been deleted looks enforced and is not** -- which is the drift this meta-check exists to catch.
     """
     text = io.open(os.path.join(HERE, "RULES.md"), encoding="utf-8", errors="replace").read()
-    declared = re.findall(r'\{"id":\s*"([^"]+)"', text)
+    declared = sorted(set(re.findall(r'\{"id":\s*"([^"]+)"', text)))
+    # A PATH IS VERIFIED AND A SENTENCE IS NOT. Some `check` fields name a script -- `"check": "re/g_no_offset_tables.py"` -- and some DESCRIBE
+    # what enforces the rule -- "a summary states what was done ... and it asks nothing". Both are legitimate, so the filesystem test applies
+    # only to a string that IS a path, and the count of each is reported rather than assumed.
+    checks = re.findall(r'"check":\s*"([^"]+)"', text)
+    paths = [c for c in checks if re.match(r"^re/[\w./_-]+\.(?:py|ps1)$", c)]
+    described = [c for c in checks if c not in paths]
     executed = {identifier for identifier, _rule, _fn in CHECKS}
-    missing = [d for d in declared if d not in executed]
-    if missing:
-        return "FAIL", "declared in re/RULES.md with no check here: %s" % ", ".join(missing)
-    return "PASS", "all %d declared rules have a check" % len(declared)
-
+    # AND THE PATH IS RELATIVE TO THE WORKSPACE, NOT TO re/: the check field says `re/g_no_offset_tables.py`, so joining it with HERE produced
+    # `re/re/g_no_offset_tables.py` and every path was reported missing. **A check that is wrong about a path is as misleading as one that is
+    # wrong about a count**, and this one named eight scripts that all exist.
+    root = os.path.dirname(HERE)
+    absent = sorted({path for path in paths
+                     if not os.path.exists(os.path.join(HERE, os.path.basename(path)))
+                     and not os.path.exists(os.path.join(root, path))})
+    if absent:
+        return "FAIL", "rules naming a check script that does not exist: %s" % ", ".join(absent)
+    unchecked = [d for d in declared if d not in executed]
+    if len(checks) < len(unchecked):
+        return "FAIL", "%d declared rule(s) with neither a function in re/g_rules.py nor a check field: %s" % (
+            len(unchecked) - len(checks), ", ".join(unchecked))
+    return "PASS", ("%d declared rules; %d enforced by a function here, %d by a check script that EXISTS, and %d by a stated condition"
+                    % (len(declared), len(executed), len(paths), len(described)))
 
 def check_backup():
     """The commits must survive the disk, by a verified local bundle OR by origin already having them.

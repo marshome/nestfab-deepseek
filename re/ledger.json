@@ -2534,6 +2534,22 @@
    "round": 682,
    "subject": "offset-in-name-is-the-tell",
    "witness": "the rule is re/g_no_address_named_functions.py, proved by re/g_prove_address_named_check.py on the accessor shape and on the two legitimate forms"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the meta-check read one of the two formats RULES.md uses, then treated a described condition as a path, then joined the path to the wrong directory and reported eight existing scripts as missing",
+   "round": 683,
+   "subject": "checks-must-verify-what-they-claim",
+   "witness": "23 rules were reported broken by the check that exists to find rules with no check; each of the three defects is fixed and the counts are now reported as 23 functions, 6 scripts and 22 stated conditions"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a rule whose check script has been deleted looks enforced and is not, so a named check path is verified against the filesystem",
+   "round": 683,
+   "subject": "a-rule-whose-check-is-deleted",
+   "witness": "re/g_ask.py is named by no-blocking-questions, report-not-ask and decide-required-decisions and no longer exists; those three now state the condition instead of naming a script"
   }
  ]
 }
