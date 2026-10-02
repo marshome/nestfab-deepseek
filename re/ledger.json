@@ -2662,6 +2662,22 @@
    "round": 690,
    "subject": "support-queue-reaches-zero",
    "witness": "the audit was repaired three times rather than the rows chased: reads count as placement, a handle's block is followed, and the allocating constructor replaces a slot"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "all eight corrected classes have slot 0 and slot 1 as the destructor pair, both writing only the vtable at +0, with methods beginning at slot 2",
+   "round": 691,
+   "subject": "the-eight-have-one-slot-shape",
+   "witness": "mapping the slots of Supervisor, InfiniteEngine, BestObserver, Squeezer, PackerCache, MultiOrientedPartPattern, MultitorchEvaluator and BoxMultiTiler; only their slot 0 and 1 write +0 and nothing else"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "re/vtables.json records 5 slots for Tiling::MultiOrientedPartPattern and the live vtable at 0xA3D370 has 8",
+   "round": 691,
+   "subject": "slot-counts-disagree-in-one-place",
+   "witness": "the dump at 0xA3D370 gives slots at +0x10 through +0x48, and the JSON entry lists five"
   }
  ]
 }

@@ -145,6 +145,10 @@ public:
  *  **AND THAT IS ALL THE INSTRUCTIONS ESTABLISH.** The declaration this replaces held a `Solution best_`, a `double bestScore_`, a `bool has_`
  *  and an `int offers_`, and **no instruction places any of them**: the two functions that could construct the object are the destructor pair
  *  and write only the vtable, and the constructor is not in the profile. A member nothing places is not a member.
+ *
+ *  A NOTE ON A TOOL, because it produced a false positive here and in `Tiling::MultiOrientedPartPattern`: counting `[rcx + N]` writes without
+ *  checking that `rcx` still holds `this` reported that slot 4 at 0x755A80 writes `+0x10` through `+0x60`, and **the routine writes none of
+ *  them** -- `rcx` is reloaded with other pointers inside it. **An offset is evidence only if the base register is the object.**
  */
 class BestObserver {
 public:
