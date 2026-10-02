@@ -331,14 +331,6 @@
       "witness": "mov rdx,[rdi+0x140]; mov r8d,esi; mov rcx,rbx; jmp 0x63f228"
     },
     {
-      "grade": "SHAPE",
-      "kind": "shape",
-      "predicate": "both user-string exports tail call 0x63F228, which is a jmp through the import table, so what they DO depends on a callee outside the module",
-      "round": 558,
-      "subject": "thunk.63F228",
-      "witness": "0x63F228 is jmp qword ptr [rip+0x4e9cee], IAT slot 0xB28F1C; the import name could not be resolved this round"
-    },
-    {
       "grade": "INSTRUCTION",
       "kind": "offset",
       "predicate": "every export owns an ORDINAL PAIR, so liblcns_52 and liblcns_51 are the same function",
@@ -353,14 +345,6 @@
       "round": 559,
       "subject": "module.ida-labels",
       "witness": "liblcns_52 -> 0x2AB0 LaunchLocalComputation 2134 B; liblcns_55 -> 0xB020 GetPartUserStringEx 52 B"
-    },
-    {
-      "grade": "SHAPE",
-      "kind": "shape",
-      "predicate": "0x63F228 is a jmp through the import table whose slot 0xB28F1C holds a run time address, so the two user-string exports call something OUTSIDE the module and the name is not recoverable from the file",
-      "round": 559,
-      "subject": "thunk.63F228-resolved",
-      "witness": "IAT slot 0xB28F1C reads 0x7FF998BDD6F0 in the dump, which is runtime; correcting my earlier note that liblcns_52 was the callee, since 0x63F228 is not 0x2AB0"
     },
     {
       "grade": "INSTRUCTION",
@@ -2870,6 +2854,14 @@
       "round": 705,
       "subject": "the-0xf0-record-producer-installs-no-vtable",
       "witness": "every lea rip in 0x4E9A10 is a data pointer and none is a vtable in re/vtables.json; its stores are almost all through rsp, so it assembles a value rather than filling a record in place. This is a NEGATIVE result and is recorded as a call and not as a type, because no constructor establishes the elements type"
+    },
+    {
+      "grade": "MEASURED",
+      "kind": "call",
+      "predicate": "the callee behind 0x63F228 is OUTSIDE libcns_dump_64.dll, and its NAME is not in this dump because the import table is degenerate",
+      "round": 706,
+      "subject": "the-import-thunk-is-external",
+      "witness": "the IAT slot 0xB28F1C holds 0x7FF998BDD6F0, in the 0x7FF9 range where a 64 bit process loads system dlls, while the whole module image ends at 0xB43000; the import directory at 0xB42274 has KERNEL32.DLL with OriginalFirstThunk 0x0 and an IAT holding resolved runtime addresses, because the file came from a process that had already loaded the module"
     }
   ]
 }
