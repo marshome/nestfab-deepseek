@@ -151,5 +151,11 @@ struct Element48 {
 static_assert(sizeof(Element48) == 48, "RE 0x8C4530");
 static_assert(modularInverse(3) == 0xAAAAAAAAAAAAAAABull, "the constant 0x8C4530 multiplies by");
 
+struct Element216 {
+    unsigned char opaque[216];
+};
+static_assert(sizeof(Element216) == 216, "RE 0x4F73E0");
+static_assert(modularInverse(27) == 0x84BDA12F684BDA13ull, "the constant 0x4F73E0 multiplies by");
+
 }  // namespace dll
 }  // namespace lcns

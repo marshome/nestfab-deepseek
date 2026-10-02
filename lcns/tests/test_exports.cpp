@@ -422,6 +422,9 @@ int main() {
         CHECK(sizeof(lcns::dll::Element48) == 48);
         CHECK(lcns::dll::modularInverse(3) == 0xAAAAAAAAAAAAAAABull);
 
+        CHECK(sizeof(lcns::dll::Element216) == 216);
+        CHECK(lcns::dll::modularInverse(27) == 0x84BDA12F684BDA13ull);
+
     return check::finish("exports");
 }
 
