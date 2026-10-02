@@ -2702,6 +2702,14 @@
    "round": 693,
    "subject": "Squeezer.enabled-gates-the-cost-path",
    "witness": "0x13A3CC calls 0x1380D0 and 0x1380D0 begins cmp byte [rdx+8],0 against the +0x08 the constructor sets to 1 at 0x138A6B"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the classes deriving from Nester have an UNIDENTIFIED base whose fields begin at +0x10, and Nester itself declares no data members",
+   "round": 694,
+   "subject": "the-nester-base-class-is-missing",
+   "witness": "NoFillNester's slot 5 at 0x7F240 stores through rbp (= rcx at 0x7F266) at +0x10, +0x18, +0x20 through +0x90, with immediate zeros at 0x7F41F, 0x7F426 and 0x7F445, and NestingNester has the same 0x10 base gap"
   }
  ]
 }
