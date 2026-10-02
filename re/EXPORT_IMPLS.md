@@ -162,3 +162,26 @@ fixtures agreed. That is now out of date, and this note supersedes it:
 Nothing calls it yet, so no exported behaviour has changed: it is a verified piece of the common step behind
 GetLength (0x526160), GetHeight (0x5266A0) and the container construction of 0x5CD800, waiting for those three
 exports to be implemented on top of it.
+
+## GetPartWithBadGeometry (ordinals 29/30, rva 0xB510) -- implemented in round 432
+
+Thirteen instructions, no calls but the logger, read whole:
+
+    0B524  edx = dword [rbx + 0x4C]      ; a 32-bit status field
+    0B527  eax = 0                       ; the default return is null
+    0B529  cmp edx, 1 ; jne 0B535        ; only status 1 continues
+    0B52E  rax = qword [rbx + 0xA0]      ; the pointer that is returned
+    0B535  ret
+
+So: object[+0xA0] when object[+0x4C] is 1, null otherwise. Implemented in lcns/src/exports_impl.cpp as
+getPartWithBadGeometry, with the two offsets asserted by the compiler in BadGeometryCarrier (lcns/dll_layout.hpp).
+That carrier is deliberately NOT PartObject: the export has a log label but no typed signature a reader can trust, so
+only the two offsets are known and the type name says so.
+
+Evidence: BEHAVIOURAL, not differential. None of the entries in this file can be compared by running the original,
+because each begins by handing a RIP-relative label string to the logger at 0x64AEA0, so the embedded copy cannot
+execute from a different image address. What the behavioural test checks is exactly the decoded behaviour: status 0
+returns null, status 2 returns null, status 1 returns the pointer at +0xA0, and a null at +0xA0 still returns null.
+
+The logger itself was shown in round 369 to do nothing on its default path (it tests a global switch and returns), so
+leaving it out is a faithful simplification rather than an omission, and that is recorded rather than assumed.
