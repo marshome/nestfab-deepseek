@@ -411,6 +411,26 @@ inline double getDouble08_52F8F0(const void* object) {
     std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x08, sizeof(value));
     return value;
 }
+/** RE 0x4F8D20: copies one dword from the second argument into the field at +0xA4. */
+inline void copyDwordToA4_4F8D20(void* destination, const void* source) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, source, sizeof(value));
+    std::memcpy(static_cast<unsigned char*>(destination) + 0xA4, &value, sizeof(value));
+}
+
+/** RE 0x4F8D10: copies one dword from the second argument into the field at +0xA0. */
+inline void copyDwordToA0_4F8D10(void* destination, const void* source) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, source, sizeof(value));
+    std::memcpy(static_cast<unsigned char*>(destination) + 0xA0, &value, sizeof(value));
+}
+
+/** RE 0x4F7600: returns the pointer held at +0x70, the tail call to 0x547610 being the identity. */
+inline void* member70_4F7600(const void* object) {
+    void* value = nullptr;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x70, sizeof(value));
+    return value;
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

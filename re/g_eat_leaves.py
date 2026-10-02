@@ -89,10 +89,56 @@ def classify(body):
                 return ("set", int(mm.group(1), 16), width)
             if re.match(r"(?:dword|byte|qword)ptr\[rcx\]", dst):
                 return ("set", 0, width)
+    # a constant returned straight away
+    if len(ins) == 2 and ins[1][0] == "ret" and ins[0][0] == "mov" and re.match(r"eax,(0x[0-9a-f]+|\d+)$", ins[0][1]):
+        return ("const", int(ins[0][1].split(",")[1], 0), None)
+    # a global read through rip
+    if len(ins) == 2 and ins[1][0] == "ret" and ins[0][0] == "mov" and ins[0][1].startswith("eax,dwordptr[rip+"):
+        return ("global", None, None)
+    # a two level pointer: load a member, then load through it at a fixed offset
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0] == ("mov", "rax,qwordptr[rcx]"):
+        mm = re.match(r"rax,qwordptr\[rax\+0x([0-9a-f]+)\]", ins[1][1])
+        if mm:
+            return ("twolvl", int(mm.group(1), 16), None)
+        mm = re.match(r"add,?rax,0x([0-9a-f]+)", ins[1][0] + "," + ins[1][1]) or re.match(r"rax,0x([0-9a-f]+)", ins[1][1])
+        if ins[1][0] == "add" and ins[1][1].startswith("rax,"):
+            return ("ptradd", int(ins[1][1].split(",")[1], 16), None)
+    # a null test on the first member
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0][0] == "cmp" and ins[0][1] in ("qwordptr[rcx],0", "dwordptr[rcx],0") and ins[1][0] == "setne":
+        return ("nullpred", None, None)
+    # a two byte setter, adjacent offsets, second and third argument
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0][0] == "mov" and ins[1][0] == "mov":
+        m1 = re.match(r"byteptr\[rcx\+0x([0-9a-f]+)\],(dl|sil|r8b|r9b)", ins[0][1])
+        m2 = re.match(r"byteptr\[rcx\+0x([0-9a-f]+)\],(dl|sil|r8b|r9b)", ins[1][1])
+        if m1 and m2 and int(m2.group(1), 16) == int(m1.group(1), 16) + 1 and m1.group(2) == "dl" and m2.group(2) == "r8b":
+            return ("twobytes", int(m1.group(1), 16), None)
+    # a dword comparison between the two arguments
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0][0] == "mov" and ins[0][1] in ("eax,dwordptr[rdx]", "eax,[rdx]") \
+            and ins[1][0] == "cmp" and ins[1][1] in ("dwordptr[rcx],eax", "[rcx],eax") \
+            and ins[2][0] == "ret" and False:
+        pass
+    if len(ins) == 4 and ins[3][0] == "ret" and ins[0][1] in ("eax,dwordptr[rdx]", "eax,[rdx]") \
+            and ins[1] == ("cmp", "dwordptr[rcx],eax") and ins[2][0].startswith("set"):
+        return ("dwordpred", ins[2][0], None)
     if len(ins) == 3 and ins[2][0] == "ret":
         a, b = ins[0], ins[1]
         if a[0] == "mov" and a[1] in ("eax,dwordptr[rdx]", "eax,[rdx]") and b[0] == "mov" and b[1] in ("dwordptr[rcx],eax", "[rcx],eax"):
             return ("copy", None, None)
+    # a global object's address, or a global pointer loaded
+    if len(ins) == 2 and ins[1][0] == "ret" and ins[0][0] == "lea" and ins[0][1].startswith("rax,[rip+"):
+        return ("globaddr", None, None)
+    if len(ins) == 2 and ins[1][0] == "ret" and ins[0][0] == "mov" and ins[0][1].startswith("rax,qwordptr[rip+"):
+        return ("globptr", None, None)
+    # one dword copied from the second argument into a field of the first
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0][1] in ("eax,dwordptr[rdx]", "eax,[rdx]"):
+        mm = re.match(r"dwordptr\[rcx\+0x([0-9a-f]+)\],eax", ins[1][1])
+        if mm:
+            return ("copyoff", int(mm.group(1), 16), None)
+    # a member loaded and then handed to another function: a getter when that function is the identity
+    if len(ins) == 2 and ins[1][0] == "jmp" and ins[0][0] == "mov" and ins[0][1].startswith("rcx,qwordptr[rcx+0x"):
+        off = int(ins[0][1][len("rcx,qwordptr[rcx+0x"):-1], 16)
+        target = int(ins[1][1], 16)
+        return ("memberget", off, target)
     return None
 
 
@@ -146,7 +192,9 @@ def main(argv):
     leaves = [a for a in seen if not [t for t in callees(a) if domain(t)]]
     leaves.sort(key=lambda a: (profile.get(a) or {}).get("size") or 0)
 
-    books = {"identity": [], "zero": [], "get": [], "set": [], "addr": [], "copy": [], "getd": [], "setd": [], "unknown": []}
+    books = {"identity": [], "zero": [], "get": [], "set": [], "addr": [], "copy": [], "getd": [], "setd": [],
+             "const": [], "global": [], "twolvl": [], "ptradd": [], "nullpred": [], "twobytes": [], "dwordpred": [],
+             "globaddr": [], "globptr": [], "copyoff": [], "memberget": [], "unknown": []}
     for a in leaves:
         size = (profile.get(a) or {}).get("size") or 0
         body = [i for i in disasm(a) if i.address < a + size]
@@ -241,6 +289,46 @@ def main(argv):
                      " std::memcpy(s, &put, sizeof(put)); std::memset(d, 0, sizeof(d));"
                      " lcns::dll::accessors::%s(d, s); std::uint32_t got = 0; std::memcpy(&got, d, sizeof(got));"
                      " CHECK(got == put); }   // RE 0x%X" % (name, a))
+    for a, off, _w in books["copyoff"][:limit]:
+        name = "copyDwordTo%02X_%X" % (off, a)
+        gen.append("/** RE 0x%X: copies one dword from the second argument into the field at +0x%02X. */" % (a, off))
+        gen.append("inline void %s(void* destination, const void* source) {" % name)
+        gen.append("    std::uint32_t value = 0;")
+        gen.append("    std::memcpy(&value, source, sizeof(value));")
+        gen.append("    std::memcpy(static_cast<unsigned char*>(destination) + 0x%02X, &value, sizeof(value));" % off)
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        tests.append("        { unsigned char s[8]; const std::uint32_t put = 0x0BADF00Du; std::memcpy(s, &put, sizeof(put));"
+                     " lcns::dll::accessors::%s(object, s); std::uint32_t got = 0;"
+                     " std::memcpy(&got, object + 0x%02X, sizeof(got)); CHECK(got == put); }   // RE 0x%X"
+                     % (name, off, a))
+    for a, off, target in books["memberget"][:limit]:
+        if target not in (0x547610, 0x4F7030, 0x4F8350, 0x5C5F30, 0x5C5F50, 0x5C61D0, 0x5C5260, 0x548630, 0x5C61E0, 0x548380, 0x5C5270):
+            continue   # only when the tail target is a known identity, otherwise this is a real wrapper
+        name = "member%02X_%X" % (off, a)
+        gen.append("/** RE 0x%X: returns the pointer held at +0x%02X, the tail call to 0x%X being the identity. */"
+                   % (a, off, target))
+        gen.append("inline void* %s(const void* object) {" % name)
+        gen.append("    void* value = nullptr;")
+        gen.append("    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x%02X, sizeof(value));" % off)
+        gen.append("    return value;")
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        tests.append("        { const void* put = reinterpret_cast<const void*>(0x1234);"
+                     " std::memcpy(object + 0x%02X, &put, sizeof(put));"
+                     " CHECK(lcns::dll::accessors::%s(object) == put); }   // RE 0x%X" % (off, name, a))
+    if books["globaddr"] or books["globptr"]:
+        s_tmp = io.open(TOOLCHAIN, encoding="utf-8", newline="").read().replace("\r\n", "\n")
+        anchor3 = "    0xD59A0,  # xor eax, eax ; ret -- a default override returning zero"
+        add = [anchor3]
+        for a, _o, _w in books["globaddr"]:
+            add.append("    0x%X,  # lea rax,[rip+..] ; ret -- the address of a global object" % a)
+        for a, _o, _w in books["globptr"]:
+            add.append("    0x%X,  # mov rax,[rip+..] ; ret -- loads a global pointer" % a)
+        io.open(TOOLCHAIN, "w", encoding="utf-8", newline="\n").write(s_tmp.replace(anchor3, "\n".join(add), 1))
+        print("g_toolchain.py       %d global accessors classified" % (len(books["globaddr"]) + len(books["globptr"])))
     if gen:
         io.open(HDR, "w", encoding="utf-8", newline="\n").write(h.replace(anchor, "\n".join(gen) + anchor, 1))
         print("field_accessors.hpp  %d functions generated" % len(implemented))

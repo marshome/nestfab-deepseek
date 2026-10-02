@@ -614,5 +614,14 @@ int main() {
         { const double put = -13.25; std::memcpy(object + 0x08, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble08_52F8F0(object) == put); }   // RE 0x52F8F0
     }
 
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];   // the largest field offset an accessor touches
+        std::memset(object, 0xA5, sizeof(object));
+        { unsigned char s[8]; const std::uint32_t put = 0x0BADF00Du; std::memcpy(s, &put, sizeof(put)); lcns::dll::accessors::copyDwordToA4_4F8D20(object, s); std::uint32_t got = 0; std::memcpy(&got, object + 0xA4, sizeof(got)); CHECK(got == put); }   // RE 0x4F8D20
+        { unsigned char s[8]; const std::uint32_t put = 0x0BADF00Du; std::memcpy(s, &put, sizeof(put)); lcns::dll::accessors::copyDwordToA0_4F8D10(object, s); std::uint32_t got = 0; std::memcpy(&got, object + 0xA0, sizeof(got)); CHECK(got == put); }   // RE 0x4F8D10
+        { const void* put = reinterpret_cast<const void*>(0x1234); std::memcpy(object + 0x70, &put, sizeof(put)); CHECK(lcns::dll::accessors::member70_4F7600(object) == put); }   // RE 0x4F7600
+    }
+
     return check::finish("boxacc");
 }
