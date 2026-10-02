@@ -2358,6 +2358,30 @@
    "round": 673,
    "subject": "slot-position-says-nothing-about-meaning",
    "witness": "the class declaration called FilterNester's slot 2 an estimate for several rounds; reading 0xB43B0 showed it is the reseed that seeds the generator and forwards to the inner nester"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "115 C++ files: 97 CODE, 18 DATA, and 0 fabricated by the four shape tests",
+   "round": 674,
+   "subject": "cpp.audit-full",
+   "witness": "re/g_full_cpp_audit.py; the shapes are a member named after its offset, a member whose comment cites a stack store, an unplaced_XXXX region, and a placeholder class"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "seven hand-written classes declare members that no instruction in their recovered constructor places, and three more have writes that do not match their declaration",
+   "round": 674,
+   "subject": "cpp.members-without-support",
+   "witness": "re/g_members_without_instructions.py over 19 classes: Supervisor, InfiniteEngine, BestObserver, Squeezer, PackerCache, MultiOrientedPattern, MultitorchEvaluator, BoxMultiTiler write nothing to the object; LimitedNester, RowNester and Canceller disagree"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the shape audit's first version flagged four correct files because a stack store may appear in a COMMENT as evidence; the fabricated form is narrower",
+   "round": 674,
+   "subject": "a-check-that-flags-correct-code-gets-switched-off",
+   "witness": "geom.hpp, variant.hpp and licensing.cpp cite mov [rsp + ...] as the evidence for something the stack holds, which is legitimate; re/g_prove_full_audit.py now plants each shape and requires failure"
   }
  ]
 }
