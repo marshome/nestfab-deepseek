@@ -50,7 +50,7 @@ else()
 endif()
 
 add_library(lcns_embedded STATIC src/embedded.cpp src/embedded/gen_blobs.cpp
-                                 src/embedded/gen_table.cpp)
+                                 src/embedded/gen_table.cpp src/embedded_shims.cpp)
 target_link_libraries(lcns_embedded PUBLIC lcns_flags)
 if(LCNS_HAVE_ASM)
   target_sources(lcns_embedded PRIVATE src/embedded/gen_orig.S)
@@ -58,7 +58,7 @@ if(LCNS_HAVE_ASM)
 endif()
 
 # --- exact geometry kernel  (mirrors ..\exact\* and ..\geom\* of the original) ---
-add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp)
+add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp src/segcost.cpp)
 target_link_libraries(lcns_geom PUBLIC lcns_flags)
 
 # --- problem model + NFP map + tiling patterns + row distance/squeeze ---
@@ -191,7 +191,7 @@ endif()
 if(LCNS_BUILD_TESTS)
   enable_testing()
   foreach(t exact conv boolean offset nofit nester model tiling io lp linear_program cloud
-            licensing row recovered json_backend crypto_backend embedded affine)
+            licensing row recovered json_backend crypto_backend embedded affine segcost)
     add_executable(test_${t} tests/test_${t}.cpp)
     target_link_libraries(test_${t} PRIVATE lcns_nest lcns_api lcns_embedded)
     add_test(NAME ${t} COMMAND test_${t})
@@ -206,3 +206,4 @@ if(Python3_Interpreter_FOUND)
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "Regenerating include/lcns/detail/api_table.inc from ../re/exports_table.json")
 endif()
+

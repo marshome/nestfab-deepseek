@@ -57,13 +57,20 @@ def main():
         if e["sha256"] not in cpp:
             print("FAIL 0x%x: gen_blobs.cpp does not carry the hash %s" % (rva, e["sha256"]))
             bad += 1
-        if e["status"] == "callable":
+        if e["status"] in ("callable", "callable_relocated"):
             callable_n += 1
             if e["symbol"] not in asm:
                 print("FAIL 0x%x: %s is not defined in gen_orig.S" % (rva, e["symbol"]))
                 bad += 1
             if e["symbol"] not in tab:
                 print("FAIL 0x%x: %s is missing from the pointer table" % (rva, e["symbol"]))
+                bad += 1
+        elif e["status"] == "callable_relocated":
+            if not e.get("relocations"):
+                print("FAIL 0x%x: a relocated copy with no relocation list" % rva)
+                bad += 1
+            if not e.get("reason"):
+                print("FAIL 0x%x: a relocated copy must record what was rewritten" % rva)
                 bad += 1
         elif e["status"] == "data":
             # Evidence carried as bytes: no symbol and no excuse, but the bytes and the hash are checked like any other.

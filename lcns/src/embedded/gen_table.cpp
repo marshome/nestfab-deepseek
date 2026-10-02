@@ -17,6 +17,7 @@ void lcns_orig_5cfdc0();
 void lcns_orig_5cea80();
 void lcns_orig_5cf6b0();
 void lcns_orig_5ce970();
+void lcns_orig_55e190();
 }
 
 namespace lcns {
@@ -35,6 +36,7 @@ const RawFn kOrigTable[] = {
     &lcns_orig_5cea80,  // 0x5cea80  affine transform applied to a source record, functional form
     &lcns_orig_5cf6b0,  // 0x5cf6b0  affine transform, out of place
     &lcns_orig_5ce970,  // 0x5ce970  composition of two 2x3 affine transforms
+    &lcns_orig_55e190,  // 0x55e190  segment length pair, min and max, with a square-root guard
 };
 const std::size_t kOrigTableCount = sizeof(kOrigTable) / sizeof(kOrigTable[0]);
 #else

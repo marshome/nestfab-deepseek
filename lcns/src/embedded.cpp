@@ -26,7 +26,7 @@ Status statusOf(std::uintptr_t rva) {
 std::size_t callableCount() {
     std::size_t n = 0;
     for (std::size_t i = 0; i < kBlockCount; ++i) {
-        if (kBlocks[i].status == Status::Callable) {
+        if (kBlocks[i].status == Status::Callable || kBlocks[i].status == Status::CallableRelocated) {
             ++n;
         }
     }
@@ -48,8 +48,8 @@ std::size_t embeddedBytes() {
 RawFn originalOf(std::uintptr_t rva) {
     std::size_t index = 0;
     for (std::size_t i = 0; i < kBlockCount; ++i) {
-        if (kBlocks[i].status != Status::Callable) {
-            continue;
+        if (kBlocks[i].status != Status::Callable && kBlocks[i].status != Status::CallableRelocated) {
+            continue;   // both statuses mean an executable copy exists, in the registry's callable order
         }
         if (kBlocks[i].rva == rva) {
             return index < kOrigTableCount ? kOrigTable[index] : nullptr;

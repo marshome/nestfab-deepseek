@@ -23,7 +23,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x5ce970` | 269 | callable | 38 | composition of two 2x3 affine transforms |
 | `0x5ce7b0` | 50 | comment_only | 32 | builds a translation matrix (identity basis + point) |
 | `0x5ced50` | 196 | comment_only | 24 | inverse of a 2x3 affine matrix |
-| `0x55e190` | 258 | comment_only | 3 | segment length pair, min and max, with a square-root guard |
+| `0x55e190` | 258 | callable_relocated | 3 | segment length pair, min and max, with a square-root guard |
 | `0x62fe20` | 270 | comment_only | 89 | libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects |
 | `0x50fd40` | 270 | comment_only | 3 | accumulator over a range of 312-byte elements |
 | `0x24dd40` | 238 | comment_only | 1 | composition of two transformed fields with weights |
@@ -33,7 +33,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x243820` | 15524 | comment_only | 3 | head of the largest routine here (15,524 bytes): geometry entry |
 | `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-22 blocks, 11 callable, 11 comment-only, 18232 bytes of original code embedded.
+22 blocks, 12 callable, 10 comment-only, 18232 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -447,8 +447,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 
 ## `0x55e190` -- segment length pair, min and max, with a square-root guard
 
-- size 258 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x62FE20 outside the block
+- size 258 bytes, 3 callers, status **callable_relocated**
+- not callable because: stub at 0x55e1dd -> lcns_stub_sqrt; stub at 0x55e20c -> lcns_stub_sqrt; stub at 0x55e26d -> lcns_stub_sqrt
 - sha256 `aea332921bf9a743b522a12559953a18cd3dc39c7c2889f8e8bfeffd78e4f32b`
 
 ```asm
@@ -599,7 +599,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x50fd40` -- accumulator over a range of 312-byte elements
 
 - size 270 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x4F8370 outside the block; call to 0x4F8380 outside the block; call to 0x51D2F0 outside the block; call to 0x5C8A10 outside the block
+- not callable because: call to 0x5C8A10 outside the block
 - sha256 `0bd76831f963660517c123629b68239771edc3f74587a380dcef90d1893c1a7b`
 
 ```asm
@@ -681,7 +681,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x24dd40` -- composition of two transformed fields with weights
 
 - size 238 bytes, 1 callers, status **comment_only**
-- not callable because: call to 0x24B440 outside the block; call to 0x24C610 outside the block; call to 0x5CF6B0 outside the block; rip-relative memory access to rva 0x9C2B30
+- not callable because: call to 0x24C610 outside the block; rip-relative memory access to rva 0x9C2B30
 - sha256 `4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e`
 
 ```asm
@@ -767,7 +767,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x24c610` -- four-stage geometry chain over the packed +0x70 point
 
 - size 138 bytes, 4 callers, status **comment_only**
-- not callable because: call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CE970 outside the block; call to 0x5CED50 outside the block
+- not callable because: call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CED50 outside the block
 - sha256 `50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc`
 
 ```asm
@@ -845,7 +845,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x243820` -- head of the largest routine here (15,524 bytes): geometry entry
 
 - size 15524 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+91 more)
+- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+88 more)
 - sha256 `ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae`
 
 ```asm

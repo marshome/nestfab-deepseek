@@ -38,9 +38,11 @@ namespace embedded {
 using RawFn = void (*)();
 
 enum class Status {
-    Callable,     // position-independent: an executable copy exists in gen_orig.S
-    CommentOnly,  // code whose bytes are embedded; the reason says why it cannot be executed
-    Data,         // read-only data whose bytes are themselves evidence for a classification or an exclusion
+    Callable,          // position-independent: an executable copy exists in gen_orig.S, byte for byte
+    CallableRelocated, // executable, but its call displacements were rewritten to reach stubs or other blocks; the
+                       // reason lists every relocation, so a reader can see exactly how the copy differs
+    CommentOnly,       // code whose bytes are embedded; the reason says why it cannot be executed
+    Data,              // read-only data whose bytes are themselves evidence for a classification or an exclusion
 };
 
 struct Block {

@@ -133,8 +133,8 @@
     "rva": 5628304,
     "size": 258,
     "symbol": "lcns_orig_55e190",
-    "status": "comment_only",
-    "reason": "call to 0x62FE20 outside the block",
+    "status": "callable_relocated",
+    "reason": "stub at 0x55e1dd -> lcns_stub_sqrt; stub at 0x55e20c -> lcns_stub_sqrt; stub at 0x55e26d -> lcns_stub_sqrt",
     "note": "segment length pair, min and max, with a square-root guard",
     "callers": 3,
     "sha256": "aea332921bf9a743b522a12559953a18cd3dc39c7c2889f8e8bfeffd78e4f32b"
@@ -154,7 +154,7 @@
     "size": 270,
     "symbol": "lcns_orig_50fd40",
     "status": "comment_only",
-    "reason": "call to 0x4F8370 outside the block; call to 0x4F8380 outside the block; call to 0x51D2F0 outside the block; call to 0x5C8A10 outside the block",
+    "reason": "call to 0x5C8A10 outside the block",
     "note": "accumulator over a range of 312-byte elements",
     "callers": 3,
     "sha256": "0bd76831f963660517c123629b68239771edc3f74587a380dcef90d1893c1a7b"
@@ -164,7 +164,7 @@
     "size": 238,
     "symbol": "lcns_orig_24dd40",
     "status": "comment_only",
-    "reason": "call to 0x24B440 outside the block; call to 0x24C610 outside the block; call to 0x5CF6B0 outside the block; rip-relative memory access to rva 0x9C2B30",
+    "reason": "call to 0x24C610 outside the block; rip-relative memory access to rva 0x9C2B30",
     "note": "composition of two transformed fields with weights",
     "callers": 1,
     "sha256": "4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e"
@@ -184,7 +184,7 @@
     "size": 138,
     "symbol": "lcns_orig_24c610",
     "status": "comment_only",
-    "reason": "call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CE970 outside the block; call to 0x5CED50 outside the block",
+    "reason": "call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CED50 outside the block",
     "note": "four-stage geometry chain over the packed +0x70 point",
     "callers": 4,
     "sha256": "50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc"
@@ -204,7 +204,7 @@
     "size": 15524,
     "symbol": "lcns_orig_243820",
     "status": "comment_only",
-    "reason": "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+91 more)",
+    "reason": "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+88 more)",
     "note": "head of the largest routine here (15,524 bytes): geometry entry",
     "callers": 3,
     "sha256": "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"

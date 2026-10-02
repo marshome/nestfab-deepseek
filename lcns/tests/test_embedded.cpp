@@ -67,7 +67,11 @@ int main() {
         CHECK(b.rva >= 0x6B4C0000u || b.rva < 0x6B4C0000u);   // just that the field is populated
         if (b.status == emb::Status::Callable) {
             ++callables;
-            CHECK(b.reason != nullptr && b.reason[0] == '\0');   // a callable block has no excuse to record
+            CHECK(b.reason != nullptr && b.reason[0] == '\0');   // an unmodified copy has no excuse to record
+        } else if (b.status == emb::Status::CallableRelocated) {
+            ++callables;
+            // A relocated copy MUST say what was rewritten: it is executable, but not byte-identical.
+            CHECK(b.reason != nullptr && b.reason[0] != '\0');
         } else if (b.status == emb::Status::Data) {
             // Evidence, not code: no reason and no symbol, but the bytes must still be there and usable.
             CHECK(b.reason != nullptr);
@@ -84,7 +88,7 @@ int main() {
         const emb::Block& b = emb::kBlocks[i];
         CHECK(emb::find(b.rva) == &b);
         CHECK(emb::statusOf(b.rva) == b.status);
-        if (b.status == emb::Status::Callable) {
+        if (b.status == emb::Status::Callable || b.status == emb::Status::CallableRelocated) {
             CHECK(emb::originalOf(b.rva) != nullptr);
         } else {
             CHECK(emb::originalOf(b.rva) == nullptr);          // no executable copy, and none claimed
