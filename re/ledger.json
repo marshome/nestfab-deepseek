@@ -374,6 +374,30 @@
    "round": 560,
    "subject": "logger.classification-unchecked",
    "witness": "one caller checked in full: 0xB470 ignores the return. The claim in re/CATEGORIES.md stands for that caller and is unverified for the rest"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "49 of the module's exports log their OWN NAME through 0x64AEA0 as the first thing they do",
+   "round": 561,
+   "subject": "logger.logs-own-name",
+   "witness": "re/g_logger_names.py: 57 calls, 49 name an export and the caller address equals the export's rva in every one of them; e.g. AddPolygonPart 1,2 at 0x162B0 logs at 0x162D8, NewLaunchingOrder 37,38 at 0x14620 logs at 0x16444"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the other 8 logger calls are internal validation labels, not exports",
+   "round": 561,
+   "subject": "logger.non-export-labels",
+   "witness": "// BadCommonCutGaps, // BadPartGeometry, // BadSheetGeometry, // BadSheetPrices in 0x1C7C0; // LocalCancel and // LocalTerminate waiting for threads termination in 0x1CC0 and 0x5D90; 'Order valid' in 0x1E70; '*** ERROR unterminated/cancelled computation ***' in 0x118F0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "name",
+   "predicate": "a name recovered from an assertion string is now checkable against the name the same function logs at its entry",
+   "round": 561,
+   "subject": "logger.two-oracles",
+   "witness": "the 49 matches are exact, so the two independent channels agree on all 49 export names"
   }
  ]
 }
