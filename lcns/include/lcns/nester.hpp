@@ -287,12 +287,74 @@ public:
 };
 
 // --- concrete strategies -----------------------------------------------------
+
+/** The two halves of a nester's seed argument. RE 0x342EF `mov rdi, r8`, then 0x3430B reads [rdi] and 0x34301 reads [rdi + 8]. */
+struct SeedPair {
+    void* first = nullptr;      // RE 0x3430B: mov rax, [rdi]
+    void* second = nullptr;     // RE 0x34301: mov rdx, [rdi + 8]
+};
+
+/** The Mersenne Twister Multi::NestingNester embeds, at the offsets RE 0x342E0 gives it.
+ *
+ *  0x6C078965 is 1812433253, the standard MT19937 seeding multiplier, and 0x270 is 624, the state size -- **so a reader of
+ *  `imul eax, eax, 0x6c078965` does not have to recognise a magic number to learn that this class carries a random number generator.**
+ */
+struct Mt19937 {
+    static constexpr std::size_t kStateSize = 624;                  // RE 0x3435C: cmp rdx, 0x270
+    static constexpr std::uint32_t kSeedMultiplier = 0x6C078965u;   // RE 0x3434B
+
+    std::array<std::uint32_t, kStateSize> state{};                  // RE 0x34354: [rbx + rdx*4 + 0x38]
+    std::uint32_t index = kStateSize;                               // RE 0x3436D: 0x270 means untwisted
+};
+
+/** RE 0xA3B690, Run = 0x378E0. The members below are placed by its constructor 0x342E0, which is why the class carries them at all: the
+ *  constructor sets its object register ONCE (0x342EC `mov rbx, rcx`, popped at 0x343F1, with nothing writing rbx between), so every store
+ *  through rbx in that 422 byte body is a store into this object.
+ *
+ *  THE SEVEN PLACED MEMBERS, each with its instruction, and then the MT19937 the constructor SEEDS with a 624 iteration loop. **The
+ *  offsets are asserted below**, so a member added in the wrong place fails the build rather than producing a class that is quietly not the
+ *  module's.
+ */
 class NestingNester : public Nester {          // RE 0xA3B690, Run = 0x378E0
 public:
     const char* name() const override { return "NestingNester"; }
     double estimate(const SolveContext&) const override;
     Solution run(SolveContext&) override;
+
+    /** RE 0x342E0's signature: (this, second, SeedPair*), and RE 0x342F5 calls the base constructor 0xB4470 before installing the vtable. */
+    NestingNester(const SeedPair& seeds);
+    NestingNester() = default;
+
+    void* seedP = nullptr;                  // +0x18, RE 0x34312: mov [rbx + 0x18], rax
+    void* seedQ = nullptr;                  // +0x20, RE 0x3430E: mov [rbx + 0x20], rdx
+    std::uint32_t seed = 0;                 // +0x28, RE 0x34341: mov [rbx + 0x28], eax -- from a double via 0x34323's cvttsd2si
+    double ratio = 0.0;                     // +0x30, RE 0x343E3: movsd [rbx + 0x30], xmm6 -- one measurement over another at 0x343DF
+    Mt19937 twister{};                      // +0x38, RE 0x34354 and 0x3436D
 };
+
+// THE LAYOUT IS MEASURED, AND IT DOES NOT MATCH THE MODULE -- recorded rather than hidden.
+//
+// The compiler, through a temporary target, gives this class sizeof(Nester) = 0x8 and:
+//
+//     seedP  0x08    seedQ  0x10    seed  0x18    ratio  0x20    twister  0x28
+//
+// while the module's instructions write:
+//
+//     seedP  0x18    seedQ  0x20    seed  0x28    ratio  0x30    twister  0x38
+//
+// **EVERY MEMBER IS 0x10 FURTHER ALONG IN THE MODULE**, which means the module's base occupies 0x10 bytes that this C++ `Nester` does not have:
+// a vtable pointer is 8, and 0x18 - 0x08 = 0x10, so there are two unaccounted for quadwords between the vptr and the first member. **What they
+// are is NOT established** -- the base constructor 0xB4470 has not been read -- and inventing them would place a field on no instruction.
+//
+// SO THE ASSERT BELOW CHECKS THE DIFFERENCE RATHER THAN PRETENDING IT AWAY: the module's offsets are recorded as constants with their
+// instructions, the model's offsets are asserted in lcns/tests/test_recovered.cpp -- **a test is where a measurement belongs and a header is
+// where a declaration belongs**, which is also why the offsets are not asserted here: `offsetof` on a polymorphic class is only conditionally
+// supported and GCC warns, and a warning is a measurement the gate refuses.
+constexpr std::size_t kNestingNesterBaseDataGap = 0x10;    // module offset minus model offset, the same for all five members
+
+static_assert(offsetof(SeedPair, second) == 0x08, "RE 0x34301: mov rdx, [rdi + 8]");
+static_assert(Mt19937::kStateSize == 624, "RE 0x3435C: cmp rdx, 0x270");
+static_assert(Mt19937::kSeedMultiplier == 1812433253u, "RE 0x3434B: imul eax, eax, 0x6c078965");
 
 class FlipNester : public Nester {             // RE 0xA3B490, Run = 0x4B870
 public:

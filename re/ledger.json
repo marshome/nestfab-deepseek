@@ -2150,6 +2150,30 @@
    "round": 664,
    "subject": "type-states-what-offsets-cannot",
    "witness": "the six kInline* constants gave six addresses and kInlineBufferPairs=3; the members give the sharing, the embedding, the 0x18 allocation and the refcount==1 at +8 and +0xC"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::NestingNester has ONE description, in nester.hpp, with the members its constructor places added to the class that already existed",
+   "round": 665,
+   "subject": "one-class-one-description",
+   "witness": "the class was already declared there with name(), estimate() and run(), and nester.cpp already implemented two of them; two further descriptions were written and both deleted"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the compiler places seedP at 0x08 while the module writes it at 0x18, and the difference is 0x10 for all five members",
+   "round": 665,
+   "subject": "NestingNester.base-gap",
+   "witness": "measured through a temporary target using the build system's compiler: sizeof(Nester)=0x8, seedP 0x08 seedQ 0x10 seed 0x18 ratio 0x20 twister 0x28, against the module's 0x18 0x20 0x28 0x30 0x38"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "on a polymorphic class the offsets are measured by pointer difference against a real object, because offsetof is conditionally supported and GCC warns",
+   "round": 665,
+   "subject": "offsetof-needs-pointer-arithmetic-here",
+   "witness": "the gate refuses a warning, and a pointer difference is stronger: it is taken on a constructed instance rather than from the type alone"
   }
  ]
 }

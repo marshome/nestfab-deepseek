@@ -435,6 +435,11 @@ std::vector<MultitorchInfo> evaluateMultitorch(const Order& order, const Nesting
 // ---------------------------------------------------------------------------
 // strategies
 // ---------------------------------------------------------------------------
+// RE 0x342E0's first two stores, which is the part of the constructor the class itself can perform. The rest of 0x342E0 seeds a 624 word
+// Mersenne Twister and computes a ratio from two measurements, and those belong to the algorithm rather than to the object's construction --
+// so this installs the two pointers and leaves the seeding to `seed()`, which is where the loop's content is read.
+NestingNester::NestingNester(const SeedPair& seeds) : seedP(seeds.first), seedQ(seeds.second) {}
+
 double NestingNester::estimate(const SolveContext& ctx) const {
     const Order& o = *ctx.order;
     const double need = o.totalPartArea();
