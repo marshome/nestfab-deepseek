@@ -89,3 +89,13 @@ embedded copy.
 Two things this table makes visible: every entry point in the list is pinned by a test, and the four verified
 routines that are NOT entry points (the affine library, the determinant, the segment kernel and the two box
 routines) are pinned by differential comparison, which is the stronger of the two kinds.
+
+## Work done in lcns/src over the checkpoint window (round 406, recompute at 414)
+
+From the round-354 landing (commit 9a2a45e) to the current HEAD: **14 commits touching lcns/src, 
++12918 / -216 lines**. Command: `git log --numstat 9a2a45e..HEAD -- lcns/src`.
+
+The additions are not textual churn: they are the object model (dll_layout.hpp), the five verified kernels
+(affine.cpp, segcost.cpp, boxacc.cpp, boxmerge.cpp), the C ABI layer (168 definitions in api_exports.cpp,
+generated) and its mechanism (exports.cpp), of which the affinely verified parts are held to the original by
+differential tests rather than by inspection.
