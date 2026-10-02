@@ -302,6 +302,30 @@
    "round": 556,
    "subject": "closure.reachability",
    "witness": "0xB470 calls 0x64AEA0 which the project already classifies as a toolchain logger with no effect on the return value"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "ordinal 55, 0xB020, 52 bytes: reads the order's +0x1B8 and tail calls 0x63F228 with (r8, value, edx)",
+   "round": 558,
+   "subject": "export.GetPartUserStringEx.body",
+   "witness": "mov rdx,[rdi+0x1b8]; mov r8d,esi; mov rcx,rbx; jmp 0x63f228, and +0x1B8 is the ledger-named userString"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "ordinal 61, 0xB060, 52 bytes: the same shape reading the sheet's +0x140",
+   "round": 558,
+   "subject": "export.GetSheetUserStringEx.body",
+   "witness": "mov rdx,[rdi+0x140]; mov r8d,esi; mov rcx,rbx; jmp 0x63f228"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "both user-string exports tail call 0x63F228, which is a jmp through the import table, so what they DO depends on a callee outside the module",
+   "round": 558,
+   "subject": "thunk.63F228",
+   "witness": "0x63F228 is jmp qword ptr [rip+0x4e9cee], IAT slot 0xB28F1C; the import name could not be resolved this round"
   }
  ]
 }

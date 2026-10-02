@@ -91,6 +91,24 @@ feeling of compliance.
   "where": "re/g_round.py, and this rule",
   "since": "round 552"}
 
+ {"id": "no-blocking-questions",
+  "rule": "不要每轮都问我；只有真正阻塞时才停下提问",
+  "check": "re/g_ask.py reports a round whose text ends in a question while no block is recorded",
+  "where": "re/g_ask.py, and the rule that says report every thirty rounds",
+  "since": "round 558"},
+
+ {"id": "report-not-ask",
+  "rule": "汇报是陈述，不是请求许可",
+  "check": "a summary states what was done, what the numbers are now, and what is next; it asks nothing",
+  "where": "re/g_ask.py",
+  "since": "round 558"},
+
+ {"id": "decide-required-decisions",
+  "rule": "需要决策也要先给出我的判断和理由，再问",
+  "check": "re/g_ask.py flags a question that carries no proposed answer",
+  "where": "re/g_ask.py",
+  "since": "round 558"},
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

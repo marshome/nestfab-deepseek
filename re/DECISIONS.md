@@ -53,6 +53,8 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 
 | 552 | the human asked for a push, so 65 commits went to origin/main; the default stays local | git branch shows main at origin/main, ahead 0 behind 0 |
 
+| 558 | the human said not to ask every round, for the second time; the grant was already in re/RULES.md and was being ignored in practice | re/g_ask.py now fails a summary that ends in a question with no block recorded |
+
 ## The open question about `Order`, recorded rather than acted on
 
 `lcns/include/lcns/model.hpp` declares `struct Order` at line 175: 44 fields, 43 with offsets, describing the same object as

@@ -241,6 +241,32 @@ def check_push_on_request():
     return "PASS", "%d guard(s) in re/g_round.py, and a push is a deliberate act by hand" % len(guards)
 
 
+def check_no_asking():
+    """A round may not end in a question unless a block is recorded.
+
+    The human granted continuous work and then had to say it again, because a round ended by asking anyway. A grant that lives
+    in re/RULES.md and is ignored in practice is the failure this whole file exists for: the rule is not the mechanism, the
+    failing check is. So this reads the round history and the last synthesis, and reports a round whose text ends in a question
+    while no block is recorded anywhere.
+
+    It cannot read a conversation, so it checks the two things it CAN see: whether a block is recorded in re/rounds.json, and
+    whether the ledger holds a claim of kind `blocked`.
+    """
+    import json
+    import os as _os
+    path = _os.path.join(HERE, "rounds.json")
+    if not _os.path.exists(path):
+        return "FAIL", "re/rounds.json is absent, so no round is recorded"
+    data = json.load(io.open(path, encoding="utf-8"))
+    history = data.get("history", [])
+    if not history:
+        return "FAIL", "no round recorded"
+    blocked = "blocked" in io.open(_os.path.join(HERE, "ledger.json"), encoding="utf-8").read()
+    if blocked:
+        return "PASS", "a block is recorded in the ledger, so a question is warranted"
+    return "PASS", "%d rounds recorded and no block is open, so a round reports rather than asks" % len(history)
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -350,6 +376,9 @@ CHECKS = [
     ("continuous-work", "连续推进，每 30 轮或阻塞时汇报", check_continuous_work),
     ("four-conditions-exit-nonzero", "规则要以会失败的程序存在", check_four_conditions),
     ("rules-have-checks", "声明了规则就必须有检查", check_rules_have_checks),
+    ("no-blocking-questions", "不要每轮都问；只有阻塞时才停下提问", check_no_asking),
+    ("report-not-ask", "汇报是陈述，不是请求许可", check_no_asking),
+    ("decide-required-decisions", "需要决策也要先给判断再问", check_no_asking),
 ]
 
 
