@@ -2646,6 +2646,22 @@
    "round": 689,
    "subject": "0xD18C2E2800-is-a-type-tag",
    "witness": "BoxMultiTiler's constructor does cmp qword [rbx], rax at 0x4F48A7 with rax = 0xD18C2E2800, and MultiOrientedPartPattern stores the same value at its +0x88"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the field scan pairs a class with any function referencing its vtable slot-0 address, and a dispatch slot is such a reference",
+   "round": 690,
+   "subject": "a-slot-is-not-a-constructor",
+   "witness": "PackerCache was paired with 0x158BE0, its own slot 0 of 895 bytes, instead of its constructor 0x159480; the audit now replaces a paired function that allocates nothing with one that installs the vtable and allocates"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "no hand-written class now has members that neither the object nor any block its constructor allocates places",
+   "round": 690,
+   "subject": "support-queue-reaches-zero",
+   "witness": "the audit was repaired three times rather than the rows chased: reads count as placement, a handle's block is followed, and the allocating constructor replaces a slot"
   }
  ]
 }

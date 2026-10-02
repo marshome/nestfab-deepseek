@@ -38,6 +38,53 @@ ALLOC_SIZE = re.compile(r"^ecx, 0x([0-9a-f]+)$")
 # by requiring the register to have been loaded from rcx and not reassigned, which is why it reports the offsets it does.
 
 
+def find_allocating_constructor(function, profile):
+    """The function that installs this class's vtable pointer AND allocates; falls back to the paired one.
+
+    A DISPATCH SLOT references the vtable's slot-0 address too, which is how the JSON came to pair `PackerCache` with 0x158BE0 -- a method of 895
+    bytes that allocates nothing. **The constructor allocates**, so that is the discriminator, and it is the same one `re/g_find_real_ctor.py`
+    applies.
+    """
+    size = (profile.get(function) or {}).get("size") or 0
+    if not size:
+        return None
+    for instruction in disasm(function):
+        if instruction.address >= function + size:
+            break
+        if re.match(r"^ecx, 0x[0-9a-f]+$", instruction.op_str):
+            return None          # the paired function DOES allocate, so it stands
+    # it does not allocate: look at the functions that install the same vtable pointer and do
+    pointer = None
+    for instruction in disasm(function):
+        if instruction.address >= function + size:
+            break
+        if instruction.mnemonic == "lea":
+            for operand in instruction.operands:
+                if operand.type == 3 and operand.mem.base == 41:
+                    if pointer is None:
+                        pointer = instruction.address + instruction.size + operand.mem.disp
+    if pointer is None:
+        return None
+    for address, info in profile.items():
+        if not info.get("size") or address == function:
+            continue
+        allocates = False
+        installs = False
+        for instruction in disasm(address):
+            if instruction.address >= address + info["size"]:
+                break
+            if re.match(r"^ecx, 0x[0-9a-f]+$", instruction.op_str):
+                allocates = True
+            if instruction.mnemonic == "lea":
+                for operand in instruction.operands:
+                    if operand.type == 3 and operand.mem.base == 41:
+                        if instruction.address + instruction.size + operand.mem.disp == pointer:
+                            installs = True
+        if allocates and installs:
+            return address
+    return None
+
+
 def walk(function, profile):
     """The offsets the function writes to `this`, AND the offsets it writes to a block it ALLOCATES.
 
@@ -114,6 +161,13 @@ def main(argv):
             if not members:
                 continue
             function = by_short[short]
+            # **A DISPATCH SLOT IS NOT A CONSTRUCTOR, AND THE JSON'S PAIRING CAN BE ONE.** The candidate is replaced by the first function
+            # that references the class's vtable POINTER and ALLOCATES, when the paired one allocates nothing -- which is what
+            # re/g_find_real_ctor.py does by hand. Its verdict is reported below so a reader sees when a slot was used.
+            alternative = find_allocating_constructor(function, profile)
+            used_slot = alternative is not None and alternative != function
+            if used_slot:
+                function = alternative
             on_this, on_block, blocks = walk(function, profile)
             for slot in (profile.get(function) or {}).get("callers") or []:
                 more_this, more_block, more_blocks = walk(slot, profile)
