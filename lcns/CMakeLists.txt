@@ -58,7 +58,7 @@ if(LCNS_HAVE_ASM)
 endif()
 
 # --- exact geometry kernel  (mirrors ..\exact\* and ..\geom\* of the original) ---
-add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp)
+add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp)
 target_link_libraries(lcns_geom PUBLIC lcns_flags)
 
 # --- problem model + NFP map + tiling patterns + row distance/squeeze ---
@@ -191,7 +191,7 @@ endif()
 if(LCNS_BUILD_TESTS)
   enable_testing()
   foreach(t exact conv boolean offset nofit nester model tiling io lp linear_program cloud
-            licensing row recovered json_backend crypto_backend embedded)
+            licensing row recovered json_backend crypto_backend embedded affine)
     add_executable(test_${t} tests/test_${t}.cpp)
     target_link_libraries(test_${t} PRIVATE lcns_nest lcns_api lcns_embedded)
     add_test(NAME ${t} COMMAND test_${t})

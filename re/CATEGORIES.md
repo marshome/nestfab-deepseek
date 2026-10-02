@@ -1,0 +1,51 @@
+# Category accounting
+
+Required by C1 and C3: every category of reachable domain code is either **implemented** in `lcns/` with tests that pin
+its behaviour, or **carried** — its original bytes embedded in the project, with the reason it is not callable recorded
+in the code — or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
+"addresses mentioned" is the metric this work already rejected once, because writing an address is not implementing
+anything.
+
+Counts are stated per category, not summed into a single progress number, so that the gap stays visible.
+
+## Implemented, with the evidence
+
+| Category | Routines | Where | Evidence |
+|---|---|---:|---|
+| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` — compose compared to the original over **36 matrix pairs, all six doubles bit-exact**; the three apply forms bit-exact over 6 matrices x 5 points; properties for the builder and the inverse (composition with the inverse, round-trip points, singular rejection) |
+| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` — bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
+| **Angle transform readers** (pre-existing) | `0x5D38C0`'s transform, `0x5CEE50` angle -> transform | `lcns/include/lcns/row.hpp` | held to the original bytes by `tests/test_affine.cpp`: `transformX`/`transformY`/`transformDet` compared with `0x5CFD80` over 6 matrices x 5 points |
+| **Embedded-original oracle** | the 11 callable blocks | `lcns/src/embedded/gen_orig.S` | `tests/test_embedded.cpp` (275 checks) and `tests/test_affine.cpp` call the originals; `re/check_embeddings.py` re-reads the DLL and fails on any byte or hash drift |
+
+"Bit-exact" is the strongest evidence available here and it is why the embedding was built: an implementation that
+produces the same bits as the original on the same inputs cannot be wrong about the arithmetic, only about the parts of
+the original the tests never exercise.
+
+## Carried, not yet implemented (bytes embedded, reason recorded)
+
+These are read, registered and now embedded, but the project does not execute them and does not claim to:
+
+| Category | Routines | Why not callable |
+|---|---|---|
+| Floating-point class/range guard | `0x62FE20` (89 callers) | RIP-relative constants (the exponent mask path compares against 1.0 at rva 0xA06838) |
+| Segment length pair and min/max | `0x55E190` | a relative call to the guard above leaves the block |
+| Accumulator over 312-byte elements | `0x50FD40` | relative calls to three helpers outside the block |
+| Composition of two fields with weights | `0x24DD40` | relative calls to two helpers |
+| Four-stage geometry chain | `0x24C610` | relative calls and RIP-relative data |
+| Tolerance owner object | `0x4B81D0` | a relative call to the allocator |
+| Twins' constructor | `0x111AD0` | a relative call plus two vtables read through RIP-relative operands |
+| Largest routine's head | `0x243820` (15,524 bytes) | relative calls, RIP-relative data, and its size |
+| Packed point add | `0x16C270` | *callable* and used as an oracle; its behaviour is not yet a library function |
+| Field accessors | `0x51D2F0`, `0x4F8370`, `0x4F8380`, `0x4DDD10` | *callable*; the offsets are registered in `layout.hpp`, and the project's own object model is what needs them, so no code was added |
+
+## Unread
+
+The mass the coverage report names: **2,548 reachable domain functions / 1,479,459 bytes (31.7%)** at the last
+measurement. `re/g_coverage.py` prints it; this file does not repeat it as a claim of progress.
+
+## How this is counted, and why not mechanically
+
+An earlier version of this work counted "addresses cited anywhere in `lcns/` or `re/`", which a constant in a header
+satisfies without any behaviour existing — it is a proxy that can be satisfied by annotation, and it was rejected for
+that reason. The implemented column above is therefore an explicit list, each row naming the routines and the test that
+pins them. If the list is wrong, it is wrong in a way a reader can check by running one executable.
