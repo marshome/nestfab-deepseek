@@ -709,5 +709,38 @@ int main() {
         CHECK(again != slot);
     }
 
+    // ------------------- the candidate object the orchestration builds (RE 0x22E30 and 0x22A20)
+    {
+        // The constructor reads the order at +0x220 and +0x238, so the test owns a buffer large enough for both. The
+        // object itself is the 0x1C8 bytes that 0x2AB0 allocates at 0x2D31.
+        unsigned char order[0x300];
+        std::memset(order, 0, sizeof(order));
+        unsigned char object[0x1C8];
+        std::memset(object, 0xA5, sizeof(object));
+        lcns::dll::accessors::constructCandidate_22E30(object, order, -13.25, 1);
+        void* got_order = nullptr;
+        std::memcpy(&got_order, object + 0x00, sizeof(got_order));
+        CHECK(got_order == order);                       // RE 0x22A43
+        double got_value = 0.0;
+        std::memcpy(&got_value, object + 0x40, sizeof(got_value));
+        CHECK(got_value == -13.25);                      // RE 0x22AD1
+        CHECK(object[0x48] == 1);                        // RE 0x22AD6, the flag the thunk widened
+        std::uint32_t nine = 0;
+        std::memcpy(&nine, object + 0x4C, sizeof(nine));
+        CHECK(nine == 9u);                               // RE 0x22ADD
+        void* begin = nullptr;
+        void* end = nullptr;
+        std::memcpy(&begin, object + 0x10, sizeof(begin));
+        std::memcpy(&end, object + 0x18, sizeof(end));
+        CHECK(begin == object + 0x18);                   // RE 0x22A55, the inline buffer
+        CHECK(end == object + 0x18);                     // RE 0x22A61, so the container is empty
+        void* inner_begin = nullptr;
+        void* inner_end = nullptr;
+        std::memcpy(&inner_begin, object + 0x50 + 0x38, sizeof(inner_begin));
+        std::memcpy(&inner_end, object + 0x50 + 0x40, sizeof(inner_end));
+        CHECK(inner_begin == object + 0x50 + 0x28);      // RE 0x22AE9 through 0x51BFC0
+        CHECK(inner_end == object + 0x50 + 0x28);
+    }
+
     return check::finish("boxacc");
 }

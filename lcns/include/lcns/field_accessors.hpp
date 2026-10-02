@@ -622,6 +622,40 @@ inline void assignTimer_5F3900(void* object) {
     std::memcpy(static_cast<unsigned char*>(object), &value, sizeof(value));
 }
 
+/** RE 0x22E30: the nine byte thunk the orchestration calls at 0x2D31. It widens the fourth integer argument with
+ * movzx r9d, r9b and tail calls 0x22A20, so the constructor sees a zero upper half. */
+inline void constructCandidate_22E30(void* object, void* order, double value, std::uint8_t flag);
+
+/** RE 0x22A20: the object 0x2AB0 allocates 0x1C8 bytes for. The fields written here are the ones read out of the
+ * instruction stream and asserted by the test; the three string members at +0xD0, +0xF8 and +0x118 and the node copy
+ * from [order+0x220] belong to containers this project has not modelled yet and are left untouched, which the comment
+ * states rather than hides. */
+inline void constructCandidate_22A20(void* object, void* order, double value, std::uint64_t flag) {
+    unsigned char* base = static_cast<unsigned char*>(object);
+    // RE 0x22A43: the order pointer at +0. RE 0x22AD1: the double at +0x40. RE 0x22AD6: the flag at +0x48.
+    std::memcpy(base + 0x00, &order, sizeof(order));
+    std::memcpy(base + 0x40, &value, sizeof(value));
+    const std::uint8_t narrow = static_cast<std::uint8_t>(flag);
+    std::memcpy(base + 0x48, &narrow, sizeof(narrow));
+    // RE 0x22ADD: the constant 9 at +0x4C.
+    const std::uint32_t nine = 9;
+    std::memcpy(base + 0x4C, &nine, sizeof(nine));
+    // RE 0x22AF7: the member at +0xA0 is cleared before the second container is built.
+    std::uint64_t zero = 0;
+    std::memcpy(base + 0xA0, &zero, sizeof(zero));
+    // RE 0x22A55 to 0x22A70: the first container's begin and end are both the inline buffer at +0x18, so it is empty.
+    void* inline_buffer = base + 0x18;
+    std::memcpy(base + 0x10, &inline_buffer, sizeof(inline_buffer));
+    std::memcpy(base + 0x18, &inline_buffer, sizeof(inline_buffer));
+    // RE 0x22AE9: the container at +0x50 is initialised by the empty container initialiser, already recovered.
+    initEmptyContainer_51BFC0(base + 0x50);
+}
+
+inline void constructCandidate_22E30(void* object, void* order, double value, std::uint8_t flag) {
+    // RE 0x22E30: movzx r9d, r9b -- the upper half of the fourth integer argument is cleared, nothing else changes.
+    constructCandidate_22A20(object, order, value, static_cast<std::uint64_t>(flag));
+}
+
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

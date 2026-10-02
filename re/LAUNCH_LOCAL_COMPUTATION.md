@@ -11,54 +11,86 @@
 
 Two other exports are thin wrappers over it, so this one entry point carries three ordinals:
 
-* `0x3310` ordinal 164 `LaunchLimitedLocalComputation`: saves `[order+0x1F8]`, sets it to 1, loads a double constant from rip, calls 0x2AB0, then restores the field. 66 bytes.
-* `0x3360` ordinal 216 `LaunchEstimateLocalComputation`: sets `[order+0x288]` to 1 and tail calls 0x2AB0 with the same double. 52 bytes.
+* `0x3310` ordinal 164 `LaunchLimitedLocalComputation`: saves `[order+0x1F8]`, sets it to 1, loads a double constant from rip, calls 0x2AB0, then restores the field. 66 bytes. It logs 'LaunchLimitedLocalComputation' through 0x64AEA0 first.
+* `0x3360` ordinal 216 `LaunchEstimateLocalComputation`: sets `[order+0x288]` to 1 and tail calls 0x2AB0 with the same double. 52 bytes. It logs '// LaunchEstimateLocalComputation' first.
 
-## The closure: this is the whole engine
+## Progress: the closure is 26 functions, and 16 of them are the engine
 
-`re/g_closure_of.py 51` reports **1208 domain functions, 713168 bytes**. For comparison, the direct closures of all other unimplemented exports together came to about 582 KB with the older, more permissive classifier. There is no larger single closure in this module, and there is no shortcut around it: LaunchLocalComputation is the entry point that drives the local optimiser, so a complete implementation of it is a complete implementation of the engine.
+The closure was **1208 domain functions and 713168 bytes**. The label pass took it to 136, batch seven read and classified all
+38 leaves (to 131), and batches eight and nine read the depth one layer whole and classified it (to **26 functions and
+15900 bytes**). The readings are `re/LEAVES51.txt` for the leaves and the round 525 to 528 sections of
+`re/CATEGORIES.md`; `re/EXPORT_BODIES.md` carries the bodies.
 
-The closure is enumerated leaves-first in the tool output, so it doubles as the work order: the deepest entries have no domain dependencies of their own and can be implemented straight away.
+What remains, with what is known about each:
 
-## What the head does, read in two passes (rounds 509 and 510)
+| rva | bytes | what it is |
+|---|---:|---|
+| `0x2AB0` | 2134 | the orchestration itself; the head and the tail are below |
+| `0x3310`, `0x3360` | 118 | the two wrappers, read whole, waiting on 0x2AB0 |
+| `0x1BE70` | 109 | the lazy initialiser of the module's own static: a global byte guard, `__cxa_guard_acquire` at 0x998DA0, the construction through 0x65A530, and the object's address returned. Its shape is the one round 427 found in 0xAB20 |
+| `0x1BF00` | 18 | calls 0x1BE70 and returns `[[static]+1]`: a byte flag of that static |
+| `0x1BF40` | 149 | calls 0x1BE70, tests `[static]`, then two module globals, and returns the address of a third or null: the fast path. Its literal is `c:\Temp\debug_nest.txt` |
+| `0x22A20`, `0x22E30` | 1037 + 9 | the constructor 0x2AB0 calls once: `0x2D31` allocates **0x1C8 bytes** through 0x998500 and calls `0x22E30(obj, order, xmm2=the double, r9=1)`. The thunk widens the fourth integer argument before the tail call. The constructor stores the order at +0, builds a container at +0x10 whose begin and end point at its own inline buffer at +0x18, copies eight bytes from `[order+0x220]` through 0x9302C0 into +0x20, sets a two-node list at +0x28 and +0x30, the double at +0x40, the flag at +0x48, the constant 9 at +0x4C, an empty container at +0x50, and three string members at +0xD0, +0xF8 and +0x118 |
+| `0x65A530` | 616 | builds three `basic_ofstream`s over `c:\Temp\log_nest.txt`, `c:\Temp\cloud_nest.txt` and `c:\Temp\local_nest.txt` and records whether each of the three is usable at +0, +1 and +2, with +2 forced to 0 when +1 is 0. It is called from 0x1BE70, so it initialises the module's static |
+| `0x7BB430` | 495 | stores 0x30, tests `[order+0xE8]`, writes five property strings through 0x978010, calls 0x8693D0 for 0x40 bytes, runs `cpuid` and writes the vendor string, then another block through 0x1B170. Its own literals include `CNS informations` |
+| `0x8693D0`, `0x8688E0` | 545 each | called by 0x7BB430 and by 0x2AB0 with a size argument; both build a string-like object |
+| `0x5007C0` | 716 | a destructor over the object at `[rcx]`: frees the node list at +0x2A8, the member at +0x280 through 0x531F20, the vector of shared_ptr at +0x268 and the container at +0x70 through 0x92ECB0 |
+| `0x8F9220` | 1462 | not yet read |
+| `0x92B340`, `0x92B940`, `0x92BBA0`, `0x92ECB0` | 2590 | the container operations 0x5007C0 and 0x22A20 use: 0x92ECB0 is called on `[obj+0x80]`, 0x9308C0 on `[obj+0x20]` |
+| `0x929FA0` | 1495 | not yet read |
+| `0x9302C0` | 390 | allocates 0x48 bytes and copies 0x28 bytes from `[src+0x20]` into the new node's inline buffer at +0x30: the node copier 0x22A20 calls once |
+| `0x9308C0` | 605 | the container operation 0x22A20 calls on its own +0x20 through +0x28 |
+
+## What the head and the tail do
 
     2AB0  save eight registers, reserve 0x208 bytes
     2AC3  rbp = rcx                     ; the launching order
-    2AC6  r13 = xmm1                    ; a double argument, kept in a register for later
-    2ACB  call 0x1BF00                  ; an early-out predicate; if true jump to 0x31C9
-    2AD8  byte [rip + 0xB1C539]         ; a module flag; if zero jump to 0x318A
-    2AF8  call 0x63F6C0                 ; the same mutex family the other exports use
-    2B05  byte [rsp+0x38] = 1           ; a guard flag for the scope
-    2B0A  call 0x1BF40                  ; fetch an engine or scheduler object
-    2B1B  call 0x978010 three times     ; set three properties, with lengths 3, 0x16 and 1
-    2B5A  call 0x8688E0                 ; hand it the double
-    2B67  [rbx] then [rax - 0x18] ...   ; the usual vtable-relative member access
-    2B7F  byte [rsi + 0x38] ; 0x867BF0 ; branch into the engine
+    2AC6  r13 = xmm1                    ; the double, kept for later
+    2ACB  call 0x1BF00                  ; if the byte flag is set, jump to 0x31C9, which reads 'cns_force_cloud'
+    2AD8  byte [rip + 0xB1C539]         ; a module switch; if zero jump to 0x318A
+    2AF8  call 0x63F6C0                 ; the mutex family
+    2B05  byte [rsp+0x38] = 1           ; the scope guard
+    2B0A  call 0x1BF40                  ; fetch the engine object
+    2B1B  call 0x978010 three times     ; the stream writes '-> ', 'LaunchLocalComputation' (0x16 bytes) and a 1 byte value
+    2B5A  call 0x8688E0                 ; hand it the double in xmm1
+    2B67  [rbx] then [rax-0x18] ...     ; the vtable-relative member access
+    2B7F  byte [rsi+0x38] ; 0x867BF0 ; branch into the engine
 
-then the second pass shows it building several stack objects whose vtables come from globals through
-`[rip + 0xA061FB]`, `[rip + 0xA05696]`, `[rip + 0xA05F19]` and friends, and calling a long chain:
-
-    2BC2 0x944530   2C2B 0x9454D0   2C50 0x87EDF0   2C60 0x9454D0   2C76 0x87D590
-    2C92 0x9456A0   2CA2 0x1EE50    2CAD 0x5070E0   2CB9 0x5007C0   2CE7 0x87D8E0
-    2CF0 0x8774F0
-
-So the shape is: guard a critical section, fetch the engine, set a few string and numeric properties, then run a
-sequence of calls over locally constructed objects. That is orchestration, not arithmetic: the arithmetic lives in the
-callees, which is why the closure is the size it is.
+    2BB6  build the input file stream over 'c:\Temp\cns.pb.json' by hand: 0x945370, 0x9454D0, 0x87EDF0, 0x87D590
+    2CA2  call 0x1EE50, 0x5070E0, 0x5007C0
+    2D31  allocate 0x1C8 bytes, call 0x22E30 -> the constructor above
+    2D54  read [order+0x1D0] and [order+0x1D8]: the end and the capacity of a vector of pointers at +0x1D0
+    2D92  if the vector had no room, 0x3144: the storage paths and 'c:\Temp\cns.pb.json'
+    314F  '// LaunchLocalComputation'
+    318A  the module-switch-off path
+    31C9  'cns_force_cloud' and, through 0x9308C0, the server list 'cns1.optalog.com;cns2.optalog.com'
+    31E9  the stream-state path
+    3236  the vector-append path
+    32AC  the null engine path
+    32FA  the guard was taken by someone else
 
 ## The order to take it
 
-1. **Classify the library layer first.** Many of the 1208 are C++ runtime and library functions, as with every other
-   closure walked so far. Each one read and classified collapses the map without any domain work. `re/g_closure_of.py 51`
-   lists them leaves-first with their sizes.
-2. **Implement the domain leaves**, bottom-up, each with the strongest evidence available: differential against the
-   embedded original when the block is callable, behavioural otherwise, with every offset asserted.
-3. **Re-run the closure after each batch** and watch the number fall. When it reaches zero, this export is done, and
-   with it ordinals 51, 52, 164, 165, 216 and 217.
-4. The wrappers 0x3310 and 0x3360 are already read whole, so they land as soon as 0x2AB0 does: they only save a field,
-   set a flag, pass a constant and call it.
+1. **Read 0x22A20 whole and implement it.** It is the object the orchestration is about, its field map is already half read,
+   and it is the only construction 0x2AB0 performs. It needs 0x9302C0 and 0x9308C0, which are 390 and 605 bytes.
+2. **Then 0x5007C0**, its destructor, which is the same object seen from the other end and needs 0x92B340, 0x92B940,
+   0x92BBA0 and 0x92ECB0.
+3. **Then 0x7BB430 and 0x8F9220**, then 0x929FA0.
+4. **Then write 0x2AB0 itself**, and with it the wrappers 0x3310 and 0x3360, which are already read whole: ordinal 51 and 52,
+   164 and 165, 216 and 217 all forward together, which is where `forwardedCount` goes up by six.
 
-## Progress against this export
+## The counting rule, which decides what "done" means here
 
-Nothing of 0x2AB0 is implemented yet. What is done is the terrain: the closure is enumerated, the head and the second
-pass are read, the two wrappers are read, and the tool that orders the work exists.
+Reading the closure whole showed that almost all of it is libstdc++: the iostreams, the locale facet caches and their
+accessors, the numeric formatting layer, the shared_ptr reference counting. That is not domain behaviour and reimplementing
+it would add code without adding recovery. The rule this project already applies to the platform-forwarding class applies
+here too: such a function is **classified and recorded, not counted**, with the evidence next to its address in
+`re/g_toolchain.py`. `re/g_domain_closure.py` computes what is left under that rule, forward from the entry point, so that
+nothing reached only through library code can enter the work list.
+
+## How to see the work list
+
+    python re/g_domain_closure.py 51          # the domain set, in work order, with the leaves marked
+    python re/g_closure_work.py 51 12 2000    # the whole closure in work order with leaf bodies
+    python re/g_callers.py 0x22A20            # who calls it, inside the closure first
+    .\re\gate.ps1                             # the whole gate, which sets its own environment

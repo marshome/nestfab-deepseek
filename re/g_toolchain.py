@@ -86,6 +86,12 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x1BE70,  # the lazy initialiser of a module static: a global byte guard, __cxa_guard_acquire at 0x998DA0, the construction through 0x65A530 and the object address returned; the shape round 427 found in 0xAB20
+    0x1B170,  # calls 0x634BE0 to format into a stack buffer and 0x1B070 to construct a string from it: the vsnprintf formatting layer
+    0x634BE0,  # bounds the length, calls 0x63B140 into a caller buffer and terminates it: the bounded string construction
+    0x88BE60,  # the same destructor shape as 0x889D00, releasing at +0x50 and +0x40
+    0x8688E0,  # called by 0x2AB0 with the double in xmm1 as well as by 123 functions across the module: the stream precision setter
+    0x8693D0,  # called with a size argument and reached only from 0x7BB430, which then writes a buffer: a fill or width setter of the same stream family
     0x63A1C0,  # loads an 80-bit long double and reads a count from the second argument, then pads through 0x6399E0: a num_put overload
     0x63A6A0,  # the same prologue as 0x63A1C0: another num_put overload
     0x63A750,  # the same prologue as 0x63A1C0 at 390 bytes: the long double overload
@@ -414,6 +420,8 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x22E30,   # batch ten, lcns/field_accessors.hpp
+    0x22A20,   # batch ten, lcns/field_accessors.hpp -- the fields the test asserts
     0x5F3900,   # batch seven, lcns/field_accessors.hpp
     0x51BFC0,   # batch six, lcns/field_accessors.hpp
     0x4FBE70, 0x822590,   # batch five, lcns/field_accessors.hpp
