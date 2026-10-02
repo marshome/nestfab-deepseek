@@ -186,3 +186,16 @@ callers at it.
 * `0x8264E0` -- called by 38 unimplemented entries, 136 bytes
 * `0x867BF0` -- called by 38 unimplemented entries, 337 bytes
 * `0x867DF0` -- called by 38 unimplemented entries, 180 bytes
+
+## Leverage update (round 407): 0x5C8C50 is implemented and tested
+
+The box merge is no longer a blocker: it lives in lcns/src/boxmerge.cpp, agrees with the original on 5000 of
+5000 random boxes, and is compared with the original over 2000 random boxes by tests/test_boxacc.cpp on every
+run. Entries whose blocking column named it can therefore be attempted directly. The rows found in this file:
+
+None: no row of this queue lists 0x5C8C50 as a blocker, so the leverage shows up indirectly -- the three
+exports behind it (GetLength via 0x526160, GetHeight via 0x5266A0, GetFillRatio via 0x5297C0) are blocked on
+those larger routines, each of which uses the box merge as one step among many.
+
+Next in line, in the order they should be attempted: GetFillRatio (entry 9 instructions, implementer 175 with
+20 calls), then GetLength and GetHeight (171 instructions each, differing in one callee).
