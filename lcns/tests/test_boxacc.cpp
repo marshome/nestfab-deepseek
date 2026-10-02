@@ -7,6 +7,7 @@
 
 #include "check.hpp"
 #include "lcns/boxacc.hpp"
+#include "lcns/boxmerge.hpp"
 #include "lcns/embedded.hpp"
 
 #include <cstdint>
@@ -188,6 +189,45 @@ int main() {
                 ++compared;
             }
             CHECK(compared == 7u);
+        }
+    }
+#endif
+
+    // ------------------- 0x5C8C50: src/boxmerge.cpp against the original over random boxes
+#if defined(LCNS_HAS_EMBEDDED_ASM)
+    {
+        auto orig = reinterpret_cast<void (*)(void*, const void*)>(emb::originalOf(0x5C8C50u));
+        CHECK(orig != nullptr);
+        if (orig != nullptr) {
+            const double vals[] = {-9.0, -1.5, -0.0, 0.0, 1.5, 7.0, 100.0, -100.0};
+            const std::size_t offs[4] = {lcns::kBoxMinX, lcns::kBoxMinY, lcns::kBoxMaxX, lcns::kBoxMaxY};
+            std::uint64_t s = 99991;
+            std::size_t mismatches = 0;
+            for (int t = 0; t < 2000; ++t) {
+                unsigned char src[lcns::kBoxBytes];
+                unsigned char mineBox[lcns::kBoxBytes];
+                unsigned char theirBox[lcns::kBoxBytes];
+                std::memset(src, 0, sizeof(src));
+                std::memset(mineBox, 0x5A, sizeof(mineBox));
+                s = s * 6364136223846793005ull + 1442695040888963407ull;
+                src[0] = static_cast<unsigned char>((s >> 33) & 1u);
+                s = s * 6364136223846793005ull + 1442695040888963407ull;
+                mineBox[0] = static_cast<unsigned char>((s >> 33) & 1u);
+                for (int i = 0; i < 4; ++i) {
+                    s = s * 6364136223846793005ull + 1442695040888963407ull;
+                    const double v = vals[(s >> 33) % 8u];
+                    std::memcpy(src + offs[i], &v, 8);
+                }
+                std::memcpy(theirBox, mineBox, sizeof(mineBox));
+                lcns::dll::exports::impl::mergeBoxInto(mineBox, src);
+                orig(theirBox, src);
+                if (std::memcmp(mineBox, theirBox, lcns::kBoxBytes) != 0) {
+                    ++mismatches;
+                }
+            }
+            // The destination flag is randomised above, so the INIT path -- the one this implementation got wrong
+            // twice -- is inside the sample, and invalid boxes are allowed for the same reason.
+            CHECK(mismatches == 0);
         }
     }
 #endif
