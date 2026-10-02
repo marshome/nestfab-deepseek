@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
-"""Separate the CRT and toolchain wrappers out of the "domain blockers" list, iteratively.
+"""Classify the blockers of the unimplemented exports, using only real function starts.
 
-Rounds 421 and 423 read two addresses that the frequency ranking put near the top and found neither to be domain code:
+Round 424's version walked the call graph and disassembled whatever it reached, which produced 22,685 "addresses", a
+third of them junk (data misread as code, visible as functions with one instruction per byte), and it still missed a
+known platform stub because its rule did not cover `call qword ptr [rip + ...]`. This version:
 
-  * 0x9984B0 -- a five-byte `jmp 0x63F390`, 5721 callers: a deallocation wrapper; 0x63F390 turns out to be a whole bank
-    of IAT stubs (`jmp qword ptr [rip + ...]` with nop padding), i.e. the import jump table;
-  * 0x998500 -- 109 bytes, 2317 callers: `operator new`, with the null-to-one correction, the new_handler retry loop and
-    the failure path.
+  * only judges addresses that the profile lists as functions, so no data is disassembled;
+  * treats as toolchain: a single-instruction function, anything that jumps or calls through a RIP-relative pointer (the
+    import stubs and the indirect platform calls), and anything that calls into the 0x63F3xx stub bank;
+  * treats as diagnostic anything that calls 0x910BA0, the helper that builds strings and reports;
+  * calls everything else domain, which is what must actually be read.
 
-Both rank high only because everything allocates and frees. A frequency ranking therefore cannot be read as a list of
-high-leverage domain functions, and this script reclassifies them so that the remaining list means what it says.
-
-A function is TOOLCHAIN when any of these holds, and the rule is applied repeatedly until nothing changes:
-
-  1. its body is a single jmp;
-  2. its body contains `jmp qword ptr [rip + ...]` or `call 0x63F3...` -- the import stub bank;
-  3. every function it calls is already toolchain.
-
-Nothing here is guessed: each rule reads the function is own instructions, and rule 3 only propagates a verdict that
-rules 1 and 2 established.
+No propagation between functions, because a verdict that depends on an unverified neighbour is how round 424 produced a
+list that could not be trusted.
 """
 import io
 import json
@@ -30,108 +24,93 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import g_leverage as L  # noqa: E402
-from lib import disasm  # noqa: E402
-
-STUB_BANK = 0x63F390  # the import jump table: every entry is jmp qword ptr [rip + ...]
+from lib import disasm, load_prof  # noqa: E402
 
 
-def scan(addr):
-    """Return (names, text, callees) for one function."""
+def kind(addr, profile):
+    """One verdict per function, from its own instructions only. Returns None if it is not a known function."""
+    if addr not in profile:
+        return None
     text = []
-    callees = []
     for ins in disasm(addr):
-        t = ins.mnemonic + " " + ins.op_str
-        text.append(t)
-        if ins.mnemonic in ("call", "jmp"):
-            m = re.search(r"0x([0-9a-f]+)", ins.op_str)
-            if m:
-                callees.append(int(m.group(1), 16))
-    return text, callees
-
-
-def is_toolchain(addr, verdicts):
-    if addr in verdicts:
-        return verdicts[addr]
-    text, callees = scan(addr)
-    verdict = False
-    if len(text) == 1 and text[0].startswith("jmp"):
-        verdict = True
+        size = (profile.get(addr) or {}).get("size")
+        if size and ins.address >= addr + size:
+            break
+        text.append(ins.mnemonic + " " + ins.op_str)
+    if not text:
+        return None
+    if len(text) == 1:
+        return "toolchain"
     for t in text:
-        if t.startswith("jmp qword ptr [rip"):
-            verdict = True
+        if "qword ptr [rip" in t and (t.startswith("jmp") or t.startswith("call")):
+            return "toolchain"
         if t.startswith("call 0x63f3"):
-            verdict = True
-    # rule 3, evaluated with whatever is already known; the outer loop repeats until stable
-    if not verdict and callees:
-        known = [c for c in callees if c in verdicts]
-        if known and len(known) == len(callees) and all(verdicts[c] for c in callees):
-            verdict = True
-    verdicts[addr] = verdict
-    return verdict
+            return "toolchain"
+    for t in text:
+        if t == "call 0x910ba0":
+            return "diagnostic"
+    return "domain"
 
 
 def main():
+    profile = load_prof()
     done = L.forwarded_ordinals()
     table = json.loads(io.open(os.path.join(L.ROOT, "re", "exports_table.json"), encoding="utf-8").read())
 
-    # Every address any unimplemented export reaches, plus everything those reach, so the verdicts are available.
-    pending = set()
+    verdicts = {}
     rows = []
     for e in table:
         ord0 = (e.get("ords") or [0])[0]
         if ord0 in done:
             continue
         name = e.get("name") or ("sub_%05X" % e["rva"])
-        tg = L.external_targets(e["rva"], e["size"])
-        rows.append((name, ord0, e["rva"], e["size"], tg))
-        for t in tg:
-            pending.add(t)
+        targets = L.external_targets(e["rva"], e["size"])
+        rows.append((name, ord0, e["rva"], e["size"], targets))
+        for t in targets:
+            if t in L.VERIFIED or t in verdicts:
+                continue
+            k = kind(t, profile)
+            verdicts[t] = k if k is not None else "unknown"
 
-    verdicts = {}
-    for _round in range(6):
-        before = len([a for a in verdicts if verdicts[a]])
-        for a in list(pending):
-            is_toolchain(a, verdicts)
-            _t, callees = scan(a)
-            for c in callees:
-                if c not in verdicts:
-                    pending.add(c)
-        after = len([a for a in verdicts if verdicts[a]])
-        if after == before and _round > 0:
-            break
+    counts = {}
+    for v in verdicts.values():
+        counts[v] = counts.get(v, 0) + 1
+    print("distinct blocker addresses judged: %d" % len(verdicts))
+    for k in sorted(counts):
+        print("    %-11s %d" % (k, counts[k]))
 
-    tool = sorted(a for a in verdicts if verdicts[a])
-    domain = sorted(a for a in verdicts if not verdicts[a])
-    print("addresses examined: %d" % len(verdicts))
-    print("  toolchain: %d" % len(tool))
-    print("  domain   : %d" % len(domain))
-    print("")
-    print("the first twelve toolchain addresses, which the frequency ranking had been calling blockers:")
-    for a in tool[:12]:
-        text, _c = scan(a)
-        print("    0x%-8X %d bytes, %d instructions, first: %s" % (a, len(text), len(text), text[0][:48]))
-    print("")
     ready = []
     blocked = []
-    for name, ord0, rva, size, tg in rows:
-        bad = [t for t in tg if (t in verdicts and not verdicts[t]) and t not in L.VERIFIED]
-        if not tg:
-            ready.append((name, ord0, rva, size, "no external target"))
+    for name, ord0, rva, size, targets in rows:
+        bad = []
+        for t in targets:
+            if t in L.VERIFIED:
+                continue
+            if verdicts.get(t) == "domain":
+                bad.append(t)
+        if not targets:
+            ready.append((name, ord0, rva, size, "no external target at all"))
         elif not bad:
-            ready.append((name, ord0, rva, size, "toolchain or verified only"))
+            ready.append((name, ord0, rva, size, "only toolchain, diagnostic or verified"))
         else:
             blocked.append((name, ord0, rva, size, bad))
-    print("implementable once toolchain is set aside: %d" % len(ready))
-    for name, ord0, rva, size, why in ready[:60]:
-        print("    0x%-6X ord %-4d %-34s %5d bytes  (%s)" % (rva, ord0, name, size, why))
+
     print("")
-    print("still blocked on real domain code: %d" % len(blocked))
+    print("implementable once toolchain and diagnostic are set aside: %d" % len(ready))
+    for name, ord0, rva, size, why in ready[:80]:
+        print("    0x%-6X ord %-4d %-36s %5d bytes  (%s)" % (rva, ord0, name, size, why))
+    print("")
+    print("still blocked on domain code: %d" % len(blocked))
     dom = {}
     for _n, _o, _r, _s, bad in blocked:
         for t in bad:
             dom[t] = dom.get(t, 0) + 1
-    for t, c in sorted(dom.items(), key=lambda kv: -kv[1])[:12]:
-        print("    0x%-8X blocks %3d exports" % (t, c))
+    for t, c in sorted(dom.items(), key=lambda kv: -kv[1])[:15]:
+        size = (profile.get(t) or {}).get("size")
+        print("    0x%-8X blocks %3d exports, %s bytes" % (t, c, size))
+    print("")
+    print("a domain blocker whose callers number in the thousands is a warning sign: it is more likely a CRT wrapper than a")
+    print("high-leverage domain function, so check its body before reading anything below it.")
     return 0
 
 
