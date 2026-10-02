@@ -33,6 +33,7 @@
 #include "lcns/cns_node.hpp"
 #include "lcns/owned_chain.hpp"
 #include "lcns/stat.hpp"
+#include "lcns/variant.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6109,6 +6110,31 @@ int main() {
         CHECK(lcns::kStatFlag == 0x00);
         CHECK(lcns::kStatMin0 == 0x08 && lcns::kStatMax0 == 0x18);
         CHECK(lcns::kStatMin1 == 0x10 && lcns::kStatMax1 == 0x20);
+    }
+
+
+    // ---------------------------------------------------------------- the variant scale rule (RE 0x132E0)
+    //
+    // The rule two exports share, and the three behaviours its instructions express: an invalid box scales nothing (0x13327 jumps
+    // past both multiplies), and the LARGER of the two extents chooses which constant is used (0x13341, 0x13345 and 0x13382).
+    {
+        // an invalid box returns zero, which is the routine jumping past its own scaling
+        CHECK(lcns::variantScale(false, 10.0, 1.0, 2.0, 3.0) == 0.0);
+        // the first extent larger: extentA * longer
+        CHECK(lcns::variantScale(true, 10.0, 1.0, 2.0, 3.0) == 20.0);
+        // the second larger: extentB * shorter
+        CHECK(lcns::variantScale(true, 1.0, 10.0, 2.0, 3.0) == 30.0);
+        // equal extents take the not-greater branch, because the instruction is ucomisd then JBE
+        CHECK(lcns::variantScale(true, 5.0, 5.0, 2.0, 3.0) == 15.0);
+        // and zero extents give zero either way, which is the degenerate case
+        CHECK(lcns::variantScale(true, 0.0, 0.0, 2.0, 3.0) == 0.0);
+        // the offsets, against the instructions that show them
+        CHECK(lcns::kVariantSource == 0x50);
+        CHECK(lcns::kVariantTargetA == 0x68);
+        CHECK(lcns::kVariantTargetB == 0x208);
+        CHECK(lcns::kVariantTargetB < 0x2C0);              // inside the object the constructor allocates
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, commonCutSafetyPreferenceGiven) == lcns::kVariantTargetA);
+        CHECK(lcns::kVariantScaleLong != lcns::kVariantScaleShort);
     }
 
     return check::finish("test_recovered");
