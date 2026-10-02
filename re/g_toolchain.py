@@ -32,7 +32,25 @@ BOILERPLATE = {
     0x64AEA0,  # the logger, no effect on its default path
     0xAB20,    # static initialisation boilerplate
     0x978750,  # allocation and constructor wrapper
-    0x97ABF0,  # exception throw machinery
+    0x62F000,  # RE round 501: xor eax,eax; ret -- the default empty implementation
+    0x62F010,  # two-level pointer fetch
+    0x963560,  # global singleton accessor
+    0x962F10,  # global singleton accessor
+    0x998CB0,  # tail call into the runtime
+    0x6562A0,  # throw helper
+    0x990E80,  # fetch a global then call the throw helper
+    0x62F380,  # virtual dispatch trampoline
+    0x62F330,  # runtime initialisation guard
+    0x656260,  # exception format and throw machinery
+    0x998FE0,  # reference count and canary guard
+    0x653130,  # virtual call with a stack cookie
+    0x653300,  # same family as 0x653130
+    0x653280,  # same family as 0x653130
+    0x6530A0,  # same family as 0x653130
+    0x998BC0,  # runtime string or exception helper
+    0x9989A0,  # runtime string or exception helper
+    0x999030,  # runtime throw entry
+    0x998A60,  # runtime allocation family
 }
 
 # Entries whose value cannot be reproduced by any reimplementation, because it is an address inside the original image.
