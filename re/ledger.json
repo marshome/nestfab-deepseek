@@ -1014,6 +1014,30 @@
    "round": 601,
    "subject": "fanout.needs-a-size-filter",
    "witness": "0xFE240 is 5 bytes with 740 callers and 0x8AA8B0 is 1 byte with 398; 0x9984B0 is 5 bytes and is the classified allocator's free, the same shape"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "three of the four substantial high-fanout functions are compiler or runtime plumbing: a reference-count release, a range walk and an argument forwarder",
+   "round": 602,
+   "subject": "fanout.mostly-plumbing",
+   "witness": "0x944070 has lock xadd dword [rax],0xffffffff with cmp edx,2; 0x910AF0 is cmp rcx,rdx then a loop; 0x983CA0 spills three arguments and calls 0x63F238"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a high caller count says many places need a function and nothing about whether it holds recoverable logic; the usable filter is distinct-callees-to-instructions plus the presence of lock",
+   "round": 602,
+   "subject": "fanout.filter-by-shape",
+   "witness": "0x943890 is 2008 bytes with 357 instructions and only 6 distinct callees, which is a switch, a table walk or unrolled code rather than a routine to read"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the stat exports may be blocked by a CLASSIFICATION rather than an unknown, if 0x5CD800 and 0x8C5090 are plumbing like the four above",
+   "round": 602,
+   "subject": "stat.blocker-may-be-a-classification",
+   "witness": "0x5CD800 has 113 callers and 0x8C5090 133; if they are the same reference-count or container shape, four exports become forwardable on a classification rather than a recovery -- TESTABLE, and the next round tests it"
   }
  ]
 }
