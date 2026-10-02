@@ -16,6 +16,7 @@ const Forwarding kForwarding[] = {
     {288, reinterpret_cast<void*>(&lcns::dll::exports::impl::setByteAtF8)},         // sub_AFF0 (no label)
     {286, reinterpret_cast<void*>(&lcns::dll::exports::impl::setDoubleAndFlag)},    // sub_B000 (no label)
     {33, reinterpret_cast<void*>(&lcns::dll::exports::impl::getSolutionIdentity)},  // GetSolution
+    {29, reinterpret_cast<void*>(&lcns::dll::exports::impl::getPartWithBadGeometry)},  // GetPartWithBadGeometry
     {84, reinterpret_cast<void*>(&lcns::dll::exports::impl::setInt_1FC)},   // SetLocalMaximumIterations, offset 0x1FC
     {146, reinterpret_cast<void*>(&lcns::dll::exports::impl::setShearMode)}, // SetShearMode, offset 0x44
     {188, reinterpret_cast<void*>(&lcns::dll::exports::impl::setNoMixPreference)}, // CNS_SetNoMixPreference, offset 0x18

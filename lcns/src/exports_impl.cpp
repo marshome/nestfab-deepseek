@@ -45,6 +45,14 @@ void* getSolutionIdentity(void* handle) {
     return handle;
 }
 
+void* getPartWithBadGeometry(void* object) {
+    auto* carrier = static_cast<BadGeometryCarrier*>(object);
+    if (carrier->status != 1u) {
+        return nullptr;
+    }
+    return carrier->geometry;
+}
+
 void setShearMode(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field44 = value; }
 void setNoMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field18 = value; }
 void setNoSheetMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field1C = value; }

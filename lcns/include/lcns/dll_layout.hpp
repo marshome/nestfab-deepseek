@@ -125,5 +125,20 @@ static_assert(offsetof(UnknownFlagCarrier, flagF8) == 0xF8, "RE 0x0AFF0");
 static_assert(offsetof(UnknownFlagCarrier, flagF9) == 0xF9, "RE 0x0B000");
 static_assert(offsetof(UnknownFlagCarrier, value100) == 0x100, "RE 0x0B000");
 
+/**
+ * The object behind GetPartWithBadGeometry (ordinal 29, rva 0xB510).
+ *
+ * Kept separate on purpose: the export has a log label but no typed signature a reader can trust, so only the two offsets
+ * its code touches are known. Claiming they are fields of PartObject would be a guess.
+ */
+struct BadGeometryCarrier {
+    unsigned char opaque00[0x4C];
+    std::uint32_t status;      // +0x4C, RE 0xB524: only the value 1 continues
+    unsigned char opaque50[0x50];
+    void* geometry;            // +0xA0, RE 0xB52E: returned when the status is 1
+};
+static_assert(offsetof(BadGeometryCarrier, status) == 0x4C, "RE 0xB524");
+static_assert(offsetof(BadGeometryCarrier, geometry) == 0xA0, "RE 0xB52E");
+
 }  // namespace dll
 }  // namespace lcns

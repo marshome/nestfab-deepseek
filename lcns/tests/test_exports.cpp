@@ -1,4 +1,4 @@
-﻿// tests/test_exports.cpp -- the C ABI layer: every export has a definition, and none of them can lie.
+// tests/test_exports.cpp -- the C ABI layer: every export has a definition, and none of them can lie.
 //
 // The requirement this test exists for: the project must correspond to ALL the exported functions, and what each one
 // does must agree with the assembly. Agreement is checkable two ways, and the test checks both:
@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 14u);
+        CHECK(ex::forwardedCount() == 15u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,7 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -392,6 +392,31 @@ int main() {
         const std::uint64_t e3 = b + 312u;
         std::memcpy(owner.data() + 0x58, &e3, 8);
         CHECK(reinterpret_cast<lcns::dll::NestingOwner*>(owner.data())->nestings.size() == 1u);
+    }
+
+    // ------------------------------------- GetPartWithBadGeometry (ordinal 29), from its own thirteen instructions
+    {
+        // The original cannot be executed from the embedded copy -- it calls the logger with a RIP-relative label -- so
+        // this is a behavioural test: the decoded offsets and the decoded condition, checked against hand-computed
+        // expectations.
+        std::vector<unsigned char> object(0xA8, 0x5A);
+        std::uint32_t status = 0;
+        std::memcpy(object.data() + 0x4C, &status, sizeof(status));
+        const void* geom = reinterpret_cast<const void*>(0x1234);
+        std::memcpy(object.data() + 0xA0, &geom, sizeof(geom));
+        CHECK(ex::impl::getPartWithBadGeometry(object.data()) == nullptr);      // status 0 returns null
+        status = 2;
+        std::memcpy(object.data() + 0x4C, &status, sizeof(status));
+        CHECK(ex::impl::getPartWithBadGeometry(object.data()) == nullptr);      // and so does any status but 1
+        status = 1;
+        std::memcpy(object.data() + 0x4C, &status, sizeof(status));
+        CHECK(ex::impl::getPartWithBadGeometry(object.data()) == geom);         // status 1 returns +0xA0
+        const void* nothing = nullptr;
+        std::memcpy(object.data() + 0xA0, &nothing, sizeof(nothing));
+        CHECK(ex::impl::getPartWithBadGeometry(object.data()) == nullptr);      // even when that field is null
+        // the carrier's offsets are asserted by the compiler too, and named here so the model is in the suite
+        CHECK(offsetof(lcns::dll::BadGeometryCarrier, status) == 0x4C);
+        CHECK(offsetof(lcns::dll::BadGeometryCarrier, geometry) == 0xA0);
     }
 
     return check::finish("exports");

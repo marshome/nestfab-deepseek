@@ -23,6 +23,9 @@ const char* getUserStringAt1B8(void* part);        // RE 0x16CF0 (210/211): the 
 void setByteAtF8(void* object, int value);         // RE 0x0AFF0 (288/289): flag = (value != 0)
 void setDoubleAndFlag(void* object, int flag, double value);   // RE 0x0B000 (286/287)
 void* getSolutionIdentity(void* handle);           // RE 0x0B0A0 (33/34): returns its argument, no memory touched
+/** RE 0xB510 (ordinals 29/30): returns object[+0xA0] when object[+0x4C] is 1, else null. */
+void* getPartWithBadGeometry(void* object);
+
 void setShearMode(void* order, int value);         // RE 0x0DDC0 -> +0x44
 void setNoMixPreference(void* order, int value);   // RE 0x0D310 -> +0x18
 void setNoSheetMixPreference(void* order, int value);   // RE 0x0D340 -> +0x1C
