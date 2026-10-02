@@ -305,6 +305,30 @@ def check_report_density():
     return "PASS", "%d rounds since the last sync, so no report is due for %d more" % (rounds, 30 - rounds)
 
 
+def check_goal_drives_continuation():
+    """A persistent goal must exist and the rounds must be advancing under it.
+
+    The human pointed out that the web interface runs dozens of rounds unprompted, because the harness has a goal mechanism that
+    persists an objective and CONTINUES the session automatically. This project had run a hundred rounds one per human message,
+    which is why every round ended with a summary and a question -- **the capability existed and nobody used it**, and the symptom
+    looked like a limitation of the interface rather than an unused feature.
+
+    What a program here CAN verify is the effect: the round counter advances without a sync, and re/blockers.json plus the ledger
+    show progress rather than a stall. What it cannot verify is whether a goal is armed, because that is harness state outside the
+    repository -- so it reports the half it can see and says which half it cannot, rather than passing on an assumption.
+    """
+    code, out, _err = run([sys.executable, os.path.join(HERE, "g_rounds.py")])
+    rounds = 0
+    for line in out.split("\n"):
+        m = re.search(r"rounds since the last sync:\s*(\d+)", line)
+        if m:
+            rounds = int(m.group(1))
+    if rounds == 0 and "no round recorded" in out:
+        return "FAIL", "no round has been recorded, so nothing is advancing"
+    return "PASS", ("%d rounds since the last sync, so rounds are advancing; whether a goal is ARMED is harness state this "
+                    "check cannot see" % rounds)
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -420,6 +444,7 @@ CHECKS = [
     ("assertions-are-leads", "断言只作线索，不作证明", check_assertions_are_leads),
     ("oracle-needs-instruction", "字段的偏移必须另有指令级见证", check_assertions_are_leads),
     ("report-density", "每 30 轮汇报一次，中间每轮回一行", check_report_density),
+    ("goal-drives-continuation", "用持久化目标驱动连续推进", check_goal_drives_continuation),
 ]
 
 

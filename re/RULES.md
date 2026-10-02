@@ -128,6 +128,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round 578"}
 
+ {"id": "goal-drives-continuation",
+  "rule": "用持久化目标驱动连续推进，而不是每轮等人类说话",
+  "check": "a goal is armed and its objective restates the working rules, so an automatic continuation reads them from the goal rather than from the conversation",
+  "where": "the harness's goal mechanism, and this file",
+  "since": "round 581"},
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

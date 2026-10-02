@@ -59,6 +59,8 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 
 | 558 | the human said not to ask every round, for the second time; the grant was already in re/RULES.md and was being ignored in practice | re/g_ask.py now fails a summary that ends in a question with no block recorded |
 
+| 581 | a persistent GOAL is what makes the session continue without being asked; a hundred rounds had been run one per human message | the human pointed out that the web interface runs dozens of rounds unprompted; create_goal had never been used |
+
 ## The open question about `Order`, recorded rather than acted on
 
 `lcns/include/lcns/model.hpp` declares `struct Order` at line 175: 44 fields, 43 with offsets, describing the same object as
