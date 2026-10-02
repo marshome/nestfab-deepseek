@@ -1878,6 +1878,30 @@
    "round": 652,
    "subject": "tiling.evaluators-share-an-implementation",
    "witness": "DensityEvaluator, MultitorchEvaluator, OldMultitorchEvaluator, ReusableEvaluator, UnlimitedDensityEvaluator and UnlimitedXDensityEvaluator all point one slot there"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x35F30 is NestingNester's own helper with three callers all in the 0x378xx range, while 0x31DB0 is shared by fourteen functions",
+   "round": 653,
+   "subject": "0x35F30.vs-0x31DB0",
+   "witness": "neither calls the other; 0x35F30 has 1569 instructions and 88 calls to the allocator's free, 0x31DB0 has 516 and 24 frees plus 7 calls to the logger gate 0x63F6B8"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the packer calls 0x31DB0 to prepare or look up and 0x35F30 for the expensive part only when a condition holds",
+   "round": 653,
+   "subject": "packer.two-stages",
+   "witness": "0x3799D call 0x31DB0 after setup, then 0x388A2 jne 0x38D5A skipping the rest, then 0x388A8 call 0x35F30 with the most arguments and a rollback path"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "knowing that 0x378E0 is Multi::NestingNester's slot 5 is what turns 'both helpers are called from here' into which of them belongs to the class",
+   "round": 653,
+   "subject": "vtable-fact-keyed-a-helper-fact",
+   "witness": "0x35F30's three callers are all in the 0x378xx range, so it is the class's own; 0x31DB0's fourteen spread across the module, so it is shared"
   }
  ]
 }
