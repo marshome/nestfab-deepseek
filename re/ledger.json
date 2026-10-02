@@ -1494,6 +1494,14 @@
    "round": 630,
    "subject": "assert.coverage",
    "witness": "the coverage is stated as a gap rather than implied, because an earlier round established that both forms exist and that generalising from one defeated a previous attempt"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the built-form decoder gets the LINE right and only the first eight bytes of the string",
+   "round": 631,
+   "subject": "assert.built-form-partial",
+   "witness": "0x526160 yields line 154 and '..\\struc'; the three stores at +0, +8 and +0x10 should all land, so the walk stops early or the word store at +0x14 discards rdx's pending value"
   }
  ]
 }
