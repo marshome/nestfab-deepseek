@@ -355,6 +355,26 @@ def check_extractor_self_check():
                     "visible to the check)" % (with_check, counters))
 
 
+def check_counts_need_consistent_rows():
+    """Every tool that prints a per-row breakdown must be self-testable, and the checker must refuse disagreeing rows.
+
+    The rule comes from three failures in five rounds -- a closure of 596 for a four-function job, `lea reg,[base+0x40]` finding 1955
+    where the ledger said 15, and a 0x50 element address counted 57 times across four different field sets. Each count was arithmetically
+    correct and answered a different question from the one the claim was about.
+
+    What this can check is whether the CHECKER works: its own self-test must refuse the rows that produced the element50 count and accept
+    a set that agrees. Whether any particular claim has consistent rows is not visible here, and the rule says so rather than implying
+    coverage it does not have.
+    """
+    code, out, _err = run([sys.executable, os.path.join(HERE, "g_set_consistency.py")])
+    if code != 0:
+        return "FAIL", "the set-consistency checker's own self-test did not pass: %s" % out.strip().splitlines()[-1:]
+    if "REFUSED" not in out:
+        return "FAIL", "the checker did not refuse the rows known to disagree, so it cannot be trusted"
+    return "PASS", ("its self-test refuses the disagreeing rows and accepts agreeing ones; whether a given claim's rows agree is not "
+                    "visible to this check")
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -471,6 +491,7 @@ CHECKS = [
     ("oracle-needs-instruction", "字段的偏移必须另有指令级见证", check_assertions_are_leads),
     ("report-density", "每 30 轮汇报一次，中间每轮回一行", check_report_density),
     ("goal-drives-continuation", "用持久化目标驱动连续推进", check_goal_drives_continuation),
+    ("counts-need-consistent-rows", "计数需要行一致", check_counts_need_consistent_rows),
     ("extractor-self-check", "提取器必须自带对照输入", check_extractor_self_check),
 ]
 

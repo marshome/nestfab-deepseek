@@ -1424,6 +1424,14 @@
    "round": 626,
    "subject": "tooling.wrong-set-third-time",
    "witness": "0x132E0's closure of 596 functions for a 4-function job; lea reg,[base+0x40] finding 1955 where the ledger said 15; and now a 0x50 element address counted 57 times where the fields do not agree"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a count over a set is worthless unless the set is the one the claim is about, and the check is whether the rows agree",
+   "round": 627,
+   "subject": "tooling.set-consistency-rule",
+   "witness": "re/g_set_consistency.py refuses the element50 rows (3 distinct member sets) and passes an agreeing set; its own self-test runs when it is given nothing, so it cannot pass while broken"
   }
  ]
 }

@@ -140,6 +140,12 @@ feeling of compliance.
   "where": "re/g_extractor_selfcheck.py",
   "since": "round 605"}
 
+ {"id": "counts-need-consistent-rows",
+  "rule": "一个计数只有在它所数的那些行彼此一致时，才能支持关于其中之一的断言",
+  "check": "re/g_set_consistency.py -- run on the rows behind a count, it REFUSES when the members disagree. It cannot inspect a claim on its own, and says so: the failure is invisible in a number and visible only in the rows.",
+  "where": "re/g_set_consistency.py",
+  "since": "round 627"},
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
