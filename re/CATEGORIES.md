@@ -1,8 +1,8 @@
 # Category accounting
 
 Required by C1 and C3: every category of reachable domain code is either **implemented** in `lcns/` with tests that pin
-its behaviour, or **carried** 闁?its original bytes embedded in the project, with the reason it is not callable recorded
-in the code 闁?or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
+its behaviour, or **carried** 闂?its original bytes embedded in the project, with the reason it is not callable recorded
+in the code 闂?or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
 "addresses mentioned" is the metric this work already rejected once, because writing an address is not implementing
 anything.
 
@@ -12,8 +12,8 @@ Counts are stated per category, not summed into a single progress number, so tha
 
 | Category | Routines | Where | Evidence |
 |---|---|---:|---|
-| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` (862 checks) 闁?**all six routines compared bit for bit with the original**: compose over 36 matrix pairs, the three apply forms over 6 matrices x 5 points, the builder over 5 points, and the inverse over every non-singular matrix in the set; the inverse comparison found a **signed-zero** difference that a property test cannot see (appendix 274). Properties remain only for what has no oracle (singular rejection) |
-| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` 闁?bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
+| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` (862 checks) 闂?**all six routines compared bit for bit with the original**: compose over 36 matrix pairs, the three apply forms over 6 matrices x 5 points, the builder over 5 points, and the inverse over every non-singular matrix in the set; the inverse comparison found a **signed-zero** difference that a property test cannot see (appendix 274). Properties remain only for what has no oracle (singular rejection) |
+| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` 闂?bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
 | **Box accumulator pair** | `0x5C8A10` init-or-extend one pair, `0x50FD40` the box over a range of 312-byte elements | `lcns/include/lcns/boxacc.hpp`, `lcns/src/boxacc.cpp` | `tests/test_boxacc.cpp` -- the whole 0x28-byte box compared **byte for byte** (the flag included) against both originals over seven element sets and ten single-pair cases |
 | **Segment threshold kernel** | `0x55E190` | `lcns/include/lcns/segcost.hpp`, `lcns/src/segcost.cpp` | `tests/test_segcost.cpp` -- compared against the original over **3072 segment/parameter combinations**, with both outcomes exercised; properties pin the operand order (which length takes which weight), the strictness of the comparison and zero-length degeneracies |
 | **Angle transform readers** (pre-existing) | `0x5D38C0`'s transform, `0x5CEE50` angle -> transform | `lcns/include/lcns/row.hpp` | held to the original bytes by `tests/test_affine.cpp`: `transformX`/`transformY`/`transformDet` compared with `0x5CFD80` over 6 matrices x 5 points |
@@ -48,7 +48,7 @@ measurement. `re/g_coverage.py` prints it; this file does not repeat it as a cla
 ## How this is counted, and why not mechanically
 
 An earlier version of this work counted "addresses cited anywhere in `lcns/` or `re/`", which a constant in a header
-satisfies without any behaviour existing 闁?it is a proxy that can be satisfied by annotation, and it was rejected for
+satisfies without any behaviour existing 闂?it is a proxy that can be satisfied by annotation, and it was rejected for
 that reason. The implemented column above is therefore an explicit list, each row naming the routines and the test that
 pins them. If the list is wrong, it is wrong in a way a reader can check by running one executable.
 
@@ -209,3 +209,28 @@ This also corrects what the ready list means. re/g_toolchain.py reports six entr
 (55 and 61) are this class, so the real candidates are four: GetLength (96), GetHeight (100), GetFillRatio (168) and
 GetNestingFillRatio (192). Those four hand an OBJECT to a domain implementer -- 0x526160, 0x5266A0 and 0x5297C0 --
 rather than to an import stub, which is the distinction that matters.
+
+## Two more gate lessons, both from rounds 495 to 498
+
+These are recorded because each cost a round, and because the first one is a new class of mistake rather than a
+repeat of the quoting problems already listed above.
+
+1. An anchor must be a whole line or a structural line, never an in-line prefix. The script that added the angle
+   constants used as its anchor the beginning of a declaration line,
+
+       void copyPair28(void* destination, const void* element);   // RE 0x5203F0 -- first argument is the destination, per RCX/RDX
+
+   which is a prefix of the real line, because the real line continues with the pair offsets. The membership test
+   passed -- the prefix is a substring -- so the script wrote happily, and it inserted its new text in the MIDDLE of
+   that comment, leaving the tail of the comment to start a new line with a colon. The compiler then reported
+   expected unqualified-id before colon, twice, forty lines further down. An assertion that passes is not evidence
+   that the edit is correct, so anchors are whole lines now: the angle script uses the namespace close line, which is
+   unique and entire.
+
+2. A variable that memcpy writes into must not be const. The angle test declared its bit pattern holder as
+   const std::uint64_t and then passed its address to memcpy, which needs a void pointer. One word, one build failure,
+   and the message pointed at the test line rather than at the declaration, which is why it took a read of the file to
+   find.
+
+Both were caught by the gate and neither was committed: the build failing is what stops a red tree from entering the
+history, and the files were reverted to the last green commit in both cases.
