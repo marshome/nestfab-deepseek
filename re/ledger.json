@@ -1062,6 +1062,22 @@
    "round": 603,
    "subject": "container.nested-shape",
    "witness": "0x8C50B0 mov rsi,[rdi+0x20] / 0x8C50B4 mov rbx,[rdi+0x18] / 0x8C50B8 cmp rsi,rbx / je; the outer stride is 0x20 and the inner pair sits at +0x18"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a search that finds nothing is a true negative OR a broken parser, and the only way to tell is to include a sighting the search MUST find",
+   "round": 604,
+   "subject": "tooling.zero-is-not-a-finding",
+   "witness": "re/g_vector_test.py reported 0 for both patterns INCLUDING for 0x23BF0, which certainly has the shape; the operand strings carry a 'qword ptr ' prefix the patterns did not allow"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "0x23BF0's 0x18 triple is {begin, end, end}, NOT libstdc++'s {begin, end, capacity}",
+   "round": 604,
+   "subject": "container.three-slot-is-not-vector",
+   "witness": "0x23C0B/0x23C27/0x23C38 zero the three slots; 0x23C5C stores rax (the block) to +0x30, 0x23C93 stores r12 to +0x38 and 0x23C64 stores r12 to +0x40; r12 was computed at 0x23C52 as [rax+rdi], the block plus its size"
   }
  ]
 }
