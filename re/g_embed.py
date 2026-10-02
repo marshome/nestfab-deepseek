@@ -62,6 +62,12 @@ BLOCKS = [
      "callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects"),
     (0x62FE00, None, "packed sibling of the guard"),
     (0x50FD40, None, "accumulator over a range of 312-byte elements"),
+    (0x5F4310, None, 'three-field constructor helper reached from 0x524EE0; calls 0x5F3900'),
+    (0x520440, None, '479 bytes, 55 callers, reached from 0x524EE0'),
+    (0x5203C0, None, 'four-byte accessor: mov eax, dword ptr [rcx + 0x20]; 20 callers'),
+    (0x4F73E0, None, '530 bytes, 12 callers, reached from 0x524EE0'),
+    (0x547620, None, 'five-byte accessor: lea rax, [rcx + 0x18]; 4 callers'),
+    (0x5C6BE0, None, '65 bytes, 46 callers, reached from 0x524EE0'),
     (0x5C8C50, None,
      "merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is "
      "re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 "

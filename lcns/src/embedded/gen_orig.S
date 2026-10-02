@@ -1013,6 +1013,30 @@ lcns_orig_50fd40:
     .byte 0xeb, 0xbd
     /* end lcns_orig_50fd40 */
 
+/* four-byte accessor: mov eax, dword ptr [rcx + 0x20]; 20 callers  rva 0x5203c0, 4 bytes, 20 callers
+ * sha256 07ad3a50b1c271e07fb57fb47d2f0e77f3342d41bfa410990cb1320a45035fb2
+ *   005203c0  mov eax, dword ptr [rcx + 0x20]
+ *   005203c3  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_5203c0
+lcns_orig_5203c0:
+    .byte 0x8b, 0x41, 0x20
+    .byte 0xc3
+    /* end lcns_orig_5203c0 */
+
+/* five-byte accessor: lea rax, [rcx + 0x18]; 4 callers  rva 0x547620, 5 bytes, 4 callers
+ * sha256 813b00f48d4cf0d99dea047ab4852415937c2c310855ec0ec2bda6184b705ba3
+ *   00547620  lea rax, [rcx + 0x18]
+ *   00547624  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_547620
+lcns_orig_547620:
+    .byte 0x48, 0x8d, 0x41, 0x18
+    .byte 0xc3
+    /* end lcns_orig_547620 */
+
 /* merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight  rva 0x5c8c50, 255 bytes, 56 callers
  * sha256 d8758387497387c58502f9d8e53a217c10e968dd78489723b318c27dcb816f92
  *   005c8c50  cmp byte ptr [rdx], 0
@@ -1297,6 +1321,8 @@ lcns_orig_table:
     .quad lcns_orig_5ced50
     .quad lcns_orig_55e190
     .quad lcns_orig_50fd40
+    .quad lcns_orig_5203c0
+    .quad lcns_orig_547620
     .quad lcns_orig_5c8c50
     .quad lcns_orig_5c8a10
     .quad lcns_orig_16cf0

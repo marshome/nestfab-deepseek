@@ -26,6 +26,12 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x55e190` | 258 | callable_relocated | 3 | segment length pair, min and max, with a square-root guard |
 | `0x62fe20` | 270 | comment_only | 89 | libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects |
 | `0x50fd40` | 270 | callable_relocated | 3 | accumulator over a range of 312-byte elements |
+| `0x5f4310` | 35 | comment_only | 45 | three-field constructor helper reached from 0x524EE0; calls 0x5F3900 |
+| `0x520440` | 479 | comment_only | 55 | 479 bytes, 55 callers, reached from 0x524EE0 |
+| `0x5203c0` | 4 | callable | 20 | four-byte accessor: mov eax, dword ptr [rcx + 0x20]; 20 callers |
+| `0x4f73e0` | 530 | comment_only | 12 | 530 bytes, 12 callers, reached from 0x524EE0 |
+| `0x547620` | 5 | callable | 4 | five-byte accessor: lea rax, [rcx + 0x18]; 4 callers |
+| `0x5c6be0` | 65 | comment_only | 46 | 65 bytes, 46 callers, reached from 0x524EE0 |
 | `0x5c8c50` | 255 | callable | 56 | merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight |
 | `0x524ee0` | 1054 | comment_only | 22 | the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented |
 | `0x4f9200` | 434 | comment_only | 21 | lazily initialised object: checks the byte at +0x100 and returns [rcx+0x108] when it is set, else constructs. 434 bytes, 97 instructions, 21 callers |
@@ -206,7 +212,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0xe1f0` | 111 | comment_only | 0 | export UnLockLaunchingOrderOxy (ordinals 342,343) |
 | `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-195 blocks, 20 callable, 175 comment-only, 92861 bytes of original code embedded.
+201 blocks, 22 callable, 179 comment-only, 93979 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -851,6 +857,329 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 0050fe4c  jmp 0x50fe0b
 ```
 
+## `0x5f4310` -- three-field constructor helper reached from 0x524EE0; calls 0x5F3900
+
+- size 35 bytes, 45 callers, status **comment_only**
+- not callable because: call to 0x5F3900 outside the block
+- sha256 `03176c354b155e09b6f47131243c43fdd8870b51b782c12f2be4f611fce1aa59`
+
+```asm
+005f4310  push rsi
+005f4311  push rbx
+005f4312  sub rsp, 0x28
+005f4316  mov rbx, rcx
+005f4319  mov qword ptr [rcx], rdx
+005f431c  mov esi, r8d
+005f431f  lea rcx, [rcx + 8]
+005f4323  call 0x5f3900
+005f4328  mov byte ptr [rbx + 0x10], sil
+005f432c  add rsp, 0x28
+005f4330  pop rbx
+005f4331  pop rsi
+005f4332  ret 
+```
+
+## `0x520440` -- 479 bytes, 55 callers, reached from 0x524EE0
+
+- size 479 bytes, 55 callers, status **comment_only**
+- not callable because: call to 0x60A620 outside the block; call to 0x62F280 outside the block; call to 0x910BA0 outside the block; call to 0x9984B0 outside the block
+- sha256 `861082eb3669a2b24512a1ff5a7d8b32f02136dbaebe460a5d62a5ebddff9526`
+
+```asm
+00520440  push rbp
+00520441  push rdi
+00520442  push rsi
+00520443  push rbx
+00520444  sub rsp, 0x98
+0052044b  mov rax, qword ptr [rcx + 0x48]
+0052044f  test rax, rax
+00520452  mov rbx, rcx
+00520455  je 0x520463
+00520457  add rsp, 0x98
+0052045e  pop rbx
+0052045f  pop rsi
+00520460  pop rdi
+00520461  pop rbp
+00520462  ret 
+00520463  lea rsi, [rsp + 0x70]
+00520468  xor r8d, r8d
+0052046b  mov qword ptr [rsp + 0x50], 0x1c
+00520474  lea rdi, [rsp + 0x50]
+00520479  mov rcx, rsi
+0052047c  lea rax, [rsi + 0x10]
+00520480  mov rdx, rdi
+00520483  mov qword ptr [rsp + 0x70], rax
+00520488  lea rbp, [rsp + 0x30]
+0052048d  call 0x910ba0
+00520492  mov rdx, qword ptr [rsp + 0x50]
+00520497  xor r8d, r8d
+0052049a  mov rcx, rbp
+0052049d  mov qword ptr [rsp + 0x70], rax
+005204a2  mov dword ptr [rax + 0x18], 0x222e676e
+005204a9  mov qword ptr [rsp + 0x80], rdx
+005204b1  movabs rdx, 0x2620747261705f6d
+005204bb  mov qword ptr [rax], rdx
+005204be  movabs rdx, 0x756f626e75222026
+005204c8  mov qword ptr [rax + 8], rdx
+005204cc  movabs rdx, 0x697473656e20646e
+005204d6  mov qword ptr [rax + 0x10], rdx
+005204da  mov rdx, qword ptr [rsp + 0x70]
+005204df  mov rax, qword ptr [rsp + 0x50]
+005204e4  mov qword ptr [rsp + 0x78], rax
+005204e9  mov byte ptr [rdx + rax], 0
+005204ed  lea rax, [rdi + 0x10]
+005204f1  mov qword ptr [rsp + 0x50], rax
+005204f6  lea rdx, [rsp + 0x28]
+005204fb  lea rax, [rbp + 0x10]
+005204ff  mov dword ptr [rsp + 0x60], 0x74726170
+00520507  mov qword ptr [rsp + 0x58], 4
+00520510  mov byte ptr [rsp + 0x64], 0
+00520515  mov qword ptr [rsp + 0x30], rax
+0052051a  mov qword ptr [rsp + 0x28], 0x1c
+00520523  call 0x910ba0
+00520528  mov rdx, qword ptr [rsp + 0x28]
+0052052d  mov qword ptr [rsp + 0x30], rax
+00520532  mov r9, rsi
+00520535  mov r8, rdi
+00520538  mov dword ptr [rax + 0x18], 0x7070632e
+0052053f  mov rcx, rbp
+00520542  mov qword ptr [rsp + 0x40], rdx
+00520547  movabs rdx, 0x63757274735c2e2e
+00520551  mov qword ptr [rax], rdx
+00520554  movabs rdx, 0x73656e5c65727574
+0052055e  mov qword ptr [rax + 8], rdx
+00520562  movabs rdx, 0x747261705f646574
+0052056c  mov qword ptr [rax + 0x10], rdx
+00520570  mov rax, qword ptr [rsp + 0x28]
+00520575  mov rdx, qword ptr [rsp + 0x30]
+0052057a  mov qword ptr [rsp + 0x38], rax
+0052057f  mov byte ptr [rdx + rax], 0
+00520583  mov edx, 0x4f
+00520588  call 0x60a620
+0052058d  mov rcx, qword ptr [rsp + 0x30]
+00520592  add rbp, 0x10
+00520596  cmp rcx, rbp
+00520599  je 0x5205a0
+0052059b  call 0x9984b0
+005205a0  mov rcx, qword ptr [rsp + 0x50]
+005205a5  add rdi, 0x10
+005205a9  cmp rcx, rdi
+005205ac  je 0x5205b3
+005205ae  call 0x9984b0
+005205b3  mov rcx, qword ptr [rsp + 0x70]
+005205b8  add rsi, 0x10
+005205bc  cmp rcx, rsi
+005205bf  je 0x5205c6
+005205c1  call 0x9984b0
+005205c6  mov rax, qword ptr [rbx + 0x48]
+005205ca  add rsp, 0x98
+005205d1  pop rbx
+005205d2  pop rsi
+005205d3  pop rdi
+005205d4  pop rbp
+005205d5  ret 
+005205d6  mov rbx, rax
+005205d9  mov rcx, qword ptr [rsp + 0x50]
+005205de  add rdi, 0x10
+005205e2  cmp rcx, rdi
+005205e5  je 0x5205ec
+005205e7  call 0x9984b0
+005205ec  mov rcx, qword ptr [rsp + 0x70]
+005205f1  add rsi, 0x10
+005205f5  cmp rcx, rsi
+005205f8  je 0x5205ff
+005205fa  call 0x9984b0
+005205ff  mov rcx, rbx
+00520602  call 0x62f280
+00520607  mov rcx, qword ptr [rsp + 0x30]
+0052060c  add rbp, 0x10
+00520610  mov rbx, rax
+00520613  cmp rcx, rbp
+00520616  je 0x5205d9
+00520618  call 0x9984b0
+0052061d  jmp 0x5205d9
+```
+
+## `0x5203c0` -- four-byte accessor: mov eax, dword ptr [rcx + 0x20]; 20 callers
+
+- size 4 bytes, 20 callers, status **callable**
+- sha256 `07ad3a50b1c271e07fb57fb47d2f0e77f3342d41bfa410990cb1320a45035fb2`
+
+```asm
+005203c0  mov eax, dword ptr [rcx + 0x20]
+005203c3  ret 
+```
+
+## `0x4f73e0` -- 530 bytes, 12 callers, reached from 0x524EE0
+
+- size 530 bytes, 12 callers, status **comment_only**
+- not callable because: call to 0x60A620 outside the block; call to 0x62F280 outside the block; call to 0x910BA0 outside the block; call to 0x9984B0 outside the block
+- sha256 `f8e3d9c89e45734f1f161ca140ef47fd15db46dd433f1c8d02261c196efc11aa`
+
+```asm
+004f73e0  push r12
+004f73e2  push rbp
+004f73e3  push rdi
+004f73e4  push rsi
+004f73e5  push rbx
+004f73e6  sub rsp, 0x90
+004f73ed  mov rax, qword ptr [rcx + 0x78]
+004f73f1  mov ebx, edx
+004f73f3  mov rdx, qword ptr [rcx + 0x70]
+004f73f7  mov rsi, rcx
+004f73fa  movabs rcx, 0x84bda12f684bda13
+004f7404  sub rax, rdx
+004f7407  sar rax, 3
+004f740b  imul rax, rcx
+004f740f  cmp rbx, rax
+004f7412  jae 0x4f7430
+004f7414  lea rax, [rbx + rbx*2]
+004f7418  lea rax, [rax + rax*8]
+004f741c  lea rax, [rdx + rax*8]
+004f7420  add rsp, 0x90
+004f7427  pop rbx
+004f7428  pop rsi
+004f7429  pop rdi
+004f742a  pop rbp
+004f742b  pop r12
+004f742d  ret 
+004f742e  nop 
+004f7430  lea rbp, [rsp + 0x50]
+004f7435  xor r8d, r8d
+004f7438  mov qword ptr [rsp + 0x50], 0x1f
+004f7441  lea rdi, [rsp + 0x70]
+004f7446  mov rdx, rbp
+004f7449  lea rax, [rdi + 0x10]
+004f744d  mov rcx, rdi
+004f7450  mov qword ptr [rsp + 0x70], rax
+004f7455  lea r12, [rsp + 0x30]
+004f745a  call 0x910ba0
+004f745f  mov rdx, qword ptr [rsp + 0x50]
+004f7464  xor r8d, r8d
+004f7467  movabs rcx, 0x695f656c75646f6d
+004f7471  mov qword ptr [rsp + 0x70], rax
+004f7476  mov dword ptr [rax + 0x18], 0x7a69732e
+004f747d  mov byte ptr [rax + 0x1e], 0x29
+004f7481  mov qword ptr [rsp + 0x80], rdx
+004f7489  mov edx, 0x2865
+004f748e  mov qword ptr [rax], rcx
+004f7491  movabs rcx, 0x6d203c207865646e
+004f749b  mov qword ptr [rax + 8], rcx
+004f749f  movabs rcx, 0x73656c75646f6d5f
+004f74a9  mov qword ptr [rax + 0x10], rcx
+004f74ad  mov ecx, 0x656c
+004f74b2  mov word ptr [rax + 0x1c], dx
+004f74b6  mov rdx, qword ptr [rsp + 0x70]
+004f74bb  mov rax, qword ptr [rsp + 0x50]
+004f74c0  mov qword ptr [rsp + 0x78], rax
+004f74c5  mov byte ptr [rdx + rax], 0
+004f74c9  lea rax, [rbp + 0x10]
+004f74cd  mov qword ptr [rsp + 0x50], rax
+004f74d2  lea rdx, [rsp + 0x28]
+004f74d7  mov dword ptr [rsp + 0x60], 0x75646f6d
+004f74df  lea rax, [r12 + 0x10]
+004f74e4  mov word ptr [rbp + 0x14], cx
+004f74e8  mov rcx, r12
+004f74eb  mov qword ptr [rsp + 0x58], 6
+004f74f4  mov byte ptr [rsp + 0x66], 0
+004f74f9  mov qword ptr [rsp + 0x30], rax
+004f74fe  mov qword ptr [rsp + 0x28], 0x15
+004f7507  call 0x910ba0
+004f750c  mov rdx, qword ptr [rsp + 0x28]
+004f7511  mov qword ptr [rsp + 0x30], rax
+004f7516  mov r9, rdi
+004f7519  mov r8, rbp
+004f751c  movabs rcx, 0x63757274735c2e2e
+004f7526  mov qword ptr [rsp + 0x40], rdx
+004f752b  mov qword ptr [rax], rcx
+004f752e  mov rdx, qword ptr [rsp + 0x30]
+004f7533  movabs rcx, 0x7261705c65727574
+004f753d  mov qword ptr [rax + 8], rcx
+004f7541  mov rcx, r12
+004f7544  mov dword ptr [rax + 0x10], 0x70632e74
+004f754b  mov byte ptr [rax + 0x14], 0x70
+004f754f  mov rax, qword ptr [rsp + 0x28]
+004f7554  mov qword ptr [rsp + 0x38], rax
+004f7559  mov byte ptr [rdx + rax], 0
+004f755d  mov edx, 0x9a
+004f7562  call 0x60a620
+004f7567  mov rcx, qword ptr [rsp + 0x30]
+004f756c  add r12, 0x10
+004f7570  cmp rcx, r12
+004f7573  je 0x4f757a
+004f7575  call 0x9984b0
+004f757a  mov rcx, qword ptr [rsp + 0x50]
+004f757f  add rbp, 0x10
+004f7583  cmp rcx, rbp
+004f7586  je 0x4f758d
+004f7588  call 0x9984b0
+004f758d  mov rcx, qword ptr [rsp + 0x70]
+004f7592  add rdi, 0x10
+004f7596  cmp rcx, rdi
+004f7599  je 0x4f75a0
+004f759b  call 0x9984b0
+004f75a0  mov rdx, qword ptr [rsi + 0x70]
+004f75a4  jmp 0x4f7414
+004f75a9  mov rbx, rax
+004f75ac  mov rcx, qword ptr [rsp + 0x50]
+004f75b1  add rbp, 0x10
+004f75b5  cmp rcx, rbp
+004f75b8  je 0x4f75bf
+004f75ba  call 0x9984b0
+004f75bf  mov rcx, qword ptr [rsp + 0x70]
+004f75c4  add rdi, 0x10
+004f75c8  cmp rcx, rdi
+004f75cb  je 0x4f75d2
+004f75cd  call 0x9984b0
+004f75d2  mov rcx, rbx
+004f75d5  call 0x62f280
+004f75da  mov rcx, qword ptr [rsp + 0x30]
+004f75df  add r12, 0x10
+004f75e3  mov rbx, rax
+004f75e6  cmp rcx, r12
+004f75e9  je 0x4f75ac
+004f75eb  call 0x9984b0
+004f75f0  jmp 0x4f75ac
+```
+
+## `0x547620` -- five-byte accessor: lea rax, [rcx + 0x18]; 4 callers
+
+- size 5 bytes, 4 callers, status **callable**
+- sha256 `813b00f48d4cf0d99dea047ab4852415937c2c310855ec0ec2bda6184b705ba3`
+
+```asm
+00547620  lea rax, [rcx + 0x18]
+00547624  ret 
+```
+
+## `0x5c6be0` -- 65 bytes, 46 callers, reached from 0x524EE0
+
+- size 65 bytes, 46 callers, status **comment_only**
+- not callable because: call to 0x62F280 outside the block; call to 0x8C4530 outside the block; call to 0x8C5090 outside the block
+- sha256 `213123586aab2df6d4d2a81bb752ae4b7d48e0a3f6bfc973c8dffd23f7880374`
+
+```asm
+005c6be0  push rsi
+005c6be1  push rbx
+005c6be2  sub rsp, 0x28
+005c6be6  mov qword ptr [rcx], 0
+005c6bed  mov rbx, rcx
+005c6bf0  mov qword ptr [rcx + 8], 0
+005c6bf8  mov qword ptr [rcx + 0x10], 0
+005c6c00  call 0x8c4530
+005c6c05  nop 
+005c6c06  add rsp, 0x28
+005c6c0a  pop rbx
+005c6c0b  pop rsi
+005c6c0c  ret 
+005c6c0d  mov rsi, rax
+005c6c10  mov rcx, rbx
+005c6c13  call 0x8c5090
+005c6c18  mov rcx, rsi
+005c6c1b  call 0x62f280
+005c6c20  nop 
+```
+
 ## `0x5c8c50` -- merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight
 
 - size 255 bytes, 56 callers, status **callable**
@@ -924,7 +1253,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x524ee0` -- the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented
 
 - size 1054 bytes, 22 callers, status **comment_only**
-- not callable because: call to 0x4F73E0 outside the block; call to 0x5203C0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block (+12 more)
+- not callable because: call to 0x4F73E0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block; call to 0x520440 outside the block (+10 more)
 - sha256 `6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070`
 
 ```asm
@@ -1637,7 +1966,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x243820` -- head of the largest routine here (15,524 bytes): geometry entry
 
 - size 15524 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+75 more)
+- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+74 more)
 - sha256 `ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae`
 
 ```asm
@@ -15647,7 +15976,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x16e60` -- export GetNestedPartPartVariant (ordinals 206,207)
 
 - size 1727 bytes, 0 callers, status **comment_only**
-- not callable because: call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x5203C0 outside the block; call to 0x520440 outside the block (+5 more)
+- not callable because: call to 0x4F76A0 outside the block; call to 0x51D0C0 outside the block; call to 0x520440 outside the block; call to 0x60A620 outside the block (+4 more)
 - sha256 `b238c8e313e079cefe54d3ba198cd20f79b6c7da243f61de9a7fa34651558a7b`
 
 ```asm
