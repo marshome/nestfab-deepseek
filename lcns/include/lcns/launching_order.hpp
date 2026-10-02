@@ -59,6 +59,32 @@
 // where the field is touched: see LaunchingOrderNames below.
 // ---------------------------------------------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------------------------------------------
+// Each name's WITNESSES (round 536)
+//
+// A name is used here only when TWO INDEPENDENT single-offset accessors agree on the offset, which is the rule
+// re/g_two_witnesses.py enforces. An accessor is a function of at most 0x100 bytes that touches exactly one offset through
+// its first argument: one witness can be a function whose name describes something else, two independent ones cannot both
+// be wrong the same way. The count is recorded next to each name because it is what tells a later reader how much weight to
+// give it.
+//
+//   offset   witnesses  the accessors and what they do
+//   +0x0010  2          GenerateDxfNesting reads it, GetNestingFillRatio reads it
+//   +0x0050  2          GenerateHtmlSolutionReport reads it, GetFillRatio reads it
+//   +0x0140  1          GetSheetUserStringEx reads it                                   (a lead)
+//   +0x01B8  1          GetPartUserStringEx reads it                                    (a lead)
+//   +0x01F8  1          LaunchLimitedLocalComputation writes it                         (a lead)
+//   +0x0288  1          LaunchEstimateLocalComputation writes it                        (a lead)
+//
+// Two of the six are for the objects the EXPORTS take rather than for the launch order itself: GetFillRatio and
+// GetNestingFillRatio are exports over a solution, and GenerateDxfNesting and GenerateHtmlSolutionReport read the same
+// object to render it. They are listed because the offsets coincide, and that coincidence is itself a fact worth knowing --
+// the solution and the launch order share a layout at +0x10 and +0x50 -- but it is not evidence that a launch order field at
+// +0x10 is named FillRatio.
+//
+// The four remaining names have one witness each and are used with that stated. Everything else keeps slotXXX.
+// ---------------------------------------------------------------------------------------------------------------
+
 namespace names {
 
 /** RE 0x0C5E0: the getter the export GetPartUserString(27/28) forwards to; it reads the pointer at +0x1B8. */
