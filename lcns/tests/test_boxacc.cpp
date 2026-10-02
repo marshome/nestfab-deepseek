@@ -742,5 +742,34 @@ int main() {
         CHECK(inner_end == object + 0x50 + 0x28);
     }
 
+    // ------------------- the candidate object's mode-dependent tail (RE 0x22A20 from 0x22C1F)
+    {
+        unsigned char order[0x300];
+        unsigned char object[0x1C8];
+        // The mode at [order+0x240] selects the parameters; 1 and 2 are the two the code tests for, 0 and 3 fall through
+        // to the default, so all four are checked.
+        const std::uint32_t modes[4] = {0, 1, 2, 3};
+        const std::uint8_t expect_flag[4] = {0, 1, 1, 0};
+        const std::uint32_t expect_cap[4] = {10, 500, 10, 10};
+        const double expect_first[4] = {4.0, 10.0, 3.0, 4.0};
+        const double expect_second[4] = {0.1, 0.2, 0.1, 0.1};
+        for (int mode = 0; mode < 4; ++mode) {
+            std::memset(order, 0, sizeof(order));
+            std::memcpy(order + 0x240, &modes[mode], sizeof(modes[mode]));
+            std::memset(object, 0xA5, sizeof(object));
+            lcns::dll::accessors::constructCandidate_22E30(object, order, 0.5, 1);
+            CHECK(object[0x150] == expect_flag[mode]);            // RE 0x22C41
+            std::uint32_t cap = 0;
+            std::memcpy(&cap, object + 0x154, sizeof(cap));
+            CHECK(cap == expect_cap[mode]);                       // RE 0x22BF1
+            double first = 0.0;
+            double second = 0.0;
+            std::memcpy(&first, object + 0x158, sizeof(first));
+            std::memcpy(&second, object + 0x160, sizeof(second));
+            CHECK(first == expect_first[mode]);                   // RE 0x22BFB
+            CHECK(second == expect_second[mode]);                 // RE 0x22C03
+        }
+    }
+
     return check::finish("boxacc");
 }

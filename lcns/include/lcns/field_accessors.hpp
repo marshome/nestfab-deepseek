@@ -649,6 +649,59 @@ inline void constructCandidate_22A20(void* object, void* order, double value, st
     std::memcpy(base + 0x18, &inline_buffer, sizeof(inline_buffer));
     // RE 0x22AE9: the container at +0x50 is initialised by the empty container initialiser, already recovered.
     initEmptyContainer_51BFC0(base + 0x50);
+    // RE 0x22AF7 to 0x22B4B: the members from +0xA0 to +0xC0 are cleared.
+    for (std::size_t offset = 0xA0; offset <= 0xC0; offset += 8) {
+        std::memcpy(base + offset, &zero, sizeof(zero));
+    }
+    // RE 0x22B56 to 0x22B8C: four members from +0xC8 to +0xE0 are registered and cleared. The registration goes through
+    // 0x63F6C8, which is the runtime's atexit family and has no counterpart here, so only the clearing is reproduced.
+    std::memcpy(base + 0xC8, &zero, sizeof(zero));
+    std::memcpy(base + 0xD0, &zero, sizeof(zero));
+    std::memcpy(base + 0xD8, &zero, sizeof(zero));
+    std::memcpy(base + 0xE0, &zero, sizeof(zero));
+    // RE 0x22B94: the member at +0xE8 is the identity of 0x895F80, which stays zero.
+    std::memcpy(base + 0xE8, &zero, sizeof(zero));
+    // RE 0x22B9C to 0x22BA6: the dword at +0xF0 and the container at +0xF8.
+    const std::uint32_t zero32 = 0;
+    std::memcpy(base + 0xF0, &zero32, sizeof(zero32));
+    initEmptyContainer_51BFC0(base + 0xF8);
+    // RE 0x22BBA to 0x22C1C: the head of the block that carries the three parameters.
+    base[0x148] = 0;                                   // RE 0x22BBA
+    base[0x149] = 0;                                   // RE 0x22BC7
+    base[0x14A] = 0;                                   // RE 0x22BD9
+    std::memcpy(base + 0x14C, &zero32, sizeof(zero32));  // RE 0x22BE0
+    // RE 0x22C12: the dword at +0x16C, and RE 0x22C1C: the pointer at +0x170.
+    std::memcpy(base + 0x16C, &zero32, sizeof(zero32));
+    std::memcpy(base + 0x170, &zero, sizeof(zero));
+    // RE 0x22C27: the timer object at +0x178 comes from 0x5F3900, which batch seven implemented. It allocates, so it is
+    // left out of this initialiser and the field stays as the caller left it; the constructor's own call is recorded here.
+    // RE 0x22C1F: the mode is read from the order at +0x240, not from the object.
+    std::uint32_t mode = 0;
+    if (order != nullptr) {
+        std::memcpy(&mode, static_cast<const unsigned char*>(order) + 0x240, sizeof(mode));
+    }
+    double first = 4.0;                                // RE 0x22BAB, the literal at 0x9AE1E8
+    double second = 0.1;                               // RE 0x22BD1, the literal at 0x9AE1F0
+    std::uint32_t cap = 10;                            // RE 0x22BF1
+    std::uint8_t applies = 0;                          // RE 0x22C3A, the default when the mode is neither 1 nor 2
+    if (mode == 1) {                                   // RE 0x22C2C
+        first = 10.0;                                  // RE 0x22C92, the literal at 0x9AE1F8
+        second = 0.2;                                  // RE 0x22CA1, the literal at 0x9AE200
+        cap = 500;                                     // RE 0x22CA9
+        applies = 1;
+    } else if (mode == 2) {                            // RE 0x22C31
+        first = 3.0;                                   // RE 0x22CD0, the literal at 0x9AE208
+        cap = 10;                                      // RE 0x22CDF
+        applies = 1;
+    }
+    base[0x150] = applies;                             // RE 0x22C41 and 0x22C9A and 0x22CD8
+    std::memcpy(base + 0x154, &cap, sizeof(cap));      // RE 0x22BF1 and 0x22CA9 and 0x22CDF
+    std::memcpy(base + 0x158, &first, sizeof(first));  // RE 0x22BFB and 0x22CB3 and 0x22CE9
+    std::memcpy(base + 0x160, &second, sizeof(second));// RE 0x22C03 and 0x22CBB
+    base[0x168] = 0;                                   // RE 0x22C0B
+    // RE 0x22C41 and 0x22C54: the two strings at +0x180 and +0x1A0 are built by 0x1B130 from two literals that the dump
+    // does not carry as text, and RE 0x22C76 calls 0x4FBE70, which this project has already recovered. Both are left out
+    // here and the object is returned with those three fields as the caller left them.
 }
 
 inline void constructCandidate_22E30(void* object, void* order, double value, std::uint8_t flag) {
