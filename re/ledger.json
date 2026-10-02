@@ -2126,6 +2126,30 @@
    "round": 663,
    "subject": "tooling.named-debt-beats-thresholds",
    "witness": "boxmerge.hpp's function declarations read as empty to a member pattern; kNestingNesterSeedP grouped as 'kN'; field_accessors.hpp's 100 functions counted as nothing"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the object RE 0x6DE480 constructs is a class of 0x58 bytes with three (pointer, size) pairs, two 0x10 byte inline buffers, and a byte at +0x50",
+   "round": 664,
+   "subject": "small-buffer.type",
+   "witness": "0x6DE49F stores the +0x10 buffer into +0, 0x6DE4AC stores the +0x30 buffer into +0x20, 0x6DE4C0 stores that SAME address into +0x40, and 0x6DE4CC writes a byte at +0x50"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the third (pointer, size) pair shares the second's storage: the constructor computes the address once and stores it twice",
+   "round": 664,
+   "subject": "small-buffer.third-shares-second",
+   "witness": "0x6DE4A8 lea rax,[rbx+0x30] then 0x6DE4AC mov [rbx+0x20],rax and 0x6DE4C0 mov [rbx+0x40],rax -- one address, two members"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a shared buffer, an embedded buffer, an allocated sub-block and a starting refcount are four facts a type states and a list of offsets cannot",
+   "round": 664,
+   "subject": "type-states-what-offsets-cannot",
+   "witness": "the six kInline* constants gave six addresses and kInlineBufferPairs=3; the members give the sharing, the embedding, the 0x18 allocation and the refcount==1 at +8 and +0xC"
   }
  ]
 }
