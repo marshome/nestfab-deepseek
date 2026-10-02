@@ -41,7 +41,9 @@ TOOLCHAIN = os.path.join(ROOT, "re", "g_toolchain.py")
 
 
 def norm(op_str):
-    return op_str.replace(" ", "")
+    # offsets appear both as 0x10 and as 8, so decimal forms are canonicalised to hex before matching
+    text = op_str.replace(" ", "")
+    return re.sub(r"\[rcx\+(\d+)\]", lambda m: "[rcx+0x%X]" % int(m.group(1)), text)
 
 
 def classify(body):
@@ -247,7 +249,8 @@ def main(argv):
         fin = '    return check::finish("boxacc");'
         assert fin in t
         block = ["    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)",
-                 "    {", "        unsigned char object[0x80];", "        std::memset(object, 0xA5, sizeof(object));"]
+                 "    {", "        unsigned char object[0x800];   // the largest field offset an accessor touches",
+                 "        std::memset(object, 0xA5, sizeof(object));"]
         block += tests
         block += ["    }", "", fin]
         io.open(TEST, "w", encoding="utf-8", newline="\n").write(t.replace(fin, "\n".join(block), 1))

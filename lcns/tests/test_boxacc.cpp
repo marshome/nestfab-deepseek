@@ -607,5 +607,12 @@ int main() {
         { lcns::dll::accessors::setDouble18_52F8B0(object, -13.25); double got = 0.0; std::memcpy(&got, object + 0x18, sizeof(got)); CHECK(got == -13.25); }   // RE 0x52F8B0
     }
 
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];   // the largest field offset an accessor touches
+        std::memset(object, 0xA5, sizeof(object));
+        { const double put = -13.25; std::memcpy(object + 0x08, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble08_52F8F0(object) == put); }   // RE 0x52F8F0
+    }
+
     return check::finish("boxacc");
 }

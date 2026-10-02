@@ -405,6 +405,12 @@ inline void setDouble60_4F7340(void* object, double value) {
 inline void setDouble18_52F8B0(void* object, double value) {
     std::memcpy(static_cast<unsigned char*>(object) + 0x18, &value, sizeof(value));
 }
+/** RE 0x52F8F0: reads the double at +0x08, as movsd does. */
+inline double getDouble08_52F8F0(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x08, sizeof(value));
+    return value;
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns
