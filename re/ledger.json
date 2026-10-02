@@ -678,6 +678,22 @@
    "round": 580,
    "subject": "stat.fold",
    "witness": "0x5C8C50 cmp byte [rdx],0 / je return; 0x5C8C60 cmp byte [rcx],0; 0x5C8C6E movsd xmm1,[rcx+8]; 0x5C8C73 ucomisd / jbe; 0x5C8C79 movsd [rcx+8],xmm0; 0x5C8C88 ucomisd xmm0,[rcx+0x18]; 0x5C8C8F movsd [rcx+0x18],xmm0; then the same pair at +0x10 and +0x20"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x524EE0 is 1054 bytes, 241 instructions, 33 direct calls over 16 targets, and it reaches only four offsets on its first argument",
+   "round": 583,
+   "subject": "element.524EE0",
+   "witness": "callers 23; the heavy callees are 0x5D3EA0 (2155 B) and 0x4F73E0 (530 B); offsets on the first argument are +0x10 x3, +0x14 x1, +0x18 x5, +0x20 x3 -- the rest of its work is on the stack"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a $ anchor written through PowerShell quoting became a literal backslash-dollar, so a call-target pattern matched nothing and reported zero calls for a function with twenty callees",
+   "round": 583,
+   "subject": "tooling.shell-quoting",
+   "witness": "the same command re-run from a Python file found 33 direct calls over 16 targets; this is the fifth impossible number this session and the first whose cause was the shell rather than a script"
   }
  ]
 }
