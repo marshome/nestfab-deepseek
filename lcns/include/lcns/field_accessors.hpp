@@ -100,6 +100,64 @@ inline void setByte20_52F8D0(void* object, std::uint8_t value) {
 inline void setByte21_52F8E0(void* object, std::uint8_t value) {
     std::memcpy(static_cast<unsigned char*>(object) + 0x21, &value, sizeof(value));
 }
+/** RE 0x54D100: reads the 8-bit value at +0x00. */
+inline std::uint8_t getByte00_54D100(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x00, sizeof(value));
+    return value;
+}
+
+/** RE 0x5C4CD0: reads the 8-bit value at +0x00. */
+inline std::uint8_t getByte00_5C4CD0(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x00, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7050: reads the 32-bit value at +0x24. */
+inline std::uint32_t getDword24_4F7050(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x24, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC1D0: reads the 64-bit value at +0x00. */
+inline std::uint64_t getPtr00_4FC1D0(const void* object) {
+    std::uint64_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x00, sizeof(value));
+    return value;
+}
+
+/** RE 0x5FC7E0: reads the 64-bit value at +0x00. */
+inline std::uint64_t getPtr00_5FC7E0(const void* object) {
+    std::uint64_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x00, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC200: reads the 64-bit value at +0x00. */
+inline std::uint64_t getPtr00_4FC200(const void* object) {
+    std::uint64_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x00, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8C70: writes the 32-bit value at +0x60 and nothing else. */
+inline void setDword60_4F8C70(void* object, std::uint32_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x60, &value, sizeof(value));
+}
+
+/** RE 0x4F76B0: writes the 32-bit value at +0x20 and nothing else. */
+inline void setDword20_4F76B0(void* object, std::uint32_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x20, &value, sizeof(value));
+}
+
+/** RE 0x548390: reads the 32-bit value at +0x20. */
+inline std::uint32_t getDword20_548390(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x20, sizeof(value));
+    return value;
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns
