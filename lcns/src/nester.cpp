@@ -98,14 +98,9 @@ bool TimeCanceller::probeCancel() {
 }
 
 // ---------------------------------------------------------------------------
-void BestObserver::offer(const Solution& s, double score) {
-    ++offers_;
-    if (!has_ || score > bestScore_) {
-        best_ = s;
-        bestScore_ = score;
-        has_ = true;
-    }
-}
+// BestObserver's three forwarders now live in lcns/src/best_observer.cpp, beside the instructions that establish them. **The body that stood
+// here kept a best solution in `best_`, `bestScore_`, `has_` and `offers_`, and no instruction places any of those four members**: three of the
+// class's six slots are 11, 11 and 18 bytes and do nothing but forward to the object at +0x10.
 
 void LinearCombinationPrice::add(std::shared_ptr<PriceComputer> pc, double weight) {
     parts_.push_back(std::move(pc));

@@ -2430,6 +2430,30 @@
    "round": 676,
    "subject": "a-destructor-also-installs-the-vtable",
    "witness": "all three of Engine::InfiniteEngine's candidates contain a lea of 0xA3CFE0 and a store into [object+0]; the only remaining discriminator is whether the object was freshly allocated and whose this it is"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Engine::BestObserver holds one pointer at +0x10 and forwards its whole interface to it; it keeps no best solution of its own",
+   "round": 677,
+   "subject": "BestObserver.forwards",
+   "witness": "0x755A40, 0x755A50 and 0x755A60 are 11, 11 and 18 bytes and each reads [rcx+0x10] then jumps into that object's vtable at +0x10, +0x18 and +0x28"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the Solution, double, bool and int the declaration held are placed by no instruction: the destructor pair writes only the vtable and the constructor is not in the profile",
+   "round": 677,
+   "subject": "BestObserver.members-were-unplaced",
+   "witness": "0x756B20 and 0x756CF0 are the destructor pair; the only stores they make to the object are the vtable at +0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the pattern across FlipNester, InfiniteEngine and BestObserver: a declaration written from a plausible guess at the class's state and never re-read against the instructions",
+   "round": 677,
+   "subject": "declarations-were-never-re-read",
+   "witness": "FlipNester had an invented ratio_, InfiniteEngine an inner_ that was the second argument, and BestObserver four members where it forwards"
   }
  ]
 }

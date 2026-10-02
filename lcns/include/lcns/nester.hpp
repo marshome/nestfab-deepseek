@@ -123,20 +123,37 @@ struct Observers {
     std::function<void(const Solution&)> newNestingFound;               // v5
 };
 
-// RE Engine::BestObserver / CompositeObserver: keeps the best solution seen.
+/** The interface `Engine::BestObserver` forwards to, RE 0x755A40 through 0x755A6F.
+ *
+ *  Its vtable is at 0xA55FB0 and has NULL in slots 0 and 1 -- **a pure interface** -- and the three forwarders reach its slots 2, 3 and 5
+ *  through [rax + 0x10], [rax + 0x18] and [rax + 0x28].
+ */
+class ObserverSink {
+public:
+    virtual ~ObserverSink() = default;
+    virtual void offer(const Solution& solution, double score) = 0;
+    virtual bool hasSolution() const = 0;
+    virtual void notify(bool finished, int offers) = 0;
+};
+
+/** RE 0xA3CF30. **IT HOLDS ONE POINTER AT +0x10 AND FORWARDS ITS WHOLE INTERFACE TO IT.** Three of its six slots are 11, 11 and 18 bytes:
+ *
+ *      0x755A40  mov rcx, [rcx + 0x10] / mov rax, [rcx] / jmp [rax + 0x10]     ; slot 2
+ *      0x755A50  mov rcx, [rcx + 0x10] / mov rax, [rcx] / jmp [rax + 0x18]     ; slot 3
+ *      0x755A60  mov rcx, [rcx + 0x10] / movzx r8d, r8b / jmp [rax + 0x28]     ; slot 5
+ *
+ *  **AND THAT IS ALL THE INSTRUCTIONS ESTABLISH.** The declaration this replaces held a `Solution best_`, a `double bestScore_`, a `bool has_`
+ *  and an `int offers_`, and **no instruction places any of them**: the two functions that could construct the object are the destructor pair
+ *  and write only the vtable, and the constructor is not in the profile. A member nothing places is not a member.
+ */
 class BestObserver {
 public:
+    void offer(const Solution& s, double score);      // RE 0x755A40
+    bool hasSolution() const;                          // RE 0x755A50
+    void notify(bool finished, int offers);            // RE 0x755A60
 
-    void offer(const Solution& s, double score);
-    bool hasSolution() const { return has_; }
-    const Solution& best() const { return best_; }
-    double bestScore() const { return bestScore_; }
-    int offers() const { return offers_; }
 private:
-    Solution best_;
-    double bestScore_ = 0.0;
-    bool has_ = false;
-    int offers_ = 0;
+    ObserverSink* sink_ = nullptr;                     // +0x10, RE 0x755A40: mov rcx, [rcx + 0x10]
 };
 
 // ---------------------------------------------------------------------------
