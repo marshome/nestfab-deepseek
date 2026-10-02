@@ -1470,6 +1470,30 @@
    "round": 629,
    "subject": "assert.two-forms",
    "witness": "0x526160 builds '../structure\\\\stat.cpp' from three immediates; 0x1EE50 loads its strings with lea from a rip-relative address and calls 0x1B130"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the module has 47 source files named by its assertions, from nesting_context.cpp (34 sites) to border_property.hpp (9)",
+   "round": 630,
+   "subject": "assert.file-map",
+   "witness": "decoded from 356 loaded assertion strings: multi/ nesting_context worker float_filler nesting_nester database; nesting/algos/ bucket_manager postop_move tree_db algo_helpers; tiling/packer_cache; structure/ text_io problem svg_io stats border_property; verify/; utils/; cns.cpp; cns_no_fit.cpp; internal.cpp"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "223 distinct method names assert, including ComputePartTilings, ComputeNodeIndex, AddOrReplaceEquiv, UpdateMaxElement and InsertAllNext",
+   "round": 630,
+   "subject": "assert.method-map",
+   "witness": "sheet x22, ComputePartTilings x12, ComputeNodeIndex x12, Run x9, GetPart x8, UpdateMaxElement x7; the domain names say what the routines compute"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "356 of 1083 assertion sites yield a loaded string; the other 727 are of the built form this decode does not handle",
+   "round": 630,
+   "subject": "assert.coverage",
+   "witness": "the coverage is stated as a gap rather than implied, because an earlier round established that both forms exist and that generalising from one defeated a previous attempt"
   }
  ]
 }

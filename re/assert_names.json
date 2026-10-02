@@ -1,0 +1,8243 @@
+{
+ "sites": {
+  "0x10040": [
+   {
+    "line": 1000,
+    "site": "0x10110",
+    "strings": [
+     "row_number < row_intervals.size()",
+     "CNS_GetRow",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0x10F30": [
+   {
+    "line": 298,
+    "site": "0x10FC6",
+    "strings": [
+     "GetNesting",
+     "nesting_number < solution_aux.size()",
+     "CNS_GetNesting",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0x11640": [
+   {
+    "line": 931,
+    "site": "0x1173A",
+    "strings": [
+     "order",
+     "CNS_AddSuggestedPartsGrouping",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0x1331B0": [
+   {
+    "line": 81,
+    "site": "0x133301",
+    "strings": []
+   }
+  ],
+  "0x133DE0": [
+   {
+    "line": 121,
+    "site": "0x13405C",
+    "strings": []
+   }
+  ],
+  "0x135040": [
+   {
+    "line": 23,
+    "site": "0x1354F3",
+    "strings": []
+   }
+  ],
+  "0x135780": [
+   {
+    "line": 45,
+    "site": "0x135BC0",
+    "strings": []
+   }
+  ],
+  "0x135C70": [
+   {
+    "line": 233,
+    "site": "0x1361FC",
+    "strings": []
+   }
+  ],
+  "0x136350": [
+   {
+    "line": 150,
+    "site": "0x1369E3",
+    "strings": []
+   }
+  ],
+  "0x136DF0": [
+   {
+    "line": 105,
+    "site": "0x136FDC",
+    "strings": []
+   }
+  ],
+  "0x137800": [
+   {
+    "line": 20,
+    "site": "0x137993",
+    "strings": []
+   }
+  ],
+  "0x1380D0": [
+   {
+    "line": 58,
+    "site": "0x13837B",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x13854E",
+    "strings": []
+   },
+   {
+    "line": 147,
+    "site": "0x138966",
+    "strings": []
+   }
+  ],
+  "0x139110": [
+   {
+    "line": 124,
+    "site": "0x139247",
+    "strings": []
+   }
+  ],
+  "0x139800": [
+   {
+    "line": 181,
+    "site": "0x139FAA",
+    "strings": []
+   },
+   {
+    "line": 180,
+    "site": "0x13A14D",
+    "strings": []
+   }
+  ],
+  "0x13BE60": [
+   {
+    "line": 110,
+    "site": "0x13C231",
+    "strings": []
+   }
+  ],
+  "0x13C5D0": [
+   {
+    "line": 496,
+    "site": "0x13C829",
+    "strings": []
+   }
+  ],
+  "0x13C8D0": [
+   {
+    "line": 19,
+    "site": "0x13CBB9",
+    "strings": []
+   },
+   {
+    "line": 18,
+    "site": "0x13CD52",
+    "strings": []
+   },
+   {
+    "line": 71,
+    "site": "0x13D2BD",
+    "strings": []
+   }
+  ],
+  "0x13D4F0": [
+   {
+    "line": 134,
+    "site": "0x13D67D",
+    "strings": []
+   }
+  ],
+  "0x13F430": [
+   {
+    "line": 205,
+    "site": "0x13F736",
+    "strings": []
+   }
+  ],
+  "0x13FAA0": [
+   {
+    "line": 598,
+    "site": "0x14027F",
+    "strings": []
+   }
+  ],
+  "0x140540": [
+   {
+    "line": 642,
+    "site": "0x141483",
+    "strings": []
+   },
+   {
+    "line": 644,
+    "site": "0x1416AE",
+    "strings": []
+   },
+   {
+    "line": 626,
+    "site": "0x14184F",
+    "strings": []
+   }
+  ],
+  "0x141F90": [
+   {
+    "line": 205,
+    "site": "0x1423AA",
+    "strings": []
+   }
+  ],
+  "0x145960": [
+   {
+    "line": 659,
+    "site": "0x145C3E",
+    "strings": []
+   },
+   {
+    "line": 663,
+    "site": "0x145FC2",
+    "strings": []
+   }
+  ],
+  "0x148E00": [
+   {
+    "line": 19,
+    "site": "0x14902D",
+    "strings": []
+   },
+   {
+    "line": 18,
+    "site": "0x14920A",
+    "strings": []
+   },
+   {
+    "line": 33,
+    "site": "0x1495FD",
+    "strings": []
+   },
+   {
+    "line": 71,
+    "site": "0x149905",
+    "strings": []
+   }
+  ],
+  "0x149B40": [
+   {
+    "line": 109,
+    "site": "0x149E8F",
+    "strings": []
+   }
+  ],
+  "0x14ABC0": [
+   {
+    "line": 78,
+    "site": "0x14AD47",
+    "strings": []
+   }
+  ],
+  "0x14AE20": [
+   {
+    "line": null,
+    "site": "0x14AF81",
+    "strings": []
+   }
+  ],
+  "0x14BB60": [
+   {
+    "line": 76,
+    "site": "0x14C277",
+    "strings": []
+   },
+   {
+    "line": 76,
+    "site": "0x14C4F3",
+    "strings": []
+   },
+   {
+    "line": 76,
+    "site": "0x14C775",
+    "strings": []
+   }
+  ],
+  "0x14CCF0": [
+   {
+    "line": 189,
+    "site": "0x14D202",
+    "strings": []
+   },
+   {
+    "line": 190,
+    "site": "0x14D354",
+    "strings": []
+   }
+  ],
+  "0x14FD00": [
+   {
+    "line": 237,
+    "site": "0x150416",
+    "strings": []
+   }
+  ],
+  "0x154BC0": [
+   {
+    "line": 704,
+    "site": "0x154D3E",
+    "strings": []
+   }
+  ],
+  "0x154DF0": [
+   {
+    "line": 689,
+    "site": "0x15560B",
+    "strings": []
+   }
+  ],
+  "0x155BB0": [
+   {
+    "line": 753,
+    "site": "0x156076",
+    "strings": []
+   },
+   {
+    "line": 746,
+    "site": "0x1561F1",
+    "strings": []
+   },
+   {
+    "line": 730,
+    "site": "0x1563B3",
+    "strings": []
+   }
+  ],
+  "0x156670": [
+   {
+    "line": 611,
+    "site": "0x15681F",
+    "strings": []
+   }
+  ],
+  "0x156BE0": [
+   {
+    "line": 128,
+    "site": "0x157201",
+    "strings": []
+   }
+  ],
+  "0x1573A0": [
+   {
+    "line": 128,
+    "site": "0x1578F0",
+    "strings": []
+   }
+  ],
+  "0x158160": [
+   {
+    "line": 86,
+    "site": "0x1586C7",
+    "strings": []
+   }
+  ],
+  "0x158810": [
+   {
+    "line": 124,
+    "site": "0x1588E7",
+    "strings": [
+     "!parameters.basic_evaluators && !parameters.quantity_evaluators",
+     "ComputeMonoTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x159680": [
+   {
+    "line": 474,
+    "site": "0x1597EF",
+    "strings": [
+     "part_number < m_tiling_parts.size()",
+     "GetPart",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x159F80": [
+   {
+    "line": 42,
+    "site": "0x15A178",
+    "strings": []
+   }
+  ],
+  "0x15A5D0": [
+   {
+    "line": 159,
+    "site": "0x15A771",
+    "strings": []
+   }
+  ],
+  "0x15A810": [
+   {
+    "line": 140,
+    "site": "0x15A950",
+    "strings": []
+   }
+  ],
+  "0x15AE70": [
+   {
+    "line": 126,
+    "site": "0x15B1CA",
+    "strings": []
+   },
+   {
+    "line": 42,
+    "site": "0x15B376",
+    "strings": []
+   },
+   {
+    "line": 42,
+    "site": "0x15B4AE",
+    "strings": []
+   }
+  ],
+  "0x15B8C0": [
+   {
+    "line": 76,
+    "site": "0x15BA7E",
+    "strings": []
+   }
+  ],
+  "0x15BC50": [
+   {
+    "line": 42,
+    "site": "0x15BDD9",
+    "strings": []
+   },
+   {
+    "line": 46,
+    "site": "0x15BEF5",
+    "strings": []
+   }
+  ],
+  "0x15BFA0": [
+   {
+    "line": 76,
+    "site": "0x15C234",
+    "strings": []
+   }
+  ],
+  "0x15C360": [
+   {
+    "line": 42,
+    "site": "0x15C4C3",
+    "strings": []
+   }
+  ],
+  "0x15C560": [
+   {
+    "line": 42,
+    "site": "0x15C6EB",
+    "strings": []
+   },
+   {
+    "line": 28,
+    "site": "0x15C80A",
+    "strings": []
+   }
+  ],
+  "0x15C900": [
+   {
+    "line": 42,
+    "site": "0x15CB1D",
+    "strings": []
+   },
+   {
+    "line": 46,
+    "site": "0x15CC3F",
+    "strings": []
+   }
+  ],
+  "0x15CD60": [
+   {
+    "line": 42,
+    "site": "0x15CF7F",
+    "strings": []
+   },
+   {
+    "line": 28,
+    "site": "0x15D0A4",
+    "strings": []
+   }
+  ],
+  "0x15E6A0": [
+   {
+    "line": 42,
+    "site": "0x15E9A3",
+    "strings": []
+   }
+  ],
+  "0x15ED50": [
+   {
+    "line": 57,
+    "site": "0x15EFAA",
+    "strings": []
+   }
+  ],
+  "0x15F100": [
+   {
+    "line": 47,
+    "site": "0x15F7FA",
+    "strings": []
+   },
+   {
+    "line": 42,
+    "site": "0x15F95C",
+    "strings": []
+   },
+   {
+    "line": 50,
+    "site": "0x15FAEC",
+    "strings": []
+   }
+  ],
+  "0x15FCB0": [
+   {
+    "line": 42,
+    "site": "0x15FE13",
+    "strings": []
+   }
+  ],
+  "0x15FEB0": [
+   {
+    "line": 42,
+    "site": "0x1600F1",
+    "strings": []
+   },
+   {
+    "line": 42,
+    "site": "0x16021B",
+    "strings": []
+   }
+  ],
+  "0x1602D0": [
+   {
+    "line": 42,
+    "site": "0x160546",
+    "strings": []
+   }
+  ],
+  "0x160660": [
+   {
+    "line": 42,
+    "site": "0x1607F1",
+    "strings": []
+   }
+  ],
+  "0x162280": [
+   {
+    "line": 62,
+    "site": "0x16242D",
+    "strings": []
+   },
+   {
+    "line": 61,
+    "site": "0x162593",
+    "strings": []
+   }
+  ],
+  "0x162670": [
+   {
+    "line": 75,
+    "site": "0x162819",
+    "strings": []
+   }
+  ],
+  "0x1628B0": [
+   {
+    "line": 83,
+    "site": "0x162A5F",
+    "strings": []
+   }
+  ],
+  "0x162B00": [
+   {
+    "line": 92,
+    "site": "0x162C4A",
+    "strings": []
+   }
+  ],
+  "0x1642E0": [
+   {
+    "line": 151,
+    "site": "0x164826",
+    "strings": []
+   }
+  ],
+  "0x1668E0": [
+   {
+    "line": 74,
+    "site": "0x166BBE",
+    "strings": []
+   }
+  ],
+  "0x166D80": [
+   {
+    "line": 432,
+    "site": "0x167108",
+    "strings": []
+   }
+  ],
+  "0x168250": [
+   {
+    "line": 358,
+    "site": "0x16880B",
+    "strings": []
+   },
+   {
+    "line": 361,
+    "site": "0x168A16",
+    "strings": []
+   }
+  ],
+  "0x16A1B0": [
+   {
+    "line": 628,
+    "site": "0x16B2F5",
+    "strings": []
+   }
+  ],
+  "0x16B970": [
+   {
+    "line": 662,
+    "site": "0x16BA7A",
+    "strings": []
+   }
+  ],
+  "0x16BB20": [
+   {
+    "line": 662,
+    "site": "0x16BC96",
+    "strings": []
+   }
+  ],
+  "0x16BE10": [
+   {
+    "line": 662,
+    "site": "0x16BF4E",
+    "strings": []
+   }
+  ],
+  "0x16C4C0": [
+   {
+    "line": 298,
+    "site": "0x16C634",
+    "strings": []
+   }
+  ],
+  "0x16CCF0": [
+   {
+    "line": 181,
+    "site": "0x16CEB4",
+    "strings": []
+   }
+  ],
+  "0x16CFB0": [
+   {
+    "line": 262,
+    "site": "0x16D853",
+    "strings": []
+   }
+  ],
+  "0x16E140": [
+   {
+    "line": 250,
+    "site": "0x16E4DC",
+    "strings": []
+   },
+   {
+    "line": 255,
+    "site": "0x16EA60",
+    "strings": []
+   }
+  ],
+  "0x16E60": [
+   {
+    "line": 99,
+    "site": "0x17039",
+    "strings": []
+   },
+   {
+    "line": 104,
+    "site": "0x1723B",
+    "strings": []
+   },
+   {
+    "line": 111,
+    "site": "0x17461",
+    "strings": []
+   }
+  ],
+  "0x16F350": [
+   {
+    "line": 208,
+    "site": "0x16F9A5",
+    "strings": []
+   },
+   {
+    "line": 198,
+    "site": "0x16FDAD",
+    "strings": []
+   }
+  ],
+  "0x170290": [
+   {
+    "line": 216,
+    "site": "0x1704BC",
+    "strings": []
+   }
+  ],
+  "0x170BB0": [
+   {
+    "line": 121,
+    "site": "0x17113E",
+    "strings": []
+   },
+   {
+    "line": 120,
+    "site": "0x171713",
+    "strings": []
+   }
+  ],
+  "0x171BD0": [
+   {
+    "line": 84,
+    "site": "0x171F32",
+    "strings": []
+   }
+  ],
+  "0x172AC0": [
+   {
+    "line": 61,
+    "site": "0x1731CE",
+    "strings": []
+   }
+  ],
+  "0x178C00": [
+   {
+    "line": 78,
+    "site": "0x179002",
+    "strings": []
+   }
+  ],
+  "0x184030": [
+   {
+    "line": 102,
+    "site": "0x1849DC",
+    "strings": []
+   }
+  ],
+  "0x1852B0": [
+   {
+    "line": 383,
+    "site": "0x18537A",
+    "strings": [
+     "&p <= &(m_parts.back())",
+     "GetPartNumber",
+     "..\\nesting\\tiled_multipart.cpp"
+    ]
+   },
+   {
+    "line": 382,
+    "site": "0x18543C",
+    "strings": [
+     "&p >= m_parts.data()",
+     "GetPartNumber",
+     "..\\nesting\\tiled_multipart.cpp"
+    ]
+   }
+  ],
+  "0x189EE0": [
+   {
+    "line": 206,
+    "site": "0x18ABC1",
+    "strings": []
+   }
+  ],
+  "0x18AF0": [
+   {
+    "line": 18,
+    "site": "0x18D26",
+    "strings": []
+   }
+  ],
+  "0x18AF60": [
+   {
+    "line": 119,
+    "site": "0x18C013",
+    "strings": []
+   }
+  ],
+  "0x18C470": [
+   {
+    "line": 310,
+    "site": "0x18C7B6",
+    "strings": [
+     "!(params.add_matrix && params.best_orientations)",
+     "ComputeNestableMultiparts",
+     "..\\nesting\\tiled_multipart.cpp"
+    ]
+   }
+  ],
+  "0x18E70": [
+   {
+    "line": 28,
+    "site": "0x190CD",
+    "strings": []
+   },
+   {
+    "line": 26,
+    "site": "0x19285",
+    "strings": []
+   }
+  ],
+  "0x191E80": [
+   {
+    "line": 371,
+    "site": "0x192411",
+    "strings": []
+   },
+   {
+    "line": 378,
+    "site": "0x192CAD",
+    "strings": []
+   }
+  ],
+  "0x193420": [
+   {
+    "line": 332,
+    "site": "0x193A7D",
+    "strings": []
+   },
+   {
+    "line": 341,
+    "site": "0x194152",
+    "strings": []
+   },
+   {
+    "line": 313,
+    "site": "0x1959F5",
+    "strings": []
+   },
+   {
+    "line": 279,
+    "site": "0x196191",
+    "strings": []
+   }
+  ],
+  "0x196C30": [
+   {
+    "line": 106,
+    "site": "0x196F10",
+    "strings": []
+   }
+  ],
+  "0x197090": [
+   {
+    "line": 135,
+    "site": "0x19734F",
+    "strings": []
+   },
+   {
+    "line": 133,
+    "site": "0x197516",
+    "strings": []
+   }
+  ],
+  "0x1A1810": [
+   {
+    "line": 33,
+    "site": "0x1A1C45",
+    "strings": []
+   }
+  ],
+  "0x1A1E80": [
+   {
+    "line": 40,
+    "site": "0x1A24C2",
+    "strings": []
+   },
+   {
+    "line": 93,
+    "site": "0x1A2699",
+    "strings": []
+   }
+  ],
+  "0x1A3DB0": [
+   {
+    "line": 111,
+    "site": "0x1A3E51",
+    "strings": [
+     "part.geometric_infos().hull().size() == 1",
+     "AsPricerPart",
+     "..\\nesting\\algos\\algo_parameters.cpp"
+    ]
+   }
+  ],
+  "0x1A4B60": [
+   {
+    "line": 94,
+    "site": "0x1A4BED",
+    "strings": [
+     "parameters.m_offset_manager",
+     "GetReducedParts",
+     "..\\nesting\\algos\\algo_parameters.cpp"
+    ]
+   }
+  ],
+  "0x1A66A0": [
+   {
+    "line": 736,
+    "site": "0x1A6955",
+    "strings": [
+     "false && \"field must be in 1 .. 5\"",
+     "NextEffortLevelField",
+     "..\\nesting\\algos\\algo_parameters.cpp"
+    ]
+   }
+  ],
+  "0x1A89D0": [
+   {
+    "line": 81,
+    "site": "0x1A8A4D",
+    "strings": [
+     "parameters.m_offset_manager",
+     "GetNestableOffset",
+     "..\\nesting\\algos\\algo_parameters.cpp"
+    ]
+   }
+  ],
+  "0x1A8AF0": [
+   {
+    "line": 88,
+    "site": "0x1A8B7A",
+    "strings": [
+     "parameters.m_offset_manager",
+     "GetNestableOffset",
+     "..\\nesting\\algos\\algo_parameters.cpp"
+    ]
+   }
+  ],
+  "0x1AAFE0": [
+   {
+    "line": 834,
+    "site": "0x1AB0ED",
+    "strings": [
+     "cparts.size() == parts.size()",
+     "MakeOriginalPartsNesting",
+     "..\\nesting\\algos\\multinesting_optimizer.cpp"
+    ]
+   },
+   {
+    "line": 837,
+    "site": "0x1AB273",
+    "strings": [
+     "cparts[i].m_user_id == parts[i].m_user_id",
+     "MakeOriginalPartsNesting",
+     "..\\nesting\\algos\\multinesting_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x1ACF30": [
+   {
+    "line": 211,
+    "site": "0x1AD2B5",
+    "strings": [
+     "nestings.size() == before_size",
+     " ",
+     " ",
+     "RecordAndReplaceIfBetter",
+     "..\\nesting\\algos\\multinesting_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x1AD3A0": [
+   {
+    "line": 211,
+    "site": "0x1AD6FA",
+    "strings": [
+     "nestings.size() == before_size",
+     " ",
+     " ",
+     "RecordAndReplaceIfBetter",
+     "..\\nesting\\algos\\multinesting_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x1AD7E0": [
+   {
+    "line": 211,
+    "site": "0x1ADB3A",
+    "strings": [
+     "nestings.size() == before_size",
+     " ",
+     " ",
+     "RecordAndReplaceIfBetter",
+     "..\\nesting\\algos\\multinesting_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x1B64E0": [
+   {
+    "line": 899,
+    "site": "0x1B673C",
+    "strings": [
+     "nb_slices == uparams.nb_threads",
+     "SeveralNestAllAndDraw",
+     "..\\nesting\\algos\\multinesting_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x1BB490": [
+   {
+    "line": 35,
+    "site": "0x1BB7A1",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x1BBB1C",
+    "strings": []
+   }
+  ],
+  "0x1BBD90": [
+   {
+    "line": 35,
+    "site": "0x1BC000",
+    "strings": []
+   }
+  ],
+  "0x1BD410": [
+   {
+    "line": 78,
+    "site": "0x1BD5BA",
+    "strings": []
+   }
+  ],
+  "0x1BE6A0": [
+   {
+    "line": 111,
+    "site": "0x1BE82B",
+    "strings": []
+   },
+   {
+    "line": 72,
+    "site": "0x1BEA3B",
+    "strings": []
+   }
+  ],
+  "0x1BEC00": [
+   {
+    "line": 131,
+    "site": "0x1BED3A",
+    "strings": []
+   }
+  ],
+  "0x1BEED0": [
+   {
+    "line": 189,
+    "site": "0x1BF09F",
+    "strings": []
+   }
+  ],
+  "0x1BFF90": [
+   {
+    "line": 131,
+    "site": "0x1C0187",
+    "strings": []
+   }
+  ],
+  "0x1C12D0": [
+   {
+    "line": 141,
+    "site": "0x1C15AF",
+    "strings": [
+     "itr != m_nodes.rend()",
+     "FindNode",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C16E0": [
+   {
+    "line": 38,
+    "site": "0x1C17DA",
+    "strings": [
+     "size > 1",
+     "NestedNode",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C18A0": [
+   {
+    "line": 48,
+    "site": "0x1C1995",
+    "strings": [
+     "size > 1 || !father",
+     "NestedNode",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C1A60": [
+   {
+    "line": 850,
+    "site": "0x1C1C11",
+    "strings": [
+     " ",
+     " ",
+     " ",
+     "Checkwindows",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C1F30": [
+   {
+    "line": 98,
+    "site": "0x1C205A",
+    "strings": [
+     "(assert_aux1 == assert_aux2)",
+     " ",
+     " != ",
+     "FillNesting",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C2110": [
+   {
+    "line": 71,
+    "site": "0x1C223D",
+    "strings": [
+     "(assert_aux1 == assert_aux2)",
+     " ",
+     " != ",
+     "CreateNesting",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C2640": [
+   {
+    "line": 235,
+    "site": "0x1C2859",
+    "strings": [
+     "last_value.IsCompatible(offval)",
+     "CheckOffset",
+     "..\\nesting\\algos\\tree_db.hpp"
+    ]
+   }
+  ],
+  "0x1C2A0": [
+   {
+    "line": 728,
+    "site": "0x1C3A9",
+    "strings": [
+     "it != part_maping.end()",
+     "MakeClusterFromSuggestedPartsGrouping",
+     "internal.cpp"
+    ]
+   }
+  ],
+  "0x1C37A0": [
+   {
+    "line": 350,
+    "site": "0x1C3A9A",
+    "strings": [
+     "node",
+     "FieldComputer",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C4350": [
+   {
+    "line": 350,
+    "site": "0x1C49B0",
+    "strings": [
+     "node",
+     "FieldComputer",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   },
+   {
+    "line": 531,
+    "site": "0x1C4DFD",
+    "strings": [
+     " ",
+     " ",
+     " cl1",
+     "ChangeLength",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   },
+   {
+    "line": 545,
+    "site": "0x1C5117",
+    "strings": [
+     " ",
+     " ",
+     " ",
+     "ChangeLength",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x1C5F0": [
+   {
+    "line": 67,
+    "site": "0x1C6CF",
+    "strings": [
+     "solution.Bindable(problem)",
+     "UnSerializeSolution",
+     "internal.cpp"
+    ]
+   }
+  ],
+  "0x1C8390": [
+   {
+    "line": 439,
+    "site": "0x1C845A",
+    "strings": [
+     "!m_logs->back().empty()",
+     "Pop",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   },
+   {
+    "line": 438,
+    "site": "0x1C84FA",
+    "strings": [
+     "!m_logs->empty()",
+     "Pop",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   }
+  ],
+  "0x1C8D30": [
+   {
+    "line": 192,
+    "site": "0x1C8E29",
+    "strings": [
+     "m_nb_strips > 0",
+     "GetZf",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   }
+  ],
+  "0x1C9290": [
+   {
+    "line": 429,
+    "site": "0x1C96E5",
+    "strings": [
+     "!m_logs->empty()",
+     "Log",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   }
+  ],
+  "0x1C97A0": [
+   {
+    "line": 421,
+    "site": "0x1C9BC6",
+    "strings": [
+     "!m_logs->empty()",
+     "Log",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   }
+  ],
+  "0x1C980": [
+   {
+    "line": 18,
+    "site": "0x1CBC8",
+    "strings": [
+     "quality >= 0 && quality < 9",
+     "GetLayerLeatherSheet",
+     "../structure/border_property.hpp"
+    ]
+   },
+   {
+    "line": 12,
+    "site": "0x1CCA4",
+    "strings": [
+     "quality >= 0 && quality < 9",
+     "GetLayerLeatherPart",
+     "../structure/border_property.hpp"
+    ]
+   },
+   {
+    "line": 45,
+    "site": "0x1CEB9",
+    "strings": [
+     "quality >= 0 && quality < 100",
+     "GetLayerRestrictedZoneSheet",
+     "../structure/border_property.hpp"
+    ]
+   },
+   {
+    "line": 39,
+    "site": "0x1CF8C",
+    "strings": [
+     "quality >= 0 && quality < 100",
+     "GetLayerRestrictedZonePart",
+     "../structure/border_property.hpp"
+    ]
+   }
+  ],
+  "0x1CB100": [
+   {
+    "line": 337,
+    "site": "0x1CCED9",
+    "strings": [
+     "nc.m_offset_manager",
+     "Postop",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   }
+  ],
+  "0x1D0D70": [
+   {
+    "line": 219,
+    "site": "0x1D0F82",
+    "strings": []
+   }
+  ],
+  "0x1D1AA0": [
+   {
+    "line": 141,
+    "site": "0x1D1C74",
+    "strings": []
+   },
+   {
+    "line": 149,
+    "site": "0x1D1ED1",
+    "strings": []
+   },
+   {
+    "line": 151,
+    "site": "0x1D20E1",
+    "strings": []
+   }
+  ],
+  "0x1D2270": [
+   {
+    "line": 347,
+    "site": "0x1D2456",
+    "strings": []
+   },
+   {
+    "line": 355,
+    "site": "0x1D2622",
+    "strings": []
+   }
+  ],
+  "0x1D53A0": [
+   {
+    "line": 243,
+    "site": "0x1D562C",
+    "strings": []
+   },
+   {
+    "line": 267,
+    "site": "0x1D5D56",
+    "strings": []
+   },
+   {
+    "line": 277,
+    "site": "0x1D60D4",
+    "strings": []
+   },
+   {
+    "line": 300,
+    "site": "0x1D6413",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x1D66A3",
+    "strings": []
+   },
+   {
+    "line": 251,
+    "site": "0x1D6A88",
+    "strings": []
+   }
+  ],
+  "0x1D7960": [
+   {
+    "line": 185,
+    "site": "0x1D851A",
+    "strings": []
+   }
+  ],
+  "0x1DA0C0": [
+   {
+    "line": 179,
+    "site": "0x1DAAB3",
+    "strings": [
+     "sol.nestings().size() == 1",
+     "CompactAux",
+     "..\\nesting\\algos\\compact.hpp"
+    ]
+   },
+   {
+    "line": 244,
+    "site": "0x1DC257",
+    "strings": []
+   }
+  ],
+  "0x1DD50": [
+   {
+    "line": 318,
+    "site": "0x1DF0C",
+    "strings": [
+     "element_points.size() >= 2u",
+     "ElementsToPoints",
+     "internal.cpp"
+    ]
+   }
+  ],
+  "0x1E1BF0": [
+   {
+    "line": 186,
+    "site": "0x1E1CD0",
+    "strings": [
+     "rpt.CheckCoherency()",
+     "OptimizeSheetWithReduce",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   }
+  ],
+  "0x1E3AA0": [
+   {
+    "line": 100,
+    "site": "0x1E3C9D",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x1E6A2B",
+    "strings": []
+   },
+   {
+    "line": 170,
+    "site": "0x1E6DA1",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x1E70F6",
+    "strings": []
+   }
+  ],
+  "0x1E76C0": [
+   {
+    "line": 230,
+    "site": "0x1E8F06",
+    "strings": []
+   },
+   {
+    "line": 229,
+    "site": "0x1E9F62",
+    "strings": []
+   }
+  ],
+  "0x1E900": [
+   {
+    "line": 822,
+    "site": "0x1EB6F",
+    "strings": [
+     "poly.inners().empty()",
+     "ComputeNoHoleRings",
+     "internal.cpp"
+    ]
+   }
+  ],
+  "0x1EC0B0": [
+   {
+    "line": 218,
+    "site": "0x1EC84D",
+    "strings": []
+   }
+  ],
+  "0x1EE50": [
+   {
+    "line": 18,
+    "site": "0x2083C",
+    "strings": [
+     "quality >= 0 && quality < 9",
+     "GetLayerLeatherSheet",
+     "../structure/border_property.hpp"
+    ]
+   },
+   {
+    "line": 45,
+    "site": "0x208C9",
+    "strings": [
+     "GetLayerLeatherSheet",
+     "../structure/border_property.hpp",
+     "quality >= 0 && quality < 100",
+     "GetLayerRestrictedZoneSheet",
+     "../structure/border_property.hpp"
+    ]
+   },
+   {
+    "line": 433,
+    "site": "0x20ABD",
+    "strings": [
+     "external_rings.size() == 1u",
+     "ComputeSheetGeometryRowMode",
+     "internal.cpp"
+    ]
+   },
+   {
+    "line": 896,
+    "site": "0x20C2C",
+    "strings": [
+     "structure_sheet",
+     "CreateProblem",
+     "internal.cpp"
+    ]
+   },
+   {
+    "line": 39,
+    "site": "0x20F78",
+    "strings": [
+     "quality >= 0 && quality < 100",
+     "GetLayerRestrictedZonePart",
+     "../structure/border_property.hpp"
+    ]
+   },
+   {
+    "line": 649,
+    "site": "0x21FCC",
+    "strings": [
+     "boost.find(order.multitorch_cutting_preference) != boost.end()",
+     "GetMultitorchProperties",
+     "internal.cpp"
+    ]
+   },
+   {
+    "line": 608,
+    "site": "0x2264E",
+    "strings": [
+     "all_settings.find(order.common_cut_safety_preference) != all_settings.end()",
+     "GetCommonCutProperties",
+     "internal.cpp"
+    ]
+   }
+  ],
+  "0x1EEC00": [
+   {
+    "line": 82,
+    "site": "0x1EF92B",
+    "strings": []
+   }
+  ],
+  "0x1F1C20": [
+   {
+    "line": 208,
+    "site": "0x1F1DF2",
+    "strings": [
+     "pnew.size() == 1",
+     "SpecialMaxMonoPart",
+     "..\\nesting\\structure_interface_private.hpp"
+    ]
+   }
+  ],
+  "0x1F2D00": [
+   {
+    "line": 254,
+    "site": "0x1F2D96",
+    "strings": [
+     "params.m_initial_solution->Bindable(p)",
+     "RotateCompact",
+     "..\\nesting\\structure_interface_private.hpp"
+    ]
+   }
+  ],
+  "0x1F5C20": [
+   {
+    "line": 297,
+    "site": "0x1F5F85",
+    "strings": [
+     "plates.size() > 0",
+     "NestProblem",
+     "..\\nesting\\structure_interface_private.hpp"
+    ]
+   },
+   {
+    "line": 304,
+    "site": "0x1F610D",
+    "strings": [
+     "params.m_initial_solution->Bindable(spb)",
+     "NestProblem",
+     "..\\nesting\\structure_interface_private.hpp"
+    ]
+   },
+   {
+    "line": 381,
+    "site": "0x1F756F",
+    "strings": [
+     "!res.m_nestings.empty()",
+     "NestProblem",
+     "..\\nesting\\structure_interface_private.hpp"
+    ]
+   },
+   {
+    "line": 391,
+    "site": "0x1F7DF6",
+    "strings": [
+     "parts.front().quantity() >= res.GetNbNested()",
+     "NestProblem",
+     "..\\nesting\\structure_interface_private.hpp"
+    ]
+   }
+  ],
+  "0x1FB810": [
+   {
+    "line": 43,
+    "site": "0x1FB9AB",
+    "strings": [
+     "!m_all_tries.empty()",
+     "LogNesting",
+     "..\\nesting\\ios\\log_ios.cpp"
+    ]
+   }
+  ],
+  "0x1FBF00": [
+   {
+    "line": 190,
+    "site": "0x1FC10E",
+    "strings": []
+   }
+  ],
+  "0x1FC4C0": [
+   {
+    "line": 74,
+    "site": "0x1FC696",
+    "strings": []
+   },
+   {
+    "line": 138,
+    "site": "0x1FC930",
+    "strings": []
+   },
+   {
+    "line": 138,
+    "site": "0x1FCACC",
+    "strings": []
+   },
+   {
+    "line": 134,
+    "site": "0x1FCC3B",
+    "strings": []
+   },
+   {
+    "line": 134,
+    "site": "0x1FCDA4",
+    "strings": []
+   },
+   {
+    "line": 137,
+    "site": "0x1FCF38",
+    "strings": []
+   },
+   {
+    "line": 137,
+    "site": "0x1FD0CC",
+    "strings": []
+   }
+  ],
+  "0x1FD820": [
+   {
+    "line": 105,
+    "site": "0x1FDC7B",
+    "strings": []
+   }
+  ],
+  "0x1FDDD0": [
+   {
+    "line": 105,
+    "site": "0x1FE42E",
+    "strings": []
+   }
+  ],
+  "0x200D10": [
+   {
+    "line": 433,
+    "site": "0x200ED0",
+    "strings": []
+   }
+  ],
+  "0x201140": [
+   {
+    "line": 433,
+    "site": "0x2013EE",
+    "strings": []
+   },
+   {
+    "line": 433,
+    "site": "0x201627",
+    "strings": []
+   }
+  ],
+  "0x201750": [
+   {
+    "line": 433,
+    "site": "0x201A35",
+    "strings": []
+   }
+  ],
+  "0x2030C0": [
+   {
+    "line": 315,
+    "site": "0x203744",
+    "strings": []
+   }
+  ],
+  "0x206690": [
+   {
+    "line": 124,
+    "site": "0x207155",
+    "strings": []
+   }
+  ],
+  "0x2072F0": [
+   {
+    "line": 36,
+    "site": "0x2074C3",
+    "strings": []
+   },
+   {
+    "line": 39,
+    "site": "0x2077EA",
+    "strings": []
+   }
+  ],
+  "0x208770": [
+   {
+    "line": 233,
+    "site": "0x208FF1",
+    "strings": []
+   }
+  ],
+  "0x20C1B0": [
+   {
+    "line": 420,
+    "site": "0x20C23B",
+    "strings": [
+     "nnp->m_father",
+     "ComputeChainState",
+     "..\\nesting\\algos\\sheet_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x20C2D0": [
+   {
+    "line": 410,
+    "site": "0x20C3A5",
+    "strings": [
+     "nn.m_father",
+     "AddNodeClusterChain",
+     "..\\nesting\\algos\\sheet_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x20C440": [
+   {
+    "line": 75,
+    "site": "0x20C6F4",
+    "strings": [
+     "nesting.m_matrixes.size() <= nesting.nesteds().size()",
+     "IntroduceNestingNodes",
+     "..\\nesting\\algos\\sheet_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x20C880": [
+   {
+    "line": 343,
+    "site": "0x20CAED",
+    "strings": [
+     "nested_extractor.m_matrixes.size() == 1",
+     "CreateNestedChain",
+     "..\\nesting\\algos\\sheet_optimizer.cpp"
+    ]
+   }
+  ],
+  "0x20CCE0": [
+   {
+    "line": 88,
+    "site": "0x20CE52",
+    "strings": [
+     "m_left >= s_min && m_right <= s_max",
+     "NestingWindow",
+     "..\\nesting\\algos\\../nesting.hpp"
+    ]
+   }
+  ],
+  "0x20E200": [
+   {
+    "line": 102,
+    "site": "0x20E570",
+    "strings": [
+     "n1.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x20E62D",
+    "strings": [
+     "n2.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   }
+  ],
+  "0x20E840": [
+   {
+    "line": 102,
+    "site": "0x20EBAE",
+    "strings": [
+     "n1.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x20EC6B",
+    "strings": [
+     "n2.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   }
+  ],
+  "0x20EE50": [
+   {
+    "line": 102,
+    "site": "0x20F1C0",
+    "strings": [
+     "n1.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x20F27D",
+    "strings": [
+     "n2.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   }
+  ],
+  "0x20FE90": [
+   {
+    "line": 237,
+    "site": "0x2107A1",
+    "strings": [
+     "first_index < static_cast< int >(m_best.size())",
+     "InsertAllNext",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x212D30": [
+   {
+    "line": 237,
+    "site": "0x213641",
+    "strings": [
+     "first_index < static_cast< int >(m_best.size())",
+     "InsertAllNext",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x215720": [
+   {
+    "line": 237,
+    "site": "0x21659E",
+    "strings": [
+     "first_index < static_cast< int >(m_best.size())",
+     "InsertAllNext",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x218A80": [
+   {
+    "line": 130,
+    "site": "0x218BFE",
+    "strings": []
+   }
+  ],
+  "0x218C90": [
+   {
+    "line": 139,
+    "site": "0x218E0E",
+    "strings": []
+   }
+  ],
+  "0x218EA0": [
+   {
+    "line": 50,
+    "site": "0x219048",
+    "strings": []
+   },
+   {
+    "line": 32,
+    "site": "0x2191D0",
+    "strings": []
+   }
+  ],
+  "0x219270": [
+   {
+    "line": 50,
+    "site": "0x219418",
+    "strings": []
+   },
+   {
+    "line": 32,
+    "site": "0x2195A0",
+    "strings": []
+   }
+  ],
+  "0x219710": [
+   {
+    "line": 32,
+    "site": "0x2198A0",
+    "strings": []
+   }
+  ],
+  "0x219930": [
+   {
+    "line": 50,
+    "site": "0x219AD9",
+    "strings": []
+   },
+   {
+    "line": 32,
+    "site": "0x219C63",
+    "strings": []
+   }
+  ],
+  "0x219D90": [
+   {
+    "line": 105,
+    "site": "0x219F0E",
+    "strings": []
+   }
+  ],
+  "0x21A6F0": [
+   {
+    "line": 347,
+    "site": "0x21A972",
+    "strings": []
+   }
+  ],
+  "0x21B090": [
+   {
+    "line": 32,
+    "site": "0x21B2D3",
+    "strings": []
+   },
+   {
+    "line": 39,
+    "site": "0x21B4BA",
+    "strings": []
+   }
+  ],
+  "0x21F210": [
+   {
+    "line": 117,
+    "site": "0x21F403",
+    "strings": []
+   },
+   {
+    "line": 124,
+    "site": "0x21F541",
+    "strings": []
+   }
+  ],
+  "0x21F5E0": [
+   {
+    "line": 117,
+    "site": "0x21F7F4",
+    "strings": []
+   },
+   {
+    "line": 124,
+    "site": "0x21F935",
+    "strings": []
+   }
+  ],
+  "0x21FAF0": [
+   {
+    "line": 117,
+    "site": "0x21FCB2",
+    "strings": []
+   },
+   {
+    "line": 124,
+    "site": "0x21FDF0",
+    "strings": []
+   }
+  ],
+  "0x21FE90": [
+   {
+    "line": 117,
+    "site": "0x220052",
+    "strings": []
+   },
+   {
+    "line": 124,
+    "site": "0x220190",
+    "strings": []
+   }
+  ],
+  "0x221360": [
+   {
+    "line": 35,
+    "site": "0x22174D",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x2218DA",
+    "strings": []
+   }
+  ],
+  "0x222200": [
+   {
+    "line": 35,
+    "site": "0x2224C7",
+    "strings": []
+   },
+   {
+    "line": 173,
+    "site": "0x2230E6",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x223485",
+    "strings": []
+   },
+   {
+    "line": 153,
+    "site": "0x223B0D",
+    "strings": []
+   },
+   {
+    "line": 165,
+    "site": "0x223F0E",
+    "strings": []
+   }
+  ],
+  "0x2241F0": [
+   {
+    "line": 35,
+    "site": "0x2243AA",
+    "strings": []
+   }
+  ],
+  "0x224560": [
+   {
+    "line": 35,
+    "site": "0x22471A",
+    "strings": []
+   }
+  ],
+  "0x224AA0": [
+   {
+    "line": 35,
+    "site": "0x224D9A",
+    "strings": []
+   }
+  ],
+  "0x225D30": [
+   {
+    "line": 163,
+    "site": "0x22640A",
+    "strings": []
+   },
+   {
+    "line": 162,
+    "site": "0x226759",
+    "strings": []
+   }
+  ],
+  "0x226A60": [
+   {
+    "line": 35,
+    "site": "0x226C4D",
+    "strings": []
+   }
+  ],
+  "0x226E10": [
+   {
+    "line": 35,
+    "site": "0x22727C",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x227401",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x2276B5",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x22783C",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x2279CD",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x228355",
+    "strings": []
+   }
+  ],
+  "0x22C570": [
+   {
+    "line": 44,
+    "site": "0x22C710",
+    "strings": []
+   }
+  ],
+  "0x22DA70": [
+   {
+    "line": 102,
+    "site": "0x22DDA1",
+    "strings": []
+   },
+   {
+    "line": 103,
+    "site": "0x22DEF1",
+    "strings": []
+   }
+  ],
+  "0x22E40": [
+   {
+    "line": 347,
+    "site": "0x23934",
+    "strings": [
+     "!elements.empty()",
+     "ArcToPoints",
+     "internal.cpp"
+    ]
+   }
+  ],
+  "0x22E960": [
+   {
+    "line": 88,
+    "site": "0x22ED71",
+    "strings": [
+     "m_left >= s_min && m_right <= s_max",
+     "NestingWindow",
+     "..\\nesting\\algos\\../nesting.hpp"
+    ]
+   }
+  ],
+  "0x2306C0": [
+   {
+    "line": 134,
+    "site": "0x2314F1",
+    "strings": []
+   }
+  ],
+  "0x234C60": [
+   {
+    "line": 118,
+    "site": "0x234EB0",
+    "strings": []
+   },
+   {
+    "line": 121,
+    "site": "0x23533B",
+    "strings": []
+   }
+  ],
+  "0x235830": [
+   {
+    "line": 25,
+    "site": "0x235C59",
+    "strings": []
+   }
+  ],
+  "0x236120": [
+   {
+    "line": 17,
+    "site": "0x23656D",
+    "strings": []
+   }
+  ],
+  "0x236BC0": [
+   {
+    "line": 130,
+    "site": "0x237912",
+    "strings": []
+   }
+  ],
+  "0x237A00": [
+   {
+    "line": 73,
+    "site": "0x238BDC",
+    "strings": []
+   },
+   {
+    "line": 86,
+    "site": "0x2390F8",
+    "strings": []
+   }
+  ],
+  "0x2393F0": [
+   {
+    "line": 160,
+    "site": "0x239591",
+    "strings": []
+   },
+   {
+    "line": 166,
+    "site": "0x239857",
+    "strings": []
+   }
+  ],
+  "0x23B080": [
+   {
+    "line": 145,
+    "site": "0x23B1C9",
+    "strings": [
+     "m_eval.m_c == c",
+     "AssertCoherency",
+     "..\\nesting\\algos\\old_beam.cpp"
+    ]
+   },
+   {
+    "line": 146,
+    "site": "0x23B267",
+    "strings": [
+     "m_eval.m_v == v",
+     "AssertCoherency",
+     "..\\nesting\\algos\\old_beam.cpp"
+    ]
+   }
+  ],
+  "0x23B420": [
+   {
+    "line": 173,
+    "site": "0x23B918",
+    "strings": [
+     "slices_width.size() > 0",
+     "BestNodes",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 237,
+    "site": "0x23BB5D",
+    "strings": [
+     "first_index < static_cast< int >(m_best.size())",
+     "InsertAllNext",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 272,
+    "site": "0x23BEA0",
+    "strings": [
+     "inserted",
+     "AddOrReplaceEquiv",
+     "../utils/evaluated_object.hpp"
+    ]
+   },
+   {
+    "line": 102,
+    "site": "0x23CBD2",
+    "strings": [
+     "n1.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x23CCBD",
+    "strings": [
+     "n2.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   }
+  ],
+  "0x2403A0": [
+   {
+    "line": 35,
+    "site": "0x240777",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x240A0A",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x240B8C",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x240D1A",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x240EAD",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x2418A7",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x241AE1",
+    "strings": []
+   },
+   {
+    "line": 35,
+    "site": "0x241CF8",
+    "strings": []
+   }
+  ],
+  "0x24290": [
+   {
+    "line": 36,
+    "site": "0x244E4",
+    "strings": []
+   },
+   {
+    "line": 29,
+    "site": "0x24627",
+    "strings": []
+   }
+  ],
+  "0x243820": [
+   {
+    "line": 156,
+    "site": "0x244245",
+    "strings": []
+   }
+  ],
+  "0x24B4C0": [
+   {
+    "line": 58,
+    "site": "0x24B67F",
+    "strings": []
+   }
+  ],
+  "0x24C6A0": [
+   {
+    "line": 58,
+    "site": "0x24CF85",
+    "strings": []
+   }
+  ],
+  "0x24DF20": [
+   {
+    "line": 110,
+    "site": "0x24E09A",
+    "strings": []
+   },
+   {
+    "line": 111,
+    "site": "0x24E1FB",
+    "strings": []
+   }
+  ],
+  "0x25100": [
+   {
+    "line": 240,
+    "site": "0x2531A",
+    "strings": [
+     "engine && problem && observer && result",
+     "RunThreadLocalComputation",
+     "..\\engine\\engine.cpp"
+    ]
+   }
+  ],
+  "0x251C00": [
+   {
+    "line": 432,
+    "site": "0x2525FC",
+    "strings": []
+   }
+  ],
+  "0x255390": [
+   {
+    "line": 159,
+    "site": "0x257294",
+    "strings": []
+   }
+  ],
+  "0x258B80": [
+   {
+    "line": 357,
+    "site": "0x258E1C",
+    "strings": []
+   }
+  ],
+  "0x258F10": [
+   {
+    "line": 398,
+    "site": "0x259182",
+    "strings": []
+   }
+  ],
+  "0x25B040": [
+   {
+    "line": 210,
+    "site": "0x25B32B",
+    "strings": []
+   }
+  ],
+  "0x25CA30": [
+   {
+    "line": 1666,
+    "site": "0x25CF7F",
+    "strings": []
+   },
+   {
+    "line": 1677,
+    "site": "0x25D420",
+    "strings": []
+   }
+  ],
+  "0x25E020": [
+   {
+    "line": 398,
+    "site": "0x25E5AD",
+    "strings": []
+   },
+   {
+    "line": 357,
+    "site": "0x25E86E",
+    "strings": []
+   }
+  ],
+  "0x25EB60": [
+   {
+    "line": 886,
+    "site": "0x25F01E",
+    "strings": []
+   }
+  ],
+  "0x25F1E0": [
+   {
+    "line": 948,
+    "site": "0x25F3F9",
+    "strings": []
+   }
+  ],
+  "0x2605F0": [
+   {
+    "line": 1238,
+    "site": "0x260911",
+    "strings": []
+   }
+  ],
+  "0x264100": [
+   {
+    "line": 58,
+    "site": "0x264581",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x26485B",
+    "strings": []
+   }
+  ],
+  "0x264AF0": [
+   {
+    "line": 58,
+    "site": "0x264EF9",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x26524F",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x265829",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x265F1C",
+    "strings": []
+   }
+  ],
+  "0x2665F0": [
+   {
+    "line": 97,
+    "site": "0x266AB1",
+    "strings": []
+   }
+  ],
+  "0x26A60": [
+   {
+    "line": 61,
+    "site": "0x291DD",
+    "strings": [
+     "solution.Bindable(problem)",
+     "UnSerializeSolution",
+     "..\\engine\\cloud_engine.cpp"
+    ]
+   }
+  ],
+  "0x2BE50": [
+   {
+    "line": 115,
+    "site": "0x2BFBB",
+    "strings": []
+   }
+  ],
+  "0x2C4D0": [
+   {
+    "line": 441,
+    "site": "0x2C909",
+    "strings": []
+   }
+  ],
+  "0x2CE00": [
+   {
+    "line": 200,
+    "site": "0x2D00A",
+    "strings": []
+   }
+  ],
+  "0x2D330": [
+   {
+    "line": 274,
+    "site": "0x2DE3A",
+    "strings": []
+   }
+  ],
+  "0x30030": [
+   {
+    "line": 870,
+    "site": "0x3015C",
+    "strings": [
+     "m_supervisor",
+     "ProbeCancel",
+     "..\\multi\\supervisor.cpp"
+    ]
+   }
+  ],
+  "0x30270": [
+   {
+    "line": 766,
+    "site": "0x3031A",
+    "strings": [
+     "m_implementation->m_strategist",
+     "strategist",
+     "..\\multi\\supervisor.cpp"
+    ]
+   }
+  ],
+  "0x305B0": [
+   {
+    "line": 238,
+    "site": "0x3081E",
+    "strings": []
+   }
+  ],
+  "0x33A70": [
+   {
+    "line": 95,
+    "site": "0x33C44",
+    "strings": []
+   }
+  ],
+  "0x344D0": [
+   {
+    "line": 276,
+    "site": "0x34803",
+    "strings": []
+   },
+   {
+    "line": 277,
+    "site": "0x34A59",
+    "strings": []
+   }
+  ],
+  "0x378E0": [
+   {
+    "line": 512,
+    "site": "0x397CA",
+    "strings": [
+     "deg_steps.size() == try_parts_ratio.size()",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   },
+   {
+    "line": 391,
+    "site": "0x39E06",
+    "strings": [
+     "parameters().nesting_pow_boost >= 1.0",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   },
+   {
+    "line": 582,
+    "site": "0x3A2FA",
+    "strings": [
+     "biggest",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   },
+   {
+    "line": 577,
+    "site": "0x3A3AE",
+    "strings": [
+     "packer_cache",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   },
+   {
+    "line": 408,
+    "site": "0x3A73C",
+    "strings": [
+     "sheet",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   },
+   {
+    "line": 554,
+    "site": "0x3A81B",
+    "strings": [
+     "Z",
+     "biggest",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   },
+   {
+    "line": 548,
+    "site": "0x3A901",
+    "strings": [
+     "packer_cache",
+     "Run",
+     "..\\multi\\nesting_nester.cpp"
+    ]
+   }
+  ],
+  "0x3B2F0": [
+   {
+    "line": 467,
+    "site": "0x3B45E",
+    "strings": [
+     "y_valid",
+     "ComputeRealNestingWindow",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3B5F0": [
+   {
+    "line": 40,
+    "site": "0x3B6CA",
+    "strings": [
+     "sheet",
+     "GetTypicalLength",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3B8A0": [
+   {
+    "line": 1036,
+    "site": "0x3B935",
+    "strings": [
+     "false",
+     "GetNestingAngle",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3BCC0": [
+   {
+    "line": 846,
+    "site": "0x3BF0B",
+    "strings": [
+     "index <= quantities.size()",
+     "NestedQuantities",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 839,
+    "site": "0x3BFB9",
+    "strings": [
+     "index <= quantities.size()",
+     "NestedQuantities",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3C3F0": [
+   {
+    "line": 864,
+    "site": "0x3C888",
+    "strings": [
+     "biggest",
+     "SetCommonCutParameters",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 865,
+    "site": "0x3C91A",
+    "strings": [
+     "..\\multi\\nesting_context.cpp",
+     "context.GetPackerCache()",
+     "SetCommonCutParameters",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3C9E0": [
+   {
+    "line": 82,
+    "site": "0x3D121",
+    "strings": [
+     "!layers.front().empty()",
+     "ComputeSheetLayers",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3DBE0": [
+   {
+    "line": 233,
+    "site": "0x3DF83",
+    "strings": [
+     "nesting_part_index < m_parts.size()",
+     "GetNestingPart",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 766,
+    "site": "0x3E258",
+    "strings": [
+     "sheet",
+     "ToNesting",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3E740": [
+   {
+    "line": 890,
+    "site": "0x3EB33",
+    "strings": [
+     "biggest",
+     "SetMultiTorchParameters",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 885,
+    "site": "0x3EBD6",
+    "strings": [
+     "packer_cache",
+     "SetMultiTorchParameters",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x3F070": [
+   {
+    "line": 233,
+    "site": "0x3F4EE",
+    "strings": [
+     "nesting_part_index < m_parts.size()",
+     "GetNestingPart",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x40070": [
+   {
+    "line": 720,
+    "site": "0x401D2",
+    "strings": [
+     "matrix_indices.size() == group_indices.size()",
+     "ComputeGroups",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 810,
+    "site": "0x4055D",
+    "strings": [
+     "part_and_module.part()->module(part_and_module.module_index()).authorizations().IsCompatible(popos.m_o)",
+     "FromNesting",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x40720": [
+   {
+    "line": 1209,
+    "site": "0x407F4",
+    "strings": [
+     "!box.empty()",
+     "RenestInHoles",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 1206,
+    "site": "0x40AB3",
+    "strings": [
+     "sheet",
+     "RenestInHoles",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x40DB0": [
+   {
+    "line": 35,
+    "site": "0x416E1",
+    "strings": [
+     "value_and_in.first",
+     "get",
+     "../utils/continuous_index_map.hpp"
+    ]
+   }
+  ],
+  "0x41920": [
+   {
+    "line": 929,
+    "site": "0x41AED",
+    "strings": [
+     "nesting.multiplicity() == 1u",
+     "FillNestingAux",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 972,
+    "site": "0x42A46",
+    "strings": [
+     "nesting.sheet()",
+     "FillNestingAux",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 924,
+    "site": "0x42AFE",
+    "strings": [
+     "sheet",
+     "FillNestingAux",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x43180": [
+   {
+    "line": 1055,
+    "site": "0x4331B",
+    "strings": [
+     "sheet",
+     "DirectionalFillNesting",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x434D0": [
+   {
+    "line": 1167,
+    "site": "0x435C5",
+    "strings": [
+     "nesting.sheet()",
+     "FillNesting",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x43670": [
+   {
+    "line": 1181,
+    "site": "0x437A9",
+    "strings": [
+     "nesting.sheet()",
+     "DirectionalFillNesting",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x442E0": [
+   {
+    "line": 1297,
+    "site": "0x44549",
+    "strings": [
+     "count++ <= initial_multiplicity",
+     "FillNestingAndSplit",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x44E0": [
+   {
+    "line": 363,
+    "site": "0x5202",
+    "strings": []
+   }
+  ],
+  "0x45840": [
+   {
+    "line": 341,
+    "site": "0x45A1A",
+    "strings": [
+     "m_packer",
+     "RawRun",
+     "..\\multi\\tiling_nester.cpp"
+    ]
+   }
+  ],
+  "0x462D0": [
+   {
+    "line": 113,
+    "site": "0x46829",
+    "strings": [
+     "sheet",
+     "RemoveNestedPartsOverlapingDefects",
+     "..\\multi\\tiling_nester.cpp"
+    ]
+   }
+  ],
+  "0x4B83E0": [
+   {
+    "line": 88,
+    "site": "0x4B89C8",
+    "strings": []
+   }
+  ],
+  "0x4B870": [
+   {
+    "line": 86,
+    "site": "0x4C466",
+    "strings": []
+   }
+  ],
+  "0x4B9FA0": [
+   {
+    "line": 229,
+    "site": "0x4BA032",
+    "strings": [
+     "false && \"internal error\"",
+     "EquivalentNestingOrigin",
+     "..\\verify\\equivalent.cpp"
+    ]
+   }
+  ],
+  "0x4BA110": [
+   {
+    "line": 266,
+    "site": "0x4BA20A",
+    "strings": [
+     "false && \"internal error mode not yet supported with grain\"",
+     "EquivalentUsedSurfaceEvaluation",
+     "..\\verify\\equivalent.cpp"
+    ]
+   }
+  ],
+  "0x4BB040": [
+   {
+    "line": 1098,
+    "site": "0x4BB30D",
+    "strings": [
+     "orig_id != \"\"",
+     "GetOriginalNesting",
+     "..\\verify\\equivalent.cpp"
+    ]
+   },
+   {
+    "line": 1095,
+    "site": "0x4BB4E8",
+    "strings": [
+     "multiplicity == 1",
+     "GetOriginalNesting",
+     "..\\verify\\equivalent.cpp"
+    ]
+   }
+  ],
+  "0x4BC9E0": [
+   {
+    "line": 321,
+    "site": "0x4BCEE6",
+    "strings": [
+     "defect_reduction > 0.0",
+     "EquivalentSmallerDefects",
+     "..\\verify\\equivalent.cpp"
+    ]
+   }
+  ],
+  "0x4BDB70": [
+   {
+    "line": 925,
+    "site": "0x4BE152",
+    "strings": [
+     "max_price_per_area != 0.0",
+     "EquivalentProblemRaw",
+     "..\\verify\\equivalent.cpp"
+    ]
+   },
+   {
+    "line": 776,
+    "site": "0x4BEB38",
+    "strings": [
+     "it != cache.end()",
+     "AddEquivalentPart",
+     "..\\verify\\equivalent.cpp"
+    ]
+   },
+   {
+    "line": 484,
+    "site": "0x4BEC30",
+    "strings": [
+     "modules_geometries.size() == nb_modules",
+     "IsTooBigGeometry",
+     "..\\verify\\equivalent.cpp"
+    ]
+   },
+   {
+    "line": 944,
+    "site": "0x4BF99F",
+    "strings": [
+     "extra_equivalent_quantity >= 0",
+     "EquivalentProblemRaw",
+     "..\\verify\\equivalent.cpp"
+    ]
+   },
+   {
+    "line": 784,
+    "site": "0x4BFAE4",
+    "strings": [
+     "!geometries.empty()",
+     "AddEquivalentPart",
+     "..\\verify\\equivalent.cpp"
+    ]
+   }
+  ],
+  "0x4C0A50": [
+   {
+    "line": 1098,
+    "site": "0x4C107D",
+    "strings": []
+   }
+  ],
+  "0x4C2200": [
+   {
+    "line": 431,
+    "site": "0x4C2CA5",
+    "strings": [
+     "!detect_correct_invalid || IsGeometryValid(inflated)",
+     "GetInflatedModulesGeometries",
+     "..\\verify\\equivalent.cpp"
+    ]
+   }
+  ],
+  "0x4C5450": [
+   {
+    "line": 77,
+    "site": "0x4C59B6",
+    "strings": []
+   },
+   {
+    "line": 97,
+    "site": "0x4C6416",
+    "strings": []
+   }
+  ],
+  "0x4C630": [
+   {
+    "line": 73,
+    "site": "0x4C918",
+    "strings": []
+   }
+  ],
+  "0x4CA00": [
+   {
+    "line": 85,
+    "site": "0x4CB7A",
+    "strings": []
+   }
+  ],
+  "0x4CC640": [
+   {
+    "line": 157,
+    "site": "0x4CD6C2",
+    "strings": []
+   },
+   {
+    "line": 161,
+    "site": "0x4CDDF6",
+    "strings": []
+   },
+   {
+    "line": 45,
+    "site": "0x4CE0B9",
+    "strings": []
+   },
+   {
+    "line": 57,
+    "site": "0x4CEB63",
+    "strings": []
+   }
+  ],
+  "0x4D3F00": [
+   {
+    "line": 52,
+    "site": "0x4D4152",
+    "strings": []
+   }
+  ],
+  "0x4D5060": [
+   {
+    "line": 80,
+    "site": "0x4D51F1",
+    "strings": []
+   },
+   {
+    "line": 79,
+    "site": "0x4D5627",
+    "strings": []
+   }
+  ],
+  "0x4D5730": [
+   {
+    "line": 95,
+    "site": "0x4D58CD",
+    "strings": []
+   },
+   {
+    "line": 96,
+    "site": "0x4D5AEA",
+    "strings": []
+   },
+   {
+    "line": 94,
+    "site": "0x4D600A",
+    "strings": []
+   }
+  ],
+  "0x4D64C0": [
+   {
+    "line": 98,
+    "site": "0x4D66DE",
+    "strings": []
+   }
+  ],
+  "0x4D97B0": [
+   {
+    "line": 207,
+    "site": "0x4D9A3E",
+    "strings": []
+   }
+  ],
+  "0x4DACA0": [
+   {
+    "line": 41,
+    "site": "0x4DADE4",
+    "strings": []
+   }
+  ],
+  "0x4DBCF0": [
+   {
+    "line": 55,
+    "site": "0x4DBFAF",
+    "strings": []
+   },
+   {
+    "line": 60,
+    "site": "0x4DC217",
+    "strings": []
+   }
+  ],
+  "0x4DC640": [
+   {
+    "line": 23,
+    "site": "0x4DC99C",
+    "strings": []
+   }
+  ],
+  "0x4DCA60": [
+   {
+    "line": 17,
+    "site": "0x4DCB95",
+    "strings": []
+   }
+  ],
+  "0x4DD300": [
+   {
+    "line": 38,
+    "site": "0x4DD62A",
+    "strings": []
+   },
+   {
+    "line": 37,
+    "site": "0x4DD7CE",
+    "strings": []
+   }
+  ],
+  "0x4DF310": [
+   {
+    "line": 889,
+    "site": "0x4DF4A5",
+    "strings": []
+   },
+   {
+    "line": 888,
+    "site": "0x4DF790",
+    "strings": []
+   }
+  ],
+  "0x4DF850": [
+   {
+    "line": 658,
+    "site": "0x4DFA5C",
+    "strings": []
+   }
+  ],
+  "0x4E3950": [
+   {
+    "line": 576,
+    "site": "0x4E3B8D",
+    "strings": []
+   },
+   {
+    "line": 573,
+    "site": "0x4E3DAE",
+    "strings": []
+   }
+  ],
+  "0x4E4600": [
+   {
+    "line": 520,
+    "site": "0x4E4785",
+    "strings": []
+   }
+  ],
+  "0x4E4A60": [
+   {
+    "line": 636,
+    "site": "0x4E4C68",
+    "strings": []
+   }
+  ],
+  "0x4E5100": [
+   {
+    "line": 539,
+    "site": "0x4E526B",
+    "strings": []
+   }
+  ],
+  "0x4E5D30": [
+   {
+    "line": 593,
+    "site": "0x4E5EF4",
+    "strings": []
+   },
+   {
+    "line": 520,
+    "site": "0x4E60A5",
+    "strings": []
+   },
+   {
+    "line": 520,
+    "site": "0x4E6471",
+    "strings": []
+   }
+  ],
+  "0x4E81B0": [
+   {
+    "line": 220,
+    "site": "0x4E833A",
+    "strings": []
+   }
+  ],
+  "0x4E8E50": [
+   {
+    "line": 125,
+    "site": "0x4E917A",
+    "strings": []
+   }
+  ],
+  "0x4E93C0": [
+   {
+    "line": 125,
+    "site": "0x4E9771",
+    "strings": []
+   }
+  ],
+  "0x4E9A10": [
+   {
+    "line": 712,
+    "site": "0x4E9BA1",
+    "strings": [
+     "!GetOrientation(minimal_box).flip()",
+     "GetBiModules",
+     "..\\tiling\\optimizer.cpp"
+    ]
+   },
+   {
+    "line": 716,
+    "site": "0x4E9DBA",
+    "strings": []
+   }
+  ],
+  "0x4EA310": [
+   {
+    "line": 751,
+    "site": "0x4EA700",
+    "strings": []
+   }
+  ],
+  "0x4EC00": [
+   {
+    "line": 374,
+    "site": "0x500E2",
+    "strings": []
+   }
+  ],
+  "0x4EE860": [
+   {
+    "line": 34,
+    "site": "0x4EEAC7",
+    "strings": []
+   }
+  ],
+  "0x4EED70": [
+   {
+    "line": 22,
+    "site": "0x4EEFB2",
+    "strings": []
+   }
+  ],
+  "0x4EFC80": [
+   {
+    "line": 26,
+    "site": "0x4EFECC",
+    "strings": []
+   },
+   {
+    "line": 31,
+    "site": "0x4F0426",
+    "strings": []
+   },
+   {
+    "line": 25,
+    "site": "0x4F0757",
+    "strings": []
+   }
+  ],
+  "0x4F0D00": [
+   {
+    "line": 117,
+    "site": "0x4F0F1F",
+    "strings": []
+   }
+  ],
+  "0x4F1020": [
+   {
+    "line": 162,
+    "site": "0x4F1330",
+    "strings": []
+   },
+   {
+    "line": 152,
+    "site": "0x4F14E9",
+    "strings": []
+   }
+  ],
+  "0x4F1740": [
+   {
+    "line": 89,
+    "site": "0x4F18CF",
+    "strings": []
+   }
+  ],
+  "0x4F1F60": [
+   {
+    "line": 275,
+    "site": "0x4F241C",
+    "strings": []
+   },
+   {
+    "line": 259,
+    "site": "0x4F2684",
+    "strings": []
+   }
+  ],
+  "0x4F2A30": [
+   {
+    "line": 174,
+    "site": "0x4F2C0E",
+    "strings": []
+   },
+   {
+    "line": 175,
+    "site": "0x4F3093",
+    "strings": []
+   }
+  ],
+  "0x4F4850": [
+   {
+    "line": 259,
+    "site": "0x4F4A09",
+    "strings": []
+   }
+  ],
+  "0x4F4BD0": [
+   {
+    "line": 259,
+    "site": "0x4F4D6A",
+    "strings": []
+   }
+  ],
+  "0x4F5450": [
+   {
+    "line": 116,
+    "site": "0x4F594B",
+    "strings": []
+   },
+   {
+    "line": 116,
+    "site": "0x4F5B1E",
+    "strings": []
+   }
+  ],
+  "0x4F7070": [
+   {
+    "line": 49,
+    "site": "0x4F71C2",
+    "strings": []
+   }
+  ],
+  "0x4F73E0": [
+   {
+    "line": 154,
+    "site": "0x4F7562",
+    "strings": []
+   }
+  ],
+  "0x4F8390": [
+   {
+    "line": 161,
+    "site": "0x4F84A4",
+    "strings": []
+   }
+  ],
+  "0x4F8550": [
+   {
+    "line": 161,
+    "site": "0x4F8681",
+    "strings": []
+   }
+  ],
+  "0x4F8720": [
+   {
+    "line": 161,
+    "site": "0x4F8875",
+    "strings": []
+   },
+   {
+    "line": 180,
+    "site": "0x4F89AB",
+    "strings": []
+   }
+  ],
+  "0x4F8A80": [
+   {
+    "line": 161,
+    "site": "0x4F8BB1",
+    "strings": []
+   }
+  ],
+  "0x4F8D70": [
+   {
+    "line": 161,
+    "site": "0x4F8EE1",
+    "strings": []
+   }
+  ],
+  "0x4F8FE0": [
+   {
+    "line": 309,
+    "site": "0x4F9163",
+    "strings": []
+   }
+  ],
+  "0x4F9200": [
+   {
+    "line": 315,
+    "site": "0x4F9322",
+    "strings": []
+   }
+  ],
+  "0x4F9C60": [
+   {
+    "line": 383,
+    "site": "0x4F9DE9",
+    "strings": []
+   }
+  ],
+  "0x4FC3E0": [
+   {
+    "line": 507,
+    "site": "0x4FC4DA",
+    "strings": [
+     "m_implementation->common_cut_properties.original_part_gap == 0.0",
+     "EnableCommonCut",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FC5B0": [
+   {
+    "line": 528,
+    "site": "0x4FC65A",
+    "strings": [
+     "number < GetNumberOfParts()",
+     "GetPart",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FC6F0": [
+   {
+    "line": 534,
+    "site": "0x4FC785",
+    "strings": [
+     "number < GetNumberOfParts()",
+     "GetMutablePart",
+     "..\\structure\\problem.cpp"
+    ]
+   },
+   {
+    "line": 528,
+    "site": "0x4FC83B",
+    "strings": [
+     "number < GetNumberOfParts()",
+     "GetPart",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FC940": [
+   {
+    "line": 546,
+    "site": "0x4FC9EA",
+    "strings": [
+     "number < GetNumberOfSheets()",
+     "GetSheet",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FCA80": [
+   {
+    "line": 553,
+    "site": "0x4FCBEA",
+    "strings": [
+     "it != m_implementation->parts.end()",
+     "GetPart",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FCD80": [
+   {
+    "line": 566,
+    "site": "0x4FCEEA",
+    "strings": [
+     "it != m_implementation->sheets.end()",
+     "GetSheet",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FCF90": [
+   {
+    "line": 581,
+    "site": "0x4FD03A",
+    "strings": [
+     "m_implementation->common_cut_computer.get()",
+     "GetCommonCutComputer",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x4FDFE0": [
+   {
+    "line": 117,
+    "site": "0x4FEEA9",
+    "strings": [
+     "AddSheet",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x500A90": [
+   {
+    "line": 132,
+    "site": "0x50131E",
+    "strings": [
+     "AddPart",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x501B60": [
+   {
+    "line": 98,
+    "site": "0x503988",
+    "strings": [
+     "sheet",
+     "Implementation",
+     "..\\structure\\problem.cpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x504AE6",
+    "strings": [
+     "part",
+     "Implementation",
+     "..\\structure\\problem.cpp"
+    ]
+   }
+  ],
+  "0x503B0": [
+   {
+    "line": 152,
+    "site": "0x50576",
+    "strings": []
+   }
+  ],
+  "0x5058E0": [
+   {
+    "line": 290,
+    "site": "0x50595F",
+    "strings": [
+     "v.isArray()",
+     "LoadClusteredPart",
+     "..\\structure\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 291,
+    "site": "0x5059F6",
+    "strings": [
+     "v.size() == 6u",
+     "LoadClusteredPart",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x505CE0": [
+   {
+    "line": 334,
+    "site": "0x505D66",
+    "strings": [
+     "v.isArray()",
+     "LoadSegment",
+     "..\\structure\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 335,
+    "site": "0x505DFF",
+    "strings": [
+     "v.size() == 4u",
+     "LoadSegment",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x5091B0": [
+   {
+    "line": 923,
+    "site": "0x5098F8",
+    "strings": [
+     "optional_fill_unlimited",
+     "used_surface_evaluation",
+     "new_sheet",
+     "LoadSheet",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x509A40": [
+   {
+    "line": 384,
+    "site": "0x509B72",
+    "strings": [
+     "common_cut_length",
+     "regarding_length",
+     "segments",
+     "segments.isArray()",
+     "LoadCommonCutEvaluation",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x509E40": [
+   {
+    "line": 455,
+    "site": "0x50A489",
+    "strings": [
+     "agroup.isArray()",
+     "LoadAssemblyGroups",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x50A550": [
+   {
+    "line": 475,
+    "site": "0x50A643",
+    "strings": [
+     "multitorch_part_infos",
+     "mt_array.isArray()",
+     "LoadMtInfos",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x50B1D0": [
+   {
+    "line": 1211,
+    "site": "0x50C8A2",
+    "strings": [
+     "index < problem.GetNumberOfSheets()",
+     "LoadProblem",
+     "..\\structure\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 1216,
+    "site": "0x50C981",
+    "strings": [
+     "new_part",
+     "LoadProblem",
+     "..\\structure\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 1178,
+    "site": "0x50CBD4",
+    "strings": [
+     "common_cutable",
+     "modules",
+     "part.isMember(s_geometry) || part.isMember(\"modules\")",
+     "LoadProblem",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x50C60": [
+   {
+    "line": 110,
+    "site": "0x51F53",
+    "strings": []
+   }
+  ],
+  "0x50DB70": [
+   {
+    "line": 492,
+    "site": "0x50DC2B",
+    "strings": [
+     "solution.IsBound()",
+     "ToJson",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x50EE50": [
+   {
+    "line": 1289,
+    "site": "0x50F1B3",
+    "strings": [
+     "np.isArray()",
+     "LoadSolution",
+     "..\\structure\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 1290,
+    "site": "0x50F290",
+    "strings": [
+     "np.size() >= 5u",
+     "LoadSolution",
+     "..\\structure\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x5100D0": [
+   {
+    "line": 445,
+    "site": "0x51047A",
+    "strings": [
+     "box area: ",
+     "&nbsp;&nbsp;&nbsp;&nbsp;",
+     "nesting.sheet()",
+     "GetNestingInformation",
+     "..\\structure\\svg_io.cpp"
+    ]
+   }
+  ],
+  "0x510560": [
+   {
+    "line": 379,
+    "site": "0x510860",
+    "strings": [
+     "p && \"can not find part.\"",
+     "DrawDxf",
+     "..\\structure\\svg_io.cpp"
+    ]
+   },
+   {
+    "line": 364,
+    "site": "0x510940",
+    "strings": [
+     "s && \"can not find sheet.\"",
+     "DrawDxf",
+     "..\\structure\\svg_io.cpp"
+    ]
+   }
+  ],
+  "0x510A90": [
+   {
+    "line": 410,
+    "site": "0x510BBA",
+    "strings": [
+     "s && \"can not find sheet.\"",
+     "DrawDxf",
+     "..\\structure\\svg_io.cpp"
+    ]
+   }
+  ],
+  "0x513880": [
+   {
+    "line": 848,
+    "site": "0x513ADF",
+    "strings": [
+     "problem.GetNumberOfSheets() != 0",
+     "DrawHtmlPartsTable",
+     "..\\structure\\svg_io.cpp"
+    ]
+   }
+  ],
+  "0x516380": [
+   {
+    "line": 252,
+    "site": "0x51716D",
+    "strings": [
+     "part && \"can not find part.\"",
+     "DrawSVGAux",
+     "..\\structure\\svg_io.cpp"
+    ]
+   },
+   {
+    "line": 86,
+    "site": "0x51754A",
+    "strings": [
+     "fill-opacity:0.8;fill:black;stroke:black;stroke-width:0.1%",
+     "properties.active",
+     "DrawSVGMarks",
+     "..\\structure\\svg_io.cpp"
+    ]
+   },
+   {
+    "line": 201,
+    "site": "0x517F3D",
+    "strings": [
+     "s && \"can not find sheet.\"",
+     "DrawSVGAux",
+     "..\\structure\\svg_io.cpp"
+    ]
+   },
+   {
+    "line": 97,
+    "site": "0x518103",
+    "strings": [
+     "sheet",
+     "DrawSVGReusableOffcuts",
+     "..\\structure\\svg_io.cpp"
+    ]
+   }
+  ],
+  "0x518660": [
+   {
+    "line": 351,
+    "site": "0x5186DA",
+    "strings": [
+     "solution.IsBound()",
+     "DrawSVG",
+     "..\\structure\\svg_io.cpp"
+    ]
+   }
+  ],
+  "0x51C030": [
+   {
+    "line": 26,
+    "site": "0x51C185",
+    "strings": []
+   }
+  ],
+  "0x51C260": [
+   {
+    "line": 41,
+    "site": "0x51C3B9",
+    "strings": []
+   }
+  ],
+  "0x51D0F0": [
+   {
+    "line": 147,
+    "site": "0x51D24B",
+    "strings": []
+   }
+  ],
+  "0x51D8F0": [
+   {
+    "line": 242,
+    "site": "0x51DC80",
+    "strings": []
+   }
+  ],
+  "0x51E250": [
+   {
+    "line": 338,
+    "site": "0x51E57C",
+    "strings": []
+   }
+  ],
+  "0x51E7E0": [
+   {
+    "line": 221,
+    "site": "0x51E910",
+    "strings": []
+   },
+   {
+    "line": 232,
+    "site": "0x51EAF8",
+    "strings": []
+   },
+   {
+    "line": 227,
+    "site": "0x51EC56",
+    "strings": []
+   }
+  ],
+  "0x51ECF0": [
+   {
+    "line": 147,
+    "site": "0x51EFB8",
+    "strings": []
+   }
+  ],
+  "0x51F070": [
+   {
+    "line": 147,
+    "site": "0x51F3A0",
+    "strings": []
+   }
+  ],
+  "0x520440": [
+   {
+    "line": 79,
+    "site": "0x520588",
+    "strings": []
+   }
+  ],
+  "0x520A30": [
+   {
+    "line": 1208,
+    "site": "0x520D7C",
+    "strings": [
+     "sheet",
+     "GetPartTypicalDimension",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x520E30": [
+   {
+    "line": 1208,
+    "site": "0x521161",
+    "strings": [
+     "sheet",
+     "GetPartTypicalDimension",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x521210": [
+   {
+    "line": 1208,
+    "site": "0x52151C",
+    "strings": [
+     "sheet",
+     "GetPartTypicalDimension",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x5215D0": [
+   {
+    "line": 345,
+    "site": "0x521C88",
+    "strings": []
+   }
+  ],
+  "0x521F90": [
+   {
+    "line": 31,
+    "site": "0x522135",
+    "strings": []
+   }
+  ],
+  "0x522580": [
+   {
+    "line": 126,
+    "site": "0x5227F1",
+    "strings": []
+   }
+  ],
+  "0x522B30": [
+   {
+    "line": 800,
+    "site": "0x522CB4",
+    "strings": []
+   }
+  ],
+  "0x522D60": [
+   {
+    "line": 811,
+    "site": "0x522EDB",
+    "strings": []
+   }
+  ],
+  "0x5232E0": [
+   {
+    "line": 956,
+    "site": "0x523481",
+    "strings": []
+   }
+  ],
+  "0x523A40": [
+   {
+    "line": 255,
+    "site": "0x523B98",
+    "strings": []
+   }
+  ],
+  "0x524510": [
+   {
+    "line": 1208,
+    "site": "0x524714",
+    "strings": [
+     "sheet",
+     "GetPartTypicalDimension",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x524890": [
+   {
+    "line": 1292,
+    "site": "0x524A26",
+    "strings": []
+   }
+  ],
+  "0x524B30": [
+   {
+    "line": 1302,
+    "site": "0x524CFC",
+    "strings": []
+   }
+  ],
+  "0x524EE0": [
+   {
+    "line": 90,
+    "site": "0x525232",
+    "strings": []
+   }
+  ],
+  "0x5253E0": [
+   {
+    "line": 446,
+    "site": "0x52564C",
+    "strings": []
+   }
+  ],
+  "0x5257D0": [
+   {
+    "line": 574,
+    "site": "0x525A3C",
+    "strings": []
+   }
+  ],
+  "0x525BE0": [
+   {
+    "line": 597,
+    "site": "0x525E51",
+    "strings": []
+   }
+  ],
+  "0x525E0": [
+   {
+    "line": 153,
+    "site": "0x52A48",
+    "strings": [
+     "production_cost > 0.0",
+     "Evaluate",
+     "..\\multi\\database.cpp"
+    ]
+   }
+  ],
+  "0x525EF0": [
+   {
+    "line": 605,
+    "site": "0x5260B8",
+    "strings": [
+     "nesting.sheet()",
+     "FillRatio",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x526160": [
+   {
+    "line": 154,
+    "site": "0x5263BF",
+    "strings": []
+   }
+  ],
+  "0x526460": [
+   {
+    "line": 166,
+    "site": "0x5265FB",
+    "strings": []
+   }
+  ],
+  "0x5266A0": [
+   {
+    "line": 176,
+    "site": "0x526901",
+    "strings": []
+   }
+  ],
+  "0x5269A0": [
+   {
+    "line": 188,
+    "site": "0x526B3B",
+    "strings": []
+   }
+  ],
+  "0x526BD0": [
+   {
+    "line": 101,
+    "site": "0x526DD1",
+    "strings": []
+   },
+   {
+    "line": 98,
+    "site": "0x527097",
+    "strings": []
+   }
+  ],
+  "0x5271A0": [
+   {
+    "line": 112,
+    "site": "0x52752D",
+    "strings": []
+   }
+  ],
+  "0x5275F0": [
+   {
+    "line": 201,
+    "site": "0x5277CA",
+    "strings": []
+   }
+  ],
+  "0x527870": [
+   {
+    "line": 546,
+    "site": "0x527A00",
+    "strings": [
+     "sheet",
+     "UsedSurfaceWithStairs",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x527BF0": [
+   {
+    "line": 662,
+    "site": "0x527F6C",
+    "strings": []
+   }
+  ],
+  "0x528020": [
+   {
+    "line": 705,
+    "site": "0x528515",
+    "strings": []
+   },
+   {
+    "line": 699,
+    "site": "0x52879D",
+    "strings": []
+   },
+   {
+    "line": 745,
+    "site": "0x528901",
+    "strings": [
+     "biggest",
+     "UsedSurfaceAux",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x528D10": [
+   {
+    "line": 705,
+    "site": "0x5291C8",
+    "strings": []
+   },
+   {
+    "line": 699,
+    "site": "0x529438",
+    "strings": []
+   },
+   {
+    "line": 745,
+    "site": "0x529578",
+    "strings": [
+     "biggest",
+     "UsedSurfaceAux",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x5297C0": [
+   {
+    "line": 800,
+    "site": "0x529A75",
+    "strings": []
+   }
+  ],
+  "0x52AAD0": [
+   {
+    "line": 489,
+    "site": "0x52B207",
+    "strings": [
+     "sheet",
+     "..\\structure\\stats.cpp"
+    ]
+   }
+  ],
+  "0x52B3D0": [
+   {
+    "line": 460,
+    "site": "0x52BA46",
+    "strings": []
+   }
+  ],
+  "0x52BE50": [
+   {
+    "line": 1270,
+    "site": "0x52C359",
+    "strings": []
+   }
+  ],
+  "0x52C70": [
+   {
+    "line": 173,
+    "site": "0x52D15",
+    "strings": [
+     "nesting.multiplicity() == 1u",
+     "GetLimitedNesting",
+     "..\\multi\\database.cpp"
+    ]
+   },
+   {
+    "line": 174,
+    "site": "0x52EAD",
+    "strings": [
+     "nesting.sheet() && \"Unbind nesting ?\"",
+     "GetLimitedNesting",
+     "..\\multi\\database.cpp"
+    ]
+   }
+  ],
+  "0x52DBB0": [
+   {
+    "line": 111,
+    "site": "0x52DEA2",
+    "strings": []
+   }
+  ],
+  "0x52DFC0": [
+   {
+    "line": 111,
+    "site": "0x52E2B2",
+    "strings": []
+   }
+  ],
+  "0x52E3D0": [
+   {
+    "line": 111,
+    "site": "0x52E6BF",
+    "strings": []
+   }
+  ],
+  "0x52FAE0": [
+   {
+    "line": 11,
+    "site": "0x52FCAC",
+    "strings": []
+   }
+  ],
+  "0x530110": [
+   {
+    "line": 77,
+    "site": "0x53044E",
+    "strings": []
+   },
+   {
+    "line": 90,
+    "site": "0x530B2C",
+    "strings": []
+   },
+   {
+    "line": 90,
+    "site": "0x530DEF",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x5310D7",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x531305",
+    "strings": []
+   },
+   {
+    "line": 89,
+    "site": "0x53152A",
+    "strings": []
+   },
+   {
+    "line": 89,
+    "site": "0x5316A1",
+    "strings": []
+   }
+  ],
+  "0x5328A0": [
+   {
+    "line": 43,
+    "site": "0x532D0C",
+    "strings": []
+   },
+   {
+    "line": 43,
+    "site": "0x532E8F",
+    "strings": []
+   },
+   {
+    "line": 43,
+    "site": "0x53302B",
+    "strings": []
+   },
+   {
+    "line": 43,
+    "site": "0x5331AD",
+    "strings": []
+   },
+   {
+    "line": 49,
+    "site": "0x533337",
+    "strings": []
+   },
+   {
+    "line": 48,
+    "site": "0x5334C5",
+    "strings": []
+   }
+  ],
+  "0x533BC0": [
+   {
+    "line": 235,
+    "site": "0x533E09",
+    "strings": []
+   }
+  ],
+  "0x5387C0": [
+   {
+    "line": 214,
+    "site": "0x538B12",
+    "strings": []
+   }
+  ],
+  "0x53BF10": [
+   {
+    "line": 49,
+    "site": "0x53C1F9",
+    "strings": []
+   }
+  ],
+  "0x53C0": [
+   {
+    "line": 652,
+    "site": "0x5590",
+    "strings": []
+   }
+  ],
+  "0x53C2C0": [
+   {
+    "line": 162,
+    "site": "0x53C7E9",
+    "strings": []
+   },
+   {
+    "line": 161,
+    "site": "0x53CAFF",
+    "strings": []
+   }
+  ],
+  "0x53CC30": [
+   {
+    "line": 363,
+    "site": "0x53D002",
+    "strings": [
+     "!torch_configs.empty()",
+     "ComputeBestConfigSequence",
+     "..\\structure\\multitorch_eval.cpp"
+    ]
+   }
+  ],
+  "0x53D0F0": [
+   {
+    "line": 620,
+    "site": "0x53D748",
+    "strings": []
+   }
+  ],
+  "0x53ECA0": [
+   {
+    "line": 162,
+    "site": "0x53F122",
+    "strings": []
+   },
+   {
+    "line": 161,
+    "site": "0x53F2EE",
+    "strings": []
+   }
+  ],
+  "0x53F910": [
+   {
+    "line": 282,
+    "site": "0x53FFCB",
+    "strings": []
+   },
+   {
+    "line": 380,
+    "site": "0x540369",
+    "strings": []
+   },
+   {
+    "line": 379,
+    "site": "0x540B5C",
+    "strings": []
+   },
+   {
+    "line": 258,
+    "site": "0x540F56",
+    "strings": []
+   },
+   {
+    "line": 279,
+    "site": "0x541139",
+    "strings": []
+   }
+  ],
+  "0x5433F0": [
+   {
+    "line": 90,
+    "site": "0x5435B9",
+    "strings": []
+   }
+  ],
+  "0x543730": [
+   {
+    "line": 85,
+    "site": "0x543B5A",
+    "strings": []
+   },
+   {
+    "line": 84,
+    "site": "0x543D01",
+    "strings": []
+   },
+   {
+    "line": 83,
+    "site": "0x543E60",
+    "strings": []
+   }
+  ],
+  "0x5448C0": [
+   {
+    "line": 75,
+    "site": "0x544B8F",
+    "strings": []
+   }
+  ],
+  "0x544EC0": [
+   {
+    "line": 22,
+    "site": "0x54512D",
+    "strings": []
+   }
+  ],
+  "0x5455A0": [
+   {
+    "line": 51,
+    "site": "0x5457D3",
+    "strings": []
+   }
+  ],
+  "0x545E50": [
+   {
+    "line": 98,
+    "site": "0x546109",
+    "strings": []
+   }
+  ],
+  "0x5461B0": [
+   {
+    "line": 164,
+    "site": "0x546488",
+    "strings": []
+   }
+  ],
+  "0x546D50": [
+   {
+    "line": 33,
+    "site": "0x546F10",
+    "strings": []
+   }
+  ],
+  "0x5471A0": [
+   {
+    "line": 33,
+    "site": "0x547362",
+    "strings": []
+   }
+  ],
+  "0x547730": [
+   {
+    "line": 110,
+    "site": "0x54791A",
+    "strings": []
+   }
+  ],
+  "0x547F80": [
+   {
+    "line": 77,
+    "site": "0x54813A",
+    "strings": []
+   }
+  ],
+  "0x5483D0": [
+   {
+    "line": 48,
+    "site": "0x5485A0",
+    "strings": []
+   }
+  ],
+  "0x54A930": [
+   {
+    "line": 82,
+    "site": "0x54AB61",
+    "strings": []
+   }
+  ],
+  "0x54AC00": [
+   {
+    "line": 124,
+    "site": "0x54B4A4",
+    "strings": []
+   }
+  ],
+  "0x54B600": [
+   {
+    "line": 167,
+    "site": "0x54B983",
+    "strings": []
+   }
+  ],
+  "0x54BA40": [
+   {
+    "line": 100,
+    "site": "0x54BEBA",
+    "strings": []
+   }
+  ],
+  "0x54BFE0": [
+   {
+    "line": 154,
+    "site": "0x54C33C",
+    "strings": []
+   }
+  ],
+  "0x54C640": [
+   {
+    "line": 14,
+    "site": "0x54C809",
+    "strings": []
+   }
+  ],
+  "0x54CC00": [
+   {
+    "line": 35,
+    "site": "0x54CD98",
+    "strings": []
+   }
+  ],
+  "0x54CEA0": [
+   {
+    "line": 35,
+    "site": "0x54D038",
+    "strings": []
+   }
+  ],
+  "0x54F5D0": [
+   {
+    "line": 102,
+    "site": "0x54FAF0",
+    "strings": []
+   }
+  ],
+  "0x552E30": [
+   {
+    "line": 483,
+    "site": "0x552FBD",
+    "strings": [
+     "!nesteds.empty()",
+     "ToCluster",
+     "..\\structure\\automatic_cluster.cpp"
+    ]
+   }
+  ],
+  "0x5563C0": [
+   {
+    "line": 397,
+    "site": "0x556D93",
+    "strings": [
+     "!groups.empty()",
+     "GetBestEraseAndUpdate",
+     "..\\structure\\automatic_cluster.cpp"
+    ]
+   }
+  ],
+  "0x55A230": [
+   {
+    "line": 58,
+    "site": "0x55A4FA",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x55A6D3",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x55A8E6",
+    "strings": []
+   }
+  ],
+  "0x55AB70": [
+   {
+    "line": 58,
+    "site": "0x55ADB5",
+    "strings": []
+   }
+  ],
+  "0x55B090": [
+   {
+    "line": 42,
+    "site": "0x55B3C1",
+    "strings": []
+   }
+  ],
+  "0x55B550": [
+   {
+    "line": 58,
+    "site": "0x55B926",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x55BB75",
+    "strings": []
+   }
+  ],
+  "0x55C150": [
+   {
+    "line": 172,
+    "site": "0x55C3D3",
+    "strings": []
+   },
+   {
+    "line": 170,
+    "site": "0x55C5ED",
+    "strings": []
+   }
+  ],
+  "0x55E2C0": [
+   {
+    "line": 58,
+    "site": "0x55E530",
+    "strings": []
+   }
+  ],
+  "0x560380": [
+   {
+    "line": 60,
+    "site": "0x5608B8",
+    "strings": []
+   },
+   {
+    "line": 73,
+    "site": "0x560AD1",
+    "strings": []
+   }
+  ],
+  "0x560C30": [
+   {
+    "line": 58,
+    "site": "0x560E52",
+    "strings": []
+   }
+  ],
+  "0x56A0B0": [
+   {
+    "line": 40,
+    "site": "0x56A1D6",
+    "strings": []
+   }
+  ],
+  "0x56A550": [
+   {
+    "line": 40,
+    "site": "0x56A6A3",
+    "strings": []
+   }
+  ],
+  "0x570050": [
+   {
+    "line": 71,
+    "site": "0x570169",
+    "strings": []
+   }
+  ],
+  "0x5702E0": [
+   {
+    "line": 137,
+    "site": "0x570434",
+    "strings": []
+   },
+   {
+    "line": 136,
+    "site": "0x570574",
+    "strings": []
+   }
+  ],
+  "0x570EE0": [
+   {
+    "line": 57,
+    "site": "0x571227",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x5713D1",
+    "strings": []
+   },
+   {
+    "line": 56,
+    "site": "0x571531",
+    "strings": []
+   },
+   {
+    "line": 55,
+    "site": "0x571681",
+    "strings": []
+   }
+  ],
+  "0x571820": [
+   {
+    "line": 137,
+    "site": "0x572046",
+    "strings": []
+   },
+   {
+    "line": 136,
+    "site": "0x572192",
+    "strings": []
+   }
+  ],
+  "0x572500": [
+   {
+    "line": 137,
+    "site": "0x5729D6",
+    "strings": []
+   },
+   {
+    "line": 136,
+    "site": "0x572B22",
+    "strings": []
+   }
+  ],
+  "0x572D60": [
+   {
+    "line": 43,
+    "site": "0x5731C3",
+    "strings": []
+   },
+   {
+    "line": 42,
+    "site": "0x573305",
+    "strings": []
+   }
+  ],
+  "0x573CD0": [
+   {
+    "line": 1024,
+    "site": "0x574352",
+    "strings": []
+   }
+  ],
+  "0x576470": [
+   {
+    "line": 605,
+    "site": "0x576C1E",
+    "strings": []
+   }
+  ],
+  "0x577310": [
+   {
+    "line": 746,
+    "site": "0x577C15",
+    "strings": []
+   },
+   {
+    "line": 744,
+    "site": "0x577ECA",
+    "strings": []
+   }
+  ],
+  "0x578100": [
+   {
+    "line": 822,
+    "site": "0x579D2F",
+    "strings": []
+   }
+  ],
+  "0x57FDA0": [
+   {
+    "line": 148,
+    "site": "0x57FFE5",
+    "strings": []
+   },
+   {
+    "line": 147,
+    "site": "0x5803FF",
+    "strings": []
+   }
+  ],
+  "0x582C00": [
+   {
+    "line": 207,
+    "site": "0x582DCF",
+    "strings": []
+   },
+   {
+    "line": 207,
+    "site": "0x583035",
+    "strings": []
+   },
+   {
+    "line": 207,
+    "site": "0x583319",
+    "strings": []
+   }
+  ],
+  "0x583830": [
+   {
+    "line": 377,
+    "site": "0x583C78",
+    "strings": []
+   }
+  ],
+  "0x584120": [
+   {
+    "line": 113,
+    "site": "0x58438F",
+    "strings": [
+     "(polygons.size() == 1u) && \"internal error: no outer boundary\""
+    ]
+   }
+  ],
+  "0x584CC0": [
+   {
+    "line": 116,
+    "site": "0x585198",
+    "strings": []
+   }
+  ],
+  "0x5854B0": [
+   {
+    "line": 116,
+    "site": "0x585988",
+    "strings": []
+   }
+  ],
+  "0x5867C0": [
+   {
+    "line": 298,
+    "site": "0x586AC0",
+    "strings": []
+   },
+   {
+    "line": 295,
+    "site": "0x5870AF",
+    "strings": []
+   }
+  ],
+  "0x5873E0": [
+   {
+    "line": 320,
+    "site": "0x587704",
+    "strings": []
+   },
+   {
+    "line": 318,
+    "site": "0x587BB7",
+    "strings": []
+   }
+  ],
+  "0x588A60": [
+   {
+    "line": 401,
+    "site": "0x5890F4",
+    "strings": []
+   }
+  ],
+  "0x58B520": [
+   {
+    "line": 453,
+    "site": "0x58B6B8",
+    "strings": []
+   }
+  ],
+  "0x596F20": [
+   {
+    "line": 331,
+    "site": "0x5971CE",
+    "strings": []
+   }
+  ],
+  "0x597BD0": [
+   {
+    "line": 183,
+    "site": "0x597D6A",
+    "strings": []
+   }
+  ],
+  "0x59B3B0": [
+   {
+    "line": 76,
+    "site": "0x59B5E4",
+    "strings": []
+   },
+   {
+    "line": 75,
+    "site": "0x59B882",
+    "strings": []
+   }
+  ],
+  "0x59C560": [
+   {
+    "line": 222,
+    "site": "0x59CBBA",
+    "strings": []
+   }
+  ],
+  "0x59CD10": [
+   {
+    "line": 36,
+    "site": "0x59DC74",
+    "strings": []
+   },
+   {
+    "line": 39,
+    "site": "0x59E082",
+    "strings": []
+   },
+   {
+    "line": 40,
+    "site": "0x59E226",
+    "strings": []
+   }
+  ],
+  "0x59D30": [
+   {
+    "line": 48,
+    "site": "0x5A00E",
+    "strings": [
+     "sheet->dimension_y() > 0.0",
+     "DatabaseNesting",
+     "..\\multi\\database.cpp"
+    ]
+   },
+   {
+    "line": 46,
+    "site": "0x5A0DF",
+    "strings": [
+     "sheet",
+     "DatabaseNesting",
+     "..\\multi\\database.cpp"
+    ]
+   }
+  ],
+  "0x59E9D0": [
+   {
+    "line": 128,
+    "site": "0x59EC7E",
+    "strings": []
+   },
+   {
+    "line": 146,
+    "site": "0x59F72D",
+    "strings": []
+   },
+   {
+    "line": 159,
+    "site": "0x5A070B",
+    "strings": []
+   },
+   {
+    "line": 138,
+    "site": "0x5A08F1",
+    "strings": []
+   },
+   {
+    "line": 127,
+    "site": "0x5A0B87",
+    "strings": []
+   }
+  ],
+  "0x5A2690": [
+   {
+    "line": 63,
+    "site": "0x5A2BB6",
+    "strings": []
+   }
+  ],
+  "0x5B250": [
+   {
+    "line": 119,
+    "site": "0x5B4FE",
+    "strings": []
+   },
+   {
+    "line": 65,
+    "site": "0x5BD42",
+    "strings": []
+   }
+  ],
+  "0x5B3BF0": [
+   {
+    "line": 86,
+    "site": "0x5B3C72",
+    "strings": [
+     "!(son->m_father) || (son->m_father == father)",
+     "MakeInclusion",
+     "..\\exact\\relinker_internal.cpp"
+    ]
+   },
+   {
+    "line": 85,
+    "site": "0x5B3D5A",
+    "strings": [
+     "(son != father) && \"Exact strange invalid geometry ?\"",
+     "MakeInclusion",
+     "..\\exact\\relinker_internal.cpp"
+    ]
+   }
+  ],
+  "0x5C3820": [
+   {
+    "line": 144,
+    "site": "0x5C3C68",
+    "strings": []
+   }
+  ],
+  "0x5C5280": [
+   {
+    "line": 34,
+    "site": "0x5C5460",
+    "strings": []
+   }
+  ],
+  "0x5C5520": [
+   {
+    "line": 40,
+    "site": "0x5C58CF",
+    "strings": []
+   }
+  ],
+  "0x5C5C0": [
+   {
+    "line": 232,
+    "site": "0x5C79B",
+    "strings": []
+   }
+  ],
+  "0x5C73B0": [
+   {
+    "line": 39,
+    "site": "0x5C7528",
+    "strings": []
+   }
+  ],
+  "0x5C75D0": [
+   {
+    "line": 46,
+    "site": "0x5C7748",
+    "strings": []
+   }
+  ],
+  "0x5C77F0": [
+   {
+    "line": 46,
+    "site": "0x5C7968",
+    "strings": []
+   }
+  ],
+  "0x5C7A10": [
+   {
+    "line": 46,
+    "site": "0x5C7B8F",
+    "strings": []
+   }
+  ],
+  "0x5C8A90": [
+   {
+    "line": 27,
+    "site": "0x5C8BB9",
+    "strings": []
+   }
+  ],
+  "0x5CB430": [
+   {
+    "line": 323,
+    "site": "0x5CB655",
+    "strings": []
+   }
+  ],
+  "0x5CD360": [
+   {
+    "line": 124,
+    "site": "0x5CD4CA",
+    "strings": []
+   }
+  ],
+  "0x5CD5C0": [
+   {
+    "line": 138,
+    "site": "0x5CD741",
+    "strings": []
+   }
+  ],
+  "0x5CD800": [
+   {
+    "line": 153,
+    "site": "0x5CD9D2",
+    "strings": []
+   }
+  ],
+  "0x5DFF90": [
+   {
+    "line": 750,
+    "site": "0x5E010C",
+    "strings": []
+   }
+  ],
+  "0x5E5170": [
+   {
+    "line": 209,
+    "site": "0x5E5245",
+    "strings": [
+     "(),",
+     "sub_strings.size() >= 3u",
+     "ReadElementPath",
+     "..\\geom\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 211,
+    "site": "0x5E53A6",
+    "strings": [
+     "sub_strings.back() == \"\"",
+     "ReadElementPath",
+     "..\\geom\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 214,
+    "site": "0x5E54AF",
+    "strings": [
+     " ",
+     "coordinates.size() == 2u",
+     "ReadElementPath",
+     "..\\geom\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 220,
+    "site": "0x5E5781",
+    "strings": [
+     "coordinates.size() == 3u",
+     "ReadElementPath",
+     "..\\geom\\text_io.cpp"
+    ]
+   },
+   {
+    "line": 210,
+    "site": "0x5E5907",
+    "strings": [
+     "boost::starts_with(sub_strings[0], std::string(\"ELEMENT_PATH\"))",
+     "ReadElementPath",
+     "..\\geom\\text_io.cpp"
+    ]
+   }
+  ],
+  "0x5EC670": [
+   {
+    "line": 29,
+    "site": "0x5EC959",
+    "strings": []
+   },
+   {
+    "line": 20,
+    "site": "0x5ECB59",
+    "strings": []
+   },
+   {
+    "line": 16,
+    "site": "0x5ECCE1",
+    "strings": []
+   }
+  ],
+  "0x5ECD90": [
+   {
+    "line": 43,
+    "site": "0x5ECFDB",
+    "strings": []
+   }
+  ],
+  "0x5EE1A0": [
+   {
+    "line": 58,
+    "site": "0x5EE4AA",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x5EE6F2",
+    "strings": []
+   }
+  ],
+  "0x5EF170": [
+   {
+    "line": 58,
+    "site": "0x5EF452",
+    "strings": []
+   }
+  ],
+  "0x5EF7E0": [
+   {
+    "line": 58,
+    "site": "0x5EFAEB",
+    "strings": []
+   }
+  ],
+  "0x5EFEA0": [
+   {
+    "line": 21,
+    "site": "0x5F032F",
+    "strings": []
+   }
+  ],
+  "0x5F1F90": [
+   {
+    "line": 58,
+    "site": "0x5F21D5",
+    "strings": []
+   },
+   {
+    "line": 33,
+    "site": "0x5F24D7",
+    "strings": []
+   },
+   {
+    "line": 29,
+    "site": "0x5F2627",
+    "strings": []
+   }
+  ],
+  "0x5F2790": [
+   {
+    "line": 58,
+    "site": "0x5F2A1F",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x5F2C35",
+    "strings": []
+   },
+   {
+    "line": 81,
+    "site": "0x5F31E7",
+    "strings": []
+   },
+   {
+    "line": 58,
+    "site": "0x5F33D4",
+    "strings": []
+   },
+   {
+    "line": 57,
+    "site": "0x5F36EB",
+    "strings": []
+   }
+  ],
+  "0x5F3D50": [
+   {
+    "line": 30,
+    "site": "0x5F3F72",
+    "strings": []
+   }
+  ],
+  "0x607890": [
+   {
+    "line": 71,
+    "site": "0x607CC6",
+    "strings": []
+   }
+  ],
+  "0x60A020": [
+   {
+    "line": 51,
+    "site": "0x60A4EE",
+    "strings": []
+   }
+  ],
+  "0x60D90": [
+   {
+    "line": 86,
+    "site": "0x60F36",
+    "strings": []
+   },
+   {
+    "line": 23,
+    "site": "0x6110C",
+    "strings": []
+   }
+  ],
+  "0x61280": [
+   {
+    "line": 23,
+    "site": "0x6144E",
+    "strings": []
+   }
+  ],
+  "0x61500": [
+   {
+    "line": 23,
+    "site": "0x616B8",
+    "strings": []
+   }
+  ],
+  "0x61760": [
+   {
+    "line": 30,
+    "site": "0x61895",
+    "strings": []
+   }
+  ],
+  "0x61930": [
+   {
+    "line": 23,
+    "site": "0x61B12",
+    "strings": []
+   },
+   {
+    "line": 30,
+    "site": "0x61C51",
+    "strings": []
+   }
+  ],
+  "0x61D40": [
+   {
+    "line": 30,
+    "site": "0x61E9C",
+    "strings": []
+   }
+  ],
+  "0x61F30": [
+   {
+    "line": 30,
+    "site": "0x6209B",
+    "strings": []
+   }
+  ],
+  "0x62130": [
+   {
+    "line": 23,
+    "site": "0x62302",
+    "strings": []
+   },
+   {
+    "line": 30,
+    "site": "0x62441",
+    "strings": []
+   }
+  ],
+  "0x62C40": [
+   {
+    "line": 183,
+    "site": "0x62D7A",
+    "strings": [
+     "solution.size() != 0u",
+     "ReducedSolution",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 184,
+    "site": "0x62E33",
+    "strings": [
+     "solution.size() != base_solution.size()",
+     "ReducedSolution",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x63570": [
+   {
+    "line": 1671,
+    "site": "0x638F6",
+    "strings": [
+     "supervisor",
+     "RunWorker",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x643910": [
+   {
+    "line": 730,
+    "site": "0x643D6A",
+    "strings": [
+     "final_nesteds.size() == (n.nesteds().size() - nesteds.size())",
+     " ",
+     " ",
+     "RRN_Reduced",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 732,
+    "site": "0x643EB9",
+    "strings": [
+     "remaining.size() == nesteds.size() - 1",
+     "RRN_Reduced",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 735,
+    "site": "0x64401C",
+    "strings": [
+     "final_nesteds.size() == n.nesteds().size()",
+     "RRN_Reduced",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   }
+  ],
+  "0x644480": [
+   {
+    "line": 730,
+    "site": "0x6448DA",
+    "strings": [
+     "final_nesteds.size() == (n.nesteds().size() - nesteds.size())",
+     " ",
+     " ",
+     "RRN_Reduced",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 732,
+    "site": "0x644A3C",
+    "strings": [
+     "remaining.size() == nesteds.size() - 1",
+     "RRN_Reduced",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 735,
+    "site": "0x644B9F",
+    "strings": [
+     "final_nesteds.size() == n.nesteds().size()",
+     "RRN_Reduced",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   }
+  ],
+  "0x64720": [
+   {
+    "line": 182,
+    "site": "0x6493C",
+    "strings": []
+   },
+   {
+    "line": 211,
+    "site": "0x64C85",
+    "strings": []
+   },
+   {
+    "line": 185,
+    "site": "0x64EE6",
+    "strings": []
+   }
+  ],
+  "0x6473E0": [
+   {
+    "line": 127,
+    "site": "0x64755B",
+    "strings": [
+     "multi.m_nestings.size() == ast.size()",
+     "MakeMultiDetails",
+     "..\\nesting\\ios\\log_ios.cpp"
+    ]
+   }
+  ],
+  "0x64A700": [
+   {
+    "line": 736,
+    "site": "0x64A7FD",
+    "strings": [
+     "false && \"field must be in 1 .. 5\"",
+     "NextEffortLevelField",
+     "..\\nesting\\algos\\algo_parameters.cpp"
+    ]
+   }
+  ],
+  "0x6507B0": [
+   {
+    "line": 666,
+    "site": "0x650A22",
+    "strings": [
+     "final_nesteds.size() == (n.nesteds().size() - nesteds.size())",
+     " ",
+     " ",
+     "RRN",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 668,
+    "site": "0x650B78",
+    "strings": [
+     "remaining.size() == nesteds.size() - renesteds.size()",
+     "RRN",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 671,
+    "site": "0x650C65",
+    "strings": [
+     "final_nesteds.size() == n.nesteds().size()",
+     "RRN",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   }
+  ],
+  "0x650F70": [
+   {
+    "line": 666,
+    "site": "0x6511E2",
+    "strings": [
+     "final_nesteds.size() == (n.nesteds().size() - nesteds.size())",
+     " ",
+     " ",
+     "RRN",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 668,
+    "site": "0x651338",
+    "strings": [
+     "remaining.size() == nesteds.size() - renesteds.size()",
+     "RRN",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   },
+   {
+    "line": 671,
+    "site": "0x651425",
+    "strings": [
+     "final_nesteds.size() == n.nesteds().size()",
+     "RRN",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   }
+  ],
+  "0x65170": [
+   {
+    "line": 83,
+    "site": "0x6543C",
+    "strings": []
+   }
+  ],
+  "0x654E0": [
+   {
+    "line": 109,
+    "site": "0x6578D",
+    "strings": []
+   }
+  ],
+  "0x656A60": [
+   {
+    "line": 77,
+    "site": "0x656D4D",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x65709D",
+    "strings": []
+   }
+  ],
+  "0x657D20": [
+   {
+    "line": 138,
+    "site": "0x657DEA",
+    "strings": [
+     "spos.extra_x() == 0.0",
+     "MinStripPos",
+     "..\\nesting\\algos\\../strips/strip_position.hpp"
+    ]
+   },
+   {
+    "line": 134,
+    "site": "0x657E7B",
+    "strings": [
+     "spos.nx() < 1e7",
+     "MinStripPos",
+     "..\\nesting\\algos\\../strips/strip_position.hpp"
+    ]
+   },
+   {
+    "line": 137,
+    "site": "0x657F0C",
+    "strings": [
+     "spos.real_y() == 0.0",
+     "MinStripPos",
+     "..\\nesting\\algos\\../strips/strip_position.hpp"
+    ]
+   }
+  ],
+  "0x65830": [
+   {
+    "line": 140,
+    "site": "0x65A45",
+    "strings": []
+   }
+  ],
+  "0x65A8C0": [
+   {
+    "line": 35,
+    "site": "0x65ACC3",
+    "strings": []
+   },
+   {
+    "line": 75,
+    "site": "0x65B302",
+    "strings": []
+   }
+  ],
+  "0x65CC50": [
+   {
+    "line": 220,
+    "site": "0x65D93E",
+    "strings": [
+     "begin == nodes.size()",
+     "EquivComputer",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x65E310": [
+   {
+    "line": 88,
+    "site": "0x65E390",
+    "strings": [
+     "m_left >= s_min && m_right <= s_max",
+     "NestingWindow",
+     "..\\nesting\\algos\\../nesting.hpp"
+    ]
+   }
+  ],
+  "0x6605F0": [
+   {
+    "line": 389,
+    "site": "0x660906",
+    "strings": []
+   }
+  ],
+  "0x665F40": [
+   {
+    "line": 161,
+    "site": "0x66666F",
+    "strings": [
+     "s.is_rectangular()",
+     "ComputeNoFitSheetMap",
+     "cns_no_fit.cpp"
+    ]
+   },
+   {
+    "line": 106,
+    "site": "0x6669A9",
+    "strings": []
+   },
+   {
+    "line": 108,
+    "site": "0x666CC7",
+    "strings": []
+   }
+  ],
+  "0x6673F0": [
+   {
+    "line": 106,
+    "site": "0x668085",
+    "strings": []
+   },
+   {
+    "line": 106,
+    "site": "0x668276",
+    "strings": []
+   },
+   {
+    "line": 108,
+    "site": "0x668803",
+    "strings": []
+   },
+   {
+    "line": 108,
+    "site": "0x668A43",
+    "strings": []
+   }
+  ],
+  "0x668F20": [
+   {
+    "line": 78,
+    "site": "0x66913A",
+    "strings": [
+     "m_equivalent_problem->GetNumberOfParts() == order->parts.size()",
+     "CNS_NoFitContext",
+     "cns_no_fit.cpp"
+    ]
+   },
+   {
+    "line": 79,
+    "site": "0x6691FD",
+    "strings": [
+     "m_equivalent_problem->GetNumberOfSheets() == order->sheets.size()",
+     "CNS_NoFitContext",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x672DA0": [
+   {
+    "line": 95,
+    "site": "0x673896",
+    "strings": [
+     "CheckCoherency()",
+     "ReducePartTransformer",
+     "..\\nesting\\algos\\postop_move.cpp"
+    ]
+   }
+  ],
+  "0x673C60": [
+   {
+    "line": 735,
+    "site": "0x673FCE",
+    "strings": [
+     "m_is_right[node]",
+     "MaxRightLengthComputer",
+     "..\\nesting\\algos\\tree_db.cpp"
+    ]
+   }
+  ],
+  "0x67460": [
+   {
+    "line": 54,
+    "site": "0x68E67",
+    "strings": []
+   }
+  ],
+  "0x674680": [
+   {
+    "line": 106,
+    "site": "0x674B7B",
+    "strings": []
+   },
+   {
+    "line": 106,
+    "site": "0x675048",
+    "strings": []
+   },
+   {
+    "line": 108,
+    "site": "0x675D53",
+    "strings": []
+   },
+   {
+    "line": 108,
+    "site": "0x675EE1",
+    "strings": []
+   }
+  ],
+  "0x677CB0": [
+   {
+    "line": 145,
+    "site": "0x677D65",
+    "strings": [
+     "groups.empty() || (groups.size() == nesting.nesteds().size())",
+     "CompactAux",
+     "..\\nesting\\algos\\compact.hpp"
+    ]
+   },
+   {
+    "line": 179,
+    "site": "0x677F83",
+    "strings": [
+     "sol.nestings().size() == 1",
+     "CompactAux",
+     "..\\nesting\\algos\\compact.hpp"
+    ]
+   }
+  ],
+  "0x678230": [
+   {
+    "line": 135,
+    "site": "0x6783FE",
+    "strings": [
+     "sol.nestings().size() == 1",
+     "RotateCompact",
+     "..\\nesting\\algos\\compact.hpp"
+    ]
+   }
+  ],
+  "0x678630": [
+   {
+    "line": 111,
+    "site": "0x678786",
+    "strings": [
+     "groups.empty() || (groups.size() == nesting.nesteds().size())",
+     "NoOverlap",
+     "..\\nesting\\algos\\compact.hpp"
+    ]
+   }
+  ],
+  "0x6859F0": [
+   {
+    "line": 116,
+    "site": "0x685BE8",
+    "strings": [
+     "!points.empty()",
+     "ToExactPath",
+     "..\\exact\\geom_conversion.inl"
+    ]
+   }
+  ],
+  "0x685CD0": [
+   {
+    "line": 116,
+    "site": "0x6860C2",
+    "strings": []
+   }
+  ],
+  "0x6863C0": [
+   {
+    "line": 116,
+    "site": "0x686ABB",
+    "strings": []
+   },
+   {
+    "line": 116,
+    "site": "0x686E17",
+    "strings": []
+   }
+  ],
+  "0x68A6E0": [
+   {
+    "line": 287,
+    "site": "0x68A8E1",
+    "strings": [
+     "nesting.Bindable(m_problem)",
+     "Compact",
+     "..\\multi\\supervisor.cpp"
+    ]
+   }
+  ],
+  "0x68AB50": [
+   {
+    "line": 112,
+    "site": "0x68AEB8",
+    "strings": []
+   },
+   {
+    "line": 174,
+    "site": "0x68CCA6",
+    "strings": []
+   },
+   {
+    "line": 126,
+    "site": "0x68D2DF",
+    "strings": []
+   },
+   {
+    "line": 93,
+    "site": "0x68D767",
+    "strings": [
+     "index < m_reduced_problem.GetNumberOfParts()",
+     "ReducedPartNumber",
+     "..\\multi\\float_filler.cpp"
+    ]
+   },
+   {
+    "line": 93,
+    "site": "0x68D843",
+    "strings": [
+     "index < m_reduced_problem.GetNumberOfParts()",
+     "ReducedPartNumber",
+     "..\\multi\\float_filler.cpp"
+    ]
+   }
+  ],
+  "0x68EBC0": [
+   {
+    "line": 126,
+    "site": "0x68F5E7",
+    "strings": []
+   }
+  ],
+  "0x68F750": [
+   {
+    "line": 265,
+    "site": "0x68F8FA",
+    "strings": [
+     "nesting.multiplicity() == 1u",
+     "GetCandidates",
+     "..\\multi\\float_filler.cpp"
+    ]
+   },
+   {
+    "line": 174,
+    "site": "0x68FE70",
+    "strings": [
+     "part_number < m_reduced_problem.GetNumberOfParts()",
+     "RawFillNesting",
+     "..\\multi\\float_filler.cpp"
+    ]
+   },
+   {
+    "line": 112,
+    "site": "0x6902BF",
+    "strings": []
+   },
+   {
+    "line": 140,
+    "site": "0x69037B",
+    "strings": [
+     "nested_part.part()",
+     "RemoveNullPricesParts",
+     "..\\multi\\float_filler.cpp"
+    ]
+   },
+   {
+    "line": 174,
+    "site": "0x691D79",
+    "strings": [
+     "part_number < m_reduced_problem.GetNumberOfParts()",
+     "RawFillNesting",
+     "..\\multi\\float_filler.cpp"
+    ]
+   },
+   {
+    "line": 126,
+    "site": "0x69262A",
+    "strings": []
+   },
+   {
+    "line": 93,
+    "site": "0x692856",
+    "strings": [
+     "index < m_reduced_problem.GetNumberOfParts()",
+     "ReducedPartNumber",
+     "..\\multi\\float_filler.cpp"
+    ]
+   },
+   {
+    "line": 93,
+    "site": "0x692933",
+    "strings": [
+     "index < m_reduced_problem.GetNumberOfParts()",
+     "ReducedPartNumber",
+     "..\\multi\\float_filler.cpp"
+    ]
+   }
+  ],
+  "0x693520": [
+   {
+    "line": 174,
+    "site": "0x6935F0",
+    "strings": [
+     "part_number < m_reduced_problem.GetNumberOfParts()",
+     "RawFillNesting",
+     "..\\multi\\float_filler.cpp"
+    ]
+   }
+  ],
+  "0x693950": [
+   {
+    "line": 369,
+    "site": "0x6945CA",
+    "strings": [
+     "sheet",
+     "GetPackerParameters",
+     "..\\multi\\tiling_nester.cpp"
+    ]
+   }
+  ],
+  "0x696C50": [
+   {
+    "line": 314,
+    "site": "0x696EDA",
+    "strings": [
+     "sheet",
+     "Implementation",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x697270": [
+   {
+    "line": 134,
+    "site": "0x697EA8",
+    "strings": []
+   }
+  ],
+  "0x69790": [
+   {
+    "line": 63,
+    "site": "0x6998F",
+    "strings": []
+   },
+   {
+    "line": 54,
+    "site": "0x69B12",
+    "strings": []
+   }
+  ],
+  "0x698470": [
+   {
+    "line": 14,
+    "site": "0x698BAE",
+    "strings": []
+   },
+   {
+    "line": 84,
+    "site": "0x698D4B",
+    "strings": []
+   }
+  ],
+  "0x69A720": [
+   {
+    "line": 226,
+    "site": "0x69A80D",
+    "strings": [
+     "index >= (m_parts.size() - m_clusters.size()) && index < m_parts.size()",
+     "GetCluster",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x69AA40": [
+   {
+    "line": 152,
+    "site": "0x69B146",
+    "strings": [
+     "m_parts.size() >= nb_parts",
+     "NestingPartModuleMapping",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x69B3B5",
+    "strings": [
+     "nb_modules > 0",
+     "NestingPartModuleMapping",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 95,
+    "site": "0x69BC47",
+    "strings": [
+     "(problem.part_gap() == 0.0) && \"part gap not supported\"",
+     "NestingPartModuleMapping",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x69BE80": [
+   {
+    "line": 141,
+    "site": "0x69C243",
+    "strings": []
+   },
+   {
+    "line": 117,
+    "site": "0x69C496",
+    "strings": []
+   },
+   {
+    "line": 121,
+    "site": "0x69C89B",
+    "strings": [
+     "m_base && \"call SetActiveNesting first\"",
+     "GetActiveParts"
+    ]
+   }
+  ],
+  "0x69DB70": [
+   {
+    "line": 993,
+    "site": "0x69DFAC",
+    "strings": [
+     "(nb_iterations <= 10000) && \"very big number of nestings ?\"",
+     "RunOnceMulti",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 14,
+    "site": "0x69E500",
+    "strings": [
+     "d != 0",
+     "InPlaceDivide",
+     "../utils/quantities.inl"
+    ]
+   },
+   {
+    "line": 89,
+    "site": "0x69E5DB",
+    "strings": [
+     "(m != 0) && \"nesting algorithm produced to much parts !\"",
+     "MaximizeMultiplicity",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x69E9B0": [
+   {
+    "line": 690,
+    "site": "0x69EC98",
+    "strings": [
+     "sheet",
+     "RunOneNesting",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 752,
+    "site": "0x69EFAC",
+    "strings": [
+     "RunOneNesting",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 654,
+    "site": "0x69F95A",
+    "strings": [
+     "quantities.size() == problem().GetNumberOfParts()",
+     "GetCommonCutMaxCuttingSurface",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 706,
+    "site": "0x69FC55",
+    "strings": [
+     "sheet->price_per_area() != 0.0",
+     "RunOneNesting",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 704,
+    "site": "0x69FF57",
+    "strings": [
+     "best.nesting().sheet()",
+     "RunOneNesting",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x69FE0": [
+   {
+    "line": 150,
+    "site": "0x6A178",
+    "strings": []
+   }
+  ],
+  "0x6A0630": [
+   {
+    "line": 503,
+    "site": "0x6A08EA",
+    "strings": [
+     "sheet",
+     "DichotomicOptimize",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x6A1650": [
+   {
+    "line": 1144,
+    "site": "0x6A1D1E",
+    "strings": [
+     "free_parts.size() == remaining.size()",
+     "FillAndUpdateFreeParts",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x6A2A50": [
+   {
+    "line": 1198,
+    "site": "0x6A300F",
+    "strings": [
+     "sheet",
+     "PostOptimizeLastWithMoreOptionals",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 1172,
+    "site": "0x6A31E7",
+    "strings": [
+     "!IsZero(quantities)",
+     "GetCheapestAvailable",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x6A320": [
+   {
+    "line": 161,
+    "site": "0x6A4CD",
+    "strings": []
+   }
+  ],
+  "0x6A3C80": [
+   {
+    "line": 1272,
+    "site": "0x6A4D3F",
+    "strings": [
+     "properties.base_solution().empty()",
+     "RunOnce",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 895,
+    "site": "0x6A4E63",
+    "strings": [
+     "GetBestSolution().nestings().size() == 1u",
+     "RunOnceMono",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x6A7800": [
+   {
+    "line": 301,
+    "site": "0x6A790B",
+    "strings": [
+     "nesting.multiplicity() == 1",
+     "InsertMonoMultiplicity",
+     "..\\multi\\database.cpp"
+    ]
+   }
+  ],
+  "0x6AABC0": [
+   {
+    "line": 85,
+    "site": "0x6AAEE4",
+    "strings": []
+   },
+   {
+    "line": 86,
+    "site": "0x6AB0D2",
+    "strings": []
+   },
+   {
+    "line": 91,
+    "site": "0x6AB33F",
+    "strings": []
+   }
+  ],
+  "0x6BCF60": [
+   {
+    "line": 117,
+    "site": "0x6BD1CB",
+    "strings": []
+   }
+  ],
+  "0x6C470": [
+   {
+    "line": 46,
+    "site": "0x6C625",
+    "strings": []
+   }
+  ],
+  "0x6C78F0": [
+   {
+    "line": 272,
+    "site": "0x6C79E9",
+    "strings": [
+     "inserted",
+     "AddOrReplaceEquiv",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6C7E80": [
+   {
+    "line": 272,
+    "site": "0x6C80DA",
+    "strings": [
+     "inserted",
+     "AddOrReplaceEquiv",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6C81D0": [
+   {
+    "line": 272,
+    "site": "0x6C829E",
+    "strings": [
+     "inserted",
+     "AddOrReplaceEquiv",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6C8590": [
+   {
+    "line": 272,
+    "site": "0x6C87EA",
+    "strings": [
+     "inserted",
+     "AddOrReplaceEquiv",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6C9210": [
+   {
+    "line": 128,
+    "site": "0x6C9458",
+    "strings": [
+     "res.size() < 1e5",
+     "all_subsets",
+     "../utils/std_algo_wrappers.hpp"
+    ]
+   }
+  ],
+  "0x6D470": [
+   {
+    "line": 396,
+    "site": "0x6D813",
+    "strings": [
+     "sheet",
+     "NestAllPartsAux",
+     "..\\multi\\rectangle_nester.cpp"
+    ]
+   },
+   {
+    "line": 416,
+    "site": "0x6DADE",
+    "strings": [
+     "sheet->is_rectangular()",
+     "NestAllPartsAux",
+     "..\\multi\\rectangle_nester.cpp"
+    ]
+   },
+   {
+    "line": 449,
+    "site": "0x6DF33",
+    "strings": [
+     "availables.size() == nb_parts",
+     "NestAllPartsAux",
+     "..\\multi\\rectangle_nester.cpp"
+    ]
+   },
+   {
+    "line": 491,
+    "site": "0x6EE51",
+    "strings": []
+   },
+   {
+    "line": 491,
+    "site": "0x6F192",
+    "strings": []
+   },
+   {
+    "line": 115,
+    "site": "0x6F3BC",
+    "strings": []
+   },
+   {
+    "line": 115,
+    "site": "0x6F5BE",
+    "strings": []
+   },
+   {
+    "line": 491,
+    "site": "0x6F786",
+    "strings": []
+   },
+   {
+    "line": 115,
+    "site": "0x6FB02",
+    "strings": [
+     "tool_box"
+    ]
+   }
+  ],
+  "0x6D6270": [
+   {
+    "line": 131,
+    "site": "0x6D6319",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6D63C0": [
+   {
+    "line": 131,
+    "site": "0x6D6469",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6D6510": [
+   {
+    "line": 131,
+    "site": "0x6D65CF",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6D6A00": [
+   {
+    "line": 131,
+    "site": "0x6D6AA9",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6D6B50": [
+   {
+    "line": 131,
+    "site": "0x6D6BF9",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6D6F60": [
+   {
+    "line": 131,
+    "site": "0x6D7009",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x6D70B0": [
+   {
+    "line": 131,
+    "site": "0x6D7159",
+    "strings": [
+     "!m_elements.empty()",
+     "UpdateMaxElement",
+     "../utils/evaluated_object.hpp"
+    ]
+   }
+  ],
+  "0x722A0": [
+   {
+    "line": 56,
+    "site": "0x724C0",
+    "strings": []
+   }
+  ],
+  "0x7270": [
+   {
+    "line": 483,
+    "site": "0x737F",
+    "strings": [
+     "external_number < map->result.size()",
+     "GetRing",
+     "cns_no_fit.cpp"
+    ]
+   },
+   {
+    "line": 490,
+    "site": "0x741A",
+    "strings": [
+     "(internal_number - 1) < inners.size()",
+     "GetRing",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x73280": [
+   {
+    "line": 139,
+    "site": "0x7376F",
+    "strings": []
+   },
+   {
+    "line": 239,
+    "site": "0x73DC9",
+    "strings": []
+   },
+   {
+    "line": 243,
+    "site": "0x74DB4",
+    "strings": []
+   },
+   {
+    "line": 222,
+    "site": "0x759DB",
+    "strings": []
+   }
+  ],
+  "0x74C0": [
+   {
+    "line": 106,
+    "site": "0x7556",
+    "strings": [
+     "it != m_part_number.end()",
+     "GetPart",
+     "cns_no_fit.cpp"
+    ]
+   },
+   {
+    "line": 108,
+    "site": "0x75FA",
+    "strings": [
+     "n <= m_equivalent_problem->GetNumberOfParts()",
+     "GetPart",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x75DDF0": [
+   {
+    "line": 113,
+    "site": "0x75DF6B",
+    "strings": [
+     "!original.empty()",
+     "NewNestingFound",
+     "..\\engine\\engine.cpp"
+    ]
+   }
+  ],
+  "0x75FB0": [
+   {
+    "line": 680,
+    "site": "0x771ED",
+    "strings": []
+   }
+  ],
+  "0x760D90": [
+   {
+    "line": 241,
+    "site": "0x761977",
+    "strings": []
+   },
+   {
+    "line": 249,
+    "site": "0x762631",
+    "strings": []
+   }
+  ],
+  "0x762900": [
+   {
+    "line": 116,
+    "site": "0x76308F",
+    "strings": []
+   },
+   {
+    "line": 116,
+    "site": "0x7632E0",
+    "strings": []
+   }
+  ],
+  "0x764A80": [
+   {
+    "line": 468,
+    "site": "0x764AFC",
+    "strings": [
+     "part_number < m_common_cut_tiling_parts.size()",
+     "GetCommonCutPart",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x765460": [
+   {
+    "line": 935,
+    "site": "0x7656E9",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 956,
+    "site": "0x7658D5",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 965,
+    "site": "0x765C7C",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 986,
+    "site": "0x765E74",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 995,
+    "site": "0x766217",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 1012,
+    "site": "0x7665FE",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 1016,
+    "site": "0x766824",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 1025,
+    "site": "0x766B18",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 1004,
+    "site": "0x766D58",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 928,
+    "site": "0x766F1D",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 1050,
+    "site": "0x76747C",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 1040,
+    "site": "0x767705",
+    "strings": [
+     "!shear",
+     "ComputePartTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 100,
+    "site": "0x76787A",
+    "strings": [
+     "part",
+     "ComputeMinBoxBiTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 324,
+    "site": "0x767E60",
+    "strings": [
+     "it != mapping.end()",
+     "OppositePattern",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x768B80": [
+   {
+    "line": 474,
+    "site": "0x769167",
+    "strings": [
+     "part_number < m_tiling_parts.size()",
+     "GetPart",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x769410": [
+   {
+    "line": 783,
+    "site": "0x7694D0",
+    "strings": [
+     "cc_properties.allowed",
+     "ComputeCommonCutMonoTilings",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   },
+   {
+    "line": 468,
+    "site": "0x769D79",
+    "strings": [
+     "part_number < m_common_cut_tiling_parts.size()",
+     "GetCommonCutPart",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x76A010": [
+   {
+    "line": 474,
+    "site": "0x76A08C",
+    "strings": [
+     "part_number < m_tiling_parts.size()",
+     "GetPart",
+     "..\\tiling\\packer_cache.cpp"
+    ]
+   }
+  ],
+  "0x76B450": [
+   {
+    "line": 84,
+    "site": "0x76B615",
+    "strings": []
+   }
+  ],
+  "0x76C8D0": [
+   {
+    "line": 123,
+    "site": "0x76D723",
+    "strings": []
+   }
+  ],
+  "0x76E440": [
+   {
+    "line": 26,
+    "site": "0x76EB28",
+    "strings": []
+   },
+   {
+    "line": 26,
+    "site": "0x76ECDD",
+    "strings": []
+   }
+  ],
+  "0x76F340": [
+   {
+    "line": 125,
+    "site": "0x76F724",
+    "strings": []
+   }
+  ],
+  "0x76FA20": [
+   {
+    "line": 242,
+    "site": "0x76FE33",
+    "strings": []
+   },
+   {
+    "line": 71,
+    "site": "0x77047B",
+    "strings": []
+   }
+  ],
+  "0x770D10": [
+   {
+    "line": 410,
+    "site": "0x770E5E",
+    "strings": [
+     "prices.size() == m_problem.GetNumberOfParts()",
+     "Run",
+     "..\\tiling\\packer.cpp"
+    ]
+   },
+   {
+    "line": 411,
+    "site": "0x770F70",
+    "strings": [
+     "availables.size() == m_problem.GetNumberOfParts()",
+     "..\\tiling\\packer.cpp"
+    ]
+   },
+   {
+    "line": 19,
+    "site": "0x77122B",
+    "strings": []
+   },
+   {
+    "line": 18,
+    "site": "0x771680",
+    "strings": []
+   },
+   {
+    "line": 57,
+    "site": "0x771994",
+    "strings": []
+   },
+   {
+    "line": 71,
+    "site": "0x772507",
+    "strings": []
+   }
+  ],
+  "0x772D40": [
+   {
+    "line": 102,
+    "site": "0x773396",
+    "strings": []
+   }
+  ],
+  "0x773EB0": [
+   {
+    "line": 101,
+    "site": "0x77484B",
+    "strings": []
+   },
+   {
+    "line": 86,
+    "site": "0x774B28",
+    "strings": []
+   },
+   {
+    "line": 157,
+    "site": "0x774D05",
+    "strings": []
+   }
+  ],
+  "0x79DA0": [
+   {
+    "line": 128,
+    "site": "0x7ACD7",
+    "strings": []
+   }
+  ],
+  "0x7AFB0": [
+   {
+    "line": 222,
+    "site": "0x7BB04",
+    "strings": []
+   }
+  ],
+  "0x7B4000": [
+   {
+    "line": 173,
+    "site": "0x7B42DD",
+    "strings": [
+     "slices_width.size() > 0",
+     "BestNodes",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x7B4B60": [
+   {
+    "line": 173,
+    "site": "0x7B4E3D",
+    "strings": [
+     "slices_width.size() > 0",
+     "BestNodes",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x7B56C0": [
+   {
+    "line": 173,
+    "site": "0x7B599D",
+    "strings": [
+     "slices_width.size() > 0",
+     "BestNodes",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x7B6260": [
+   {
+    "line": 51,
+    "site": "0x7B6893",
+    "strings": []
+   }
+  ],
+  "0x7B71A0": [
+   {
+    "line": 746,
+    "site": "0x7B75F4",
+    "strings": []
+   },
+   {
+    "line": 744,
+    "site": "0x7B77A1",
+    "strings": []
+   }
+  ],
+  "0x7B8DC0": [
+   {
+    "line": 39,
+    "site": "0x7B8F9C",
+    "strings": []
+   },
+   {
+    "line": 160,
+    "site": "0x7B94A1",
+    "strings": [
+     "(n.nesteds().size() != nb_nested) || m_current.m_cache.empty()",
+     "SetNesting"
+    ]
+   }
+  ],
+  "0x7BC180": [
+   {
+    "line": 84,
+    "site": "0x7BC23B",
+    "strings": [
+     "IsLeather(p)",
+     "GetLeatherLayer",
+     "..\\structure\\border_property.hpp"
+    ]
+   }
+  ],
+  "0x7BC340": [
+   {
+    "line": 160,
+    "site": "0x7BC787",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x7BCBEA",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x7BD31D",
+    "strings": []
+   },
+   {
+    "line": 77,
+    "site": "0x7BD54D",
+    "strings": []
+   },
+   {
+    "line": 90,
+    "site": "0x7BD817",
+    "strings": []
+   },
+   {
+    "line": 90,
+    "site": "0x7BDADA",
+    "strings": []
+   },
+   {
+    "line": 70,
+    "site": "0x7BE07D",
+    "strings": []
+   },
+   {
+    "line": 232,
+    "site": "0x7BE2AA",
+    "strings": []
+   },
+   {
+    "line": 89,
+    "site": "0x7BE535",
+    "strings": []
+   },
+   {
+    "line": 89,
+    "site": "0x7BE6AE",
+    "strings": []
+   },
+   {
+    "line": 208,
+    "site": "0x7BE88A",
+    "strings": []
+   }
+  ],
+  "0x7BCC0": [
+   {
+    "line": 357,
+    "site": "0x7C02E",
+    "strings": []
+   },
+   {
+    "line": 197,
+    "site": "0x7CE91",
+    "strings": []
+   },
+   {
+    "line": 203,
+    "site": "0x7D2A4",
+    "strings": []
+   },
+   {
+    "line": 297,
+    "site": "0x7E491",
+    "strings": []
+   }
+  ],
+  "0x7BF0C0": [
+   {
+    "line": 12,
+    "site": "0x7BF12B",
+    "strings": [
+     "quality >= 0 && quality < 9",
+     "GetLayerLeatherPart",
+     "../structure/border_property.hpp"
+    ]
+   }
+  ],
+  "0x7C5B70": [
+   {
+    "line": 290,
+    "site": "0x7C5D7F",
+    "strings": [
+     "reduced",
+     "Run",
+     "..\\nesting\\algos\\postop.cpp"
+    ]
+   }
+  ],
+  "0x7C6B50": [
+   {
+    "line": 162,
+    "site": "0x7C6D37",
+    "strings": []
+   }
+  ],
+  "0x7C6E00": [
+   {
+    "line": 162,
+    "site": "0x7C6FE7",
+    "strings": []
+   }
+  ],
+  "0x7C7E70": [
+   {
+    "line": 121,
+    "site": "0x7C7F14",
+    "strings": [
+     "it != m_sheet_number.end()",
+     "GetSheet",
+     "cns_no_fit.cpp"
+    ]
+   },
+   {
+    "line": 123,
+    "site": "0x7C7FBA",
+    "strings": [
+     "n <= m_equivalent_problem->GetNumberOfSheets()",
+     "GetSheet",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x7C80B0": [
+   {
+    "line": 106,
+    "site": "0x7C833C",
+    "strings": []
+   },
+   {
+    "line": 108,
+    "site": "0x7C852D",
+    "strings": []
+   }
+  ],
+  "0x7C9D90": [
+   {
+    "line": 43,
+    "site": "0x7CA007",
+    "strings": []
+   }
+  ],
+  "0x7CA370": [
+   {
+    "line": 124,
+    "site": "0x7CA51F",
+    "strings": []
+   }
+  ],
+  "0x7D2610": [
+   {
+    "line": 109,
+    "site": "0x7D28EE",
+    "strings": [
+     "m_supervisor",
+     "ProbeCancel",
+     "..\\multi\\supervisor.cpp"
+    ]
+   }
+  ],
+  "0x7D29F0": [
+   {
+    "line": 90,
+    "site": "0x7D2B9A",
+    "strings": [
+     "m_supervisor",
+     "ProbeCancel",
+     "..\\multi\\supervisor.cpp"
+    ]
+   }
+  ],
+  "0x7D3D10": [
+   {
+    "line": 233,
+    "site": "0x7D3DBA",
+    "strings": [
+     "nesting_part_index < m_parts.size()",
+     "GetNestingPart",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x7D3E50": [
+   {
+    "line": 212,
+    "site": "0x7D3F1C",
+    "strings": [
+     "index >= 0 && index < m_parts.size()",
+     "GetStructureModule",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   },
+   {
+    "line": 210,
+    "site": "0x7D3FAD",
+    "strings": [
+     "!IsCluster(p)",
+     "GetStructureModule",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x7D4050": [
+   {
+    "line": 219,
+    "site": "0x7D410A",
+    "strings": [
+     "index >= 0 && index < m_parts.size()",
+     "IsCluster",
+     "..\\multi\\nesting_context.cpp"
+    ]
+   }
+  ],
+  "0x7D42F0": [
+   {
+    "line": 318,
+    "site": "0x7D43CE",
+    "strings": [
+     "IsBoostCompatible()",
+     "GetBoostPrices",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 323,
+    "site": "0x7D4642",
+    "strings": [
+     "nested_part.part()->number() < selected.size()",
+     "GetBoostPrices",
+     "..\\multi\\worker.cpp"
+    ]
+   },
+   {
+    "line": 322,
+    "site": "0x7D4782",
+    "strings": [
+     "nested_part.part()",
+     "GetBoostPrices",
+     "..\\multi\\worker.cpp"
+    ]
+   }
+  ],
+  "0x7D7200": [
+   {
+    "line": 450,
+    "site": "0x7D7702",
+    "strings": [
+     "biggest_sheet->price()",
+     "BuildAndSolveLp",
+     "..\\multi\\database.cpp"
+    ]
+   }
+  ],
+  "0x7D7950": [
+   {
+    "line": 35,
+    "site": "0x7D79EA",
+    "strings": [
+     "value_and_in.first",
+     "get",
+     "../utils/continuous_index_map.hpp"
+    ]
+   }
+  ],
+  "0x7E6010": [
+   {
+    "line": 125,
+    "site": "0x7E72A2",
+    "strings": []
+   }
+  ],
+  "0x7E9240": [
+   {
+    "line": 327,
+    "site": "0x7E93A3",
+    "strings": []
+   }
+  ],
+  "0x7E9580": [
+   {
+    "line": 125,
+    "site": "0x7E978A",
+    "strings": []
+   },
+   {
+    "line": 63,
+    "site": "0x7EA1DF",
+    "strings": []
+   },
+   {
+    "line": 49,
+    "site": "0x7EAF83",
+    "strings": []
+   }
+  ],
+  "0x7EB320": [
+   {
+    "line": 296,
+    "site": "0x7EB49A",
+    "strings": []
+   }
+  ],
+  "0x7EB5E0": [
+   {
+    "line": 102,
+    "site": "0x7EB8C4",
+    "strings": []
+   }
+  ],
+  "0x7EBFC0": [
+   {
+    "line": 106,
+    "site": "0x7EC16F",
+    "strings": []
+   }
+  ],
+  "0x7EC210": [
+   {
+    "line": 128,
+    "site": "0x7EC3CB",
+    "strings": []
+   }
+  ],
+  "0x7EE7B0": [
+   {
+    "line": 391,
+    "site": "0x7EEAD0",
+    "strings": [
+     "!best.empty()",
+     "NewLocalAngleOptimize",
+     "..\\tiling\\optimizer.cpp"
+    ]
+   },
+   {
+    "line": 398,
+    "site": "0x7EEC5B",
+    "strings": [
+     "pattern",
+     "NewLocalAngleOptimize",
+     "..\\tiling\\optimizer.cpp"
+    ]
+   }
+  ],
+  "0x7F0F00": [
+   {
+    "line": 228,
+    "site": "0x7F1159",
+    "strings": []
+   }
+  ],
+  "0x7F240": [
+   {
+    "line": 103,
+    "site": "0x7FE04",
+    "strings": []
+   }
+  ],
+  "0x7F3090": [
+   {
+    "line": 40,
+    "site": "0x7F334C",
+    "strings": []
+   },
+   {
+    "line": 52,
+    "site": "0x7F3ACF",
+    "strings": []
+   }
+  ],
+  "0x81C370": [
+   {
+    "line": 193,
+    "site": "0x81C4A7",
+    "strings": [
+     " ",
+     "eval.m_c >= 0 && eval.m_c <= max_surface * 1.05",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 194,
+    "site": "0x81C540",
+    "strings": [
+     "surface_step >= 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 199,
+    "site": "0x81C5E7",
+    "strings": [
+     "eval.m_c == 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x81C690": [
+   {
+    "line": 193,
+    "site": "0x81C7C7",
+    "strings": [
+     " ",
+     "eval.m_c >= 0 && eval.m_c <= max_surface * 1.05",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 194,
+    "site": "0x81C860",
+    "strings": [
+     "surface_step >= 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 199,
+    "site": "0x81C907",
+    "strings": [
+     "eval.m_c == 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x81C9B0": [
+   {
+    "line": 193,
+    "site": "0x81CAE7",
+    "strings": [
+     " ",
+     "eval.m_c >= 0 && eval.m_c <= max_surface * 1.05",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 194,
+    "site": "0x81CB80",
+    "strings": [
+     "surface_step >= 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 199,
+    "site": "0x81CC27",
+    "strings": [
+     "eval.m_c == 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x81CCD0": [
+   {
+    "line": 193,
+    "site": "0x81CE07",
+    "strings": [
+     " ",
+     "eval.m_c >= 0 && eval.m_c <= max_surface * 1.05",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 194,
+    "site": "0x81CEA0",
+    "strings": [
+     "surface_step >= 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   },
+   {
+    "line": 199,
+    "site": "0x81CF47",
+    "strings": [
+     "eval.m_c == 0",
+     "ComputeNodeIndex",
+     "..\\nesting\\algos\\bucket_manager.hpp"
+    ]
+   }
+  ],
+  "0x81E330": [
+   {
+    "line": 85,
+    "site": "0x81E4BF",
+    "strings": []
+   },
+   {
+    "line": 84,
+    "site": "0x81E63D",
+    "strings": []
+   },
+   {
+    "line": 83,
+    "site": "0x81E785",
+    "strings": []
+   }
+  ],
+  "0x81E820": [
+   {
+    "line": 85,
+    "site": "0x81E9AF",
+    "strings": []
+   },
+   {
+    "line": 84,
+    "site": "0x81EB2D",
+    "strings": []
+   },
+   {
+    "line": 83,
+    "site": "0x81EC75",
+    "strings": []
+   }
+  ],
+  "0x85D0": [
+   {
+    "line": 402,
+    "site": "0x88D8",
+    "strings": [
+     "geometry",
+     "DrawSVG",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x86D70": [
+   {
+    "line": 117,
+    "site": "0x87150",
+    "strings": []
+   },
+   {
+    "line": 121,
+    "site": "0x874DD",
+    "strings": []
+   }
+  ],
+  "0x86D9E0": [
+   {
+    "line": 105,
+    "site": "0x86E2D9",
+    "strings": []
+   },
+   {
+    "line": 105,
+    "site": "0x86E5D7",
+    "strings": []
+   }
+  ],
+  "0x8B280": [
+   {
+    "line": 220,
+    "site": "0x8B652",
+    "strings": [
+     "(nx < 1000) && (ny < 1000)",
+     "FindAllWindows",
+     "..\\multi\\marker.cpp"
+    ]
+   }
+  ],
+  "0x8BA70": [
+   {
+    "line": 351,
+    "site": "0x8BF02",
+    "strings": [
+     "problem.mark_properties().size > 0.0",
+     "FindAllMarks",
+     "..\\multi\\marker.cpp"
+    ]
+   }
+  ],
+  "0x8D4500": [
+   {
+    "line": 174,
+    "site": "0x8D46FA",
+    "strings": [
+     "m_state && m_problem && m_observer",
+     "CompositeObserver",
+     "..\\engine\\engine.cpp"
+    ]
+   }
+  ],
+  "0x8DB320": [
+   {
+    "line": 58,
+    "site": "0x8DB503",
+    "strings": []
+   }
+  ],
+  "0x8DB620": [
+   {
+    "line": 58,
+    "site": "0x8DB868",
+    "strings": []
+   }
+  ],
+  "0x8DED0": [
+   {
+    "line": 551,
+    "site": "0x8E084",
+    "strings": []
+   }
+  ],
+  "0x8E1F0": [
+   {
+    "line": 203,
+    "site": "0x8E7BA",
+    "strings": []
+   },
+   {
+    "line": 193,
+    "site": "0x8EA96",
+    "strings": []
+   }
+  ],
+  "0x8E70": [
+   {
+    "line": 474,
+    "site": "0x8EF4",
+    "strings": [
+     "NoFitGetNumberOfInternalHoles",
+     "external_number < n",
+     "CNS_NoFitGetNumberOfHoles",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x8FF70": [
+   {
+    "line": 147,
+    "site": "0x9065F",
+    "strings": []
+   },
+   {
+    "line": 308,
+    "site": "0x909CE",
+    "strings": []
+   },
+   {
+    "line": 149,
+    "site": "0x90D03",
+    "strings": []
+   }
+  ],
+  "0x913E0": [
+   {
+    "line": 426,
+    "site": "0x93D78",
+    "strings": []
+   }
+  ],
+  "0x91C0": [
+   {
+    "line": 514,
+    "site": "0x929A",
+    "strings": [
+     "point_number < ring.size()",
+     "CNS_NoFitGetPoint",
+     "cns_no_fit.cpp"
+    ]
+   }
+  ],
+  "0x93FD50": [
+   {
+    "line": 47,
+    "site": "0x9400A3",
+    "strings": []
+   },
+   {
+    "line": 46,
+    "site": "0x94021E",
+    "strings": []
+   },
+   {
+    "line": 47,
+    "site": "0x9404C5",
+    "strings": []
+   },
+   {
+    "line": 46,
+    "site": "0x940657",
+    "strings": []
+   },
+   {
+    "line": 47,
+    "site": "0x94084C",
+    "strings": []
+   },
+   {
+    "line": 46,
+    "site": "0x9409D8",
+    "strings": []
+   }
+  ],
+  "0x940AE0": [
+   {
+    "line": 47,
+    "site": "0x940E4C",
+    "strings": []
+   },
+   {
+    "line": 47,
+    "site": "0x941240",
+    "strings": []
+   },
+   {
+    "line": 46,
+    "site": "0x9413CB",
+    "strings": []
+   },
+   {
+    "line": 47,
+    "site": "0x9415B9",
+    "strings": []
+   },
+   {
+    "line": 47,
+    "site": "0x941786",
+    "strings": []
+   }
+  ],
+  "0x96970": [
+   {
+    "line": 85,
+    "site": "0x972E9",
+    "strings": []
+   }
+  ],
+  "0x99360": [
+   {
+    "line": 27,
+    "site": "0x9967E",
+    "strings": []
+   }
+  ],
+  "0x9985D0": [
+   {
+    "line": 102,
+    "site": "0x998725",
+    "strings": [
+     "n1.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   },
+   {
+    "line": 103,
+    "site": "0x9987C6",
+    "strings": [
+     "n2.Valid()",
+     "operator+",
+     "..\\nesting\\algos\\algo_helpers.hpp"
+    ]
+   }
+  ],
+  "0x99AD0": [
+   {
+    "line": 228,
+    "site": "0x9A367",
+    "strings": []
+   },
+   {
+    "line": 220,
+    "site": "0x9A556",
+    "strings": []
+   }
+  ],
+  "0x9DE40": [
+   {
+    "line": 309,
+    "site": "0x9E100",
+    "strings": []
+   }
+  ],
+  "0x9E1D0": [
+   {
+    "line": 426,
+    "site": "0x9E431",
+    "strings": []
+   }
+  ],
+  "0x9E660": [
+   {
+    "line": 22,
+    "site": "0x9EB2A",
+    "strings": []
+   }
+  ],
+  "0x9ED20": [
+   {
+    "line": 179,
+    "site": "0x9F0C6",
+    "strings": []
+   },
+   {
+    "line": 178,
+    "site": "0x9F8C7",
+    "strings": []
+   },
+   {
+    "line": 177,
+    "site": "0x9FAD5",
+    "strings": []
+   },
+   {
+    "line": 152,
+    "site": "0x9FCD3",
+    "strings": []
+   },
+   {
+    "line": 14,
+    "site": "0xA15A1",
+    "strings": []
+   },
+   {
+    "line": 84,
+    "site": "0xA1745",
+    "strings": []
+   }
+  ],
+  "0xA2160": [
+   {
+    "line": 15,
+    "site": "0xA2325",
+    "strings": []
+   }
+  ],
+  "0xA2480": [
+   {
+    "line": 92,
+    "site": "0xA26DD",
+    "strings": []
+   },
+   {
+    "line": 93,
+    "site": "0xA2962",
+    "strings": []
+   },
+   {
+    "line": 14,
+    "site": "0xA2E09",
+    "strings": []
+   }
+  ],
+  "0xA35F0": [
+   {
+    "line": 44,
+    "site": "0xA37AA",
+    "strings": []
+   }
+  ],
+  "0xA3900": [
+   {
+    "line": 271,
+    "site": "0xA3D5A",
+    "strings": []
+   }
+  ],
+  "0xAA250": [
+   {
+    "line": 313,
+    "site": "0xAA6EB",
+    "strings": []
+   },
+   {
+    "line": 327,
+    "site": "0xAA897",
+    "strings": []
+   }
+  ],
+  "0xABEC0": [
+   {
+    "line": 64,
+    "site": "0xACDF5",
+    "strings": []
+   }
+  ],
+  "0xAD630": [
+   {
+    "line": 30,
+    "site": "0xAD76D",
+    "strings": []
+   }
+  ],
+  "0xAD810": [
+   {
+    "line": 30,
+    "site": "0xAD96D",
+    "strings": []
+   }
+  ],
+  "0xADAD0": [
+   {
+    "line": 61,
+    "site": "0xADC7E",
+    "strings": []
+   }
+  ],
+  "0xADDF0": [
+   {
+    "line": 76,
+    "site": "0xADF95",
+    "strings": []
+   }
+  ],
+  "0xAE040": [
+   {
+    "line": 84,
+    "site": "0xAE29E",
+    "strings": []
+   }
+  ],
+  "0xAE340": [
+   {
+    "line": 103,
+    "site": "0xAE53E",
+    "strings": []
+   }
+  ],
+  "0xAE6B0": [
+   {
+    "line": 30,
+    "site": "0xAE7FD",
+    "strings": []
+   }
+  ],
+  "0xAF7D0": [
+   {
+    "line": 148,
+    "site": "0xAFC9E",
+    "strings": []
+   }
+  ],
+  "0xAFD60": [
+   {
+    "line": 168,
+    "site": "0xAFF27",
+    "strings": []
+   }
+  ],
+  "0xB13D0": [
+   {
+    "line": 81,
+    "site": "0xB2FDC",
+    "strings": []
+   }
+  ],
+  "0xB3AE0": [
+   {
+    "line": 59,
+    "site": "0xB422B",
+    "strings": []
+   }
+  ],
+  "0xB44D0": [
+   {
+    "line": 30,
+    "site": "0xB4648",
+    "strings": []
+   }
+  ],
+  "0xB46F0": [
+   {
+    "line": 30,
+    "site": "0xB49C7",
+    "strings": []
+   }
+  ],
+  "0xB4A70": [
+   {
+    "line": 30,
+    "site": "0xB4C88",
+    "strings": []
+   }
+  ],
+  "0xB600": [
+   {
+    "line": 316,
+    "site": "0xB6AA",
+    "strings": [
+     "GetSheet",
+     "number <= order->sheets.size()",
+     "CNS_GetSheet",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xB750": [
+   {
+    "line": 338,
+    "site": "0xB83B",
+    "strings": [
+     "min_x && min_y && max_x && max_y",
+     "CNS_GetNestingBoundingBox",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xBA50": [
+   {
+    "line": 772,
+    "site": "0xBBE2",
+    "strings": [
+     "common_cut_number < evaluation.common_cut_segments.size()",
+     "CNS_GetCommonCut",
+     "cns.cpp"
+    ]
+   },
+   {
+    "line": 770,
+    "site": "0xBC7E",
+    "strings": [
+     "nesting->nesting",
+     "CNS_GetCommonCut",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xBD90": [
+   {
+    "line": 795,
+    "site": "0xBE3A",
+    "strings": [
+     "GetNestingDimensions",
+     "y",
+     "CNS_GetNestingDimensions",
+     "cns.cpp"
+    ]
+   },
+   {
+    "line": 794,
+    "site": "0xBECB",
+    "strings": [
+     "x",
+     "CNS_GetNestingDimensions",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xCF20": [
+   {
+    "line": 193,
+    "site": "0xCFBA",
+    "strings": [
+     "SetInterpartGap",
+     "(gap >= 0.0) && \"Negative part gap unsupported\"",
+     "CNS_SetInterpartGap",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xD460": [
+   {
+    "line": 359,
+    "site": "0xD507",
+    "strings": [
+     "GetNestedPart",
+     "nested_part_number <= nested_parts.size()",
+     "CNS_GetNestedPart",
+     "cns.cpp"
+    ]
+   },
+   {
+    "line": 364,
+    "site": "0xD5CF",
+    "strings": [
+     "part_number <= order->parts.size()",
+     "CNS_GetNestedPart",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xD710": [
+   {
+    "line": 745,
+    "site": "0xD7D5",
+    "strings": [
+     "// GetNumberOfCommonCuts ",
+     "cns_nesting->nesting",
+     "CNS_GetNumberOfCommonCuts",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xD870": [
+   {
+    "line": 902,
+    "site": "0xD918",
+    "strings": [
+     "GetPartTorchInfos",
+     "part_index < nesting->nesting->nested_parts().size()",
+     "CNS_GetPartTorchInfos",
+     "cns.cpp"
+    ]
+   },
+   {
+    "line": 911,
+    "site": "0xD9E6",
+    "strings": [
+     "part_index < nesting->nesting->multitorch_infos().m_infos.size()",
+     "CNS_GetPartTorchInfos",
+     "cns.cpp"
+    ]
+   },
+   {
+    "line": 901,
+    "site": "0xDAFA",
+    "strings": [
+     "nesting->nesting",
+     "CNS_GetPartTorchInfos",
+     "cns.cpp"
+    ]
+   }
+  ],
+  "0xF7C0": [
+   {
+    "line": 947,
+    "site": "0xF9FD",
+    "strings": [
+     "group",
+     "CNS_AddPartToSuggestedPartsGrouping",
+     "cns.cpp"
+    ]
+   }
+  ]
+ }
+}
