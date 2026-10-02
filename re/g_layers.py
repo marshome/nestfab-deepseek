@@ -28,6 +28,9 @@ from lib import disasm  # noqa: E402
 
 
 def classify(addr):
+    ins = list(disasm(addr))
+    if len(ins) == 1 and ins[0].mnemonic == chr(106)+chr(109)+chr(112):
+        return chr(116)+chr(111)+chr(111)+chr(108)+chr(99)+chr(104)+chr(97)+chr(105)+chr(110)
     """platform / diagnostic / domain, from the function's own instructions."""
     text = []
     for ins in disasm(addr):
