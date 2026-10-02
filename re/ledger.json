@@ -2806,6 +2806,22 @@
    "round": 700,
    "subject": "0x4E7E50-is-a-copy-not-a-score",
    "witness": "0x4E7E5F through 0x4E7EE6 copy [r8]..[r8+0x58] into [rcx]; 0x4E7F01 calls the allocator 0x998500; 0x4E7F41 calls 0x63F2F8 per element; 0x4E7F49 adds 0x90 to both pointers"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "width",
+   "predicate": "the container inside Tiling::Pattern has 0x90 byte elements, and the class itself is at least 0x60 bytes with its container words at +0x48, +0x50 and +0x58",
+   "round": 701,
+   "subject": "Pattern-element-stride-is-0x90",
+   "witness": "0x4E7E5F through 0x4E7EE6 copy [r8]..[r8+0x58] into [rcx]; 0x4E7F49 and 0x4E7F50 both add 0x90 while walking end - begin; Tiling::Pattern is not declared in lcns/"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the sequence sar rax,4 then imul rax,0x8E38E38E38E38E39 yields FIVE TIMES the element count, not the count, so it is not a divide by 9",
+   "round": 701,
+   "subject": "the-0x8E38E38E-magic-is-five-times-the-count",
+   "witness": "the constant is 5 times the reciprocal 0x1C71C71C71C71C7 of nine, and over the first 5000 multiples of 0x90 the product divided by the count is 5.00000 every time; an earlier note in this same round called it a divide by 9 and was wrong"
   }
  ]
 }

@@ -109,6 +109,24 @@ inline constexpr const char* kTilingEvaluator = "N6Tiling9EvaluatorE";
 //     Multi::SplitNode, Multi::TerminalNode                      ->  Multi::Node
 //     Multi::CompactCanceller, NoFitMapCanceller, RCompactCanceller,
 //     SupervisorCanceller, Tiling::WarpCanceller                 ->  Utils::Canceller
+//
+// **AND ONE OF THESE HAS A MEASURED LAYOUT EVEN THOUGH IT IS NOT DECLARED: `Tiling::Pattern`.** Its COPY CONSTRUCTOR is 0x4E7E50, 539 bytes, and it is
+// the routine SIX OF THE EIGHT EVALUATORS carry at vtable slot 3:
+//
+//     0x4E7E5F  mov rax, [r8]  ...  through [r8 + 0x58] into [rcx]     ; 0x60 BYTES OF THE OBJECT ARE COPIED FLAT
+//     0x4E7ECB  mov rax, rbx / sar rax, 4 / imul rax, 0x8E38E38E38E38E39 ; rbx = end - begin, and after these three the value is FIVE TIMES the
+//                                                                        ;   ELEMENT COUNT -- see the measurement below
+//     0x4E7F01  call 0x998500                                            ; the allocator
+//     0x4E7F41  call 0x63F2F8                                            ; ONE CALL PER ELEMENT
+//     0x4E7F49  add rbx, 0x90  /  0x4E7F50 add r9, 0x90                   ; THE ELEMENT STRIDE IS 0x90
+//
+// **THE STRIDE IS THE SOLID FACT AND THE ARITHMETIC IS NOT.** `add rbx, 0x90` appears twice, at 0x4E7F49 and 0x4E7F50, and the loop walks
+// `end - begin` bytes in those steps, so **an element of the container at +0x48/+0x50/+0x58 is 0x90 bytes**.
+//
+// **AND I FIRST READ THE MAGIC AS A DIVIDE BY SOMETHING IT IS NOT.** `sar rax, 4` then `imul rax, 0x8E38E38E38E38E39` looked like the compiler's
+// division by 9, and the constant is 5 times the reciprocal `0x1C71C71C71C71C7` of nine -- **so the product is FIVE TIMES the element count rather
+// than the count.** Measured over the first 5000 multiples of 0x90 the product divided by the count is 5.00000 every time. **What the code does with
+// a value five times the count is NOT established here**, so this note says the measurement and stops rather than naming the arithmetic.
 inline constexpr const char* kTilingPattern = "N6Tiling7PatternE";
 inline constexpr const char* kTilingPart = "N6Tiling4PartE";
 inline constexpr const char* kTilingCandidater = "N6Tiling10CandidaterE";
