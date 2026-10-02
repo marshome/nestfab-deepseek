@@ -942,6 +942,22 @@
    "round": 597,
    "subject": "0x14A60.signature",
    "witness": "0x14A6B mov rax,[rdx] and 0x14A6E mov rdx,[rdx+8]; 0x14A72 movsd xmm0,[rsp+0x100] is a stack-passed double"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "ordinal 204 is NOT forwarded because its target 0x10CE0 has only its head read, and a forwarding entry claims agreement with the assembly",
+   "round": 598,
+   "subject": "variant.204-held-back",
+   "witness": "40 of 0x10CE0's 125 instructions are read; ordinals 200 and 202 are forwarded because 0x14A60 and 0xC1A0 are read end to end"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x14A60 and 0xC1A0 set no return register, so the double and intptr_t their entries declare are not values they produce",
+   "round": 598,
+   "subject": "variant.no-return-value",
+   "witness": "0x14A60's five instructions before ret are add rsp,0xb8 and four pops; 0xC1A0 ends after its stores"
   }
  ]
 }

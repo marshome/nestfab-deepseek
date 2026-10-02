@@ -45,6 +45,11 @@ void addExternalBoundaryToPartVariant(void* order, int partIndex, void* argument
  *  logs its name, and calls 0x14A60 with that pair and two more arguments. */
 void addOpenCuttingPathToPartVariant(void* object, const void* pair, int flag, void* argument, double extra);
 
+/** RE 0xC1A0 (ordinals 202/203, CNS_SetPartVariantAuthorizations): 241 bytes, a 24-byte move assignment into order+0x188 that
+ *  keeps the old first word and tests it for null. The signature is (order, int, int, double): the flag is in r8d and the double in
+ *  xmm3, both saved before anything else touches them. */
+void setPartVariantAuthorizations(void* order, int first, int second, double value);
+
 /** RE 0xDD90 (ordinal 144): byte at +0x40 becomes the truth value of the argument. */
 void setFillLastNestingStrategy(void* object, int value);
 /** RE 0xDE50 (ordinal 166): byte at +0x1C. */

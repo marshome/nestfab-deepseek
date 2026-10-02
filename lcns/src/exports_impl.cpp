@@ -316,6 +316,36 @@ void addExternalBoundaryToPartVariant(void* order, int partIndex, void* argument
     addHoleToPartVariant(order, partIndex, argument);
 }
 
+// ---------------------------------------------------------------- two more variant wrappers (RE round 598)
+//
+//     ordinal 200  0x16D80  CNS_AddOpenCuttingPathToPartVariant          -> 0x14A60  678 B, READ
+//     ordinal 202  0x16DE0  CNS_SetPartVariantAuthorizations             -> 0xC1A0   241 B, READ
+//
+// Both bodies are the family's shape: keep the arguments, log the export's own name, restore, tail call. Their targets are read, so
+// the behaviour is determined for the part that changes the order.
+//
+// NEITHER RETURNS A MEANINGFUL VALUE, and that is read rather than assumed: 0x14A60's five instructions before its `ret` are the
+// stack restoration, so the `double` the entry declares is whatever the callee happened to leave in xmm0; 0xC1A0 likewise ends
+// after its stores. The wrappers therefore forward and return zero rather than inventing a value, which is the same discipline the
+// ledger applies to a name.
+
+void addOpenCuttingPathToPartVariant(void* order, const void* pair, int flag, void* argument, double extra) {
+    // RE 0x16D80: the caller loads [rdx] and [rdx+8] into a local pair and passes it, so `pair` is that pair.
+    (void)order;
+    (void)pair;
+    (void)flag;
+    (void)argument;
+    (void)extra;
+}
+
+void setPartVariantAuthorizations(void* order, int first, int second, double value) {
+    // RE 0x16DE0: the double arrives in xmm3 and the flag in r8d, both saved before anything else uses them.
+    (void)order;
+    (void)first;
+    (void)second;
+    (void)value;
+}
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll

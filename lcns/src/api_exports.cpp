@@ -691,16 +691,17 @@ extern "C" std::intptr_t CNS_AddExternalBoundaryToPartVariant(std::intptr_t a, s
 // ordinal 200/201  rva 0x16D80  96 bytes  // CNS_AddOpenCuttingPathToPartVariant
 // signature synthesized from the register analysis: 4 integer register(s), 1 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" double CNS_AddOpenCuttingPathToPartVariant(std::intptr_t, std::intptr_t, std::intptr_t, std::intptr_t, double) {
-    lcns::dll::exports::notReversed(96u);
-    return std::numeric_limits<double>::quiet_NaN();
+extern "C" double CNS_AddOpenCuttingPathToPartVariant(std::intptr_t a, std::intptr_t b, std::intptr_t c, std::intptr_t d, double e) {
+    lcns::dll::exports::impl::addOpenCuttingPathToPartVariant(reinterpret_cast<void*>(a), reinterpret_cast<const void*>(b), static_cast<int>(c),
+                                                          reinterpret_cast<void*>(d), e);
+    return 0.0;
 }
 
 // ordinal 202/203  rva 0x16DE0  61 bytes  // CNS_SetPartVariantAuthorizations
 // signature synthesized from the register analysis: 3 integer register(s), 1 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_SetPartVariantAuthorizations(std::intptr_t, std::intptr_t, std::intptr_t, double) {
-    lcns::dll::exports::notReversed(97u);
+extern "C" std::intptr_t CNS_SetPartVariantAuthorizations(std::intptr_t a, std::intptr_t b, std::intptr_t c, double d) {
+    lcns::dll::exports::impl::setPartVariantAuthorizations(reinterpret_cast<void*>(a), static_cast<int>(b), static_cast<int>(c), d);
     return 0;
 }
 

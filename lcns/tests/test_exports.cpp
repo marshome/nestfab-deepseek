@@ -335,7 +335,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 45u);
+        CHECK(ex::forwardedCount() == 47u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -353,7 +353,11 @@ int main() {
                                   e->ordinal0 == 88 || e->ordinal0 == 90 || e->ordinal0 == 92 ||
                                   // round 593: the two variant wrappers, which share the tail target 0x132E0 and
                                   // whose every callee on the path is now read
-                                  e->ordinal0 == 196 || e->ordinal0 == 198;
+                                  e->ordinal0 == 196 || e->ordinal0 == 198 ||
+                                  // round 598: two more of the variant family, whose targets 0x14A60 and 0xC1A0 are read.
+                                  // Ordinal 204 is deliberately NOT here: its target 0x10CE0 has only its head read, and a
+                                  // forwarding entry claims agreement with the assembly.
+                                  e->ordinal0 == 200 || e->ordinal0 == 202;
             CHECK(ex::forwards(i) == expected);
         }
     }

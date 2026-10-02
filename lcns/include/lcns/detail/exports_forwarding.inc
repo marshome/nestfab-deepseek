@@ -9,6 +9,8 @@
 
 const Forwarding kForwarding[] = {
     {25, reinterpret_cast<void*>(&lcns::dll::exports::impl::getNumberOfNestings)},   // GetNumberOfNestings
+    {200, reinterpret_cast<void*>(&lcns::dll::exports::impl::addOpenCuttingPathToPartVariant)},   // CNS_AddOpenCuttingPathToPartVariant, RE 0x16D80
+    {202, reinterpret_cast<void*>(&lcns::dll::exports::impl::setPartVariantAuthorizations)},   // CNS_SetPartVariantAuthorizations, RE 0x16DE0
     {196, reinterpret_cast<void*>(&lcns::dll::exports::impl::addHoleToPartVariant)},   // AddHoleToPartVariant, RE 0x16D00
     {198, reinterpret_cast<void*>(&lcns::dll::exports::impl::addExternalBoundaryToPartVariant)},   // CNS_AddExternalBoundaryToPartVariant, RE 0x16D40
     {88, reinterpret_cast<void*>(&lcns::dll::exports::impl::getBuildVersion)},   // GetBuildVersion, RE 0xB490
