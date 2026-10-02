@@ -174,6 +174,30 @@
    "round": 546,
    "subject": "Order.refactor",
    "witness": "44 fields over nester.cpp, engine.cpp and eight test files; deliberately not done in the round that found it"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the order has parts and sheets containers",
+   "round": 547,
+   "subject": "Order.members",
+   "witness": "the module's own assertion at 0x9AC698: m_equivalent_problem->GetNumberOfParts() == order->parts.size(), and 0x9AC6D8 for sheets"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "assertion strings spell out member names and their receivers, a naming channel this project had not read",
+   "round": 547,
+   "subject": "member-names.channel",
+   "witness": "0x9ACE50 multitorch_infos().m_infos, 0x9AED48 m_implementation->m_strategist, 0x9AF2B0 m_parts and m_clusters"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "none of Order's 24 unique field names appears in the recovered registry or in the image as a string",
+   "round": 547,
+   "subject": "Order.names",
+   "witness": "24 searched, 0 found; multitorch appears only inside the library's multitorch_infos"
   }
  ]
 }
