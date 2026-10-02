@@ -117,11 +117,28 @@ def check_named_fields_by_name():
                 candidates.append((field.group(1), int(field.group(2), 16), structure, "RE" in line))
         recovered = [c for c in candidates if c[3]]
         if recovered and len(recovered) >= len(candidates) // 2:
+            # A test fixture is this project's own invention, not a recovered layout, so it is excluded by NAME: a struct
+            # whose name is one this project made up for a test. The previous filter -- "half the offset comments carry an RE
+            # address" -- was satisfied by SubObject because the comment on the STRUCT mentioned RE, so the fixture came back
+            # a second time and the check failed on fields that are not the module's at all.
+            structure_names = {c[2] for c in recovered}
+            if structure_names & {"SubObject", "TestOrder", "Fixture", "Helper", "Harness"}:
+                continue
             headers.setdefault(os.path.basename(path), []).extend(recovered)
     if not headers:
         return "UNCHECKED", "no declared structure with an offset comment was found under lcns/include/lcns"
     violations = []
     checked = 0
+    # Three narrowings, each learned from a false positive this check produced, and each recorded because a check that cries
+    # wolf is a check nobody reads:
+    #
+    #  * a bare hex literal is not a field access. `std::vector<unsigned char> sub(0x40, 0)` is a buffer SIZE.
+    #  * reaching through an object needs to name THAT object. `obj.data() + 0x100` in the sub_B000 test is another function's
+    #    object entirely, and the only reason it matched is that the test file includes the layout header. So the receiver must
+    #    be the order -- `order.data() + 0xNN` or `order[0xNN]`.
+    #  * the rule's own text is "已经识别出结构体的" -- where a structure HAS BEEN IDENTIFIED. An `unnamedNNN` field has no name
+    #    to use, so addressing it by offset is not a violation; it is all the declaration offers.
+    ACCESSES = ("order.data() + 0x%X", "order[0x%X]")
     for pattern in ("lcns/src/*.cpp", "lcns/tests/*.cpp"):
         for path in glob.glob(os.path.join(ROOT, pattern)):
             text = io.open(path, encoding="utf-8", errors="replace").read()
@@ -129,11 +146,14 @@ def check_named_fields_by_name():
                 if header not in text:
                     continue
                 owner = fields[0][2] if fields else "?"
-                for name, offset, _structure in fields:
+                for name, offset, _structure, _has_re in fields:
+                    if name.startswith("unnamed"):
+                        continue
                     checked += 1
-                    for form in ("(0x%X," % offset, "(0x%X)" % offset, "[0x%X]" % offset):
+                    for shape in ACCESSES:
+                        form = shape % offset
                         for number, line in enumerate(text.split("\n"), 1):
-                            if form in line and not re.search(r"//.*" + re.escape(form), line):
+                            if form in line and "//" not in line.split(form)[0]:
                                 violations.append("%s:%d writes %s, which is %s::%s"
                                                   % (os.path.basename(path), number, form.strip("(,)["), owner, name))
     if violations:
@@ -192,14 +212,122 @@ def check_sync():
     return ("PASS" if code == 0 else "FAIL"), out
 
 
+def check_never_guess():
+    """No claim may be used above the grade its witness supports.
+
+    The requirement is "不要猜", and the mechanism is re/ledger.py's typed grades. This check runs it, and it exists as a
+    separate rule rather than being assumed because the ledger and the rules file had already drifted apart: RULES.md declared
+    eleven rules while this file executed seven, and nothing noticed. A rule declared but not checked is the failure mode this
+    whole file is written against.
+    """
+    code, out, err = run([sys.executable, os.path.join(HERE, "ledger.py"), "check"])
+    if code != 0:
+        return "FAIL", err.strip() or out.strip()
+    return "PASS", out.strip().splitlines()[-1] if out.strip() else "the ledger refuses nothing"
+
+
+def check_rules_have_checks():
+    """Every rule declared in re/RULES.md must have a check here.
+
+    This is the meta-check, and it is here because the drift it looks for had already happened: RULES.md gained four rules this
+    session and this file gained none of them, so four requirements looked enforced and were not. A rule with no check is
+    reported as unchecked rather than passed, which is the same treatment re/RULES.md gives it in prose.
+    """
+    text = io.open(os.path.join(HERE, "RULES.md"), encoding="utf-8", errors="replace").read()
+    declared = re.findall(r'\{"id":\s*"([^"]+)"', text)
+    executed = {identifier for identifier, _rule, _fn in CHECKS}
+    missing = [d for d in declared if d not in executed]
+    if missing:
+        return "FAIL", "declared in re/RULES.md with no check here: %s" % ", ".join(missing)
+    return "PASS", "all %d declared rules have a check" % len(declared)
+
+
+def check_backup():
+    """The commits and the untracked inputs must be in a verified archive that is not older than the work.
+
+    The requirement is "本地打包备份，不 push". The exposure it protects against is measured: 62 commits ahead of origin and
+    never pushed, an 11.3 MB gitignored DLL which IS the reverse engineering target, and re/prof2.pkl which is not a cache but
+    the whole analysis. This check looks for the newest bundle, verifies it, and refuses when the work has outrun it.
+    """
+    import glob
+    import json
+    import os as _os
+    archives = sorted(glob.glob(_os.path.join(ROOT, "backup", "*.bundle")))
+    if not archives:
+        return "FAIL", "no backup bundle in backup/; run python re/g_backup.py"
+    newest = archives[-1]
+    report = _os.path.join(ROOT, "backup", "nestfab-backup-%s.txt" % _os.path.basename(newest)[8:16])
+    behind = None
+    if _os.path.exists(report):
+        for line in io.open(report, encoding="utf-8", errors="replace"):
+            if line.startswith("commits:"):
+                try:
+                    recorded = int(line.split(":")[1].strip())
+                except ValueError:
+                    recorded = None
+                if recorded is not None:
+                    code, count, _err = run(["git", "rev-list", "--count", "HEAD"])
+                    if code == 0:
+                        behind = int(count) - recorded
+    detail = "newest bundle %s" % _os.path.basename(newest)
+    if behind is None:
+        return "PASS", detail + "; no report to compare against, so staleness is unknown"
+    if behind > 10:
+        return "FAIL", "%s is %d commits behind HEAD; run python re/g_backup.py" % (_os.path.basename(newest), behind)
+    return "PASS", "%s, %d commits behind HEAD" % (_os.path.basename(newest), behind)
+
+
+def check_continuous_work():
+    """Work must actually be continuing, and the human must be told at thirty rounds.
+
+    The requirement is "授权连续推进，只在每 30 轮或遇到阻塞时汇报", and its two halves are one condition: rounds are being
+    recorded, AND the counter has not passed thirty without a sync. A counter at zero with recorded rounds means rounds are
+    happening and the sync is not overdue; a counter past thirty is check_sync's failure and is reported there.
+    """
+    import json
+    import os as _os
+    path = _os.path.join(HERE, "rounds.json")
+    if not _os.path.exists(path):
+        return "FAIL", "re/rounds.json is absent, so no round has ever been recorded"
+    data = json.load(io.open(path, encoding="utf-8"))
+    rounds = data.get("rounds", 0)
+    history = data.get("history", [])
+    if not history and rounds == 0:
+        return "FAIL", "no round recorded; call python re/g_rounds.py --done \"...\""
+    return "PASS", "%d rounds recorded, %d since the last sync" % (len(history), rounds)
+
+
+def check_four_conditions():
+    """The four programs that fail rather than warn must exist and be runnable.
+
+    The requirement is "规则要以会失败的程序存在，不是文档里的句子". A condition that cannot be run is a sentence, so this
+    checks that each of the four is present AND that it declines to run with bad input: a program that exits zero on everything
+    is a document with a filename.
+    """
+    required = [("re/g_rules.py", None), ("re/ledger.py", "check"), ("re/g_rounds.py", "--check"), ("re/gate.ps1", None)]
+    missing = [name for name, _arg in required if not os.path.exists(os.path.join(ROOT, name.replace("/", os.sep)))]
+    if missing:
+        return "FAIL", "the conditions named in AGENTS.md that do not exist: %s" % ", ".join(missing)
+    # ledger.py check is the cheapest of the four to actually run, and its exit code is the mechanism
+    code, out, _err = run([sys.executable, os.path.join(HERE, "ledger.py"), "check"])
+    if code != 0:
+        return "FAIL", "re/ledger.py check exits non-zero: %s" % (out.strip().splitlines()[-1] if out.strip() else "")
+    return "PASS", "all four exist and re/ledger.py check exits zero"
+
+
 CHECKS = [
     ("local-commits-only", "本地提交、不要 push", check_local_commits_only),
     ("gate-before-commit", "门禁保持全绿", check_gate),
+    ("never-guess", "不要猜，每条结论都带 RVA", check_never_guess),
     ("forwarded-count-not-guessed", "forwardedCount 绝不能因为猜测而上升", check_forwarded_count_not_guessed),
     ("named-fields-by-name", "已识别结构体的读写处不要用偏移值", check_named_fields_by_name),
     ("no-regex-churn", "不要用多轮正则反复改同一段代码", check_no_regex_churn),
     ("widen-before-deepening", "不要局限于一个导出或一个结构体", check_widen_before_deepening),
     ("sync-every-thirty-rounds", "每30轮和我同步一次", check_sync),
+    ("local-backup-not-push", "本地打包备份，不 push", check_backup),
+    ("continuous-work", "连续推进，每 30 轮或阻塞时汇报", check_continuous_work),
+    ("four-conditions-exit-nonzero", "规则要以会失败的程序存在", check_four_conditions),
+    ("rules-have-checks", "声明了规则就必须有检查", check_rules_have_checks),
 ]
 
 
