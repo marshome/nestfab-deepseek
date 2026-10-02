@@ -742,6 +742,22 @@
    "round": 586,
    "subject": "variant.offsets",
    "witness": "+0x50 is where the ledger PROVED CommonCutProperties is embedded; +0x208 and +0x68 are constructor-written fields of the 0x2C0 object; so the variant path operates on the launch order itself"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x23BF0 is 246 bytes with 27 callers, more than twenty of them export bodies, so it is the highest-leverage unread function in the module",
+   "round": 587,
+   "subject": "0x23BF0.leverage",
+   "witness": "callers include 0x101C0, 0x10240, 0x132E0, 0x13390, 0x13410, 0x13610, 0x13800, 0x13A50, 0x14190, 0x14210, 0x14D10, 0x157A0, 0x16420, 0x16610, 0x167C0, 0x16970, 0x18100, 0x195E0, 0x19720, 0x19850, 0x19DE0, 0x19F40, 0x1A0A0, 0x1A210 and itself"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a closure measured by reachability reported 596 functions and 121762 bytes for an export that needs ONE 246 byte callee",
+   "round": 587,
+   "subject": "closure.defect-again",
+   "witness": "the closure of 0x132E0 contains 388 unknown functions because it reaches into the whole program; re/g_export_sizes.py's per-export count of direct callees gave the right answer, and this is the second time the two measures have disagreed"
   }
  ]
 }
