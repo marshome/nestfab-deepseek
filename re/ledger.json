@@ -111,6 +111,30 @@
    "round": 543,
    "subject": "rcx.type",
    "witness": "101, 2599, 315 and 9 functions write 1, 2, 4 and 16 bytes at +0x10 through rcx; only their types separate them"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "18614 functions carry a size in the profile",
+   "round": 544,
+   "subject": "Module.functions",
+   "witness": "re/g_inventory.py over re/profile.json"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "251 named, 355 with a class, 342 typable, 359 mentioned in C++",
+   "round": 544,
+   "subject": "Module.coverage",
+   "witness": "re/INVENTORY.md; the WRITTEN count is an upper bound because an RE comment can name a data address"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "the bottleneck is that only methods have a first-argument type, and 355 of 18614 functions are methods",
+   "round": 544,
+   "subject": "type-propagation",
+   "witness": "a callee's first argument is the caller's class when the call is through a vtable; nothing propagates that yet"
   }
  ]
 }

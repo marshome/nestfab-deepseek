@@ -55,4 +55,13 @@ Stage 'coverage' { & $py (Join-Path $root 're\g_coverage.py') }
 Stage 'acceptance' { & $py (Join-Path $root 're\g_acceptance.py') }
 
 Write-Host 'GATE GREEN'
+# The verdict goes to a file so re/g_rules.py can check "门禁保持全绿" without paying two minutes for it. A rule checker that
+# is slow is a rule checker nobody runs; a rule checker that reads a stale file is worse, so the header hash is written too and
+# g_rules.py reports UNCHECKED when the file is older than the newest commit.
+$gateStamp = (git -C $root log -1 --format='%H' 2>$null)
+Set-Content -Path (Join-Path $build 'gate_result.txt') -Encoding utf8 -Value @(
+    "GATE GREEN",
+    "at $((Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'))",
+    "head $gateStamp"
+)
 exit 0
