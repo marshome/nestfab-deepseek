@@ -2334,6 +2334,30 @@
    "round": 672,
    "subject": "unverified-parameters-are-guesses",
    "witness": "FlipNester took a double flipPartsRatio and stored ratio_; the constructor takes no such argument and has no such member"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::FilterNester holds an inner nester at +0x18, an index at +0x10 and a Mersenne Twister at +0x20 seeded with 1",
+   "round": 673,
+   "subject": "FilterNester.is-a-delegating-filter",
+   "witness": "0x4B4449 loads [rcx+0x18] and 0x4B4452 calls its vtable slot 2; 0x4B4455 stores the index at +0x10; 0xB3A87 seeds with 1 and 0xB3AB0 fills 624 words at +0x20"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "FilterNester's vtable slot 2 at 0xB43B0 is a RESEED taking an int, not an estimate; the seed is the argument plus one and the index is forwarded to the inner nester",
+   "round": 673,
+   "subject": "FilterNester.slot2-is-a-reseed",
+   "witness": "0xB43B9 lea r8d,[rdx+1], then the 624 iteration seeding loop, then 0xB4449 through 0xB4455 storing the index and calling the inner object's slot 2"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a vtable slot's NUMBER says nothing about what the method does, so a declaration that names a slot by position is a guess",
+   "round": 673,
+   "subject": "slot-position-says-nothing-about-meaning",
+   "witness": "the class declaration called FilterNester's slot 2 an estimate for several rounds; reading 0xB43B0 showed it is the reseed that seeds the generator and forwards to the inner nester"
   }
  ]
 }

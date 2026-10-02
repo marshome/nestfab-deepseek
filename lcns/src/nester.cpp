@@ -496,23 +496,10 @@ LCNS_SUBSTITUTED(strategy.flip);
 // FlipNester::run now lives in lcns/src/flip_nester.cpp, next to the constructor's instructions. The version that
 // stood here took a `double ratio_` and delegated to NestingNester, neither of which the module's FlipNester does.
 
-double FilterNester::estimate(const SolveContext& ctx) const {
-    // cheap lower bound: part area / sheet area
-    const Order& o = *ctx.order;
-    return o.totalSheetArea() > 0.0 ? o.totalPartArea() / o.totalSheetArea() : 1.0;
-}
+// FilterNester's estimate and run now live in lcns/src/filter_nester.cpp, beside the constructor's instructions.
 
 LCNS_SUBSTITUTED(strategy.filter);
-Solution FilterNester::run(SolveContext& ctx) {
-    // prune when the instance cannot possibly fit, then delegate
-    if (estimate(ctx) > 1.0 + 1e-9) {
-        Solution s;
-        s.valid = false;
-        return s;
-    }
-    NestingNester base;
-    return base.run(ctx);
-}
+// FilterNester's estimate and run now live in lcns/src/filter_nester.cpp, beside the constructor's instructions.
 
 LCNS_SUBSTITUTED(strategy.nofill);
 Solution NoFillNester::run(SolveContext& ctx) {

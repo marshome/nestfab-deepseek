@@ -216,6 +216,7 @@ struct BeamParams {
 int width = 8;               // NOT recovered from the binary -> tunable
     bool distinctAngle = true;   // RE key "beam_distinct_angle"
     double frequencyRatio = 1.0; // RE key "beam_frequency_ratio"
+    double frequencyRatioSecondary = 0.0;   // RE 0xB3B62: a double at +0x178, eight bytes past the one above
     int maxAngleSteps = 24;
 };
 
@@ -379,14 +380,36 @@ public:
     static double score(const Solution& solution);
 };
 
-class FilterNester : public Nester {           // RE 0xA3B4F0, Run = 0xB3AE0
+// RE 0xA3B4F0, Run = 0xB3AE0. **THE CLASS DELEGATES TO AN INNER NESTER AT +0x18**, holds the seed it was reset with at +0x10, and carries a
+// MERSENNE TWISTER at +0x20 whose seed is the constant 1 at construction. Its vtable's slot 2 is the RESEED at 0xB43B0, not an estimate. See
+// lcns/src/filter_nester.cpp for the instructions.
+class FilterNester : public Nester {
 public:
+    FilterNester();
 
     const char* name() const override { return "FilterNester"; }
     const char* tracePrefix() const override { return kTraceFilter; }   // RE verbatim
-    double estimate(const SolveContext&) const override;
     Solution run(SolveContext&) override;
+
+    /** RE 0xB43B0, vtable slot 2: re-seed the generator with `index + 1` and forward the same index to the inner nester. The module calls
+     *  the inner object's slot 2 THROUGH ITS VTABLE, so the inner object implements this same interface. */
+    virtual void reset(int index);
+
+    /** RE 0x609E20: a Bernoulli trial that advances the generator it is given. */
+    bool draw(double probability);
+
+private:
+    /** RE 0xB4449: the object at +0x18 that actually nests, reached through its own vtable. */
+    FilterNester* inner_ = nullptr;
+    int seed_ = 0;         // RE 0xB4455: mov dword [rbx + 0x10], esi
+    Mt19937 rng_;          // RE 0xB3AB0: the state at +0x20, and RE 0xB3AC1 the index at +0x9E0
+
+    void seedMt(std::uint32_t seed);   // the recurrence the constructor and the reseed both perform
 };
+
+/** RE 0x97A090, 1599 bytes, SEVENTEEN callers: it takes the generator and a double and produces a double. A free function, because other
+ *  nesters reach it too and a member would claim it as one class's own. */
+double filterScore(const SolveContext& ctx, Mt19937& rng);
 
 class NoFillNester : public Nester {           // RE 0xA3B530, Run = 0x7F240
 public:

@@ -162,6 +162,7 @@ struct Nesting {
 struct Solution {
     std::vector<Nesting> nestings;
     bool valid = false;
+    double filterScore = 0.0;      // RE 0xB3B6A: the double 0x97A090 produces, which FilterNester's Run stores
 
     double usedSurface() const;
     double sheetArea() const;
