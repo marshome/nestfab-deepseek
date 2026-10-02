@@ -462,6 +462,30 @@
    "round": 566,
    "subject": "order.destructor.decomposition",
    "witness": "re/g_dtor_report.py: 22 calls; 0x9984B0 x16, 0x92B340 x1 (605 B, 147 callers), 0x92B940 x1 (597 B, 118 callers), 0x92BBA0 x1 (687 B), 0x92ECB0 x1 (791 B, implemented), 0x531F20 x1 (71 B), 0x63F6D0 x1 a thunk"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a recursive teardown is recognisable by exactly ONE self-call plus four or more allocator frees plus a +0x18 chain",
+   "round": 567,
+   "subject": "teardown.signature",
+   "witness": "re/g_teardowns.py finds 137; the order's four member destructors all match: 0x92B340 self x1 free x18, 0x92B940 self x1 free x18, 0x92BBA0 self x1 free x21, and 0x92ECB0 is the flat variant with free x27 and no self call"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "eight destructors share the identical signature 1495 bytes, 45 frees, 2 targets, 27 chain reads -- they are template instantiations of one body",
+   "round": 567,
+   "subject": "teardown.templates",
+   "witness": "0x941E20, 0x939E00, 0x938000, 0x929FA0, 0x9285E0, 0x7CB0, 0x76D0 and one more; identical size and identical counts across all eight"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "0x237A00 is 6636 bytes with 68 frees, matching the closure size LAUNCH_LOCAL_COMPUTATION.md records for the objective",
+   "round": 567,
+   "subject": "teardown.237A00",
+   "witness": "re/g_teardowns.py: the largest teardown in the module; 6636 is exactly the byte count re/LAUNCH_LOCAL_COMPUTATION.md gives for the LaunchLocalComputation closure"
   }
  ]
 }
