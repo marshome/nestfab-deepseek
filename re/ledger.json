@@ -378,6 +378,11 @@
    "predicate": "the project classified 0x64AEA0 as a logger with no effect on a return value, and that classification was neither read nor verified for all 54 callers",
    "round": 560,
    "subject": "logger.classification-unchecked",
+   "superseded_by": {
+    "grade": "INSTRUCTION",
+    "round": 624,
+    "why": "the classification was decided by instruction for 46 of 53 callers with no counterexample, so the gap this claim recorded is closed for those and listed for the rest"
+   },
    "witness": "one caller checked in full: 0xB470 ignores the return. The claim in re/CATEGORIES.md stands for that caller and is unverified for the rest"
   },
   {
@@ -1383,7 +1388,7 @@
   {
    "grade": "INSTRUCTION",
    "kind": "offset",
-   "predicate": "no caller of 0x64AEA0 reads its return value, verified by instruction for 46 of 53 callers with 7 still undecided and listed by address",
+   "predicate": "the project classified 0x64AEA0 as a logger with no effect on a return value, and that classification was neither read nor verified for all 54 callers",
    "round": 624,
    "subject": "logger.no-caller-reads-it",
    "witness": "re/g_logger_rax.py reproduces 0xB470, the one caller decided by hand, and finds 0 readers; 30 callers are confirmed by an intervening call or a jmp and 7 remain inconclusive"
@@ -1395,6 +1400,14 @@
    "round": 624,
    "subject": "tooling.pessimistic-mislabelling",
    "witness": "re/g_logger_rax.py reported 'another call first' and 'no read before jmp' as unknown when both prove the value was not read, discarding thirty proofs; this project's tools have more often over-reported, so the failure direction is worth noting"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "logger.does-not-preserve-rax is about the callee writing rax and logger.no-caller-reads-it is about its callers reading it, so neither supersedes the other",
+   "round": 625,
+   "subject": "logger.claims-are-complementary",
+   "witness": "the two facts are about two different things and are complementary rather than redundant; telling them apart needed only reading the subjects"
   }
  ]
 }
