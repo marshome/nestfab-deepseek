@@ -10,6 +10,10 @@ So this file is append-only and short. One line per decision, one line per requi
 to it and to `re/RULES.md` when a requirement arrives, so recording is a command rather than an intention.
 
 ## The requirements, in the human's words, with the round they were given
+| 548 | 本地打包备份，不 push：用 git bundle 加输入归档，origin 保持不动 |
+| 548 | 授权连续推进，只在每 30 轮或遇到阻塞时汇报 |
+
+
 
 | round | requirement |
 |---|---|
@@ -30,6 +34,10 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 
 ## The decisions, and the evidence for each
 | 546 | Order and LaunchingOrderLayout are duplicates, and the module's own stores decide which is right at each disputed offset | re/g_adjudicate.py: 20 offsets to the layout, 1 to Order, and that one was a layout defect already fixed |
+| 548 | the human authorised continuous work with a report every thirty rounds or on a block | round 548, recorded in re/DECISIONS.md and as a rule in re/RULES.md |
+| 548 | backups are a verified local bundle plus a tar of the inputs, never a push | re/g_backup.py produced a 7.23 MB bundle of 552 commits and a 25.03 MB tar, and a test clone from the bundle reproduced HEAD |
+
+
 
 
 | round | decision | evidence |

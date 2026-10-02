@@ -105,3 +105,6 @@ re/g_*.py
 !re/g_add_batch10.py
 !re/g_add_batch11.py
 !re/g_add_batch12.py
+
+# the local backup archives: large, and the bundle contains the whole history already
+/backup/

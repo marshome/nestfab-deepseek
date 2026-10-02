@@ -67,6 +67,24 @@ feeling of compliance.
 ]
 ```
 
+{"id": "local-backup-not-push",
+  "rule": "本地打包备份，不 push：用 git bundle 加输入归档，origin 保持不动",
+  "check": "re/g_backup.py writes a verified bundle and a tar of the DLL, the pickles and the re/ tooling, and reports the sha256 of each; the run prints that it did not push",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round 548"}
+
+{"id": "continuous-work",
+  "rule": "授权连续推进，只在每 30 轮或遇到阻塞时汇报",
+  "check": "re/g_rounds.py --check exits 4 at thirty rounds without a sync",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round 548"}
+
+ {"id": "four-conditions-exit-nonzero",
+  "rule": "规则要以会失败的程序存在，不是文档里的句子",
+  "check": "re/g_rules.py, re/ledger.py check, re/g_rounds.py --check and re/gate.ps1 all exit non-zero when broken",
+  "where": "the four programs named in AGENTS.md",
+  "since": "round 548"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
