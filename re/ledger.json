@@ -422,6 +422,38 @@
    "round": 562,
    "subject": "dump.imports-lost",
    "witness": "the import directory at rva 0xB42274 has OriginalFirstThunk == 0 for all 8 DLLs, so no import name table survives; the FirstThunk slots hold the ORIGINAL machine's runtime addresses (0x7FF9..., and libwinpthread at 0x649472B0)"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the orchestration after the logging preamble is: geometry, serialise, release",
+   "round": 563,
+   "subject": "LaunchLocalComputation.outline",
+   "witness": "call sequence at 0x2AB0: 0x1EE50 ComputeSheetGeometryRowMode (15305 B) at 0x2CA2, then 0x5070E0 the JSON serialiser (7663 B) at 0x2CAD, then 0x5007C0 the order destructor (716 B) at 0x2CB9, with 0x92ECB0 called EIGHT times (0x2DE5, 0x2E57, 0x2FBF, 0x3027 and four more)"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x92ECB0 is called eight times, once per container the order owns",
+   "round": 563,
+   "subject": "LaunchLocalComputation.releases",
+   "witness": "re/g_ordinal.py-independent: the eight call sites are 0x2DE5, 0x2E57, 0x2FBF, 0x3027 and four more, each preceded by a 0x9984B0 pair (the allocator's free), so the body is dominated by teardown"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x92ECB0 is an eight-level linked-list teardown, not a flat container release: each level dereferences [+0x18] on the previous, tests it, and branches to its own cleanup",
+   "round": 564,
+   "subject": "0x92ECB0.shape",
+   "witness": "791 bytes; the chain of tests is at 0x92ECE0, 0x92ECEE, 0x92ED00, 0x92ED0D, 0x92ED1A, 0x92ED27, 0x92ED34, 0x92ED41, each je to a distinct cleanup at 0x92EF60, 0x92EF13, 0x92EECB, 0x92EE8A, 0x92EE4E, 0x92EE12, 0x92EDD6, 0x92ED9A"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the eight calls in LaunchLocalComputation are eight SEPARATE calls to one teardown, not eight containers",
+   "round": 564,
+   "subject": "0x92ECB0.sites-in-target",
+   "witness": "0x2DE5, 0x2E57, 0x2FBF, 0x3027 and four more, each preceded by 0x9984B0 the allocator free"
   }
  ]
 }
