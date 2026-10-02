@@ -96,3 +96,12 @@ re/g_*.py
 !re/g_callers.py
 !re/g_domain_closure.py
 !re/gate.ps1
+# The batch recorders. Each one is the evidence for a batch: the addresses, the bytes, and the reason each was classified
+# as it was, in the file rather than in a message that scrolls away. g_add_batch7.py and later are tracked for that reason.
+!re/g_note_round529.py
+!re/g_add_batch7.py
+!re/g_add_batch8.py
+!re/g_add_batch9.py
+!re/g_add_batch10.py
+!re/g_add_batch11.py
+!re/g_add_batch12.py
