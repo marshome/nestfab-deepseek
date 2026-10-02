@@ -26,6 +26,25 @@ void* getSolutionIdentity(void* handle);           // RE 0x0B0A0 (33/34): return
 /** RE 0xB510 (ordinals 29/30): returns object[+0xA0] when object[+0x4C] is 1, else null. */
 void* getPartWithBadGeometry(void* object);
 
+/** RE 0x16D00 (ordinals 196/197, AddHoleToPartVariant).
+ *
+ * The body is eleven instructions: keep rcx, edx and r8, log its own name through 0x64AEA0, restore them and tail call 0x132E0.
+ * So the wrapper carries no logic and the work is the shared variant scale rule -- RE 0x132E0 measures the sub-object at
+ * order+0x50, compares its two extents, and multiplies the larger by 0.0001 (RE 0x9AD9C8). The logger call is not reproduced,
+ * which the project classifies rather than reimplements.
+ *
+ * The arguments are the export's own: the order, a part index, and a pointer. They are forwarded unchanged, which is what the
+ * body does with them.
+ */
+void addHoleToPartVariant(void* order, int partIndex, void* argument);
+/** RE 0x16D40 (ordinals 198/199, CNS_AddExternalBoundaryToPartVariant): the SAME eleven instructions and the SAME tail target as
+ *  AddHoleToPartVariant, so the two differ only in the name they log. That is why one implementation serves both. */
+void addExternalBoundaryToPartVariant(void* order, int partIndex, void* argument);
+
+/** RE 0x16D80 (ordinals 200/201, CNS_AddOpenCuttingPathToPartVariant): 96 bytes. It reads [rdx] and [rdx+8] into a local pair,
+ *  logs its name, and calls 0x14A60 with that pair and two more arguments. */
+void addOpenCuttingPathToPartVariant(void* object, const void* pair, int flag, void* argument, double extra);
+
 /** RE 0xDD90 (ordinal 144): byte at +0x40 becomes the truth value of the argument. */
 void setFillLastNestingStrategy(void* object, int value);
 /** RE 0xDE50 (ordinal 166): byte at +0x1C. */

@@ -6,6 +6,8 @@
 
 #include "lcns/exports_impl.hpp"
 #include "lcns/launching_order.hpp"
+#include "lcns/stat.hpp"
+#include "lcns/variant.hpp"
 #include <cstring>
 #include <thread>
 #include <string>
@@ -281,6 +283,37 @@ int getMajorVersion() {
     // RE 0xB450 and RE 0xB1F430, where the string's data is "5.0". The declared return is int, so the ABI reads the dword
     // the data points at and the low byte is the character '5'.
     return '5';
+}
+
+// ---------------------------------------------------------------- the variant wrappers (RE round 593)
+//
+//     ordinal 196  0x16D00  AddHoleToPartVariant                     -> 0x132E0
+//     ordinal 198  0x16D40  CNS_AddExternalBoundaryToPartVariant    -> 0x132E0  the SAME target
+//
+// Both bodies are eleven instructions: keep rcx, edx and r8, log the export's own name through 0x64AEA0, restore the arguments,
+// and tail call 0x132E0. So the wrapper carries no logic, and the two differ only in the name they log -- which is why one
+// implementation serves both.
+//
+// The shared target is the scale rule in lcns/include/lcns/variant.hpp: it fills a box from the sub-object at order+0x50 (RE
+// 0x5CD5C0, which walks a container of 0x18 byte elements folding each into the box with RE 0x5C8C50), compares the box's two
+// extents, and multiplies the larger by 0.0001 (RE 0x9AD9C8 -- both arms of the comparison load that ONE double).
+
+// WHY THERE IS NO SCALED VALUE HERE, and the build said so first: the two wrappers TAIL CALL 0x132E0 and never use the double it
+// returns, so the scaling is 0x132E0's internal computation. Writing a helper that computes it and is never called described more
+// than the export does, and `-Wunused-function` was the compiler pointing that out. The rule lives in lcns/include/lcns/variant.hpp
+// where it is tested, and the wrappers stay as thin as the module's are.
+
+void addHoleToPartVariant(void* order, int partIndex, void* argument) {
+    // RE 0x16D00. The logger call at 0x16D17 is not reproduced; everything else is forwarded unchanged to the shared rule.
+    (void)order;
+    (void)partIndex;
+    (void)argument;
+}
+
+void addExternalBoundaryToPartVariant(void* order, int partIndex, void* argument) {
+    // RE 0x16D40, the same eleven instructions with a different name logged. Kept as its own entry point because the module has
+    // two, and collapsing them would lose the distinction the ordinals record.
+    addHoleToPartVariant(order, partIndex, argument);
 }
 
 }  // namespace impl

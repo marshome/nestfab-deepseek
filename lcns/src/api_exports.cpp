@@ -669,16 +669,22 @@ extern "C" std::intptr_t AddPartVariantToPart(std::intptr_t, std::intptr_t, std:
 // ordinal 196/197  rva 0x16D00  49 bytes  // AddHoleToPartVariant
 // signature synthesized from the register analysis: 3 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t AddHoleToPartVariant(std::intptr_t, std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(94u);
+extern "C" std::intptr_t AddHoleToPartVariant(std::intptr_t a, std::intptr_t b, std::intptr_t c) {
+    // RE 0x16D00, ordinal 196/197: eleven instructions that keep the three arguments, log the export's own name and tail
+    // call 0x132E0. The logger call is not reproduced; the rest is forwarded unchanged.
+    lcns::dll::exports::impl::addHoleToPartVariant(reinterpret_cast<void*>(a), static_cast<int>(b),
+                                                  reinterpret_cast<void*>(c));
     return 0;
 }
 
 // ordinal 198/199  rva 0x16D40  49 bytes  // CNS_AddExternalBoundaryToPartVariant
 // signature synthesized from the register analysis: 3 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_AddExternalBoundaryToPartVariant(std::intptr_t, std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(95u);
+extern "C" std::intptr_t CNS_AddExternalBoundaryToPartVariant(std::intptr_t a, std::intptr_t b, std::intptr_t c) {
+    // RE 0x16D40, ordinal 198/199: the SAME eleven instructions and the same tail target, so this delegates rather than
+    // repeating its twin. Kept as its own entry point because the module has two and the ordinals record the distinction.
+    lcns::dll::exports::impl::addExternalBoundaryToPartVariant(reinterpret_cast<void*>(a), static_cast<int>(b),
+                                                               reinterpret_cast<void*>(c));
     return 0;
 }
 

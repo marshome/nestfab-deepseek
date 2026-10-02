@@ -838,6 +838,22 @@
    "round": 592,
    "subject": "displacement-not-address",
    "witness": "the previous round recorded 0x99A679 and 0x99A63E as two scale constants, which made the branch look substantive; the correction: the branch selects which extent is multiplied, not the factor"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the two variant wrappers tail call 0x132E0 and never use the double it returns, so the scaling is internal to that routine",
+   "round": 593,
+   "subject": "variant.fire-and-forget",
+   "witness": "the build rejected an unused helper that computed the scaled extent; -Wunused-function was right because no caller consumes it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a script reported nothing to wire while the entry points still called notReversed, so the forwarding table claimed two implementations that did not exist",
+   "round": 593,
+   "subject": "tooling.script-hid-a-defect",
+   "witness": "re/g_impl_variant.py looked for the target name inside a body that does not mention it; re/g_wire_variant.py fixed it by line and printed the before and after"
   }
  ]
 }

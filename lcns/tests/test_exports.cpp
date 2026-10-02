@@ -335,7 +335,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 43u);
+        CHECK(ex::forwardedCount() == 45u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -350,7 +350,10 @@ int main() {
                                   // round 557: the build metadata, whose whole body is a logger call and one std::string data
                                   // pointer. They were never blocked -- the 256 function closure they appeared to carry was the
                                   // LOGGER's reachable graph, not their own need.
-                                  e->ordinal0 == 88 || e->ordinal0 == 90 || e->ordinal0 == 92;
+                                  e->ordinal0 == 88 || e->ordinal0 == 90 || e->ordinal0 == 92 ||
+                                  // round 593: the two variant wrappers, which share the tail target 0x132E0 and
+                                  // whose every callee on the path is now read
+                                  e->ordinal0 == 196 || e->ordinal0 == 198;
             CHECK(ex::forwards(i) == expected);
         }
     }
