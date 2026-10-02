@@ -122,6 +122,12 @@ feeling of compliance.
   "where": "re/g_conflict.py, re/g_stale.py",
   "since": "round 572, refined in 573"},
 
+{"id": "30",
+  "rule": "不用每轮都停下来汇报，跑满 30 轮再停",
+  "check": "re/g_rounds.py --check exits 4 at thirty rounds; re/g_selfcheck.py refuses a report that is not due",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round 578"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

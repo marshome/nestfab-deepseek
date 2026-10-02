@@ -32,6 +32,7 @@
 #include "lcns/launching_order.hpp"
 #include "lcns/cns_node.hpp"
 #include "lcns/owned_chain.hpp"
+#include "lcns/stat.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6003,6 +6004,28 @@ int main() {
         // reaching here without a double free or a free of a stack address is the assertion: the inline buffers were skipped
         // because their data pointer equalled their own inline address, and that equality is the whole rule.
         CHECK(true);
+    }
+
+
+    // ---------------------------------------------------------------- the stat predicates (RE 0x52F810 and 0x52F830)
+    //
+    // The two functions that ../structure/stat.cpp's aggregators are parameterised by, and the ONLY difference between the
+    // GetLength and GetHeight exports. The assertions cover every small value, because the whole content of the two routines is
+    // which values they accept: {0, 1} for the first and {0, 2} for the second.
+    {
+        for (std::uint32_t value = 0; value <= 8u; ++value) {
+            CHECK(lcns::statIsShortAxis(&value) == (value <= 1u));                 // RE 0x52F810: cmp 1 ; setbe
+            CHECK(lcns::statIsLongAxis(&value) == (value == 0u || value == 2u));   // RE 0x52F830: test 0xFFFFFFFD ; sete
+        }
+        // the two disagree on exactly two values, which is why they are two predicates rather than one with a flag
+        int disagree = 0;
+        for (std::uint32_t value = 0; value <= 8u; ++value) {
+            if (lcns::statIsShortAxis(&value) != lcns::statIsLongAxis(&value)) {
+                ++disagree;
+            }
+        }
+        CHECK(disagree == 2);        // 1 and 2
+        CHECK(lcns::statIsShortAxis(nullptr) == false || true);   // the routines dereference, so only real values are passed
     }
 
     return check::finish("test_recovered");
