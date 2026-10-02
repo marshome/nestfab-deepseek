@@ -86,6 +86,10 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x8F9220,  # takes the distance between [rcx] and [rcx+8], divides by 8, tests against 0x1FFFFFFFFFFFFFFF, doubles and allocates with an 8 byte minimum: the vector of pointers growth
+    0x929FA0,  # recurses six levels into [node+0x18], frees a contiguous array of 0x30 byte slots and the member at +0x28, then the node: the destructor of the tree's node type
+    0x9308C0,  # walks the 0x48 byte doubly linked nodes through +0x10 and +0x18, frees the inline string at +0x20 only when it is not the node's own +0x30, and frees each node: the node tree release
+    0x9302C0,  # allocates 0x48 byte nodes, moves the string at +0x20 into the new node's inline buffer at +0x30, copies the type dword at +0, and recurses the forward chain: the node tree copy
     0x1BE70,  # the lazy initialiser of a module static: a global byte guard, __cxa_guard_acquire at 0x998DA0, the construction through 0x65A530 and the object address returned; the shape round 427 found in 0xAB20
     0x1B170,  # calls 0x634BE0 to format into a stack buffer and 0x1B070 to construct a string from it: the vsnprintf formatting layer
     0x634BE0,  # bounds the length, calls 0x63B140 into a caller buffer and terminates it: the bounded string construction
