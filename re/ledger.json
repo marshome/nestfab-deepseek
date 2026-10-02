@@ -646,6 +646,22 @@
    "round": 576,
    "subject": "export.aggregator-shape",
    "witness": "e.g. 0x5297C0: call 0x51c020 / mov rdi,[rax] / cmp [rax+8],rdi / je to the empty-container exit; 0x526160 the same with call 0x51d0c0, and both have ZERO direct calls so every call they make is indirect"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the length and height aggregators live in ../structure/stat.cpp, at assertion lines 154 and 176",
+   "round": 577,
+   "subject": "stat.cpp",
+   "witness": "decoded from the byte stores before the assert: movabs 0x6174735c65727574 is 'ture\\\\stat', mov dword 0x632e7374 is 'ts.c', mov word 0x7070 is 'pp', giving ../structure\\\\stat.cpp; the assert argument edx is 0x9A then 0xB0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "GetLength and GetHeight are one algorithm parameterised in ONE place: the same seven calls, then 0x52F810 for length and 0x52F830 for height",
+   "round": 577,
+   "subject": "stat.aggregators",
+   "witness": "0x526160 and 0x5266A0 call 0x51D0C0 x2, 0x524EE0, 0x5C8C50, 0x51D2F0, 0x4F9200, 0x5CD800 identically, then differ only at the last: 0x52F810 vs 0x52F830, 0x20 apart; both then call 0x910BA0 x2, 0x60A620 and 0x9984B0 x3"
   }
  ]
 }
