@@ -1,0 +1,100 @@
+{
+ "claims": [
+  {
+   "grade": "CONSTRUCTOR",
+   "kind": "layout",
+   "predicate": "0x2C0 bytes",
+   "round": 538,
+   "subject": "LaunchingOrder.size",
+   "witness": "RE 0x14620 allocates 0x2C0 through operator new at 0x998500"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "field at +0x240",
+   "round": 537,
+   "subject": "LaunchingOrder.automaticStop",
+   "witness": "export SetAutomaticStop (140) stores at RE 0xE0D9; RE 0x22BC1 reads it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "width",
+   "predicate": "double at +0x010",
+   "round": 540,
+   "subject": "LaunchingOrder.multiplicityPreference",
+   "witness": "RE 0xD255 and RE 0x14668 are movsd"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "dword at +0x00C",
+   "round": 537,
+   "subject": "LaunchingOrder.origin",
+   "witness": "RE 0xD119, SetOrigin (86)"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the string at +0x20 is owned iff it is not the node's own +0x30",
+   "round": 530,
+   "subject": "CnsNode.ownership",
+   "witness": "RE 0x9308C0 compares before freeing"
+  },
+  {
+   "grade": "DIFFERENTIAL",
+   "kind": "equivalence",
+   "predicate": "0x9302C0 and 0x9308C0 are recovered",
+   "round": 530,
+   "subject": "CnsNode.copy_and_release",
+   "witness": "lcns/tests/test_recovered.cpp runs both halves of the ownership rule"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "75 classes of this module",
+   "round": 538,
+   "subject": "Module.classes",
+   "witness": "re/vtables.json filtered on the MANGLED name, not the decoded one"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "0xA3BB30",
+   "round": 539,
+   "subject": "Multi::RowNester.vtable",
+   "witness": "re/vtables.json slot 5 is 0x913E0, the Run body in re/STRATEGY_METHODS.md"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "a sub-object with fields +0x10..+0x38",
+   "round": 539,
+   "subject": "parent+0x40.subobject",
+   "witness": "15 functions derive its address with lea; no constructor read"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "begins +0x10 +0x18 +0x20",
+   "round": 539,
+   "subject": "element50.layout",
+   "witness": "57 functions compute a 0x50 byte element address; several element registers per body"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "the keys name the solution's fields",
+   "round": 535,
+   "subject": "ToJson.keys",
+   "witness": "the keys are oracle-grade strings but the key-to-offset pairing picks the wrong accessor"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "twelve strategies' Run bodies are not recovered",
+   "round": 539,
+   "subject": "Multi::Run bodies",
+   "witness": "re/STRATEGY_METHODS.md lists them; their classes are now identifiable"
+  }
+ ]
+}
