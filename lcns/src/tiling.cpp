@@ -226,6 +226,16 @@ double MultitorchEvaluator::evaluate(const std::vector<PatternCell>& cells, doub
 }
 
 // ---------------------------------------------------------------------------
+// RE 0x4F4850: mov qword [rcx], 0 at 0x4F486A -- the class clears the ONE pointer it has, and the 0x188 byte object it allocates
+// carries the vtable and the evaluator vector. **	agged is the second argument, whose first qword the module compares against
+// 0xD18C2E2800**, and lag is the bool the 	est r9b, r9b at 0x4F4861 reads.
+BoxMultiTiler::BoxMultiTiler(const void* tagged, bool flag) {
+    (void)tagged;
+    (void)flag;
+    // The module allocates Inner here and copies the evaluators out of 	agged; 0x4F4B10 through 0x4F4ADD is 900 bytes of that walk and
+    // has not been read, so nothing is claimed about it beyond the structure the offsets establish.
+}
+
 std::vector<PatternCell> BoxMultiTiler::best(const std::vector<std::vector<PatternCell>>& candidates,
                                             double sheetArea, double* score) const {
     std::vector<PatternCell> bestCells;

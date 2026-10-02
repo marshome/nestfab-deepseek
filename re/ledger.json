@@ -2630,6 +2630,22 @@
    "round": 688,
    "subject": "MultiOrientedPartPattern.ctor-takes-config",
    "witness": "0x4F291F mov rsi,rdx then 0x4F2943 through 0x4F29B6 copy [rsi]..[rsi+0x70] into [rbx+8]..[rbx+0x78]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Tiling::BoxMultiTiler is ONE POINTER at +0: its constructor CLEARS [this] rather than installing a vtable, and calls a virtual method through the pointer at +0",
+   "round": 689,
+   "subject": "BoxMultiTiler.is-not-polymorphic",
+   "witness": "0x4F486A mov qword [rcx],0; 0x4F4887 installs the vtable into the ALLOCATED object; 0x4F4AED mov rax,[rcx] then 0x4F4AF0 call [rax+8] releases the old one"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0xD18C2E2800 (900000000000) is a TYPE TAG the module compares a caller's first qword against, not a magic number",
+   "round": 689,
+   "subject": "0xD18C2E2800-is-a-type-tag",
+   "witness": "BoxMultiTiler's constructor does cmp qword [rbx], rax at 0x4F48A7 with rax = 0xD18C2E2800, and MultiOrientedPartPattern stores the same value at its +0x88"
   }
  ]
 }
