@@ -56,8 +56,17 @@ def width_of(type_text, count=None):
 
 
 def declarations():
-    """struct name -> {offset: (field, width, file, line)}, for every struct whose offsets are commented."""
+    """struct name -> {offset: (field, width, file, line)}, for every struct whose offsets are commented.
+
+    A structure only counts as an INNER candidate when its offsets were RECOVERED from the module, and the test for that is the
+    evidence in its own comments: an `RE 0x...` address. This distinction was missing from the first version and it produced a
+    false embedding -- `AngleTransform` matched the launch order at five bases because it IS six consecutive doubles, and the
+    fields `zero20` and `zero28` name themselves as padding, so the structure describes a shape rather than a recovered layout.
+    Its own header quotes a constant at 0x9DE958 that does not exist in the module, which is the kind of thing a recovered
+    layout cannot do. An invented struct matching a real one is not evidence about the module.
+    """
     out = {}
+    evidence = {}
     for path in glob.glob(os.path.join(ROOT, "lcns", "include", "lcns", "**", "*.hpp"), recursive=True):
         text = io.open(path, encoding="utf-8", errors="replace").read()
         current = None
@@ -66,6 +75,7 @@ def declarations():
             if m:
                 current = m.group(1)
                 out.setdefault(current, {})
+                evidence.setdefault(current, 0)
                 continue
             if current is None:
                 continue
@@ -80,7 +90,19 @@ def declarations():
                 continue
             out[current][int(o.group(1), 16)] = (f.group(2), width_of(f.group(1), f.group(3)),
                                                  os.path.relpath(path, ROOT).replace("\\", "/"), number)
-    return {k: v for k, v in out.items() if len(v) >= 2}
+            if "RE" in (f.group(4) or ""):
+                evidence[current] += 1
+    # The RE-evidence filter that stood here has been WITHDRAWN, and the reason is recorded because the failure is
+    # instructive. It kept only structures citing an RE address on half their fields, which sounded like a good test for
+    # "recovered rather than invented" -- and it excluded CommonCutProperties and MultitorchProperties, the two embeddings
+    # PROVEN in rounds 550 and 551, because their recovered layouts do not carry per-field RE comments. It kept Box2d, an
+    # invented geometry primitive, which then matched the launch order at 38 bases.
+    #
+    # So the filter did not fix the problem it was written for; it made it worse, by removing the true positives and keeping
+    # the false one. What actually distinguishes a real embedding is the ANCHOR: a field whose width the host distinguishes.
+    # That is applied below by marking any structure whose matches are all the same width as SLIDING, and it works without
+    # guessing which structures are "real" -- the data says it.
+    return {name: fields for name, fields in out.items() if len(fields) >= 2}
 
 
 def main(argv):
@@ -142,8 +164,40 @@ def main(argv):
                 found.append((len(matches), outer, inner, base, matches))
 
     found.sort(key=lambda f: -f[0])
+    # one row per (host, inner, base), keeping the best count, so a base cannot be reported twice
+    best = {}
+    for count, outer, inner, base, matches in found:
+        key = (outer, inner, base)
+        if key not in best or count > best[key][0]:
+            best[key] = (count, outer, inner, base, matches)
+    found = sorted(best.values(), key=lambda f: -f[0])
     print("embeddings found (one difference explaining several fields, with containment): %d" % len(found))
     print("")
+
+    # A window whose fields all have the SAME width can slide, and the tool must say so rather than report five equal
+    # candidates as five findings. This is the structural half of the anchor rule: an all-doubles structure inside a run of
+    # doubles has no position, because nothing in the bytes distinguishes one base from the next. AngleTransform and Box2d both
+    # do this at +0x178; CommonCutProperties and MultitorchProperties do not, because each contains a 4-byte field.
+    bases_of = defaultdict(list)
+    for count, outer, inner, base, _matches in found:
+        bases_of[(outer, inner)].append(base)
+    multi = {key: sorted(bases) for key, bases in bases_of.items() if len(bases) > 1}
+
+    for count, outer, inner, base, matches in found[:args.top]:
+        if (outer, inner) in multi and base != multi[(outer, inner)][0]:
+            continue
+        print("=== %s contains %s at +0x%X   (%d agreeing fields)" % (outer, inner, base, count))
+        for i_offset, i_name, o_offset, o_name, i_width in sorted(matches)[:6]:
+            print("      %-28s +0x%-5X = %-28s +0x%-5X  %s B"
+                  % (i_name, i_offset, o_name, o_offset, i_width if i_width else "?"))
+        if (outer, inner) in multi:
+            others = [b for b in multi[(outer, inner)] if b != base]
+            widths = {m[4] for m in matches}
+            print("      SLIDES: the same structure also fits at %s, so this base is NOT determined,"
+                  % ", ".join("+0x%X" % b for b in others))
+            print("      because every field here is %s wide and nothing distinguishes one boundary from the next."
+                  % ("the same width" if len(widths) == 1 else "of comparable width"))
+        print("")
     for count, outer, inner, base, matches in found[:args.top]:
         print("=== %s contains %s at +0x%X   (%d agreeing fields)" % (outer, inner, base, count))
         for i_offset, i_name, o_offset, o_name, i_width in sorted(matches)[:6]:
