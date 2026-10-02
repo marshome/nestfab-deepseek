@@ -94,4 +94,5 @@ re/g_*.py
 !re/g_closure_work.py
 !re/g_closure_labels.py
 !re/g_callers.py
+!re/g_domain_closure.py
 !re/gate.ps1

@@ -86,6 +86,51 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x63A1C0,  # loads an 80-bit long double and reads a count from the second argument, then pads through 0x6399E0: a num_put overload
+    0x63A6A0,  # the same prologue as 0x63A1C0: another num_put overload
+    0x63A750,  # the same prologue as 0x63A1C0 at 390 bytes: the long double overload
+    0x6398E0,  # reads the 0x7fff exponent mask of an 80-bit long double, classifies zero, infinity and NaN, and calls 0x63BF20
+    0x639B50,  # pads and adjusts through 0x6399E0 using the stream width at +0xc: part of the num_put formatting
+    0x639CA0,  # the same padding path, storing 0xffffffff as the width
+    0x639C50,  # stores the '(null)' literal when the string argument is null: the num_put null string path
+    0x639D40,  # the same family, emitting through 0x6399E0
+    0x639A40,  # emits a wide character array through 0x630DA0 and 0x6399E0 with the same width padding
+    0x639E30,  # reads the same stream fields and reaches three of the above: the same num_put layer
+    0x63B140,  # reads the stream state words, dispatches on the format flags and reaches eleven num_put functions: the num_put entry point
+    0x63BD80,  # shifts 1 left by the word count at [rcx - 4] and jumps to 0x63E530: the bignum normalisation
+    0x8AABC0,  # atomically decrements the count the first member points at and calls 0x8AA690 then frees: the shared_ptr release
+    0x8AABF0,  # increments one shared_ptr count, decrements the count at the destination and stores: the shared_ptr assignment
+    0x8761B0,  # frees the pointer at +0 through 0x63F6B8 when the flag at +8 is set, else throws through 0x97ABF0: the string dispose with its ownership flag
+    0x9456A0,  # reads and writes the basic_ios state word at +0x20 and throws through 0x97A7B0; its own literal names 'basic_ios::clear'
+    0x9445E0,  # installs a vtable from the image, releases the member string at +0xc8 and hands +0xd0 to the shared_ptr release: a destructor
+    0x87F2A0,  # installs a vtable, releases the members at +0x48 and +0x38 and hands +0xd0 to the shared_ptr release: the same destructor shape
+    0x9454D0,  # calls 0x944160 and 0x945370 then stores the stream state at +0x20 and the buffer at +0xe8: the basic_ios initialisation
+    0x944160,  # stores 6, 0 and 0x1002 at +8, +0x10 and +0x18 and moves a shared_ptr at +0xd0: the basic_streambuf header
+    0x944530,  # fills the vtable-relative members and clears the two flags: part of the basic_ios construction
+    0x945370,  # fills the eight facet pointers of a basic_ios from a locale and tests each: part of the same construction
+    0x990540,  # looks a facet up in the locale cache, dynamic casts it through 0x9990E0 and throws when it fails: a facet accessor
+    0x990840,  # the same facet accessor for another typeinfo
+    0x990780,  # the same facet accessor for another typeinfo
+    0x9916E0,  # the same facet accessor, throwing through 0x978750 and 0x998920
+    0x991920,  # the same facet accessor for another typeinfo
+    0x9919E0,  # the same facet accessor for another typeinfo
+    0x9990E0,  # reads the virtual base at [rcx - 0x10], compares the typeinfo at [rax - 8] and calls the virtual function at 0x38 or 0x40: a dynamic cast to a facet type
+    0x88B6F0,  # stores three vtable addresses from the image and calls 0x945370, 0x9454D0, 0x87EDF0 and 0x87D590: the stream object construction
+    0x978010,  # reads the stream state, then calls the vtable entry at +0x68 or +0x60 and fills or pads the buffer: the ostream write
+    0x9878C0,  # hands a pointer and a length to 0x978010: the ostream string overload
+    0x867BF0,  # tests the sentry, writes one character through the buffer at +0xe8 and calls the vtable entry at +0x30: the single character write
+    0x8682A0,  # tests the stream state against the 0x1002 write mode and sets the sentry result: the ostream sentry
+    0x868380,  # the input sentry, the same shape without the write mode test
+    0x867DF0,  # flushes the buffer when the state demands it: the stream flush
+    0x87D590,  # calls 0x822590, 0x877160 and 0x822590 then sets the buffer pointers: the filebuf open
+    0x87D8E0,  # calls 0x822590, 0x87D270 and 0x87D4E0 and clears the members: the filebuf close
+    0x87D270,  # clears a member and returns whether a byte is available: the buffer underflow helper
+    0x87EDF0,  # stores a vtable from the image, initialises the members and calls 0x8AAB00 and 0x8774E0: a constructor of the stream family
+    0x877160,  # calls 0x65C810 for the mode string and 0x630FD0 to open, storing the handle at +0 and the flag at +8: the fopen wrapper
+    0x630110,  # converts the character through 0x63F508 and 0x62FF90 with the default buffer: the widen-then-convert character path
+    0x89EC90,  # forwards to 0x89EBA0, the ctype<char> initialiser
+    0x8894B0,  # forwards to 0x889D00, the member initialiser of the same family
+    0x531F20,  # reads the pointer at +0, frees the member at +8 through 0x530010 and frees the object: a destructor
     0x63A2A0,  # long division by ten with zero padding and digit grouping, 0x6399E0 called per digit: std::num_put do_put(long)
     0x63A8E0,  # the same with the character taken from the argument and base 8, 16 or 10: the unsigned num_put sibling
     0x63BDA0,  # bignum division over the 32-bit word array at +0x18 with its length at +0x14: printf's floating point core

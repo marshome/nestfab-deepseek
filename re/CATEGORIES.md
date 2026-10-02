@@ -268,3 +268,32 @@ The lesson worth keeping: a caller's address is not evidence. 0x8264E0 is called
 objective, and it is still library code; 0x8A82F0 and 0x827240 call half of the locale constructors and are library code
 themselves. What decided every entry above was a literal decoded from the function's own body, an offset pattern that names
 a standard class, or the guard and throw machinery it hands control to.
+
+## What the LaunchLocalComputation closure actually contains, and the counting rule (round 526)
+
+Batch eight read the twenty four functions the entry point calls directly. Not one of them is an algorithm: they are
+libstdc++'s iostreams, its locale facet accessors, its shared_ptr reference counting and a handful of destructors. The
+evidence is recorded next to each address in `re/g_toolchain.py`, and the shape of it is worth stating because it decides
+how the rest of this objective should be counted:
+
+* The whole `0x63xxxx` block of the closure is the numeric and locale layer, and the `0x8Axxxx`/`0x90Exxx`/`0x921xxx`/
+  `0x922xxx`/`0x944xxx`/`0x945xxx` block is the iostreams and the locale's facet caches. `0x8A82F0` is
+  `std::locale::_S_initialize`, which installs every facet there is, and that is why one call reaches twelve hundred
+  functions: it is not a domain dependency chain, it is the standard library's own construction.
+* `0x2AB0` itself is orchestration over those objects. It builds an input file stream over `c:\Temp\cns.pb.json` (the
+  stream construction at 0x2BB6 to 0x2C92 calls exactly the four functions batch eight classified), writes '-> ' and
+  'LaunchLocalComputation' into an output stream, writes the double argument, and at the end reads two configuration strings,
+  `cns_force_cloud` and the server list `cns1.optalog.com;cns2.optalog.com`, plus the debug marker
+  `// LaunchLocalComputation`.
+
+So the honest way to finish this objective is NOT to write reimplementations of `basic_ios::clear` or a facet accessor:
+those already exist in the standard library this project links against, and reimplementing them would add code without
+adding recovered behaviour. `forwardedCount` is a count of *recovered domain behaviour*, and the rule that keeps it honest
+is the one this project already uses for the platform-forwarding class: code whose work is done by the standard library or
+by the platform is classified, recorded, and not counted as progress.
+
+What is left of the closure after batch eight is the orchestration at 0x2AB0, the two wrappers, and the domain routines
+that touch this module's own objects -- among them `0x1BF40` (the engine fetch, whose own literal is
+`c:\Temp\debug_nest.txt`), `0x22A20`, `0x65A530` (which opens the three log files `log_nest.txt`, `cloud_nest.txt` and
+`local_nest.txt` and records three success flags) and `0x7BB430` (whose literal is `CNS informations`). Those are the
+functions the orchestration is about, and they are what the next batches read.

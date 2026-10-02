@@ -29,6 +29,7 @@ directory is `D:\Nesting\nestfab`. `lcns/` holds the project, `re/` holds the re
 | `re/g_closure_work.py` | `python g_closure_work.py 51 38 2000` | the whole closure in work order, depth then size, followed by the unread leaf bodies: one batch per run |
 | `re/g_closure_labels.py` | `python g_closure_labels.py 51 6` | every literal each function of the closure loads, with its target address, then the head of its body |
 | `re/g_callers.py` | `python g_callers.py 0x9449E0` | who calls it, inside the closure first. A caller's address is context, not evidence; several library functions here are called by 0x2AB0 itself |
+| `re/g_domain_closure.py` | `python g_domain_closure.py 51 [--all]` | what is left once library code is transparent: the domain set is computed FORWARD from the entry point, so nothing reached only through library code can enter it. This is the work list for this objective |
 | `re/g_closure.py` | `python g_closure.py` | the transitive closure of every unimplemented export, and the leverage ranking, written to `re/WORKLIST.md` |
 | `re/g_closure_of.py` | `python g_closure_of.py 51` | one export's closure, leaves first, plus the functions several closures share |
 | `re/g_leaves.py` | `python g_leaves.py 51 12` | the smallest leaves of a closure, with their bodies |
@@ -76,6 +77,19 @@ round 525 section of `re/CATEGORIES.md`, and the recorder is `re/g_add_batch7.py
 The order to work in: finish the remaining leaves, then the intermediate layers, and when the closure is empty write the
 orchestration at `0x2AB0` itself and forward ordinals 51, 164 and 216 together, which is where `forwardedCount` goes up by
 three.
+
+**Batches eight and nine (rounds 526 and 527) took the closure from 131 functions to 26.** The twenty four functions
+`0x2AB0` calls directly were read whole and none is an algorithm: they are libstdc++'s iostreams (the sentries, the write
+through the vtable's `xsputn`, the `filebuf` open and close), the locale facet accessors that dynamic cast through
+`0x9990E0`, the `basic_ios` state word, and the `shared_ptr` release and assignment. Batch nine closed the numeric layer:
+`0x63B140` and the `num_put` overloads, and `0x6398E0`, which classifies an 80-bit long double as zero, infinity or NaN.
+The reasoning is in the round 525, 526 and 527 sections of `re/CATEGORIES.md`.
+
+That leaves **26 functions**: the orchestration at `0x2AB0`, the two wrappers, and the routines that touch this module's
+own objects -- `0x1BF40`/`0x1BF00` over the module's lazy static (whose literal is `c:\Temp\debug_nest.txt`), `0x22A20`,
+`0x65A530` (the three log files), `0x7BB430` (`CNS informations`), `0x5007C0`, `0x8F9220`, `0x92B340`, `0x92B940`,
+`0x92BBA0`, `0x92ECB0`, `0x929FA0`, `0x9302C0` and `0x9308C0`. Those are the real work, and `re/g_domain_closure.py`
+prints them in work order.
 
 ## What to tell a fresh session
 
