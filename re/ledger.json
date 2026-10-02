@@ -510,6 +510,22 @@
    "round": 569,
    "subject": "LaunchLocalComputation.1C8",
    "witness": "RE 0x2D31 mov ecx,0x1C8 then call 0x998500, the same allocator the constructor uses; the ledger records 0x22A20 allocating 0x1C8 and reading the order's mode at +0x240"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the 0x1C8 object is constructed by 0x22E30 and pushed into the pointer vector at +0x1D0",
+   "round": 570,
+   "subject": "LaunchLocalComputation.candidate-vector",
+   "witness": "RE 0x2D31 alloc 0x1C8; 0x2D46-0x2D4F mov rdx,rbp / mov rcx,rax / mov rdi,rax / call 0x22E30; then 0x2D54 mov rax,[rbp+0x1D0] / cmp rax,[rbp+0x1D8] / mov [rax],rdi / add rax,8 / mov [rbp+0x1D0],rax"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the order holds a vector of 8-byte POINTERS at +0x1D0, at least +0x1D0..+0x1D8, and it receives the constructed candidates",
+   "round": 570,
+   "subject": "LaunchingOrder.vectorAt1D0",
+   "witness": "the push_back at RE 0x2D7F..0x2D8B increments the end by 8; the constructor and the destructor both touch +0x1D0, which is the containment check"
   }
  ]
 }
