@@ -226,6 +226,21 @@ def check_never_guess():
     return "PASS", out.strip().splitlines()[-1] if out.strip() else "the ledger refuses nothing"
 
 
+def check_push_on_request():
+    """A push may only happen when the human asks in that same conversation, so the driver must have no push path.
+
+    The default is local because the driver cannot ask; the exception is a person typing the request, which is a thing no
+    program can verify after the fact. What IS verifiable is the half that protects against the accident: the round driver
+    asserts that no git invocation it makes contains `push`, and this check looks for that assertion in the source. A
+    protection that exists only as an intention in a document is a document, not a protection.
+    """
+    text = io.open(os.path.join(HERE, "g_round.py"), encoding="utf-8", errors="replace").read()
+    guards = [line.strip() for line in text.split("\n") if "push" in line and "assert" in line]
+    if not guards:
+        return "FAIL", "re/g_round.py has no assertion preventing a push, so the default is not enforced"
+    return "PASS", "%d guard(s) in re/g_round.py, and a push is a deliberate act by hand" % len(guards)
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -243,18 +258,25 @@ def check_rules_have_checks():
 
 
 def check_backup():
-    """The commits and the untracked inputs must be in a verified archive that is not older than the work.
+    """The commits must survive the disk, by a verified local bundle OR by origin already having them.
 
-    The requirement is "本地打包备份，不 push". The exposure it protects against is measured: 62 commits ahead of origin and
-    never pushed, an 11.3 MB gitignored DLL which IS the reverse engineering target, and re/prof2.pkl which is not a cache but
-    the whole analysis. This check looks for the newest bundle, verifies it, and refuses when the work has outrun it.
+    The requirement is "本地打包备份；push 仅在人类当次要求时进行". The exposure it protects against was measured: 65 commits ahead
+    of origin with nothing pushed, an 11.3 MB gitignored DLL which IS the reverse engineering target, and re/prof2.pkl which is
+    not a cache but the whole analysis.
+
+    Both ends count, and the check says which one is carrying the weight rather than demanding the bundle specifically. A rule
+    that insisted on a bundle after origin already had every commit would fail on a healthy repository, and a check that always
+    fails is a check nobody reads.
     """
     import glob
-    import json
     import os as _os
+    code, ahead_text, _err = run(["git", "rev-list", "--count", "@{u}..HEAD"])
+    ahead = int(ahead_text) if code == 0 and ahead_text.isdigit() else None
     archives = sorted(glob.glob(_os.path.join(ROOT, "backup", "*.bundle")))
+    if ahead == 0:
+        return "PASS", "origin has every commit (ahead 0), so the history survives the disk without the bundle"
     if not archives:
-        return "FAIL", "no backup bundle in backup/; run python re/g_backup.py"
+        return "FAIL", "%s commits are ahead of origin and there is no bundle in backup/; run python re/g_backup.py" % ahead
     newest = archives[-1]
     report = _os.path.join(ROOT, "backup", "nestfab-backup-%s.txt" % _os.path.basename(newest)[8:16])
     behind = None
@@ -266,15 +288,14 @@ def check_backup():
                 except ValueError:
                     recorded = None
                 if recorded is not None:
-                    code, count, _err = run(["git", "rev-list", "--count", "HEAD"])
-                    if code == 0:
+                    _code, count, _e = run(["git", "rev-list", "--count", "HEAD"])
+                    if _code == 0:
                         behind = int(count) - recorded
-    detail = "newest bundle %s" % _os.path.basename(newest)
     if behind is None:
-        return "PASS", detail + "; no report to compare against, so staleness is unknown"
+        return "PASS", "%s commits not pushed; newest bundle %s, staleness unknown" % (ahead, _os.path.basename(newest))
     if behind > 10:
-        return "FAIL", "%s is %d commits behind HEAD; run python re/g_backup.py" % (_os.path.basename(newest), behind)
-    return "PASS", "%s, %d commits behind HEAD" % (_os.path.basename(newest), behind)
+        return "FAIL", "%s commits not pushed and the newest bundle is %d commits behind HEAD; run python re/g_backup.py" % (ahead, behind)
+    return "PASS", "%s commits not pushed; %s is %d commits behind HEAD" % (ahead, _os.path.basename(newest), behind)
 
 
 def check_continuous_work():
@@ -324,7 +345,8 @@ CHECKS = [
     ("no-regex-churn", "不要用多轮正则反复改同一段代码", check_no_regex_churn),
     ("widen-before-deepening", "不要局限于一个导出或一个结构体", check_widen_before_deepening),
     ("sync-every-thirty-rounds", "每30轮和我同步一次", check_sync),
-    ("local-backup-not-push", "本地打包备份，不 push", check_backup),
+    ("local-backup-not-push", "本地打包备份；push 仅在人类当次要求时进行", check_backup),
+    ("push-on-request", "push 只在人类于同一对话中明确要求时进行", check_push_on_request),
     ("continuous-work", "连续推进，每 30 轮或阻塞时汇报", check_continuous_work),
     ("four-conditions-exit-nonzero", "规则要以会失败的程序存在", check_four_conditions),
     ("rules-have-checks", "声明了规则就必须有检查", check_rules_have_checks),

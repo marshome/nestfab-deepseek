@@ -51,6 +51,8 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 | 545 | a callee's first-argument type is the caller's class when rcx carries it | re/g_types_propagate.py, 4486 functions typed by CALL |
 | 546 | `Order` in model.hpp is a duplicate of `LaunchingOrderLayout` and is wrong where they disagree | re/g_adjudicate.py: the module agrees with the layout at 20 offsets and with Order at one, and that one is a width the layout then fixed |
 
+| 552 | the human asked for a push, so 65 commits went to origin/main; the default stays local | git branch shows main at origin/main, ahead 0 behind 0 |
+
 ## The open question about `Order`, recorded rather than acted on
 
 `lcns/include/lcns/model.hpp` declares `struct Order` at line 175: 44 fields, 43 with offsets, describing the same object as

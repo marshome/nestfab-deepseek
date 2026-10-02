@@ -85,6 +85,12 @@ feeling of compliance.
   "where": "the four programs named in AGENTS.md",
   "since": "round 548"}
 
+ {"id": "push-on-request",
+  "rule": "push 只在人类于同一对话中明确要求时进行",
+  "check": "re/g_round.py asserts that no git invocation it runs contains push; a push is done by hand and reported",
+  "where": "re/g_round.py, and this rule",
+  "since": "round 552"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
