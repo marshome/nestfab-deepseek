@@ -672,3 +672,54 @@ Last 24 instructions:
 00529b2c  mov rbx, rax
 00529b2f  jmp 0x529b14
 ```
+
+## The 0x52F8xx family (round 375)
+
+GetLength's implementer (0x526160) and GetHeight's (0x5266A0) are otherwise identical and differ in one callee each:
+0x52F810 against 0x52F830. That pair is where the length and the height are computed, so these listings are what an
+implementation of GetLength (0xB130, ord 96) and GetHeight (0xB160, ord 100) has to be written from.
+
+### 0x52F810 -- 7 bytes, 8 callers, 3 instructions
+
+```asm
+0052f810  cmp dword ptr [rcx], 1
+0052f813  setbe al
+0052f816  ret 
+```
+
+### 0x52F830 -- 10 bytes, 4 callers, 3 instructions
+
+```asm
+0052f830  test dword ptr [rcx], 0xfffffffd
+0052f836  sete al
+0052f839  ret 
+```
+
+### 0x52F8B0 -- 6 bytes, 4 callers, 2 instructions
+
+```asm
+0052f8b0  movsd qword ptr [rcx + 0x18], xmm1
+0052f8b5  ret 
+```
+
+### 0x52F8C0 -- 11 bytes, 4 callers, 3 instructions
+
+```asm
+0052f8c0  movsd qword ptr [rcx + 8], xmm1
+0052f8c5  movsd qword ptr [rcx + 0x10], xmm2
+0052f8ca  ret 
+```
+
+### 0x52F950 -- 37 bytes, 3 callers, 9 instructions
+
+```asm
+0052f950  pxor xmm0, xmm0
+0052f954  mov rax, rcx
+0052f957  mov dword ptr [rcx], 0
+0052f95d  movsd qword ptr [rcx + 8], xmm0
+0052f962  movsd qword ptr [rcx + 0x10], xmm0
+0052f967  movsd qword ptr [rcx + 0x18], xmm0
+0052f96c  mov byte ptr [rcx + 0x20], 0
+0052f970  mov byte ptr [rcx + 0x21], 0
+0052f974  ret 
+```
