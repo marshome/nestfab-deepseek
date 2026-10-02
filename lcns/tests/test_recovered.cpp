@@ -6987,5 +6987,30 @@ int main() {
         CHECK(reinterpret_cast<const unsigned char*>(&probe.anything) == reinterpret_cast<const unsigned char*>(&probe) + 8);
     }
 
+
+    // ---------------------------------------------------------------- the pattern family's base (RE the typeinfo chains)
+    //
+    // **BOTH RELATIONSHIPS ARE THE MODULE'S OWN, READ FROM THE +0x10 POINTER OF EACH CLASS'S TYPEINFO**:
+    //
+    //     N6Tiling15BiModulePatternE          -> N6Tiling7PatternE
+    //     N6Tiling21MultiOrientedPartPatternE -> N6Tiling7PatternE
+    //
+    // and neither was declared here until Tiling::Pattern existed, because an abstract base is not a key in `re/vtables.json`.
+    {
+        static_assert(std::is_base_of<lcns::tiling::Pattern, lcns::tiling::BiModulePattern>::value,
+                      "the typeinfo chain N6Tiling15BiModulePatternE -> N6Tiling7PatternE says so");
+        static_assert(std::is_base_of<lcns::tiling::Pattern, lcns::tiling::MultiOrientedPartPattern>::value,
+                      "the typeinfo chain N6Tiling21MultiOrientedPartPatternE -> N6Tiling7PatternE says so");
+
+        // **AND `Tiling::Pattern`'S MEASURED FACTS ARE REACHABLE THROUGH BOTH**, which is what the base exists for
+        CHECK(lcns::tiling::Pattern::kElementStride == 0x90);       // RE 0x4E7F49 and 0x4E7F50
+        CHECK(lcns::tiling::Pattern::kCopiedBytes == 0x48);         // RE 0x4E7E6E through 0x4E7EC2
+        CHECK(lcns::tiling::Pattern::kContainerOffset == 0x48);     // RE 0x4E7EBA
+
+        // the base is one word, and a derived instance carries MORE -- which is the open question recorded in pattern.hpp and not asserted here
+        static_assert(sizeof(lcns::tiling::Pattern) == sizeof(void*),
+                      "sizeof(Pattern) is ONE WORD, which is why a derived first member landing at +8 is unexplained");
+    }
+
     return check::finish("test_recovered");
 }

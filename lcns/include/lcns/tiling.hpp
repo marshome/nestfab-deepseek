@@ -19,6 +19,7 @@
 
 #include "lcns/geom.hpp"
 #include "lcns/model.hpp"
+#include "lcns/pattern.hpp"
 
 namespace lcns {
 namespace tiling {
@@ -87,7 +88,20 @@ private:
 };
 
 // RE Tiling::BiModulePattern: two modules A and B alternate in a repeating cell.
-class BiModulePattern {
+
+// ---------------------------------------------------------------------------
+// the two pattern classes -- **BOTH DERIVE FROM `Tiling::Pattern`**, by the typeinfo chains
+// N6Tiling15BiModulePatternE -> N6Tiling7PatternE and N6Tiling21MultiOrientedPartPatternE -> N6Tiling7PatternE.
+//
+// **AND THAT DERIVATION WAS ABSENT FROM THIS TREE UNTIL `lcns/pattern.hpp` EXISTED**, because the base is abstract and therefore not a key in
+// `re/vtables.json` -- so nothing here had noticed it. `Tiling::Pattern`'s own measured facts, including the copy constructor at 0x4E7E50 that SIX OF THE
+// EIGHT EVALUATORS carry at vtable slot 3, are in that header.
+//
+// **WHAT IS STILL OPEN**: `sizeof(Tiling::Pattern)` measured ONE WORD while a derived instance's own first member landed at +8, so SOMETHING OCCUPIES
+// +0x00 that the base does not have. The constructors write a `std::shared_ptr` into a CALLER-owned 2 word object, which is a fact about the CALL rather
+// than about the layout, and the two do not yet agree on which object holds what. **Recorded, not resolved.**
+// ---------------------------------------------------------------------------
+class BiModulePattern : public Pattern {
 public:
     BiModulePattern(double moduleW, double moduleH);
     void setModules(int partA, int partB);
@@ -132,7 +146,7 @@ private:
  *  of the class's own slots place its offsets: slot 2 at 0x7EBB90 reads +0x88, slot 3 at 0x7EB5E0 reads +0x10, and slot 4 at 0x7EBC30 reads
  *  +0x80.
  */
-class MultiOrientedPartPattern {
+class MultiOrientedPartPattern : public Pattern {
 public:
     /** The 0x70 bytes RE 0x4F2943 copies in, at +8 through +0x78. **Its fields are not established one by one**, so it is carried as the byte
      *  block the instruction copies rather than given names that would be guesses. */

@@ -2854,6 +2854,22 @@
    "round": 704,
    "subject": "the-pattern-record-stride-is-0xf0",
    "witness": "the call site at 0x4EA310 iterates 0x4EA380 add rbx,0xf0 from [rsp+0x70] to [rsp+0x78] and calls 0x4F2870 with the element as rdx; 0x4F2887 mov r8d,0xf0 with 0x4F289A lea rcx,[rbx+8] and 0x4F28A1 call 0x63F2F8 blits it"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "Tiling::BiModulePattern and Tiling::MultiOrientedPartPattern both derive from Tiling::Pattern",
+   "round": 705,
+   "subject": "both-pattern-classes-derive-from-Pattern",
+   "witness": "the module's typeinfo chains N6Tiling15BiModulePatternE -> N6Tiling7PatternE and N6Tiling21MultiOrientedPartPatternE -> N6Tiling7PatternE, read from each class's +0x10 pointer"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "type",
+   "predicate": "the 0xf0 byte vector element the BiModulePattern constructor is fed from is a plain aggregate and not a class with virtuals",
+   "round": 705,
+   "subject": "the-0xf0-record-is-not-polymorphic",
+   "witness": "0x4E9A10, the routine that produces the vector, installs NO vtable: every lea rip in its 2297 bytes is a data pointer and none is a vtable in re/vtables.json, and its stores are almost all through rsp"
   }
  ]
 }
