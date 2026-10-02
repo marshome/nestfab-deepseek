@@ -214,6 +214,30 @@
    "round": 549,
    "subject": "key-pairing.gap",
    "witness": "re/g_json_fields.py pairs 16 offsets but +0x10 receives four different keys; the 13 serialisers act on different objects"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "CommonCutProperties is embedded at +0x50, size 0x38, so it spans +0x50..+0x87",
+   "round": 550,
+   "subject": "LaunchingOrder.commonCutAt50",
+   "witness": "two independent differences: Order commonCutNoHoles +0x84 minus noHoles +0x34 is 0x50, and commonCutOnlyBiModules +0x85 minus onlyBiModules +0x35 is 0x50; re/g_keys_bound.py serialiser 0x506B30 fits CommonCutProperties 5/7 with all 7 offsets inside its bounds"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "MultitorchProperties is embedded at +0x98, size 0x38",
+   "round": 550,
+   "subject": "LaunchingOrder.multitorchAt98",
+   "witness": "MultitorchProperties is 7 fields spanning +0x00..+0x37; the layout has multitorch fields at +0x98..+0xD0 and Order calls +0xD0 multitorchMaxDistance and +0xC0 multitorchNbTorches, agreeing with the member list"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a sub-object is proven by an offset difference, not by a shape",
+   "round": 550,
+   "subject": "subobject.witness",
+   "witness": "the +0x40 candidate from round 539 was a SHAPE with 15 functions; the +0x50 embedding is proven by two subtractions that agree"
   }
  ]
 }
