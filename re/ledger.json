@@ -1558,6 +1558,30 @@
    "round": 634,
    "subject": "archive-reachable-by-address",
    "witness": "re/g_archive_index.py with a self-check that refuses to write unless it finds 0x1EE50, which is known to appear 72 times"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "0x668F20 is CNS_NoFitContext in cns_no_fit.cpp, with DeleteNoFitContext at 0x9CC0 as its destructor",
+   "round": 635,
+   "subject": "0x668F20.name",
+   "witness": "recorded in findings_border_property.md and confirmed by the archive index (12 mentions in 4 files); it was ranked as an unread task by the priority list"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the archive holds a full dossier on 0x378E0: 14374 bytes, 2841 instructions, 75 callees with sizes and caller counts, 132 field offsets",
+   "round": 635,
+   "subject": "0x378E0.dossier",
+   "witness": "findings_engine.md, which also lists its strings, floating constants and immediates"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the archive names the project's real bottleneck: strategy.nesting and search.pack_all are still Substituted, which it states is the main cause of the nesting-quality gap",
+   "round": 635,
+   "subject": "nesting-quality-bottleneck",
+   "witness": "findings_engine.md's unsolved list, after the 0x378E0 dossier"
   }
  ]
 }
