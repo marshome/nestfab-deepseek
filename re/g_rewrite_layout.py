@@ -29,6 +29,14 @@ from lib import disasm, load_prof  # noqa: E402
 ROOT = os.path.dirname(HERE)
 PATH = os.path.join(ROOT, "lcns", "include", "lcns", "launching_order.hpp")
 CTOR = 0x14620
+# The object's own writers besides the constructor: the nine setters the ledger names at ORACLE or INSTRUCTION, each with the
+# export that justifies it. Their stores are what decides a field's width where the constructor is ambiguous.
+WRITERS = [
+    (0xD050, "SetOrigin (86)"), (0xD1A0, "CNS_SetMultiplicityPreference (128)"), (0xE010, "SetAutomaticStop (140)"),
+    (0xEC90, "SetCommonCutCuttingPreference (154)"), (0xE940, "SetCommonCutSafetyPreference (150)"),
+    (0xF130, "SetMultiTorchCuttingPreference (176)"), (0x13E30, "SetSpecificSheetOrigin (298)"),
+    (0x13FE0, "SetSpecificSheetObjective (300)"), (0x188D0, "SetMarkMode (246)"),
+]
 STORE = re.compile(r"^(byte|word|dword|qword|xmmword) ptr \[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\], (.+)$")
 WIDTH = {"byte": 1, "word": 2, "dword": 4, "qword": 8, "xmmword": 16}
 
@@ -90,7 +98,18 @@ NAMED_WIDTHS = {
 }
 
 
+NARROWEST = {}
+NARROWEST_AT = {}
+
+
 def fields():
+    """Every offset the constructor writes, and the WIDEST store it makes there.
+
+    `NARROWEST` is filled as a side effect with the narrowest store seen anywhere in the object's own writers -- the
+    constructor and the nine setters -- because the narrowest observation constrains a field hardest. re/g_adjudicate.py
+    found `unnamed038` declared 8 bytes wide while RE 0xD0F8 writes one byte there, which is how a layout overruns its
+    neighbour in a packed view while every offset in it still looks right.
+    """
     profile = load_prof()
     size = (profile.get(CTOR) or {}).get("size") or 0
     body = [i for i in disasm(CTOR) if i.address < CTOR + size]
@@ -102,6 +121,24 @@ def fields():
         offset = int(m.group(3), 16) if m.group(3) else 0
         width = WIDTH[m.group(1)]
         written[offset] = max(written.get(offset, 0), width)
+    seen = []
+    for address in [CTOR] + [w[0] for w in WRITERS]:
+        span = (profile.get(address) or {}).get("size") or 0
+        if span <= 0:
+            continue
+        for ins in disasm(address):
+            if ins.address >= address + span:
+                break
+            m = STORE.match(ins.op_str)
+            if not m:
+                continue
+            offset = int(m.group(3), 16) if m.group(3) else 0
+            width = WIDTH[m.group(1)]
+            seen.append((offset, width, ins.address))
+    for offset, width, address in seen:
+        if width < NARROWEST.get(offset, 99):
+            NARROWEST[offset] = width
+            NARROWEST_AT[offset] = address
     return written
 
 
@@ -127,6 +164,11 @@ def main():
         available = following - offset
         width = written.get(offset, 0)
         name, evidence = NAMES.get(offset, ("", ""))
+        # The module's own store constrains the field hardest, and re/g_adjudicate.py showed why this must be applied to
+        # UNNAMED fields too: `unnamed038` was declared 8 bytes wide while RE 0xD0F8 writes ONE byte at +0x38, so the
+        # declaration overran the next field in any packed view. The narrowest store observed at an offset is that field's
+        # width, whoever wrote it.
+        observed = NARROWEST.get(offset, 0)
         if name and offset in NAMED_WIDTHS:
             # For a NAMED field the store the name came from is the authority, not the constructor: RE 0x140B9 is
             # `mov dword ptr [rdi+0x130], ebp` while the constructor writes eight bytes there, and the setter is what the
@@ -134,10 +176,10 @@ def main():
             width = NAMED_WIDTHS[offset]
         elif width == 0:
             width = NAMED_WIDTHS.get(offset, min(available, 4))
-        # A field may not run into the next named one: the boundary between them is what makes the layout exact. The second
-        # version of this loop advanced a cursor by each field's width, so a named field that began inside a preceding gap
-        # was reported as an overlap and silently dropped -- specificSheetOriginGiven at +0x124 went missing that way while
-        # the run still printed "26 of 96 named".
+        if observed and observed < width:
+            width = observed
+            if not name:
+                evidence = (evidence + "; " if evidence else "") + "narrowest store is %d byte(s) at RE 0x%X" % (observed, NARROWEST_AT.get(offset, 0))
         if width > available:
             width = available
         if width <= 0:

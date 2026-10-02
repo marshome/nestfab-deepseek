@@ -158,6 +158,22 @@
    "round": 545,
    "subject": "rcx.type",
    "witness": "re/g_types_propagate.py rule CALL, 4486 functions"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "lcns/include/lcns/model.hpp:175 duplicates LaunchingOrderLayout and loses 20 of 21 width disputes",
+   "round": 546,
+   "subject": "Order.duplicate",
+   "witness": "re/g_adjudicate.py against RE 0x14620 and the nine setters; shared offsets 39, agreeing on both name and width 1"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "replace model.hpp's Order with the recovered layout",
+   "round": 546,
+   "subject": "Order.refactor",
+   "witness": "44 fields over nester.cpp, engine.cpp and eight test files; deliberately not done in the round that found it"
   }
  ]
 }

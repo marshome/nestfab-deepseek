@@ -35,9 +35,11 @@ struct LaunchingOrderLayout {
     std::uint8_t         unnamed022;   // +0x022  written by RE 0x14620
     std::uint8_t         unnamed023;   // +0x023  written by RE 0x14620
     unsigned char unnamed024[0x4];   // +0x024..+0x027, not written by RE 0x14620
-    std::uint64_t        unnamed028;   // +0x028  written by RE 0x14620
+    std::uint8_t         unnamed028;   // +0x028  narrowest store is 1 byte(s) at RE 0xD062
+    unsigned char unnamed029[0x7];   // +0x029..+0x02F, not written by RE 0x14620
     std::uint64_t        unnamed030;   // +0x030  written by RE 0x14620
-    std::uint64_t        unnamed038;   // +0x038  written by RE 0x14620
+    std::uint8_t         unnamed038;   // +0x038  narrowest store is 1 byte(s) at RE 0xD0F8
+    unsigned char unnamed039[0x7];   // +0x039..+0x03F, not written by RE 0x14620
     std::uint8_t         unnamed040;   // +0x040  written by RE 0x14620
     std::uint8_t         unnamed041;   // +0x041  written by RE 0x14620
     unsigned char unnamed042[0x2];   // +0x042..+0x043, not written by RE 0x14620
@@ -91,7 +93,8 @@ struct LaunchingOrderLayout {
     std::uint32_t        emptySlotMarker2;   // +0x120  RE 0x147A9, the constant 0x3FFFFFFF
     std::uint8_t         specificSheetOriginGiven;   // +0x124  RE 0x13F02, SetSpecificSheetOrigin (298), byte = 1
     unsigned char unnamed125[0x3];   // +0x125..+0x127, not written by RE 0x14620
-    std::uint32_t        specificSheetOrigin;   // +0x128  RE 0x13F09, SetSpecificSheetOrigin (298)
+    std::uint8_t         specificSheetOrigin;   // +0x128  RE 0x13F09, SetSpecificSheetOrigin (298)
+    unsigned char unnamed129[0x3];   // +0x129..+0x12B, not written by RE 0x14620
     std::uint8_t         specificSheetObjectiveGiven;   // +0x12C  RE 0x140B2, SetSpecificSheetObjective (300), byte = 1
     unsigned char unnamed12D[0x3];   // +0x12D..+0x12F, not written by RE 0x14620
     std::uint32_t        specificSheetObjective;   // +0x130  RE 0x140B9, SetSpecificSheetObjective (300)
@@ -140,8 +143,8 @@ struct LaunchingOrderLayout {
     std::uint64_t        unnamed270;   // +0x270  written by RE 0x14620
     std::uint8_t         unnamed278;   // +0x278  written by RE 0x14620
     unsigned char unnamed279[0xF];   // +0x279..+0x287, not written by RE 0x14620
-    std::uint32_t        estimateLocalComputation;   // +0x288  RE 0x3383, LaunchEstimateLocalComputation (216)
-    unsigned char unnamed28C[0x4];   // +0x28C..+0x28F, not written by RE 0x14620
+    std::uint8_t         estimateLocalComputation;   // +0x288  RE 0x3383, LaunchEstimateLocalComputation (216)
+    unsigned char unnamed289[0x7];   // +0x289..+0x28F, not written by RE 0x14620
     std::uint64_t        unnamed290;   // +0x290  written by RE 0x14620
     std::uint64_t        unnamed298;   // +0x298  written by RE 0x14620
     std::uint64_t        unnamed2A0;   // +0x2A0  written by RE 0x14620
