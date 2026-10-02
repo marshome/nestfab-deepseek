@@ -46,7 +46,6 @@
 #include "lcns/engines_composite.hpp"
 #include "lcns/class_definitions.hpp"
 #include "lcns/vtable_layout.hpp"
-#include "lcns/nesting_nester_fields.hpp"
 #include "lcns/nesting_nester_layout.hpp"
 #include "lcns/records.hpp"
 #include "lcns/small_buffer.hpp"
@@ -6897,132 +6896,12 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- Multi::NestingNester's fields (RE 0x342E0)
+    // ---------------------------------------------------------------- the constructor's store list, DELETED
     //
-    // One instruction per position, and the constructor is the best source because it sets its object register once: 0x342EC mov rbx,rcx
-    // and 0x343F1 pop rbx, with nothing writing rbx in between.
-    {
-        CHECK(lcns::kNestingNesterCtorAddress == 0x342E0u);
-        CHECK(lcns::kNestingNesterCtorBytes == 422u);
-        CHECK(lcns::kNestingNesterVtableField == 0x00u);
-
-        std::size_t count = 0;
-        const lcns::FieldStore* fields = lcns::nestingNesterCtorFields(count);
-        CHECK(count == 8u);                             // eight stores, seven distinct offsets
-
-        // every offset has an instruction, and the instruction is inside the constructor
-        for (std::size_t i = 0; i < count; ++i) {
-            CHECK(fields[i].address >= lcns::kNestingNesterCtorAddress);
-            CHECK(fields[i].address < lcns::kNestingNesterCtorAddress + lcns::kNestingNesterCtorBytes);
-            CHECK(fields[i].width != nullptr);
-        }
-
-        // the offsets themselves, in order, and the duplicate at 0x30 which is two stores rather than two fields
-        CHECK(fields[0].offset == 0x000u);
-        CHECK(fields[1].offset == 0x018u);
-        CHECK(fields[2].offset == 0x020u);
-        CHECK(fields[3].offset == 0x028u);
-        CHECK(fields[4].offset == 0x030u);
-        CHECK(fields[5].offset == 0x030u);              // RE 0x343E3 sets the same offset from xmm6
-        CHECK(fields[6].offset == 0x038u);
-        CHECK(fields[7].offset == 0x9F8u);              // RE 0x3436D: 0x270, which is 624
-
-        // the vtable is installed first and at offset 0, which is what makes it the object's first quadword
-        CHECK(fields[0].offset == lcns::kNestingNesterVtableField);
-        CHECK(fields[0].address == 0x34308u);           // RE 0x34308: mov [rbx], rax
-
-        // 0x30 is written twice and the SECOND write is a double, which is the evidence that the field is a double rather than a pointer
-        CHECK(std::string(fields[4].width) == "qword");
-        CHECK(std::string(fields[5].width) == "qword");
-        CHECK(std::string(fields[5].note).find("DOUBLE") != std::string::npos);
-
-        // the smallest and largest offsets, which bound the class's own storage that the constructor names
-        CHECK(fields[0].offset == 0u);
-        CHECK(fields[7].offset == 0x9F8u);
-
-        // and slot 2's contribution, which the same scan found after 0x3311F made rbp the object
-        std::size_t slot2Count = 0;
-        const lcns::FieldStore* slot2 = lcns::nestingNesterSlot2Fields(slot2Count);
-        CHECK(slot2Count == 3u);
-        for (std::size_t i = 0; i < slot2Count; ++i) {
-            CHECK(slot2[i].address >= 0x33100u);
-            CHECK(slot2[i].address < 0x33100u + 2240u);
-        }
-        // and the two sets agree about the vtable pointer being at 0
-        CHECK(slot2[0].offset == fields[0].offset);
-    }
-
-
-    // ---------------------------------------------------------------- every class's constructor (generated)
-    //
-    // A constructor is found by the vtable slot-0 ADDRESS it installs, and a field by a store through a register shown to hold the object.
-    // The count is of DISTINCT OFFSETS, so Multi::NestingNester's two writes at 0x30 make one position.
-    {
-        std::size_t count = 0;
-        const lcns::ClassConstructor* ctors = lcns::classConstructors(count);
-        CHECK(count == lcns::kClassesWithConstructor);
-        CHECK(count >= 90u);
-        CHECK(lcns::kClassesWritingFields >= 80u);
-        CHECK(lcns::kClassesWritingFields <= count);
-
-        // every row has a vtable in the data range, and a constructor either in the code range or absent
-        std::size_t withCtor = 0;
-        std::size_t writing = 0;
-        for (std::size_t i = 0; i < count; ++i) {
-            CHECK(ctors[i].qualified != nullptr);
-            CHECK(ctors[i].vtable >= 0xA00000u);
-            CHECK(ctors[i].candidates >= 1u);
-            CHECK(ctors[i].functionsWriting <= ctors[i].candidates);
-            if (ctors[i].constructor != 0u) {
-                ++withCtor;
-                CHECK(ctors[i].constructor >= 0x1000u);
-                CHECK(ctors[i].constructor < 0x9C0000u);
-            }
-            if (ctors[i].fields > 0u) {
-                ++writing;
-            }
-        }
-        CHECK(writing == lcns::kClassesWritingFields);
-        CHECK(withCtor >= 90u);
-
-        // THE TWO CLASSES THE COVERAGE CHECK FOUND NAMED AND UNDECLARED now have constructors, which is what this round was for
-        bool sawSplit = false, sawTerminal = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            if (std::string(ctors[i].qualified) == "Multi::SplitNode") {
-                sawSplit = true;
-                CHECK(ctors[i].constructor == 0x99910u);
-                CHECK(ctors[i].fields == 11u);
-            }
-            if (std::string(ctors[i].qualified) == "Multi::TerminalNode") {
-                sawTerminal = true;
-                CHECK(ctors[i].constructor == 0x99360u);
-                CHECK(ctors[i].fields == 10u);
-            }
-        }
-        CHECK(sawSplit);
-        CHECK(sawTerminal);
-
-        // the class a previous round measured by hand, whose two writes at 0x30 make one position
-        bool sawNesting = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            if (std::string(ctors[i].qualified) == "Multi::NestingNester") {
-                sawNesting = true;
-                CHECK(ctors[i].constructor == 0x342E0u);
-                CHECK(ctors[i].fields == 7u);      // seven positions from eight stores
-            }
-        }
-        CHECK(sawNesting);
-
-        // and the class with the most, which is the richest layout the scan found
-        const lcns::ClassConstructor* richest = &ctors[0];
-        for (std::size_t i = 1; i < count; ++i) {
-            if (ctors[i].fields > richest->fields) {
-                richest = &ctors[i];
-            }
-        }
-        CHECK(richest->fields >= 30u);
-        CHECK(std::string(richest->qualified) == "Tiling::SqueezeMultiTiler");
-    }
+    // A `FieldStore` table stood here, listing the constructor's eight stores at seven offsets with their instructions. **The
+    // class below states the same facts as MEMBERS**, which is what the human asked for, and two descriptions of one class drift --
+    // this pair already did, both defining kNestingNesterCtorAddress. The table is deleted and the class's members keep the
+    // instructions; nothing was true in the table that the class does not say.
 
     // ---------------------------------------------------------------- Multi::NestingNester as a CLASS (RE 0x342E0)
     //
@@ -7195,6 +7074,75 @@ int main() {
         CHECK(owner.refcount == 1u && owner.flags == 1u);
         owner.payload = &buffer;
         CHECK(owner.payload == &buffer);
+    }
+
+
+    // ---------------------------------------------------------------- every class's constructor (generated)
+    //
+    // A constructor is found by the vtable slot-0 ADDRESS it installs, and a field by a store through a register shown to hold the object.
+    // The count is of DISTINCT OFFSETS, so Multi::NestingNester's two writes at 0x30 make one position.
+    {
+        std::size_t count = 0;
+        const lcns::ClassConstructor* ctors = lcns::classConstructors(count);
+        CHECK(count == lcns::kClassesWithConstructor);
+        CHECK(count >= 90u);
+        CHECK(lcns::kClassesWritingFields >= 80u);
+        CHECK(lcns::kClassesWritingFields <= count);
+
+        std::size_t withCtor = 0;
+        std::size_t writing = 0;
+        for (std::size_t i = 0; i < count; ++i) {
+            CHECK(ctors[i].qualified != nullptr);
+            CHECK(ctors[i].vtable >= 0xA00000u);
+            CHECK(ctors[i].candidates >= 1u);
+            CHECK(ctors[i].functionsWriting <= ctors[i].candidates);
+            if (ctors[i].constructor != 0u) {
+                ++withCtor;
+                CHECK(ctors[i].constructor >= 0x1000u);
+                CHECK(ctors[i].constructor < 0x9C0000u);
+            }
+            if (ctors[i].fields > 0u) {
+                ++writing;
+            }
+        }
+        CHECK(writing == lcns::kClassesWritingFields);
+        CHECK(withCtor >= 90u);
+
+        // THE TWO CLASSES THE COVERAGE CHECK FOUND NAMED AND UNDECLARED now have constructors
+        bool sawSplit = false, sawTerminal = false;
+        for (std::size_t i = 0; i < count; ++i) {
+            if (std::string(ctors[i].qualified) == "Multi::SplitNode") {
+                sawSplit = true;
+                CHECK(ctors[i].constructor == 0x99910u);
+                CHECK(ctors[i].fields == 11u);
+            }
+            if (std::string(ctors[i].qualified) == "Multi::TerminalNode") {
+                sawTerminal = true;
+                CHECK(ctors[i].constructor == 0x99360u);
+                CHECK(ctors[i].fields == 10u);
+            }
+        }
+        CHECK(sawSplit);
+        CHECK(sawTerminal);
+
+        bool sawNesting = false;
+        for (std::size_t i = 0; i < count; ++i) {
+            if (std::string(ctors[i].qualified) == "Multi::NestingNester") {
+                sawNesting = true;
+                CHECK(ctors[i].constructor == 0x342E0u);
+                CHECK(ctors[i].fields == 7u);      // seven positions from eight stores
+            }
+        }
+        CHECK(sawNesting);
+
+        const lcns::ClassConstructor* richest = &ctors[0];
+        for (std::size_t i = 1; i < count; ++i) {
+            if (ctors[i].fields > richest->fields) {
+                richest = &ctors[i];
+            }
+        }
+        CHECK(richest->fields >= 30u);
+        CHECK(std::string(richest->qualified) == "Tiling::SqueezeMultiTiler");
     }
 
     return check::finish("test_recovered");
