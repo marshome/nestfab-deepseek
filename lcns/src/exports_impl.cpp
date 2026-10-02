@@ -5,6 +5,7 @@
 // computes it (byte difference times the derived inverse), not as a division.
 
 #include "lcns/exports_impl.hpp"
+#include "lcns/launching_order.hpp"
 #include <cstring>
 #include <thread>
 #include <string>
@@ -179,30 +180,25 @@ void setInt_1FC(void* order, int value) { static_cast<IntFieldCarrier*>(order)->
 
 namespace {
 
-/** A field and the "given" byte this module writes four bytes before it. RE 0xEA09/0xEA0D and its four siblings. */
-struct FieldWriter {
-    unsigned char* base;
-    void writeByte(std::size_t offset, unsigned char value) const {
-        std::memcpy(base + offset, &value, sizeof(value));
-    }
-    void writeDword(std::size_t offset, std::uint32_t value) const {
-        std::memcpy(base + offset, &value, sizeof(value));
-    }
-    void writeDouble(std::size_t offset, double value) const {
-        std::memcpy(base + offset, &value, sizeof(value));
-    }
-};
+/** The order as the nine setters see it: lcns/launching_order.hpp's NAMED layout.
+ *
+ * RE 0xEA09 and 0xEA0D and their four siblings established the shape these setters share -- a "given" byte four bytes before
+ * its value -- and the header now carries those offsets as named fields, so the setters below address them by name. That is
+ * what the header is for: a layout edit that moves a field breaks the compile instead of silently writing the wrong place.
+ */
+inline LaunchingOrderLayout* order_fields(void* order) {
+    return static_cast<LaunchingOrderLayout*>(order);
+}
 
 }  // namespace
 
 void setOrigin_0D050(void* order, int value) {
-    FieldWriter{static_cast<unsigned char*>(order)}.writeDword(0x0C, static_cast<std::uint32_t>(value));  // RE 0xD119
+    order_fields(order)->origin = static_cast<std::uint32_t>(value);                        // RE 0xD119
 }
 
 void setCommonCutCuttingPreference_0EC90(void* order, int value) {
-    const FieldWriter w{static_cast<unsigned char*>(order)};
-    w.writeByte(0x88, 1);                                        // RE 0xED59
-    w.writeDword(0x8C, static_cast<std::uint32_t>(value));       // RE 0xED60
+    order_fields(order)->commonCutCuttingPreferenceGiven = 1;                               // RE 0xED59
+    order_fields(order)->commonCutCuttingPreference = static_cast<std::uint32_t>(value);    // RE 0xED60
 }
 
 void setMultiplicityPreference_0D1A0(void* order, int choice) {
@@ -210,52 +206,47 @@ void setMultiplicityPreference_0D1A0(void* order, int choice) {
     //   RE 0xD248 loads 0x9AD6D8 = 0.25, the default        RE 0xD262 loads 0x9AD6E0 = 0.05
     //   RE 0xD294 loads 0x9AD6E8 = 0.001 for choice 1      RE 0xD2B5 loads 0x9AD6D0 = 2.0 for choice 4
     // The branches are 0xD253 (choice == 3), 0xD28F (choice == 1) and 0xD2B0 (choice == 4); every other value falls
-    // through to the default, which is why a switch is written rather than a table.
-    double chosen = 0.25;                                        // RE 0x9AD6D8
+    // through to the default, which is why a chain is written rather than a table.
+    double chosen = 0.25;                                                                   // RE 0x9AD6D8
     if (choice == 3) {
-        chosen = 0.05;                                           // RE 0x9AD6E0
+        chosen = 0.05;                                                                      // RE 0x9AD6E0
     } else if (choice == 1) {
-        chosen = 0.001;                                          // RE 0x9AD6E8
+        chosen = 0.001;                                                                     // RE 0x9AD6E8
     } else if (choice == 4) {
-        chosen = 2.0;                                            // RE 0x9AD6D0
+        chosen = 2.0;                                                                       // RE 0x9AD6D0
     }
-    FieldWriter{static_cast<unsigned char*>(order)}.writeDouble(0x10, chosen);   // RE 0xD26A and its siblings
+    order_fields(order)->multiplicityPreference = chosen;                                   // RE 0xD26A and its siblings
 }
 
 void setAutomaticStop_0E010(void* order, int value) {
-    FieldWriter{static_cast<unsigned char*>(order)}.writeDword(0x240, static_cast<std::uint32_t>(value));  // RE 0xE0D9
+    order_fields(order)->automaticStop = static_cast<std::uint32_t>(value);                 // RE 0xE0D9
 }
 
 void setCommonCutSafetyPreference_0E940(void* order, int value) {
-    const FieldWriter w{static_cast<unsigned char*>(order)};
-    w.writeByte(0x68, 1);                                        // RE 0xEA09
-    w.writeDword(0x6C, static_cast<std::uint32_t>(value));       // RE 0xEA0D
+    order_fields(order)->commonCutSafetyPreferenceGiven = 1;                                // RE 0xEA09
+    order_fields(order)->commonCutSafetyPreference = static_cast<std::uint32_t>(value);     // RE 0xEA0D
 }
 
 void setMultiTorchCuttingPreference_0F130(void* order, int value) {
-    const FieldWriter w{static_cast<unsigned char*>(order)};
-    w.writeByte(0x98, 1);                                                          // RE 0xF225
-    w.writeByte(0xA0, (value > 0) ? 1 : 0);                                        // RE 0xF22C, setg
-    w.writeDword(0x9C, static_cast<std::uint32_t>(value));                         // RE 0xF233
+    order_fields(order)->multiTorchCuttingPreferenceGiven = 1;                              // RE 0xF225
+    order_fields(order)->multiTorchCuttingPreferencePositive = (value > 0) ? 1 : 0;         // RE 0xF22C, setg
+    order_fields(order)->multiTorchCuttingPreference = static_cast<std::uint32_t>(value);   // RE 0xF233
 }
 
 void setSpecificSheetOrigin_13E30(void* order, int value) {
-    const FieldWriter w{static_cast<unsigned char*>(order)};
-    w.writeByte(0x124, 1);                                       // RE 0x13F02
-    w.writeDword(0x128, static_cast<std::uint32_t>(value));      // RE 0x13F09
+    order_fields(order)->specificSheetOriginGiven = 1;                                      // RE 0x13F02
+    order_fields(order)->specificSheetOrigin = static_cast<std::uint32_t>(value);           // RE 0x13F09
 }
 
 void setSpecificSheetObjective_13FE0(void* order, int value) {
-    const FieldWriter w{static_cast<unsigned char*>(order)};
-    w.writeByte(0x12C, 1);                                       // RE 0x140B2
-    w.writeDword(0x130, static_cast<std::uint32_t>(value));      // RE 0x140B9
+    order_fields(order)->specificSheetObjectiveGiven = 1;                                   // RE 0x140B2
+    order_fields(order)->specificSheetObjective = static_cast<std::uint32_t>(value);        // RE 0x140B9
 }
 
 void setMarkMode_188D0(void* order, int flag, double first, double second) {
-    const FieldWriter w{static_cast<unsigned char*>(order)};
-    w.writeDouble(0xE8, first);                                  // RE 0x189FA, from xmm2
-    w.writeByte(0xE0, (flag != 0) ? 1 : 0);                      // RE 0x18A09, setne
-    w.writeDouble(0xF0, second);                                 // RE 0x18A10, from xmm3
+    order_fields(order)->markModeFirst = first;                                             // RE 0x189FA, from xmm2
+    order_fields(order)->markModeGiven = (flag != 0) ? 1 : 0;                               // RE 0x18A09, setne
+    order_fields(order)->markModeSecond = second;                                           // RE 0x18A10, from xmm3
 }
 
 }  // namespace impl

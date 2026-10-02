@@ -68,6 +68,27 @@ TYPES = {
     1: "std::uint8_t", 2: "std::uint16_t", 4: "std::uint32_t", 8: "std::uint64_t", 16: "unsigned char[16]",
 }
 
+# The fields whose setter stores a DOUBLE, so the declaration must be `double` and not a 64-bit integer: `movsd` moves a
+# floating value, and declaring the slot as an integer makes the compiler insert a conversion. RE 0xD255, RE 0x189FA and
+# RE 0x18A10 are all `movsd`, and the failing test was the compiler doing exactly that conversion.
+DOUBLE_FIELDS = {0x010, 0x0E8, 0x0F0}
+TYPE_DOUBLE = "double"
+
+# The width of a field the constructor does not write, taken from the store the NAME came from. RE 0xD255 stores a double at
+# +0x10, RE 0x13F09 and RE 0x140B9 store a dword, and everything else named is a byte flag.
+NAMED_WIDTHS = {
+    0x010: 8,    # RE 0xD255, movsd
+    0x0E8: 8,    # RE 0x189FA, movsd
+    0x0F0: 8,    # RE 0x18A10, movsd
+    0x124: 1,    # RE 0x13F02, mov byte = 1
+    0x128: 4,    # RE 0x13F09, mov dword
+    0x12C: 1,    # RE 0x140B2
+    0x130: 4,    # RE 0x140B9, mov dword
+    0x068: 1, 0x06C: 4, 0x088: 1, 0x08C: 4, 0x098: 1, 0x09C: 4, 0x0A0: 1, 0x0E0: 1,
+    0x170: 1, 0x1A0: 8, 0x1A8: 8, 0x1B0: 8, 0x1B8: 8, 0x1C0: 8, 0x240: 4, 0x288: 4, 0x2A8: 8,
+    0x00C: 4, 0x110: 8, 0x118: 8, 0x120: 8,
+}
+
 
 def fields():
     profile = load_prof()
@@ -86,27 +107,53 @@ def fields():
 
 def main():
     written = fields()
+    # One pass over the offsets: where a name exists, emit the field; where the constructor writes a value, emit it with an
+    # offset-derived name; where neither, collect the gap into ONE unnamed run. The first version emitted a single byte per
+    # unnamed offset, which is how `specificSheetOriginGiven` at +0x124 ended up declared as `unsigned char[0x128]` -- the
+    # name was there in the table but the byte-by-byte walk never reached it.
+    named_offsets = sorted(set(list(NAMES) + list(written)))
     lines = []
     used = set()
-    offset = 0
-    while offset < 0x2C0:
-        width = written.get(offset, 0)
-        if width == 0:
-            # an offset the constructor does not write: emit one byte and carry on, since the interior is what matters
-            name, evidence = NAMES.get(offset, ("", ""))
-            lines.append("    unsigned char %s;   // +0x%03X%s" % (name or ("unnamed%03X" % offset), offset,
-                                                                 ("  " + evidence) if evidence else ""))
-            used.add(name or ("unnamed%03X" % offset))
-            offset += 1
+    cursor = 0
+    for index, offset in enumerate(named_offsets):
+        following = named_offsets[index + 1] if index + 1 < len(named_offsets) else 0x2C0
+        # a gap before this offset is its own field, so the layout is exact and the size assertion holds
+        if offset > cursor:
+            lines.append("    unsigned char unnamed%03X[0x%X];   // +0x%03X..+0x%03X, not written by RE 0x14620"
+                         % (cursor, offset - cursor, cursor, offset - 1))
+            cursor = offset
+        if offset < cursor:
             continue
+        available = following - offset
+        width = written.get(offset, 0)
         name, evidence = NAMES.get(offset, ("", ""))
+        if name and offset in NAMED_WIDTHS:
+            # For a NAMED field the store the name came from is the authority, not the constructor: RE 0x140B9 is
+            # `mov dword ptr [rdi+0x130], ebp` while the constructor writes eight bytes there, and the setter is what the
+            # field's meaning is read from.
+            width = NAMED_WIDTHS[offset]
+        elif width == 0:
+            width = NAMED_WIDTHS.get(offset, min(available, 4))
+        # A field may not run into the next named one: the boundary between them is what makes the layout exact. The second
+        # version of this loop advanced a cursor by each field's width, so a named field that began inside a preceding gap
+        # was reported as an overlap and silently dropped -- specificSheetOriginGiven at +0x124 went missing that way while
+        # the run still printed "26 of 96 named".
+        if width > available:
+            width = available
+        if width <= 0:
+            continue
         if not name:
             name = "unnamed%03X" % offset
         if name in used:
             name = "%s_%03X" % (name, offset)
         used.add(name)
-        lines.append("    %-20s %s;   // +0x%03X  %s" % (TYPES[width], name, offset, evidence or "written by RE 0x14620"))
-        offset += width
+        declaration = TYPE_DOUBLE if offset in DOUBLE_FIELDS else TYPES.get(width, "unsigned char")
+        lines.append("    %-20s %s;   // +0x%03X  %s"
+                     % (declaration, name, offset, evidence or "written by RE 0x14620"))
+        cursor = offset + width
+    if cursor < 0x2C0:
+        lines.append("    unsigned char unnamed%03X[0x%X];   // +0x%03X..+0x2BF, not written by RE 0x14620"
+                     % (cursor, 0x2C0 - cursor, cursor))
 
     header = """// lcns/include/lcns/launching_order.hpp -- the launch order's layout, read out of its constructor and its setters.
 //
