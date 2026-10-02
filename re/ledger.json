@@ -854,6 +854,22 @@
    "round": 593,
    "subject": "tooling.script-hid-a-defect",
    "witness": "re/g_impl_variant.py looked for the target name inside a body that does not mention it; re/g_wire_variant.py fixed it by line and printed the before and after"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the three unforwarded variant exports have one unread callee each, all outlined, and each routine has exactly TWO callers -- its own export pair",
+   "round": 594,
+   "subject": "variant.remaining-targets",
+   "witness": "0x14A60 678 B 150 instr for CNS_AddOpenCuttingPathToPartVariant (200); 0xC1A0 241 B 63 instr for CNS_SetPartVariantAuthorizations (202); 0x10CE0 584 B 125 instr for CNS_AddPartVariantSpecificAuthorizations (204)"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the variant authorisation routines touch order offsets the ledger already names: +0x1A0, +0x1A8, +0x1B0 and +0x188..+0x198",
+   "round": 594,
+   "subject": "variant.authorization-offsets",
+   "witness": "0xC1A0 touches +0x188, +0x190, +0x198; 0x10CE0 touches +0x1A0, +0x1A8, +0x1B0; the ledger names +0x1A0/+0x1A8/+0x1B0 commonCutParameterA/B/C from the constructor's writes and +0x1B8 userString"
   }
  ]
 }
