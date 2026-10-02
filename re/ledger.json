@@ -1038,6 +1038,30 @@
    "round": 602,
    "subject": "stat.blocker-may-be-a-classification",
    "witness": "0x5CD800 has 113 callers and 0x8C5090 133; if they are the same reference-count or container shape, four exports become forwardable on a classification rather than a recovery -- TESTABLE, and the next round tests it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the stat blocker is real domain container logic, not a classification: 0x5CD800 and 0x8C5090 are container walks",
+   "round": 603,
+   "subject": "stat.blocker-is-domain",
+   "witness": "0x5CD816 call 0x5C61D0 with [rax+8] vs [rax]; 0x8C509A mov rbp,[rcx+8] / 0x8C509E mov rdi,[rcx] / cmp / je -- both are begin/end walks, and neither is a lock or a forwarder"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a high caller count does NOT imply plumbing: four high-fanout functions were plumbing and two are not",
+   "round": 603,
+   "subject": "hypothesis.disproven-not-caller-count",
+   "witness": "what separates them is the body -- a lock xadd and cmp/je loops against iterator pairs dereferencing 0x18 and 0x20 offsets, versus a reference-count release and a range walk"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x8C5090 walks a container whose elements are 0x20 bytes and hold a nested container at +0x18..+0x20",
+   "round": 603,
+   "subject": "container.nested-shape",
+   "witness": "0x8C50B0 mov rsi,[rdi+0x20] / 0x8C50B4 mov rbx,[rdi+0x18] / 0x8C50B8 cmp rsi,rbx / je; the outer stride is 0x20 and the inner pair sits at +0x18"
   }
  ]
 }
