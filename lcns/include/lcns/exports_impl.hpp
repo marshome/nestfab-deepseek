@@ -66,6 +66,9 @@ void setModuleSwitch(int value);
 /** RE 0x60A610: reads back the byte the switch writes, so the behaviour can be checked. */
 unsigned char moduleSwitch();
 
+/** RE 0x16CB0 (ordinal 208): assigns the C string to the std::string at +0x1B8. */
+void setUserStringAt1B8(void* object, const char* text);
+
 void setShearMode(void* order, int value);         // RE 0x0DDC0 -> +0x44
 void setNoMixPreference(void* order, int value);   // RE 0x0D310 -> +0x18
 void setNoSheetMixPreference(void* order, int value);   // RE 0x0D340 -> +0x1C

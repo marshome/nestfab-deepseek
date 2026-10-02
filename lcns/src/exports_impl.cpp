@@ -7,6 +7,7 @@
 #include "lcns/exports_impl.hpp"
 #include <cstring>
 #include <thread>
+#include <string>
 
 namespace lcns {
 namespace dll {
@@ -157,6 +158,13 @@ void setModuleSwitch(int value) {
 
 unsigned char moduleSwitch() {
     return g_moduleSwitch;
+}
+
+void setUserStringAt1B8(void* object, const char* text) {
+    // RE 0x16CB0: the length comes from the strlen stub at 0x63F238, and the string sits at +0x1B8, so this is an
+    // assignment of a C string into a std::string, done with the same type the original uses.
+    auto* holder = reinterpret_cast<std::string*>(static_cast<unsigned char*>(object) + 0x1B8);
+    *holder = (text != nullptr) ? text : "";
 }
 
 void setShearMode(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field44 = value; }

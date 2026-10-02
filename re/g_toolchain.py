@@ -58,7 +58,8 @@ BOILERPLATE = {
     0x86B6B0,  # std::string range constructor using the strlen stub
     0x9988C0,  # allocator with a 0xA0 byte header, zeroed, returns past the header
     0x97AB50,  # allocates, installs a vtable, throws, then releases
-    0x910BA0,  # std::string growth: length field, doubling, allocate
+    0x910C20,  # std::string internal: data, length and small buffer, calls the growth routine
+    0x90ECB0,  # std::string internal: same three words, clamps against max_size
 }
 
 # Entries whose value cannot be reproduced by any reimplementation, because it is an address inside the original image.

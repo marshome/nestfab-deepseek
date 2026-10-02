@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 30u);
+        CHECK(ex::forwardedCount() == 31u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,7 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82 || e->ordinal0 == 270;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82 || e->ordinal0 == 270 || e->ordinal0 == 208;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -567,6 +567,30 @@ int main() {
         CHECK(lcns::dll::exports::impl::moduleSwitch() == 1);
         lcns::dll::exports::impl::setModuleSwitch(0);
         CHECK(lcns::dll::exports::impl::moduleSwitch() == 0);
+    }
+
+    // ------------------- ordinal 208: a std::string assignment at +0x1B8
+    {
+        // A std::string has to live at +0x1B8 for this to be the same operation the original performs, so the test builds
+        // exactly that: an object large enough, with a std::string at the offset the assembly names.
+        alignas(std::string) unsigned char object[0x1B8 + sizeof(std::string) + 0x40];
+        std::memset(object, 0, sizeof(object));
+        auto* holder = new (object + 0x1B8) std::string();
+        lcns::dll::exports::impl::setUserStringAt1B8(object, "hello");
+        CHECK(holder->size() == 5);
+        CHECK(*holder == "hello");
+        lcns::dll::exports::impl::setUserStringAt1B8(object, "");
+        CHECK(holder->empty());
+        const char* longText = "a much longer string that will not fit in the small buffer at all";
+        lcns::dll::exports::impl::setUserStringAt1B8(object, longText);
+        CHECK(holder->size() == std::strlen(longText));                 // the assignment replaces rather than appends
+        CHECK(holder->compare(0, 4, "a mu") == 0);
+        lcns::dll::exports::impl::setUserStringAt1B8(object, nullptr);
+        CHECK(holder->empty());                      // a null pointer is treated as the empty string
+        holder->~basic_string();
+        CHECK(offsetof(lcns::dll::UserStringHolder, data) == 0x00);
+        CHECK(offsetof(lcns::dll::UserStringHolder, length) == 0x08);
+        CHECK(offsetof(lcns::dll::UserStringHolder, smallBuffer) == 0x10);
     }
 
     return check::finish("exports");

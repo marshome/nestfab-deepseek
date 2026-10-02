@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <string>
+
 #include <cstddef>
 #include <cstdint>
 
@@ -270,6 +272,21 @@ struct LocalEngineCarrier {
 static_assert(offsetof(LocalEngineCarrier, maxThreads) == 0x1F8, "RE 0xD3D5");
 static_assert(offsetof(LocalEngineCarrier, engineLo) == 0x200, "RE 0xD390");
 static_assert(offsetof(LocalEngineCarrier, engineHi) == 0x201, "RE 0xD3A0");
+
+/**
+ * The std::string at +0x1B8 of a part, as libstdc++ lays it out: data at +0x00, length at +0x08 and the small string
+ * buffer at +0x10. RE 0x90ECB0 reads all three, and RE 0x16CB0 reaches it through the strlen stub, which is why the
+ * field is modelled as std::string rather than as a raw pointer.
+ */
+struct UserStringHolder {
+    void* data;                                // +0x00
+    std::size_t length;                        // +0x08
+    unsigned char smallBuffer[0x10];
+    std::string* stringAt(std::size_t offset) { return reinterpret_cast<std::string*>(reinterpret_cast<unsigned char*>(this) + offset); }
+};
+static_assert(offsetof(UserStringHolder, data) == 0x00, "libstdc++ layout, RE 0x90ECB0");
+static_assert(offsetof(UserStringHolder, length) == 0x08, "libstdc++ layout, RE 0x90ECB0");
+static_assert(offsetof(UserStringHolder, smallBuffer) == 0x10, "libstdc++ layout, RE 0x90ECB0");
 
 }  // namespace dll
 }  // namespace lcns
