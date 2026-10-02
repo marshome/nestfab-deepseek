@@ -78,6 +78,10 @@ BOILERPLATE = {
     0x8760F0,  # destructor thunk: installs a vtable then jumps into the release path
     0x876040,  # derived copy constructor: calls 0x888F50 then installs a vtable
     0x877AD0,  # destructor thunk for the same family as 0x875FD0
+    0xB5D60,  # xor eax, eax ; ret -- a default override returning zero
+    0x6FC810,  # xor eax, eax ; ret -- a default override returning zero
+    0xD5970,  # xor eax, eax ; ret -- a default override returning zero
+    0xD59A0,  # xor eax, eax ; ret -- a default override returning zero
     0x90ECB0,  # std::string internal: same three words, clamps against max_size
 }
 

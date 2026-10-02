@@ -6,6 +6,7 @@
 // original accepts exactly the same memory the C++ does.
 
 #include "check.hpp"
+#include "lcns/field_accessors.hpp"
 #include "lcns/boxacc.hpp"
 #include "lcns/boxmerge.hpp"
 #include "lcns/embedded.hpp"
@@ -343,6 +344,58 @@ int main() {
         CHECK(lcns::dll::exports::impl::kAngleAxisQuarter * 4 == static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn));
         CHECK(lcns::dll::exports::impl::kAngleAxisHalf * 2 == static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn));
         CHECK(lcns::dll::exports::impl::kAngleAxisThreeQuarter * 4 == static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn) * 3);
+    }
+
+    // ------------------- the field accessors, each against its own offset and width
+    {
+        // A large noisy buffer, so writing the wrong offset or the wrong width shows up immediately.
+        unsigned char object[0x80];
+        std::memset(object, 0xA5, sizeof(object));
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x00, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword00_52F920(object) == put);   // RE 0x52F920
+        }
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x00, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword00_54CE90(object) == put);   // RE 0x54CE90
+        }
+        lcns::dll::accessors::setByte00_54D110(object, 0x5A);   // RE 0x54D110
+        {
+            std::uint8_t got = 0;
+            std::memcpy(&got, object + 0x00, sizeof(got));
+            CHECK(got == 0x5A);
+        }
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x60, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword60_4F8C60(object) == put);   // RE 0x4F8C60
+        }
+        lcns::dll::accessors::setDword64_4F8CC0(object, 0x12345678);   // RE 0x4F8CC0
+        {
+            std::uint32_t got = 0;
+            std::memcpy(&got, object + 0x64, sizeof(got));
+            CHECK(got == 0x12345678);
+        }
+        lcns::dll::accessors::setDword6C_4F76C0(object, 0x12345678);   // RE 0x4F76C0
+        {
+            std::uint32_t got = 0;
+            std::memcpy(&got, object + 0x6C, sizeof(got));
+            CHECK(got == 0x12345678);
+        }
+        lcns::dll::accessors::setDword28_4F7270(object, 0x12345678);   // RE 0x4F7270
+        {
+            std::uint32_t got = 0;
+            std::memcpy(&got, object + 0x28, sizeof(got));
+            CHECK(got == 0x12345678);
+        }
+        lcns::dll::accessors::setByte2C_4F7290(object, 0x5A);   // RE 0x4F7290
+        {
+            std::uint8_t got = 0;
+            std::memcpy(&got, object + 0x2C, sizeof(got));
+            CHECK(got == 0x5A);
+        }
     }
 
     return check::finish("boxacc");
