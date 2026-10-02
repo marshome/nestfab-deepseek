@@ -1950,6 +1950,30 @@
    "round": 656,
    "subject": "classes.named-without-being-declared",
    "witness": "re/g_defined_classes.py, after excluding substituted template parameters: engines_composite.hpp 1, nester.hpp 3, recovery.hpp 7, row.hpp 1, engine.hpp 3, engines.hpp 1, model.hpp 1 -- including Multi::NestingNester, Multi::SplitNode, Multi::TerminalNode, Row::Squeezer and Compact::Compacter::Implementation"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "of the 96 classes the RTTI names, 82 are usable and 46 had no definition, so declarations were generated for all 46",
+   "round": 657,
+   "subject": "classes.all-96-checked",
+   "witness": "by namespace Multi 17, Structure 7, Utils 5, Prc 4, Json 3, Tiling 3, EngineNS 2, dbg 2; 36 were skipped because a hand-written header already declares them"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Engine in the RTTI is a namespace and lcns::Engine is a class here, so the generated namespace is emitted as EngineNS while the doc comments keep the RTTI name",
+   "round": 657,
+   "subject": "classes.Engine-is-a-namespace",
+   "witness": "a namespace and a class cannot share a name; the comment is the evidence and the identifier is what had to change"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "three attempts at parsing the generated namespace nesting failed, and the qualified name was written in the doc comment above every declaration",
+   "round": 657,
+   "subject": "tooling.read-the-producers-answer",
+   "witness": "the consumer now reads what the generator stated rather than re-deriving it -- the same lesson as the unindexed archive"
   }
  ]
 }

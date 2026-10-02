@@ -44,6 +44,7 @@
 #include "lcns/classes.hpp"
 #include "lcns/virtual_methods.hpp"
 #include "lcns/engines_composite.hpp"
+#include "lcns/class_definitions.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6742,6 +6743,108 @@ int main() {
         for (int i = 0; i < 7; ++i) {
             CHECK(lcns::kCompositeLoops[i] > 0x759B70u);
             CHECK(lcns::kCompositeLoops[i] < 0x759B70u + 8230u);
+        }
+    }
+
+
+    // ---------------------------------------------------------------- every class the RTTI names (generated declarations)
+    //
+    // The systematic answer to the defect the human found: the repository named classes in prose and declared almost none. This asserts the
+    // TABLE's shape and that the declarations exist as types, which is the claim a declaration makes.
+    {
+        std::size_t count = 0;
+        const lcns::ClassFacts* facts = lcns::classFacts(count);
+        CHECK(count >= 80u);
+
+        // the namespaces the declarations cover, and how many per namespace
+        CHECK(lcns::kDeclaredIn_Multi == 17u);
+        CHECK(lcns::kDeclaredIn_Structure == 7u);
+        CHECK(lcns::kDeclaredIn_Utils == 5u);
+        CHECK(lcns::kDeclaredIn_Prc == 4u);
+        CHECK(lcns::kDeclaredIn_Json == 3u);
+
+        // THE DECLARATIONS ARE TYPES: one pointer per declared class, taken from the header's own doc comments, which
+        // state the qualified name. This is a COMPILE-TIME claim that the type exists in that namespace.
+        {
+            lcns::Compact::Compacter::Implementation* p0 = nullptr; (void)p0;
+            lcns::Json::DefaultValueAllocator* p3 = nullptr; (void)p3;
+            lcns::Json::FastWriter* p4 = nullptr; (void)p4;
+            lcns::Json::StyledWriter* p5 = nullptr; (void)p5;
+            lcns::Multi::AdvancedStrategist* p6 = nullptr; (void)p6;
+            lcns::Multi::AllSheetSelector* p7 = nullptr; (void)p7;
+            lcns::Multi::CompactCanceller* p8 = nullptr; (void)p8;
+            lcns::Multi::LargestSheetSelector* p9 = nullptr; (void)p9;
+            lcns::Multi::NestingContextPool* p10 = nullptr; (void)p10;
+            lcns::Multi::NestingObserver* p11 = nullptr; (void)p11;
+            lcns::Multi::NoFitMapCanceller* p12 = nullptr; (void)p12;
+            lcns::Multi::NoMixSheetSelector* p13 = nullptr; (void)p13;
+            lcns::Multi::PartUpdaterLimiter* p14 = nullptr; (void)p14;
+            lcns::Multi::RCompactCanceller* p15 = nullptr; (void)p15;
+            lcns::Multi::RandomSheetSelector* p16 = nullptr; (void)p16;
+            lcns::Multi::SplitNode* p17 = nullptr; (void)p17;
+            lcns::Multi::StrategyBasicAdder* p18 = nullptr; (void)p18;
+            lcns::Multi::SupervisorCanceller* p19 = nullptr; (void)p19;
+            lcns::Multi::TerminalNode* p20 = nullptr; (void)p20;
+            lcns::Multi::TraceObserver* p21 = nullptr; (void)p21;
+            lcns::Multi::WrapObserver* p22 = nullptr; (void)p22;
+            lcns::Prc::AlphaPriceComputer* p23 = nullptr; (void)p23;
+            lcns::Prc::BoxPriceComputer* p24 = nullptr; (void)p24;
+            lcns::Prc::HullPriceComputer* p25 = nullptr; (void)p25;
+            lcns::Prc::LinearCombinationPricer* p26 = nullptr; (void)p26;
+            lcns::RCompact::RotateLogger* p27 = nullptr; (void)p27;
+            lcns::Row::BasicDistancer* p28 = nullptr; (void)p28;
+            lcns::Structure::BoxAreaDimensioner* p29 = nullptr; (void)p29;
+            lcns::Structure::ClusterObserver* p30 = nullptr; (void)p30;
+            lcns::Structure::Observer* p31 = nullptr; (void)p31;
+            lcns::Structure::ParseProblemException* p32 = nullptr; (void)p32;
+            lcns::Structure::ParseSolutionException* p33 = nullptr; (void)p33;
+            lcns::Structure::SizeDimensioner* p34 = nullptr; (void)p34;
+            lcns::Structure::WidthDimensioner* p35 = nullptr; (void)p35;
+            lcns::Tiling::BasicCandidater* p36 = nullptr; (void)p36;
+            lcns::Tiling::OldMultitorchEvaluator* p37 = nullptr; (void)p37;
+            lcns::Tiling::WarpCanceller* p38 = nullptr; (void)p38;
+            lcns::Utils::BadResponseException* p39 = nullptr; (void)p39;
+            lcns::Utils::ConnectException* p40 = nullptr; (void)p40;
+            lcns::Utils::ResolveException* p41 = nullptr; (void)p41;
+            lcns::Utils::TimeoutException* p42 = nullptr; (void)p42;
+            lcns::Utils::TimerWinImplementation* p43 = nullptr; (void)p43;
+            lcns::dbg::file_error* p44 = nullptr; (void)p44;
+            lcns::dbg::symlog* p45 = nullptr; (void)p45;
+        }
+
+            // THE TWO OBSERVERS ARE NAMED THROUGH EngineNS, which is what the generator emits because this repository already has
+            // lcns::Engine as a class and a namespace cannot share its name. The doc comment above each declaration keeps the RTTI name
+            // -- Engine::CompositeObserver -- because that is the evidence; the identifier is what differs.
+            lcns::EngineNS::CompositeObserver* compositeObserver = nullptr; (void)compositeObserver;
+            lcns::EngineNS::EquivalentObserver* equivalentObserver = nullptr; (void)equivalentObserver;
+
+        // a class already defined by hand is flagged, and NOT declared again -- two declarations would be a compile error
+        bool sawInfinite = false;
+        bool sawCompositeByHand = false;
+        for (std::size_t i = 0; i < count; ++i) {
+            CHECK(facts[i].vtable >= 0xA00000u);
+            CHECK(facts[i].slots >= 3u);
+            CHECK(facts[i].firstVirtual >= 0x1000u);
+            if (std::string(facts[i].qualified) == "Engine::InfiniteEngine") {
+                sawInfinite = true;
+                CHECK(facts[i].definedByHand);
+                CHECK(facts[i].firstVirtual == 0x759A80u);
+                CHECK(facts[i].firstVirtualBytes == 80u);
+            }
+            if (std::string(facts[i].qualified) == "Engine::CompositeEngine") {
+                sawCompositeByHand = true;
+                CHECK(facts[i].definedByHand);
+                CHECK(facts[i].firstVirtualBytes != 0u);
+            }
+        }
+        CHECK(sawInfinite);
+        CHECK(sawCompositeByHand);
+
+        // and no two classes share a vtable, which is what makes the vtables identifiers
+        for (std::size_t i = 0; i < count; ++i) {
+            for (std::size_t j = i + 1; j < count; ++j) {
+                CHECK(facts[i].vtable != facts[j].vtable);
+            }
         }
     }
 
