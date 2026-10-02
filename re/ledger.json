@@ -1355,6 +1355,14 @@
    "round": 621,
    "subject": "tooling.supersession-not-deletion",
    "witness": "re/g_supersede.py marks the weaker of two live claims and refuses when there are not exactly two, or when they share a grade, so a real conflict is not resolved by fiat"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a search for lea reg,[base+0x40] found 1955 functions where the ledger recorded 15, because the 15 were functions in which the base's TYPE was identified",
+   "round": 622,
+   "subject": "subobject.search-wrong-set",
+   "witness": "the qualification was the whole content of the claim and the search discarded it -- the same error as the reachability columns: a count taken over the wrong set"
   }
  ]
 }
