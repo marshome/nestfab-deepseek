@@ -1710,6 +1710,22 @@
    "round": 642,
    "subject": "0x4E5B0.defaults",
    "witness": "each value is the immediate of its instruction or the double its movsd loads, from 0x4E5FE through 0x4E637"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the archive's 54 option keys are ALL present in the 159 names extracted from the lookup's call sites, and the archive has none the extraction missed",
+   "round": 643,
+   "subject": "param.two-sources-agree",
+   "witness": "one list came from reading a rodata range and the other from following 259 call sites; agreement on the intersection is the strongest confirmation either could get"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the 175-name figure included MIPLIB benchmark names such as air03, bell3a, danoint and egout, so it is an over-count in the optimistic direction",
+   "round": 643,
+   "subject": "param.175-was-an-over-count",
+   "witness": "a lea of a rip-relative string precedes the lookup whether or not that string is a parameter name; the confirmed figure is 54 and about 105 more identifiers are unresolved"
   }
  ]
 }
