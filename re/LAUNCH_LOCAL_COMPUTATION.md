@@ -14,14 +14,16 @@ Two other exports are thin wrappers over it, so this one entry point carries thr
 * `0x3310` ordinal 164 `LaunchLimitedLocalComputation`: saves `[order+0x1F8]`, sets it to 1, loads a double constant from rip, calls 0x2AB0, then restores the field. 66 bytes. It logs 'LaunchLimitedLocalComputation' through 0x64AEA0 first.
 * `0x3360` ordinal 216 `LaunchEstimateLocalComputation`: sets `[order+0x288]` to 1 and tail calls 0x2AB0 with the same double. 52 bytes. It logs '// LaunchEstimateLocalComputation' first.
 
-## Progress: the closure is 26 functions, and 16 of them are the engine
+## Progress: the closure is seven functions and 6636 bytes, with no library code left in it
 
-The closure was **1208 domain functions and 713168 bytes**. The label pass took it to 136, batch seven read and classified all
-38 leaves (to 131), and batches eight and nine read the depth one layer whole and classified it (to **26 functions and
-15900 bytes**). The readings are `re/LEAVES51.txt` for the leaves and the round 525 to 528 sections of
+The closure was **1208 domain functions and 713168 bytes**. The label pass took it to 136, batch seven read and classified
+all 38 leaves (to 131), batches eight and nine read the depth one layer whole and classified it (to 26), and batches ten to
+thirteen implemented the constructor, the node layout, the module switch and the engine fetch and classified the rest (to
+**seven functions and 6636 bytes**). The readings are `re/LEAVES51.txt` for the leaves and the round 525 to 532 sections of
 `re/CATEGORIES.md`; `re/EXPORT_BODIES.md` carries the bodies.
 
-What remains, with what is known about each:
+What remains, with what is known about each. After batch fourteen the closure is **seven functions and 6636
+bytes** with no library code left in it, which is the number this objective is actually working against:
 
 | rva | bytes | what it is |
 |---|---:|---|
@@ -35,9 +37,9 @@ What remains, with what is known about each:
 | `0x7BB430` | 495 | stores 0x30, tests `[order+0xE8]`, writes five property strings through 0x978010, calls 0x8693D0 for 0x40 bytes, runs `cpuid` and writes the vendor string, then another block through 0x1B170. Its own literals include `CNS informations` |
 | `0x8693D0`, `0x8688E0` | 545 each | called by 0x7BB430 and by 0x2AB0 with a size argument; both build a string-like object |
 | `0x5007C0` | 716 | a destructor over the object at `[rcx]`: frees the node list at +0x2A8, the member at +0x280 through 0x531F20, the vector of shared_ptr at +0x268 and the container at +0x70 through 0x92ECB0 |
-| `0x8F9220` | 1462 | not yet read |
-| `0x92B340`, `0x92B940`, `0x92BBA0`, `0x92ECB0` | 2590 | the container operations 0x5007C0 and 0x22A20 use: 0x92ECB0 is called on `[obj+0x80]`, 0x9308C0 on `[obj+0x20]` |
-| `0x929FA0` | 1495 | not yet read |
+| `0x8F9220` | 1462 | read in batch twelve: the vector of pointers growth -- begin and end at [rcx] and [rcx+8], the distance over 8, the 0x1FFFFFFFFFFFFFFF bound, the doubled capacity and the eight byte minimum. Classified as library, not domain |
+| `0x92B340`, `0x92B940`, `0x92BBA0`, `0x92ECB0` | 2680 | the container releases, read whole in batch fourteen: each recurses up to seven levels into `[node+0x18]`, then frees the node's string and the node. `0x5007C0` calls all four, and each calls itself. Domain, and blocked on the ownership rule the 0x50 byte records imply |
+| `0x929FA0` | 1495 | read in batch twelve: recurses six levels into [node+0x18], frees a contiguous array of 0x30 byte slots and the member at +0x28, then the node. Classified as library, not domain |
 | `0x9302C0` | 390 | allocates 0x48 bytes and copies 0x28 bytes from `[src+0x20]` into the new node's inline buffer at +0x30: the node copier 0x22A20 calls once. Each node is 0x48 bytes with a back pointer at +0x10, a forward pointer at +0x18, an inline string at +0x20 with its length at +0x28, a type dword at +0 and a double at +0x40 |
 | `0x9308C0` | 605 | the release of the same node tree: it recurses on `[node+0x18]`, frees the string when it does not point at +0x30, then frees the node. A list head is passed in the second argument and walked, but the list is built by the constructor and a direct implementation is blocked until the list's owner is known; the node layout and the two free paths are certain |
 
