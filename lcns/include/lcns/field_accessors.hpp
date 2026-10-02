@@ -431,6 +431,107 @@ inline void* member70_4F7600(const void* object) {
     std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x70, sizeof(value));
     return value;
 }
+/** RE 0x4FC240: reads the 32-bit field at +0xA8 of the object the first member points at. */
+inline std::uint32_t igetA8_4FC240(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint32_t value = 0;
+    std::memcpy(&value, inner + 0xA8, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC250: reads the 32-bit field at +0xAC of the object the first member points at. */
+inline std::uint32_t igetAC_4FC250(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint32_t value = 0;
+    std::memcpy(&value, inner + 0xAC, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC2F0: reads the 8-bit field at +0x170 of the object the first member points at. */
+inline std::uint8_t iget170_4FC2F0(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0x170, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC300: reads the 8-bit field at +0x1A0 of the object the first member points at. */
+inline std::uint8_t iget1A0_4FC300(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0x1A0, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC260: reads the 8-bit field at +0xC8 of the object the first member points at. */
+inline std::uint8_t igetC8_4FC260(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0xC8, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC2D0: reads the 8-bit field at +0xE8 of the object the first member points at. */
+inline std::uint8_t igetE8_4FC2D0(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0xE8, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC320: reads the 8-bit field at +0x1E8 of the object the first member points at. */
+inline std::uint8_t iget1E8_4FC320(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0x1E8, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC340: reads the 8-bit field at +0x1E9 of the object the first member points at. */
+inline std::uint8_t iget1E9_4FC340(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0x1E9, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FC290: reads the 8-bit field at +0xE0 of the object the first member points at. */
+inline std::uint8_t igetE0_4FC290(const void* object) {
+    const unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::uint8_t value = 0;
+    std::memcpy(&value, inner + 0xE0, sizeof(value));
+    return value;
+}
+
+/** RE 0x4FBE90: writes the 32-bit field at +0xA8 of the object the first member points at. */
+inline void isetA8_4FBE90(void* object, std::uint32_t value) {
+    unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::memcpy(inner + 0xA8, &value, sizeof(value));
+}
+
+/** RE 0x4FBEA0: writes the 32-bit field at +0xAC of the object the first member points at. */
+inline void isetAC_4FBEA0(void* object, std::uint32_t value) {
+    unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::memcpy(inner + 0xAC, &value, sizeof(value));
+}
+
+/** RE 0x4FC330: writes the 8-bit field at +0x1E8 of the object the first member points at. */
+inline void iset1E8_4FC330(void* object, std::uint8_t value) {
+    unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::memcpy(inner + 0x1E8, &value, sizeof(value));
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

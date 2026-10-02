@@ -623,5 +623,23 @@ int main() {
         { const void* put = reinterpret_cast<const void*>(0x1234); std::memcpy(object + 0x70, &put, sizeof(put)); CHECK(lcns::dll::accessors::member70_4F7600(object) == put); }   // RE 0x4F7600
     }
 
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];   // the largest field offset an accessor touches
+        std::memset(object, 0xA5, sizeof(object));
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint32_t put = 0x12345678ull; std::memcpy(inner + 0xA8, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::igetA8_4FC240(outer) == put); }   // RE 0x4FC240, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint32_t put = 0x12345678ull; std::memcpy(inner + 0xAC, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::igetAC_4FC250(outer) == put); }   // RE 0x4FC250, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0x170, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::iget170_4FC2F0(outer) == put); }   // RE 0x4FC2F0, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0x1A0, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::iget1A0_4FC300(outer) == put); }   // RE 0x4FC300, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0xC8, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::igetC8_4FC260(outer) == put); }   // RE 0x4FC260, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0xE8, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::igetE8_4FC2D0(outer) == put); }   // RE 0x4FC2D0, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0x1E8, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::iget1E8_4FC320(outer) == put); }   // RE 0x4FC320, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0x1E9, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::iget1E9_4FC340(outer) == put); }   // RE 0x4FC340, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); const std::uint8_t put = 0x5Aull; std::memcpy(inner + 0xE0, &put, sizeof(put)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::igetE0_4FC290(outer) == put); }   // RE 0x4FC290, read through the first member
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); lcns::dll::accessors::isetA8_4FBE90(outer, 0x12345678ull); std::uint32_t got = 0; std::memcpy(&got, inner + 0xA8, sizeof(got)); CHECK(got == 0x12345678ull); }   // RE 0x4FBE90
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); lcns::dll::accessors::isetAC_4FBEA0(outer, 0x12345678ull); std::uint32_t got = 0; std::memcpy(&got, inner + 0xAC, sizeof(got)); CHECK(got == 0x12345678ull); }   // RE 0x4FBEA0
+        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner)); unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p)); lcns::dll::accessors::iset1E8_4FC330(outer, 0x5Aull); std::uint8_t got = 0; std::memcpy(&got, inner + 0x1E8, sizeof(got)); CHECK(got == 0x5Aull); }   // RE 0x4FC330
+    }
+
     return check::finish("boxacc");
 }

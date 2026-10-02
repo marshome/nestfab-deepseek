@@ -135,10 +135,20 @@ def classify(body):
         if mm:
             return ("copyoff", int(mm.group(1), 16), None)
     # a member loaded and then handed to another function: a getter when that function is the identity
-    if len(ins) == 2 and ins[1][0] == "jmp" and ins[0][0] == "mov" and ins[0][1].startswith("rcx,qwordptr[rcx+0x"):
-        off = int(ins[0][1][len("rcx,qwordptr[rcx+0x"):-1], 16)
-        target = int(ins[1][1], 16)
-        return ("memberget", off, target)
+    # a field of the object the first member points at
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0] == ("mov", "rax,qwordptr[rcx]"):
+        mm = re.match(r"dwordptr\[rax\+0x([0-9a-f]+)\],edx", ins[1][1])
+        if mm:
+            return ("iset", int(mm.group(1), 16), 4)
+        mm = re.match(r"byteptr\[rax\+0x([0-9a-f]+)\],dl", ins[1][1])
+        if mm:
+            return ("iset", int(mm.group(1), 16), 1)
+        mm = re.match(r"eax,dwordptr\[rax\+0x([0-9a-f]+)\]", ins[1][1])
+        if mm:
+            return ("iget", int(mm.group(1), 16), 4)
+        mm = re.match(r"eax,byteptr\[rax\+0x([0-9a-f]+)\]", ins[1][1])
+        if mm:
+            return ("iget", int(mm.group(1), 16), 1)
     return None
 
 
@@ -194,7 +204,7 @@ def main(argv):
 
     books = {"identity": [], "zero": [], "get": [], "set": [], "addr": [], "copy": [], "getd": [], "setd": [],
              "const": [], "global": [], "twolvl": [], "ptradd": [], "nullpred": [], "twobytes": [], "dwordpred": [],
-             "globaddr": [], "globptr": [], "copyoff": [], "memberget": [], "unknown": []}
+             "globaddr": [], "globptr": [], "copyoff": [], "memberget": [], "iget": [], "iset": [], "unknown": []}
     for a in leaves:
         size = (profile.get(a) or {}).get("size") or 0
         body = [i for i in disasm(a) if i.address < a + size]
@@ -329,6 +339,44 @@ def main(argv):
             add.append("    0x%X,  # mov rax,[rip+..] ; ret -- loads a global pointer" % a)
         io.open(TOOLCHAIN, "w", encoding="utf-8", newline="\n").write(s_tmp.replace(anchor3, "\n".join(add), 1))
         print("g_toolchain.py       %d global accessors classified" % (len(books["globaddr"]) + len(books["globptr"])))
+    for a, off, width in books["iget"][:limit]:
+        bits = width * 8
+        name = "iget%02X_%X" % (off, a)
+        gen.append("/** RE 0x%X: reads the %d-bit field at +0x%02X of the object the first member points at. */"
+                   % (a, bits, off))
+        gen.append("inline std::uint%d_t %s(const void* object) {" % (bits, name))
+        gen.append("    const unsigned char* inner = nullptr;")
+        gen.append("    std::memcpy(&inner, object, sizeof(inner));")
+        gen.append("    std::uint%d_t value = 0;" % bits)
+        gen.append("    std::memcpy(&value, inner + 0x%02X, sizeof(value));" % off)
+        gen.append("    return value;")
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        probe = {1: 0x5A, 4: 0x12345678}[width]
+        tests.append("        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner));"
+                     " const std::uint%d_t put = 0x%Xull; std::memcpy(inner + 0x%02X, &put, sizeof(put));"
+                     " unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p));"
+                     " CHECK(lcns::dll::accessors::%s(outer) == put); }   // RE 0x%X, read through the first member"
+                     % (bits, probe, off, name, a))
+    for a, off, width in books["iset"][:limit]:
+        bits = width * 8
+        name = "iset%02X_%X" % (off, a)
+        gen.append("/** RE 0x%X: writes the %d-bit field at +0x%02X of the object the first member points at. */"
+                   % (a, bits, off))
+        gen.append("inline void %s(void* object, std::uint%d_t value) {" % (name, bits))
+        gen.append("    unsigned char* inner = nullptr;")
+        gen.append("    std::memcpy(&inner, object, sizeof(inner));")
+        gen.append("    std::memcpy(inner + 0x%02X, &value, sizeof(value));" % off)
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        probe = {1: 0x5A, 4: 0x12345678}[width]
+        tests.append("        { unsigned char inner[0x400]; std::memset(inner, 0, sizeof(inner));"
+                     " unsigned char outer[8]; unsigned char* p = inner; std::memcpy(outer, &p, sizeof(p));"
+                     " lcns::dll::accessors::%s(outer, 0x%Xull); std::uint%d_t got = 0;"
+                     " std::memcpy(&got, inner + 0x%02X, sizeof(got)); CHECK(got == 0x%Xull); }   // RE 0x%X"
+                     % (name, probe, bits, off, probe, a))
     if gen:
         io.open(HDR, "w", encoding="utf-8", newline="\n").write(h.replace(anchor, "\n".join(gen) + anchor, 1))
         print("field_accessors.hpp  %d functions generated" % len(implemented))

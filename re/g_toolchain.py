@@ -202,6 +202,7 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x4FC240, 0x4FC250, 0x4FC2F0, 0x4FC300, 0x4FC260, 0x4FC2D0, 0x4FC320, 0x4FC340, 0x4FC290, 0x4FBE90, 0x4FBEA0, 0x4FC330,   # eaten by g_eat_leaves.py
     0x4F8D20, 0x4F8D10, 0x4F7600,   # eaten by g_eat_leaves.py
     0x52F8F0,   # eaten by g_eat_leaves.py
     0x4F8370, 0x4F8380, 0x4F8C80, 0x4F8C90, 0x4F8CA0, 0x4F8CB0, 0x4F9C30, 0x52F900, 0x52F910, 0x4F7330, 0x547650, 0x547630, 0x4F9C20, 0x4F7340, 0x52F8B0,   # eaten by g_eat_leaves.py
