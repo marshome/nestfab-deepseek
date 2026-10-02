@@ -262,6 +262,46 @@
    "round": 551,
    "subject": "Embedding.rule",
    "witness": "the anchor at +0x50 and +0x98 is a 4-byte field (noHoles, nbTorches); the AngleTransform candidates have no anchor, so all five remain SHAPE"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "ordinal 88, 0xB490, 31 bytes: logs its own name and returns the global build version string",
+   "round": 556,
+   "subject": "export.GetBuildVersion",
+   "witness": "the logger name at 0xB494 resolves to GetBuildVersion; mov rax,[rip+0x9fc1b9] then mov rax,[rax]"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "ordinal 90, 0xB470, 31 bytes, same shape",
+   "round": 556,
+   "subject": "export.GetBuildDate",
+   "witness": "the logger name at 0xB474 is GetBuildDate"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "ordinal 92, 0xB450, 31 bytes, same shape",
+   "round": 556,
+   "subject": "export.GetMajorVersion",
+   "witness": "the logger name at 0xB454 is GetMajorVersion"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "name",
+   "predicate": "ordinal 55, 0xB020, 52 bytes: tail call to 0x63F228 with the order's +0x1B8",
+   "round": 556,
+   "subject": "export.GetPartUserStringEx",
+   "witness": "mov rdx,[rdi+0x1b8]; mov r8d,esi; mov rcx,rbx; jmp 0x63f228, and the ledger names +0x1B8 userString"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a closure of 256 for a 31 byte export is the LOGGER's closure, not the export's need",
+   "round": 556,
+   "subject": "closure.reachability",
+   "witness": "0xB470 calls 0x64AEA0 which the project already classifies as a toolchain logger with no effect on the return value"
   }
  ]
 }
