@@ -66,6 +66,11 @@ void setNoSheetMixPreference(void* object, int value);   // RE CNS_SetNoSheetMix
 void setShearRepulseFromBorders(void* object, int value);   // RE SetShearRepulseFromBorders: offset 0x58
 void unlockLaunchingOrder(void* object, int value);   // RE UnLockLaunchingOrder: offset 0x244
 
+/** The int-setter family, extended by shape (see re/EXPORT_IMPLS.md). Each stores the second argument unchanged
+ *  as a 32-bit value at the offset named in its own `mov dword ptr [rsi+OFF], ebx`. Established by behavioural
+ *  test; the offsets below were read from the instructions, not from a name. */
+void setInt_1FC(void* object, int value);   // RE SetLocalMaximumIterations (ord 84, rva 0xD400, 36 bytes): offset 0x1FC
+
 const char* getPartUserString(void* part);
 
 }  // namespace impl

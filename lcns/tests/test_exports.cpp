@@ -321,8 +321,19 @@ int main() {
             std::memcpy(&got, obj.data() + 0x244, 4);
             CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
         }
-        // The thirteen are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 13u);
+        // SetLocalMaximumIterations (ord 84, offset 0x1FC)
+        {
+            std::vector<unsigned char> obj(0x300, 0xAA);
+            ex::impl::setInt_1FC(obj.data(), 0x12345678);
+            std::uint32_t got = 0;
+            std::memcpy(&got, obj.data() + 0x1FC, 4);
+            CHECK(got == 0x12345678u);
+            ex::impl::setInt_1FC(obj.data(), -2);
+            std::memcpy(&got, obj.data() + 0x1FC, 4);
+            CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
+        }
+        // The 14 are exactly the entries the hand-written map forwards to.
+        CHECK(ex::forwardedCount() == 14u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -330,7 +341,8 @@ int main() {
                                   sameName(e->name, "GetSolution") ||
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
-                                  e->ordinal0 == 304 || e->ordinal0 == 76;
+                                  e->ordinal0 == 304 || e->ordinal0 == 76 ||
+                                  e->ordinal0 == 84;
             CHECK(ex::forwards(i) == expected);
         }
     }

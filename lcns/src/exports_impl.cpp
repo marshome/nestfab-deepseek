@@ -82,6 +82,8 @@ void setShearRepulseFromBorders(void* object, int value) { setIntField(object, v
 
 void unlockLaunchingOrder(void* object, int value) { setIntField(object, value, 0x244); }   // UnLockLaunchingOrder
 
+void setInt_1FC(void* object, int value) { setIntField(object, value, 0x1FC); }   // SetLocalMaximumIterations
+
 const char* getPartUserString(void* part) {
     return static_cast<const char*>(loadPointer(part, 0x1B8));
 }
