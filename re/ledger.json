@@ -806,6 +806,22 @@
    "round": 590,
    "subject": "element.double-at-10",
    "witness": "0x22EAB ucomisd xmm7, [rsi+0x10] with pxor xmm7,xmm7 before it and 0x22EB0 jp to a separate path"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x5CD5C0 fills a box from a container and calls the SAME fold 0x5C8C50 the stat accumulator uses",
+   "round": 591,
+   "subject": "boxfill.5CD5C0",
+   "witness": "0x5CD5D0 begin / 0x5CD5D6 cmp end / 0x5CD5DC call 0x5C5260 / 0x5CD5EC call 0x5CD360 / 0x5CD603 add rbx,0x18 / 0x5CD61D call 0x5C8C50 in a loop"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the two variant exports have every function on their path read; only two scale CONSTANTS remain, and they are doubles in the image",
+   "round": 591,
+   "subject": "variant.ready",
+   "witness": "the path is 0x16D00/0x16D40 -> 0x132E0 (read) -> 0x5CD5C0 (read) -> 0x5C8C50 (implemented in stat.hpp); the constants are at 0x99A679 and 0x99A63E by address and their values are unread"
   }
  ]
 }
