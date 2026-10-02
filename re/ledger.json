@@ -1158,6 +1158,22 @@
    "round": 610,
    "subject": "pairs-are-one-thing",
    "witness": "the two stat predicates wrote both aggregators; the shared scale rule wrote both variant exports; four comparison pairs write one class's members"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the four equal-size pairs are NOT comparison-operator pairs: they agree for only 45 to 48 of 152 to 203 instructions",
+   "round": 611,
+   "subject": "cmppairs.disproven",
+   "witness": "an operator!= shares all of operator=='s instructions except the last, so it would be 202 of 203, not 48 of 203; equal sizes plus identical openings is evidence of a family, not of a pair"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "comparing two functions must normalise jump targets, because the addresses inside two copies of one routine differ by construction",
+   "round": 611,
+   "subject": "tooling.compare-must-normalise-targets",
+   "witness": "re/g_pair_verify.py reported the first difference as 'jle 0x87cbc5' vs 'jle 0x87c625' -- the same instruction -- in all five cases, scoring identical bodies as differing at instruction 48 and 12; its SELF-CHECK passed because a function compared with itself has the same targets, the one input where the defect cannot appear"
   }
  ]
 }
