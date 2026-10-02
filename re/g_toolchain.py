@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Classify the blockers of the unimplemented exports, using only real function starts.
+"""Which unimplemented exports still depend on REAL domain code, once the measured boilerplate is set aside.
 
-Round 424's version walked the call graph and disassembled whatever it reached, which produced 22,685 "addresses", a
-third of them junk (data misread as code, visible as functions with one instruction per byte), and it still missed a
-known platform stub because its rule did not cover `call qword ptr [rip + ...]`. This version:
+The BOILERPLATE set below is not guessed. Every address in it was read whole and identified in an earlier round:
 
-  * only judges addresses that the profile lists as functions, so no data is disassembled;
-  * treats as toolchain: a single-instruction function, anything that jumps or calls through a RIP-relative pointer (the
-    import stubs and the indirect platform calls), and anything that calls into the 0x63F3xx stub bank;
-  * treats as diagnostic anything that calls 0x910BA0, the helper that builds strings and reports;
-  * calls everything else domain, which is what must actually be read.
+  0x9984B0  a five-byte jmp into the import stub bank, 5721 callers -- a deallocation wrapper
+  0x998500  109 bytes, 2317 callers -- operator new, with the null-to-one fix and the new_handler retry
+  0x62F280  171 bytes -- reaches the platform through the IAT; builds an "CCG " tagged argument block
+  0x64AEA0  403 bytes -- the logger; round 369 showed it tests a global switch and returns when it is off
+  0xAB20    98 bytes -- compiler-generated initialisation of a function-local static
+  0x978750  51 bytes -- an allocation plus vtable store plus constructor call wrapper
+  0x97ABF0  183 bytes -- the exception throw machinery: allocate, refcount, vtable, throw
 
-No propagation between functions, because a verdict that depends on an unverified neighbour is how round 424 produced a
-list that could not be trusted.
+Everything else that a function's own instructions show as toolchain, diagnostic or unknown is handled by kind() below.
+An address in neither VERIFIED nor BOILERPLATE nor one of those kinds counts as domain, which is what must be read.
 """
 import io
 import json
 import os
-import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -26,14 +25,27 @@ sys.path.insert(0, HERE)
 import g_leverage as L  # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
+BOILERPLATE = {
+    0x9984B0,  # deallocation thunk into the import stub bank
+    0x998500,  # operator new
+    0x62F280,  # platform stub through the IAT
+    0x64AEA0,  # the logger, no effect on its default path
+    0xAB20,    # static initialisation boilerplate
+    0x978750,  # allocation and constructor wrapper
+    0x97ABF0,  # exception throw machinery
+}
+
+# Entries whose value cannot be reproduced by any reimplementation, because it is an address inside the original image.
+NOT_EQUIVALENT = {88, 90, 92}   # GetBuildVersion, GetBuildDate, GetMajorVersion
+
 
 def kind(addr, profile):
-    """One verdict per function, from its own instructions only. Returns None if it is not a known function."""
+    """One verdict per function, from its own instructions only. None if it is not a known function."""
     if addr not in profile:
         return None
     text = []
+    size = (profile.get(addr) or {}).get("size")
     for ins in disasm(addr):
-        size = (profile.get(addr) or {}).get("size")
         if size and ins.address >= addr + size:
             break
         text.append(ins.mnemonic + " " + ins.op_str)
@@ -67,7 +79,7 @@ def main():
         targets = L.external_targets(e["rva"], e["size"])
         rows.append((name, ord0, e["rva"], e["size"], targets))
         for t in targets:
-            if t in L.VERIFIED or t in verdicts:
+            if t in L.VERIFIED or t in BOILERPLATE or t in verdicts:
                 continue
             k = kind(t, profile)
             verdicts[t] = k if k is not None else "unknown"
@@ -78,39 +90,45 @@ def main():
     print("distinct blocker addresses judged: %d" % len(verdicts))
     for k in sorted(counts):
         print("    %-11s %d" % (k, counts[k]))
+    print("    %-11s %d  (measured whole in earlier rounds)" % ("boilerplate", len(BOILERPLATE)))
 
     ready = []
+    not_equivalent = []
     blocked = []
     for name, ord0, rva, size, targets in rows:
         bad = []
         for t in targets:
-            if t in L.VERIFIED:
+            if t in L.VERIFIED or t in BOILERPLATE:
                 continue
             if verdicts.get(t) == "domain":
                 bad.append(t)
         if not targets:
             ready.append((name, ord0, rva, size, "no external target at all"))
         elif not bad:
-            ready.append((name, ord0, rva, size, "only toolchain, diagnostic or verified"))
+            if ord0 in NOT_EQUIVALENT:
+                not_equivalent.append((name, ord0, rva, size, "returns an address inside the original image"))
+            else:
+                ready.append((name, ord0, rva, size, "only boilerplate, toolchain, diagnostic or verified"))
         else:
             blocked.append((name, ord0, rva, size, bad))
 
     print("")
-    print("implementable once toolchain and diagnostic are set aside: %d" % len(ready))
+    print("implementable now: %d" % len(ready))
     for name, ord0, rva, size, why in ready[:80]:
         print("    0x%-6X ord %-4d %-36s %5d bytes  (%s)" % (rva, ord0, name, size, why))
     print("")
-    print("still blocked on domain code: %d" % len(blocked))
+    print("not equivalent by address, listed rather than counted as progress: %d" % len(not_equivalent))
+    for name, ord0, rva, size, why in not_equivalent:
+        print("    0x%-6X ord %-4d %-36s %5d bytes  (%s)" % (rva, ord0, name, size, why))
+    print("")
+    print("still blocked on real domain code: %d" % len(blocked))
     dom = {}
     for _n, _o, _r, _s, bad in blocked:
         for t in bad:
             dom[t] = dom.get(t, 0) + 1
-    for t, c in sorted(dom.items(), key=lambda kv: -kv[1])[:15]:
+    for t, c in sorted(dom.items(), key=lambda kv: -kv[1])[:14]:
         size = (profile.get(t) or {}).get("size")
         print("    0x%-8X blocks %3d exports, %s bytes" % (t, c, size))
-    print("")
-    print("a domain blocker whose callers number in the thousands is a warning sign: it is more likely a CRT wrapper than a")
-    print("high-leverage domain function, so check its body before reading anything below it.")
     return 0
 
 
