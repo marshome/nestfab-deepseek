@@ -1,311 +1,301 @@
-// lcns/include/lcns/launching_order.hpp -- the launch order's layout, read out of its constructor.
+// lcns/include/lcns/launching_order.hpp -- the launch order's layout, read out of its constructor and its setters.
 //
-// RE 0x14620 NewLaunchingOrder. The evidence is one function: it takes its own name to the logger, allocates 0x2C0 bytes
-// through operator new at 0x998500, and then writes 96 fields, the largest at +0x2B8 and nothing above 0x2C0. That is why
-// this file exists at all -- a constructor that writes every field gives the size, the boundaries and the widths at once,
-// where counting how many functions touch an offset does not.
+// The size and every offset come from RE 0x14620 NewLaunchingOrder, which allocates 0x2C0 bytes through operator new at
+// 0x998500 and then writes 96 fields, the largest at +0x2B8 and nothing above 0x2C0. The names come from the exports that
+// set the fields and from the accessors that read them, each carrying the store address that establishes it.
 //
-// What is NOT claimed here. The offsets and widths are evidence and are asserted below against the listing. The MEANINGS
-// are not: a member named `word08` is an eight byte slot at +0x08 whose purpose is unknown, and it is named that way rather
-// than "flags" or "counter" so that nothing is implied. Where the meaning IS known it is named and carries its address.
+// A field with a NAME here is one the module itself names, and the comment says where: eight exports set fields and their
+// own names are the field names (SetAutomaticStop sets +0x240, SetMarkMode sets +0xE8 and +0xF0, and so on), GetPartUserStringEx
+// reads +0x1B8, and an earlier round read the five common-cut parameters that Multi::RowNester's core reads.
 //
-// This is the object LaunchLocalComputation receives: 0x2AB0 reads the mode at +0x240, and 0x5007C0, the destructor in the
-// same closure, walks +0x1D0, +0x1F8, +0x208, +0x228, +0x230, +0x240, +0x250, +0x258, +0x268, +0x270, +0x280, +0x2A8 and
-// +0x2B8 -- every one of them inside this size.
+// A field with an OFFSET-DERIVED name (unnamedXXX) is one the module never names anywhere this project can read. It is
+// spelled that way on purpose: inventing a meaning for it would be the mistake this file exists to prevent, and the
+// serialiser channel that could name more of them is located but not yet paired (see re/LAUNCH_LOCAL_COMPUTATION.md).
 #pragma once
 
 #include <cstddef>
 #include <cstdint>
 
-// ---------------------------------------------------------------------------------------------------------------
-// The field names, and how far they can honestly be pushed (rounds 534 and 535)
-//
-// The offsets and widths above are evidence: 0x14620 writes all 96 of them, which is what fixes the size at 0x2C0. The
-// NAMES are a separate question and they are answered from three channels, of which only one is reliable today.
-//
-// 1. ACCESSORS. A function that is small and touches exactly ONE offset is an accessor, and its own name is the field's.
-//    re/g_named_fields.py finds them. What it gives for this object:
-//
-//        +0x1B8  read by GetPartUserStringEx        (RE 0x0C5E0 is the recovered implementation of that getter)
-//        +0x1F8  written by LaunchLimitedLocalComputation  (RE 0x332E, which saves it, sets it to 1 and calls 0x2AB0)
-//        +0x240  the mode the candidate constructor reads (RE 0x22BC1) -- the setter is not a single-offset accessor, so
-//                this one stays unnamed
-//        +0x288  written by LaunchEstimateLocalComputation (RE 0x3383)
-//
-//    A big function is NOT an accessor even when it writes the field: SetCommonCutParameters writes twenty offsets, and
-//    attributing all twenty to its name is how the first version of this tool labelled the whole object
-//    'CommonCutParameters'. Size and single-mindedness are the filter, and a name from here is safe to use.
-//
-// 2. THE SERIALISERS. `..\structure\text_io.cpp` is where this module reads and writes its JSON, and its vocabulary is
-//    exactly the field names of the objects it stores. Two functions carry most of it:
-//
-//        ToJson (0x50DB70, 4607 bytes, 217 calls) writes valid, version, number_of_nested_parts, nestings, sheet_id,
-//            multiplicity, common_cut_evaluation, multitorch_infos, number_of_groups, fill_ratio, min_x, min_y
-//        LoadSheet (0x5091B0) reads geometry, quantity, dimension_x, dimension_y, left_gap, right_gap, bottom_gap,
-//            top_gap, defect_gap, used_surface_evaluation, used_surface_min_offcut_dimension, used_surface_min_offcut_area
-//        LoadCommonCutEvaluation (0x509A40) reads common_cut, left, right, left_index, right_index, valid, linked,
-//            number_of_common_cut, common_cut_length, regarding_length, segments
-//
-//    These are the names to use, but the PAIRING of a key to an offset is not reliable yet: each key is followed by several
-//    accessor calls, and picking the wrong one is invisible in the output -- 'common_cut_length' came out attached to +0x10
-//    that way. re/g_json_fields.py prints the pairings it completes; until one is confirmed by reading the two instructions
-//    around it, it stays a lead and not a name.
-//
-// 3. THE KEY VOCABULARY of the settings: 555 lower_case_underscore literals across 288 functions, listed by
-//    re/g_option_keys.py -- nb_strips_first, enable_database, beam_width, shear_corner, common_cut_allowed and the rest.
-//    Note that most of these belong to SETTINGS objects, not to the launch order, which is why they are not used here.
-//
-// So: slot000 keeps its placeholder name and the reason is above, not an omission. The four names in channel 1 are used
-// where the field is touched: see LaunchingOrderNames below.
-// ---------------------------------------------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------------------------------------------
-// Each name's WITNESSES (round 536)
-//
-// A name is used here only when TWO INDEPENDENT single-offset accessors agree on the offset, which is the rule
-// re/g_two_witnesses.py enforces. An accessor is a function of at most 0x100 bytes that touches exactly one offset through
-// its first argument: one witness can be a function whose name describes something else, two independent ones cannot both
-// be wrong the same way. The count is recorded next to each name because it is what tells a later reader how much weight to
-// give it.
-//
-//   offset   witnesses  the accessors and what they do
-//   +0x0010  2          GenerateDxfNesting reads it, GetNestingFillRatio reads it
-//   +0x0050  2          GenerateHtmlSolutionReport reads it, GetFillRatio reads it
-//   +0x0140  1          GetSheetUserStringEx reads it                                   (a lead)
-//   +0x01B8  1          GetPartUserStringEx reads it                                    (a lead)
-//   +0x01F8  1          LaunchLimitedLocalComputation writes it                         (a lead)
-//   +0x0288  1          LaunchEstimateLocalComputation writes it                        (a lead)
-//
-// Two of the six are for the objects the EXPORTS take rather than for the launch order itself: GetFillRatio and
-// GetNestingFillRatio are exports over a solution, and GenerateDxfNesting and GenerateHtmlSolutionReport read the same
-// object to render it. They are listed because the offsets coincide, and that coincidence is itself a fact worth knowing --
-// the solution and the launch order share a layout at +0x10 and +0x50 -- but it is not evidence that a launch order field at
-// +0x10 is named FillRatio.
-//
-// The four remaining names have one witness each and are used with that stated. Everything else keeps slotXXX.
-// ---------------------------------------------------------------------------------------------------------------
-
-namespace names {
-
-/** RE 0x0C5E0: the getter the export GetPartUserString(27/28) forwards to; it reads the pointer at +0x1B8. */
-inline constexpr std::size_t kPartUserString = 0x1B8;
-
-/** RE 0x332E: LaunchLimitedLocalComputation saves this field, sets it to 1, calls 0x2AB0 and restores it. */
-inline constexpr std::size_t kLimitedLocalComputation = 0x1F8;
-
-/** RE 0x3383: LaunchEstimateLocalComputation sets this one to 1 and tail calls 0x2AB0. */
-inline constexpr std::size_t kEstimateLocalComputation = 0x288;
-
-/** RE 0x22BC1: the mode the candidate constructor reads to choose its iteration cap and its two doubles. */
-inline constexpr std::size_t kLocalComputationMode = 0x240;
-
-}  // namespace names
-
 namespace lcns {
 namespace dll {
 
-/** The launch order, as bytes. RE 0x14620: operator new(0x2C0) and 96 field writes. */
+/** The launch order, 0x2C0 bytes. RE 0x14636: mov ecx, 0x2C0 ; call operator new. */
 struct LaunchingOrderLayout {
-    // A null pointer with the low 30 bits set is this module's "empty slot" marker for the two pointer members at +0x110
-    // and +0x120, so they are spelled as integers: RE 0x14793 and 0x1479E write the constant 0x3FFFFFFF.
+    /** The empty-slot marker the constructor writes to +0x110, +0x118 and +0x120: the low 30 bits set. */
     static constexpr std::uint32_t kEmptySlotMarker = 0x3FFFFFFFu;
 
-    // The order the constructor writes them in, with the width of each store.
-    std::uint64_t slot000;      // +0x000 qword = 0.0        RE 0x1464C
-    std::uint32_t slot008;      // +0x008 dword = 0          RE 0x1465A
-    std::uint32_t slot00C;      // +0x00C dword = 0          RE 0x14661
-    std::uint64_t slot010;      // +0x010 qword = 0.0        RE 0x14668
-    std::uint32_t slot018;      // +0x018 dword = 0          RE 0x1466D
-    std::uint32_t slot01C;      // +0x01C dword = 0          RE 0x14674
-    std::uint8_t  slot020;      // +0x020 byte = 0           RE 0x1467B
-    std::uint8_t  slot021;      // +0x021 byte = 0           RE 0x1467F
-    std::uint8_t  slot022;      // +0x022 byte = 0           RE 0x14683
-    std::uint8_t  slot023;      // +0x023 byte = 0           RE 0x14687
-    std::uint32_t slot024;      // +0x024 padding to the next qword
-    std::uint64_t slot028;      // +0x028 qword = 0.0        RE 0x1468B
-    std::uint64_t slot030;      // +0x030 qword = 0.0        RE 0x14690
-    std::uint64_t slot038;      // +0x038 qword = 0.0        RE 0x14695
-    std::uint8_t  slot040;      // +0x040 byte = 0           RE 0x1469A
-    std::uint8_t  slot041;      // +0x041 byte = 0           RE 0x1469E
-    std::uint16_t slot042;      // +0x042 padding
-    std::uint32_t slot044;      // +0x044 dword = 0          RE 0x146A2
-    std::uint32_t slot048;      // +0x048 dword = 0          RE 0x146A9
-    std::uint32_t slot04C;      // +0x04C padding to the next qword
-    std::uint64_t slot050;      // +0x050 qword = 0.0        RE 0x146B0
-    std::uint32_t slot058;      // +0x058 dword = 0          RE 0x146B5
-    std::uint8_t  slot05C;      // +0x05C byte = 0           RE 0x146BC
-    std::uint8_t  slot05D;      // +0x05D .. +0x05F padding
-    std::uint8_t  slot05E;
-    std::uint8_t  slot05F;
-    std::uint64_t slot060;      // +0x060 qword = 0.0        RE 0x146C0
-    std::uint8_t  slot068;      // +0x068 byte = 1           RE 0x146C5
-    std::uint8_t  slot069;      // +0x069 .. +0x06B padding
-    std::uint8_t  slot06A;
-    std::uint8_t  slot06B;
-    std::uint32_t slot06C;      // +0x06C dword = 1          RE 0x146C9
-    std::uint64_t slot070;      // +0x070 qword = 0.0        RE 0x146D0
-    std::uint64_t slot078;      // +0x078 qword = a constant RE 0x146D5, the double at 0x9A93E8
-    std::uint32_t slot080;      // +0x080 dword = 0          RE 0x146DA
-    std::uint8_t  slot084;      // +0x084 byte = 0           RE 0x146E4
-    std::uint8_t  slot085;      // +0x085 byte = 0           RE 0x146EB
-    std::uint16_t slot086;      // +0x086 padding
-    std::uint8_t  slot088;      // +0x088 byte = 1           RE 0x146F2
-    std::uint8_t  slot089;      // +0x089 .. +0x08B padding
-    std::uint8_t  slot08A;
-    std::uint8_t  slot08B;
-    std::uint32_t slot08C;      // +0x08C dword = 1          RE 0x146F9
-    std::uint64_t slot090;      // +0x090 qword = 0.0        RE 0x14703
-    std::uint8_t  slot098;      // +0x098 byte = 1           RE 0x1470B
-    std::uint8_t  slot099;      // +0x099 .. +0x09B padding
-    std::uint8_t  slot09A;
-    std::uint8_t  slot09B;
-    std::uint32_t slot09C;      // +0x09C dword = 2          RE 0x14712
-    std::uint8_t  slot0A0;      // +0x0A0 byte = 0           RE 0x1471C
-    std::uint8_t  slot0A1;      // +0x0A1 .. +0x0A7 padding
-    std::uint8_t  slot0A2;
-    std::uint8_t  slot0A3;
-    std::uint8_t  slot0A4;
-    std::uint8_t  slot0A5;
-    std::uint8_t  slot0A6;
-    std::uint8_t  slot0A7;
-    std::uint32_t slot0A8;      // +0x0A8 dword = 0          RE 0x14723
-    std::uint32_t slot0AC;      // +0x0AC padding
-    std::uint64_t slot0B0;      // +0x0B0 qword = 0.0        RE 0x1472D
-    std::uint64_t slot0B8;      // +0x0B8 qword = 0.0        RE 0x14735
-    std::uint64_t slot0C0;      // +0x0C0 qword = 0.0        RE 0x1473D
-    std::uint64_t slot0C8;      // +0x0C8 qword = 0.0        RE 0x14745
-    std::uint8_t  slot0D0;      // +0x0D0 byte = 1           RE 0x1474D
-    std::uint8_t  slot0D1;      // +0x0D1 .. +0x0D7 padding
-    std::uint8_t  slot0D2;
-    std::uint8_t  slot0D3;
-    std::uint8_t  slot0D4;
-    std::uint8_t  slot0D5;
-    std::uint8_t  slot0D6;
-    std::uint8_t  slot0D7;
-    std::uint64_t slot0D8;      // +0x0D8 qword = 0.0        RE 0x14754
-    std::uint8_t  slot0E0;      // +0x0E0 byte = 0           RE 0x1475C
-    std::uint8_t  slot0E1;      // +0x0E1 .. +0x0E7 padding
-    std::uint8_t  slot0E2;
-    std::uint8_t  slot0E3;
-    std::uint8_t  slot0E4;
-    std::uint8_t  slot0E5;
-    std::uint8_t  slot0E6;
-    std::uint8_t  slot0E7;
-    std::uint64_t slot0E8;      // +0x0E8 qword = 0.0        RE 0x14763
-    std::uint64_t slot0F0;      // +0x0F0 qword = 0.0        RE 0x1476B
-    std::uint8_t  slot0F8;      // +0x0F8 byte = 0           RE 0x14773
-    std::uint8_t  slot0F9;      // +0x0F9 byte = 0           RE 0x1477A
-    std::uint8_t  slot0FA;      // +0x0FA .. +0x0FF padding
-    std::uint8_t  slot0FB;
-    std::uint8_t  slot0FC;
-    std::uint8_t  slot0FD;
-    std::uint8_t  slot0FE;
-    std::uint8_t  slot0FF;
-    std::uint64_t slot100;      // +0x100 qword = 0.0        RE 0x14781
-    std::uint32_t slot108;      // +0x108 dword = 0          RE 0x14789
-    std::uint32_t slot10C;      // +0x10C padding
-    std::uint64_t slot110;      // +0x110 qword = 0x3FFFFFFF RE 0x14793, the empty slot marker
-    std::uint64_t slot118;      // +0x118 qword = 0x3FFFFFFF RE 0x1479E
-    std::uint64_t slot120;      // +0x120 qword = 0x3FFFFFFF RE 0x147A9
-    std::uint8_t  slot128;      // +0x128 byte = 0           RE 0x147B4
-    std::uint8_t  slot129;      // +0x129 .. +0x12F padding
-    std::uint8_t  slot12A;
-    std::uint8_t  slot12B;
-    std::uint8_t  slot12C;
-    std::uint8_t  slot12D;
-    std::uint8_t  slot12E;
-    std::uint8_t  slot12F;
-    std::uint64_t slot130;      // +0x130 qword = 0.0        RE 0x147BB
-    std::uint64_t slot138;      // +0x138 qword = 0.0        RE 0x147C3
-    std::uint64_t slot140;      // +0x140 qword = 0.0        RE 0x147CB
-    std::uint64_t slot148;      // +0x148 qword = 0.0        RE 0x147D3
-    std::uint8_t  slot150;      // +0x150 byte = 0           RE 0x147DB
-    std::uint8_t  slot151;      // +0x151 .. +0x157 padding
-    std::uint8_t  slot152;
-    std::uint8_t  slot153;
-    std::uint8_t  slot154;
-    std::uint8_t  slot155;
-    std::uint8_t  slot156;
-    std::uint8_t  slot157;
-    std::uint8_t  slot158;      // +0x158 byte = 0           RE 0x147E2
-    std::uint8_t  slot159;      // +0x159 .. +0x15F padding
-    std::uint8_t  slot15A;
-    std::uint8_t  slot15B;
-    std::uint8_t  slot15C;
-    std::uint8_t  slot15D;
-    std::uint8_t  slot15E;
-    std::uint8_t  slot15F;
-    std::uint64_t slot160;      // +0x160 qword = 0.0        RE 0x147E9
-    std::uint64_t slot168;      // +0x168 qword = 0.0        RE 0x147F1
-    std::uint8_t  slot170;      // +0x170 byte = 0           RE 0x147F9
-    std::uint8_t  slot171;      // +0x171 .. +0x177 padding
-    std::uint8_t  slot172;
-    std::uint8_t  slot173;
-    std::uint8_t  slot174;
-    std::uint8_t  slot175;
-    std::uint8_t  slot176;
-    std::uint8_t  slot177;
-    std::uint64_t slot178;      // +0x178 qword = 0.0        RE 0x14800
-    std::uint64_t slot180;      // +0x180 qword = 0          RE 0x14808
-    std::uint64_t slot188;      // +0x188 qword = 0          RE 0x14813
-    std::uint64_t slot190;      // +0x190 qword = 0          RE 0x1481E
-    std::uint64_t slot198;      // +0x198 qword = 0          RE 0x14829
-    std::uint64_t slot1A0;      // +0x1A0 qword = 0          RE 0x14834
-    std::uint64_t slot1A8;      // +0x1A8 qword = 0          RE 0x1483F
-    std::uint64_t slot1B0;      // +0x1B0 qword = 0          RE 0x1484A
-    std::uint64_t slot1B8;      // +0x1B8 qword = 0          RE 0x14855
-    // The fields above +0x1B8 are written by the rest of the constructor and by the setters -- GetPartUserString reads
-    // +0x1B8, LaunchLocalComputation reads the mode at +0x240, and the destructor walks to +0x2B8.
-    std::uint64_t tail[0x2C0 / 8 - 0x1C0 / 8];   // +0x1C0 .. +0x2BF, all inside the 0x2C0 the constructor allocates
+    std::uint64_t        unnamed000;   // +0x000  written by RE 0x14620
+    unsigned char unnamed008;   // +0x008
+    unsigned char unnamed009;   // +0x009
+    unsigned char unnamed00A;   // +0x00A
+    unsigned char unnamed00B;   // +0x00B
+    std::uint32_t        origin;   // +0x00C  RE 0xD119, SetOrigin (86)
+    std::uint64_t        multiplicityPreference;   // +0x010  RE 0xD26A, CNS_SetMultiplicityPreference (128), a double
+    std::uint32_t        unnamed018;   // +0x018  written by RE 0x14620
+    std::uint32_t        unnamed01C;   // +0x01C  written by RE 0x14620
+    std::uint8_t         unnamed020;   // +0x020  written by RE 0x14620
+    std::uint8_t         unnamed021;   // +0x021  written by RE 0x14620
+    std::uint8_t         unnamed022;   // +0x022  written by RE 0x14620
+    std::uint8_t         unnamed023;   // +0x023  written by RE 0x14620
+    unsigned char unnamed024;   // +0x024
+    unsigned char unnamed025;   // +0x025
+    unsigned char unnamed026;   // +0x026
+    unsigned char unnamed027;   // +0x027
+    std::uint64_t        unnamed028;   // +0x028  written by RE 0x14620
+    std::uint64_t        unnamed030;   // +0x030  written by RE 0x14620
+    std::uint64_t        unnamed038;   // +0x038  written by RE 0x14620
+    std::uint8_t         unnamed040;   // +0x040  written by RE 0x14620
+    std::uint8_t         unnamed041;   // +0x041  written by RE 0x14620
+    unsigned char unnamed042;   // +0x042
+    unsigned char unnamed043;   // +0x043
+    std::uint32_t        unnamed044;   // +0x044  written by RE 0x14620
+    std::uint32_t        unnamed048;   // +0x048  written by RE 0x14620
+    unsigned char unnamed04C;   // +0x04C
+    unsigned char unnamed04D;   // +0x04D
+    unsigned char unnamed04E;   // +0x04E
+    unsigned char unnamed04F;   // +0x04F
+    std::uint64_t        unnamed050;   // +0x050  written by RE 0x14620
+    std::uint32_t        unnamed058;   // +0x058  written by RE 0x14620
+    std::uint8_t         unnamed05C;   // +0x05C  written by RE 0x14620
+    unsigned char unnamed05D;   // +0x05D
+    unsigned char unnamed05E;   // +0x05E
+    unsigned char unnamed05F;   // +0x05F
+    std::uint64_t        unnamed060;   // +0x060  written by RE 0x14620
+    std::uint8_t         commonCutSafetyPreferenceGiven;   // +0x068  RE 0xEA09, SetCommonCutSafetyPreference (150), byte = 1
+    unsigned char unnamed069;   // +0x069
+    unsigned char unnamed06A;   // +0x06A
+    unsigned char unnamed06B;   // +0x06B
+    std::uint32_t        commonCutSafetyPreference;   // +0x06C  RE 0xEA0D, SetCommonCutSafetyPreference (150)
+    std::uint64_t        unnamed070;   // +0x070  written by RE 0x14620
+    std::uint64_t        unnamed078;   // +0x078  written by RE 0x14620
+    std::uint32_t        unnamed080;   // +0x080  written by RE 0x14620
+    std::uint8_t         unnamed084;   // +0x084  written by RE 0x14620
+    std::uint8_t         unnamed085;   // +0x085  written by RE 0x14620
+    unsigned char unnamed086;   // +0x086
+    unsigned char unnamed087;   // +0x087
+    std::uint8_t         commonCutCuttingPreferenceGiven;   // +0x088  RE 0xED59, SetCommonCutCuttingPreference (154), byte = 1
+    unsigned char unnamed089;   // +0x089
+    unsigned char unnamed08A;   // +0x08A
+    unsigned char unnamed08B;   // +0x08B
+    std::uint32_t        commonCutCuttingPreference;   // +0x08C  RE 0xED60, SetCommonCutCuttingPreference (154)
+    std::uint64_t        unnamed090;   // +0x090  written by RE 0x14620
+    std::uint8_t         multiTorchCuttingPreferenceGiven;   // +0x098  RE 0xF225, SetMultiTorchCuttingPreference (176), byte = 1
+    unsigned char unnamed099;   // +0x099
+    unsigned char unnamed09A;   // +0x09A
+    unsigned char unnamed09B;   // +0x09B
+    std::uint32_t        multiTorchCuttingPreference;   // +0x09C  RE 0xF233, SetMultiTorchCuttingPreference (176)
+    std::uint8_t         multiTorchCuttingPreferencePositive;   // +0x0A0  RE 0xF22C, setg on the same argument
+    unsigned char unnamed0A1;   // +0x0A1
+    unsigned char unnamed0A2;   // +0x0A2
+    unsigned char unnamed0A3;   // +0x0A3
+    unsigned char unnamed0A4;   // +0x0A4
+    unsigned char unnamed0A5;   // +0x0A5
+    unsigned char unnamed0A6;   // +0x0A6
+    unsigned char unnamed0A7;   // +0x0A7
+    std::uint32_t        unnamed0A8;   // +0x0A8  written by RE 0x14620
+    unsigned char unnamed0AC;   // +0x0AC
+    unsigned char unnamed0AD;   // +0x0AD
+    unsigned char unnamed0AE;   // +0x0AE
+    unsigned char unnamed0AF;   // +0x0AF
+    std::uint64_t        unnamed0B0;   // +0x0B0  written by RE 0x14620
+    std::uint64_t        unnamed0B8;   // +0x0B8  written by RE 0x14620
+    std::uint64_t        unnamed0C0;   // +0x0C0  written by RE 0x14620
+    std::uint64_t        unnamed0C8;   // +0x0C8  written by RE 0x14620
+    std::uint8_t         unnamed0D0;   // +0x0D0  written by RE 0x14620
+    unsigned char unnamed0D1;   // +0x0D1
+    unsigned char unnamed0D2;   // +0x0D2
+    unsigned char unnamed0D3;   // +0x0D3
+    unsigned char unnamed0D4;   // +0x0D4
+    unsigned char unnamed0D5;   // +0x0D5
+    unsigned char unnamed0D6;   // +0x0D6
+    unsigned char unnamed0D7;   // +0x0D7
+    std::uint64_t        unnamed0D8;   // +0x0D8  written by RE 0x14620
+    std::uint8_t         markModeGiven;   // +0x0E0  RE 0x18A09, SetMarkMode (246), setne on the flag
+    unsigned char unnamed0E1;   // +0x0E1
+    unsigned char unnamed0E2;   // +0x0E2
+    unsigned char unnamed0E3;   // +0x0E3
+    unsigned char unnamed0E4;   // +0x0E4
+    unsigned char unnamed0E5;   // +0x0E5
+    unsigned char unnamed0E6;   // +0x0E6
+    unsigned char unnamed0E7;   // +0x0E7
+    std::uint64_t        markModeFirst;   // +0x0E8  RE 0x189FA, SetMarkMode (246), the double in xmm2
+    std::uint64_t        markModeSecond;   // +0x0F0  RE 0x18A10, SetMarkMode (246), the double in xmm3
+    std::uint8_t         unnamed0F8;   // +0x0F8  written by RE 0x14620
+    std::uint8_t         unnamed0F9;   // +0x0F9  written by RE 0x14620
+    unsigned char unnamed0FA;   // +0x0FA
+    unsigned char unnamed0FB;   // +0x0FB
+    unsigned char unnamed0FC;   // +0x0FC
+    unsigned char unnamed0FD;   // +0x0FD
+    unsigned char unnamed0FE;   // +0x0FE
+    unsigned char unnamed0FF;   // +0x0FF
+    std::uint64_t        unnamed100;   // +0x100  written by RE 0x14620
+    std::uint32_t        unnamed108;   // +0x108  written by RE 0x14620
+    unsigned char unnamed10C;   // +0x10C
+    unsigned char unnamed10D;   // +0x10D
+    unsigned char unnamed10E;   // +0x10E
+    unsigned char unnamed10F;   // +0x10F
+    std::uint64_t        emptySlotMarker0;   // +0x110  RE 0x14793, the constant 0x3FFFFFFF
+    std::uint64_t        emptySlotMarker1;   // +0x118  RE 0x1479E, the constant 0x3FFFFFFF
+    std::uint64_t        emptySlotMarker2;   // +0x120  RE 0x147A9, the constant 0x3FFFFFFF
+    std::uint8_t         specificSheetOrigin;   // +0x128  RE 0x13F09, SetSpecificSheetOrigin (298)
+    unsigned char unnamed129;   // +0x129
+    unsigned char unnamed12A;   // +0x12A
+    unsigned char unnamed12B;   // +0x12B
+    unsigned char specificSheetObjectiveGiven;   // +0x12C  RE 0x140B2, SetSpecificSheetObjective (300), byte = 1
+    unsigned char unnamed12D;   // +0x12D
+    unsigned char unnamed12E;   // +0x12E
+    unsigned char unnamed12F;   // +0x12F
+    std::uint64_t        specificSheetObjective;   // +0x130  RE 0x140B9, SetSpecificSheetObjective (300)
+    std::uint64_t        unnamed138;   // +0x138  written by RE 0x14620
+    std::uint64_t        unnamed140;   // +0x140  written by RE 0x14620
+    std::uint64_t        unnamed148;   // +0x148  written by RE 0x14620
+    std::uint8_t         unnamed150;   // +0x150  written by RE 0x14620
+    unsigned char unnamed151;   // +0x151
+    unsigned char unnamed152;   // +0x152
+    unsigned char unnamed153;   // +0x153
+    unsigned char unnamed154;   // +0x154
+    unsigned char unnamed155;   // +0x155
+    unsigned char unnamed156;   // +0x156
+    unsigned char unnamed157;   // +0x157
+    std::uint8_t         unnamed158;   // +0x158  written by RE 0x14620
+    unsigned char unnamed159;   // +0x159
+    unsigned char unnamed15A;   // +0x15A
+    unsigned char unnamed15B;   // +0x15B
+    unsigned char unnamed15C;   // +0x15C
+    unsigned char unnamed15D;   // +0x15D
+    unsigned char unnamed15E;   // +0x15E
+    unsigned char unnamed15F;   // +0x15F
+    std::uint64_t        unnamed160;   // +0x160  written by RE 0x14620
+    std::uint64_t        unnamed168;   // +0x168  written by RE 0x14620
+    std::uint8_t         pipeMode;   // +0x170  RE 0xFCF0 SetPipeMode, read by 0x4FC2F0 / 0x4FC300
+    unsigned char unnamed171;   // +0x171
+    unsigned char unnamed172;   // +0x172
+    unsigned char unnamed173;   // +0x173
+    unsigned char unnamed174;   // +0x174
+    unsigned char unnamed175;   // +0x175
+    unsigned char unnamed176;   // +0x176
+    unsigned char unnamed177;   // +0x177
+    std::uint64_t        unnamed178;   // +0x178  written by RE 0x14620
+    std::uint64_t        unnamed180;   // +0x180  written by RE 0x14620
+    std::uint64_t        unnamed188;   // +0x188  written by RE 0x14620
+    std::uint64_t        unnamed190;   // +0x190  written by RE 0x14620
+    std::uint64_t        unnamed198;   // +0x198  written by RE 0x14620
+    std::uint64_t        commonCutParameterA;   // +0x1A0  RE 0x3C3F0 SetCommonCutParameters, read by 0x4FC3C0
+    std::uint64_t        commonCutParameterB;   // +0x1A8  RE 0x3C3F0
+    std::uint64_t        commonCutParameterC;   // +0x1B0  RE 0x3C3F0
+    std::uint64_t        userString;   // +0x1B8  RE 0x14855 and GetPartUserStringEx (55)
+    std::uint64_t        commonCutParameterE;   // +0x1C0  RE 0x3C3F0
+    std::uint64_t        unnamed1C8;   // +0x1C8  written by RE 0x14620
+    std::uint64_t        unnamed1D0;   // +0x1D0  written by RE 0x14620
+    std::uint64_t        unnamed1D8;   // +0x1D8  written by RE 0x14620
+    std::uint64_t        unnamed1E0;   // +0x1E0  written by RE 0x14620
+    std::uint64_t        unnamed1E8;   // +0x1E8  written by RE 0x14620
+    std::uint64_t        unnamed1F0;   // +0x1F0  written by RE 0x14620
+    unsigned char unnamed1F8;   // +0x1F8
+    unsigned char unnamed1F9;   // +0x1F9
+    unsigned char unnamed1FA;   // +0x1FA
+    unsigned char unnamed1FB;   // +0x1FB
+    unsigned char unnamed1FC;   // +0x1FC
+    unsigned char unnamed1FD;   // +0x1FD
+    unsigned char unnamed1FE;   // +0x1FE
+    unsigned char unnamed1FF;   // +0x1FF
+    unsigned char unnamed200;   // +0x200
+    unsigned char unnamed201;   // +0x201
+    unsigned char unnamed202;   // +0x202
+    unsigned char unnamed203;   // +0x203
+    unsigned char unnamed204;   // +0x204
+    unsigned char unnamed205;   // +0x205
+    unsigned char unnamed206;   // +0x206
+    unsigned char unnamed207;   // +0x207
+    unsigned char unnamed208;   // +0x208
+    unsigned char unnamed209;   // +0x209
+    unsigned char unnamed20A;   // +0x20A
+    unsigned char unnamed20B;   // +0x20B
+    unsigned char unnamed20C;   // +0x20C
+    unsigned char unnamed20D;   // +0x20D
+    unsigned char unnamed20E;   // +0x20E
+    unsigned char unnamed20F;   // +0x20F
+    unsigned char unnamed210;   // +0x210
+    unsigned char unnamed211;   // +0x211
+    unsigned char unnamed212;   // +0x212
+    unsigned char unnamed213;   // +0x213
+    unsigned char unnamed214;   // +0x214
+    unsigned char unnamed215;   // +0x215
+    unsigned char unnamed216;   // +0x216
+    unsigned char unnamed217;   // +0x217
+    std::uint32_t        unnamed218;   // +0x218  written by RE 0x14620
+    unsigned char unnamed21C;   // +0x21C
+    unsigned char unnamed21D;   // +0x21D
+    unsigned char unnamed21E;   // +0x21E
+    unsigned char unnamed21F;   // +0x21F
+    std::uint64_t        unnamed220;   // +0x220  written by RE 0x14620
+    std::uint64_t        unnamed228;   // +0x228  written by RE 0x14620
+    std::uint64_t        unnamed230;   // +0x230  written by RE 0x14620
+    std::uint64_t        unnamed238;   // +0x238  written by RE 0x14620
+    std::uint32_t        automaticStop;   // +0x240  RE 0xE0D9, SetAutomaticStop (140); read by 0x22A20 at RE 0x22BC1
+    std::uint32_t        unnamed244;   // +0x244  written by RE 0x14620
+    std::uint64_t        unnamed248;   // +0x248  written by RE 0x14620
+    std::uint64_t        unnamed250;   // +0x250  written by RE 0x14620
+    std::uint8_t         unnamed258;   // +0x258  written by RE 0x14620
+    unsigned char unnamed259;   // +0x259
+    unsigned char unnamed25A;   // +0x25A
+    unsigned char unnamed25B;   // +0x25B
+    unsigned char unnamed25C;   // +0x25C
+    unsigned char unnamed25D;   // +0x25D
+    unsigned char unnamed25E;   // +0x25E
+    unsigned char unnamed25F;   // +0x25F
+    unsigned char unnamed260;   // +0x260
+    unsigned char unnamed261;   // +0x261
+    unsigned char unnamed262;   // +0x262
+    unsigned char unnamed263;   // +0x263
+    unsigned char unnamed264;   // +0x264
+    unsigned char unnamed265;   // +0x265
+    unsigned char unnamed266;   // +0x266
+    unsigned char unnamed267;   // +0x267
+    std::uint64_t        unnamed268;   // +0x268  written by RE 0x14620
+    std::uint64_t        unnamed270;   // +0x270  written by RE 0x14620
+    std::uint8_t         unnamed278;   // +0x278  written by RE 0x14620
+    unsigned char unnamed279;   // +0x279
+    unsigned char unnamed27A;   // +0x27A
+    unsigned char unnamed27B;   // +0x27B
+    unsigned char unnamed27C;   // +0x27C
+    unsigned char unnamed27D;   // +0x27D
+    unsigned char unnamed27E;   // +0x27E
+    unsigned char unnamed27F;   // +0x27F
+    unsigned char unnamed280;   // +0x280
+    unsigned char unnamed281;   // +0x281
+    unsigned char unnamed282;   // +0x282
+    unsigned char unnamed283;   // +0x283
+    unsigned char unnamed284;   // +0x284
+    unsigned char unnamed285;   // +0x285
+    unsigned char unnamed286;   // +0x286
+    unsigned char unnamed287;   // +0x287
+    std::uint8_t         estimateLocalComputation;   // +0x288  RE 0x3383, LaunchEstimateLocalComputation (216)
+    unsigned char unnamed289;   // +0x289
+    unsigned char unnamed28A;   // +0x28A
+    unsigned char unnamed28B;   // +0x28B
+    unsigned char unnamed28C;   // +0x28C
+    unsigned char unnamed28D;   // +0x28D
+    unsigned char unnamed28E;   // +0x28E
+    unsigned char unnamed28F;   // +0x28F
+    std::uint64_t        unnamed290;   // +0x290  written by RE 0x14620
+    std::uint64_t        unnamed298;   // +0x298  written by RE 0x14620
+    std::uint64_t        unnamed2A0;   // +0x2A0  written by RE 0x14620
+    std::uint64_t        nodeList;   // +0x2A8  RE 0x5007C0 through the order dereference
+    std::uint64_t        unnamed2B0;   // +0x2B0  written by RE 0x14620
+    std::uint64_t        unnamed2B8;   // +0x2B8  written by RE 0x14620
 };
 
 static_assert(sizeof(LaunchingOrderLayout) == 0x2C0,
-              "RE 0x14636: NewLaunchingOrder allocates 0x2C0 bytes, and the field writes stop at +0x2B8");
+              "RE 0x14636: NewLaunchingOrder allocates 0x2C0 bytes and its field writes stop at +0x2B8");
 
-// The two members a reader of this objective actually needs, asserted so a later edit cannot move them silently.
-static_assert(offsetof(LaunchingOrderLayout, slot100) == 0x100, "RE 0x14781");
-static_assert(offsetof(LaunchingOrderLayout, slot110) == 0x110, "RE 0x14793, the empty slot marker");
-static_assert(offsetof(LaunchingOrderLayout, slot178) == 0x178, "RE 0x14800");
-static_assert(offsetof(LaunchingOrderLayout, slot1B8) == 0x1B8, "RE 0x14855, the user string pointer");
-static_assert(offsetof(LaunchingOrderLayout, tail) == 0x1C0, "RE: the first field past the ones written above");
-
-
-/** The fields the EXPORTS name.
- *
- * An export that ends by writing a field of the order gives that field its name, and this table is read out of the nine
- * entries re/g_ready.py reports as needing no reading at all. Each line carries the export, its ordinal, the store address,
- * and the width, so the name can be checked against the instruction that produced it.
- *
- * This is a different kind of evidence from the accessor witnesses above: there, a function that touches one offset is
- * named; here, the entry point that a caller uses IS the name of the field it sets. Both are direct, and neither is a
- * guess about what a number means.
- */
-namespace exported_fields {
-
-inline constexpr std::size_t kOrigin = 0x00C;                    // RE 0xD119: SetOrigin (86) writes a dword
-inline constexpr std::size_t kCommonCutCuttingPreference = 0x08C;   // RE 0xED60: SetCommonCutCuttingPreference (154)
-inline constexpr std::size_t kMultiplicityPreference = 0x010;    // RE 0xD255: CNS_SetMultiplicityPreference (128), a double
-inline constexpr std::size_t kAutomaticStop = 0x240;             // RE 0xE0D9: SetAutomaticStop (140)
-inline constexpr std::size_t kCommonCutSafetyPreference = 0x06C; // RE 0xEA0D: SetCommonCutSafetyPreference (150)
-inline constexpr std::size_t kMultiTorchCuttingPreference = 0x09C;   // RE 0xF233: SetMultiTorchCuttingPreference (176)
-inline constexpr std::size_t kSpecificSheetOriginGiven = 0x124;  // RE 0x13F02: SetSpecificSheetOrigin (298), byte = 1
-inline constexpr std::size_t kSpecificSheetOrigin = 0x128;       // RE 0x13F09: the value that flag qualifies
-inline constexpr std::size_t kSpecificSheetObjectiveGiven = 0x12C;   // RE 0x140B2: SetSpecificSheetObjective (300)
-inline constexpr std::size_t kSpecificSheetObjective = 0x130;    // RE 0x140B9
-inline constexpr std::size_t kMarkModeFirst = 0x0E8;             // RE 0x189FA: SetMarkMode (246), a double from xmm2
-inline constexpr std::size_t kMarkModeSecond = 0x0F0;            // RE 0x18A10: the second double, from xmm3
-
-// Confirmed by hand in an earlier round and kept because it is the same kind of evidence:
-//   SetPipeMode (0xFCF0) writes the gate byte at +0x170, and SetCommonCutParameters (0x3C3F0) writes +0x1A0, +0x1A8,
-//   +0x1B0, +0x1B8 and +0x1C0 -- exactly the fields Multi::RowNester's core reads through 0x4FC2F0, 0x4FC300 and 0x4FC3C0.
-inline constexpr std::size_t kPipeMode = 0x170;                  // RE round before 537
-inline constexpr std::size_t kCommonCutParameterA = 0x1A0;
-inline constexpr std::size_t kCommonCutParameterB = 0x1A8;
-inline constexpr std::size_t kCommonCutParameterC = 0x1B0;
-inline constexpr std::size_t kCommonCutParameterD = 0x1B8;
-inline constexpr std::size_t kCommonCutParameterE = 0x1C0;
-
-}  // namespace exported_fields
+// The offsets a reader of this objective needs, asserted so a later edit cannot move them silently.
+static_assert(offsetof(LaunchingOrderLayout, userString) == 0x1B8, "RE 0x14855, GetPartUserStringEx reads it");
+static_assert(offsetof(LaunchingOrderLayout, automaticStop) == 0x240, "RE 0xE0D9 and RE 0x22BC1");
+static_assert(offsetof(LaunchingOrderLayout, estimateLocalComputation) == 0x288, "RE 0x3383");
+static_assert(offsetof(LaunchingOrderLayout, emptySlotMarker0) == 0x110, "RE 0x14793");
+static_assert(offsetof(LaunchingOrderLayout, markModeFirst) == 0x0E8, "RE 0x189FA");
+static_assert(offsetof(LaunchingOrderLayout, nodeList) == 0x2A8, "RE 0x5007C0");
 
 }  // namespace dll
 }  // namespace lcns

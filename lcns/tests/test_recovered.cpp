@@ -5887,18 +5887,21 @@ int main() {
     // checks hold the two facts a reader needs from here -- the size, and the widths at the offsets the constructor writes.
     {
         CHECK(sizeof(lcns::dll::LaunchingOrderLayout) == 0x2C0);      // RE 0x14636, mov ecx, 0x2C0
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot000) == 0x000);   // RE 0x1464C, movsd
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot068) == 0x068);   // RE 0x146C5, byte = 1
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot06C) == 0x06C);   // RE 0x146C9, dword = 1
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot09C) == 0x09C);   // RE 0x14712, dword = 2
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot110) == 0x110);   // RE 0x14793, the marker
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot1B8) == 0x1B8);   // RE 0x14855
-        // The destructor in the same closure walks to +0x2B8, so every offset it touches is inside this size.
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, tail) + sizeof(lcns::dll::LaunchingOrderLayout::tail) == 0x2C0);
-        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, tail) == 0x1C0);
-        // The mode LaunchLocalComputation reads lives in this object, past the fields named above (RE 0x22BC1).
-        CHECK(0x240 >= offsetof(lcns::dll::LaunchingOrderLayout, tail));
-        CHECK(0x2A8 < sizeof(lcns::dll::LaunchingOrderLayout));       // RE 0x5007C0 walks the node list here
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, origin) == 0x00C);   // RE 0xD119, SetOrigin (86), not the constructor
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, multiplicityPreference) == 0x010);   // RE 0xD26A, a double
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, commonCutSafetyPreferenceGiven) == 0x068);   // RE 0xEA09
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, commonCutSafetyPreference) == 0x06C);   // RE 0xEA0D
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, commonCutCuttingPreference) == 0x08C);   // RE 0xED60
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, multiTorchCuttingPreference) == 0x09C);   // RE 0xF233
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, markModeFirst) == 0x0E8);   // RE 0x189FA
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, emptySlotMarker0) == 0x110);   // RE 0x14793, the marker
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, specificSheetOrigin) == 0x128);   // RE 0x13F09
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, specificSheetObjective) == 0x130);   // RE 0x140B9
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, userString) == 0x1B8);   // RE 0x14855
+        // The mode LaunchLocalComputation reads has a name from an export now, and it is inside this object.
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, automaticStop) == 0x240);   // RE 0xE0D9
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, nodeList) == 0x2A8);         // RE 0x5007C0
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, estimateLocalComputation) == 0x288);  // RE 0x3383
         CHECK(lcns::dll::LaunchingOrderLayout::kEmptySlotMarker == 0x3FFFFFFFu);
     }
 
