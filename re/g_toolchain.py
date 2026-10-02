@@ -71,6 +71,13 @@ BOILERPLATE = {
     0x6533B0,  # jump table dispatch on a low nibble: a library character or format classifier
     0x97A6D0,  # reads a field of a runtime global and returns whether it is non zero
     0x62D860,  # calls 0x62D7B0 then returns minus one when the result is zero
+    0x60C5A0,  # container size: distance from an inline buffer plus a stored count
+    0x875F50,  # copy constructor: installs a vtable then copies a shared_ptr member
+    0x877A20,  # derived copy constructor: vtable plus a string member
+    0x875FD0,  # destructor: installs a vtable, decrements a refcount, releases when it reaches zero
+    0x8760F0,  # destructor thunk: installs a vtable then jumps into the release path
+    0x876040,  # derived copy constructor: calls 0x888F50 then installs a vtable
+    0x877AD0,  # destructor thunk for the same family as 0x875FD0
     0x90ECB0,  # std::string internal: same three words, clamps against max_size
 }
 
