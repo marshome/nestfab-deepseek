@@ -659,5 +659,22 @@ int main() {
         { std::memset(object, 0xA5, sizeof(object)); lcns::dll::accessors::clear2_8774E0(object); std::uint64_t got64 = 1; std::memcpy(&got64, object, sizeof(got64)); CHECK(got64 == 0u); std::uint8_t got8 = 1; std::memcpy(&got8, object + 0x08, sizeof(got8)); CHECK(got8 == 0); }   // RE 0x8774E0
     }
 
+    // ------------------- two accessors the pattern matcher missed, written by hand
+    {
+        unsigned char innerObject[0x400];
+        std::memset(innerObject, 0, sizeof(innerObject));
+        unsigned char outer[8];
+        unsigned char* p = innerObject;
+        std::memcpy(outer, &p, sizeof(p));
+        lcns::dll::accessors::isetDouble98_4FBE70(outer, 12.5);
+        double got = 0.0;
+        std::memcpy(&got, innerObject + 0x98, sizeof(got));
+        CHECK(got == 12.5);                                  // RE 0x4FBE70
+        CHECK(lcns::dll::accessors::notNullMember_822590(outer));   // RE 0x822590, the member is set
+        const void* nothing = nullptr;
+        std::memcpy(outer, &nothing, sizeof(nothing));
+        CHECK(!lcns::dll::accessors::notNullMember_822590(outer));  // and now it is not
+    }
+
     return check::finish("boxacc");
 }

@@ -86,6 +86,15 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0xB81F0,  # returns the constant 100: a default override, not a computation
+    0x877120,  # loads a member and calls the runtime stub 0x63F4B8
+    0x63F140,  # a bounded byte scan, the strlen shape
+    0x7C4AB0,  # allocates eight bytes, stores a vtable, calls the throw entry
+    0x998920,  # the same exception object shape as 0x7C4AB0
+    0x889010,  # stores a vtable then copies a shared_ptr member
+    0x1B130,  # builds a string from a pointer and a length through the strlen stub
+    0x63DEB0,  # walks a word array counting non zero entries: a bitset or vector internal
+    0x63EA30,  # compares two word arrays element by element: the same family
     0x1E70,  # library by its own label: ' max iterations.'
     0x6100,  # library by its own label: 'basic_string::append'
     0x1B070,  # library by its own label: 'basic_string::_M_construct null not valid'
@@ -296,6 +305,7 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x4FBE70, 0x822590,   # batch five, lcns/field_accessors.hpp
     0x8774E0,   # eaten by g_eat_leaves.py
     0x54CBC0, 0x4F7690, 0x4F7660, 0x4F7640, 0x4F7680,   # eaten by g_eat_leaves.py
     0x4FC240, 0x4FC250, 0x4FC2F0, 0x4FC300, 0x4FC260, 0x4FC2D0, 0x4FC320, 0x4FC340, 0x4FC290, 0x4FBE90, 0x4FBEA0, 0x4FC330,   # eaten by g_eat_leaves.py

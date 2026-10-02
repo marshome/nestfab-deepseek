@@ -577,6 +577,20 @@ inline void clear2_8774E0(void* object) {
     std::memcpy(object, &zero64, sizeof(zero64));
     std::memcpy(static_cast<unsigned char*>(object) + 0x08, &zero8, sizeof(zero8));
 }
+/** RE 0x4FBE70: writes the double at +0x98 of the object the first member points at. */
+inline void isetDouble98_4FBE70(void* object, double value) {
+    unsigned char* inner = nullptr;
+    std::memcpy(&inner, object, sizeof(inner));
+    std::memcpy(inner + 0x98, &value, sizeof(value));
+}
+
+/** RE 0x822590: true when the first member is not null, the setne on a compare against zero. */
+inline bool notNullMember_822590(const void* object) {
+    const void* member = nullptr;
+    std::memcpy(&member, object, sizeof(member));
+    return member != nullptr;
+}
+
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns
