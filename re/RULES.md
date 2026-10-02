@@ -182,6 +182,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "getdword00-52f920-rva-rva-shim-sub-xxxx",
+  "rule": "函数名不能带自己的偏移或地址：getDword00_52F920 这种名字要求调用者知道偏移和 RVA，是调用约定而不是程序；语义名字可以带 RVA 作为证据，内嵌 shim（sub_XXXX）因导出名被加壳器剥掉而豁免。检查见 re/g_no_address_named_functions.py，证明见 re/g_prove_address_named_check.py。",
+  "check": "re/g_no_address_named_functions.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

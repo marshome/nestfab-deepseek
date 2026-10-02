@@ -2526,6 +2526,14 @@
    "round": 681,
    "subject": "semantic-and-trivial-accessors-are-not-separable",
    "witness": "assignTimer_5F3900 calls timerObject_5F47C0; keeping only the named ones does not compile, which is why all 96 were deleted and the seven are recorded as work"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a function carrying its own field OFFSET in its name is a calling convention: the tell is a type word followed by two hex digits, as in getDword00_52F920",
+   "round": 682,
+   "subject": "offset-in-name-is-the-tell",
+   "witness": "the rule is re/g_no_address_named_functions.py, proved by re/g_prove_address_named_check.py on the accessor shape and on the two legitimate forms"
   }
  ]
 }
