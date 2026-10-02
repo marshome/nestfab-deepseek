@@ -1582,6 +1582,30 @@
    "round": 635,
    "subject": "nesting-quality-bottleneck",
    "witness": "findings_engine.md's unsolved list, after the 0x378E0 dossier"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the archive's bottleneck names strategy.nesting and search.pack_all do not exist as strings in the image, and the archive does not record which offsets they label",
+   "round": 636,
+   "subject": "archive.labels-unverifiable",
+   "witness": "'pack_all' and 'strategy.nesting' each occur 0 times; 'nesting_pow_boost' occurs twice, so the archive has mixed real names with invented ones without marking which is which"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the parameter 'nesting_pow_boost' is stored at +0x100 of the object the parser 0x4EC00 is filling, and +0xF4 receives a bool derived from the same value",
+   "round": 636,
+   "subject": "nesting_pow_boost.at-100",
+   "witness": "0x4F496 lea rdx,[rip+0x960a7d] -> 'nesting_pow_boost'; 0x4F4A0 call 0x82A3E0 to look it up by name; 0x4F4A9 movsd [rsi+0x100],xmm6; 0x4F490 mov [rsi+0xf4],al from the same xmm6"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x4EC00 stores a named parameter's value when its lookup by name succeeds, and four fields are placed in one sequence",
+   "round": 636,
+   "subject": "0x4EC00.parameter-parser",
+   "witness": "0x82A3E0 is called with the parameter's name and its eax result decides whether to store; the sequence places +0xF4 and +0x100 and continues with two more names"
   }
  ]
 }
