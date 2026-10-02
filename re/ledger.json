@@ -1078,6 +1078,22 @@
    "round": 604,
    "subject": "container.three-slot-is-not-vector",
    "witness": "0x23C0B/0x23C27/0x23C38 zero the three slots; 0x23C5C stores rax (the block) to +0x30, 0x23C93 stores r12 to +0x38 and 0x23C64 stores r12 to +0x40; r12 was computed at 0x23C52 as [rax+rdi], the block plus its size"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "NO function in the module writes all three of +0x00, +0x08 and +0x10 of one object, so its containers are its own rather than std::vector",
+   "round": 605,
+   "subject": "container.not-std-vector",
+   "witness": "re/g_vector_test.py with a self-check that first proves it can see 0x23BF0's store: the INSTALL shape has 0 functions and the COUNT shape 0, across every function of 40 to 1200 bytes in the code range; a std::vector would produce that shape hundreds of times"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "every extractor should include one input whose expected result is known and refuse to report when that input comes back empty",
+   "round": 605,
+   "subject": "tooling.extractors-need-a-known-input",
+   "witness": "two consecutive rounds produced 'found 0' and only one was a finding; the fixed tool prints 'REFUSING TO REPORT' when its self-check fails, converting a class of silent false negatives into a loud refusal"
   }
  ]
 }
