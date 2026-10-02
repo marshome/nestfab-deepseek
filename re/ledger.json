@@ -870,6 +870,30 @@
    "round": 594,
    "subject": "variant.authorization-offsets",
    "witness": "0xC1A0 touches +0x188, +0x190, +0x198; 0x10CE0 touches +0x1A0, +0x1A8, +0x1B0; the ledger names +0x1A0/+0x1A8/+0x1B0 commonCutParameterA/B/C from the constructor's writes and +0x1B8 userString"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0xC1A0 is a 24-byte move assignment into the order at +0x188, keeping the old first word and testing it for null",
+   "round": 595,
+   "subject": "0xC1A0.move-assign",
+   "witness": "0xC205 call 0x5C3D90 builds a 0x18 triple at rsp+0x40; 0xC20A/0xC226/0xC23E read its three words and 0xC21F/0xC237/0xC24C write order+0x188/+0x190/+0x198; 0xC218 reads the OLD [rbx+0x188] into rcx and 0xC234 tests it"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the 0x18 byte element size now has FOUR independent sightings",
+   "round": 595,
+   "subject": "element.18-four-sightings",
+   "witness": "0x23BF0 allocates count*3*8; 0x22E40 walks with add rax,0x18; 0x5CD5C0 walks with add rbx,0x18; and 0xC1A0 moves a three-word value into order+0x188..+0x198"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "CNS_SetPartVariantAuthorizations takes (order, int, int, double): the flag is in r8d and the double in xmm3, both saved before anything touches them",
+   "round": 595,
+   "subject": "0xC1A0.signature",
+   "witness": "0xC1A7 mov esi,r8d and 0xC1AA movsd [rsp+0x20],xmm3 precede every other use of those registers"
   }
  ]
 }
