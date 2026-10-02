@@ -590,6 +590,22 @@
    "round": 573,
    "subject": "LaunchingOrder.assertion-names-accepted",
    "witness": "re/g_conflict.py: 0 orphans. common_cut_safety_preference and multitorch_cutting_preference also have setter witnesses; parts occurs 70 times in the image and sheets 12, so both are used throughout the code and not stale labels"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the key-to-offset pairing produced 96 pairs, 0 of which agree with the layout's name at that offset, and one is not an object offset at all",
+   "round": 574,
+   "subject": "pairing.still-contaminated",
+   "witness": "re/g_pair.py: floating paired with +0x4D2D7B, clusters with +0x918; common_cut_gap paired with +0x10 in 0x5070E0 and +0x10 in a different serialiser while common_cut_cutting_cost_per_unit got +0x10 in 0x506B30 and +0x20 in 0x5070E0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the comparison-bounded span is not enough: a key's body contains calls to helpers that touch THEIR objects, and a nested serialiser touches a nested object",
+   "round": 574,
+   "subject": "pairing.reason",
+   "witness": "0x5070E0 is 7663 bytes and calls 0x50A550, 0x50B1D0 and others, each of which has its own object; the span therefore contains offsets of several objects and the pairing cannot tell them apart"
   }
  ]
 }
