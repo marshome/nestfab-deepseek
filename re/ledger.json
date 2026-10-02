@@ -1630,6 +1630,14 @@
    "round": 637,
    "subject": "param.taxonomy",
    "witness": "combined/linear/boost/random_price_frequency and adaptative/boost_price_max_random are the weighted-search parameters, which is a shape the C++ reconstruction should respect"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RE 0x4EC00 writes 59 named parameters into one object, from +0x24 to +0x344, with 22 gaps larger than eight bytes",
+   "round": 638,
+   "subject": "config.59-fields",
+   "witness": "re/g_param_layouts.py: the function's 112 lookup sites with a field, no duplicate offset in the chosen base rsi; the header lcns/config_parameters.hpp carries each name with a static_assert on its offset"
   }
  ]
 }

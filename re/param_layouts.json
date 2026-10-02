@@ -1,0 +1,251 @@
+{
+ "layouts": {
+  "0x2A3520": {
+   "base": "rsp",
+   "duplicates": [
+    "+0x20"
+   ],
+   "fields": {
+    "+0x20": [
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword",
+     "dword"
+    ],
+    "+0x380": [
+     "dword"
+    ],
+    "+0xA0": [
+     "dword"
+    ]
+   }
+  },
+  "0x4EC00": {
+   "base": "rsi",
+   "duplicates": [],
+   "fields": {
+    "+0x100": [
+     "qword"
+    ],
+    "+0x108": [
+     "dword"
+    ],
+    "+0x10E": [
+     "byte"
+    ],
+    "+0x110": [
+     "dword"
+    ],
+    "+0x114": [
+     "dword"
+    ],
+    "+0x118": [
+     "dword"
+    ],
+    "+0x120": [
+     "qword"
+    ],
+    "+0x140": [
+     "qword"
+    ],
+    "+0x148": [
+     "qword"
+    ],
+    "+0x150": [
+     "dword"
+    ],
+    "+0x160": [
+     "qword"
+    ],
+    "+0x180": [
+     "dword"
+    ],
+    "+0x184": [
+     "dword"
+    ],
+    "+0x190": [
+     "dword"
+    ],
+    "+0x194": [
+     "dword"
+    ],
+    "+0x1A8": [
+     "qword"
+    ],
+    "+0x1B0": [
+     "dword"
+    ],
+    "+0x1B8": [
+     "qword"
+    ],
+    "+0x1C4": [
+     "dword"
+    ],
+    "+0x1DC": [
+     "dword"
+    ],
+    "+0x1E0": [
+     "qword"
+    ],
+    "+0x1EC": [
+     "dword"
+    ],
+    "+0x200": [
+     "qword"
+    ],
+    "+0x208": [
+     "qword"
+    ],
+    "+0x210": [
+     "qword"
+    ],
+    "+0x218": [
+     "qword"
+    ],
+    "+0x220": [
+     "qword"
+    ],
+    "+0x228": [
+     "qword"
+    ],
+    "+0x230": [
+     "qword"
+    ],
+    "+0x238": [
+     "qword"
+    ],
+    "+0x24": [
+     "dword"
+    ],
+    "+0x264": [
+     "dword"
+    ],
+    "+0x268": [
+     "qword"
+    ],
+    "+0x270": [
+     "qword"
+    ],
+    "+0x288": [
+     "qword"
+    ],
+    "+0x2A8": [
+     "qword"
+    ],
+    "+0x2B0": [
+     "qword"
+    ],
+    "+0x2B8": [
+     "qword"
+    ],
+    "+0x2DC": [
+     "dword"
+    ],
+    "+0x31C": [
+     "dword"
+    ],
+    "+0x320": [
+     "dword"
+    ],
+    "+0x334": [
+     "dword"
+    ],
+    "+0x33C": [
+     "dword"
+    ],
+    "+0x344": [
+     "dword"
+    ],
+    "+0x44": [
+     "dword"
+    ],
+    "+0x48": [
+     "dword"
+    ],
+    "+0x4C": [
+     "dword"
+    ],
+    "+0x50": [
+     "dword"
+    ],
+    "+0x60": [
+     "dword"
+    ],
+    "+0x78": [
+     "dword"
+    ],
+    "+0x84": [
+     "dword"
+    ],
+    "+0x88": [
+     "dword"
+    ],
+    "+0x8C": [
+     "dword"
+    ],
+    "+0x90": [
+     "dword"
+    ],
+    "+0xC0": [
+     "dword"
+    ],
+    "+0xE0": [
+     "qword"
+    ],
+    "+0xE8": [
+     "dword"
+    ],
+    "+0xEC": [
+     "dword"
+    ],
+    "+0xF0": [
+     "dword"
+    ]
+   }
+  },
+  "0x708D30": {
+   "base": "rsp",
+   "duplicates": [
+    "+0x1A0"
+   ],
+   "fields": {
+    "+0x1A0": [
+     "qword",
+     "qword"
+    ],
+    "+0x60": [
+     "qword"
+    ],
+    "+0x68": [
+     "qword"
+    ]
+   }
+  }
+ }
+}
