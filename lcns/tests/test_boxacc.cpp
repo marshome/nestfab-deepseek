@@ -1,0 +1,196 @@
+// tests/test_boxacc.cpp -- the box accumulator and the element accumulator, against the originals.
+//
+// 0x5C8A10 is callable as embedded; 0x50FD40 became executable once its four callees were relocated to embedded blocks,
+// which is why both can be compared here rather than merely described. Elements are fabricated to the layout the
+// accessors read (0x138 stride, sub-object pointer at +0x60, the pair at +0x28/+0x30 of that sub-object), so the
+// original accepts exactly the same memory the C++ does.
+
+#include "check.hpp"
+#include "lcns/boxacc.hpp"
+#include "lcns/embedded.hpp"
+
+#include <cstdint>
+#include <cstring>
+#include <vector>
+
+namespace emb = lcns::embedded;
+
+namespace {
+
+struct Sub {
+    unsigned char pad[lcns::kBoxValueA];
+    double a;
+    double b;
+    unsigned char tail[8];
+};
+
+struct Element {
+    unsigned char pad[lcns::kBoxElementSubObject];
+    Sub* sub;
+    unsigned char rest[lcns::kBoxElementStride - lcns::kBoxElementSubObject - sizeof(Sub*)];
+};
+
+struct Range {
+    const Element* begin;
+    const Element* end;
+};
+
+/** Build a vector of elements carrying the given pairs, with storage that outlives the calls. */
+struct Fixture {
+    std::vector<Sub> subs;
+    std::vector<Element> elements;
+    Range range;
+
+    explicit Fixture(const std::vector<std::pair<double, double>>& pairs) {
+        subs.resize(pairs.size());
+        elements.resize(pairs.size());
+        for (std::size_t i = 0; i < pairs.size(); ++i) {
+            subs[i].a = pairs[i].first;
+            subs[i].b = pairs[i].second;
+            std::memset(elements[i].pad, 0, sizeof(elements[i].pad));
+            elements[i].sub = &subs[i];
+            std::memset(elements[i].rest, 0, sizeof(elements[i].rest));
+        }
+        range.begin = elements.empty() ? nullptr : elements.data();
+        range.end = elements.empty() ? nullptr : elements.data() + elements.size();
+    }
+};
+
+double boxField(const unsigned char* box, std::size_t off) {
+    double v = 0.0;
+    std::memcpy(&v, box + off, sizeof(v));
+    return v;
+}
+
+bool sameBytes(const unsigned char* a, const unsigned char* b, std::size_t n) {
+    return std::memcmp(a, b, n) == 0;
+}
+
+const std::vector<std::pair<double, double>> kSets[] = {
+    {},                                                    // empty: the box must stay untouched
+    {{2.0, 3.0}},
+    {{-1.0, -1.0}, {0.0, 0.0}},
+    {{5.0, -2.0}, {-7.0, 4.0}, {1.0, 1.0}},
+    {{0.5, 0.25}},
+    {{-0.125, 8.0}, {8.0, -0.125}},
+    {{1e3, 1e-3}, {-1e3, 0.0}},
+};
+
+}  // namespace
+
+int main() {
+    // ---------------------------------------------------------------- properties of the box accumulator
+    {
+        unsigned char box[lcns::kBoxBytes];
+        std::memset(box, 0, sizeof(box));
+        box[lcns::kBoxFlag] = 1;                       // callers mark it uninitialised before the first pair
+        const double first[2] = {3.0, -4.0};
+        lcns::boxAccumulate(box, first);
+        CHECK(box[lcns::kBoxFlag] == 0);               // the first call clears the flag
+        CHECK(boxField(box, lcns::kBoxMinX) == 3.0);
+        CHECK(boxField(box, lcns::kBoxMinY) == -4.0);
+        CHECK(boxField(box, lcns::kBoxMaxX) == 3.0);
+        CHECK(boxField(box, lcns::kBoxMaxY) == -4.0);
+        const double second[2] = {-1.0, 2.0};
+        lcns::boxAccumulate(box, second);
+        CHECK(boxField(box, lcns::kBoxMinX) == -1.0);
+        CHECK(boxField(box, lcns::kBoxMinY) == -4.0);
+        CHECK(boxField(box, lcns::kBoxMaxX) == 3.0);
+        CHECK(boxField(box, lcns::kBoxMaxY) == 2.0);
+        // a pair inside the box changes nothing
+        const double inside[2] = {0.0, 0.0};
+        lcns::boxAccumulate(box, inside);
+        CHECK(boxField(box, lcns::kBoxMinX) == -1.0 && boxField(box, lcns::kBoxMaxY) == 2.0);
+    }
+
+    // ---------------------------------------------------------------- properties of the element accumulator
+    {
+        // one element: the box is the origin unioned with the pair, then its own size is folded in
+        Fixture f({{2.0, 3.0}});
+        unsigned char box[lcns::kBoxBytes];
+        std::memset(box, 0xAA, sizeof(box));
+        CHECK(lcns::boxAccumulateRange(box, &f.range) == box);
+        CHECK(box[lcns::kBoxFlag] == 0);
+        CHECK(boxField(box, lcns::kBoxMinX) == 0.0);      // the origin is always seeded in
+        CHECK(boxField(box, lcns::kBoxMinY) == 0.0);
+        CHECK(boxField(box, lcns::kBoxMaxX) == 2.0);
+        CHECK(boxField(box, lcns::kBoxMaxY) == 3.0);
+
+        // An empty range: CORRECTED in round 358. The seeding call at 0x50FD84 takes the initialise path, which
+        // CLEARS the flag, so the box is all zeros with a cleared flag -- the "uninitialised" guard at 0x50FDDC is not
+        // reachable through this entry. My first version of this check expected the flag to stay set.
+        Fixture empty({});
+        unsigned char zeroBox[lcns::kBoxBytes];
+        std::memset(zeroBox, 0x5A, sizeof(zeroBox));
+        lcns::boxAccumulateRange(zeroBox, &empty.range);
+        CHECK(zeroBox[lcns::kBoxFlag] == 0);
+        CHECK(boxField(zeroBox, lcns::kBoxMinX) == 0.0);
+        CHECK(boxField(zeroBox, lcns::kBoxMaxX) == 0.0);
+        CHECK(boxField(zeroBox, lcns::kBoxMinY) == 0.0);
+        CHECK(boxField(zeroBox, lcns::kBoxMaxY) == 0.0);
+
+        // (2,3) and (-1,-1): after the walk the box is [-1,2] x [-1,3], width 3, height 4, and folding (3,4) in widens
+        // it to [-1,3] x [-1,4]
+        Fixture two({{2.0, 3.0}, {-1.0, -1.0}});
+        unsigned char box2[lcns::kBoxBytes];
+        std::memset(box2, 0, sizeof(box2));
+        lcns::boxAccumulateRange(box2, &two.range);
+        CHECK(boxField(box2, lcns::kBoxMinX) == -1.0);
+        CHECK(boxField(box2, lcns::kBoxMinY) == -1.0);
+        CHECK(boxField(box2, lcns::kBoxMaxX) == 3.0);
+        CHECK(boxField(box2, lcns::kBoxMaxY) == 4.0);
+    }
+
+    // ---------------------------------------------------------------- differential against both originals
+#if defined(LCNS_HAS_EMBEDDED_ASM)
+    {
+        auto originalPair = reinterpret_cast<void (*)(unsigned char*, const double*)>(emb::originalOf(0x5C8A10u));
+        auto originalRange = reinterpret_cast<void* (*)(unsigned char*, const void*)>(emb::originalOf(0x50FD40u));
+        CHECK(originalPair != nullptr);
+        CHECK(originalRange != nullptr);
+        const emb::Block* rb = emb::find(0x50FD40u);
+        CHECK(rb != nullptr);
+        if (rb != nullptr) {
+            CHECK(rb->status == emb::Status::CallableRelocated);
+            CHECK(rb->reason != nullptr && rb->reason[0] != '\0');   // names the six rewritten calls
+        }
+
+        if (originalPair != nullptr) {
+            // the pair accumulator, over the pairs the boxes meet
+            const double pairs[][2] = {{0.0, 0.0}, {1.0, -1.0}, {-5.0, 5.0}, {0.25, 0.75}, {-0.0, -0.0}};
+            for (const double* p : pairs) {
+                for (int flag = 0; flag <= 1; ++flag) {
+                    unsigned char mine[lcns::kBoxBytes];
+                    unsigned char theirs[lcns::kBoxBytes];
+                    std::memset(mine, 0, sizeof(mine));
+                    std::memset(theirs, 0, sizeof(theirs));
+                    mine[lcns::kBoxFlag] = static_cast<unsigned char>(flag);
+                    theirs[lcns::kBoxFlag] = static_cast<unsigned char>(flag);
+                    lcns::boxAccumulate(mine, p);
+                    originalPair(theirs, p);
+                    CHECK(sameBytes(mine, theirs, sizeof(mine)));
+                }
+            }
+        }
+
+        if (originalRange != nullptr) {
+            std::size_t compared = 0;
+            for (const auto& set : kSets) {
+                Fixture f(set);
+                unsigned char mine[lcns::kBoxBytes];
+                unsigned char theirs[lcns::kBoxBytes];
+                std::memset(mine, 0x5A, sizeof(mine));
+                std::memset(theirs, 0x5A, sizeof(theirs));
+                lcns::boxAccumulateRange(mine, &f.range);
+                originalRange(theirs, &f.range);
+                // every byte, not only the four doubles: the flag is part of the answer
+                CHECK(sameBytes(mine, theirs, sizeof(mine)));
+                ++compared;
+            }
+            CHECK(compared == 7u);
+        }
+    }
+#endif
+
+    return check::finish("boxacc");
+}

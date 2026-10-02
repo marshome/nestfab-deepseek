@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+﻿cmake_minimum_required(VERSION 3.20)
 project(lcns LANGUAGES CXX VERSION 0.1.0)
 
 # ---------------------------------------------------------------------------
@@ -58,7 +58,7 @@ if(LCNS_HAVE_ASM)
 endif()
 
 # --- exact geometry kernel  (mirrors ..\exact\* and ..\geom\* of the original) ---
-add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp src/segcost.cpp)
+add_library(lcns_geom STATIC src/geom.cpp src/boolean.cpp src/affine.cpp src/segcost.cpp src/boxacc.cpp)
 target_link_libraries(lcns_geom PUBLIC lcns_flags)
 
 # --- problem model + NFP map + tiling patterns + row distance/squeeze ---
@@ -191,7 +191,7 @@ endif()
 if(LCNS_BUILD_TESTS)
   enable_testing()
   foreach(t exact conv boolean offset nofit nester model tiling io lp linear_program cloud
-            licensing row recovered json_backend crypto_backend embedded affine segcost)
+            licensing row recovered json_backend crypto_backend embedded affine segcost boxacc)
     add_executable(test_${t} tests/test_${t}.cpp)
     target_link_libraries(test_${t} PRIVATE lcns_nest lcns_api lcns_embedded)
     add_test(NAME ${t} COMMAND test_${t})
@@ -206,4 +206,5 @@ if(Python3_Interpreter_FOUND)
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "Regenerating include/lcns/detail/api_table.inc from ../re/exports_table.json")
 endif()
+
 

@@ -25,7 +25,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x5ced50` | 196 | comment_only | 24 | inverse of a 2x3 affine matrix |
 | `0x55e190` | 258 | callable_relocated | 3 | segment length pair, min and max, with a square-root guard |
 | `0x62fe20` | 270 | comment_only | 89 | libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects |
-| `0x50fd40` | 270 | comment_only | 3 | accumulator over a range of 312-byte elements |
+| `0x50fd40` | 270 | callable_relocated | 3 | accumulator over a range of 312-byte elements |
+| `0x5c8a10` | 114 | callable | 16 | the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it |
 | `0x24dd40` | 238 | comment_only | 1 | composition of two transformed fields with weights |
 | `0x4b81d0` | 78 | comment_only | 4 | builds the object whose first member is the 0.01 tolerance |
 | `0x24c610` | 138 | comment_only | 4 | four-stage geometry chain over the packed +0x70 point |
@@ -33,7 +34,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x243820` | 15524 | comment_only | 3 | head of the largest routine here (15,524 bytes): geometry entry |
 | `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-22 blocks, 12 callable, 10 comment-only, 18232 bytes of original code embedded.
+23 blocks, 14 callable, 9 comment-only, 18346 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -598,8 +599,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 
 ## `0x50fd40` -- accumulator over a range of 312-byte elements
 
-- size 270 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x5C8A10 outside the block
+- size 270 bytes, 3 callers, status **callable_relocated**
+- not callable because: block at 0x50fd84 -> lcns_orig_5c8a10; block at 0x50fd98 -> lcns_orig_51d2f0; block at 0x50fda0 -> lcns_orig_4f8370; block at 0x50fdb3 -> lcns_orig_51d2f0; block at 0x50fdbb -> lcns_orig_4f8380; block at 0x50fdd2 -> lcns_orig_5c8a10; block at 0x50fe1d -> lcns_orig_5c8a10
 - sha256 `0bd76831f963660517c123629b68239771edc3f74587a380dcef90d1893c1a7b`
 
 ```asm
@@ -676,6 +677,45 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 0050fe44  addsd xmm0, xmm7
 0050fe48  addsd xmm7, xmm1
 0050fe4c  jmp 0x50fe0b
+```
+
+## `0x5c8a10` -- the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it
+
+- size 114 bytes, 16 callers, status **callable**
+- sha256 `11fd0141b88c0c13259995daf85e6f5fc382eb89ffd328c4a08f89464cee9e0c`
+
+```asm
+005c8a10  cmp byte ptr [rcx], 0
+005c8a13  jne 0x5c8a60
+005c8a15  movsd xmm0, qword ptr [rdx]
+005c8a19  movsd xmm1, qword ptr [rcx + 8]
+005c8a1e  ucomisd xmm1, xmm0
+005c8a22  jbe 0x5c8a2d
+005c8a24  movsd qword ptr [rcx + 8], xmm0
+005c8a29  movsd xmm0, qword ptr [rdx]
+005c8a2d  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8a32  jbe 0x5c8a39
+005c8a34  movsd qword ptr [rcx + 0x18], xmm0
+005c8a39  movsd xmm0, qword ptr [rdx + 8]
+005c8a3e  movsd xmm1, qword ptr [rcx + 0x10]
+005c8a43  ucomisd xmm1, xmm0
+005c8a47  jbe 0x5c8a53
+005c8a49  movsd qword ptr [rcx + 0x10], xmm0
+005c8a4e  movsd xmm0, qword ptr [rdx + 8]
+005c8a53  ucomisd xmm0, qword ptr [rcx + 0x20]
+005c8a58  jbe 0x5c8a5f
+005c8a5a  movsd qword ptr [rcx + 0x20], xmm0
+005c8a5f  ret 
+005c8a60  mov r9, qword ptr [rdx]
+005c8a63  mov byte ptr [rcx], 0
+005c8a66  mov r10, qword ptr [rdx + 8]
+005c8a6a  mov qword ptr [rcx + 8], r9
+005c8a6e  mov qword ptr [rcx + 0x10], r10
+005c8a72  mov rax, qword ptr [rdx]
+005c8a75  mov rdx, qword ptr [rdx + 8]
+005c8a79  mov qword ptr [rcx + 0x18], rax
+005c8a7d  mov qword ptr [rcx + 0x20], rdx
+005c8a81  ret 
 ```
 
 ## `0x24dd40` -- composition of two transformed fields with weights

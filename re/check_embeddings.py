@@ -65,12 +65,22 @@ def main():
             if e["symbol"] not in tab:
                 print("FAIL 0x%x: %s is missing from the pointer table" % (rva, e["symbol"]))
                 bad += 1
-        elif e["status"] == "callable_relocated":
-            if not e.get("relocations"):
-                print("FAIL 0x%x: a relocated copy with no relocation list" % rva)
-                bad += 1
-            if not e.get("reason"):
-                print("FAIL 0x%x: a relocated copy must record what was rewritten" % rva)
+            # IN THIS BRANCH, not in an elif that can never run: a relocated copy must list what was rewritten, and the
+            # generated assembly must carry a symbolic call for each of those sites.
+            if e["status"] == "callable_relocated":
+                relocs = e.get("relocations") or []
+                if not relocs:
+                    print("FAIL 0x%x: a relocated copy with no relocation list" % rva)
+                    bad += 1
+                if not e.get("reason"):
+                    print("FAIL 0x%x: a relocated copy must record what was rewritten" % rva)
+                    bad += 1
+                for rel in relocs:
+                    if rel.get("symbol") not in asm:
+                        print("FAIL 0x%x: relocation to %s is not in gen_orig.S" % (rva, rel.get("symbol")))
+                        bad += 1
+            elif e.get("relocations"):
+                print("FAIL 0x%x: a plain callable copy must not carry relocations" % rva)
                 bad += 1
         elif e["status"] == "data":
             # Evidence carried as bytes: no symbol and no excuse, but the bytes and the hash are checked like any other.
