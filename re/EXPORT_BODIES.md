@@ -1146,3 +1146,30 @@ The numerator saves ten xmm registers and uses a 0x1d8 frame, so it is a routine
 begins with 0x51C250 and, on its error path, builds strings whose bytes read as solution and .IsBound through the
 0x910BA0 helper -- consistent with a denominator about a solution being bound, and again a diagnostic path rather than
 a returned value. Neither is small, which is why GetFillRatio is listed as needing two more layers rather than guessed at.
+
+## Correction: what 0x524EE0 actually is (round 455)
+
+Rounds 441 to 454 treated 0x524EE0 as the function that turns a container element into a pair of values, and the
+dependency table above was written on that reading. The reading is wrong, and this note corrects it.
+
+What the middle of the function shows:
+
+    525058  rbx = [r12 + 0x18] ; test rbx, rbx ; je ; call 0x9984B0     ; releases a pointer inside the element
+    52506A  rcx = [r12] ; test rcx, rcx ; je ; call 0x9984B0           ; releases the element itself
+    525078  add r12, 0x30                                                ; element stride 48
+    52507C  cmp r13, r12 ; jne 525033                                    ; loop
+    525093  call 0x5F4340                                                ; epilogue, same family as 0x5F4310
+
+So 0x524EE0 walks a container of 48-byte elements and destroys them; it is a destructor, in the same family as
+0x8C5090, and not a value extractor. The 150-200 section, read in round 454, builds diagnostic text containing the
+source file name ..\structure\stats.cpp, which fits a destructor reporting an invariant, not a computation.
+
+Two useful consequences. First, the 48-byte element family now has two independent confirmations: the modular
+inverse of three in 0x8C4530, and the literal add r12, 0x30 here. Second, the loop body of 0x526160 (the implementer
+behind GetLength) is therefore a clean-up call plus the box merge 0x5C8C50, which this project already implements
+and holds to the original over 2000 random boxes. The arithmetic in GetLength really is as short as round 439
+suggested: one subtraction, chosen by a status test, with zero for an empty container.
+
+What is still missing before GetLength and GetHeight can be implemented is not an algorithm but the provenance of
+the two doubles that are subtracted: they are copied onto the stack from a window object built by 0x4F9200 and
+0x5CD800 in the section between instructions 34 and 150 of 0x526160.
