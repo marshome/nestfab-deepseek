@@ -102,7 +102,7 @@ prints them in work order.
 | `forwardedCount()` | **40 of 168** | `lcns/include/lcns/detail/exports_forwarding.inc` |
 | embedded blocks | 205 / 95533 bytes, all matching | `re/EMBEDDED.md` |
 | tests | 22 of 22, 116 of 116 acceptance checks | `re/gate.ps1` |
-| domain functions named by the reporter channels | 251 read from their own call sites, 281 guessed and kept apart | `re/NAME_REGISTRY` -> `re/name_registry.json` |
+| domain functions named by the reporter channels | 251 read from their own call sites, 281 guessed and kept apart | `re/NAMES.md`, `re/name_registry.json` |
 | this module's classes | **75**, from RTTI | `re/CLASSES.md` |
 | LaunchLocalComputation closure | 7 functions, 6636 bytes | `re/LAUNCH_LOCAL_COMPUTATION.md` |
 
