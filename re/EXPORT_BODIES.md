@@ -507,3 +507,168 @@ Shape: NOT a simple double difference (it has calls or branches), so it is recor
 ```
 
 Shape: NOT a simple double difference (it has calls or branches), so it is recorded, not implemented.
+
+## Call graph and tail arithmetic of the box routines (round 373)
+
+Three exports depend on these: GetLength (0xB130) and GetHeight (0xB160) tail-call the first two with the sub-object
+at [order+0x08], and GetFillRatio (0xB4B0) tail-calls the third with the nesting container's address (order+0x50).
+The calls below are in instruction order; the tail is everything after the last branch target that is still inside
+the function.
+
+### 0x526160 -- GetLength's implementer (757 bytes, 171 instructions)
+
+Calls, in order:
+
+* `0x51D0C0` (called from 0x526177), 5 bytes
+* `0x51D0C0` (called from 0x526194), 5 bytes
+* `0x524EE0` (called from 0x5261DE), 1054 bytes
+* `0x5C8C50` (called from 0x5261E9), 255 bytes
+* `0x51D2F0` (called from 0x5261F6), 5 bytes
+* `0x4F9200` (called from 0x526206), 434 bytes
+* `0x5CD800` (called from 0x526211), 610 bytes
+* `0x52F810` (called from 0x52621E), 7 bytes
+* `0x910BA0` (called from 0x5262A8), 109 bytes
+* `0x910BA0` (called from 0x52635F), 109 bytes
+* `0x60A620` (called from 0x5263BF), 2620 bytes
+* `0x9984B0` (called from 0x5263D2), 5 bytes
+* `0x9984B0` (called from 0x5263E5), 5 bytes
+* `0x9984B0` (called from 0x5263FF), 5 bytes
+* `0x9984B0` (called from 0x52641A), 5 bytes
+* `0x9984B0` (called from 0x526430), 5 bytes
+* `0x62F280` (called from 0x526438), 171 bytes
+* `0x9984B0` (called from 0x52644E), 5 bytes
+
+Last 24 instructions:
+
+```asm
+005263f6  cmp rcx, rax
+005263f9  je 0x526203
+005263ff  call 0x9984b0
+00526404  jmp 0x526203
+00526409  mov rbx, rax
+0052640c  mov rcx, qword ptr [rsp + 0x50]
+00526411  add rdi, 0x10
+00526415  cmp rcx, rdi
+00526418  je 0x52641f
+0052641a  call 0x9984b0
+0052641f  mov rcx, qword ptr [rsp + 0xa0]
+00526427  add rsi, 0x10
+0052642b  cmp rcx, rsi
+0052642e  je 0x526435
+00526430  call 0x9984b0
+00526435  mov rcx, rbx
+00526438  call 0x62f280
+0052643d  mov rcx, qword ptr [rsp + 0x30]
+00526442  add rbp, 0x10
+00526446  mov rbx, rax
+00526449  cmp rcx, rbp
+0052644c  je 0x52640c
+0052644e  call 0x9984b0
+00526453  jmp 0x52640c
+```
+
+### 0x5266A0 -- GetHeight's implementer (759 bytes, 171 instructions)
+
+Calls, in order:
+
+* `0x51D0C0` (called from 0x5266B7), 5 bytes
+* `0x51D0C0` (called from 0x5266D4), 5 bytes
+* `0x524EE0` (called from 0x52671E), 1054 bytes
+* `0x5C8C50` (called from 0x526729), 255 bytes
+* `0x51D2F0` (called from 0x526736), 5 bytes
+* `0x4F9200` (called from 0x526746), 434 bytes
+* `0x5CD800` (called from 0x526751), 610 bytes
+* `0x52F830` (called from 0x52675E), 10 bytes
+* `0x910BA0` (called from 0x5267EA), 109 bytes
+* `0x910BA0` (called from 0x5268A1), 109 bytes
+* `0x60A620` (called from 0x526901), 2620 bytes
+* `0x9984B0` (called from 0x526914), 5 bytes
+* `0x9984B0` (called from 0x526927), 5 bytes
+* `0x9984B0` (called from 0x526941), 5 bytes
+* `0x9984B0` (called from 0x52695C), 5 bytes
+* `0x9984B0` (called from 0x526972), 5 bytes
+* `0x62F280` (called from 0x52697A), 171 bytes
+* `0x9984B0` (called from 0x526990), 5 bytes
+
+Last 24 instructions:
+
+```asm
+00526938  cmp rcx, rax
+0052693b  je 0x526743
+00526941  call 0x9984b0
+00526946  jmp 0x526743
+0052694b  mov rbx, rax
+0052694e  mov rcx, qword ptr [rsp + 0x50]
+00526953  add rdi, 0x10
+00526957  cmp rcx, rdi
+0052695a  je 0x526961
+0052695c  call 0x9984b0
+00526961  mov rcx, qword ptr [rsp + 0xa0]
+00526969  add rsi, 0x10
+0052696d  cmp rcx, rsi
+00526970  je 0x526977
+00526972  call 0x9984b0
+00526977  mov rcx, rbx
+0052697a  call 0x62f280
+0052697f  mov rcx, qword ptr [rsp + 0x30]
+00526984  add rbp, 0x10
+00526988  mov rbx, rax
+0052698b  cmp rcx, rbp
+0052698e  je 0x52694e
+00526990  call 0x9984b0
+00526995  jmp 0x52694e
+```
+
+### 0x5297C0 -- GetFillRatio's implementer (881 bytes, 175 instructions)
+
+Calls, in order:
+
+* `0x51C020` (called from 0x5297E0), 4 bytes
+* `0x51C020` (called from 0x5297FD), 4 bytes
+* `0x51D2F0` (called from 0x52980D), 5 bytes
+* `0x4F8D30` (called from 0x529824), 49 bytes
+* `0x52F8C0` (called from 0x529838), 11 bytes
+* `0x52F8B0` (called from 0x529844), 6 bytes
+* `0x522D60` (called from 0x52984C), 528 bytes
+* `0x528D10` (called from 0x5298E6), 2493 bytes
+* `0x523A40` (called from 0x529923), 1044 bytes
+* `0x910BA0` (called from 0x52998A), 109 bytes
+* `0x910BA0` (called from 0x529A09), 109 bytes
+* `0x60A620` (called from 0x529A75), 2620 bytes
+* `0x9984B0` (called from 0x529A8B), 5 bytes
+* `0x9984B0` (called from 0x529AA1), 5 bytes
+* `0x9984B0` (called from 0x529ABB), 5 bytes
+* `0x52F950` (called from 0x529AD0), 37 bytes
+* `0x9984B0` (called from 0x529AEE), 5 bytes
+* `0x62F280` (called from 0x529AF6), 171 bytes
+* `0x9984B0` (called from 0x529B0F), 5 bytes
+* `0x9984B0` (called from 0x529B25), 5 bytes
+
+Last 24 instructions:
+
+```asm
+00529ad0  call 0x52f950
+00529ad5  jmp 0x529829
+00529ada  mov rbx, rax
+00529add  mov rcx, qword ptr [rsp + 0x80]
+00529ae5  add r12, 0x10
+00529ae9  cmp rcx, r12
+00529aec  je 0x529af3
+00529aee  call 0x9984b0
+00529af3  mov rcx, rbx
+00529af6  call 0x62f280
+00529afb  mov rcx, qword ptr [rsp + 0xd0]
+00529b03  add rbp, 0x10
+00529b07  mov rbx, rax
+00529b0a  cmp rcx, rbp
+00529b0d  je 0x529b14
+00529b0f  call 0x9984b0
+00529b14  mov rcx, qword ptr [rsp + 0xa0]
+00529b1c  add rsi, 0x10
+00529b20  cmp rcx, rsi
+00529b23  je 0x529add
+00529b25  call 0x9984b0
+00529b2a  jmp 0x529add
+00529b2c  mov rbx, rax
+00529b2f  jmp 0x529b14
+```
