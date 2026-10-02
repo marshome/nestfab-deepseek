@@ -723,3 +723,272 @@ implementation of GetLength (0xB130, ord 96) and GetHeight (0xB160, ord 100) has
 0052f970  mov byte ptr [rcx + 0x21], 0
 0052f974  ret 
 ```
+
+## The four callees reached only from the box routine's loop (round 376)
+
+0x526160 (behind GetLength) has 18 calls, and these four are reached only from inside its loop, so they are where the
+container's elements are actually turned into the scalar the export returns. 0x5266A0 (behind GetHeight) shares them.
+
+### 0x524EE0 -- 1054 bytes, 22 callers, 241 instructions
+
+```asm
+00524ee0  push r13
+00524ee2  push r12
+00524ee4  push rbp
+00524ee5  push rdi
+00524ee6  push rsi
+00524ee7  push rbx
+00524ee8  sub rsp, 0x108
+00524eef  movaps xmmword ptr [rsp + 0xf0], xmm7
+00524ef7  xor r8d, r8d
+00524efa  lea rdi, [rsp + 0x50]
+00524eff  mov r12, rdx
+00524f02  mov rbp, rcx
+00524f05  lea rdx, [rip + 0x5fde74]
+00524f0c  mov rcx, rdi
+00524f0f  call 0x5f4310
+00524f14  mov rcx, r12
+00524f17  call 0x520440
+00524f1c  test rax, rax
+00524f1f  je 0x5250b7
+00524f25  mov rcx, r12
+00524f28  call 0x5203c0
+00524f2d  mov rcx, r12
+00524f30  mov ebx, eax
+00524f32  call 0x520440
+00524f37  mov edx, ebx
+00524f39  mov rcx, rax
+00524f3c  call 0x4f73e0
+00524f41  mov rcx, rax
+00524f44  call 0x547620
+00524f49  lea r13, [rsp + 0x70]
+00524f4e  mov rdx, rax
+00524f51  mov rcx, r13
+00524f54  call 0x5c6be0
+00524f59  lea rcx, [rsp + 0x30]
+00524f5e  mov rdx, r12
+00524f61  call 0x5203d0
+00524f66  lea rbx, [rsp + 0xd0]
+00524f6e  mov rdx, r12
+00524f71  movdqu xmm7, xmmword ptr [rsp + 0x30]
+00524f77  mov rcx, rbx
+00524f7a  call 0x5203f0
+00524f7f  lea r9, [rsp + 0x20]
+00524f84  mov r8, rbx
+00524f87  mov rdx, r13
+00524f8a  movaps xmmword ptr [rsp + 0x20], xmm7
+00524f8f  lea rsi, [rsp + 0xb0]
+00524f97  mov rcx, rsi
+00524f9a  call 0x5d3ea0
+00524f9f  mov rdx, rsi
+00524fa2  mov rcx, rbp
+00524fa5  call 0x5cd800
+00524faa  mov r13, qword ptr [rsp + 0xb8]
+00524fb2  mov r12, qword ptr [rsp + 0xb0]
+00524fba  cmp r13, r12
+00524fbd  je 0x525017
+00524fbf  nop 
+00524fc0  mov rsi, qword ptr [r12 + 0x20]
+00524fc5  mov rbx, qword ptr [r12 + 0x18]
+00524fca  cmp rsi, rbx
+00524fcd  je 0x524feb
+... (241 instructions in total)
+```
+
+### 0x5C8C50 -- 255 bytes, 56 callers, 62 instructions
+
+```asm
+005c8c50  cmp byte ptr [rdx], 0
+005c8c53  je 0x5c8c60
+005c8c55  ret 
+005c8c56  nop word ptr cs:[rax + rax]
+005c8c60  cmp byte ptr [rcx], 0
+005c8c63  jne 0x5c8d10
+005c8c69  movsd xmm0, qword ptr [rdx + 8]
+005c8c6e  movsd xmm1, qword ptr [rcx + 8]
+005c8c73  ucomisd xmm1, xmm0
+005c8c77  jbe 0x5c8c88
+005c8c79  movsd qword ptr [rcx + 8], xmm0
+005c8c7e  movsd xmm0, qword ptr [rdx + 8]
+005c8c83  movsd xmm1, qword ptr [rcx + 8]
+005c8c88  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8c8d  jbe 0x5c8c94
+005c8c8f  movsd qword ptr [rcx + 0x18], xmm0
+005c8c94  movsd xmm0, qword ptr [rdx + 0x10]
+005c8c99  movsd xmm3, qword ptr [rcx + 0x10]
+005c8c9e  ucomisd xmm3, xmm0
+005c8ca2  jbe 0x5c8cb2
+005c8ca4  movsd qword ptr [rcx + 0x10], xmm0
+005c8ca9  movapd xmm3, xmm0
+005c8cad  movsd xmm0, qword ptr [rdx + 0x10]
+005c8cb2  movsd xmm2, qword ptr [rcx + 0x20]
+005c8cb7  ucomisd xmm0, xmm2
+005c8cbb  jbe 0x5c8cc6
+005c8cbd  movsd qword ptr [rcx + 0x20], xmm0
+005c8cc2  movapd xmm2, xmm0
+005c8cc6  movsd xmm0, qword ptr [rdx + 0x18]
+005c8ccb  ucomisd xmm1, xmm0
+005c8ccf  jbe 0x5c8cdb
+005c8cd1  movsd qword ptr [rcx + 8], xmm0
+005c8cd6  movsd xmm0, qword ptr [rdx + 0x18]
+005c8cdb  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8ce0  jbe 0x5c8ce7
+005c8ce2  movsd qword ptr [rcx + 0x18], xmm0
+005c8ce7  movsd xmm0, qword ptr [rdx + 0x20]
+005c8cec  ucomisd xmm3, xmm0
+005c8cf0  jbe 0x5c8cfc
+005c8cf2  movsd qword ptr [rcx + 0x10], xmm0
+005c8cf7  movsd xmm0, qword ptr [rdx + 0x20]
+005c8cfc  ucomisd xmm0, xmm2
+005c8d00  jbe 0x5c8c55
+005c8d06  movsd qword ptr [rcx + 0x20], xmm0
+005c8d0b  ret 
+005c8d0c  nop dword ptr [rax]
+005c8d10  mov r9, qword ptr [rdx + 8]
+005c8d14  mov byte ptr [rcx], 0
+005c8d17  mov r10, qword ptr [rdx + 0x10]
+005c8d1b  mov qword ptr [rcx + 8], r9
+005c8d1f  movsd xmm1, qword ptr [rcx + 8]
+005c8d24  mov qword ptr [rcx + 0x10], r10
+005c8d28  mov r9, qword ptr [rdx + 8]
+005c8d2c  mov r10, qword ptr [rdx + 0x10]
+005c8d30  movsd xmm3, qword ptr [rcx + 0x10]
+005c8d35  mov qword ptr [rcx + 0x18], r9
+005c8d39  mov qword ptr [rcx + 0x20], r10
+005c8d3d  movsd xmm0, qword ptr [rdx + 0x18]
+005c8d42  movsd xmm2, qword ptr [rcx + 0x20]
+005c8d47  ucomisd xmm1, xmm0
+... (62 instructions in total)
+```
+
+### 0x4F9200 -- 434 bytes, 21 callers, 97 instructions
+
+```asm
+004f9200  push rbp
+004f9201  push rdi
+004f9202  push rsi
+004f9203  push rbx
+004f9204  sub rsp, 0x98
+004f920b  cmp byte ptr [rcx + 0x100], 0
+004f9212  mov rbx, rcx
+004f9215  je 0x4f9230
+004f9217  lea rax, [rbx + 0x108]
+004f921e  add rsp, 0x98
+004f9225  pop rbx
+004f9226  pop rsi
+004f9227  pop rdi
+004f9228  pop rbp
+004f9229  ret 
+004f922a  nop word ptr [rax + rax]
+004f9230  lea rdi, [rsp + 0x70]
+004f9235  mov ecx, 0x7274
+004f923a  xor r8d, r8d
+004f923d  mov qword ptr [rsp + 0x78], 0xf
+004f9246  lea rax, [rdi + 0x10]
+004f924a  mov byte ptr [rsp + 0x68], 0
+004f924f  movabs rsi, 0x675f657661685f6d
+004f9259  lea rbp, [rsp + 0x50]
+004f925e  mov qword ptr [rsp + 0x70], rax
+004f9263  lea rax, [rbp + 0x10]
+004f9267  mov qword ptr [rsp + 0x80], rsi
+004f926f  mov qword ptr [rsp + 0x50], rax
+004f9274  lea rsi, [rsp + 0x30]
+004f9279  movabs rax, 0x797274656d6f6567
+004f9283  mov word ptr [rdi + 0x1c], cx
+004f9287  lea rdx, [rsp + 0x28]
+004f928c  mov rcx, rsi
+004f928f  mov dword ptr [rdi + 0x18], 0x656d6f65
+004f9296  mov byte ptr [rdi + 0x1e], 0x79
+004f929a  mov qword ptr [rsp + 0x60], rax
+004f929f  lea rax, [rsi + 0x10]
+004f92a3  mov byte ptr [rsp + 0x8f], 0
+004f92ab  mov qword ptr [rsp + 0x58], 8
+004f92b4  mov qword ptr [rsp + 0x30], rax
+004f92b9  mov qword ptr [rsp + 0x28], 0x16
+004f92c2  call 0x910ba0
+004f92c7  mov rdx, qword ptr [rsp + 0x28]
+004f92cc  mov qword ptr [rsp + 0x30], rax
+004f92d1  mov r9, rdi
+004f92d4  mov r8, rbp
+004f92d7  mov rcx, rsi
+004f92da  mov qword ptr [rsp + 0x40], rdx
+004f92df  movabs rdx, 0x63757274735c2e2e
+004f92e9  mov qword ptr [rax], rdx
+004f92ec  movabs rdx, 0x6568735c65727574
+004f92f6  mov qword ptr [rax + 8], rdx
+004f92fa  mov edx, 0x7070
+004f92ff  mov word ptr [rax + 0x14], dx
+004f9303  mov rdx, qword ptr [rsp + 0x30]
+004f9308  mov dword ptr [rax + 0x10], 0x632e7465
+004f930f  mov rax, qword ptr [rsp + 0x28]
+004f9314  mov qword ptr [rsp + 0x38], rax
+004f9319  mov byte ptr [rdx + rax], 0
+004f931d  mov edx, 0x13b
+... (97 instructions in total)
+```
+
+### 0x5CD800 -- 610 bytes, 112 callers, 145 instructions
+
+```asm
+005cd800  push r12
+005cd802  push rbp
+005cd803  push rdi
+005cd804  push rsi
+005cd805  push rbx
+005cd806  sub rsp, 0xa0
+005cd80d  mov rdi, rcx
+005cd810  mov rcx, rdx
+005cd813  mov rbx, rdx
+005cd816  call 0x5c61d0
+005cd81b  mov rsi, qword ptr [rax + 8]
+005cd81f  cmp qword ptr [rax], rsi
+005cd822  je 0x5cd8a0
+005cd824  lea rsi, [rsp + 0x70]
+005cd829  mov rcx, rbx
+005cd82c  call 0x5c61d0
+005cd831  mov rcx, qword ptr [rax]
+005cd834  call 0x5c5f30
+005cd839  mov rcx, rax
+005cd83c  call 0x5c5260
+005cd841  mov rcx, rdi
+005cd844  mov rdx, rax
+005cd847  call 0x5cd360
+005cd84c  mov rcx, rbx
+005cd84f  call 0x5c61d0
+005cd854  mov rbp, qword ptr [rax + 8]
+005cd858  mov rbx, qword ptr [rax]
+005cd85b  cmp rbx, rbp
+005cd85e  je 0x5cd88f
+005cd860  mov rcx, rbx
+005cd863  add rbx, 0x30
+005cd867  call 0x5c5f30
+005cd86c  mov rcx, rax
+005cd86f  call 0x5c5260
+005cd874  mov rcx, rsi
+005cd877  mov rdx, rax
+005cd87a  call 0x5cd360
+005cd87f  mov rdx, rsi
+005cd882  mov rcx, rdi
+005cd885  call 0x5c8c50
+005cd88a  cmp rbp, rbx
+005cd88d  jne 0x5cd860
+005cd88f  mov rax, rdi
+005cd892  add rsp, 0xa0
+005cd899  pop rbx
+005cd89a  pop rsi
+005cd89b  pop rdi
+005cd89c  pop rbp
+005cd89d  pop r12
+005cd89f  ret 
+005cd8a0  lea rbp, [rsp + 0x50]
+005cd8a5  xor r8d, r8d
+005cd8a8  mov qword ptr [rsp + 0x50], 0x19
+005cd8b1  lea rsi, [rsp + 0x70]
+005cd8b6  mov rdx, rbp
+005cd8b9  lea rax, [rsi + 0x10]
+005cd8bd  mov rcx, rsi
+005cd8c0  mov qword ptr [rsp + 0x70], rax
+005cd8c5  lea r12, [rsp + 0x30]
+005cd8ca  call 0x910ba0
+... (145 instructions in total)
+```
