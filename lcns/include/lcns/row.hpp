@@ -939,6 +939,28 @@ double directionSine(double ux, double uy);
 // which is implemented literally here. The original stores the entries in a red-black tree; this
 // reconstruction scans a vector with the same predicate (the tree is only an index, so the
 // hit/miss decision is unchanged). That substitution is structural, not semantic.
+/** **THE ABSTRACT BASE lcns/row.hpp NEVER HAD**, named by the module's own RTTI: `Row::Squeezer`'s typeinfo at 0xA17E00 points at 0xA17E60, whose
+ *  name string is `N3Row9DistancerE`.
+ *
+ *  **ITS INTERFACE IS READABLE FROM THE SIBLING THAT HAS A VTABLE.** `Row::BasicDistancer` at 0xA3B1B0 has three slots:
+ *
+ *      0x679060  ret                       ; slot 0: the deleting destructor's abstract placeholder
+ *      0x679050  jmp 0x9984B0              ; slot 1: the destructor, tail calling the allocator
+ *      0x7CA810  movsd xmm0, [rcx + 8]     ; slot 2: THE ONE VIRTUAL METHOD -- it returns the double at +8
+ *                ret
+ *
+ *  so the base's whole surface is one accessor, and a class deriving from it is one that can hand back a `double`.
+ *
+ *  **`Row::Distancer` ITSELF HAS NO INSTANTIATED VTABLE AND IS THEREFORE NOT A KEY IN re/vtables.json**, which is why it went unnoticed while every
+ *  class in this header was written as a standalone type. */
+class Distancer {
+public:
+    virtual ~Distancer() = default;
+
+    /** RE 0x7CA810: `movsd xmm0, qword ptr [rcx + 8]` then `ret`. A double, read at +8 of the object. */
+    virtual double distance() const = 0;
+};
+
     /** The 0x270 byte object RE 0x138A20 allocates and stores at Squeezer + 8.
      *
      *      0x138A6B  mov byte [rax + 8], 1        ; enabled
@@ -975,12 +997,14 @@ double directionSine(double ux, double uy);
         Node* cacheTree = nullptr;        // +0x240, RE 0x13A3EB
     };
 
-    /** RE 0xA3B1F0, three slots. **ITS OWN STATE IS ONE POINTER.** The constructor installs the vtable at +0, allocates the 0x270 byte Impl and
-     *  stores it at +8, and touches nothing else of this object -- so `Impl` is where the fields are, and this class is the handle.
+    /** **RE 0xA3B1E0, AND IT DERIVES FROM `Distancer`** -- the module's own RTTI says so: the typeinfo at 0xA17E00 names this class and its +0x10
+     *  points at 0xA17E60, whose name is `N3Row9DistancerE`.
      *
-     *  The cost path below the constructor reads the SCALARS through that pointer, which is why `enabled`, `threshold`, `coeff` and
-     *  `twiceMaxExtent` are accessors here rather than members. */
-    class Squeezer {
+     *  Its state is ONE POINTER at +8, and that is also where the base's only virtual method looks: 0x7CA810 is `movsd xmm0, [rcx + 8]`. **SO
+     *  `distance()` RETURNS A DOUBLE OUT OF THE OBJECT THE CONSTRUCTOR ALLOCATED**, which is the coherent reading of both instructions at once.
+     *
+     *  RE 0x138A20 installs the vtable, allocates the 0x270 byte Impl and stores it at +8, and touches nothing else of this object. */
+    class Squeezer : public Distancer {
     public:
         Squeezer() = default;
         Squeezer(double twiceMaxExtent, double coeffAt0x18, double thresholdAt0x10);
@@ -989,6 +1013,10 @@ double directionSine(double ux, double uy);
         double threshold() const { return impl_ != nullptr ? impl_->threshold : 0.0; }
         double coeff() const { return impl_ != nullptr ? impl_->coeff : 0.0; }
         double twiceMaxExtent() const { return impl_ != nullptr ? impl_->twiceMaxExtent : 0.0; }
+
+        /** RE 0x7CA810: the base's only virtual method reads the double at +8, and `impl_` IS what this class stores there
+         *  (`mov [rbp + 8], rbx` at 0x138B5C). So the implementation hands back the extent. */
+        double distance() const override { return twiceMaxExtent(); }
 
         /** RE 0x13A360, vtable slot 2: the insert into the tree at inner +0x240. */
         void insert(std::uintptr_t keyLo, std::uintptr_t keyHi, double value);

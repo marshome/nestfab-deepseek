@@ -1,0 +1,88 @@
+Coin::CoinLP                                   Lp::LinearProgram
+Compact::Compacter::Implementation             Utils::Pool::<Compact::Session>
+Engine::BestObserver                           Structure::Observer
+Engine::CloudEngine                            Engine::Engine
+Engine::CompositeEngine                        Engine::Engine
+Engine::CompositeObserver                      Structure::Observer
+Engine::DelayedEngine                          Engine::Engine
+Engine::EquivalentEngine                       Engine::Engine
+Engine::EquivalentObserver                     Structure::Observer
+Engine::InfiniteEngine                         Engine::Engine
+Engine::MultiEngine                            Engine::Engine
+Engine::NestingEngine                          Engine::Engine
+Json::DefaultValueAllocator                    Json::ValueAllocator
+Json::FastWriter                               Json::Writer
+Json::StyledWriter                             Json::Writer
+Multi::AdvancedStrategist                      Multi::Strategist
+Multi::AllSheetSelector                        Multi::SheetSelector
+Multi::CompactCanceller                        Utils::Canceller
+Multi::CompactNester                           Multi::CompositeNester  <-  Multi::Nester
+Multi::DatabaseNester                          Multi::Nester
+Multi::FilterNester                            Multi::CompositeNester  <-  Multi::Nester
+Multi::FlipNester                              Multi::CompositeNester  <-  Multi::Nester
+Multi::LargestSheetSelector                    Multi::SheetSelector
+Multi::LimitedNester                           Multi::CompositeNester  <-  Multi::Nester
+Multi::MultiTorchNester                        Multi::CompositeNester  <-  Multi::Nester
+Multi::NestingContextPool                      Utils::Pool::<Multi::NestingContext>
+Multi::NestingNester                           Multi::Nester
+Multi::NestingObserver                         Structure::Observer
+Multi::NoFillNester                            Multi::CompositeNester  <-  Multi::Nester
+Multi::NoFitMapCanceller                       Utils::Canceller
+Multi::NoMixSheetSelector                      Multi::SheetSelector
+Multi::PartUpdaterLimiter                      Tiling::PartUpdaterInformer  <-  Utils::Canceller
+Multi::RCompactCanceller                       Utils::Canceller
+Multi::RandomSheetSelector                     Multi::SheetSelector
+Multi::RectangleNester                         Multi::Nester
+Multi::RowNester                               Multi::Nester
+Multi::SplitNode                               Multi::Node
+Multi::StrategyBasicAdder                      Multi::StrategyAdder
+Multi::StrategyDescriber                       Multi::StrategyAdder
+Multi::Supervisor                              (no base)
+Multi::SupervisorCanceller                     Utils::Canceller
+Multi::TerminalNode                            Multi::Node
+Multi::TilingNester                            Multi::Nester
+Multi::TraceObserver                           Structure::Observer
+Multi::WrapObserver                            Utils::Canceller
+Pack::BestNester                               Pack::Nester
+Pack::KnapsackNester                           Pack::Nester
+Pack::RecursiveNester                          Pack::Nester
+Prc::AlphaPriceComputer                        Prc::PriceComputer
+Prc::BoxPriceComputer                          Prc::PriceComputer
+Prc::HullPriceComputer                         Prc::PriceComputer
+Prc::LinearCombinationPricer                   Prc::PriceComputer
+RCompact::RotateLogger                         (no base)
+Row::BasicDistancer                            Row::Distancer
+Row::Squeezer                                  Row::Distancer
+Structure::BoxAreaDimensioner                  Structure::Dimensioner
+Structure::ClusterObserver                     Structure::Observer
+Structure::Observer                            (no base)
+Structure::ParseProblemException               (no base)
+Structure::ParseSolutionException              (no base)
+Structure::SizeDimensioner                     Structure::Dimensioner
+Structure::WidthDimensioner                    Structure::Dimensioner
+Tiling::BasicCandidater                        Tiling::Candidater
+Tiling::BiModulePattern                        Tiling::Pattern
+Tiling::BoxMultiTiler                          Tiling::MultiTiler
+Tiling::CompositePart                          Tiling::Part
+Tiling::DensityEvaluator                       Tiling::Evaluator
+Tiling::MultiOrientedPartPattern               Tiling::Pattern
+Tiling::MultitorchEvaluator                    Tiling::Evaluator
+Tiling::ObliqueEvaluator                       Tiling::Evaluator
+Tiling::OldMultitorchEvaluator                 Tiling::Evaluator
+Tiling::PackerCache                            (no base)
+Tiling::Part                                   (no base)
+Tiling::QuantityEvaluator                      Tiling::Evaluator
+Tiling::ReusableEvaluator                      Tiling::Evaluator
+Tiling::SqueezeMultiTiler                      Tiling::MultiTiler
+Tiling::UnlimitedDensityEvaluator              Tiling::Evaluator
+Tiling::UnlimitedXDensityEvaluator             Tiling::Evaluator
+Tiling::WarpCanceller                          Utils::Canceller
+Utils::BadResponseException                    (no base)
+Utils::Canceller                               (no base)
+Utils::ConnectException                        (no base)
+Utils::LogSink                                 (no base)
+Utils::ResolveException                        (no base)
+Utils::TimeoutException                        (no base)
+Utils::TimerWinImplementation                  Utils::Timer::Implementation
+dbg::file_error                                (no base)
+dbg::symlog                                    dbg::symsink

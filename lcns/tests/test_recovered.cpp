@@ -28,6 +28,7 @@
 #include "lcns/nfp.hpp"
 #include "lcns/equivalent.hpp"
 #include "lcns/recovery.hpp"
+#include "lcns/base_chain.hpp"
 #include "lcns/row.hpp"
 #include "lcns/tiling.hpp"
 #include "lcns/launching_order.hpp"
@@ -6916,6 +6917,33 @@ int main() {
         // ObserverSink is an interface: abstract, with the three methods the forwarders reach
         static_assert(std::is_abstract<lcns::ObserverSink>::value, "a pure interface");
         CHECK(sizeof(lcns::BestObserver) == sizeof(void*));      // RE 0x755A40: the class holds ONE pointer, at +0x10
+    }
+
+
+    // ---------------------------------------------------------------- the base chain (RE the module's own RTTI typeinfo)
+    //
+    // **THE MODULE'S CLASSES ARE NOT STANDALONE TYPES AND lcns/ WROTE THEM AS IF THEY WERE.** A whole layer of abstract bases was missing, which is
+    // why a field would appear at +0x10 with nothing to own it. Each name below is read out of the module's typeinfo strings by
+    // re/g_base_chain.py, and the list is in lcns/base_chain.hpp.
+    {
+        using namespace lcns::base_chain;
+
+        // the two names the Nester family's middle layer needs: **THE +0x10 FIELDS BELONG TO CompositeNester**
+        CHECK(std::string(kNester) == "N5Multi6NesterE");
+        CHECK(std::string(kCompositeNester) == "N5Multi15CompositeNesterE");
+
+        // and the bases lcns/ was missing entirely
+        CHECK(std::string(kRowDistancer) == "N3Row9DistancerE");          // Row::Squeezer IS one
+        CHECK(std::string(kEngineEngine) == "N6Engine6EngineE");          // and every concrete engine
+        CHECK(std::string(kStructureObserver) == "N9Structure8ObserverE");  // which DOES have a vtable at 0xA53550
+        CHECK(std::string(kTilingMultiTiler) == "N6Tiling10MultiTilerE");
+        CHECK(std::string(kTilingEvaluator) == "N6Tiling9EvaluatorE");
+
+        // the list is the module's, and it is long enough to be the missing layer rather than one class
+        CHECK(sizeof(kUndeclaredAbstractBases) / sizeof(kUndeclaredAbstractBases[0]) == 14);
+
+        // **AND THE ONE THAT MATTERS MOST**: Nester and CompositeNester are DIFFERENT classes, which is the whole reason the fields had no owner
+        CHECK(std::string(kNester) != std::string(kCompositeNester));
     }
 
     return check::finish("test_recovered");
