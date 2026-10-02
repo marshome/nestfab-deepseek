@@ -110,6 +110,37 @@ inline constexpr const char* kTilingEvaluator = "N6Tiling9EvaluatorE";
 //     Multi::CompactCanceller, NoFitMapCanceller, RCompactCanceller,
 //     SupervisorCanceller, Tiling::WarpCanceller                 ->  Utils::Canceller
 //
+// **AND THE CONSTRUCTORS OF `BiModulePattern` AND `MultiOrientedPartPattern` ESTABLISH A SECOND THING ABOUT THIS FAMILY: THE CALLER GETS A
+// `std::shared_ptr`.** RE 0x4F2870, `Tiling::BiModulePattern`'s constructor, 156 bytes:
+//
+//     0x4F2877  mov rsi, rcx                      ; the destination -- a 2 WORD object the CALLER owns
+//     0x4F287A  mov ecx, 0xf8 / call 0x998500      ; THE CLASS ITSELF, 0xf8 bytes
+//     0x4F2893  lea rax, [rip + 0x54a936]          ; = 0xA3D1D0, and 0xA3D1C0 is `Tiling::BiModulePattern`
+//     0x4F289E  mov qword [rbx], rax               ; so rbx IS the BiModulePattern
+//     0x4F2887  mov r8d, 0xf0 / 0x4F289A lea rcx, [rbx + 8] / 0x4F28A1 call 0x63F2F8
+//                                                  ; and 0xf0 bytes are BLITTED from rdi into rbx + 8
+//     0x4F28A6  mov qword [rsi], rbx               ; the caller's first word takes the object
+//     0x4F28A9  mov ecx, 0x18 / 0x4F28B6 call 0x998500   ; A CONTROL BLOCK of 0x18 bytes
+//     0x4F28C2  mov dword [rax + 8], 1             ; TWO reference counts, both 1
+//     0x4F28C9  mov dword [rax + 0xc], 1
+//     0x4F28D0  mov qword [rax], rdx               ; its vtable, from 0xA56100
+//     0x4F28D3  mov qword [rax + 0x10], rbx        ; pointing back at the object
+//     0x4F28D7  mov qword [rsi + 8], rax           ; and the caller's SECOND word
+//
+// **AND THE CONTROL BLOCK'S TYPEINFO NAMES IT**: the string at its typeinfo is
+// `St15_Sp_counted_ptrIPN6Tiling15BiModulePatternELN9__gnu_cxx12_Lock_policyE2EE`, which is
+// `std::_Sp_counted_ptr<BiModulePattern*, __gnu_cxx::_Lock_policy, 2>` -- libstdc++'s own class for a `shared_ptr` control block. **So the 2 word object the
+// caller owns IS a `std::shared_ptr<BiModulePattern>`**, 0x18 bytes because `_Sp_counted_ptr` holds only the vtable, the two atomic counts and the
+// pointer: **the allocator and the deleter are the DEFAULT ones and are not stored.**
+//
+// **AND THAT IS AN ORACLE RATHER THAN A SHAPE** -- the name is in the module's RTTI, so the "reference-counted handle" this project recorded by its
+// structure now has the standard library's own name.
+//
+// **AND THE CONSTRUCTOR'S SECOND ARGUMENT IS AN ELEMENT OF A `std::vector` OF 0xf0 BYTE RECORDS.** The call site at 0x4EA310 iterates
+// `0x4EA380 add rbx, 0xf0` from the container's begin to its end, and constructs one `BiModulePattern` per element -- so the 0xf0 bytes blitted into each
+// object are a RECORD of that vector, and **the vector's element type is not established**: 0x4E9A10 produces it and its `lea` targets are data rather
+// than vtables.
+//
 // **AND ONE OF THESE HAS A MEASURED LAYOUT EVEN THOUGH IT IS NOT DECLARED: `Tiling::Pattern`.** Its COPY CONSTRUCTOR is 0x4E7E50, 539 bytes, and it is
 // the routine SIX OF THE EIGHT EVALUATORS carry at vtable slot 3:
 //

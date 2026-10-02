@@ -2846,6 +2846,14 @@
    "round": 703,
    "subject": "BiModulePattern-ctor-blits-its-state",
    "witness": "0x4F287A mov ecx,0xf8; 0x4F2893 lea 0xA3D1D0 and 0x4F289E mov [rbx],rax; 0x4F2887 mov r8d,0xf0 with 0x4F289A lea rcx,[rbx+8] and 0x4F28A1 call 0x63F2F8"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "width",
+   "predicate": "the std::vector the BiModulePattern constructor is fed from has 0xf0 byte elements, each of which is blitted into one constructed object at +8",
+   "round": 704,
+   "subject": "the-pattern-record-stride-is-0xf0",
+   "witness": "the call site at 0x4EA310 iterates 0x4EA380 add rbx,0xf0 from [rsp+0x70] to [rsp+0x78] and calls 0x4F2870 with the element as rdx; 0x4F2887 mov r8d,0xf0 with 0x4F289A lea rcx,[rbx+8] and 0x4F28A1 call 0x63F2F8 blits it"
   }
  ]
 }
