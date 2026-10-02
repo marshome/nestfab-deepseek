@@ -35,3 +35,28 @@ Drafted at round 388 from the artifacts themselves (no figure here is typed by h
 
 Build 0 errors / 0 warnings; ctest 22 of 22 with freshly linked binaries; `check_recovery.py`, `check_embeddings.py`, `g_coverage.py`, `g_acceptance.py` all clean.
 
+
+## Per-export status at round 402 (generated, not typed)
+
+Produced by cross-referencing the hand-written forwarding map with re/exports_table.json. An entry not listed here
+reports its call and returns the documented neutral value, with its original bytes embedded and verified.
+
+| ordinal | entry point | rva | size | implementation |
+|---:|---|---:|---:|---|
+| 25 | GetNumberOfNestings | 0xB0C0 | 52 | lcns::dll::exports::impl::getNumberOfNestings |
+| 23 | GetNumberOfNestedParts | 0xB190 | 63 | lcns::dll::exports::impl::getNumberOfNestedParts |
+| 17 | GetMultiplicity | 0xB100 | 34 | lcns::dll::exports::impl::getMultiplicity |
+| 27 | GetPartUserString | 0xC5E0 | 36 | lcns::dll::exports::impl::getPartUserString |
+| 210 | sub_16CF0 | 0x16CF0 | 8 | lcns::dll::exports::impl::getUserStringAt1B8 |
+| 288 | sub_0AFF0 | 0xAFF0 | 10 | lcns::dll::exports::impl::setByteAtF8 |
+| 286 | sub_0B000 | 0xB000 | 18 | lcns::dll::exports::impl::setDoubleAndFlag |
+| 33 | GetSolution | 0xB0A0 | 29 | lcns::dll::exports::impl::getSolutionIdentity |
+| 84 | SetLocalMaximumIterations | 0xD400 | 36 | lcns::dll::exports::impl::setInt_1FC |
+| 146 | SetShearMode | 0xDDC0 | 33 | lcns::dll::exports::impl::setShearMode |
+| 188 | CNS_SetNoMixPreference | 0xD310 | 33 | lcns::dll::exports::impl::setNoMixPreference |
+| 222 | CNS_SetNoSheetMixPreference | 0xD340 | 33 | lcns::dll::exports::impl::setNoSheetMixPreference |
+| 304 | SetShearRepulseFromBorders | 0xDE20 | 33 | lcns::dll::exports::impl::setShearRepulseFromBorders |
+| 76 | UnLockLaunchingOrder | 0xD430 | 36 | lcns::dll::exports::impl::unlockLaunchingOrder |
+
+Total: 14 of 168 entry points implemented. The remaining 154 fail loudly; the work queue in re/EXPORT_QUEUE.md
+orders them by structural cost, and re/EXPORT_IMPLS.md records why the ones deliberately left alone are left alone.
