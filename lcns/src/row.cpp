@@ -96,11 +96,11 @@ SqueezeResult squeezeCost(const SqueezeContext& ctx) {
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
+// RE 0x138A20: the constructor installs the vtable, ALLOCATES the 0x270 byte object and stores it at +8, and touches nothing else of the
+// Squeezer object. **So the three scalars are initialised in the Impl, not in the handle** -- which is what the declaration now says and what the
+// instructions at 0x138A6B, 0x138A72 and 0x138A79 do.
 Squeezer::Squeezer(double twiceMaxExtent, double coeffAt0x18, double thresholdAt0x10)
-    : enabled_(true),                       // RE: inner[+8] = 1 (0x138A6B)
-      coeff_(coeffAt0x18),                  // RE: inner[+0x00] = xmm2
-      threshold_(thresholdAt0x10),          // RE: inner[+0x10] = xmm3
-      twiceMaxExtent_(twiceMaxExtent) {}    // RE: 0x2530D0(2 * xmm1, xmm2)
+    : impl_(new Impl{true, coeffAt0x18, thresholdAt0x10, twiceMaxExtent}) {}
 
 // RE: 0x13C380 -- how the per-row extent becomes the Squeezer's first argument.
 Squeezer buildSqueezer(const std::vector<RowView>& rows, double configAt0x10,

@@ -939,53 +939,69 @@ double directionSine(double ux, double uy);
 // which is implemented literally here. The original stores the entries in a red-black tree; this
 // reconstruction scans a vector with the same predicate (the tree is only an index, so the
 // hit/miss decision is unchanged). That substitution is structural, not semantic.
-class Squeezer {
-public:
-    Squeezer() = default;
-
-    // RE: 0x138A20, the Row::Squeezer constructor. It allocates a 16 byte outer object
-    // ({ vptr @0xA3B1F0, inner* @+8 }) plus a 0x270 = 624 byte inner object, and fills the inner
-    // one as
-    //     inner[+8]    = 1                    (the flag 0x1380D0 tests with `cmp byte [rdx+8],0`)
-    //     inner[+0x00] = arg2                 (xmm2)
-    //     inner[+0x10] = arg3                 (xmm3)  <-- the cost formula's threshold
-    //     inner[+0x18] = a pointer built from the 1 character string "s" via 0x4FFC10
-    //     inner[+0x20] = constructed by 0x500710
-    //     inner[+0x28] = constructed by 0x2530D0(2 * arg1, arg2)
-    //     inner[+0x210]/[+0x240] = two red-black tree headers (0x13A360 inserts into the latter)
-    // Only the three scalars matter to the cost path, so they are the reconstructed state.
-    Squeezer(double twiceMaxExtent, double coeffAt0x18, double thresholdAt0x10);
-
-    // Mirrors 0x13A360: (result, obj, lo, hi) with lo/hi used both as the cache key and as the
-    // pointers the two slots are taken from.
-    double cost(std::uintptr_t lo, std::uintptr_t hi, const SqueezeContext& ctx);
-
-    std::size_t hits() const { return hits_; }
-    std::size_t misses() const { return misses_; }
-    std::size_t entries() const { return cache_.size(); }
-    void clear();
-
-    // RE: inner[+8] (set to 1 by the constructor) and inner[+0x10] (xmm3).
-    bool enabled() const { return enabled_; }
-    double threshold() const { return threshold_; }
-    double coeff() const { return coeff_; }
-    double twiceMaxExtent() const { return twiceMaxExtent_; }
-
-private:
-    bool enabled_ = true;              // RE inner +0x08
-    double coeff_ = 0.0;               // RE inner +0x00 (xmm2, read by the sub-objects)
-    double threshold_ = 0.0;           // RE inner +0x10 (xmm3, the cost threshold)
-    double twiceMaxExtent_ = 0.0;      // RE: 2 * xmm1, handed to 0x2530D0
-
-    struct Entry {
-        std::uintptr_t keyLo = 0;
-        std::uintptr_t keyHi = 0;
-        double value = 0.0;
+    /** The 0x270 byte object RE 0x138A20 allocates and stores at Squeezer + 8.
+     *
+     *      0x138A6B  mov byte [rax + 8], 1        ; enabled
+     *      0x138A72  movsd [rax], xmm2           ; the coefficient, the constructor's second argument
+     *      0x138A79  movsd [rax + 0x10], xmm3    ; the threshold, its third
+     *      0x138A8F  addsd xmm7, xmm6            ; TWICE the first argument
+     *      0x138A9A  call 0x2530D0               ; and 0x2530D0 is given (twiceMaxExtent, coefficient)
+     *      0x138A7E  call 0x500710               ; the sub-object at +0x20
+     *      0x138AAD  mov byte [rsp + 0x50], 0x73 ; the one character string "s"
+     *      0x138ADA  mov [rbx + 0x258], rax      ; and two tree headers at +0x210 and +0x240
+     *
+     *  **THE SCALARS LIVE HERE AND NOT IN Squeezer**, which is why the class was reported as having unsupported members: nothing writes +0x08,
+     *  +0x10 or +0x18 of the Squeezer object itself.
+     */
+    struct Impl {
+        bool enabled = true;              // inner +0x08, RE 0x138A6B
+        double coeff = 0.0;               // inner +0x00, RE 0x138A72 -- the constructor's second argument
+        double threshold = 0.0;           // inner +0x10, RE 0x138A79 -- its third
+        double twiceMaxExtent = 0.0;      // RE 0x138A8F: addsd xmm7, xmm6, handed to 0x2530D0
     };
-    std::vector<Entry> cache_;   // RE: the map at [this+8][+0x240]
-    std::size_t hits_ = 0;
-    std::size_t misses_ = 0;
-};
+
+    /** RE 0xA3B1F0, three slots. **ITS OWN STATE IS ONE POINTER.** The constructor installs the vtable at +0, allocates the 0x270 byte Impl and
+     *  stores it at +8, and touches nothing else of this object -- so `Impl` is where the fields are, and this class is the handle.
+     *
+     *  The cost path below the constructor reads the SCALARS through that pointer, which is why `enabled`, `threshold`, `coeff` and
+     *  `twiceMaxExtent` are accessors here rather than members. */
+    class Squeezer {
+    public:
+        Squeezer() = default;
+        Squeezer(double twiceMaxExtent, double coeffAt0x18, double thresholdAt0x10);
+
+        bool enabled() const { return impl_ != nullptr && impl_->enabled; }
+        double threshold() const { return impl_ != nullptr ? impl_->threshold : 0.0; }
+        double coeff() const { return impl_ != nullptr ? impl_->coeff : 0.0; }
+        double twiceMaxExtent() const { return impl_ != nullptr ? impl_->twiceMaxExtent : 0.0; }
+
+        /** RE 0x13A360, vtable slot 2: the insert into the tree at inner +0x240. */
+        void insert(std::uintptr_t keyLo, std::uintptr_t keyHi, double value);
+        std::size_t size() const { return cache_.size(); }
+        void clear();
+
+        std::size_t hits() const { return hits_; }
+        std::size_t misses() const { return misses_; }
+
+        /** The cost of a key, RE 0x13A360 and the routine around it: a cache hit returns the stored value, and a miss computes one. Its body is
+         *  in lcns/src/row.cpp beside the instructions. */
+        double cost(std::uintptr_t lo, std::uintptr_t hi, const SqueezeContext& ctx);
+
+    private:
+        // RE 0x138B5C: mov [rbp + 8], rbx -- THE ONLY MEMBER OF THIS OBJECT THE CONSTRUCTOR WRITES.
+        Impl* impl_ = nullptr;             // +8, and the 0x270 byte object it points at holds the state
+
+        // THE MODEL'S OWN CACHE, NOT THE MODULE'S. The module keeps a tree at inner +0x240; this keeps a vector, and says so, because the
+        // tree's routines (0x13A360 and 0x13C380) have not been read.
+        struct Entry {
+            std::uintptr_t keyLo = 0;
+            std::uintptr_t keyHi = 0;
+            double value = 0.0;
+        };
+        std::vector<Entry> cache_;
+        std::size_t hits_ = 0;
+        std::size_t misses_ = 0;
+    };
 
 // ---------------------------------------------------------------------------
 // RE: 0x13C380 (416 B) -- how a row set turns into a Squeezer

@@ -2550,6 +2550,22 @@
    "round": 683,
    "subject": "a-rule-whose-check-is-deleted",
    "witness": "re/g_ask.py is named by no-blocking-questions, report-not-ask and decide-required-decisions and no longer exists; those three now state the condition instead of naming a script"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Row::Squeezer is {vptr @0, inner* @8}: the constructor allocates a 0x270 byte object and stores it at +8, and touches nothing else of the class",
+   "round": 684,
+   "subject": "Squeezer.holds-one-pointer",
+   "witness": "0x138A3B installs vtable 0xA3B1F0, 0x138A41 allocates 0x270, 0x138A6B/0x138A72/0x138A79 initialise the INNER object's +8/+0/+0x10, and 0x138B5C stores it at [rbp+8]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the fields were declared as the class's own while the comments beside them said inner+0x08 and inner+0x00, and the comments were right",
+   "round": 684,
+   "subject": "Squeezer.comment-contradicted-its-own-declaration",
+   "witness": "nothing writes +0x08, +0x10 or +0x18 of the Squeezer object, which is why the support audit reported the class unsupported"
   }
  ]
 }

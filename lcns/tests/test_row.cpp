@@ -160,27 +160,27 @@ int main() {
         Squeezer sq;
         const SqueezeContext ctx = makeContext(90.0, 8.0, 0.0, 0.0);
 
-        CHECK(sq.entries() == 0);
+        CHECK(sq.size() == 0);
         const double first = sq.cost(0x2000, 0x2100, ctx);
         CHECK_NEAR(first, 8.0, 1e-9);
         CHECK(sq.misses() == 1);
         CHECK(sq.hits() == 0);
-        CHECK(sq.entries() == 1);
+        CHECK(sq.size() == 1);
 
         // an entry with keyLo=0x2000, keyHi=0x2100 covers a query with lo<=keyLo and hi<=keyHi
         const double again = sq.cost(0x1F00, 0x2050, ctx);
         CHECK_NEAR(again, first, 1e-12);
         CHECK(sq.hits() == 1);
-        CHECK(sq.entries() == 1);
+        CHECK(sq.size() == 1);
 
         // a query to the right is not covered -> a second entry is inserted
         const double third = sq.cost(0x3000, 0x3100, ctx);
         CHECK_NEAR(third, first, 1e-12);
-        CHECK(sq.entries() == 2);
+        CHECK(sq.size() == 2);
         CHECK(sq.misses() == 2);
 
         sq.clear();
-        CHECK(sq.entries() == 0);
+        CHECK(sq.size() == 0);
         CHECK(sq.hits() == 0);
     }
 
@@ -190,7 +190,7 @@ int main() {
         SqueezeContext ctx = makeContext(90.0, 8.0, 0.0, 0.0);
         ctx.hiList.items.pop_back();
         CHECK_NEAR(sq.cost(0x1000, 0x1100, ctx), 0.0, 1e-12);
-        CHECK(sq.entries() == 0);
+        CHECK(sq.size() == 0);
         CHECK(sq.misses() == 1);
     }
 
@@ -529,7 +529,7 @@ int main() {
         CHECK_NEAR(sq.cost(reinterpret_cast<std::uintptr_t>(&lo),
                            reinterpret_cast<std::uintptr_t>(&hi), ctx), 0.0, 1e-12);
         CHECK(sq.misses() == 1);      // evaluated once, not cached (not applicable)
-        CHECK(sq.entries() == 0);
+        CHECK(sq.size() == 0);
 
         // with both slots present and the lists aligned, the recovered formula applies
         ctx.loSlot.present = true;
@@ -542,7 +542,7 @@ int main() {
                                   reinterpret_cast<std::uintptr_t>(&hi), ctx);
         // cost = threshold / sin(90) - max(|v0-v2|, |v0-v2|) = 20 / 1 - 0 = 20
         CHECK_NEAR(v, 20.0, 1e-9);
-        CHECK(sq2.entries() == 1);    // this one IS cached
+        CHECK(sq2.size() == 1);    // this one IS cached
     }
 
     // --- RE 0x5C4C50 / 0x8BEFC0 / 0x134470's setup: where the candidate angles come from ---
