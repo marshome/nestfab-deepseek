@@ -82,6 +82,10 @@ BOILERPLATE = {
     0x6FC810,  # xor eax, eax ; ret -- a default override returning zero
     0xD5970,  # xor eax, eax ; ret -- a default override returning zero
     0xD59A0,  # xor eax, eax ; ret -- a default override returning zero
+    0x5F3960,  # loads a member and makes a virtual call through its vtable: dispatch, not domain logic
+    0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
+    0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
+    0x63F170,  # word by word scan of a string, the strcmp family
     0x1E70,  # library by its own label: ' max iterations.'
     0x6100,  # library by its own label: 'basic_string::append'
     0x1B070,  # library by its own label: 'basic_string::_M_construct null not valid'
@@ -292,6 +296,7 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x8774E0,   # eaten by g_eat_leaves.py
     0x54CBC0, 0x4F7690, 0x4F7660, 0x4F7640, 0x4F7680,   # eaten by g_eat_leaves.py
     0x4FC240, 0x4FC250, 0x4FC2F0, 0x4FC300, 0x4FC260, 0x4FC2D0, 0x4FC320, 0x4FC340, 0x4FC290, 0x4FBE90, 0x4FBEA0, 0x4FC330,   # eaten by g_eat_leaves.py
     0x4F8D20, 0x4F8D10, 0x4F7600,   # eaten by g_eat_leaves.py

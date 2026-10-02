@@ -570,6 +570,13 @@ inline void* compose70_68_4F7680(void* object) {
     std::memcpy(&member, object, sizeof(member));
     return static_cast<unsigned char*>(member) + 0x68;
 }
+/** RE 0x8774E0: clears the qword at +0x00 and the byte at +0x08, returning nothing. */
+inline void clear2_8774E0(void* object) {
+    const std::uint64_t zero64 = 0;
+    const std::uint8_t zero8 = 0;
+    std::memcpy(object, &zero64, sizeof(zero64));
+    std::memcpy(static_cast<unsigned char*>(object) + 0x08, &zero8, sizeof(zero8));
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

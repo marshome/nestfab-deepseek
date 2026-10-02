@@ -652,5 +652,12 @@ int main() {
         { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject)); unsigned char outer[8]; void* p = innerObject; std::memcpy(outer, &p, sizeof(p)); CHECK(lcns::dll::accessors::compose70_68_4F7680(outer) == innerObject + 0x68); }   // RE 0x4F7680
     }
 
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];   // the largest field offset an accessor touches
+        std::memset(object, 0xA5, sizeof(object));
+        { std::memset(object, 0xA5, sizeof(object)); lcns::dll::accessors::clear2_8774E0(object); std::uint64_t got64 = 1; std::memcpy(&got64, object, sizeof(got64)); CHECK(got64 == 0u); std::uint8_t got8 = 1; std::memcpy(&got8, object + 0x08, sizeof(got8)); CHECK(got8 == 0); }   // RE 0x8774E0
+    }
+
     return check::finish("boxacc");
 }

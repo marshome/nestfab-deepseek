@@ -135,6 +135,17 @@ def classify(body):
         mm = re.match(r"dwordptr\[rcx\+0x([0-9a-f]+)\],eax", ins[1][1])
         if mm:
             return ("copyoff", int(mm.group(1), 16), None)
+    # two fields cleared to zero, nothing returned
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0][0] == "mov" and ins[1][0] == "mov":
+        m1 = re.match(r"qwordptr\[rcx\],0", ins[0][1])
+        m2 = re.match(r"byteptr\[rcx\+0x([0-9a-f]+)\],0", ins[1][1])
+        if m1 and m2:
+            return ("clear2", int(m2.group(1), 16), None)
+    # a double written into a field of the object the first member points at
+    if len(ins) == 3 and ins[2][0] == "ret" and ins[0] == ("mov", "rax,qwordptr[rcx]"):
+        mm = re.match(r"movsdqwordptr\[rax\+0x([0-9a-f]+)\],xmm1", ins[1][1])
+        if mm:
+            return ("isetd", int(mm.group(1), 16), None)
     # an initialiser: stores a constant in one field and returns the object itself
     if len(ins) == 3 and ins[2][0] == "ret" and ins[0] == ("mov", "rax,rcx"):
         mm = re.match(r"dwordptr\[rcx\+0x([0-9a-f]+)\],(0x[0-9a-f]+|\d+)", ins[1][1])
@@ -226,7 +237,7 @@ def main(argv):
     books = {"identity": [], "zero": [], "get": [], "set": [], "addr": [], "copy": [], "getd": [], "setd": [],
              "const": [], "global": [], "twolvl": [], "ptradd": [], "nullpred": [], "twobytes": [], "dwordpred": [],
              "globaddr": [], "globptr": [], "copyoff": [], "memberget": [], "iget": [], "iset": [],
-             "init": [], "compose": [], "unknown": []}
+             "init": [], "compose": [], "clear2": [], "isetd": [], "unknown": []}
     for a in leaves:
         size = (profile.get(a) or {}).get("size") or 0
         body = [i for i in disasm(a) if i.address < a + size]
@@ -448,6 +459,36 @@ def main(argv):
         else:
             continue
         gen.append("")
+    for a, off, _w in books["clear2"][:limit]:
+        name = "clear2_%X" % a
+        gen.append("/** RE 0x%X: clears the qword at +0x00 and the byte at +0x%02X, returning nothing. */" % (a, off))
+        gen.append("inline void %s(void* object) {" % name)
+        gen.append("    const std::uint64_t zero64 = 0;")
+        gen.append("    const std::uint8_t zero8 = 0;")
+        gen.append("    std::memcpy(object, &zero64, sizeof(zero64));")
+        gen.append("    std::memcpy(static_cast<unsigned char*>(object) + 0x%02X, &zero8, sizeof(zero8));" % off)
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        tests.append("        { std::memset(object, 0xA5, sizeof(object)); lcns::dll::accessors::%s(object);"
+                     " std::uint64_t got64 = 1; std::memcpy(&got64, object, sizeof(got64)); CHECK(got64 == 0u);"
+                     " std::uint8_t got8 = 1; std::memcpy(&got8, object + 0x%02X, sizeof(got8)); CHECK(got8 == 0); }"
+                     "   // RE 0x%X" % (name, off, a))
+    for a, off, _w in books["isetd"][:limit]:
+        name = "isetDouble%02X_%X" % (off, a)
+        gen.append("/** RE 0x%X: writes the double at +0x%02X of the object the first member points at. */" % (a, off))
+        gen.append("inline void %s(void* object, double value) {" % name)
+        gen.append("    unsigned char* inner = nullptr;")
+        gen.append("    std::memcpy(&inner, object, sizeof(inner));")
+        gen.append("    std::memcpy(inner + 0x%02X, &value, sizeof(value));" % off)
+        gen.append("}")
+        gen.append("")
+        implemented.append(a)
+        tests.append("        { unsigned char innerObject[0x400]; std::memset(innerObject, 0, sizeof(innerObject));"
+                     " unsigned char outer[8]; unsigned char* p = innerObject; std::memcpy(outer, &p, sizeof(p));"
+                     " lcns::dll::accessors::%s(outer, 7.5); double got = 0.0;"
+                     " std::memcpy(&got, innerObject + 0x%02X, sizeof(got)); CHECK(got == 7.5); }   // RE 0x%X"
+                     % (name, off, a))
     if gen:
         io.open(HDR, "w", encoding="utf-8", newline="\n").write(h.replace(anchor, "\n".join(gen) + anchor, 1))
         print("field_accessors.hpp  %d functions generated" % len(implemented))
