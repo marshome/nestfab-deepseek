@@ -1238,3 +1238,19 @@ subtractions, two status tests and the zero for an empty container.
 Both entry points are comment-only in the embedded registry, so neither can be differentially tested: the behavioural
 test is the strongest evidence available for these two, and the reason is recorded in re/EXPORT_IMPLS.md rather than
 left implicit.
+
+## The status operand: not a window field, but the implementer second argument (rounds 468 and 469)
+
+Round 467 guessed that the status the two implementers test lives at rsi+0x98 in the window object. Round 468 tested that guess by searching 0x4F9200, 0x5CD800 and 0x4F8D30 for any access to offset 0x98, 0x99 or 0x9A: there were none, so the guess was wrong.
+
+Round 469 then searched 0x526160 itself and found exactly two instructions touching that slot:
+
+    526170  mov dword ptr [rsp + 0x108], edx     ; writes it, from the second argument
+    526216  lea rcx, [rsp + 0x108]              ; reads it, to hand to the status function
+
+So the status is the implementer second argument, saved once and read once. The entry points pass zero -- 0xB130 and 0xB160 both set edx = 0 before tail calling -- and the status function 0x52F810 is cmp dword ptr [rcx], 1 followed by setbe, so zero makes it TRUE. Both exports therefore take the status-true branch:
+
+    GetLength, ordinal 96,  0x526160:  rsi[+0x18] - rsi[+0x38]
+    GetHeight, ordinal 100, 0x5266A0:  rsi[+0x20] - rsi[+0x40]
+
+with zero returned for an empty container. The status-false branches are unreachable from these two entry points but are kept in the implementation, because the implementer is shared and takes the status as a parameter.

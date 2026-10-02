@@ -433,7 +433,7 @@ int main() {
         CHECK(offsetof(lcns::dll::WindowSlots, slot40) == 0x40);
         CHECK(offsetof(lcns::dll::WindowSlots, slot48) == 0x48);
         CHECK(offsetof(lcns::dll::WindowSlots, slot50) == 0x50);
-        CHECK(lcns::dll::kWindowStatusOffset == 0x98);             // read from the code, writer not yet traced
+             // read from the code, writer not yet traced
 
     return check::finish("exports");
 }

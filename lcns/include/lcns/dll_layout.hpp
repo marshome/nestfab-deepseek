@@ -187,7 +187,7 @@ static_assert(offsetof(WindowSlots, slot48) == 0x48, "RE 0x526227");
 static_assert(offsetof(WindowSlots, slot50) == 0x50, "RE 0x526767");
 
 /** Where the status test in the two implementers reads its operand, as read from the code but NOT yet traced to a writer. */
-constexpr std::size_t kWindowStatusOffset = 0x98;   // rsp+0x108 with rsi = rsp+0x70; the writer is still to be read
+// The status the two implementers test is their SECOND ARGUMENT. RE 0x526170 saves edx at rsp+0x108 and RE 0x526216 passes that address to the status function, so it is not a window field, and both entry points call with zero.
 
 }  // namespace dll
 }  // namespace lcns
