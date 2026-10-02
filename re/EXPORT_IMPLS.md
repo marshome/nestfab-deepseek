@@ -74,3 +74,49 @@ falls into the tail at 0x5C8CDB carrying xmm1/xmm3/xmm2 from the freshly written
 initialisation, because those are the two places where the register contents across the branch differ from the plain
 path. Next round: print the mismatching fixture''s 0x28 bytes from both sides, fix the model, and re-run -- the original is
 callable, so this is a matter of reading the difference, not of guessing.
+
+## The original 0x5C8C50's output, fixture by fixture (round 381 measured, round 382 recorded)
+
+A probe called the embedded original -- executable since round 377 -- over ten fixtures and printed the resulting
+box. These ARE the expected bytes, so the model is corrected against them rather than against reasoning. Layout:
+flag +0x00, minX +0x08, minY +0x10, maxX +0x18, maxY +0x20.
+
+| case | src flag | dst flag | src (minX,minY,maxX,maxY) | dst in | result | flag |
+|---:|---:|---:|---|---|---|---:|
+| 0 | 1 | 0 | (0,0,0,0) | (1,2,3,4) | (1,2,3,4) | 0 |
+| 1 | 1 | 1 | (0,0,0,0) | (0,0,0,0) | (0,0,0,0) | 1 |
+| 2 | 0 | 1 | (5,6,7,8) | (0,0,0,0) | (5,6,7,8) | 0 |
+| 3 | 0 | 1 | (-5,-6,-7,-8) | (0,0,0,0) | (-7,-8,-5,-6) | 0 |
+| 4 | 0 | 0 | (1.5,2.5,2.5,3.5) | (1,2,3,4) | (1,2,3,4) | 0 |
+| 5 | 0 | 0 | (-1,-2,9,10) | (1,2,3,4) | (-1,-2,9,10) | 0 |
+| 6 | 0 | 0 | (-9,-10,-1,-2) | (1,2,3,4) | (-9,-10,3,4) | 0 |
+| 7 | 0 | 0 | (100,200,300,400) | (1,2,3,4) | (1,2,300,400) | 0 |
+| 8 | 0 | 0 | (-0.0,-0.0,0.0,0.0) | (0.0,0.0,-0.0,-0.0) | (0.0,0.0,-0.0,-0.0) | 0 |
+| 9 | 0 | 0 | (1,2,3,4) | (1,2,3,4) | (1,2,3,4) | 0 |
+
+Hex exactly as printed (so signed zeros are visible):
+
+```
+case  0 -> minX=3ff0000000000000 minY=4000000000000000 maxX=4008000000000000 maxY=4010000000000000 flag=0
+case  1 -> minX=0000000000000000 minY=0000000000000000 maxX=0000000000000000 maxY=0000000000000000 flag=1
+case  2 -> minX=4014000000000000 minY=4018000000000000 maxX=401c000000000000 maxY=4020000000000000 flag=0
+case  3 -> minX=c01c000000000000 minY=c020000000000000 maxX=c014000000000000 maxY=c018000000000000 flag=0
+case  4 -> minX=3ff0000000000000 minY=4000000000000000 maxX=4008000000000000 maxY=4010000000000000 flag=0
+case  5 -> minX=bff0000000000000 minY=c000000000000000 maxX=4022000000000000 maxY=4024000000000000 flag=0
+case  6 -> minX=c022000000000000 minY=c024000000000000 maxX=4008000000000000 maxY=4010000000000000 flag=0
+case  7 -> minX=3ff0000000000000 minY=4000000000000000 maxX=4072c00000000000 maxY=4079000000000000 flag=0
+case  8 -> minX=0000000000000000 minY=0000000000000000 maxX=8000000000000000 maxY=8000000000000000 flag=0
+case  9 -> minX=3ff0000000000000 minY=4000000000000000 maxX=4008000000000000 maxY=4010000000000000 flag=0
+```
+
+What these bytes settle, and what they do NOT:
+
+* the INIT path (destination flag non-zero) stores the source's MIN corner into all four fields, and the tail then
+  moves minX and minY DOWN to the source's maxX and maxY while the maxes keep what INIT stored: case 3 ends at
+  (-7,-8,-5,-6), not at (-5,-6,-5,-6). A model that treated the source's max corner as an upper bound would fail
+  exactly here, which is the kind of plausible-looking error a differential test exists to catch;
+* case 2 shows the tail does run on the INIT path (maxY ends at 8, the source's maxY, not at 6);
+* case 8 keeps signed zeros: the maxes stay -0.0 although +0.0 was offered, because +0.0 > -0.0 is false;
+* and the outstanding contradiction is recorded rather than resolved: hand-checking the model against ALL ten of
+  these rows says it matches every one, so round 380's single failure is more likely a defect in the test harness
+  (fixture plumbing) than in the model. The next run must print BOTH sides per fixture to decide.
