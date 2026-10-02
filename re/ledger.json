@@ -958,6 +958,30 @@
    "round": 598,
    "subject": "variant.no-return-value",
    "witness": "0x14A60's five instructions before ret are add rsp,0xb8 and four pops; 0xC1A0 ends after its stores"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x10CE0 has NO normal return: it loops back to 0x10E4A or frees a temporary and calls the throw helper 0x62F280",
+   "round": 599,
+   "subject": "0x10CE0.no-return",
+   "witness": "0x10EE0 add rax,rcx / 0x10EE6 jg 0x10EE0 is a loop; 0x10F15 test rcx,rcx / 0x10F1A call 0x9984B0 (free) / 0x10F22 call 0x62F280 (throw) / 0x10F27 nop"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x10CE0 computes angle * factor + angle, which is angle * (1 + factor)",
+   "round": 599,
+   "subject": "0x10CE0.angle-arithmetic",
+   "witness": "0x10DD7 movapd xmm0,xmm7 / 0x10DE3 mulsd xmm0,xmm8 / 0x10DE8 addsd xmm0,xmm7"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "all three variant targets set no return register, so the family's declared return types are not values they produce",
+   "round": 599,
+   "subject": "variant.family-no-return",
+   "witness": "0x14A60 ends with stack restoration, 0xC1A0 ends after its stores, 0x10CE0 throws rather than returning"
   }
  ]
 }
