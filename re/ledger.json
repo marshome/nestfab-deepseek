@@ -1534,6 +1534,30 @@
    "round": 633,
    "subject": "InfiniteEngine.Run.verified",
    "witness": "0x759A85 ucomisd xmm3,[rip+0x254cb3] where the target rva 0x9AE740 is -1.0; 0x759A94 call 0x757AE0 for the equal case; 0x759AB0 mov rdx,[rdx+0x10] then 0x759AC4 call qword ptr [rax+0x10]"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "0x2AB0 loads 'cns_force_cloud', 'cns1.optalog.com;cns2.optalog.com' and 'c:\\\\Temp\\\\cns.pb.json', so it is the cloud gate and not only a geometry pipeline",
+   "round": 634,
+   "subject": "0x2AB0.cloud-gate",
+   "witness": "0x9AC139, 0x9AC150 and 0x9AC189 resolved from the function's own rip-relative loads; findings_cloud_lic.md records it as the only function referencing cns_force_cloud, and that is now verified by hand"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "0x2AB0 loads 'LaunchLocalComputation', 'cns_force_cloud', 'cns1.optalog.com;cns2.optalog.com', 'c:\\\\Temp\\\\cns.pb.json' and '// LaunchLocalComputation'",
+   "round": 634,
+   "subject": "0x2AB0.loaded-strings",
+   "witness": "resolved by computing each rip-relative target and reading a NUL-terminated printable string"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the findings archive is now indexed by address: 14 files, 4796 distinct addresses, 10934 mentions in re/archive_index.json",
+   "round": 634,
+   "subject": "archive-reachable-by-address",
+   "witness": "re/g_archive_index.py with a self-check that refuses to write unless it finds 0x1EE50, which is known to appear 72 times"
   }
  ]
 }
