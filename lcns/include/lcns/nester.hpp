@@ -359,15 +359,24 @@ static_assert(offsetof(SeedPair, second) == 0x08, "RE 0x34301: mov rdx, [rdi + 8
 static_assert(Mt19937::kStateSize == 624, "RE 0x3435C: cmp rdx, 0x270");
 static_assert(Mt19937::kSeedMultiplier == 1812433253u, "RE 0x3434B: imul eax, eax, 0x6c078965");
 
-class FlipNester : public Nester {             // RE 0xA3B490, Run = 0x4B870
+// RE 0xA3B490, Run = 0x4B870. The two members are BOOLEANS the constructor COMPUTES from its argument, and neither is a ratio -- the previous
+// declaration had a `double ratio_`, which came from a guess. lcns/src/flip_nester.cpp carries the constructor's instructions.
+class FlipNester : public Nester {
 public:
+    FlipNester() = default;
+    explicit FlipNester(const SolveContext& ctx);
 
-    explicit FlipNester(double flipPartsRatio = 1.0) : ratio_(flipPartsRatio) {}
     const char* name() const override { return "FlipNester"; }
     const char* tracePrefix() const override { return kTraceFlip; }   // RE verbatim
     Solution run(SolveContext&) override;
-private:
-    double ratio_;
+
+    /** Whether the flip is recorded, and whether the two scores are compared -- both COMPUTED from the context by the constructor, at
+     *  0x4B59B and 0x4B5AE, rather than passed in. */
+    bool record_ = false;
+    bool compare_ = false;
+
+    /** The comparison the module makes at 0x4B8CF: one measurement over the other. */
+    static double score(const Solution& solution);
 };
 
 class FilterNester : public Nester {           // RE 0xA3B4F0, Run = 0xB3AE0

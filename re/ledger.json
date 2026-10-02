@@ -2310,6 +2310,30 @@
    "round": 671,
    "subject": "object-register-must-be-established",
    "witness": "the nesters are sound because their constructors do mov rbx, rcx once and never change it; the classes where the base was rsp or a reassigned register are not"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::FlipNester holds two booleans computed from its argument at 0x4B59B and 0x4B5AE, and no double",
+   "round": 672,
+   "subject": "FlipNester.members-are-booleans",
+   "witness": "0x4B570 is 92 bytes; rbx is set once at 0x4B576 and popped at 0x4B5B5, and the only stores through it are byte stores to +0x20 and +0x21 from two predicates' results"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "FlipNester::run nests the order plain and mirrored, inverting NestedPart::flipped, and keeps whichever score the ratio at 0x4B8CF prefers",
+   "round": 672,
+   "subject": "FlipNester.run-mirrors-and-compares",
+   "witness": "0x4B8C3 and 0x4B8CF take two double summaries and 0x4B8DC divides them; a previous body delegated to NestingNester and compared a made-up formula"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a constructor parameter that no instruction shows is a guess, and it sat in the tree as though it were recovered",
+   "round": 672,
+   "subject": "unverified-parameters-are-guesses",
+   "witness": "FlipNester took a double flipPartsRatio and stored ratio_; the constructor takes no such argument and has no such member"
   }
  ]
 }

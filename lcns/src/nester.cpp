@@ -493,21 +493,8 @@ Solution NestingNester::run(SolveContext& ctx) {
 }
 
 LCNS_SUBSTITUTED(strategy.flip);
-Solution FlipNester::run(SolveContext& ctx) {
-    // RE 0x4B933 inlines the literal "temporary_flipped": nest a mirrored copy and keep
-    // whichever scores better.
-    auto eval = [](const Solution& s) {
-        double v = 0.0;
-        for (const auto& n : s.nestings) v += n.usedSurface - 1e-3 * n.cachedBounds.area();
-        return v;
-    };
-    NestingNester base;
-    Solution normal = base.run(ctx);
-    Solution flipped = normal;
-    if (ratio_ <= 0.0) return normal;
-    if (eval(flipped) > eval(normal) + 1e-9) return flipped;
-    return normal;
-}
+// FlipNester::run now lives in lcns/src/flip_nester.cpp, next to the constructor's instructions. The version that
+// stood here took a `double ratio_` and delegated to NestingNester, neither of which the module's FlipNester does.
 
 double FilterNester::estimate(const SolveContext& ctx) const {
     // cheap lower bound: part area / sheet area
