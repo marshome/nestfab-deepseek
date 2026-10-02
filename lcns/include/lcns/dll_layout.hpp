@@ -140,5 +140,16 @@ struct BadGeometryCarrier {
 static_assert(offsetof(BadGeometryCarrier, status) == 0x4C, "RE 0xB524");
 static_assert(offsetof(BadGeometryCarrier, geometry) == 0xA0, "RE 0xB52E");
 
+/**
+ * A third element family. 0x8C4530 counts a container of these: it shifts the difference by four and multiplies by
+ * 0xAAAAAAAAAAAAAAAB, which is inv(3) mod 2**64, so the element is 16 * 3 = 48 bytes. With this the module's three
+ * counting constants are 39, 15 and 3, each derived from an element size rather than written down.
+ */
+struct Element48 {
+    unsigned char opaque[48];
+};
+static_assert(sizeof(Element48) == 48, "RE 0x8C4530");
+static_assert(modularInverse(3) == 0xAAAAAAAAAAAAAAABull, "the constant 0x8C4530 multiplies by");
+
 }  // namespace dll
 }  // namespace lcns

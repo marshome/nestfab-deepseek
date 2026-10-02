@@ -673,6 +673,26 @@ Last 24 instructions:
 00529b2f  jmp 0x529b14
 ```
 
+## The dependency chain behind GetLength, layer by layer (rounds 441 to 447)
+
+0x524EE0 (1051 bytes, 241 instructions) turns one container element into a pair of values. Its dependencies, read from
+the top down:
+
+| address | bytes | what it is |
+|---|---:|---|
+| 0x5F4310 | 35 | stores a pointer at +0, hands +8 to 0x5F3900, stores a byte at +0x10 |
+| 0x5F3900 | 22 | stores whatever 0x5F47C0 returns at +0 |
+| 0x5F47C0 | 112 | allocates 16 bytes through operator new, stores a constant at +0, makes two IAT calls, then stores the QUOTIENT of their two results as a double at +8. A ratio singleton, and platform-flavoured for that reason |
+| 0x5C6BE0 | 65 | clears a 24-byte object, then constructs through 0x8C4530, with 0x8C5090 and the platform stub on the exception path |
+| 0x8C4530 | 1209 | the size idiom: (end - begin) shifted by four, multiplied by inv(3), so the element is 48 bytes |
+| 0x8C5090 | 147 | the matching destructor, 133 callers, walking the same container |
+| 0x5203C0 | 4 | mov eax, dword ptr [rcx + 0x20] -- differentially tested against the original in round 445 |
+| 0x547620 | 5 | lea rax, [rcx + 0x18] -- differentially tested against the original in round 445 |
+
+Still to read before this chain is finished: 0x520440 (479 bytes, 55 callers), 0x4F73E0 (530 bytes, 12 callers) and
+0x524EE0 itself. The two accessors at the bottom are already held to the original bit for bit, which is what makes this
+chain worth walking one layer at a time rather than in one go.
+
 ## The 0x52F8xx family (round 375)
 
 GetLength's implementer (0x526160) and GetHeight's (0x5266A0) are otherwise identical and differ in one callee each:
