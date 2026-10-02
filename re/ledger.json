@@ -1363,6 +1363,22 @@
    "round": 622,
    "subject": "subobject.search-wrong-set",
    "witness": "the qualification was the whole content of the claim and the search discarded it -- the same error as the reachability columns: a count taken over the wrong set"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x9AF0 and 0x64B2C0 both test the global flag at rva 0xB1F050 and pass the object at rva 0xB1F058 to the gate 0x63F6C0",
+   "round": 623,
+   "subject": "global.switch-pair",
+   "witness": "0x9AF7 movzx eax,byte [rip+0xb15552] and 0x64B2C7 movzx eax,byte [rip+0x4d3d82] both resolve to 0xB1F050; 0x9B09 and 0x64B2DC both resolve to 0xB1F058; the gate is the logger's second gate, and 0xB1F050 is NOT the logger switch at 0xB1F018"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x9AF0 and 0x64B2C0 test a global enable flag and hand a global object to a gate, the shape of a lazily initialised singleton",
+   "round": 623,
+   "subject": "0x9AF0.shape",
+   "witness": "both store a zero byte and the object's address to [rsp+0x28] and [rsp+0x20] before calling 0x63F6C0; a global reached from two unrelated closures is shared state and not a local convenience"
   }
  ]
 }
