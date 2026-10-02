@@ -771,5 +771,33 @@ int main() {
         }
     }
 
+    // ------------------- the module switch and the engine fetch (RE 0x1BF00 and 0x1BF40)
+    {
+        unsigned char module_static[0x10];
+        std::memset(module_static, 0, sizeof(module_static));
+        module_static[0] = 1;                       // RE 0x1BF4A: the static says the engine is on
+        module_static[1] = 1;                       // RE 0x1BF09: the switch 0x1BF00 returns
+        CHECK(lcns::dll::accessors::moduleSwitch_1BF00(module_static) == 1);
+        module_static[1] = 0;
+        CHECK(lcns::dll::accessors::moduleSwitch_1BF00(module_static) == 0);
+
+        std::uint8_t header_flag = 1;               // RE 0x1BF4F: the header was already built
+        std::uint32_t build_id = 0;                 // RE 0x1BF62: a zero build id is the one that lets the fetch through
+        int header = 0;
+        CHECK(lcns::dll::accessors::engineFetch_1BF40(module_static, &header_flag, &build_id, &header) == &header);
+        // RE 0x1BF4D: the static's first byte is clear, so the fetch returns null whatever else says.
+        module_static[0] = 0;
+        CHECK(lcns::dll::accessors::engineFetch_1BF40(module_static, &header_flag, &build_id, &header) == nullptr);
+        module_static[0] = 1;
+        // RE 0x1BF62: a non-zero build id returns null, which is the case where the module recorded one.
+        build_id = 7;
+        CHECK(lcns::dll::accessors::engineFetch_1BF40(module_static, &header_flag, &build_id, &header) == nullptr);
+        build_id = 0;
+        // RE 0x1BF56 to 0x1BF90: the header is not built yet, which is the branch that calls 0x7BB430. It must not change
+        // the result, because that call only writes the header the caller owns.
+        header_flag = 0;
+        CHECK(lcns::dll::accessors::engineFetch_1BF40(module_static, &header_flag, &build_id, &header) == &header);
+    }
+
     return check::finish("boxacc");
 }

@@ -709,6 +709,41 @@ inline void constructCandidate_22E30(void* object, void* order, double value, st
     constructCandidate_22A20(object, order, value, static_cast<std::uint64_t>(flag));
 }
 
+/** RE 0x1BF00: the entry point's first test. It reads byte 1 of the module's lazy static, which is the switch that
+ * decides whether LaunchLocalComputation does any work at all: the orchestration jumps to the 'cns_force_cloud' path when
+ * this returns non-zero. moduleStatic_1BE70 is the caller's view of that static, because the static itself is built by the
+ * runtime's guard and by 0x65A530. */
+inline std::uint8_t moduleSwitch_1BF00(const void* moduleStatic_1BE70) {
+    // RE 0x1BF09: movzx eax, byte ptr [rax + 1]
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(moduleStatic_1BE70) + 1, sizeof(value));
+    return value;
+}
+
+/** RE 0x1BF40: the engine fetch. It reads the static's first byte, the module flag that says the diagnostic header was
+ * already built, and the module dword that holds the build id, and returns the header or null. The addresses are the
+ * module's own: 0xB033C5 for the header, 0xB0324A for the flag, 0xB03348 for the dword and 0xB03217 for the guard. They
+ * are reproduced as the arguments the test supplies, because a reimplementation does not own the module's data. */
+inline void* engineFetch_1BF40(const void* moduleStatic_1BE70,
+                               const std::uint8_t* headerBuiltFlag,
+                               const std::uint32_t* buildId,
+                               void* header) {
+    // RE 0x1BF4A: the static's first byte, which is a different byte from the switch 0x1BF00 reads at +1.
+    std::uint8_t on = 0;
+    std::memcpy(&on, static_cast<const unsigned char*>(moduleStatic_1BE70), sizeof(on));
+    if (on == 0) {
+        return nullptr;
+    }
+    if (*headerBuiltFlag == 0) {
+        // RE 0x1BF90: the header is built once, under the guard, by 0x7BB430. That function is read and classified, and
+        // its effect is the header the caller passes in, so it is not run here.
+    }
+    if (*buildId != 0) {
+        return nullptr;
+    }
+    return header;
+}
+
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns
