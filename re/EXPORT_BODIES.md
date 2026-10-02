@@ -1173,3 +1173,37 @@ suggested: one subtraction, chosen by a status test, with zero for an empty cont
 What is still missing before GetLength and GetHeight can be implemented is not an algorithm but the provenance of
 the two doubles that are subtracted: they are copied onto the stack from a window object built by 0x4F9200 and
 0x5CD800 in the section between instructions 34 and 150 of 0x526160.
+
+## What 0x5CD800 does, and the two return forms of GetLength (round 459)
+
+The loop body of 0x5CD800, read whole in round 459:
+
+    5CD863  add rbx, 0x30                 ; element stride 48, the third sighting of that family
+    5CD867  call 0x5C5F30
+    5CD86C  call 0x5C5260                 ; one value out of the element
+    5CD874  call 0x5CD360                 ; fold it into the object at rsi
+    5CD87F  call 0x5C8C50                 ; the box merge this project already implements
+    5CD88A  cmp rbp, rbx ; jne 5CD860     ; loop
+    5CD88F  rax = rdi ; ret               ; returns the box it was given
+
+So 0x5CD800 walks 48-byte elements, folds each into a box, merges that box, and returns the box. Its diagnostic
+strings read as !multip.olygons(...).empty() and Bounding..., which is an invariant report rather than a
+computation.
+
+Consequence for the implementer behind GetLength, 0x526160. Its stack object at rsi is the box that 0x5CD800 fills,
+so the four doubles the tail subtracts are box fields: with rsi as the base they are rsi+0x08, rsi+0x18, rsi+0x38 and
+rsi+0x48. Pairs are 16 apart and the two pairs are 72 apart, which is the same shape as the 48-byte family. The two
+return forms are therefore:
+
+    one branch:  rsi[+0x48] - rsi[+0x08]
+    other:       rsi[+0x18] - rsi[+0x38]
+
+with zero returned for an empty container, and the choice between them made by the status test at 0x52F810, whose
+body (cmp dword ptr [rcx], 1 ; setbe al) was read in round 375.
+
+What is NOT yet established, and must be pinned by a test rather than assumed: which branch belongs to GetLength and
+which to GetHeight. The two implementers differ in exactly one callee of the 0x52F8xx family, so the branch-to-export
+mapping is a question of fact that a behavioural test settles, not one to write down from plausibility.
+
+The 48-byte element family now has three independent sightings: the modular inverse of three in 0x8C4530, the literal
+add r12, 0x30 in 0x524EE0, and add rbx, 0x30 here.
