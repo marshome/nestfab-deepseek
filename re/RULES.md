@@ -170,6 +170,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "struct-xmembers-xlayout-xfields-xinfo-r",
+  "rule": "生成的 struct 不能是已存在类的第二份描述（XMembers/XLayout/XFields/XInfo 若与别处的类同名即失败）。检查见 re/g_no_duplicate_structs.py，该检查用植入的重复验证过。",
+  "check": "re/g_no_duplicate_structs.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

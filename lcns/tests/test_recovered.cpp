@@ -49,7 +49,6 @@
 #include "lcns/vtable_layout.hpp"
 #include "lcns/records.hpp"
 #include "lcns/small_buffer.hpp"
-#include "lcns/named_members.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -7070,65 +7069,6 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- the members an ORACLE names (generated)
-    //
-    // lcns/docs/WHAT_IS_NORMAL_CPP.md states the standard and this is the first file to meet it: **a field with no name does not belong in a
-    // class**, so every member here is named by an option key the module ANSWERS TO, paired with the offset its lookup result is stored into.
-    // The MIPLIB benchmark names are excluded, which a first version of the generator got wrong and emitted `void* air03`.
-    {
-        using lcns::SqueezeMultiTilerMembers;
-
-        // the members have NAMES a programmer can read, which is the point, and offsets that are footnotes rather than the content
-        SqueezeMultiTilerMembers tiler{};
-        tiler.nb_iterations_first = 3;
-        tiler.enable_flip = 1;
-        CHECK(tiler.nb_iterations_first == 3u);
-        CHECK(tiler.enable_flip == 1u);
-
-        // a COUNT is an integer and not a pointer, and a FLAG likewise: the first version typed every qword store as void*
-        CHECK(sizeof(tiler.nb_iterations_first) == 8u);
-        CHECK(sizeof(tiler.enable_flip) == 8u);
-        CHECK(sizeof(tiler.nb_strips_filling_advanced) == 8u);
-
-        // and the name-derived types, which is the oracle doing work the instruction cannot: nb_* is a count, *ratio is a measurement
-        static_assert(sizeof(decltype(tiler.nb_iterations_first)) == 8, "a count is not a pointer");
-        static_assert(std::is_same<decltype(tiler.enable_flip), std::uint64_t>::value, "a flag is an unsigned integer");
-        static_assert(std::is_same<decltype(tiler.nesting_offset_ratio), double>::value,
-                      "a name ending in _ratio is a measurement, which is what the vocabulary says");
-
-        // EVERY GENERATED MEMBER STRUCT IS NAMED, which check_recovery requires: a declaration nothing refers to is a declaration
-        // nobody has checked. **Each is also INSTANTIATED**, because a struct that does not compile is not a declaration either.
-        {
-            lcns::AdvancedStrategistMembers instance0{}; (void)instance0;
-            lcns::BadResponseExceptionMembers instance1{}; (void)instance1;
-            lcns::CancellerMembers instance2{}; (void)instance2;
-            lcns::CloudEngineMembers instance3{}; (void)instance3;
-            lcns::ClusterObserverMembers instance4{}; (void)instance4;
-            lcns::CompactCancellerMembers instance5{}; (void)instance5;
-            lcns::CompositeObserverMembers instance6{}; (void)instance6;
-            lcns::CompositePartMembers instance7{}; (void)instance7;
-            lcns::LimitedNesterMembers instance8{}; (void)instance8;
-            lcns::LogSinkMembers instance9{}; (void)instance9;
-            lcns::NestingEngineMembers instance10{}; (void)instance10;
-            lcns::NestingNesterMembers instance11{}; (void)instance11;
-            lcns::NoMixSheetSelectorMembers instance12{}; (void)instance12;
-            lcns::ObserverMembers instance13{}; (void)instance13;
-            lcns::PartMembers instance14{}; (void)instance14;
-            lcns::PartUpdaterLimiterMembers instance15{}; (void)instance15;
-            lcns::QuantityEvaluatorMembers instance16{}; (void)instance16;
-            lcns::RectangleNesterMembers instance17{}; (void)instance17;
-            lcns::RecursiveNesterMembers instance18{}; (void)instance18;
-            lcns::SplitNodeMembers instance19{}; (void)instance19;
-            lcns::SqueezeMultiTilerMembers instance20{}; (void)instance20;
-            lcns::TerminalNodeMembers instance21{}; (void)instance21;
-            lcns::WarpCancellerMembers instance22{}; (void)instance22;
-            lcns::WrapObserverMembers instance23{}; (void)instance23;
-        }
-
-        // THE REGION BETWEEN PLACED FIELDS IS NAMED, because a byte range that says so is honest and a member named after its address is not
-        CHECK(sizeof(tiler.unplaced_0008) == 0x30u);
-        CHECK(sizeof(tiler.unplaced_0040) == 0x8u);
-    }
 
     return check::finish("test_recovered");
 }
