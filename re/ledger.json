@@ -1790,6 +1790,22 @@
    "round": 647,
    "subject": "fold.5C8C50.is-wrong-in-the-tree",
    "witness": "the committed fold treats a single value per axis, sets its flag on the first fold rather than clearing it, and has no second pass; three attempts to reconcile it with the instructions failed, and the instructions above are what the rewrite must follow"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "StatBox::fold implements RE 0x5C8C50 from its whole body: four element doubles, a build path that clears the flag, and a compare path",
+   "round": 648,
+   "subject": "StatBox.fold-rewritten",
+   "witness": "0x5C8D10 installs a and b into all four slots and 0x5C8D14 clears the flag before joining the compare at c; the compare path's 0x5C8C73 is ucomisd of the box against the element with jbe skipping the store"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a fresh box has no useful lows, because the compare path only moves a low when the element is BELOW it and a fresh box's lows are zero",
+   "round": 648,
+   "subject": "fold.why-the-build-path-exists",
+   "witness": "0x5C8C73 ucomisd xmm1,xmm0 compares the BOX against the ELEMENT with jbe skipping the store, so the first element must be installed rather than compared"
   }
  ]
 }

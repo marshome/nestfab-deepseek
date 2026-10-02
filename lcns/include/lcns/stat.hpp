@@ -82,42 +82,96 @@ constexpr std::size_t kStatMin1 = 0x10;
 constexpr std::size_t kStatMax0 = 0x18;
 constexpr std::size_t kStatMax1 = 0x20;
 
-/** RE 0x5C8C50: fold one element's measurements into a running bounding box.
+/** RE 0x5C8C50: fold one element's FOUR doubles into a box of two (low, high) pairs.
  *
- * An element whose +0x00 flag is zero is skipped, which is the routine's first instruction and the reason a set can contain
- * elements that do not contribute. Each dimension is a pair of comparisons, one against the current minimum and one against the
- * current maximum.
+ * READ FROM THE WHOLE 255 BYTE BODY, both halves, which is what three earlier attempts did not do. The routine's three branches:
+ *
+ *     the ELEMENT's flag at +0x00 is zero   -> return without touching the box     (0x5C8C50, je, 0x5C8C55 ret)
+ *     the BOX's flag at +0x00 is NONZERO    -> BUILD, then fall into the compare of c and d   (0x5C8D10 .. 0x5C8D4D)
+ *     the BOX's flag at +0x00 is ZERO       -> COMPARE a, b, c and d against the box          (0x5C8C69 .. 0x5C8D0B)
+ *
+ * THE BUILD PATH, 0x5C8D10, copies the element's first two doubles into ALL FOUR slots and clears the flag:
+ *
+ *     0x5C8D1B  mov [rcx + 8],   [rdx + 8]        ; low0  = a
+ *     0x5C8D24  mov [rcx + 0x10],[rdx + 0x10]     ; low1  = b
+ *     0x5C8D35  mov [rcx + 0x18],[rdx + 8]        ; high0 = a
+ *     0x5C8D39  mov [rcx + 0x20],[rdx + 0x10]     ; high1 = b
+ *     0x5C8D14  mov byte ptr [rcx], 0             ; AND THE FLAG IS CLEARED
+ *     0x5C8D47  ucomisd xmm1, xmm0 / ja 0x5C8CD1 / jmp 0x5C8CDB   ; then JOIN the compare path at c
+ *
+ * THE COMPARE PATH, four compare-and-keep pairs over
+ *
+ *     element +8    against low0 and high0        (0x5C8C69 .. 0x5C8C8F)
+ *     element +0x10 against low1 and high1        (0x5C8C94 .. 0x5C8CBD)
+ *     element +0x18 against low0 and high0 AGAIN  (0x5C8CC6 .. 0x5C8CE2)
+ *     element +0x20 against low1 and high1 AGAIN  (0x5C8CE7 .. 0x5C8D06)
+ *
+ * **SO `valid` MEANS "BUILD ME" AND NOT "I AM VALID"**, which is why the initialiser RE 0x4E5B0 stores 1 into such a byte: a fresh box
+ * needs its first element installed rather than compared against zeros. An earlier version of this struct had the polarity the other way
+ * and one value per axis, and it was replaced rather than patched -- the three attempts are in re/blockers.json.
+ *
+ * THE ELEMENT IS FOUR DOUBLES, at +8, +0x10, +0x18 and +0x20, and all four reach the box: a and b set it, then c and d are compared
+ * against what a and b installed.
  */
 struct StatBox {
-    unsigned char valid = 0;                // +0x00
+    unsigned char valid = 0;                // +0x00: NONZERO means build from the first element; zero means compare
     double low0 = 0.0;                      // +0x08
     double low1 = 0.0;                      // +0x10
     double high0 = 0.0;                     // +0x18
     double high1 = 0.0;                     // +0x20
 
-    /** RE 0x5C8C50 with one dimension, which is the whole of the two comparisons the routine performs per axis. */
-    void fold(bool element_valid, double value, double& low, double& high) {
-        if (!element_valid) {                                  // RE 0x5C8C50: cmp byte [rdx],0 ; je
-            return;
+    /** One axis's compare-and-keep, the pair of instructions the body repeats four times. */
+    static void keep(double value, double& low, double& high) {
+        if (value < low) {                                  // RE 0x5C8C73 with 0x5C8C79
+            low = value;
         }
-        if (!valid) {                                          // RE 0x5C8C60: the accumulator being unset
-            low = high = value;
-            valid = 1;
-            return;
-        }
-        if (value < low) {                                     // RE 0x5C8C73: ucomisd + the jbe
-            low = value;                                       // RE 0x5C8C79
-        }
-        if (value > high) {                                    // RE 0x5C8C88
-            high = value;                                      // RE 0x5C8C8F
+        if (value > high) {                                 // RE 0x5C8C88 with 0x5C8C8F
+            high = value;
         }
     }
-};
 
-static_assert(offsetof(StatBox, low0) == kStatMin0, "RE 0x5C8C6E: movsd xmm1, [rcx+8]");
-static_assert(offsetof(StatBox, low1) == kStatMin1, "RE 0x5C8C94: movsd xmm0, [rdx+0x10]");
-static_assert(offsetof(StatBox, high0) == kStatMax0, "RE 0x5C8C88: ucomisd xmm0, [rcx+0x18]");
-static_assert(offsetof(StatBox, high1) == kStatMax1, "the second dimension's maximum");
+    /** Fold one element's four doubles in. RE 0x5C8C50, whole body.
+     *
+     * `element_valid` is the element's flag at its +0x00; a zero element is skipped entirely. `a`, `b`, `c` and `d` are the element's four
+     * doubles at +8, +0x10, +0x18 and +0x20, named by POSITION because the routine gives them no other identity: a and b go to the two
+     * axes, then c and d are compared against the same two axes.
+     */
+    void fold(bool element_valid, double a, double b, double c, double d) {
+        if (!element_valid) {                               // RE 0x5C8C50 / je / 0x5C8C55 ret
+            return;
+        }
+        if (valid) {
+            // THE BUILD PATH: 0x5C8D10 installs a and b into both ends of both axes and clears the flag
+            low0 = a;                                       // RE 0x5C8D1B
+            low1 = b;                                       // RE 0x5C8D24
+            high0 = a;                                      // RE 0x5C8D35
+            high1 = b;                                      // RE 0x5C8D39
+            valid = 0;                                      // RE 0x5C8D14
+            // and then the compare path's second half runs, for c and d
+            keep(c, low0, high0);                           // RE 0x5C8CC6 / 0x5C8CD1 / 0x5C8CDB / 0x5C8CE2
+            keep(d, low1, high1);                           // RE 0x5C8CE7 / 0x5C8CF2 / 0x5C8CFC / 0x5C8D06
+            return;
+        }
+        keep(a, low0, high0);                               // RE 0x5C8C69 / 0x5C8C79 / 0x5C8C88 / 0x5C8C8F
+        keep(b, low1, high1);                               // RE 0x5C8C94 / 0x5C8CA4 / 0x5C8CB2 / 0x5C8CBD
+        keep(c, low0, high0);                               // RE 0x5C8CC6 / 0x5C8CD1 / 0x5C8CDB / 0x5C8CE2
+        keep(d, low1, high1);                               // RE 0x5C8CE7 / 0x5C8CF2 / 0x5C8CFC / 0x5C8D06
+    }
+
+    /** The single-axis form kept for statExtent, which folds one measurement per element. It is NOT RE 0x5C8C50: it is a convenience for
+     *  the accumulator at 0x526160, which uses one axis, and it is named apart so the two cannot be confused again. */
+    void foldSingle(bool element_valid, double value, bool& seen, double& low, double& high) {
+        if (!element_valid) {
+            return;
+        }
+        if (!seen) {
+            low = high = value;
+            seen = true;
+            return;
+        }
+        keep(value, low, high);
+    }
+};
 
 /** RE 0x526160 and RE 0x5266A0: the extent of a set, which is what GetLength and GetHeight return.
  *
@@ -128,12 +182,13 @@ static_assert(offsetof(StatBox, high1) == kStatMax1, "the second dimension's max
 template <typename Element, typename Measure, typename Accept>
 double statExtent(const Element* begin, const Element* end, Measure measure, Accept accept) {
     StatBox box;
+    bool seen = false;
     for (const Element* element = begin; element != end; ++element) {          // RE 0x5261D4 and 0x5261EE
         if (!accept(element)) {                                                // RE 0x52621E, the predicate on the element
             continue;
         }
         const double value = measure(element);                                 // RE 0x5261DE and 0x5261E9
-        box.fold(true, value, box.low0, box.high0);                            // RE 0x5C8C50
+        box.foldSingle(true, value, seen, box.low0, box.high0);                // one axis, not RE 0x5C8C50's four
     }
     return (box.high0 - box.low0);                                             // RE 0x526227 and 0x526230
 }

@@ -6084,35 +6084,62 @@ int main() {
 
     // ---------------------------------------------------------------- StatBox::fold (RE 0x5C8C50)
     //
-    // The fold's three behaviours, each from an instruction: an element whose flag is zero is skipped (0x5C8C50), the first value
-    // that arrives sets both bounds (0x5C8C60's other route), and a later value moves one bound or the other (0x5C8C73 and
-    // 0x5C8C88). The class is declared in a header, so check_recovery requires it to be named in a test; the requirement and the
-    // behaviour coincide here.
+    // READ FROM THE WHOLE 255 BYTE BODY. The element is FOUR doubles and the box's flag means BUILD ME rather than I am valid:
+    //
+    //     element flag zero  -> return untouched           (0x5C8C50)
+    //     box flag NONZERO   -> install a and b into all four slots, clear the flag, then compare c and d  (0x5C8D10)
+    //     box flag ZERO      -> compare a, b, c and d      (0x5C8C69)
+    //
+    // Three earlier attempts read a fragment and got the polarity and the arity wrong; they are recorded in re/blockers.json.
     {
-        lcns::StatBox box;
-        CHECK(box.valid == 0);
-        // an invalid element contributes nothing at all
-        box.fold(false, 42.0, box.low0, box.high0);
-        CHECK(box.valid == 0);
-        CHECK(box.low0 == 0.0 && box.high0 == 0.0);
-        // the first valid value sets both bounds
-        box.fold(true, 5.0, box.low0, box.high0);
-        CHECK(box.valid == 1);
-        CHECK(box.low0 == 5.0 && box.high0 == 5.0);
-        // a smaller value moves the low bound only
-        box.fold(true, 2.0, box.low0, box.high0);
-        CHECK(box.low0 == 2.0 && box.high0 == 5.0);
-        // a larger one moves the high bound only
-        box.fold(true, 9.0, box.low0, box.high0);
-        CHECK(box.low0 == 2.0 && box.high0 == 9.0);
-        // and one inside the range moves neither
-        box.fold(true, 4.0, box.low0, box.high0);
-        CHECK(box.low0 == 2.0 && box.high0 == 9.0);
-        // the second dimension is independent, which is what the 0x10 interleave at 0x5C8C94 is for
-        box.fold(true, -1.0, box.low1, box.high1);
-        box.fold(true, 3.0, box.low1, box.high1);
-        CHECK(box.low1 == -1.0 && box.high1 == 3.0);
-        CHECK(box.low0 == 2.0 && box.high0 == 9.0);      // untouched by the second dimension
+        // the build path: a and b set both ends of both axes, the flag clears, and c and d are then compared
+        lcns::StatBox fresh;
+        fresh.valid = 1;                                   // BUILD ME
+        fresh.low0 = 100.0; fresh.high0 = 200.0;
+        fresh.low1 = 300.0; fresh.high1 = 400.0;
+        fresh.fold(true, 11.0, 22.0, 5.0, 40.0);
+        CHECK(fresh.valid == 0);                           // RE 0x5C8D14
+        CHECK(fresh.low0 == 5.0);                          // a=11 set it, then c=5 lowered it
+        CHECK(fresh.high0 == 11.0);                        // and a is still the high, because c did not exceed it
+        CHECK(fresh.low1 == 22.0);                         // b=22 set it, then d=40 raised the high instead
+        CHECK(fresh.high1 == 40.0);
+
+        // the compare path against a ZERO box, which only lowers a low when the element is BELOW ZERO -- 0x5C8C73 is `ucomisd` of
+        // the box against the element with `jbe` skipping the store. **This is why the build path exists**: a fresh box has no useful
+        // lows, so the first element is installed rather than compared.
+        lcns::StatBox zeroed;
+        zeroed.fold(true, 5.0, 7.0, 9.0, 4.0);
+        CHECK(zeroed.valid == 0);                          // the compare path never touches the flag
+        CHECK(zeroed.low0 == 0.0);                         // 5 and 9 are both above zero, so the low stays
+        CHECK(zeroed.high0 == 9.0);                        // and c=9 raised the high
+        CHECK(zeroed.low1 == 0.0);                         // same for the second axis
+        CHECK(zeroed.high1 == 7.0);                        // b=7
+
+        // and a NEGATIVE element does lower the low, which is the comparison the jbe skips over
+        lcns::StatBox negative;
+        negative.fold(true, -5.0, -7.0, 1.0, -2.0);
+        CHECK(negative.low0 == -5.0);                      // a=-5 is below zero, so it lands
+        CHECK(negative.low1 == -7.0);                      // b=-7 likewise
+        CHECK(negative.high0 == 1.0);                      // c=1 raised the high
+        CHECK(negative.high1 == 0.0);                      // d=-2 is below zero, so the high stays 0
+
+        // an element with a zero flag contributes nothing at all, which is the routine's first three instructions
+        lcns::StatBox untouched;
+        untouched.fold(false, 42.0, 42.0, 42.0, 42.0);
+        CHECK(untouched.low0 == 0.0 && untouched.high0 == 0.0);
+        CHECK(untouched.low1 == 0.0 && untouched.high1 == 0.0);
+        CHECK(untouched.valid == 0);
+
+        // and a build followed by a compare: the second call takes the compare path because the flag was cleared
+        lcns::StatBox built;
+        built.valid = 1;
+        built.fold(true, 1.0, 2.0, 1.0, 2.0);
+        CHECK(built.low0 == 1.0 && built.high0 == 1.0);
+        CHECK(built.low1 == 2.0 && built.high1 == 2.0);
+        built.fold(true, 0.0, 0.0, 3.0, 3.0);
+        CHECK(built.low0 == 0.0 && built.high0 == 3.0);
+        CHECK(built.low1 == 0.0 && built.high1 == 3.0);
+
         CHECK(lcns::kStatFlag == 0x00);
         CHECK(lcns::kStatMin0 == 0x08 && lcns::kStatMax0 == 0x18);
         CHECK(lcns::kStatMin1 == 0x10 && lcns::kStatMax1 == 0x20);

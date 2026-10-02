@@ -17,7 +17,10 @@
    "at": "2026-10-02T13:40:52Z",
    "id": "StatBox::fold rewrite",
    "reason": "the committed StatBox::fold does not implement RE 0x5C8C50: four element doubles reach the accumulator in two passes, and the flag's polarity is the opposite of what the struct assumes",
-   "resolved": null,
+   "resolved": {
+    "at": "2026-10-02T13:43:19Z",
+    "how": "rewritten from the whole 255 byte body: four element doubles, the flag means BUILD ME, and the build path clears it before joining the compare at c; the one-axis caller was separated into foldSingle, which was the cause of the confusion"
+   },
    "round": 647,
    "tried": [
     "attempt 1: one axis, flag set on the first fold -- the test failed on the second axis",
