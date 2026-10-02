@@ -59,3 +59,18 @@ model has to keep them apart:
 Until an entry point's own code ties a setter to the container's owner (for instance a setter that reads or writes both),
 the two stay separate types in the model. The implementations themselves are unaffected: a store to a fixed offset is a
 store to a fixed offset, and that is what the tests verify.
+
+
+## 0x5C8C50 differential test: draft result (round 380)
+
+A ten-fixture differential comparison against the original was written and built cleanly (no warnings). Nine of the ten
+fixtures matched the original byte for byte; one did not, so the model was reverted rather than committed. The fixtures
+were: source uninitialised; both uninitialised; destination uninitialised with positive extents; destination
+uninitialised with negative extents; source inside the destination; source outside; crossing (source max below
+destination min); far outside; signed zeros; equal values.
+
+The failing one is most likely either the INIT branch (0x5C8D10, which builds the destination from the source and then
+falls into the tail at 0x5C8CDB carrying xmm1/xmm3/xmm2 from the freshly written fields) or the negative-extent
+initialisation, because those are the two places where the register contents across the branch differ from the plain
+path. Next round: print the mismatching fixture''s 0x28 bytes from both sides, fix the model, and re-run -- the original is
+callable, so this is a matter of reading the difference, not of guessing.
