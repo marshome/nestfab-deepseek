@@ -95,6 +95,22 @@
    "round": 539,
    "subject": "Multi::Run bodies",
    "witness": "re/STRATEGY_METHODS.md lists them; their classes are now identifiable"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "4 of 5 checks need shared identity, and only the ledger-level ones have it",
+   "round": 543,
+   "subject": "contradiction.rules",
+   "witness": "973 findings scoped to nothing, 720 to a ledger offset, 42 to a constructor width, 2 to a constructor width reached through rcx"
+  },
+  {
+   "grade": "SHAPE",
+   "kind": "shape",
+   "predicate": "the first argument's type is unknown per function, which is why the width check cannot conclude",
+   "round": 543,
+   "subject": "rcx.type",
+   "witness": "101, 2599, 315 and 9 functions write 1, 2, 4 and 16 bytes at +0x10 through rcx; only their types separate them"
   }
  ]
 }
