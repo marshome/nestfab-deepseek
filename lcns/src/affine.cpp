@@ -51,9 +51,15 @@ bool invertTransform(const AngleTransform& t, AngleTransform& out) {
     inv.negSin = -t.negSin * r;  // -b/det
     inv.sin = -t.sin * r;      // -c/det
     inv.cos2 = t.cos * r;      // a/det
-    // The translation of the inverse is minus the inverse basis applied to the original translation.
-    inv.zero20 = -(inv.cos * t.zero20 + inv.negSin * t.zero28);
-    inv.zero28 = -(inv.sin * t.zero20 + inv.cos2 * t.zero28);
+    // The translation of the inverse is minus the inverse basis applied to the original translation -- and the negation
+    // belongs to the OPERANDS, not to the sum. 0x5CEDB3 loads the translation pair, 0x5CEDBC flips its sign with xorpd,
+    // and only then are the products formed and added. For a zero translation the two orders differ in the SIGN OF ZERO:
+    // (-a) + (-b) can be +0.0 where -(a + b) is -0.0. The differential test in tests/test_affine.cpp caught exactly
+    // that, which is why this is written the long way.
+    const double negTx = -t.zero20;
+    const double negTy = -t.zero28;
+    inv.zero20 = inv.cos * negTx + inv.negSin * negTy;
+    inv.zero28 = inv.sin * negTx + inv.cos2 * negTy;
     out = inv;
     return true;
 }

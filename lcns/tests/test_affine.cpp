@@ -214,6 +214,61 @@ int main() {
     }
 #endif
 
+    // ------------------- the builder and the inverse, differential now that data relocation makes them executable
+#if defined(LCNS_HAS_EMBEDDED_ASM)
+    {
+        auto builder = reinterpret_cast<void (*)(void*, const void*)>(emb::originalOf(0x5CE7B0u));
+        auto inverse = reinterpret_cast<void* (*)(void*, const void*)>(emb::originalOf(0x5CED50u));
+        CHECK(builder != nullptr);
+        CHECK(inverse != nullptr);
+        // both were comment-only until round 359, when their RIP-relative reads gained data relocations
+        const emb::Block* bb = emb::find(0x5CE7B0u);
+        const emb::Block* bi = emb::find(0x5CED50u);
+        CHECK(bb != nullptr && bb->status == emb::Status::CallableRelocated);
+        CHECK(bi != nullptr && bi->status == emb::Status::CallableRelocated);
+
+        if (builder != nullptr) {
+            const double points[][2] = {{0.0, 0.0}, {3.0, -4.0}, {-0.5, 0.25}, {1e6, -1e6}, {-0.0, 0.0}};
+            for (const double* p : points) {
+                double mine[6] = {0, 0, 0, 0, 0, 0};
+                double theirs[6] = {0, 0, 0, 0, 0, 0};
+                toArray(lcns::affine::translationTransform(p[0], p[1]), mine);
+                builder(theirs, p);
+                for (int i = 0; i < 6; ++i) {
+                    CHECK(sameDouble(mine[i], theirs[i]));
+                }
+            }
+        }
+
+        if (inverse != nullptr) {
+            for (const double* m : kMatrices) {
+                const AngleTransform t0 = fromArray(m);
+                if (lcns::row::transformDet(t0) == 0.0) {
+                    continue;   // the deviation below
+                }
+                double mine[6] = {0, 0, 0, 0, 0, 0};
+                double theirs[6] = {0, 0, 0, 0, 0, 0};
+                AngleTransform out;
+                CHECK(lcns::affine::invertTransform(t0, out));
+                toArray(out, mine);
+                inverse(theirs, m);
+                for (int i = 0; i < 6; ++i) {
+                    CHECK(sameDouble(mine[i], theirs[i]));
+                }
+            }
+            // DEVIATION, stated rather than hidden: a singular matrix makes the original divide by zero and return
+            // infinities, while invertTransform reports failure and leaves an identity. The check below pins the
+            // project's behaviour, so the difference cannot drift unnoticed.
+            const AngleTransform singular = fromArray(kMatrices[4]);
+            AngleTransform degenerate = singular;
+            degenerate.cos2 = 0.0;                     // a*d = 0 with b = 0, so the determinant is zero
+            AngleTransform out;
+            CHECK(!lcns::affine::invertTransform(degenerate, out));
+            CHECK(sameDouble(out.cos, 0.0) && sameDouble(out.cos2, 0.0));
+        }
+    }
+#endif
+
     // ---------------------------------------------------------------- the inverse (0x5CED50, comment-only)
     // Properties again: the original's reciprocal comes from a RIP-relative 1.0 and its sign flips from a mask, so the
     // embedded copy cannot run. What is checked is what the routine's structure promises: the composition of a transform

@@ -174,7 +174,7 @@ alignas(16) const unsigned char kBytes_5ce970[269] = {
 };
 
 // 0x5ce7b0  50 bytes  builds a translation matrix (identity basis + point)
-// status: comment_only  -- rip-relative memory access to rva 0x9DE930
+// status: callable_relocated  -- data at 0x5ce7b4 -> lcns_data_9de930
 // sha256: 1c553f16928c26c0173c2de81a054b5edaafc671750db4bc7bf5487e8af1270c
 alignas(16) const unsigned char kBytes_5ce7b0[50] = {
     0x66, 0x0f, 0xef, 0xc9, 0xf2, 0x0f, 0x10, 0x05, 0x74, 0x01, 0x41, 0x00,
@@ -185,7 +185,7 @@ alignas(16) const unsigned char kBytes_5ce7b0[50] = {
 };
 
 // 0x5ced50  196 bytes  inverse of a 2x3 affine matrix
-// status: comment_only  -- rip-relative memory access to rva 0x9DE930; rip-relative memory access to rva 0x9DE960
+// status: callable_relocated  -- data at 0x5ced5d -> lcns_data_9de960; data at 0x5ced8f -> lcns_data_9de930
 // sha256: 71653da18d5c60a8564445ad58f0b3b24d7639bccb7efedf71fa3a017edf9b9d
 alignas(16) const unsigned char kBytes_5ced50[196] = {
     0x48, 0x83, 0xec, 0x28, 0x0f, 0x29, 0x34, 0x24, 0x0f, 0x29, 0x7c, 0x24,
@@ -236,7 +236,7 @@ alignas(16) const unsigned char kBytes_55e190[258] = {
 };
 
 // 0x62fe20  270 bytes  libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects
-// status: comment_only  -- call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)
+// status: comment_only  -- call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block
 // sha256: 92ba45ca52d125e32af5d8f222dee28c09d4134141b999a3588aff4c0d76180f
 alignas(16) const unsigned char kBytes_62fe20[270] = {
     0x48, 0x83, 0xec, 0x58, 0xf2, 0x0f, 0x11, 0x44, 0x24, 0x48, 0x8b, 0x44,
@@ -310,7 +310,7 @@ alignas(16) const unsigned char kBytes_5c8a10[114] = {
 };
 
 // 0x24dd40  238 bytes  composition of two transformed fields with weights
-// status: comment_only  -- call to 0x24C610 outside the block; rip-relative memory access to rva 0x9C2B30
+// status: comment_only  -- call to 0x24C610 outside the block
 // sha256: 4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e
 alignas(16) const unsigned char kBytes_24dd40[238] = {
     0x57, 0x56, 0x53, 0x48, 0x81, 0xec, 0xd0, 0x00, 0x00, 0x00, 0x48, 0x8d,
@@ -349,7 +349,7 @@ alignas(16) const unsigned char kBytes_4b81d0[78] = {
 };
 
 // 0x24c610  138 bytes  four-stage geometry chain over the packed +0x70 point
-// status: comment_only  -- call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CED50 outside the block
+// status: comment_only  -- call to 0x24C4A0 outside the block
 // sha256: 50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc
 alignas(16) const unsigned char kBytes_24c610[138] = {
     0x41, 0x54, 0x55, 0x57, 0x56, 0x53, 0x48, 0x81, 0xec, 0xe0, 0x00, 0x00,
@@ -367,7 +367,7 @@ alignas(16) const unsigned char kBytes_24c610[138] = {
 };
 
 // 0x111ad0  64 bytes  constructor of the twins' object (two vtables)
-// status: comment_only  -- call to 0xC33F0 outside the block; rip-relative memory access to rva 0xA45D10; rip-relative memory access to rva 0xA45E98
+// status: comment_only  -- call to 0xC33F0 outside the block
 // sha256: e3f1487d0f779a0a9152c745741974bce0afbab0ed9852cc0d6f3be90aca9c55
 alignas(16) const unsigned char kBytes_111ad0[64] = {
     0x57, 0x56, 0x53, 0x48, 0x83, 0xec, 0x20, 0x48, 0x89, 0xd7, 0x31, 0xd2,
@@ -379,7 +379,7 @@ alignas(16) const unsigned char kBytes_111ad0[64] = {
 };
 
 // 0x243820  15524 bytes  head of the largest routine here (15,524 bytes): geometry entry
-// status: comment_only  -- call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+88 more)
+// status: comment_only  -- call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+75 more)
 // sha256: ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae
 alignas(16) const unsigned char kBytes_243820[15524] = {
     0x41, 0x57, 0x41, 0x56, 0x41, 0x55, 0x41, 0x54, 0x55, 0x57, 0x56, 0x53,
@@ -1699,17 +1699,17 @@ const Block kBlocks[] = {
     {0x5cea80u, 269u, "lcns_orig_5cea80", Status::Callable, "", "affine transform applied to a source record, functional form", kBytes_5cea80, "7c2297bb43e8a96865177c08637c282c3abf2afcf1704247a857e7c05063f1b6"},
     {0x5cf6b0u, 235u, "lcns_orig_5cf6b0", Status::Callable, "", "affine transform, out of place", kBytes_5cf6b0, "2913a685d3e8420c3fbad3e8706228ba4de4d09783aad3ccdde0e355e394fa1b"},
     {0x5ce970u, 269u, "lcns_orig_5ce970", Status::Callable, "", "composition of two 2x3 affine transforms", kBytes_5ce970, "d910ebbbcf0478750d2b2a1ddf196f4b5ac49e6f996adf211d0abc6a46d0f3bd"},
-    {0x5ce7b0u, 50u, "lcns_orig_5ce7b0", Status::CommentOnly, "rip-relative memory access to rva 0x9DE930", "builds a translation matrix (identity basis + point)", kBytes_5ce7b0, "1c553f16928c26c0173c2de81a054b5edaafc671750db4bc7bf5487e8af1270c"},
-    {0x5ced50u, 196u, "lcns_orig_5ced50", Status::CommentOnly, "rip-relative memory access to rva 0x9DE930; rip-relative memory access to rva 0x9DE960", "inverse of a 2x3 affine matrix", kBytes_5ced50, "71653da18d5c60a8564445ad58f0b3b24d7639bccb7efedf71fa3a017edf9b9d"},
+    {0x5ce7b0u, 50u, "lcns_orig_5ce7b0", Status::CallableRelocated, "data at 0x5ce7b4 -> lcns_data_9de930", "builds a translation matrix (identity basis + point)", kBytes_5ce7b0, "1c553f16928c26c0173c2de81a054b5edaafc671750db4bc7bf5487e8af1270c"},
+    {0x5ced50u, 196u, "lcns_orig_5ced50", Status::CallableRelocated, "data at 0x5ced5d -> lcns_data_9de960; data at 0x5ced8f -> lcns_data_9de930", "inverse of a 2x3 affine matrix", kBytes_5ced50, "71653da18d5c60a8564445ad58f0b3b24d7639bccb7efedf71fa3a017edf9b9d"},
     {0x55e190u, 258u, "lcns_orig_55e190", Status::CallableRelocated, "stub at 0x55e1dd -> lcns_stub_sqrt; stub at 0x55e20c -> lcns_stub_sqrt; stub at 0x55e26d -> lcns_stub_sqrt", "segment length pair, min and max, with a square-root guard", kBytes_55e190, "aea332921bf9a743b522a12559953a18cd3dc39c7c2889f8e8bfeffd78e4f32b"},
-    {0x62fe20u, 270u, "lcns_orig_62fe20", Status::CommentOnly, "call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)", "libm sqrt: the C library square root, identified in round 356 from its own error path (the name string 'sqrt' at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects", kBytes_62fe20, "92ba45ca52d125e32af5d8f222dee28c09d4134141b999a3588aff4c0d76180f"},
+    {0x62fe20u, 270u, "lcns_orig_62fe20", Status::CommentOnly, "call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block", "libm sqrt: the C library square root, identified in round 356 from its own error path (the name string 'sqrt' at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects", kBytes_62fe20, "92ba45ca52d125e32af5d8f222dee28c09d4134141b999a3588aff4c0d76180f"},
     {0x50fd40u, 270u, "lcns_orig_50fd40", Status::CallableRelocated, "block at 0x50fd84 -> lcns_orig_5c8a10; block at 0x50fd98 -> lcns_orig_51d2f0; block at 0x50fda0 -> lcns_orig_4f8370; block at 0x50fdb3 -> lcns_orig_51d2f0; block at 0x50fdbb -> lcns_orig_4f8380; block at 0x50fdd2 -> lcns_orig_5c8a10; block at 0x50fe1d -> lcns_orig_5c8a10", "accumulator over a range of 312-byte elements", kBytes_50fd40, "0bd76831f963660517c123629b68239771edc3f74587a380dcef90d1893c1a7b"},
     {0x5c8a10u, 114u, "lcns_orig_5c8a10", Status::Callable, "", "the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it", kBytes_5c8a10, "11fd0141b88c0c13259995daf85e6f5fc382eb89ffd328c4a08f89464cee9e0c"},
-    {0x24dd40u, 238u, "lcns_orig_24dd40", Status::CommentOnly, "call to 0x24C610 outside the block; rip-relative memory access to rva 0x9C2B30", "composition of two transformed fields with weights", kBytes_24dd40, "4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e"},
+    {0x24dd40u, 238u, "lcns_orig_24dd40", Status::CommentOnly, "call to 0x24C610 outside the block", "composition of two transformed fields with weights", kBytes_24dd40, "4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e"},
     {0x4b81d0u, 78u, "lcns_orig_4b81d0", Status::CommentOnly, "call to 0x998500 outside the block", "builds the object whose first member is the 0.01 tolerance", kBytes_4b81d0, "31b092b0bf261d80450ce3783f7583863fd71e1a6f8eba5f6379769db10628e3"},
-    {0x24c610u, 138u, "lcns_orig_24c610", Status::CommentOnly, "call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CED50 outside the block", "four-stage geometry chain over the packed +0x70 point", kBytes_24c610, "50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc"},
-    {0x111ad0u, 64u, "lcns_orig_111ad0", Status::CommentOnly, "call to 0xC33F0 outside the block; rip-relative memory access to rva 0xA45D10; rip-relative memory access to rva 0xA45E98", "constructor of the twins' object (two vtables)", kBytes_111ad0, "e3f1487d0f779a0a9152c745741974bce0afbab0ed9852cc0d6f3be90aca9c55"},
-    {0x243820u, 15524u, "lcns_orig_243820", Status::CommentOnly, "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+88 more)", "head of the largest routine here (15,524 bytes): geometry entry", kBytes_243820, "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"},
+    {0x24c610u, 138u, "lcns_orig_24c610", Status::CommentOnly, "call to 0x24C4A0 outside the block", "four-stage geometry chain over the packed +0x70 point", kBytes_24c610, "50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc"},
+    {0x111ad0u, 64u, "lcns_orig_111ad0", Status::CommentOnly, "call to 0xC33F0 outside the block", "constructor of the twins' object (two vtables)", kBytes_111ad0, "e3f1487d0f779a0a9152c745741974bce0afbab0ed9852cc0d6f3be90aca9c55"},
+    {0x243820u, 15524u, "lcns_orig_243820", Status::CommentOnly, "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+75 more)", "head of the largest routine here (15,524 bytes): geometry entry", kBytes_243820, "ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae"},
     {0xa06820u, 32u, "", Status::Data, "", "libm sqrt's constant cluster: the name string 'sqrt' then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code", kBytes_a06820, "b1c990bc7b38a93d330fd06165bb4db14befc5e958457165d7a036b8c48eaf2d"},
 };
 const std::size_t kBlockCount = sizeof(kBlocks) / sizeof(kBlocks[0]);

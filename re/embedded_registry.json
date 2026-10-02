@@ -124,10 +124,18 @@
     "rva": 6088624,
     "size": 50,
     "symbol": "lcns_orig_5ce7b0",
-    "status": "comment_only",
-    "reason": "rip-relative memory access to rva 0x9DE930",
+    "status": "callable_relocated",
+    "reason": "data at 0x5ce7b4 -> lcns_data_9de930",
     "note": "builds a translation matrix (identity basis + point)",
-    "relocations": [],
+    "relocations": [
+      {
+        "at": 6088628,
+        "target": 10348848,
+        "kind": "data",
+        "symbol": "lcns_data_9de930",
+        "width": 8
+      }
+    ],
     "callers": 32,
     "sha256": "1c553f16928c26c0173c2de81a054b5edaafc671750db4bc7bf5487e8af1270c"
   },
@@ -135,10 +143,25 @@
     "rva": 6090064,
     "size": 196,
     "symbol": "lcns_orig_5ced50",
-    "status": "comment_only",
-    "reason": "rip-relative memory access to rva 0x9DE930; rip-relative memory access to rva 0x9DE960",
+    "status": "callable_relocated",
+    "reason": "data at 0x5ced5d -> lcns_data_9de960; data at 0x5ced8f -> lcns_data_9de930",
     "note": "inverse of a 2x3 affine matrix",
-    "relocations": [],
+    "relocations": [
+      {
+        "at": 6090077,
+        "target": 10348896,
+        "kind": "data",
+        "symbol": "lcns_data_9de960",
+        "width": 8
+      },
+      {
+        "at": 6090127,
+        "target": 10348848,
+        "kind": "data",
+        "symbol": "lcns_data_9de930",
+        "width": 8
+      }
+    ],
     "callers": 24,
     "sha256": "71653da18d5c60a8564445ad58f0b3b24d7639bccb7efedf71fa3a017edf9b9d"
   },
@@ -154,19 +177,22 @@
         "at": 5628381,
         "target": 6487584,
         "kind": "stub",
-        "symbol": "lcns_stub_sqrt"
+        "symbol": "lcns_stub_sqrt",
+        "width": 4
       },
       {
         "at": 5628428,
         "target": 6487584,
         "kind": "stub",
-        "symbol": "lcns_stub_sqrt"
+        "symbol": "lcns_stub_sqrt",
+        "width": 4
       },
       {
         "at": 5628525,
         "target": 6487584,
         "kind": "stub",
-        "symbol": "lcns_stub_sqrt"
+        "symbol": "lcns_stub_sqrt",
+        "width": 4
       }
     ],
     "callers": 3,
@@ -177,7 +203,7 @@
     "size": 270,
     "symbol": "lcns_orig_62fe20",
     "status": "comment_only",
-    "reason": "call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)",
+    "reason": "call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block",
     "note": "libm sqrt: the C library square root, identified in round 356 from its own error path (the name string \"sqrt\" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects",
     "relocations": [],
     "callers": 89,
@@ -195,43 +221,50 @@
         "at": 5307780,
         "target": 6064656,
         "kind": "block",
-        "symbol": "lcns_orig_5c8a10"
+        "symbol": "lcns_orig_5c8a10",
+        "width": 4
       },
       {
         "at": 5307800,
         "target": 5362416,
         "kind": "block",
-        "symbol": "lcns_orig_51d2f0"
+        "symbol": "lcns_orig_51d2f0",
+        "width": 4
       },
       {
         "at": 5307808,
         "target": 5210992,
         "kind": "block",
-        "symbol": "lcns_orig_4f8370"
+        "symbol": "lcns_orig_4f8370",
+        "width": 4
       },
       {
         "at": 5307827,
         "target": 5362416,
         "kind": "block",
-        "symbol": "lcns_orig_51d2f0"
+        "symbol": "lcns_orig_51d2f0",
+        "width": 4
       },
       {
         "at": 5307835,
         "target": 5211008,
         "kind": "block",
-        "symbol": "lcns_orig_4f8380"
+        "symbol": "lcns_orig_4f8380",
+        "width": 4
       },
       {
         "at": 5307858,
         "target": 6064656,
         "kind": "block",
-        "symbol": "lcns_orig_5c8a10"
+        "symbol": "lcns_orig_5c8a10",
+        "width": 4
       },
       {
         "at": 5307933,
         "target": 6064656,
         "kind": "block",
-        "symbol": "lcns_orig_5c8a10"
+        "symbol": "lcns_orig_5c8a10",
+        "width": 4
       }
     ],
     "callers": 3,
@@ -253,7 +286,7 @@
     "size": 238,
     "symbol": "lcns_orig_24dd40",
     "status": "comment_only",
-    "reason": "call to 0x24C610 outside the block; rip-relative memory access to rva 0x9C2B30",
+    "reason": "call to 0x24C610 outside the block",
     "note": "composition of two transformed fields with weights",
     "relocations": [],
     "callers": 1,
@@ -275,7 +308,7 @@
     "size": 138,
     "symbol": "lcns_orig_24c610",
     "status": "comment_only",
-    "reason": "call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CED50 outside the block",
+    "reason": "call to 0x24C4A0 outside the block",
     "note": "four-stage geometry chain over the packed +0x70 point",
     "relocations": [],
     "callers": 4,
@@ -286,7 +319,7 @@
     "size": 64,
     "symbol": "lcns_orig_111ad0",
     "status": "comment_only",
-    "reason": "call to 0xC33F0 outside the block; rip-relative memory access to rva 0xA45D10; rip-relative memory access to rva 0xA45E98",
+    "reason": "call to 0xC33F0 outside the block",
     "note": "constructor of the twins' object (two vtables)",
     "relocations": [],
     "callers": 21,
@@ -297,7 +330,7 @@
     "size": 15524,
     "symbol": "lcns_orig_243820",
     "status": "comment_only",
-    "reason": "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+88 more)",
+    "reason": "call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+75 more)",
     "note": "head of the largest routine here (15,524 bytes): geometry entry",
     "relocations": [],
     "callers": 3,

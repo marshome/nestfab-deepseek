@@ -21,8 +21,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x5cea80` | 269 | callable | 9 | affine transform applied to a source record, functional form |
 | `0x5cf6b0` | 235 | callable | 6 | affine transform, out of place |
 | `0x5ce970` | 269 | callable | 38 | composition of two 2x3 affine transforms |
-| `0x5ce7b0` | 50 | comment_only | 32 | builds a translation matrix (identity basis + point) |
-| `0x5ced50` | 196 | comment_only | 24 | inverse of a 2x3 affine matrix |
+| `0x5ce7b0` | 50 | callable_relocated | 32 | builds a translation matrix (identity basis + point) |
+| `0x5ced50` | 196 | callable_relocated | 24 | inverse of a 2x3 affine matrix |
 | `0x55e190` | 258 | callable_relocated | 3 | segment length pair, min and max, with a square-root guard |
 | `0x62fe20` | 270 | comment_only | 89 | libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects |
 | `0x50fd40` | 270 | callable_relocated | 3 | accumulator over a range of 312-byte elements |
@@ -34,7 +34,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x243820` | 15524 | comment_only | 3 | head of the largest routine here (15,524 bytes): geometry entry |
 | `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-23 blocks, 14 callable, 9 comment-only, 18346 bytes of original code embedded.
+23 blocks, 16 callable, 7 comment-only, 18346 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -373,8 +373,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 
 ## `0x5ce7b0` -- builds a translation matrix (identity basis + point)
 
-- size 50 bytes, 32 callers, status **comment_only**
-- not callable because: rip-relative memory access to rva 0x9DE930
+- size 50 bytes, 32 callers, status **callable_relocated**
+- not callable because: data at 0x5ce7b4 -> lcns_data_9de930
 - sha256 `1c553f16928c26c0173c2de81a054b5edaafc671750db4bc7bf5487e8af1270c`
 
 ```asm
@@ -394,8 +394,8 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 
 ## `0x5ced50` -- inverse of a 2x3 affine matrix
 
-- size 196 bytes, 24 callers, status **comment_only**
-- not callable because: rip-relative memory access to rva 0x9DE930; rip-relative memory access to rva 0x9DE960
+- size 196 bytes, 24 callers, status **callable_relocated**
+- not callable because: data at 0x5ced5d -> lcns_data_9de960; data at 0x5ced8f -> lcns_data_9de930
 - sha256 `71653da18d5c60a8564445ad58f0b3b24d7639bccb7efedf71fa3a017edf9b9d`
 
 ```asm
@@ -523,7 +523,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x62fe20` -- libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects
 
 - size 270 bytes, 89 callers, status **comment_only**
-- not callable because: call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block; rip-relative memory access to rva 0xA06820; rip-relative memory access to rva 0xA06828 (+2 more)
+- not callable because: call to 0x63F4D8 outside the block; call to 0x63FA50 outside the block
 - sha256 `92ba45ca52d125e32af5d8f222dee28c09d4134141b999a3588aff4c0d76180f`
 
 ```asm
@@ -721,7 +721,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x24dd40` -- composition of two transformed fields with weights
 
 - size 238 bytes, 1 callers, status **comment_only**
-- not callable because: call to 0x24C610 outside the block; rip-relative memory access to rva 0x9C2B30
+- not callable because: call to 0x24C610 outside the block
 - sha256 `4d172f17c977298cebcc7c33223e7441f2febdac27dadfb9803a76221edddb8e`
 
 ```asm
@@ -807,7 +807,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x24c610` -- four-stage geometry chain over the packed +0x70 point
 
 - size 138 bytes, 4 callers, status **comment_only**
-- not callable because: call to 0x24C4A0 outside the block; call to 0x5CE7B0 outside the block; call to 0x5CED50 outside the block
+- not callable because: call to 0x24C4A0 outside the block
 - sha256 `50ff0b09ce15d0d184cb2ff5516473f554d6cc006b7b8f781432940e20a46bcc`
 
 ```asm
@@ -855,7 +855,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x111ad0` -- constructor of the twins' object (two vtables)
 
 - size 64 bytes, 21 callers, status **comment_only**
-- not callable because: call to 0xC33F0 outside the block; rip-relative memory access to rva 0xA45D10; rip-relative memory access to rva 0xA45E98
+- not callable because: call to 0xC33F0 outside the block
 - sha256 `e3f1487d0f779a0a9152c745741974bce0afbab0ed9852cc0d6f3be90aca9c55`
 
 ```asm
@@ -885,7 +885,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 ## `0x243820` -- head of the largest routine here (15,524 bytes): geometry entry
 
 - size 15524 bytes, 3 callers, status **comment_only**
-- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+88 more)
+- not callable because: call to 0x24A1C0 outside the block; call to 0x2530D0 outside the block; call to 0x253140 outside the block; call to 0x254090 outside the block (+75 more)
 - sha256 `ae8129e19a4d2aab35f2683b787ed1a2c8663beeef102664979b09519afb68ae`
 
 ```asm
