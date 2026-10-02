@@ -894,6 +894,30 @@
    "round": 595,
    "subject": "0xC1A0.signature",
    "witness": "0xC1A7 mov esi,r8d and 0xC1AA movsd [rsp+0x20],xmm3 precede every other use of those registers"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "0x10CE0 compares the difference of two doubles against 359.9999 at rva 0x9AD720, a near-full-turn wraparound test",
+   "round": 596,
+   "subject": "angle.tolerance-359-9999",
+   "witness": "raw bytes at 0x10D39: 66 0f 2e 05 df c9 99 00, displacement 10078687, resolving to 0x9AD720 where the double is 359.9999"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "order+0x1A0 and +0x1A8 are a RANGE: 0x10CE0 reads +0x1A8 as the end and takes the ADDRESS of +0x1A0",
+   "round": 596,
+   "subject": "LaunchingOrder.commonCutPairIsRange",
+   "witness": "0x10D53 mov rdx,[rbx+0x1a8] / 0x10D5A lea rcx,[rbx+0x1a0] / 0x10D70 call 0x8BF990; the ledger names those offsets commonCutParameterA/B from the constructor's writes, and a routine treating them as begin and end says what they are"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x99C9DF and 0x99A679 are displacements in the same region that resolve to DIFFERENT constants; similarity of encoding is not identity of value",
+   "round": 596,
+   "subject": "displacement-similarity-trap",
+   "witness": "they resolve to 0x9AD720 (359.9999) and 0x9AD9C8 (0.0001), 0x2A8 apart"
   }
  ]
 }
