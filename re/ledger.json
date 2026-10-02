@@ -2406,6 +2406,30 @@
    "round": 675,
    "subject": "a-wrapper-member-can-be-a-misread-argument",
    "witness": "setInner and the dispatch template existed to serve inner_ at +0x10, which was the PROBLEM's +0x10 read as an offset from this"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Engine::InfiniteEngine's constructor is not in the profile: the three functions that install its vtable pointer are two destructors and another class's constructor",
+   "round": 676,
+   "subject": "InfiniteEngine.ctor-not-in-profile",
+   "witness": "0x24FD0 stores 0xA3CFE0 into an object it allocated at rbx rather than into its own rsi, so it is a holder class's constructor; 0x759AD0 tail calls the allocator and 0x759B20 is the deleting destructor"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the pointer a constructor installs is vtable_rva + 0x10, so searching for the value re/vtables.json records finds nothing",
+   "round": 676,
+   "subject": "vtable-pointer-is-base-plus-0x10",
+   "witness": "dumping 0xA3CFD0 gives a NULL at +0, the typeinfo at +8 and the first slot at +0x10 whose value is 0x759B20; the code at 0x2500D produces 0xA3CFE0 and stores it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a destructor stores its class's vtable into [this+0], which is exactly what a constructor does, so an install-based search cannot separate them",
+   "round": 676,
+   "subject": "a-destructor-also-installs-the-vtable",
+   "witness": "all three of Engine::InfiniteEngine's candidates contain a lea of 0xA3CFE0 and a store into [object+0]; the only remaining discriminator is whether the object was freshly allocated and whose this it is"
   }
  ]
 }
