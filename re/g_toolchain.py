@@ -54,7 +54,11 @@ BOILERPLATE = {
     0x86A2C0,  # atomic decrement of [rcx+0x10] and delete when it reaches zero: refcount release
     0x877B20,  # installs a vtable taken from a global plus 0x10
     0x998C70,  # allocator size class dispatch between two globals
-    0x7C4A80,  # allocates eight bytes, stores a vtable and calls the throw entry
+    0x875EB0,  # installs a vtable then initialises a member string
+    0x86B6B0,  # std::string range constructor using the strlen stub
+    0x9988C0,  # allocator with a 0xA0 byte header, zeroed, returns past the header
+    0x97AB50,  # allocates, installs a vtable, throws, then releases
+    0x910BA0,  # std::string growth: length field, doubling, allocate
 }
 
 # Entries whose value cannot be reproduced by any reimplementation, because it is an address inside the original image.
