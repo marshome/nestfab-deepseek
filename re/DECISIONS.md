@@ -13,6 +13,8 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 | 548 | 本地打包备份，不 push：用 git bundle 加输入归档，origin 保持不动 |
 | 548 | 授权连续推进，只在每 30 轮或遇到阻塞时汇报 |
 | 578 | 不用每轮都停下来汇报，跑满 30 轮再停 |
+| 605 | 每个报告计数的提取器必须自带一个已知答案的对照输入，并在该输入返回空时拒绝报告 |
+
 
 
 
@@ -40,6 +42,8 @@ to it and to `re/RULES.md` when a requirement arrives, so recording is a command
 | 548 | backups are a verified local bundle plus a tar of the inputs, never a push | re/g_backup.py produced a 7.23 MB bundle of 552 commits and a 25.03 MB tar, and a test clone from the bundle reproduced HEAD |
 | 578 | from round 578 the cadence is thirty rounds of continuous work with no per-round summary | the human asked twice; the earlier grant said report every thirty rounds and rounds were still being summarised one at a time |
 | 600 | the 30-round period 2 delivered five C++ headers and four forwarded exports; forwardedCount 43 to 47 | commits 609, ledger 125 claims (81 INSTRUCTION, 14 ORACLE, 15 MEASURED, 13 SHAPE), 20 rules all green, one blocker |
+| 629 | the third thirty-round period: 47 exports forwarded, 182 claims, 22 rules, and three tool-mismeasurement rules added | ledger 182 claims (123 INSTRUCTION, 28 MEASURED, 16 ORACLE, 13 SHAPE, 1 CONSTRUCTOR, 1 DIFFERENTIAL) with 3 superseded; 22 rules none broken; 304 tools; 44 headers; 639 commits; ahead 0 |
+
 
 
 
