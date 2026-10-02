@@ -188,6 +188,13 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+
+{"id": "vtables-match-module-bytes",
+  "rule": "每个 vtable 的槽数与槽地址必须与模块字节一致，避免把读错地址当成模块的差异",
+  "check": "re/g_check_vtables.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
