@@ -1,8 +1,8 @@
 # Category accounting
 
 Required by C1 and C3: every category of reachable domain code is either **implemented** in `lcns/` with tests that pin
-its behaviour, or **carried** 閳?its original bytes embedded in the project, with the reason it is not callable recorded
-in the code 閳?or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
+its behaviour, or **carried** 闁?its original bytes embedded in the project, with the reason it is not callable recorded
+in the code 闁?or **unread**. This file is the ledger. It is maintained by hand on purpose: a mechanical count of
 "addresses mentioned" is the metric this work already rejected once, because writing an address is not implementing
 anything.
 
@@ -12,8 +12,8 @@ Counts are stated per category, not summed into a single progress number, so tha
 
 | Category | Routines | Where | Evidence |
 |---|---|---:|---|
-| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` (862 checks) 閳?**all six routines compared bit for bit with the original**: compose over 36 matrix pairs, the three apply forms over 6 matrices x 5 points, the builder over 5 points, and the inverse over every non-singular matrix in the set; the inverse comparison found a **signed-zero** difference that a property test cannot see (appendix 274). Properties remain only for what has no oracle (singular rejection) |
-| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` 閳?bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
+| **2x3 affine library** | `0x5CE7B0` build, `0x5CED50` invert, `0x5CE970` compose, `0x5CF6B0` apply out of place, `0x5CFD80` apply in place (one point), `0x5CFDC0` apply in place (two points) | `lcns/include/lcns/affine.hpp`, `lcns/src/affine.cpp` | `tests/test_affine.cpp` (862 checks) 闁?**all six routines compared bit for bit with the original**: compose over 36 matrix pairs, the three apply forms over 6 matrices x 5 points, the builder over 5 points, and the inverse over every non-singular matrix in the set; the inverse comparison found a **signed-zero** difference that a property test cannot see (appendix 274). Properties remain only for what has no oracle (singular rejection) |
+| **Orientation determinant** | `0x24B440` | `lcns/src/affine.cpp` | `tests/test_affine.cpp` 闁?bit-exact against the original over four operand sets, plus the sign distinction between turn directions |
 | **Box accumulator pair** | `0x5C8A10` init-or-extend one pair, `0x50FD40` the box over a range of 312-byte elements | `lcns/include/lcns/boxacc.hpp`, `lcns/src/boxacc.cpp` | `tests/test_boxacc.cpp` -- the whole 0x28-byte box compared **byte for byte** (the flag included) against both originals over seven element sets and ten single-pair cases |
 | **Segment threshold kernel** | `0x55E190` | `lcns/include/lcns/segcost.hpp`, `lcns/src/segcost.cpp` | `tests/test_segcost.cpp` -- compared against the original over **3072 segment/parameter combinations**, with both outcomes exercised; properties pin the operand order (which length takes which weight), the strictness of the comparison and zero-length degeneracies |
 | **Angle transform readers** (pre-existing) | `0x5D38C0`'s transform, `0x5CEE50` angle -> transform | `lcns/include/lcns/row.hpp` | held to the original bytes by `tests/test_affine.cpp`: `transformX`/`transformY`/`transformDet` compared with `0x5CFD80` over 6 matrices x 5 points |
@@ -48,7 +48,7 @@ measurement. `re/g_coverage.py` prints it; this file does not repeat it as a cla
 ## How this is counted, and why not mechanically
 
 An earlier version of this work counted "addresses cited anywhere in `lcns/` or `re/`", which a constant in a header
-satisfies without any behaviour existing 閳?it is a proxy that can be satisfied by annotation, and it was rejected for
+satisfies without any behaviour existing 闁?it is a proxy that can be satisfied by annotation, and it was rejected for
 that reason. The implemented column above is therefore an explicit list, each row naming the routines and the test that
 pins them. If the list is wrong, it is wrong in a way a reader can check by running one executable.
 
@@ -182,3 +182,30 @@ instructions and no algorithm, so a frequency ranking puts them near the top for
 
 And the pair to read next is shallow: 0x97ABF0, the error path that 0x8761B0 calls, blocks 51 exports at 183 bytes;
 with it and 0x8761B0 the destructor family can be implemented together.
+
+## A fifth class: platform-forwarding exports, which must not count as progress (round 436)
+
+GetPartUserStringEx (ordinal 55, rva 0xB020) and GetSheetUserStringEx (ordinal 61, rva 0xB060) were read whole. Both
+are seventeen instructions and structurally identical:
+
+    mov rdi, rcx           ; the object
+    mov esi, edx           ; a 32-bit argument
+    mov rbx, r8            ; the caller buffer
+    lea rcx, [rip+...] ; call 0x64AEA0     ; the logger, no effect on its default path
+    mov rdx, [rdi + 0x1B8] ; the user string (0x140 for the sheet variant)
+    mov r8d, esi ; mov rcx, rbx
+    jmp 0x63F228                           ; an import stub
+
+The two differ only in which field they read and in the log label. Their actual work -- copying the string into the
+caller buffer -- is done by the imported function at 0x63F228, which sits in the same stub bank as 0x63F390.
+
+So implementing them would mean either forwarding to the platform function, in which case no domain logic has been
+reversed, or reimplementing a CRT copy, which is not what this objective is about. Either way they are not evidence of
+recovered domain behaviour, and they are therefore NOT counted in forwardedCount. They are recorded here as a fifth
+class, platform-forwarding, with the mechanical rule that identifies them: a body that assembles its arguments and
+then jumps or calls into 0x63F2xx or 0x63F3xx -- the import stub bank -- does its work outside the module.
+
+This also corrects what the ready list means. re/g_toolchain.py reports six entries as implementable, but two of them
+(55 and 61) are this class, so the real candidates are four: GetLength (96), GetHeight (100), GetFillRatio (168) and
+GetNestingFillRatio (192). Those four hand an OBJECT to a domain implementer -- 0x526160, 0x5266A0 and 0x5297C0 --
+rather than to an import stub, which is the distinction that matters.
