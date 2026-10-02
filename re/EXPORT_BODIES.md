@@ -1111,3 +1111,18 @@ diagnostic paths, not part of the value returned.
 
 Next: read 0x528D10 (the numerator) and 0x523A40 (the denominator). Both are small, and with them GetFillRatio can be
 implemented and tested behaviourally, since the original cannot execute from the embedded copy.
+
+## GetFillRatio operators are not small (round 413)
+
+Reading the two calls the skeleton needs showed both to be subsystems, so this export needs two more layers read
+before it can be implemented.
+
+| function | role | bytes | instructions |
+|---|---|---:|---:|
+| 0x528D10 | numerator | 2493 | 477 |
+| 0x523A40 | denominator | 1044 | 264 |
+
+The numerator saves ten xmm registers and uses a 0x1d8 frame, so it is a routine in its own right. The denominator
+begins with 0x51C250 and, on its error path, builds strings whose bytes read as solution and .IsBound through the
+0x910BA0 helper -- consistent with a denominator about a solution being bound, and again a diagnostic path rather than
+a returned value. Neither is small, which is why GetFillRatio is listed as needing two more layers rather than guessed at.

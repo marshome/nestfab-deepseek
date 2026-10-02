@@ -129,3 +129,8 @@ re/EXPORT_IMPLS.md. forwardedCount() rises by one per export and never by assert
 Two things the 414 report must still do: recompute the lcns/src window at the then-current HEAD, and state
 forwardedCount() as the only progress number, with the 154 unimplemented entry points described by their
 embedded bytes and their reasons rather than by omission.
+
+## CHECKPOINT 414 -- window recomputed at this HEAD
+
+Commits touching lcns/src since the round-354 landing: 14. Lines: +12918 / -216. Command: git log --numstat 9a2a45e..HEAD -- lcns/src
+
