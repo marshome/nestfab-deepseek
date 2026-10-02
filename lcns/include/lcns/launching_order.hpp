@@ -269,5 +269,43 @@ static_assert(offsetof(LaunchingOrderLayout, slot178) == 0x178, "RE 0x14800");
 static_assert(offsetof(LaunchingOrderLayout, slot1B8) == 0x1B8, "RE 0x14855, the user string pointer");
 static_assert(offsetof(LaunchingOrderLayout, tail) == 0x1C0, "RE: the first field past the ones written above");
 
+
+/** The fields the EXPORTS name.
+ *
+ * An export that ends by writing a field of the order gives that field its name, and this table is read out of the nine
+ * entries re/g_ready.py reports as needing no reading at all. Each line carries the export, its ordinal, the store address,
+ * and the width, so the name can be checked against the instruction that produced it.
+ *
+ * This is a different kind of evidence from the accessor witnesses above: there, a function that touches one offset is
+ * named; here, the entry point that a caller uses IS the name of the field it sets. Both are direct, and neither is a
+ * guess about what a number means.
+ */
+namespace exported_fields {
+
+inline constexpr std::size_t kOrigin = 0x00C;                    // RE 0xD119: SetOrigin (86) writes a dword
+inline constexpr std::size_t kCommonCutCuttingPreference = 0x08C;   // RE 0xED60: SetCommonCutCuttingPreference (154)
+inline constexpr std::size_t kMultiplicityPreference = 0x010;    // RE 0xD255: CNS_SetMultiplicityPreference (128), a double
+inline constexpr std::size_t kAutomaticStop = 0x240;             // RE 0xE0D9: SetAutomaticStop (140)
+inline constexpr std::size_t kCommonCutSafetyPreference = 0x06C; // RE 0xEA0D: SetCommonCutSafetyPreference (150)
+inline constexpr std::size_t kMultiTorchCuttingPreference = 0x09C;   // RE 0xF233: SetMultiTorchCuttingPreference (176)
+inline constexpr std::size_t kSpecificSheetOriginGiven = 0x124;  // RE 0x13F02: SetSpecificSheetOrigin (298), byte = 1
+inline constexpr std::size_t kSpecificSheetOrigin = 0x128;       // RE 0x13F09: the value that flag qualifies
+inline constexpr std::size_t kSpecificSheetObjectiveGiven = 0x12C;   // RE 0x140B2: SetSpecificSheetObjective (300)
+inline constexpr std::size_t kSpecificSheetObjective = 0x130;    // RE 0x140B9
+inline constexpr std::size_t kMarkModeFirst = 0x0E8;             // RE 0x189FA: SetMarkMode (246), a double from xmm2
+inline constexpr std::size_t kMarkModeSecond = 0x0F0;            // RE 0x18A10: the second double, from xmm3
+
+// Confirmed by hand in an earlier round and kept because it is the same kind of evidence:
+//   SetPipeMode (0xFCF0) writes the gate byte at +0x170, and SetCommonCutParameters (0x3C3F0) writes +0x1A0, +0x1A8,
+//   +0x1B0, +0x1B8 and +0x1C0 -- exactly the fields Multi::RowNester's core reads through 0x4FC2F0, 0x4FC300 and 0x4FC3C0.
+inline constexpr std::size_t kPipeMode = 0x170;                  // RE round before 537
+inline constexpr std::size_t kCommonCutParameterA = 0x1A0;
+inline constexpr std::size_t kCommonCutParameterB = 0x1A8;
+inline constexpr std::size_t kCommonCutParameterC = 0x1B0;
+inline constexpr std::size_t kCommonCutParameterD = 0x1B8;
+inline constexpr std::size_t kCommonCutParameterE = 0x1C0;
+
+}  // namespace exported_fields
+
 }  // namespace dll
 }  // namespace lcns

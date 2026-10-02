@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 31u);
+        CHECK(ex::forwardedCount() == 40u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,9 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82 || e->ordinal0 == 270 || e->ordinal0 == 208;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82 || e->ordinal0 == 270 || e->ordinal0 == 208 ||
+                                  // round 537: the nine setters re/g_ready.py found ready
+                                  e->ordinal0 == 86 || e->ordinal0 == 154 || e->ordinal0 == 128 || e->ordinal0 == 140 || e->ordinal0 == 150 || e->ordinal0 == 176 || e->ordinal0 == 298 || e->ordinal0 == 300 || e->ordinal0 == 246;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -591,6 +593,81 @@ int main() {
         CHECK(offsetof(lcns::dll::UserStringHolder, data) == 0x00);
         CHECK(offsetof(lcns::dll::UserStringHolder, length) == 0x08);
         CHECK(offsetof(lcns::dll::UserStringHolder, smallBuffer) == 0x10);
+    }
+
+
+    // ------------------- the nine setters (round 537), every store against its RE address
+    {
+        std::vector<unsigned char> order(0x2C0, 0xA5);
+        auto dword = [&order](std::size_t offset) {
+            std::uint32_t value = 0;
+            std::memcpy(&value, order.data() + offset, sizeof(value));
+            return value;
+        };
+        auto dbl = [&order](std::size_t offset) {
+            double value = 0.0;
+            std::memcpy(&value, order.data() + offset, sizeof(value));
+            return value;
+        };
+        // RE 0xD119: SetOrigin (86) writes the dword to +0x0C.
+        ex::impl::setOrigin_0D050(order.data(), 7);
+        CHECK(dword(0x0C) == 7u);
+        // RE 0xED59 and 0xED60: SetCommonCutCuttingPreference (154) sets the given byte then the value.
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setCommonCutCuttingPreference_0EC90(order.data(), 11);
+        CHECK(order[0x88] == 1);
+        CHECK(dword(0x8C) == 11u);
+        // RE 0xE0D9: SetAutomaticStop (140) writes the mode 0x22A20 reads, at +0x240.
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setAutomaticStop_0E010(order.data(), 2);
+        CHECK(dword(0x240) == 2u);
+        // RE 0xEA09 and 0xEA0D: SetCommonCutSafetyPreference (150).
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setCommonCutSafetyPreference_0E940(order.data(), 13);
+        CHECK(order[0x68] == 1);
+        CHECK(dword(0x6C) == 13u);
+        // RE 0xF225, 0xF22C and 0xF233: SetMultiTorchCuttingPreference (176) also derives a byte from the sign.
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMultiTorchCuttingPreference_0F130(order.data(), 5);
+        CHECK(order[0x98] == 1);
+        CHECK(order[0xA0] == 1);
+        CHECK(dword(0x9C) == 5u);
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMultiTorchCuttingPreference_0F130(order.data(), 0);
+        CHECK(order[0xA0] == 0);      // setg: the derived byte is zero when the value is not positive
+        // RE 0x13F02 and 0x13F09: SetSpecificSheetOrigin (298).
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setSpecificSheetOrigin_13E30(order.data(), 17);
+        CHECK(order[0x124] == 1);
+        CHECK(dword(0x128) == 17u);
+        // RE 0x140B2 and 0x140B9: SetSpecificSheetObjective (300).
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setSpecificSheetObjective_13FE0(order.data(), 19);
+        CHECK(order[0x12C] == 1);
+        CHECK(dword(0x130) == 19u);
+        // RE 0x189FA, 0x18A09 and 0x18A10: SetMarkMode (246) takes two doubles and a flag.
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMarkMode_188D0(order.data(), 0, -1.5, 2.5);
+        CHECK(dbl(0xE8) == -1.5);
+        CHECK(order[0xE0] == 0);      // setne
+        CHECK(dbl(0xF0) == 2.5);
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMarkMode_188D0(order.data(), 3, 0.0, 0.0);
+        CHECK(order[0xE0] == 1);
+        // RE 0x9AD6D8 (0.25), 0x9AD6E0 (0.05), 0x9AD6E8 (0.001) and 0x9AD6D0 (2.0): the four constants that
+        // CNS_SetMultiplicityPreference (128) chooses between, and the default when nothing matches.
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMultiplicityPreference_0D1A0(order.data(), 0);
+        CHECK(dbl(0x10) == 0.25);
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMultiplicityPreference_0D1A0(order.data(), 1);
+        CHECK(dbl(0x10) == 0.001);
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMultiplicityPreference_0D1A0(order.data(), 3);
+        CHECK(dbl(0x10) == 0.05);
+        std::memset(order.data(), 0, order.size());
+        ex::impl::setMultiplicityPreference_0D1A0(order.data(), 4);
+        CHECK(dbl(0x10) == 2.0);
     }
 
     return check::finish("exports");

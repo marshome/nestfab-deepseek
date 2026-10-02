@@ -39,5 +39,15 @@ const Forwarding kForwarding[] = {
     {222, reinterpret_cast<void*>(&lcns::dll::exports::impl::setNoSheetMixPreference)}, // CNS_SetNoSheetMixPreference, offset 0x1C
     {304, reinterpret_cast<void*>(&lcns::dll::exports::impl::setShearRepulseFromBorders)}, // SetShearRepulseFromBorders, offset 0x58
     {76, reinterpret_cast<void*>(&lcns::dll::exports::impl::unlockLaunchingOrder)}, // UnLockLaunchingOrder, offset 0x244
+    // ---------------------------------------------------------------- the nine setters re/g_ready.py found ready
+    {86, reinterpret_cast<void*>(&lcns::dll::exports::impl::setOrigin_0D050)},                    // SetOrigin
+    {154, reinterpret_cast<void*>(&lcns::dll::exports::impl::setCommonCutCuttingPreference_0EC90)},  // SetCommonCutCuttingPreference
+    {128, reinterpret_cast<void*>(&lcns::dll::exports::impl::setMultiplicityPreference_0D1A0)},   // CNS_SetMultiplicityPreference
+    {140, reinterpret_cast<void*>(&lcns::dll::exports::impl::setAutomaticStop_0E010)},            // SetAutomaticStop
+    {150, reinterpret_cast<void*>(&lcns::dll::exports::impl::setCommonCutSafetyPreference_0E940)},   // SetCommonCutSafetyPreference
+    {176, reinterpret_cast<void*>(&lcns::dll::exports::impl::setMultiTorchCuttingPreference_0F130)},  // SetMultiTorchCuttingPreference
+    {298, reinterpret_cast<void*>(&lcns::dll::exports::impl::setSpecificSheetOrigin_13E30)},      // SetSpecificSheetOrigin
+    {300, reinterpret_cast<void*>(&lcns::dll::exports::impl::setSpecificSheetObjective_13FE0)},   // SetSpecificSheetObjective
+    {246, reinterpret_cast<void*>(&lcns::dll::exports::impl::setMarkMode_188D0)},                 // SetMarkMode
 };
 const std::size_t kForwardingCount = sizeof(kForwarding) / sizeof(kForwarding[0]);

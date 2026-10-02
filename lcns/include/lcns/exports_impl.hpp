@@ -76,6 +76,32 @@ void setShearRepulseFromBorders(void* order, int value);   // RE 0x0DE20 -> +0x5
 void unlockLaunchingOrder(void* order, int value); // RE 0x0D430 -> +0x244
 void setInt_1FC(void* order, int value);           // RE 0x0D400 -> +0x1FC
 
+
+// ---------------------------------------------------------------- the nine setters re/g_ready.py found ready (round 537)
+//
+// Every one writes a field of the order and nothing else observable: the logger call they make first is toolchain and
+// affects no state, and the mutex guard they take is not reproduced. Each carries the store address that establishes it.
+
+/** RE 0xD119 (ordinal 86, SetOrigin): the 32-bit argument goes to +0x0C. */
+void setOrigin_0D050(void* order, int value);
+/** RE 0xED59 and 0xED60 (154, SetCommonCutCuttingPreference): +0x88 = 1, then the argument at +0x8C. */
+void setCommonCutCuttingPreference_0EC90(void* order, int value);
+/** RE 0xD255 and its three siblings (128, CNS_SetMultiplicityPreference): one of four doubles at +0x10, chosen by the
+ *  argument (1, 3 or 4 select 0x9A0476, 0x9A044C, 0x9A0413; anything else takes 0x9A0488). */
+void setMultiplicityPreference_0D1A0(void* order, int choice);
+/** RE 0xE0D9 and 0xE12F (140, SetAutomaticStop): the argument goes to +0x240, the mode 0x22A20 reads. */
+void setAutomaticStop_0E010(void* order, int value);
+/** RE 0xEA09 and 0xEA0D (150, SetCommonCutSafetyPreference): +0x68 = 1, then the argument at +0x6C. */
+void setCommonCutSafetyPreference_0E940(void* order, int value);
+/** RE 0xF225, 0xF22C and 0xF233 (176, SetMultiTorchCuttingPreference): +0x98 = 1, +0xA0 = (value > 0), value at +0x9C. */
+void setMultiTorchCuttingPreference_0F130(void* order, int value);
+/** RE 0x13F02 and 0x13F09 (298, SetSpecificSheetOrigin): +0x124 = 1, then the argument at +0x128. */
+void setSpecificSheetOrigin_13E30(void* order, int value);
+/** RE 0x140B2 and 0x140B9 (300, SetSpecificSheetObjective): +0x12C = 1, then the argument at +0x130. */
+void setSpecificSheetObjective_13FE0(void* order, int value);
+/** RE 0x189FA, 0x18A09 and 0x18A10 (246, SetMarkMode): xmm2 to +0xE8, +0xE0 = (flag != 0), xmm3 to +0xF0. */
+void setMarkMode_188D0(void* order, int flag, double first, double second);
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll
