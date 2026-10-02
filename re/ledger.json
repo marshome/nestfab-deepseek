@@ -1926,6 +1926,22 @@
    "round": 654,
    "subject": "classes.coverage-34-of-96",
    "witness": "re/g_class_coverage.py: Multi 30 with 13 defined, Tiling 17 with 13, Engine 10 with 3 before this round, Utils 8 with 1, Structure 7 with 0, Prc 4 with 0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "CompositeEngine::Run calls NO other engine's Run, so the class does not compose engines; it walks a container of 16 byte records and accumulates into locals",
+   "round": 655,
+   "subject": "CompositeEngine.does-not-compose",
+   "witness": "RE 0x759B70's 184 calls reach 39 distinct targets and none is 0x755050, 0x756EC0, 0x757250, 0x759A80, 0x75BCC0 or 0x26A60; its prologue is 0x759B8B mov rax,[rdx+0x18], 0x759B8F sub rax,[rdx+0x10], 0x759BAA sar rax,4"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the claim that seven Engine classes were defined was wrong: engines.hpp gives six of them a vtable address, three slot addresses and a table row, and only InfiniteEngine is a class",
+   "round": 655,
+   "subject": "Engine.family-not-defined",
+   "witness": "the human asked where CompositeEngine's implementation is; grepping engines.hpp finds class EngineBase, class InfiniteEngine and struct EngineClass, and CompositeEngine appears only as four constexpr constants and a row"
   }
  ]
 }

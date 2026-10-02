@@ -43,6 +43,7 @@
 #include "lcns/engines.hpp"
 #include "lcns/classes.hpp"
 #include "lcns/virtual_methods.hpp"
+#include "lcns/engines_composite.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6705,6 +6706,42 @@ int main() {
                 CHECK(family[i].vtable != family[j].vtable);
                 CHECK(family[i].run != family[j].run);
             }
+        }
+    }
+
+
+    // ---------------------------------------------------------------- CompositeEngine::Run (RE 0x759B70)
+    //
+    // The class is named Composite and does not compose engines: its 184 calls reach 39 distinct targets and NOT ONE is another engine's
+    // Run. What its prologue does is walk a container of SIXTEEN BYTE records and accumulate into locals.
+    {
+        CHECK(lcns::kCompositeEngineRunAddress == 0x759B70u);
+        CHECK(lcns::kCompositeEngineStride == 0x10u);
+        CHECK(lcns::kCompositeEngineStride == 16u);
+        CHECK(lcns::kCompositeContainerBegin == 0x10u);
+        CHECK(lcns::kCompositeContainerEnd == 0x18u);
+
+        // the count a first element and an end give, which is `(end - begin) >> 4`
+        CHECK(lcns::compositeElementCount(0x1000u, 0x1000u) == 0u);
+        CHECK(lcns::compositeElementCount(0x1000u, 0x1010u) == 1u);
+        CHECK(lcns::compositeElementCount(0x1000u, 0x1100u) == 16u);
+        // a partial record is not counted, because the shift discards the remainder exactly as `sar` does
+        CHECK(lcns::compositeElementCount(0x1000u, 0x100Fu) == 0u);
+
+        // AND THE ENGINES IT DOES NOT CALL, which is the finding rather than an omission
+        for (std::uintptr_t engine : lcns::kEnginesNotCalled) {
+            CHECK(engine != lcns::kCompositeEngineRunAddress);
+        }
+        // the seven it might have called are seven distinct addresses
+        for (int i = 0; i < 6; ++i) {
+            for (int j = i + 1; j < 6; ++j) {
+                CHECK(lcns::kEnginesNotCalled[i] != lcns::kEnginesNotCalled[j]);
+            }
+        }
+        // and the eight loops are eight distinct bodies
+        for (int i = 0; i < 7; ++i) {
+            CHECK(lcns::kCompositeLoops[i] > 0x759B70u);
+            CHECK(lcns::kCompositeLoops[i] < 0x759B70u + 8230u);
         }
     }
 
