@@ -1083,6 +1083,48 @@ lcns_orig_5c8a10:
     .byte 0xc3
     /* end lcns_orig_5c8a10 */
 
+/* export sub_16CF0 (ordinals 210,211)  rva 0x16cf0, 8 bytes, 0 callers
+ * sha256 d9281642d1642eba42a247a7cc7a24bf8d22dc5450ae6e032b6edbb338702125
+ *   00016cf0  mov rax, qword ptr [rcx + 0x1b8]
+ *   00016cf7  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_16cf0
+lcns_orig_16cf0:
+    .byte 0x48, 0x8b, 0x81, 0xb8, 0x01, 0x00, 0x00
+    .byte 0xc3
+    /* end lcns_orig_16cf0 */
+
+/* export sub_0B000 (ordinals 286,287)  rva 0xb000, 18 bytes, 0 callers
+ * sha256 3760c4936086dd8de6812aa750276054976c5191a627ac2871cb415ecc3f0256
+ *   0000b000  test edx, edx
+ *   0000b002  movsd qword ptr [rcx + 0x100], xmm2
+ *   0000b00a  setne byte ptr [rcx + 0xf9]
+ *   0000b011  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_b000
+lcns_orig_b000:
+    .byte 0x85, 0xd2
+    .byte 0xf2, 0x0f, 0x11, 0x91, 0x00, 0x01, 0x00, 0x00
+    .byte 0x0f, 0x95, 0x81, 0xf9, 0x00, 0x00, 0x00
+    .byte 0xc3
+    /* end lcns_orig_b000 */
+
+/* export sub_0AFF0 (ordinals 288,289)  rva 0xaff0, 10 bytes, 0 callers
+ * sha256 78da96b6d180c46b94cc7f47e5e8ae76829af454a1268f9984c2cfb7dbb9044c
+ *   0000aff0  test edx, edx
+ *   0000aff2  setne byte ptr [rcx + 0xf8]
+ *   0000aff9  ret 
+ */
+    .p2align 4
+    .globl lcns_orig_aff0
+lcns_orig_aff0:
+    .byte 0x85, 0xd2
+    .byte 0x0f, 0x95, 0x81, 0xf8, 0x00, 0x00, 0x00
+    .byte 0xc3
+    /* end lcns_orig_aff0 */
+
 
 /* read-only data the relocated copies read, copied from the image at the address the original used */
     .p2align 3
@@ -1124,4 +1166,7 @@ lcns_orig_table:
     .quad lcns_orig_55e190
     .quad lcns_orig_50fd40
     .quad lcns_orig_5c8a10
+    .quad lcns_orig_16cf0
+    .quad lcns_orig_b000
+    .quad lcns_orig_aff0
 

@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.20)
 project(lcns LANGUAGES CXX VERSION 0.1.0)
 
 # ---------------------------------------------------------------------------
@@ -169,8 +169,8 @@ else()
 endif()
 
 # --- ordinal loader for a real liblcns.dll (Windows only) ---
-add_library(lcns_api STATIC src/api.cpp)
-target_link_libraries(lcns_api PUBLIC lcns_flags)
+add_library(lcns_api STATIC src/api.cpp src/exports.cpp src/api_exports.cpp)
+target_link_libraries(lcns_api PUBLIC lcns_flags lcns_embedded)
 if(WIN32)
   target_link_libraries(lcns_api PUBLIC kernel32)
   set_target_properties(lcns_api PROPERTIES OUTPUT_NAME lcns_api)
@@ -191,7 +191,7 @@ endif()
 if(LCNS_BUILD_TESTS)
   enable_testing()
   foreach(t exact conv boolean offset nofit nester model tiling io lp linear_program cloud
-            licensing row recovered json_backend crypto_backend embedded affine segcost boxacc)
+            licensing row recovered json_backend crypto_backend embedded affine segcost boxacc exports)
     add_executable(test_${t} tests/test_${t}.cpp)
     target_link_libraries(test_${t} PRIVATE lcns_nest lcns_api lcns_embedded)
     add_test(NAME ${t} COMMAND test_${t})

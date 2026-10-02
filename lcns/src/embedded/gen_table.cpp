@@ -22,6 +22,9 @@ void lcns_orig_5ced50();
 void lcns_orig_55e190();
 void lcns_orig_50fd40();
 void lcns_orig_5c8a10();
+void lcns_orig_16cf0();
+void lcns_orig_b000();
+void lcns_orig_aff0();
 }
 
 namespace lcns {
@@ -45,6 +48,9 @@ const RawFn kOrigTable[] = {
     &lcns_orig_55e190,  // 0x55e190  segment length pair, min and max, with a square-root guard
     &lcns_orig_50fd40,  // 0x50fd40  accumulator over a range of 312-byte elements
     &lcns_orig_5c8a10,  // 0x5c8a10  the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it
+    &lcns_orig_16cf0,  // 0x16cf0  export sub_16CF0 (ordinals 210,211)
+    &lcns_orig_b000,  // 0xb000  export sub_0B000 (ordinals 286,287)
+    &lcns_orig_aff0,  // 0xaff0  export sub_0AFF0 (ordinals 288,289)
 };
 const std::size_t kOrigTableCount = sizeof(kOrigTable) / sizeof(kOrigTable[0]);
 #else
