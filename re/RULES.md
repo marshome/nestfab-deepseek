@@ -134,6 +134,12 @@ feeling of compliance.
   "where": "the harness's goal mechanism, and this file",
   "since": "round 581"},
 
+{"id": "extractor-self-check",
+  "rule": "每个报告计数的提取器必须自带一个已知答案的对照输入，并在该输入返回空时拒绝报告",
+  "check": "re/g_extractor_selfcheck.py exits 1 when a counter has no construct that could refuse. It CANNOT see whether the question asked is useful, and the check prints that limit: a vacuous self-check passes, so its count is an upper bound",
+  "where": "re/g_extractor_selfcheck.py",
+  "since": "round 605"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

@@ -1094,6 +1094,14 @@
    "round": 605,
    "subject": "tooling.extractors-need-a-known-input",
    "witness": "two consecutive rounds produced 'found 0' and only one was a finding; the fixed tool prints 'REFUSING TO REPORT' when its self-check fails, converting a class of silent false negatives into a loud refusal"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "152 extractors report a count and 30 hold an assert, but the 30 assert their arguments rather than their extraction, so almost none self-check",
+   "round": 606,
+   "subject": "tooling.selfcheck-coverage",
+   "witness": "re/g_extractor_selfcheck.py examines 287 tools; the strongest pattern is 'asserts something' and the matching tools are scripts like g_add29.py and g_add_batch7.py"
   }
  ]
 }

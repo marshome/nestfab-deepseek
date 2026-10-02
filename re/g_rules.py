@@ -329,6 +329,32 @@ def check_goal_drives_continuation():
                     "check cannot see" % rounds)
 
 
+def check_extractor_self_check():
+    """Every extractor that reports a count must hold a construct that could refuse.
+
+    The rule comes from two consecutive rounds that both printed "found 0" and only one of which was a finding. The second was
+    trustworthy because it asked a question whose answer it already knew and refused to report when the answer came back wrong.
+
+    This delegates to re/g_extractor_selfcheck.py and RELAYS ITS OWN STATED LIMIT: the check can see whether a tool holds a construct
+    that would refuse, and cannot see whether the question asked is useful, so its count is an upper bound and the check's own output
+    says so. Reporting the bound as if it were the measurement would be the failure this project keeps recording.
+    """
+    code, out, _err = run([sys.executable, os.path.join(HERE, "g_extractor_selfcheck.py")])
+    counters = 0
+    with_check = 0
+    for line in out.split("\n"):
+        m = re.search(r"tools examined:\s*(\d+), of which\s*(\d+) report a count", line)
+        if m:
+            counters = int(m.group(2))
+        m = re.search(r"counters with a self-check:\s*(\d+) of\s*(\d+)", line)
+        if m:
+            with_check = int(m.group(1))
+    if counters == 0:
+        return "FAIL", "the auditor reported no counters at all, which cannot be right"
+    return "PASS", ("%d of %d counters hold a construct that could refuse (an UPPER BOUND: whether the question is useful is not "
+                    "visible to the check)" % (with_check, counters))
+
+
 def check_rules_have_checks():
     """Every rule declared in re/RULES.md must have a check here.
 
@@ -445,6 +471,7 @@ CHECKS = [
     ("oracle-needs-instruction", "字段的偏移必须另有指令级见证", check_assertions_are_leads),
     ("report-density", "每 30 轮汇报一次，中间每轮回一行", check_report_density),
     ("goal-drives-continuation", "用持久化目标驱动连续推进", check_goal_drives_continuation),
+    ("extractor-self-check", "提取器必须自带对照输入", check_extractor_self_check),
 ]
 
 
