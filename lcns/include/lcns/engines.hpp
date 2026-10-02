@@ -40,16 +40,9 @@ constexpr double kUnlimitedTime = -1.0;
 constexpr std::uintptr_t kUnlimitedTimeConstant = 0x9AE740;
 
 /** The seven Run slots, by the address in the base class's comment. */
-constexpr std::uintptr_t kRunMultiEngine = 0x755050;
-constexpr std::uintptr_t kRunDelayedEngine = 0x756EC0;
-constexpr std::uintptr_t kRunNestingEngine = 0x757250;
-constexpr std::uintptr_t kRunInfiniteEngine = 0x759A80;
-constexpr std::uintptr_t kRunCompositeEngine = 0x759B70;
-constexpr std::uintptr_t kRunEquivalentEngine = 0x75BCC0;
-constexpr std::uintptr_t kRunCloudEngine = 0x26A60;
 
-/** RE 0x757AE0, the routine the unlimited case calls -- NestingEngine's Run slot, reached directly rather than through a vtable. */
-constexpr std::uintptr_t kNestingEngineRun = 0x757AE0;
+/** RE 0x757AE0, the routine the unlimited case calls DIRECTLY rather than through the vtable -- NestingEngine's Run slot, reached directly rather than through a vtable. */
+constexpr std::uintptr_t kNestingEngineRunDirect = 0x757AE0;
 
 /** The Engine family's interface, as the call site expresses it.
  *
@@ -121,11 +114,86 @@ private:
     EngineBase* inner_ = nullptr;                   // +0x10
 };
 
+// ------------------------------------------------------------------------------------------------
+// The rest of the Engine family, each with its vtable and its three slots.
+//
+// EVERY ONE OF THESE HAS THE SAME THREE SLOTS: the deleting destructor, the destructor and Run. What differs is where Run
+// points, which is the only thing the base class's comment listed -- and a class with an address and no definition is what the
+// human asked about. The slot addresses come from re/vtables.json; the Run addresses were verified by the archive.
+//
+
+/** Engine::MultiEngine, vtable 0xA3CF00. */
+constexpr std::uintptr_t kVtableMultiEngine = 0xA3CF00;
+constexpr std::uintptr_t kMultiEngineDeletingDtor = 0x7559E0;   // slot 0
+constexpr std::uintptr_t kMultiEngineDtor = 0x755970;             // slot 1
+constexpr std::uintptr_t kMultiEngineRun = 0x755050;              // slot 2
+
+/** Engine::DelayedEngine, vtable 0xA3CF70. */
+constexpr std::uintptr_t kVtableDelayedEngine = 0xA3CF70;
+constexpr std::uintptr_t kDelayedEngineDeletingDtor = 0x757200;   // slot 0
+constexpr std::uintptr_t kDelayedEngineDtor = 0x7571B0;             // slot 1
+constexpr std::uintptr_t kDelayedEngineRun = 0x756EC0;              // slot 2
+
+/** Engine::NestingEngine, vtable 0xA3CFA0. */
+constexpr std::uintptr_t kVtableNestingEngine = 0xA3CFA0;
+constexpr std::uintptr_t kNestingEngineDeletingDtor = 0x757A70;   // slot 0
+constexpr std::uintptr_t kNestingEngineDtor = 0x757A10;             // slot 1
+constexpr std::uintptr_t kNestingEngineRun = 0x757250;              // slot 2
+
+/** Engine::InfiniteEngine, vtable 0xA3CFD0. */
+constexpr std::uintptr_t kVtableInfiniteEngine = 0xA3CFD0;
+constexpr std::uintptr_t kInfiniteEngineDeletingDtor = 0x759B20;   // slot 0
+constexpr std::uintptr_t kInfiniteEngineDtor = 0x759AD0;             // slot 1
+constexpr std::uintptr_t kInfiniteEngineRun = 0x759A80;              // slot 2
+
+/** Engine::CompositeEngine, vtable 0xA3D000. */
+constexpr std::uintptr_t kVtableCompositeEngine = 0xA3D000;
+constexpr std::uintptr_t kCompositeEngineDeletingDtor = 0x75BC30;   // slot 0
+constexpr std::uintptr_t kCompositeEngineDtor = 0x75BBA0;             // slot 1
+constexpr std::uintptr_t kCompositeEngineRun = 0x759B70;              // slot 2
+
+/** Engine::EquivalentEngine, vtable 0xA3D030. */
+constexpr std::uintptr_t kVtableEquivalentEngine = 0xA3D030;
+constexpr std::uintptr_t kEquivalentEngineDeletingDtor = 0x75CB40;   // slot 0
+constexpr std::uintptr_t kEquivalentEngineDtor = 0x75CAC0;             // slot 1
+constexpr std::uintptr_t kEquivalentEngineRun = 0x75BCC0;              // slot 2
+
+/** Engine::CloudEngine, vtable 0xA3CED0. */
+constexpr std::uintptr_t kVtableCloudEngine = 0xA3CED0;
+constexpr std::uintptr_t kCloudEngineDeletingDtor = 0x755000;   // slot 0
+constexpr std::uintptr_t kCloudEngineDtor = 0x754FB0;             // slot 1
+constexpr std::uintptr_t kCloudEngineRun = 0x26A60;              // slot 2
+
+
+/** The family as a table, so a test asserts the whole shape rather than seven names. */
+struct EngineClass {
+    const char* name;
+    std::uintptr_t vtable;
+    std::uintptr_t run;
+};
+
+inline const EngineClass* engineFamily(std::size_t& count) {
+    static const EngineClass table[] = {
+        {"MultiEngine", 0xA3CF00, 0x755050},
+        {"DelayedEngine", 0xA3CF70, 0x756EC0},
+        {"NestingEngine", 0xA3CFA0, 0x757250},
+        {"InfiniteEngine", 0xA3CFD0, 0x759A80},
+        {"CompositeEngine", 0xA3D000, 0x759B70},
+        {"EquivalentEngine", 0xA3D030, 0x75BCC0},
+        {"CloudEngine", 0xA3CED0, 0x26A60},
+    };
+    count = sizeof(table) / sizeof(table[0]);
+    return table;
+}
+
+constexpr std::size_t kEngineFamilyCount = 7;
 static_assert(kEngineRunSlot == 0x10, "RE 0x2516E: call qword ptr [rax + 0x10]");
 static_assert(kUnlimitedTime == -1.0, "the double at rva 0x9AE740");
-static_assert(kRunInfiniteEngine == 0x759A80, "the slot this class implements");
-static_assert(kNestingEngineRun == 0x757AE0, "the routine the unlimited case calls");
-static_assert(kRunMultiEngine != kRunNestingEngine && kRunNestingEngine != kRunInfiniteEngine,
+static_assert(kInfiniteEngineRun == 0x759A80, "the slot this class implements");
+static_assert(kNestingEngineRunDirect == 0x757AE0, "the routine the unlimited case calls DIRECTLY, not through a vtable");
+static_assert(kNestingEngineRun == 0x757250 && kNestingEngineRunDirect == 0x757AE0,
+              "NestingEngine has two entry points: its vtable slot and the direct one 0x757AE0");
+static_assert(kMultiEngineRun != kNestingEngineRun && kNestingEngineRun != kInfiniteEngineRun,
               "the seven slots are seven addresses and must not be collapsed");
 
 }  // namespace lcns

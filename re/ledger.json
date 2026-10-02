@@ -1902,6 +1902,30 @@
    "round": 653,
    "subject": "vtable-fact-keyed-a-helper-fact",
    "witness": "0x35F30's three callers are all in the 0x378xx range, so it is the class's own; 0x31DB0's fourteen spread across the module, so it is shared"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the Engine family is seven classes, each with the same three slots and Run signature, differing only in where Run points",
+   "round": 654,
+   "subject": "engine.family-seven",
+   "witness": "vtables 0xA3CF00 through 0xA3D030 and 0xA3CED0, Run at 0x755050, 0x756EC0, 0x757250, 0x759A80, 0x759B70, 0x75BCC0 and 0x26A60, all read from re/vtables.json and matching the archive's list"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "NestingEngine's vtable slot is 0x757250 and the routine InfiniteEngine's unlimited arm calls is 0x757AE0, a different address for the same class",
+   "round": 654,
+   "subject": "NestingEngine.two-entry-points",
+   "witness": "found by generating the family rather than by assuming one address per class; a static_assert records that the two entry points must not be collapsed"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "34 of the module's 96 own classes are mentioned by a hand-written header and 37 by a test, so sixty had no definition",
+   "round": 654,
+   "subject": "classes.coverage-34-of-96",
+   "witness": "re/g_class_coverage.py: Multi 30 with 13 defined, Tiling 17 with 13, Engine 10 with 3 before this round, Utils 8 with 1, Structure 7 with 0, Prc 4 with 0"
   }
  ]
 }
