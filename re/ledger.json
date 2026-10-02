@@ -1408,6 +1408,22 @@
    "round": 625,
    "subject": "logger.claims-are-complementary",
    "witness": "the two facts are about two different things and are complementary rather than redundant; telling them apart needed only reading the subjects"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the 57 functions that compute a 0x50 byte element address have four different field sets, one empty, so the tool measures an addressing idiom and not a type",
+   "round": 626,
+   "subject": "element50.conflates-idiom-with-layout",
+   "witness": "0x1C6860 shows only +0x48:4, 0x8BCCB0 shows +0x10 and +0x18, 0x489BE0 shows none; an element layout is a property of a TYPE so the members must agree across functions or the count means something else"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "three times in five rounds a tool has reported a count taken over the wrong set",
+   "round": 626,
+   "subject": "tooling.wrong-set-third-time",
+   "witness": "0x132E0's closure of 596 functions for a 4-function job; lea reg,[base+0x40] finding 1955 where the ledger said 15; and now a 0x50 element address counted 57 times where the fields do not agree"
   }
  ]
 }
