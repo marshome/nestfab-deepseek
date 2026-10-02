@@ -23,6 +23,7 @@ sys.path.insert(0, HERE)
 
 import g_leverage as L          # noqa: E402
 import g_toolchain as T         # noqa: E402
+import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
 SMALL_FOR_TOOLCHAIN = 64
@@ -87,8 +88,8 @@ def main(argv):
     print("")
     for a, d in order:
         deps = [t for t in callees(a) if domain(t)]
-        print("    depth %-2d 0x%-8X %6d B  own domain deps %-3d %s"
-              % (d, a, size_of(a), len(deps), "LEAF" if not deps else ""))
+        print("    depth %-2d 0x%-8X %6d B  own domain deps %-3d %-26s %s"
+              % (d, a, size_of(a), len(deps), N.direct(a) or "", "LEAF" if not deps else ""))
     print("")
 
     leaves = [a for a in seen if not [t for t in callees(a) if domain(t)]]

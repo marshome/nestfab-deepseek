@@ -32,6 +32,7 @@ sys.path.insert(0, HERE)
 
 import g_leverage as L          # noqa: E402
 import g_toolchain as T         # noqa: E402
+import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
 SMALL_FOR_TOOLCHAIN = 64
@@ -134,8 +135,10 @@ def main(argv):
     order = sorted(domain, key=lambda a: size_of(a))
     for a in order:
         deps = [t for t in succ.get(a, ()) if t in domain]
-        print("    0x%-8X %6d B  domain deps %-3d %s"
-              % (a, size_of(a), len(deps), "LEAF" if not deps else ""))
+        # the name the module gives the function itself, where the reporter channels supplied one
+        name = N.direct(a)
+        print("    0x%-8X %6d B  domain deps %-3d %-26s %s"
+              % (a, size_of(a), len(deps), name or "", "LEAF" if not deps else ""))
     leaves = sorted((a for a in domain if not [t for t in succ.get(a, ()) if t in domain]), key=size_of)
     print("")
     print("domain leaves: %d" % len(leaves))

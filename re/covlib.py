@@ -84,6 +84,13 @@ def reachable():
 # generates. Otherwise "listing a function as uncovered" would itself mark it covered.
 SKIP_NAMES = {   # single source of truth (round 123): the union of both lists
     "IDENTIFIED.md",
+    # The naming reports must never count as citations of themselves. re/NAMES.md and re/NAME_COVERAGE.md both list the
+    # address of every function they name, so leaving them scannable made the naming work invisible: the functions were
+    # marked "cited" by the very reports that recorded their names, and the coverage number did not move when they were
+    # named. The registry re/name_registry.json is the citation source (covlib.cited_set reads it explicitly), so the
+    # prose reports are skipped, exactly as UNCOVERED_RANKED.md already was for the same reason.
+    "NAMES.md",
+    "NAME_COVERAGE.md",
     "RECOVERY_STATUS.md",
     "STRATEGY_METHODS.md",
     "SWEEP.md",
@@ -133,6 +140,23 @@ def cited_set(extra_skip=()):
             v = int(m.group(1), 16)
             if v in PROF:
                 cited[v] += 1
+    # The reporter channels are a fourth citation source, and a strong one: a function whose call site hands the assertion
+    # reporter its own name has been identified -- the module itself says what it is. re/g_harvest_names.py writes the
+    # registry and re/g_names_report.py separates the names read out of a function's OWN call site from the ones guessed off
+    # a callee; only the first kind is evidence, so only the first kind is counted here. Such a function is weighted 2, the
+    # same as a mention in one of the findings documents and less than a mention in code.
+    try:
+        reg = json.load(io.open(os.path.join(RE, "name_registry.json"), encoding="utf-8"))
+    except Exception:
+        reg = {}
+    for key, value in reg.items():
+        try:
+            addr = int(key, 16)
+        except ValueError:
+            continue
+        own = [v for v in (value.get("via") or []) if not v.startswith("via ")]
+        if addr in PROF and value.get("methods") and own:
+            cited[addr] += 2
     return cited
 
 
