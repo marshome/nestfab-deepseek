@@ -2606,6 +2606,30 @@
    "round": 687,
    "subject": "members-can-be-one-level-down",
    "witness": "the audit asked only about offsets of the object itself and reported four handle classes in a row as unsupported; MultitorchEvaluator is {impl* @0}, PackerCache and Squeezer are {impl* @8} and Supervisor {state* @8}"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Tiling::MultiOrientedPartPattern IS the 0x90 byte object its constructor allocates: the vtable installed at 0x4F2940 is its own, and its state is 0x70 copied bytes plus a count at +0x80 and a constant at +0x88",
+   "round": 688,
+   "subject": "MultiOrientedPartPattern.fields-are-inline",
+   "witness": "0x4F292F lea target 0xA3D380 and 0xA3D370 is this class; slot 4 at 0x7EBC30 reads [rcx+0x80] and slot 2 at 0x7EBB90 reads [rcx+0x88]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an offset is evidence only if the base register is the object; matching any of rcx, rdx, rbx, rdi or rsi cannot tell an argument from an instance",
+   "round": 688,
+   "subject": "offset-needs-the-object-as-base",
+   "witness": "reading MultiOrientedPartPattern's slot 3 I reported [this+0x10] and the instruction is 0x7EB61C lea rbx,[r12+8] with r12 = rdx, the second argument"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the constructor takes a configuration pointer and copies 0x70 bytes of it, so its argument is not an index",
+   "round": 688,
+   "subject": "MultiOrientedPartPattern.ctor-takes-config",
+   "witness": "0x4F291F mov rsi,rdx then 0x4F2943 through 0x4F29B6 copy [rsi]..[rsi+0x70] into [rbx+8]..[rbx+0x78]"
   }
  ]
 }

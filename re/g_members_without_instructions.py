@@ -31,6 +31,13 @@ MEMBER = re.compile(r"^ {4,}([\w:<>,\s\*&]+?)\s+(\w+)\s*(?:\{\})?\s*(?:=\s*[^;]*
 ALLOC_SIZE = re.compile(r"^ecx, 0x([0-9a-f]+)$")
 
 
+# A NOTE ON A MISTAKE MADE WHILE READING A CLASS BY HAND, because the same act is what this function automates: an offset matched against ANY of
+# (rcx, rdx, rbx, rdi, rsi) is NOT evidence about `this`. Reading `Tiling::MultiOrientedPartPattern` I reported that its slot 3 "reads
+# [this + 0x10]", and the matched instruction was `0x7EB61C lea rbx, [r12 + 8]` with r12 = rdx = the SECOND ARGUMENT. **THE RULE IS THAT THE BASE
+# REGISTER MUST BE THE OBJECT**, and a scan accepting five registers at once cannot tell an argument from an instance. This function avoids that
+# by requiring the register to have been loaded from rcx and not reassigned, which is why it reports the offsets it does.
+
+
 def walk(function, profile):
     """The offsets the function writes to `this`, AND the offsets it writes to a block it ALLOCATES.
 

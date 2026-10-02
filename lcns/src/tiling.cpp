@@ -1,4 +1,5 @@
 // lcns/tiling.cpp
+#include <cstring>
 #include "lcns/tiling.hpp"
 #include "lcns/recovery.hpp"
 
@@ -74,7 +75,14 @@ std::vector<PatternCell> BiModulePattern::layout(double sheetW, double sheetH, i
 
 // ---------------------------------------------------------------------------
 // --- MultiOrientedPartPattern ---
-MultiOrientedPartPattern::MultiOrientedPartPattern(int partIndex) : partIndex_(partIndex) {}
+// RE 0x4F2910: the class is the 0x90 byte object the routine allocates, its vtable is 0xA3D380 (base 0xA3D370), and it copies 0x70 bytes of
+// the configuration into +8 through +0x78. **The `{object, control}` pair the caller receives is a reference-counted handle and is not part of
+// this class**, which is why this constructor takes the configuration rather than an index.
+MultiOrientedPartPattern::MultiOrientedPartPattern(const PatternConfig& config)
+    : capacity_(4),                       // RE 0x4F2936: mov dword [rbx + 0x80], 4
+      limit_(0xD18C2E2800ull) {           // RE 0x4F29C4: movabs rax, 0xD18C2E2800
+    std::memcpy(inline_.bytes, config.bytes, sizeof(inline_.bytes));   // RE 0x4F2943 .. 0x4F29B6, 0x70 bytes
+}
 
 void MultiOrientedPartPattern::addOrientation(double angleRadians, bool flipped) {
     orientations_.push_back(Orientation{angleRadians, flipped});

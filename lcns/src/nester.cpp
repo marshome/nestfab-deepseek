@@ -1,4 +1,5 @@
 // lcns/nester.cpp -- placement search implementation.
+#include <cstring>
 #include "lcns/nester.hpp"
 #include "lcns/recovery.hpp"
 
@@ -538,7 +539,10 @@ Solution TilingNester::run(SolveContext& ctx) {
                 }
             }
             const geom::Box pb = order.parts[top].bounds();
-            tiling::MultiOrientedPartPattern pat(static_cast<int>(top));
+            // RE 0x4F2910 takes a configuration and copies 0x70 bytes of it; `top` is what the model uses to fill one
+    tiling::MultiOrientedPartPattern::PatternConfig patternConfig;
+    std::memcpy(patternConfig.bytes, &top, std::min(sizeof(top), sizeof(patternConfig.bytes)));
+    tiling::MultiOrientedPartPattern pat(patternConfig);
             pat.setCellSize(pb.width(), pb.height());
             pat.setSpacing(order.interpartGap);
             pat.addOrientation(0.0, false);

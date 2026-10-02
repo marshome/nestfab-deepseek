@@ -58,7 +58,9 @@ int main() {
 
     // --- MultiOrientedPartPattern cycles through the orientations ---
     {
-        MultiOrientedPartPattern pat(3);
+        MultiOrientedPartPattern::PatternConfig config;
+        MultiOrientedPartPattern pat(config);
+        pat.setPartIndex(3);   // the MODEL's index; the module's is inside the 0x70 bytes it copies
         pat.setCellSize(10.0, 10.0);
         pat.addOrientation(0.0, false);
         pat.addOrientation(1.5707963267948966, true);
@@ -129,7 +131,7 @@ int main() {
 
     // --- SqueezeMultiTiler clamps cells into the sheet ---
     {
-        auto cells = MultiOrientedPartPattern(0).layout(100.0, 100.0, 0);
+        auto cells = MultiOrientedPartPattern(MultiOrientedPartPattern::PatternConfig{}).layout(100.0, 100.0, 0);
         (void)cells;
         BiModulePattern pat(30.0, 30.0);
         pat.setModules(0, 0);

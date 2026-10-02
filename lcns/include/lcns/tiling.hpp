@@ -109,22 +109,74 @@ private:
 
 // RE Tiling::MultiOrientedPartPattern: the same part repeated in several orientations
 // inside one repeating cell.
+/** RE 0xA3D370, five slots. **THE CLASS IS A 0x90 BYTE OBJECT AND ITS FIELDS ARE INLINE.**
+ *
+ *  RE 0x4F2910, 285 bytes:
+ *
+ *      0x4F2917  mov rdi, rcx                      ; the destination -- a 2 word handle the CALLER owns
+ *      0x4F291A  mov ecx, 0x90 / call 0x998500      ; THE CLASS, 0x90 bytes
+ *      0x4F292F  lea rax, [rip + 0x54aa4a]          ; = 0xA3D380, and 0xA3D370 is THIS class
+ *      0x4F2940  mov [rbx], rax                     ; so rbx IS this object
+ *      0x4F2936  mov dword [rbx + 0x80], 4          ; a count of 4
+ *      0x4F2943  copies 0x70 bytes from rsi into [rbx + 8] .. [rbx + 0x78]
+ *      0x4F29C4  mov qword [rbx + 0x88], 0xD18C2E2800   ; = 900000000000
+ *      0x4F29CB  mov [rdi], rbx                     ; the caller's handle takes the object
+ *      0x4F29D6  mov ecx, 0x18 / call 0x998500       ; A CONTROL BLOCK of 0x18 bytes
+ *      0x4F29F0  mov [rax], rdx                     ; its vtable at 0xA56140
+ *      0x4F29E2  mov dword [rax + 8], 1             ; TWO reference counts, both 1
+ *      0x4F29E9  mov dword [rax + 0xc], 1
+ *      0x4F29F3  mov [rax + 0x10], rbx              ; pointing back at the object
+ *      0x4F29F7  mov [rdi + 8], rax                 ; the second word of the caller's handle
+ *
+ *  **SO THE `{object, control}` PAIR IS A REFERENCE-COUNTED HANDLE THAT BELONGS TO THE CALLER**, and the class itself is the 0x90 bytes. Three
+ *  of the class's own slots place its offsets: slot 2 at 0x7EBB90 reads +0x88, slot 3 at 0x7EB5E0 reads +0x10, and slot 4 at 0x7EBC30 reads
+ *  +0x80.
+ */
 class MultiOrientedPartPattern {
 public:
-    explicit MultiOrientedPartPattern(int partIndex);
-    void addOrientation(double angleRadians, bool flipped);
-    void setCellSize(double w, double h);
+    /** The 0x70 bytes RE 0x4F2943 copies in, at +8 through +0x78. **Its fields are not established one by one**, so it is carried as the byte
+     *  block the instruction copies rather than given names that would be guesses. */
+    struct Inline {
+        std::byte bytes[0x70]{};
+    };
+
+    /** What the constructor copies FROM: the same 0x70 bytes, read at rsi. **THE ROUTINE TAKES A POINTER TO THIS AND MEMCPYS IT**, so the
+     *  constructor's argument is not an index. Declared before the constructor because it is a parameter type. */
+    struct PatternConfig {
+        std::byte bytes[0x70]{};
+    };
+
+    /** RE 0x4F2910. */
+    explicit MultiOrientedPartPattern(const PatternConfig& config);
+
+    void addOrientation(double angleRadians, bool flipped);   // the model's own; NOT a slot of the module's class
+    void setCellSize(double w, double h);                     // and this one likewise
     void setSpacing(double spacing) { spacing_ = spacing; }
+
+    /** **THE MODEL'S PART INDEX, NOT A MODULE FIELD.** The module's own index is somewhere in the 0x70 bytes it copies; this is what the port
+     *  uses, so it is settable and named as the port's. */
+    void setPartIndex(int index) { partIndex_ = index; }
 
     std::vector<PatternCell> layout(double sheetW, double sheetH, int budget) const;
     std::size_t orientationCount() const { return orientations_.size(); }
 
+    /** The state the module keeps INLINE, which is what its own slots read. */
+    std::uint32_t capacity() const { return capacity_; }        // +0x80, RE 0x4F2936 and slot 4 at 0x7EBC30
+    std::uint64_t limit() const { return limit_; }              // +0x88, RE 0x4F29C4 and slot 2 at 0x7EBB90
+
 private:
+    Inline inline_{};                      // +0x08 .. +0x78, RE 0x4F2943
+    std::uint32_t capacity_ = 0;           // +0x80, RE 0x4F2936: mov dword [rbx + 0x80], 4
+    std::uint32_t padding_ = 0;            // +0x84, so that +0x88 is 8 byte aligned
+    std::uint64_t limit_ = 0;              // +0x88, RE 0x4F29C4: movabs rax, 0xD18C2E2800
+
+    // **THE MODEL'S OWN STORAGE, NOT THE MODULE'S.** The module's orientation data is inside the 0x70 bytes at +8; this keeps a vector so the
+    // port can place the same calls, because those bytes have not been read field by field.
     struct Orientation {
         double angle;
         bool flipped;
     };
-    int partIndex_;
+    int partIndex_ = 0;
     std::vector<Orientation> orientations_;
     double cellW_ = 0.0;
     double cellH_ = 0.0;
