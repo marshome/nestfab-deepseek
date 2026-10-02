@@ -140,6 +140,38 @@ void copyPair28(void* destination, const void* element) {
     std::memcpy(dst + 8, &second, sizeof(second));  // RE 0x5203FE: [rcx + 8] = r10
 }
 
+bool axisSinCos(long long angleUnits, double* sine, double* cosine) {
+    const long long turn = static_cast<long long>(kAngleUnitsPerTurn);
+    long long remainder = angleUnits % turn;
+    if (remainder < 0) {
+        remainder += turn;
+    }
+    // RE 0x9DE948: the axis value is minus zero, and it is written to whichever of the two outputs is zero here.
+    const double minusZero = -0.0;
+    const double one = 1.0;    // RE 0x9DE930
+    if (remainder == kAngleAxisZero) {          // RE 0x5D3F45
+        *sine = minusZero;
+        *cosine = one;
+        return true;
+    }
+    if (remainder == kAngleAxisQuarter) {       // RE 0x5D3F58
+        *sine = one;
+        *cosine = minusZero;
+        return true;
+    }
+    if (remainder == kAngleAxisHalf) {          // RE 0x5D3F6B
+        *sine = minusZero;
+        *cosine = -1.0;                         // RE 0x9DE940
+        return true;
+    }
+    if (remainder == kAngleAxisThreeQuarter) {  // RE 0x5D3F7E
+        *sine = -1.0;
+        *cosine = minusZero;
+        return true;
+    }
+    return false;   // the caller goes on to the trigonometry at RE 0x634CA0
+}
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll

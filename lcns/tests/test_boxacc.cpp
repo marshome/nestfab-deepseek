@@ -312,5 +312,38 @@ int main() {
     }
 #endif
 
+    // ------------------------- the angle axes of 0x5D3EA0, compared on the bits
+    {
+        double s = 99.0;
+        double c = 99.0;
+        CHECK(lcns::dll::exports::impl::axisSinCos(lcns::dll::exports::impl::kAngleAxisZero, &s, &c));
+        CHECK(s == 0.0);
+        CHECK(c == 1.0);
+        // the zero must be NEGATIVE, which a value comparison cannot see: RE 0x9DE948
+        std::uint64_t sinBits = 0;
+        std::memcpy(&sinBits, &s, sizeof(sinBits));
+        CHECK(sinBits == 0x8000000000000000ull);   // minus zero, not plus zero
+        CHECK(lcns::dll::exports::impl::axisSinCos(lcns::dll::exports::impl::kAngleAxisQuarter, &s, &c));
+        CHECK(s == 1.0);
+        std::uint64_t cosBits = 0;
+        std::memcpy(&cosBits, &c, sizeof(cosBits));
+        CHECK(cosBits == 0x8000000000000000ull);   // again minus zero
+        CHECK(lcns::dll::exports::impl::axisSinCos(lcns::dll::exports::impl::kAngleAxisHalf, &s, &c));
+        CHECK(s == 0.0);
+        CHECK(c == -1.0);
+        CHECK(lcns::dll::exports::impl::axisSinCos(lcns::dll::exports::impl::kAngleAxisThreeQuarter, &s, &c));
+        CHECK(s == -1.0);
+        CHECK(c == 0.0);
+        // a non-axis angle is not handled here; the caller falls through to the trigonometry
+        CHECK(!lcns::dll::exports::impl::axisSinCos(12345LL, &s, &c));
+        // and a full turn lands back on the first axis
+        CHECK(lcns::dll::exports::impl::axisSinCos(static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn), &s, &c));
+        CHECK(c == 1.0);
+        // the four constants are the four quarters of one turn, which is what makes them the axes
+        CHECK(lcns::dll::exports::impl::kAngleAxisQuarter * 4 == static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn));
+        CHECK(lcns::dll::exports::impl::kAngleAxisHalf * 2 == static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn));
+        CHECK(lcns::dll::exports::impl::kAngleAxisThreeQuarter * 4 == static_cast<long long>(lcns::dll::exports::impl::kAngleUnitsPerTurn) * 3);
+    }
+
     return check::finish("boxacc");
 }

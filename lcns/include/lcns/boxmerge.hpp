@@ -24,6 +24,26 @@ void copyPair28(void* destination, const void* element);   // RE 0x5203F0 -- fir
 
 
 
+
+/** One turn in the angle units 0x5D3EA0 uses: RE 0x9DE950 is 3.6e12 and RE 0x5D3F42 subtracts multiples of it. */
+constexpr double kAngleUnitsPerTurn = 3600000000000.0;
+
+/** The four remainders 0x5D3EA0 special cases, at RE 0x5D3F45, 0x5D3F58, 0x5D3F6B and 0x5D3F7E. */
+constexpr long long kAngleAxisZero = 0LL;
+constexpr long long kAngleAxisQuarter = 0xD18C2E2800LL;       //  900000000000, a quarter turn
+constexpr long long kAngleAxisHalf = 0x1A3185C5000LL;         // 1800000000000, a half turn
+constexpr long long kAngleAxisThreeQuarter = 0x274A48A7800LL; // 2700000000000, three quarters
+
+/**
+ * True when the angle lands exactly on an axis, in which case the sine and cosine are exact values rather than the
+ * trigonometry result. RE 0x5D3F45 and its three siblings branch away from 0x634CA0 for exactly these four remainders.
+ *
+ * The zero that is written is the NEGATIVE zero at RE 0x9DE948, so the sign is part of the answer: a caller can observe
+ * it through division and through the sign bit, and this project has already had to fix one signed zero divergence, in
+ * the affine inverse, so the test compares bits rather than values.
+ */
+bool axisSinCos(long long angleUnits, double* sine, double* cosine);
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll
