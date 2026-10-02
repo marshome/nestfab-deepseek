@@ -1134,6 +1134,30 @@
    "round": 609,
    "subject": "leverage.true-figure",
    "witness": "the corrected g_cheapest.py prints reach>1 and direct>1 side by side: for ordinal 55 both are 74 and 4; 0x8A9510 is in 121 closures and called directly by ZERO unforwarded exports"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the cheapest export's layer contains four equal-size function pairs with identical openings, the shape of operator== and operator!=",
+   "round": 610,
+   "subject": "cmppairs.in-the-layer",
+   "witness": "0x87C960 and 0x87C3C0 are both 787 B; 0x87BA80 and 0x87BF20 both 650; 0x87CC80 and 0x87C6E0 both 632; 0x87BD10 and 0x87C1B0 both 522; each opens with mov rax,[rdx] and mov rbx,r8"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a measurement that is the same for every row measures the row SET rather than the rows, and should be printed once",
+   "round": 610,
+   "subject": "tooling.constant-column",
+   "witness": "every one of the 75 functions on the cheapest export's path printed 'in 121 closures', so the column distinguished nothing even as a reachability measure"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "equal-size pairs with one difference are one thing to recover, not two -- the third time this project has found that",
+   "round": 610,
+   "subject": "pairs-are-one-thing",
+   "witness": "the two stat predicates wrote both aggregators; the shared scale rule wrote both variant exports; four comparison pairs write one class's members"
   }
  ]
 }
