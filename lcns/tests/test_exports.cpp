@@ -1,4 +1,4 @@
-// tests/test_exports.cpp -- the C ABI layer: every export has a definition, and none of them can lie.
+﻿// tests/test_exports.cpp -- the C ABI layer: every export has a definition, and none of them can lie.
 //
 // The requirement this test exists for: the project must correspond to ALL the exported functions, and what each one
 // does must agree with the assembly. Agreement is checkable two ways, and the test checks both:
@@ -13,6 +13,7 @@
 // project actually implements, and this test prints it in its failure message if it ever goes backwards.
 
 #include "check.hpp"
+#include "lcns/dll_layout.hpp"
 #include "lcns/embedded.hpp"
 #include "lcns/exports.hpp"
 #include "lcns/exports_impl.hpp"
@@ -347,5 +348,52 @@ int main() {
         }
     }
 
+    // ------------------------------- the object model, named here so it cannot drift out of the suite
+    {
+        // The container template first, because a name no test mentions is a name nobody checks.
+        lcns::dll::RawVector<lcns::dll::NestingElement> empty{};
+        empty.begin = nullptr;
+        empty.end = nullptr;
+        empty.capacity = nullptr;
+        CHECK(empty.size() == 0u);
+        CHECK(sizeof(lcns::dll::RawVector<lcns::dll::NestingElement>) == 24u);   // begin, end, capacity
+        CHECK(sizeof(lcns::dll::RawVector<lcns::dll::NestedPartElement>) == 24u);
+
+        CHECK(sizeof(lcns::dll::NestingElement) == 312);
+        CHECK(sizeof(lcns::dll::NestedPartElement) == 120);
+        // The assembly's constants are DERIVED from those sizes and pinned to the literals it actually uses.
+        CHECK(lcns::dll::modularInverse(39) == 0x6F96F96F96F96F97ull);
+        CHECK(lcns::dll::modularInverse(15) == 0xEEEEEEEEEEEEEEEFull);
+        CHECK(offsetof(lcns::dll::SubObject, multiplicity) == 0x20);
+        CHECK(offsetof(lcns::dll::SubObject, parts) == 0x28);
+        CHECK(offsetof(lcns::dll::NestingOwner, sub) == 0x08);
+        CHECK(offsetof(lcns::dll::NestingOwner, nestings) == 0x50);
+        CHECK(offsetof(lcns::dll::PartObject, userString) == 0x1B8);
+        CHECK(offsetof(lcns::dll::IntFieldCarrier, field18) == 0x18);
+        CHECK(offsetof(lcns::dll::IntFieldCarrier, field1C) == 0x1C);
+        CHECK(offsetof(lcns::dll::IntFieldCarrier, field44) == 0x44);
+        CHECK(offsetof(lcns::dll::IntFieldCarrier, field58) == 0x58);
+        CHECK(offsetof(lcns::dll::IntFieldCarrier, field1FC) == 0x1FC);
+        CHECK(offsetof(lcns::dll::IntFieldCarrier, field244) == 0x244);
+        CHECK(offsetof(lcns::dll::UnknownFlagCarrier, flagF8) == 0xF8);
+        CHECK(offsetof(lcns::dll::UnknownFlagCarrier, flagF9) == 0xF9);
+        CHECK(offsetof(lcns::dll::UnknownFlagCarrier, value100) == 0x100);
+
+        // The structure and the raw bytes must agree: the same fixture the void* tests use, read through the model.
+        std::vector<unsigned char> elements(3u * 312u, 0);
+        std::vector<unsigned char> owner(0x68, 0);
+        const std::uint64_t b = reinterpret_cast<std::uint64_t>(elements.data());
+        const std::uint64_t e2 = b + elements.size();
+        std::memcpy(owner.data() + 0x50, &b, 8);
+        std::memcpy(owner.data() + 0x58, &e2, 8);
+        CHECK(ex::impl::getNumberOfNestings(owner.data()) == 3u);
+        CHECK(reinterpret_cast<lcns::dll::NestingOwner*>(owner.data())->nestings.size() == 3u);
+        // A malformed container is where the original's multiply and a division differ; the model must keep the original.
+        const std::uint64_t e3 = b + 312u;
+        std::memcpy(owner.data() + 0x58, &e3, 8);
+        CHECK(reinterpret_cast<lcns::dll::NestingOwner*>(owner.data())->nestings.size() == 1u);
+    }
+
     return check::finish("exports");
 }
+
