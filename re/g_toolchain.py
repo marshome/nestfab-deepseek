@@ -424,6 +424,9 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x9302C0,   # batch fifteen, lcns/cns_node.hpp -- the node copy
+    0x9308C0,   # batch fifteen, lcns/cns_node.hpp -- the node release
+
     0x1BF00,   # batch thirteen, lcns/field_accessors.hpp
     0x1BF40,   # batch thirteen, lcns/field_accessors.hpp -- the decision, with the module's data as arguments
     0x22E30,   # batch ten, lcns/field_accessors.hpp

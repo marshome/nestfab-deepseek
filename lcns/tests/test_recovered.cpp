@@ -30,6 +30,7 @@
 #include "lcns/row.hpp"
 #include "lcns/tiling.hpp"
 #include "lcns/launching_order.hpp"
+#include "lcns/cns_node.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -5899,6 +5900,74 @@ int main() {
         CHECK(0x240 >= offsetof(lcns::dll::LaunchingOrderLayout, tail));
         CHECK(0x2A8 < sizeof(lcns::dll::LaunchingOrderLayout));       // RE 0x5007C0 walks the node list here
         CHECK(lcns::dll::LaunchingOrderLayout::kEmptySlotMarker == 0x3FFFFFFFu);
+    }
+
+    // --- the 0x48 byte node: its copy and its release (RE 0x9302C0 and 0x9308C0) ---
+    //
+    // The ownership rule these two routines share is what makes them implementable at all: a node's +0x20 points at its
+    // own +0x30 for a short string, and 0x9308C0 frees that pointer ONLY when it is not the node's own buffer. The test
+    // builds a node with an INLINE string and a node with an OUTSIDE string, and checks that the copy keeps the rule and
+    // that releasing both does not double free.
+    {
+        CHECK(lcns::dll::kCnsNodeBytes == 0x48);          // RE 0x9302D2, mov ecx, 0x48
+        CHECK(lcns::dll::kCnsNodeInlineBuffer == 0x30);   // RE 0x93030D
+
+        // A source node whose string lives in its own inline buffer.
+        unsigned char source[0x48];
+        std::memset(source, 0, sizeof(source));
+        const std::uint32_t type = 7;
+        std::memcpy(source + 0x00, &type, sizeof(type));
+        void* inline_buffer = source + lcns::dll::kCnsNodeInlineBuffer;
+        std::memcpy(source + 0x20, &inline_buffer, sizeof(inline_buffer));
+        const std::size_t length = 5;
+        std::memcpy(source + 0x28, &length, sizeof(length));
+        std::memcpy(source + lcns::dll::kCnsNodeInlineBuffer, "hello", 5);
+        const double value = -13.25;
+        std::memcpy(source + 0x40, &value, sizeof(value));
+
+        void* copy = lcns::dll::cnsNodeCopy(nullptr, source, lcns::dll::kCnsNodeBytes);
+        CHECK(copy != nullptr);
+        unsigned char* copied = static_cast<unsigned char*>(copy);
+        std::uint32_t copied_type = 0;
+        std::memcpy(&copied_type, copied + 0x00, sizeof(copied_type));
+        CHECK(copied_type == type);                                  // RE 0x93030D
+        void* copied_data = nullptr;
+        std::memcpy(&copied_data, copied + 0x20, sizeof(copied_data));
+        CHECK(copied_data == copied + lcns::dll::kCnsNodeInlineBuffer);   // RE 0x9302F1, the copy's own buffer
+        CHECK(std::memcmp(copied_data, "hello", 5) == 0);             // RE 0x9302FC
+        std::size_t copied_length = 0;
+        std::memcpy(&copied_length, copied + 0x28, sizeof(copied_length));
+        CHECK(copied_length == length);
+        double copied_value = 0.0;
+        std::memcpy(&copied_value, copied + 0x40, sizeof(copied_value));
+        CHECK(copied_value == value);                                // RE 0x930323
+        CHECK(copied_data != static_cast<void*>(source + lcns::dll::kCnsNodeInlineBuffer));
+        // The release must accept the copy: the inline buffer is not freed, the node is.
+        lcns::dll::cnsNodeRelease(nullptr, copy);
+
+        // A node whose string was allocated outside the node: the release must free that pointer and not leak it.
+        unsigned char outside[0x48];
+        std::memset(outside, 0, sizeof(outside));
+        char* external = static_cast<char*>(std::malloc(8));
+        CHECK(external != nullptr);
+        if (external != nullptr) {
+            std::memcpy(external, "abcdefg", 8);
+            void* external_pointer = external;
+            std::memcpy(outside + 0x20, &external_pointer, sizeof(external_pointer));
+            const std::size_t outside_length = 7;
+            std::memcpy(outside + 0x28, &outside_length, sizeof(outside_length));
+            // cnsNodeCopyString copies from the outside pointer into the copy's own buffer, which is the rule the original
+            // has: a copy never shares a string with its source.
+            void* second = lcns::dll::cnsNodeCopy(nullptr, outside, lcns::dll::kCnsNodeBytes);
+            CHECK(second != nullptr);
+            unsigned char* second_bytes = static_cast<unsigned char*>(second);
+            void* second_data = nullptr;
+            std::memcpy(&second_data, second_bytes + 0x20, sizeof(second_data));
+            CHECK(second_data == second_bytes + lcns::dll::kCnsNodeInlineBuffer);
+            CHECK(std::memcmp(second_data, "abcdefg", 7) == 0);
+            lcns::dll::cnsNodeRelease(nullptr, second);
+            std::free(external);
+        }
     }
 
     return check::finish("test_recovered");
