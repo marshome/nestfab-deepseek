@@ -50,7 +50,11 @@ BOILERPLATE = {
     0x998BC0,  # runtime string or exception helper
     0x9989A0,  # runtime string or exception helper
     0x999030,  # runtime throw entry
-    0x998A60,  # runtime allocation family
+    0x89A730,  # eight bytes: lea rax,[rip+..] ; ret -- returns a static object address
+    0x86A2C0,  # atomic decrement of [rcx+0x10] and delete when it reaches zero: refcount release
+    0x877B20,  # installs a vtable taken from a global plus 0x10
+    0x998C70,  # allocator size class dispatch between two globals
+    0x7C4A80,  # allocates eight bytes, stores a vtable and calls the throw entry
 }
 
 # Entries whose value cannot be reproduced by any reimplementation, because it is an address inside the original image.
