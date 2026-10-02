@@ -1285,3 +1285,31 @@ maxY +0x20), so the two objects are both boxes in the same layout and the arithm
 What remains before ordinals 96 and 100 can be forwarded is the production of those two boxes: which of 0x4F9200 and
 0x5CD800 supplies the maximum side and which the minimum. That is one read of 0x4F9200 (434 bytes) and the opening of
 0x5CD800, and it is deliberately not guessed here.
+
+## 0x5D3EA0 is the angle and trigonometry helper, not a matrix pass (round 488)
+
+The opening was read in rounds 487 and 488 and corrects the guess made in round 484, where the seven saved xmm
+registers suggested a floating point geometry core doing a batch transform. What the code actually does:
+
+    5D3F10  rdx = 0x9C5FFF26ED75ED55                 ; a modular inverse, used with
+    5D3F1F  imul rdx ; lea rax, [rdx + rsi]
+    5D3F2D  sar rax, 0x29 ; sub rax, rdx             ; to form a quotient, then
+    5D3F42  rcx = rsi - rax * 0x34630B8A000          ; the remainder of the argument
+    5D3F45  je 0x5D452F                              ; remainder zero
+    5D3F58  je 0x5D4563                              ; remainder 0xD18C2E2800
+    5D3F6B  je 0x5D4694                              ; remainder 0x1A3185C5000
+    5D3F7E  je 0x5D465D                              ; remainder 0x274A48A7800
+    5D3F92  divsd xmm6, [rip + 0x40A9B6]
+    5D3F9A  mulsd xmm6, [rip + 0x40A9B6]             ; divide then multiply by the same constant: truncate the low bits
+    5D3FA6  call 0x634CA0                            ; the trigonometry itself
+
+So it takes an angle, reduces it modulo a large constant with the usual multiply-and-shift remainder idiom, special
+cases four remainders -- which read as zero and the quarter turns -- to avoid rounding error at the axes, truncates
+precision with the divide-then-multiply pair, and calls the trigonometry routine. That is an angle helper, and it is
+the routine the box arithmetic above it depends on.
+
+This matters for the estimate of what is left. In round 484 the 2155 byte size and the saved xmm registers were read as
+a deep geometric algorithm, and that is wrong: the dependency behind GetLength and GetHeight is an angle normaliser
+plus a trigonometry call, and this project already has an angle transform model (row::AngleTransform, with a, b, c, d,
+tx and ty) plus the sine and cosine work recorded in re/HELPERS.md. What still has to be read is what the three
+remaining quadrants do, whether 0x634CA0 is sin or sincos, and where the loop that follows writes its results.
