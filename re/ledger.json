@@ -1198,6 +1198,22 @@
    "round": 612,
    "subject": "tooling.selfcheck-must-exercise-the-defect",
    "witness": "the previous tool compared a function with itself, the one input where an address difference cannot appear, and passed while broken; this one requires two word-for-word-alike functions to agree FURTHER than before"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x923110 walks a chain whose link is at +0x18, frees a node per step, and loops; 35 functions are byte-identical to it",
+   "round": 613,
+   "subject": "0x923110.deep-chain",
+   "witness": "0x92313C mov rax,[rax+0x18]; nine call 0x9984B0; 0x923291 jne 0x923134 back to the top; 0x923120 test rdx,rdx / je for the null case"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a compiler warning is a measurement and must be read as a fact about the data, not as a comment on the test's shape",
+   "round": 613,
+   "subject": "tooling.warning-is-a-measurement",
+   "witness": "-Warray-bounds reported 'array subscript 7 outside array bounds of Node [3]' twice because linkAt reads +0x18 while the test's node was 0x10 bytes; dismissing both led to a segfault in the recovered test"
   }
  ]
 }
