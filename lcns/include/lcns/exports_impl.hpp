@@ -37,6 +37,21 @@ void setOriginPackingMode(void* object, int value);
 /** RE 0xDDF0 (ordinal 330): the 32-bit value goes to BOTH +0x48 and +0x44. */
 void setPartialShearMode(void* object, int value);
 
+/** RE 0x10440 (ordinal 316): byte at +0x41 becomes the truth value of the argument. */
+void setEvaluateIntermediateNestingsAsLast(void* object, int value);
+/** RE 0x10470 (ordinal 336): byte at +0x22. */
+void setReorganizeBiggestPartNearOrigin(void* object, int value);
+/** RE 0x104A0 (ordinal 338): byte at +0x23. */
+void setReorganizeLongestPartNearOrigin(void* object, int value);
+/** RE 0xC610 (ordinal 334): sets +0x20A to 1 and +0x20B to 0. No argument beyond the object. */
+void forcePartInsideHole(void* part);
+/** RE 0xCEC0 (ordinal 78): the 32-bit argument goes to +0x08. */
+void setObjective(void* options, int value);
+/** RE 0xCEF0 (ordinal 212): the double argument goes to +0x50. */
+void setShearGap(void* options, double gap);
+/** RE 0x89D0 (ordinal 238): counts the 48-byte elements of the container at +0 and +8. */
+std::size_t noFitGetNumberOfExternalPolygons(const void* owner);
+
 void setShearMode(void* order, int value);         // RE 0x0DDC0 -> +0x44
 void setNoMixPreference(void* order, int value);   // RE 0x0D310 -> +0x18
 void setNoSheetMixPreference(void* order, int value);   // RE 0x0D340 -> +0x1C

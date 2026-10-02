@@ -214,9 +214,12 @@ struct OptionFlagCarrier {
     unsigned char opaque1D[0x03];
     unsigned char flag20;      // +0x20, RE 0xDD49, CNS_SetFloatingMode (ordinal 182)
     unsigned char flag21;      // +0x21, RE 0xDD79, CNS_SetOriginPackingMode (ordinal 312)
-    unsigned char opaque22[0x1E];
+    unsigned char flag22;      // +0x22, RE 0x1048F, SetReorganizeBiggestPartNearOrigin (ordinal 336)
+    unsigned char flag23;      // +0x23, RE 0x104BF, SetReorganizeLongestPartNearOrigin (ordinal 338)
+    unsigned char opaque24[0x1C];
     unsigned char flag40;      // +0x40, RE 0xDDA9, SetFillLastNestingStrategy (ordinal 144)
-    unsigned char opaque41[0x03];
+    unsigned char flag41;      // +0x41, RE 0x1045F, CNS_SetEvaluateIntermediateNestingsAsLast (ordinal 316)
+    unsigned char opaque42[0x02];
     std::uint32_t field44;     // +0x44, RE 0xDE0A, SetPartialShearMode (ordinal 330) and the existing setShearMode
     std::uint32_t field48;     // +0x48, RE 0xDE07, SetPartialShearMode (ordinal 330)
 };
@@ -226,6 +229,32 @@ static_assert(offsetof(OptionFlagCarrier, flag21) == 0x21, "RE 0xDD79");
 static_assert(offsetof(OptionFlagCarrier, flag40) == 0x40, "RE 0xDDA9");
 static_assert(offsetof(OptionFlagCarrier, field44) == 0x44, "RE 0xDE0A");
 static_assert(offsetof(OptionFlagCarrier, field48) == 0x48, "RE 0xDE07");
+static_assert(offsetof(OptionFlagCarrier, flag22) == 0x22, "RE 0x1048F");
+static_assert(offsetof(OptionFlagCarrier, flag23) == 0x23, "RE 0x104BF");
+static_assert(offsetof(OptionFlagCarrier, flag41) == 0x41, "RE 0x1045F");
+
+/**
+ * The object SetObjective and SetShearGap write: a 32-bit objective at +0x08 (RE 0xCEE3) and a double gap at +0x50
+ * (RE 0xCF0D). Separate from the option flag carrier because the two exports write different offsets of a different
+ * shape, and nothing read so far connects them.
+ */
+struct SolverOptionCarrier {
+    unsigned char opaque00[0x08];
+    std::int32_t objective;    // +0x08, RE 0xCEE3
+    unsigned char opaque0C[0x44];
+    double shearGap;           // +0x50, RE 0xCF0D
+};
+static_assert(offsetof(SolverOptionCarrier, objective) == 0x08, "RE 0xCEE3");
+static_assert(offsetof(SolverOptionCarrier, shearGap) == 0x50, "RE 0xCF0D");
+
+/** The two bytes ForcePartInsideHole sets: RE 0xC627 writes +0x20A and RE 0xC62E writes +0x20B. */
+struct HoleForceCarrier {
+    unsigned char opaque00[0x20A];
+    unsigned char insideHole;   // +0x20A, RE 0xC627, set to 1
+    unsigned char something;    // +0x20B, RE 0xC62E, set to 0
+};
+static_assert(offsetof(HoleForceCarrier, insideHole) == 0x20A, "RE 0xC627");
+static_assert(offsetof(HoleForceCarrier, something) == 0x20B, "RE 0xC62E");
 
 }  // namespace dll
 }  // namespace lcns

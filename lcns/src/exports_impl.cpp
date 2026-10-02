@@ -5,6 +5,7 @@
 // computes it (byte difference times the derived inverse), not as a division.
 
 #include "lcns/exports_impl.hpp"
+#include <cstring>
 
 namespace lcns {
 namespace dll {
@@ -73,6 +74,43 @@ void setPartialShearMode(void* object, int value) {
     OptionFlagCarrier* carrier = static_cast<OptionFlagCarrier*>(object);
     carrier->field48 = static_cast<std::uint32_t>(value);   // RE 0xDE07
     carrier->field44 = static_cast<std::uint32_t>(value);   // RE 0xDE0A, the same field setShearMode writes
+}
+
+void setEvaluateIntermediateNestingsAsLast(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag41 = (value != 0) ? 1 : 0;   // RE 0x1045F: setne
+}
+
+void setReorganizeBiggestPartNearOrigin(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag22 = (value != 0) ? 1 : 0;   // RE 0x1048F: setne
+}
+
+void setReorganizeLongestPartNearOrigin(void* object, int value) {
+    static_cast<OptionFlagCarrier*>(object)->flag23 = (value != 0) ? 1 : 0;   // RE 0x104BF: setne
+}
+
+void forcePartInsideHole(void* part) {
+    HoleForceCarrier* carrier = static_cast<HoleForceCarrier*>(part);
+    carrier->insideHole = 1;   // RE 0xC627
+    carrier->something = 0;    // RE 0xC62E
+}
+
+void setObjective(void* options, int value) {
+    static_cast<SolverOptionCarrier*>(options)->objective = value;   // RE 0xCEE3 stores the integer itself
+}
+
+void setShearGap(void* options, double gap) {
+    static_cast<SolverOptionCarrier*>(options)->shearGap = gap;      // RE 0xCF0D
+}
+
+std::size_t noFitGetNumberOfExternalPolygons(const void* owner) {
+    const unsigned char* o = static_cast<const unsigned char*>(owner);
+    std::uintptr_t begin = 0;   // RE 0x89E7: [rbx]
+    std::uintptr_t end = 0;     // RE 0x89F5 reads [rbx + 8]
+    std::memcpy(&begin, o, sizeof(begin));
+    std::memcpy(&end, o + 8, sizeof(end));
+    const std::uint64_t units = static_cast<std::uint64_t>(end - begin) >> 4;   // RE 0x89F8: sar 4
+    // RE 0x89EB multiplies by 0xAAAAAAAAAAAAAAAB, which is the modular inverse of three: 48-byte elements.
+    return static_cast<std::size_t>(units * lcns::dll::modularInverse(3));
 }
 
 void setShearMode(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field44 = value; }

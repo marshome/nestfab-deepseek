@@ -16,6 +16,13 @@ const Forwarding kForwarding[] = {
     {288, reinterpret_cast<void*>(&lcns::dll::exports::impl::setByteAtF8)},         // sub_AFF0 (no label)
     {286, reinterpret_cast<void*>(&lcns::dll::exports::impl::setDoubleAndFlag)},    // sub_B000 (no label)
     {33, reinterpret_cast<void*>(&lcns::dll::exports::impl::getSolutionIdentity)},  // GetSolution
+    {316, reinterpret_cast<void*>(&lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast)},
+    {336, reinterpret_cast<void*>(&lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin)},
+    {338, reinterpret_cast<void*>(&lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin)},
+    {334, reinterpret_cast<void*>(&lcns::dll::exports::impl::forcePartInsideHole)},
+    {78, reinterpret_cast<void*>(&lcns::dll::exports::impl::setObjective)},
+    {212, reinterpret_cast<void*>(&lcns::dll::exports::impl::setShearGap)},
+    {238, reinterpret_cast<void*>(&lcns::dll::exports::impl::noFitGetNumberOfExternalPolygons)},
     {144, reinterpret_cast<void*>(&lcns::dll::exports::impl::setFillLastNestingStrategy)},  // SetFillLastNestingStrategy
     {166, reinterpret_cast<void*>(&lcns::dll::exports::impl::setPartCommonCutMode)},  // SetPartCommonCutMode
     {182, reinterpret_cast<void*>(&lcns::dll::exports::impl::setFloatingMode)},  // CNS_SetFloatingMode

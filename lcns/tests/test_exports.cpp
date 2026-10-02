@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 20u);
+        CHECK(ex::forwardedCount() == 27u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,7 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -474,6 +474,50 @@ int main() {
         CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag40) == 0x40);
         CHECK(offsetof(lcns::dll::OptionFlagCarrier, field44) == 0x44);
         CHECK(offsetof(lcns::dll::OptionFlagCarrier, field48) == 0x48);
+    }
+
+    // ------------------- second sweep: seven more exports, each against its decoded offset
+    {
+        lcns::dll::OptionFlagCarrier flags{};
+        std::memset(&flags, 0x5A, sizeof(flags));
+        lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(&flags, 5);
+        CHECK(flags.flag41 == 1);                       // RE 0x1045F stores the truth value
+        lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(&flags, 0);
+        CHECK(flags.flag41 == 0);
+        lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin(&flags, -2);
+        CHECK(flags.flag22 == 1);                       // RE 0x1048F
+        lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin(&flags, 9);
+        CHECK(flags.flag23 == 1);                       // RE 0x104BF
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag22) == 0x22);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag23) == 0x23);
+        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag41) == 0x41);
+
+        lcns::dll::HoleForceCarrier part{};
+        std::memset(&part, 0x5A, sizeof(part));
+        lcns::dll::exports::impl::forcePartInsideHole(&part);
+        CHECK(part.insideHole == 1);                    // RE 0xC627
+        CHECK(part.something == 0);                     // RE 0xC62E
+        CHECK(offsetof(lcns::dll::HoleForceCarrier, insideHole) == 0x20A);
+        CHECK(offsetof(lcns::dll::HoleForceCarrier, something) == 0x20B);
+
+        lcns::dll::SolverOptionCarrier options{};
+        std::memset(&options, 0x5A, sizeof(options));
+        lcns::dll::exports::impl::setObjective(&options, 4321);
+        CHECK(options.objective == 4321);               // RE 0xCEE3 stores the integer, not its truth value
+        lcns::dll::exports::impl::setShearGap(&options, 2.5);
+        CHECK(options.shearGap == 2.5);                 // RE 0xCF0D
+        CHECK(offsetof(lcns::dll::SolverOptionCarrier, objective) == 0x08);
+        CHECK(offsetof(lcns::dll::SolverOptionCarrier, shearGap) == 0x50);
+
+        // three 48-byte elements: the count must be three, which only holds if the stride is 48 and not 16
+        std::vector<unsigned char> storage(3 * 48, 0);
+        unsigned char owner[16];
+        const std::uintptr_t begin = reinterpret_cast<std::uintptr_t>(storage.data());
+        const std::uintptr_t end = begin + storage.size();
+        std::memcpy(owner, &begin, sizeof(begin));
+        std::memcpy(owner + 8, &end, sizeof(end));
+        CHECK(lcns::dll::exports::impl::noFitGetNumberOfExternalPolygons(owner) == 3u);
+        CHECK(lcns::dll::modularInverse(3) == 0xAAAAAAAAAAAAAAABull);   // the multiplier in RE 0x89EB
     }
 
     return check::finish("exports");
