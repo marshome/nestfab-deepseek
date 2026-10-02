@@ -98,6 +98,15 @@ def main(argv):
                 continue
             overclaims.append((name, qualified, mentions))
 
+    # A CROSS-REFERENCE IS NOT AN OVER-CLAIM. A header that names a class DECLARED IN ANOTHER header is doing what headers are for, so the
+    # defect is narrower than "named more than once here and not declared here": it is "named more than once and declared NOWHERE", which is
+    # what a reader can mistake for a definition. The first version conflated the two and flagged three correct cross-references.
+    declared_somewhere = set()
+    for path, text_of in headers.items():
+        for match in re.finditer(r"\b(?:class|struct)\s+(\w+)", text_of):
+            declared_somewhere.add(match.group(1))
+    overclaims = [row for row in overclaims if row[1].split("::")[-1] not in declared_somewhere]
+
     print("HEADERS THAT NAME A CLASS MORE THAN ONCE WITHOUT DECLARING IT: %d" % len(overclaims))
     for name, qualified, mentions in sorted(overclaims, key=lambda row: -row[2])[:20]:
         print("   %-24s %-34s %d mentions" % (name, qualified[:34], mentions))

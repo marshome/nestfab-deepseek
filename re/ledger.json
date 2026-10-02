@@ -2054,6 +2054,22 @@
    "round": 660,
    "subject": "fields.count-positions-not-stores",
    "witness": "0x34328 zeroes +0x30 and 0x343E3 sets it from xmm6, which is also the evidence that the field holds a double"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "85 of the 96 classes the RTTI names are now declared as class/struct in a hand-written header, and 0 headers name a class repeatedly while declaring it nowhere",
+   "round": 661,
+   "subject": "classes.85-of-96-declared",
+   "witness": "re/g_defined_classes.py after excluding cross-references: the 11 not counted are substituted template parameters and classes with fewer than three slots"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a check that flags a correct cross-reference will be ignored, so the named-but-undeclared test is 'declared nowhere' rather than 'not declared here'",
+   "round": 661,
+   "subject": "tooling.checks-need-precision",
+   "witness": "the count went from 17 to 20 with all three new rows being headers citing a class declared in another file"
   }
  ]
 }
