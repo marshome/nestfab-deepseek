@@ -2494,6 +2494,14 @@
    "round": 679,
    "subject": "Supervisor.private-section-was-invented",
    "witness": "the destructor releases an array at +0x528..+0x4E0, a linked list at +0x4D0/+0x4E0, refcounted pointers at +0x4C8 and +0x4A0 and an embedded sub-object at +0x478, all inside the object at +8"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "where a port needs bookkeeping the module keeps elsewhere, the members say so at their own declaration rather than blending in with the recovered ones",
+   "round": 680,
+   "subject": "port-state-must-be-marked",
+   "witness": "Supervisor holds the module's single member at +8 and five members the port needs; the five are marked as the model's because 0x32700 and 0x827F0 have not been read"
   }
  ]
 }

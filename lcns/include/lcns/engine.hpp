@@ -431,9 +431,21 @@ public:
     std::size_t strategyCount() const { return strategies_.size(); }
 
     // Runs every registered strategy (spread over `threads` workers) and returns the best.
-    Solution run(BestObserver* sink = nullptr);
+     Solution run(BestObserver* sink = nullptr);
+
+    /** RE 0x30B71, THE CLASS'S ONLY MEMBER OF ITS OWN: a pointer at +8 to a 0x530 byte object holding everything else.
+     *
+     *  The module's destructor at 0x30B60 reads `mov rsi, [rcx + 8]`, writes its vtable at `[rcx]`, and then releases ONLY through rsi: an
+     *  array at +0x528 down to +0x4E0 eight bytes at a time, a linked list at +0x4D0 and +0x4E0, refcounted pointers at +0x4C8 and +0x4A0,
+     *  and an embedded sub-object whose own vtable is installed at +0x478. **Nothing else of the Supervisor object itself is touched.** */
+    void* state_ = nullptr;                     // +8, RE 0x30B71: mov rsi, [rcx + 8]
 
 private:
+    // ------------------------------------------------------------------------------------------------
+    // **THIS IS THE MODEL'S BOOKKEEPING AND NOT THE MODULE'S STATE.** The module keeps all of it inside the object at +8; this
+    // implementation keeps it here because the two routines that walk that object -- 0x32700 (1669 bytes, the constructor) and 0x827F0 (5274
+    // bytes, the strategy loop) -- have not been read. **Recorded as a difference rather than blended in**, so a reader can tell which
+    // members are the module's and which are this port's.
     const Order& order_;
     SolveContext& ctx_;
     EngineParams params_;
