@@ -250,6 +250,161 @@ inline void copyDword_52F8A0(void* destination, const void* source) {
     std::memcpy(&value, source, sizeof(value));
     std::memcpy(destination, &value, sizeof(value));
 }
+/** RE 0x4F8F80: reads the 32-bit value at +0xA0. */
+inline std::uint32_t getA0_4F8F80(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0xA0, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8F90: reads the 32-bit value at +0xA4. */
+inline std::uint32_t getA4_4F8F90(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0xA4, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F73B0: reads the 32-bit value at +0xA0. */
+inline std::uint32_t getA0_4F73B0(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0xA0, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8540: reads the 8-bit value at +0x90. */
+inline std::uint8_t get90_4F8540(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x90, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7390: writes the 32-bit value at +0xA0 and nothing else. */
+inline void setA0_4F7390(void* object, std::uint32_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0xA0, &value, sizeof(value));
+}
+
+/** RE 0x895F80: writes the 64-bit value at +0x00 and nothing else. */
+inline void set00_895F80(void* object, std::uint64_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x00, &value, sizeof(value));
+}
+
+/** RE 0x5479B0: returns the address of the member at +0x68, not its value. */
+inline void* addr68_5479B0(void* object) {
+    return static_cast<unsigned char*>(object) + 0x68;
+}
+
+/** RE 0x4F77C0: returns the address of the member at +0x88, not its value. */
+inline void* addr88_4F77C0(void* object) {
+    return static_cast<unsigned char*>(object) + 0x88;
+}
+
+/** RE 0x547670: returns the address of the member at +0x90, not its value. */
+inline void* addr90_547670(void* object) {
+    return static_cast<unsigned char*>(object) + 0x90;
+}
+
+/** RE 0x4F8FA0: returns the address of the member at +0xA8, not its value. */
+inline void* addrA8_4F8FA0(void* object) {
+    return static_cast<unsigned char*>(object) + 0xA8;
+}
+/** RE 0x4F8370: reads the double at +0x28, as movsd does. */
+inline double getDouble28_4F8370(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x28, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8380: reads the double at +0x30, as movsd does. */
+inline double getDouble30_4F8380(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x30, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8C80: reads the double at +0x38, as movsd does. */
+inline double getDouble38_4F8C80(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x38, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8C90: reads the double at +0x40, as movsd does. */
+inline double getDouble40_4F8C90(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x40, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8CA0: reads the double at +0x48, as movsd does. */
+inline double getDouble48_4F8CA0(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x48, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8CB0: reads the double at +0x50, as movsd does. */
+inline double getDouble50_4F8CB0(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x50, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F9C30: reads the double at +0x58, as movsd does. */
+inline double getDouble58_4F9C30(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x58, sizeof(value));
+    return value;
+}
+
+/** RE 0x52F900: reads the double at +0x10, as movsd does. */
+inline double getDouble10_52F900(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x10, sizeof(value));
+    return value;
+}
+
+/** RE 0x52F910: reads the double at +0x18, as movsd does. */
+inline double getDouble18_52F910(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x18, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7330: reads the double at +0x60, as movsd does. */
+inline double getDouble60_4F7330(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x60, sizeof(value));
+    return value;
+}
+
+/** RE 0x547650: reads the double at +0x58, as movsd does. */
+inline double getDouble58_547650(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x58, sizeof(value));
+    return value;
+}
+
+/** RE 0x547630: reads the double at +0x48, as movsd does. */
+inline double getDouble48_547630(const void* object) {
+    double value = 0.0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x48, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F9C20: writes the double at +0x58 and nothing else. */
+inline void setDouble58_4F9C20(void* object, double value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x58, &value, sizeof(value));
+}
+
+/** RE 0x4F7340: writes the double at +0x60 and nothing else. */
+inline void setDouble60_4F7340(void* object, double value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x60, &value, sizeof(value));
+}
+
+/** RE 0x52F8B0: writes the double at +0x18 and nothing else. */
+inline void setDouble18_52F8B0(void* object, double value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x18, &value, sizeof(value));
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

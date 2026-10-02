@@ -349,7 +349,7 @@ int main() {
     // ------------------- the field accessors, each against its own offset and width
     {
         // A large noisy buffer, so writing the wrong offset or the wrong width shows up immediately.
-        unsigned char object[0x80];
+        unsigned char object[0x800];
         std::memset(object, 0xA5, sizeof(object));
         {
             const std::uint32_t put = 0x12345678;
@@ -400,7 +400,7 @@ int main() {
 
     // ------------------- field accessors, second batch
     {
-        unsigned char object[0x80];
+        unsigned char object[0x800];
         std::memset(object, 0xA5, sizeof(object));
         lcns::dll::accessors::setByte6A_4F7380(object, 0x5A);   // RE 0x4F7380
         {
@@ -444,7 +444,7 @@ int main() {
 
     // ------------------- field accessors, third batch
     {
-        unsigned char object[0x80];
+        unsigned char object[0x800];
         std::memset(object, 0xA5, sizeof(object));
         {
             const std::uint8_t put = 0x5Aull;
@@ -497,7 +497,7 @@ int main() {
 
     // ------------------- field accessors, fourth batch: values, addresses and a copy
     {
-        unsigned char object[0x80];
+        unsigned char object[0x800];
         std::memset(object, 0xA5, sizeof(object));
         {
             const std::uint8_t put = 0x5Aull;
@@ -568,6 +568,43 @@ int main() {
             std::memcpy(&untouched, destination + 4, sizeof(untouched));
             CHECK(untouched == 0u);   // exactly one dword is copied, not two
         }
+    }
+
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];
+        std::memset(object, 0xA5, sizeof(object));
+        { const std::uint32_t put = 0x12345678ull; std::memcpy(object + 0xA0, &put, sizeof(put)); CHECK(lcns::dll::accessors::getA0_4F8F80(object) == put); }   // RE 0x4F8F80
+        { const std::uint32_t put = 0x12345678ull; std::memcpy(object + 0xA4, &put, sizeof(put)); CHECK(lcns::dll::accessors::getA4_4F8F90(object) == put); }   // RE 0x4F8F90
+        { const std::uint32_t put = 0x12345678ull; std::memcpy(object + 0xA0, &put, sizeof(put)); CHECK(lcns::dll::accessors::getA0_4F73B0(object) == put); }   // RE 0x4F73B0
+        { const std::uint8_t put = 0x5Aull; std::memcpy(object + 0x90, &put, sizeof(put)); CHECK(lcns::dll::accessors::get90_4F8540(object) == put); }   // RE 0x4F8540
+        { lcns::dll::accessors::setA0_4F7390(object, 0x12345678ull); std::uint32_t got = 0; std::memcpy(&got, object + 0xA0, sizeof(got)); CHECK(got == 0x12345678ull); }   // RE 0x4F7390
+        { lcns::dll::accessors::set00_895F80(object, 0x1122334455667788ull); std::uint64_t got = 0; std::memcpy(&got, object + 0x00, sizeof(got)); CHECK(got == 0x1122334455667788ull); }   // RE 0x895F80
+        CHECK(lcns::dll::accessors::addr68_5479B0(object) == object + 0x68);   // RE 0x5479B0
+        CHECK(lcns::dll::accessors::addr88_4F77C0(object) == object + 0x88);   // RE 0x4F77C0
+        CHECK(lcns::dll::accessors::addr90_547670(object) == object + 0x90);   // RE 0x547670
+        CHECK(lcns::dll::accessors::addrA8_4F8FA0(object) == object + 0xA8);   // RE 0x4F8FA0
+    }
+
+    // ------------------- accessors eaten mechanically from the closure (g_eat_leaves.py)
+    {
+        unsigned char object[0x800];
+        std::memset(object, 0xA5, sizeof(object));
+        { const double put = -13.25; std::memcpy(object + 0x28, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble28_4F8370(object) == put); }   // RE 0x4F8370
+        { const double put = -13.25; std::memcpy(object + 0x30, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble30_4F8380(object) == put); }   // RE 0x4F8380
+        { const double put = -13.25; std::memcpy(object + 0x38, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble38_4F8C80(object) == put); }   // RE 0x4F8C80
+        { const double put = -13.25; std::memcpy(object + 0x40, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble40_4F8C90(object) == put); }   // RE 0x4F8C90
+        { const double put = -13.25; std::memcpy(object + 0x48, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble48_4F8CA0(object) == put); }   // RE 0x4F8CA0
+        { const double put = -13.25; std::memcpy(object + 0x50, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble50_4F8CB0(object) == put); }   // RE 0x4F8CB0
+        { const double put = -13.25; std::memcpy(object + 0x58, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble58_4F9C30(object) == put); }   // RE 0x4F9C30
+        { const double put = -13.25; std::memcpy(object + 0x10, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble10_52F900(object) == put); }   // RE 0x52F900
+        { const double put = -13.25; std::memcpy(object + 0x18, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble18_52F910(object) == put); }   // RE 0x52F910
+        { const double put = -13.25; std::memcpy(object + 0x60, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble60_4F7330(object) == put); }   // RE 0x4F7330
+        { const double put = -13.25; std::memcpy(object + 0x58, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble58_547650(object) == put); }   // RE 0x547650
+        { const double put = -13.25; std::memcpy(object + 0x48, &put, sizeof(put)); CHECK(lcns::dll::accessors::getDouble48_547630(object) == put); }   // RE 0x547630
+        { lcns::dll::accessors::setDouble58_4F9C20(object, -13.25); double got = 0.0; std::memcpy(&got, object + 0x58, sizeof(got)); CHECK(got == -13.25); }   // RE 0x4F9C20
+        { lcns::dll::accessors::setDouble60_4F7340(object, -13.25); double got = 0.0; std::memcpy(&got, object + 0x60, sizeof(got)); CHECK(got == -13.25); }   // RE 0x4F7340
+        { lcns::dll::accessors::setDouble18_52F8B0(object, -13.25); double got = 0.0; std::memcpy(&got, object + 0x18, sizeof(got)); CHECK(got == -13.25); }   // RE 0x52F8B0
     }
 
     return check::finish("boxacc");
