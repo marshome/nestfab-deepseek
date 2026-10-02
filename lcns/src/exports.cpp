@@ -38,6 +38,8 @@ const Entry* lastNotReversed() { return g_lastNotReversed; }
 
 std::size_t forwardedCount() { return kForwardingCount; }
 
+Status statusOf(std::size_t index) { return forwards(index) ? Status::Forwarded : Status::NotReversed; }
+
 const Forwarding* forwarding(std::size_t index) {
     return index < kForwardingCount ? &kForwarding[index] : nullptr;
 }

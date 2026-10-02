@@ -1,0 +1,16 @@
+// HAND-WRITTEN, not generated. The forwarding map: which entry points run a recovered implementation.
+//
+// Keyed by ORDINAL -- the module exports by ordinal (NumberOfNames = 0) and the names this project uses were
+// recovered from the labels the functions log, so two entries can share a label.
+//
+// Every line here is a claim that the named implementation agrees with the assembly at the entry's rva, and each
+// one carries a test that says how that was established (a differential test where the original can be executed,
+// a behavioural test where it cannot). An entry left out fails loudly and returns the documented neutral value.
+
+const Forwarding kForwarding[] = {
+    {25, reinterpret_cast<void*>(&lcns::dll::exports::impl::getNumberOfNestings)},   // GetNumberOfNestings
+    {23, reinterpret_cast<void*>(&lcns::dll::exports::impl::getNumberOfNestedParts)},   // GetNumberOfNestedParts
+    {17, reinterpret_cast<void*>(&lcns::dll::exports::impl::getMultiplicity)},   // GetMultiplicity
+    {27, reinterpret_cast<void*>(&lcns::dll::exports::impl::getPartUserString)},   // GetPartUserString
+};
+const std::size_t kForwardingCount = sizeof(kForwarding) / sizeof(kForwarding[0]);

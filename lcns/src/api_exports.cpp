@@ -6,6 +6,7 @@
 
 #include "lcns/api.hpp"
 #include "lcns/exports.hpp"
+#include "lcns/exports_impl.hpp"
 
 #include <cstdint>
 #include <limits>
@@ -14,16 +15,11 @@ namespace lcns {
 namespace dll {
 namespace exports {
 
-// Which exports the project implements. The sentinel is never matched; the count is what says how many
-// entries forward, and it is zero at this stage -- so every definition below fails loudly instead of
-// guessing. Filling this in is the work of the coming rounds.
-// extern: namespace-scope const has internal linkage in C++, and the runtime half must link to these.
+// Which exports the project implements, from the hand-written file below. Every entry not listed there
+// fails loudly instead of guessing, and its original bytes are embedded and verified.
 extern const Forwarding kForwarding[];
 extern const std::size_t kForwardingCount;
-const Forwarding kForwarding[] = {
-    {0, nullptr},   // keyed by ORDINAL: the module has no export names to key on
-};
-const std::size_t kForwardingCount = 0;
+#include "lcns/detail/exports_forwarding.inc"
 
 }  // namespace exports
 }  // namespace dll

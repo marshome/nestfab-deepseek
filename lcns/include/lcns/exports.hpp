@@ -69,6 +69,13 @@ void notReversed(std::size_t index);
 std::size_t notReversedCount();
 const Entry* lastNotReversed();
 
+/**
+ * The EFFECTIVE status of an entry point, which is what a reader should use: the table's own `status` field is the
+ * default the generator knew when it wrote the file (always NotReversed), while this consults the hand-written
+ * forwarding map, so recovering a behaviour never requires regenerating anything.
+ */
+Status statusOf(std::size_t index);
+
 /** How many entry points forward to a recovered implementation. */
 std::size_t forwardedCount();
 bool forwards(std::size_t index);

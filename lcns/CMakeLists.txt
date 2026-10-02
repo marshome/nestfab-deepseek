@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+﻿cmake_minimum_required(VERSION 3.20)
 project(lcns LANGUAGES CXX VERSION 0.1.0)
 
 # ---------------------------------------------------------------------------
@@ -169,7 +169,7 @@ else()
 endif()
 
 # --- ordinal loader for a real liblcns.dll (Windows only) ---
-add_library(lcns_api STATIC src/api.cpp src/exports.cpp src/api_exports.cpp)
+add_library(lcns_api STATIC src/api.cpp src/exports.cpp src/exports_impl.cpp src/api_exports.cpp)
 target_link_libraries(lcns_api PUBLIC lcns_flags lcns_embedded)
 if(WIN32)
   target_link_libraries(lcns_api PUBLIC kernel32)
@@ -206,5 +206,6 @@ if(Python3_Interpreter_FOUND)
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     COMMENT "Regenerating include/lcns/detail/api_table.inc from ../re/exports_table.json")
 endif()
+
 
 
