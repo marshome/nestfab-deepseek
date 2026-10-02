@@ -135,6 +135,29 @@
    "round": 544,
    "subject": "type-propagation",
    "witness": "a callee's first argument is the caller's class when the call is through a vtable; nothing propagates that yet"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "4828 of 18614 functions now have a first-argument type: 342 by SEED, 4486 by CALL",
+   "round": 545,
+   "subject": "type-propagation.result",
+   "witness": "re/TYPES.md, from re/g_types_propagate.py"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "predicate": "the bottleneck is that only methods have a first-argument type, and 355 of 18614 functions are methods",
+   "round": 545,
+   "subject": "type-propagation",
+   "witness": "re/g_types_propagate.py: a callee's rcx carries the caller's class at the call, verified by 4486 functions typing that way; 1137 typed functions touch +0x10 and they divide into Multi 635, Engine 379, Tiling 59"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a callee's first-argument type is the caller's class when rcx carries it into the call",
+   "round": 545,
+   "subject": "rcx.type",
+   "witness": "re/g_types_propagate.py rule CALL, 4486 functions"
   }
  ]
 }
