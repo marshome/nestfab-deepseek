@@ -35,6 +35,7 @@
 #include "lcns/stat.hpp"
 #include "lcns/variant.hpp"
 #include "lcns/chain_release.hpp"
+#include "lcns/module_switch.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6216,6 +6217,31 @@ int main() {
             node->link = nullptr;
         });
         CHECK(released == 1);
+    }
+
+
+    // ---------------------------------------------------------------- the module switch pair (RE 0x9AF0 and 0x64B2C0)
+    //
+    // Two domain functions in different closures read the SAME flag and the SAME object and call the same gate, which is what makes
+    // the state shared rather than local. The assertions are about the ARITHMETIC OF THE ADDRESSES, because that is the whole claim:
+    // the object is the flag's neighbour, and the flag is not the logger's switch.
+    {
+        CHECK(lcns::kModuleSwitchFlag == 0xB1F050);
+        CHECK(lcns::kModuleSwitchObject == 0xB1F058);
+        CHECK(lcns::kModuleSwitchObject == lcns::kModuleSwitchFlag + 8);   // the 8 bytes between them
+        CHECK(lcns::kModuleSwitchGate == 0x63F6C0);
+        // and it is NOT the logger's own switch, which is 0x38 before it
+        CHECK(lcns::kLoggerSwitch == 0xB1F018);
+        CHECK(lcns::kLoggerSwitch != lcns::kModuleSwitchFlag);
+        CHECK(lcns::kLoggerSwitch + 0x38 == lcns::kModuleSwitchFlag);
+        // two independent sites, which is the evidence that the state is module-wide
+        CHECK(lcns::kModuleSwitchSiteA == 0x9AF0);
+        CHECK(lcns::kModuleSwitchSiteB == 0x64B2C0);
+        CHECK(lcns::kModuleSwitchSiteA != lcns::kModuleSwitchSiteB);
+        // the enable test, which is `test al, al` then `je` at both sites
+        CHECK(lcns::moduleSwitchEnabled(0) == false);
+        CHECK(lcns::moduleSwitchEnabled(1) == true);
+        CHECK(lcns::moduleSwitchEnabled(0xFF) == true);
     }
 
     return check::finish("test_recovered");
