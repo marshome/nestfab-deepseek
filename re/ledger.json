@@ -606,6 +606,46 @@
    "round": 574,
    "subject": "pairing.reason",
    "witness": "0x5070E0 is 7663 bytes and calls 0x50A550, 0x50B1D0 and others, each of which has its own object; the span therefore contains offsets of several objects and the pairing cannot tell them apart"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the assumption that a serialiser's first argument is the object it serialises has never been verified, and it is the cause of every pairing failure",
+   "round": 575,
+   "subject": "pairing.root-cause",
+   "witness": "the 13 surviving pairs put common_cut_min_length, multitorch_max_torch_distance and row_punch_common_cut_gap ALL on +0x18; those offsets are exactly the fields of CommonCutProperties and MultitorchProperties, which are passed as parameters, so the offsets are relative to a sub-object and not to the order"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the pairing needs the serialisers' SIGNATURES before their offsets: which argument is the object, and which is the sub-object",
+   "round": 575,
+   "subject": "pairing.needs-signature-first",
+   "witness": "0x506B30 fits CommonCutProperties 5/7 with all 7 offsets inside its bounds, so it takes a CommonCutProperties by argument; 0x506E90 and 0x506D80 fit MultitorchProperties the same way"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "ordinal 168, 0xB4B0, 34 bytes: reads [rcx+0x50] and tail calls 0x5297C0 with it",
+   "round": 576,
+   "subject": "export.GetFillRatio.body",
+   "witness": "0xB4C4 lea rcx,[rbx+0x50] / 0xB4CD jmp 0x5297C0; +0x50 is where the ledger proves CommonCutProperties is embedded, so the argument is a sub-object"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "ordinals 96 and 100, 0xB130 and 0xB160, 36 bytes each: read [rcx+8] and tail call distinct aggregators with edx=0",
+   "round": 576,
+   "subject": "export.GetLength.GetHeight.body",
+   "witness": "0xB144 mov rcx,[rbx+8] / xor edx,edx / 0xB14F jmp 0x526160, and the same shape at 0xB174 / 0xB17F jmp 0x5266A0; two different aggregators on the SAME source field"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x5297C0, 0x526160, 0x5266A0 and 0x5257D0 all call a getter, take a container's begin and end, and iterate",
+   "round": 576,
+   "subject": "export.aggregator-shape",
+   "witness": "e.g. 0x5297C0: call 0x51c020 / mov rdi,[rax] / cmp [rax+8],rdi / je to the empty-container exit; 0x526160 the same with call 0x51d0c0, and both have ZERO direct calls so every call they make is indirect"
   }
  ]
 }
