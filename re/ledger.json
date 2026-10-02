@@ -918,6 +918,30 @@
    "round": 596,
    "subject": "displacement-similarity-trap",
    "witness": "they resolve to 0x9AD720 (359.9999) and 0x9AD9C8 (0.0001), 0x2A8 apart"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x14A60 inlines the grow primitive rather than calling 0x23BF0: the same magic 0xAAAAAAAAAAAAAAAB and the same count*3*8",
+   "round": 597,
+   "subject": "0x14A60.inline-grow",
+   "witness": "0x14AC1 lea rax,[rbx+rbx*2]; 0x14AC5 movabs rdx,0xAAAAAAAAAAAAAAAB; 0x14AD8 lea rbx,[rax*8]; 0x14AF2 imul rax,rdx -- identical to 0x23BF0's sequence, and 0x23BF0 is not among 0x14A60's 12 calls"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the 0x18 byte element size now has FIVE sightings, two of them from the identical growth sequence",
+   "round": 597,
+   "subject": "element.18-five-sightings",
+   "witness": "0x23BF0 allocation, 0x22E40 walk, 0x5CD5C0 walk, 0xC1A0 three-word move, and 0x14A60's INLINE copy of the grow sequence"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x14A60 takes (order, pointer-to-pair, int, pointer, double-on-stack, ...) and reads the pair as [rdx] and [rdx+8]",
+   "round": 597,
+   "subject": "0x14A60.signature",
+   "witness": "0x14A6B mov rax,[rdx] and 0x14A6E mov rdx,[rdx+8]; 0x14A72 movsd xmm0,[rsp+0x100] is a stack-passed double"
   }
  ]
 }
