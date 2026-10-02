@@ -143,3 +143,22 @@ it -- the same mechanism that caught the signed-zero error in the affine inverse
 Next step is narrow: dump `0x5C8C50`''s first twelve instructions again, trace `xmm0` at `0x5C8C88` through BOTH entry
 branches, correct the model, and re-run this probe until it reports zero mismatches of 5000. Only then is the model moved
 into `lcns/src/boxmerge.cpp`.
+
+## 0x5C8C50 status correction (round 405)
+
+An earlier section of this file says the box merge model was reverted rather than committed after nine of ten
+fixtures agreed. That is now out of date, and this note supersedes it:
+
+* the root cause was found in round 393 and is recorded in re/MERGE_MAX_X.md: on the INIT path the original jumps
+  to 0x5C8CDB, the maxX check inside the second pass, which runs BEFORE the tail at 0x5C8CE7, while the model did
+  only the minX half on that path; every mismatching fixture had a destination flag of 1;
+* with that corrected, the model agrees with the original on **5000 of 5000** random boxes, invalid ones included
+  (re/_probe_invalid.cpp);
+* the verified worker is now in **lcns/src/boxmerge.cpp** with its declaration in lcns/include/lcns/boxmerge.hpp
+  (commit ec6f689), copied unchanged and only wrapped;
+* and it is **continuously tested**: tests/test_boxacc.cpp compares it with the original over 2000 random boxes
+  with the destination flag randomised, so the INIT path is inside the sample (commit efc99d7).
+
+Nothing calls it yet, so no exported behaviour has changed: it is a verified piece of the common step behind
+GetLength (0x526160), GetHeight (0x5266A0) and the container construction of 0x5CD800, waiting for those three
+exports to be implemented on top of it.
