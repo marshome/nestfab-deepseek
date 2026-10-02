@@ -90,10 +90,6 @@ public:
  */
 class InfiniteEngine : public EngineBase {
 public:
-    /** The class's RTTI identifiers, the same three constants every other class carries. */
-    static constexpr const char* kMangled = "N6Engine14InfiniteEngineE";
-    static constexpr unsigned kVirtualSlots = 3;
-    static constexpr std::uintptr_t kVtable = 0xA3CFD0;
 
     InfiniteEngine() = default;
 
@@ -210,10 +206,6 @@ constexpr std::size_t kEngineFamilyCount = 7;
  */
 class MultiEngine : public EngineBase {
 public:
-    /** The class's RTTI identifiers, the same three constants every other class carries. */
-    static constexpr const char* kMangled = "N6Engine11MultiEngineE";
-    static constexpr unsigned kVirtualSlots = 3;
-    static constexpr std::uintptr_t kVtable = 0xA3CF00;
 
     MultiEngine() = default;
 
@@ -226,10 +218,6 @@ public:
  */
 class DelayedEngine : public EngineBase {
 public:
-    /** The class's RTTI identifiers, the same three constants every other class carries. */
-    static constexpr const char* kMangled = "N6Engine13DelayedEngineE";
-    static constexpr unsigned kVirtualSlots = 3;
-    static constexpr std::uintptr_t kVtable = 0xA3CF70;
 
     DelayedEngine() = default;
 
@@ -242,10 +230,6 @@ public:
  */
 class NestingEngine : public EngineBase {
 public:
-    /** The class's RTTI identifiers, the same three constants every other class carries. */
-    static constexpr const char* kMangled = "N6Engine13NestingEngineE";
-    static constexpr unsigned kVirtualSlots = 3;
-    static constexpr std::uintptr_t kVtable = 0xA3CFA0;
 
     NestingEngine() = default;
 
@@ -260,10 +244,6 @@ public:
  */
 class EquivalentEngine : public EngineBase {
 public:
-    /** The class's RTTI identifiers, the same three constants every other class carries. */
-    static constexpr const char* kMangled = "N6Engine16EquivalentEngineE";
-    static constexpr unsigned kVirtualSlots = 3;
-    static constexpr std::uintptr_t kVtable = 0xA3D030;
 
     EquivalentEngine() = default;
 
@@ -276,10 +256,6 @@ public:
  */
 class CloudEngine : public EngineBase {
 public:
-    /** The class's RTTI identifiers, the same three constants every other class carries. */
-    static constexpr const char* kMangled = "N6Engine11CloudEngineE";
-    static constexpr unsigned kVirtualSlots = 3;
-    static constexpr std::uintptr_t kVtable = 0xA3CED0;
 
     CloudEngine() = default;
 

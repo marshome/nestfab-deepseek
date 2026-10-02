@@ -1,0 +1,467 @@
+{
+ "Coin::CoinLP": {
+  "address": "0x267760",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x267783 and neither frees nor releases before it"
+ },
+ "Compact::Compacter::Implementation": {
+  "address": "0x266E00",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x266E3D and neither frees nor releases before it"
+ },
+ "Engine::BestObserver": {
+  "address": "0x756B20",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x756B36 and TAIL CALLS the allocator at 0x756CDE, which is the freeing destructor"
+ },
+ "Engine::CloudEngine": {
+  "address": "0x268A0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x268BB and neither frees nor releases before it"
+ },
+ "Engine::CompositeEngine": {
+  "address": "0x24C40",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x24C75 and neither frees nor releases before it"
+ },
+ "Engine::CompositeObserver": {
+  "address": "0x8D4500",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x8D459B and neither frees nor releases before it"
+ },
+ "Engine::DelayedEngine": {
+  "address": "0x24B80",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x24BB8 and neither frees nor releases before it"
+ },
+ "Engine::EquivalentEngine": {
+  "address": "0x24AB0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x24ADC and neither frees nor releases before it"
+ },
+ "Engine::EquivalentObserver": {
+  "address": "0x75E0E0",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x75E0F7 and TAIL CALLS the allocator at 0x75E10C, which is the freeing destructor"
+ },
+ "Engine::InfiniteEngine": {
+  "address": "0x24FD0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x25014 and neither frees nor releases before it"
+ },
+ "Engine::MultiEngine": {
+  "address": "0x240D0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x2411A and neither frees nor releases before it"
+ },
+ "Engine::NestingEngine": {
+  "address": "0x23E70",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x23EB8 and neither frees nor releases before it"
+ },
+ "Multi::AdvancedStrategist": {
+  "address": "0x2EC50",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x2ED53 and neither frees nor releases before it"
+ },
+ "Multi::AllSheetSelector": {
+  "address": "0xB00E0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0xB0101 and neither frees nor releases before it"
+ },
+ "Multi::CompactCanceller": {
+  "address": "0x68A6E0",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Multi::CompactNester": {
+  "address": "0xB0270",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0xB028B and neither frees nor releases before it"
+ },
+ "Multi::DatabaseNester": {
+  "address": "0x5B1F0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x5B20A and neither frees nor releases before it"
+ },
+ "Multi::FilterNester": {
+  "address": "0xB3A70",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0xB3A95 and neither frees nor releases before it"
+ },
+ "Multi::FlipNester": {
+  "address": "0x4B570",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4B58B and neither frees nor releases before it"
+ },
+ "Multi::LargestSheetSelector": {
+  "address": "0xB0000",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0xB0021 and neither frees nor releases before it"
+ },
+ "Multi::LimitedNester": {
+  "address": "0x4AAD0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4AAF0 and neither frees nor releases before it"
+ },
+ "Multi::MultiTorchNester": {
+  "address": "0x780E0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x780FB and neither frees nor releases before it"
+ },
+ "Multi::NestingContextPool": {
+  "address": "0x32700",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x3271A and neither frees nor releases before it"
+ },
+ "Multi::NestingNester": {
+  "address": "0x342E0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x34308 and neither frees nor releases before it"
+ },
+ "Multi::NestingObserver": {
+  "address": "0x378E0",
+  "kind": "destructor",
+  "reason": "does an atomic at 0x38573 BEFORE installing the vtable at 0x38A06"
+ },
+ "Multi::NoFillNester": {
+  "address": "0x7EE50",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x7EE74 and neither frees nor releases before it"
+ },
+ "Multi::NoFitMapCanceller": {
+  "address": "0x32700",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x3271A and neither frees nor releases before it"
+ },
+ "Multi::NoMixSheetSelector": {
+  "address": "0xAFD60",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0xAFD98 and neither frees nor releases before it"
+ },
+ "Multi::PartUpdaterLimiter": {
+  "address": "0x695C70",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Multi::RCompactCanceller": {
+  "address": "0x67460",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x675DD and neither frees nor releases before it"
+ },
+ "Multi::RandomSheetSelector": {
+  "address": "0xB0040",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0xB006F and neither frees nor releases before it"
+ },
+ "Multi::RectangleNester": {
+  "address": "0x77440",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x7746A and neither frees nor releases before it"
+ },
+ "Multi::RowNester": {
+  "address": "0x8F210",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x8F230 and neither frees nor releases before it"
+ },
+ "Multi::SplitNode": {
+  "address": "0x99910",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x999D0 and neither frees nor releases before it"
+ },
+ "Multi::StrategyBasicAdder": {
+  "address": "0xAF750",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Multi::StrategyDescriber": {
+  "address": "0xAF720",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Multi::Supervisor": {
+  "address": "0x30B60",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x30B78 and TAIL CALLS the allocator at 0x30E7D, which is the freeing destructor"
+ },
+ "Multi::SupervisorCanceller": {
+  "address": "0x30A30",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x30A42 and neither frees nor releases before it"
+ },
+ "Multi::TerminalNode": {
+  "address": "0x99360",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x993E3 and neither frees nor releases before it"
+ },
+ "Multi::TilingNester": {
+  "address": "0x45680",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x45698 and TAIL CALLS the allocator at 0x456DE, which is the freeing destructor"
+ },
+ "Multi::TraceObserver": {
+  "address": "0x5F000",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x5F007 and neither frees nor releases before it"
+ },
+ "Multi::WrapObserver": {
+  "address": "0x83DC0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x84183 and neither frees nor releases before it"
+ },
+ "Pack::BestNester": {
+  "address": "0x15E3B0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x15E3CF and neither frees nor releases before it"
+ },
+ "Pack::KnapsackNester": {
+  "address": "0x15D1D0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x15D1D7 and neither frees nor releases before it"
+ },
+ "Pack::RecursiveNester": {
+  "address": "0x162280",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x162294 and neither frees nor releases before it"
+ },
+ "Prc::AlphaPriceComputer": {
+  "address": "0x4D9B30",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4D9B55 and neither frees nor releases before it"
+ },
+ "Prc::BoxPriceComputer": {
+  "address": "0x4D9AD0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4D9AE9 and neither frees nor releases before it"
+ },
+ "Prc::HullPriceComputer": {
+  "address": "0x4D9B00",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4D9B19 and neither frees nor releases before it"
+ },
+ "Prc::LinearCombinationPricer": {
+  "address": "0x4D9CD0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4D9D11 and neither frees nor releases before it"
+ },
+ "RCompact::RotateLogger": {
+  "address": "0x24A1C0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x24A439 and neither frees nor releases before it"
+ },
+ "Row::BasicDistancer": {
+  "address": "0x136AE0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x136B05 and neither frees nor releases before it"
+ },
+ "Row::Squeezer": {
+  "address": "0x138A20",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x138A3B and neither frees nor releases before it"
+ },
+ "Structure::BoxAreaDimensioner": {
+  "address": "0x5247F0",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Structure::ClusterObserver": {
+  "address": "0x553100",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x553116 and neither frees nor releases before it"
+ },
+ "Structure::Observer": {
+  "address": "0x83DC0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x84183 and neither frees nor releases before it"
+ },
+ "Structure::ParseProblemException": {
+  "address": "0x50CF70",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x50D097 and neither frees nor releases before it"
+ },
+ "Structure::ParseSolutionException": {
+  "address": "0x50FA10",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x50FB0A and neither frees nor releases before it"
+ },
+ "Structure::SizeDimensioner": {
+  "address": "0x5247D0",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Structure::WidthDimensioner": {
+  "address": "0x5247B0",
+  "kind": "unknown",
+  "reason": "no vtable install found, so this is neither"
+ },
+ "Tiling::BasicCandidater": {
+  "address": "0x4F3630",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4F3637 and neither frees nor releases before it"
+ },
+ "Tiling::BiModulePattern": {
+  "address": "0x7E8520",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x7E8698 and neither frees nor releases before it"
+ },
+ "Tiling::BoxMultiTiler": {
+  "address": "0x4F4850",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4F486A and neither frees nor releases before it"
+ },
+ "Tiling::CompositePart": {
+  "address": "0x4DBA70",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4DBB93 and neither frees nor releases before it"
+ },
+ "Tiling::DensityEvaluator": {
+  "address": "0x4E8470",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E8479 and neither frees nor releases before it"
+ },
+ "Tiling::MultiOrientedPartPattern": {
+  "address": "0x4F2910",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4F2940 and neither frees nor releases before it"
+ },
+ "Tiling::MultitorchEvaluator": {
+  "address": "0x4E8410",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E8444 and neither frees nor releases before it"
+ },
+ "Tiling::ObliqueEvaluator": {
+  "address": "0x4E8170",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E8190 and neither frees nor releases before it"
+ },
+ "Tiling::OldMultitorchEvaluator": {
+  "address": "0x4E83E0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E83F9 and neither frees nor releases before it"
+ },
+ "Tiling::PackerCache": {
+  "address": "0x158BE0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x158BFA and neither frees nor releases before it"
+ },
+ "Tiling::Part": {
+  "address": "0x4DB0D0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4DB0E9 and neither frees nor releases before it"
+ },
+ "Tiling::QuantityEvaluator": {
+  "address": "0x4E81B0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E81DE and neither frees nor releases before it"
+ },
+ "Tiling::ReusableEvaluator": {
+  "address": "0x4E8540",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E854F and neither frees nor releases before it"
+ },
+ "Tiling::SqueezeMultiTiler": {
+  "address": "0x76E440",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x76E494 and neither frees nor releases before it"
+ },
+ "Tiling::UnlimitedDensityEvaluator": {
+  "address": "0x4E80A0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E80B9 and neither frees nor releases before it"
+ },
+ "Tiling::UnlimitedXDensityEvaluator": {
+  "address": "0x4E80D0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4E80E9 and neither frees nor releases before it"
+ },
+ "Tiling::WarpCanceller": {
+  "address": "0x4ED480",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x4ED4D8 and neither frees nor releases before it"
+ },
+ "Utils::BadResponseException": {
+  "address": "0x2B660",
+  "kind": "destructor",
+  "reason": "does an atomic at 0x2B6F8 BEFORE installing the vtable at 0x2B817"
+ },
+ "Utils::Canceller": {
+  "address": "0x68AB50",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x68AD6B and neither frees nor releases before it"
+ },
+ "Utils::ConnectException": {
+  "address": "0x6D3240",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x6D324F and TAIL CALLS the allocator at 0x6D325F, which is the freeing destructor"
+ },
+ "Utils::LogSink": {
+  "address": "0x199570",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x199591 and neither frees nor releases before it"
+ },
+ "Utils::OstreamSink::<<subst>>": {
+  "address": "0x19DA20",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x19DA50 and neither frees nor releases before it"
+ },
+ "Utils::ResolveException": {
+  "address": "0x6D3280",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x6D328F and TAIL CALLS the allocator at 0x6D329F, which is the freeing destructor"
+ },
+ "Utils::TimeoutException": {
+  "address": "0x6D32C0",
+  "kind": "destructor",
+  "reason": "installs its own vtable at 0x6D32CF and TAIL CALLS the allocator at 0x6D32DF, which is the freeing destructor"
+ },
+ "Utils::TimerWinImplementation": {
+  "address": "0x5F47C0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x5F47DF and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__class_type_info": {
+  "address": "0x656310",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x65631F and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__enum_type_info": {
+  "address": "0x6562D0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x6562DF and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__fundamental_type_info": {
+  "address": "0x656470",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x65647F and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__pbase_type_info": {
+  "address": "0x656350",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x65635F and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__pointer_type_info": {
+  "address": "0x6563B0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x6563BF and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__si_class_type_info": {
+  "address": "0x6563F0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x6563FF and neither frees nor releases before it"
+ },
+ "__cxxabiv1::__vmi_class_type_info": {
+  "address": "0x656430",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x65643F and neither frees nor releases before it"
+ },
+ "dbg::file_error": {
+  "address": "0x60C160",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x60C1AA and neither frees nor releases before it"
+ },
+ "dbg::symlog": {
+  "address": "0x60B4E0",
+  "kind": "constructor",
+  "reason": "installs the vtable at 0x60B4EA and neither frees nor releases before it"
+ }
+}

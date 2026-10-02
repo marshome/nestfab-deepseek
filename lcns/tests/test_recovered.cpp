@@ -43,7 +43,6 @@
 #include "lcns/miplib_names.hpp"
 #include "lcns/engines.hpp"
 #include "lcns/engines_composite.hpp"
-#include "lcns/class_definitions.hpp"
 #include "lcns/vtable_layout.hpp"
 #include "lcns/records.hpp"
 #include "lcns/small_buffer.hpp"
@@ -6554,76 +6553,30 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- the class registers, AS CLASS CONSTANTS
+    // ---------------------------------------------------------------- the generated class tables, DELETED
     //
-    // A `ClassInfo` table of 96 rows and a `VirtualSlot` table of 384 stood here. **Every column was a constant of the class it named**: the
-    // mangled name is the class's own RTTI name, the slot count is its own virtual count, and a slot's address is its own virtual's. A table
-    // keyed by a STRING is a second description; the same numbers as constants are the class.
-    {
-        // the mangled name is PRIMARY EVIDENCE -- the demangling is a decode and a decode can be wrong
-        CHECK(std::string(lcns::Multi::SplitNode::kMangled) == "N5Multi9SplitNodeE");
-        CHECK(lcns::Multi::SplitNode::kVirtualSlots == 4u);   // MEASURED: not the 6 the nester interface has
-        CHECK(std::string(lcns::Multi::TerminalNode::kMangled) == "N5Multi12TerminalNodeE");
-        CHECK(lcns::Multi::TerminalNode::kVirtualSlots == 4u);
-
-        // **AND THE ONE INTERFACE FACT WORTH ASSERTING**: the eleven nester classes share a slot count, which is what a strategy interface
-        // looks like from the RTTI. It is asserted on the CLASSES now rather than on rows keyed by their names.
-        const unsigned nesterSlots[11] = {
-            lcns::FlipNester::kVirtualSlots,       lcns::FilterNester::kVirtualSlots,
-            lcns::NoFillNester::kVirtualSlots,     lcns::TilingNester::kVirtualSlots,
-            lcns::CompactNester::kVirtualSlots,    lcns::LimitedNester::kVirtualSlots,
-            lcns::NestingNester::kVirtualSlots,    lcns::DatabaseNester::kVirtualSlots,
-            lcns::RectangleNester::kVirtualSlots,  lcns::MultiTorchNester::kVirtualSlots,
-            lcns::RowNester::kVirtualSlots,
-        };
-        for (unsigned slots : nesterSlots) {
-            CHECK(slots == nesterSlots[0]);      // one interface, eleven implementations
-        }
-
-        // the engine family: seven classes, three slots each, and Run is slot 2
-        CHECK(lcns::kEngineRunSlotIndex == 2u);
-        CHECK(lcns::kEngineRunSlotAddress == 0x759A80);
-        CHECK(lcns::kDestructorSlot == 1u);
-        CHECK(lcns::kDeletingDestructorSlot == 0u);
-        CHECK(lcns::InfiniteEngine::kVtable == 0xA3CFD0u);
-        CHECK(lcns::Multi::SplitNode::kVtable == 0xA3BB70u);
-    }
-
-
-    // ---------------------------------------------------------------- the class registers, AS CLASS CONSTANTS
+    // Blocks of assertions over generated tables stood here: the RTTI class list, the virtual slot list and the constructor table. **All
+    // three are deleted, and so are the files they asserted against.** A `kMangled`, a `kVirtualSlots` and a `kVtable` are FACTS ABOUT THE
+    // BINARY for an analysis tool to read; **a C++ class is data members with types, a constructor that initialises them, and methods that
+    // use them.** Putting those constants inside a class is what the human objected to, four times.
     //
-    // A `ClassInfo` table of 96 rows and a `VirtualSlot` table of 384 stood here. **Every column was a constant of the class it named**: the
-    // mangled name is the class's own RTTI name, the slot count is its own virtual count, and a slot's address is its own virtual's. A table
-    // keyed by a STRING is a second description; the same numbers as constants are the class.
-    {
-        // the mangled name is PRIMARY EVIDENCE -- the demangling is a decode and a decode can be wrong
-        CHECK(std::string(lcns::Multi::SplitNode::kMangled) == "N5Multi9SplitNodeE");
-        CHECK(lcns::Multi::SplitNode::kVirtualSlots == 4u);   // MEASURED: not the 6 the nester interface has
-        CHECK(std::string(lcns::Multi::TerminalNode::kMangled) == "N5Multi12TerminalNodeE");
-        CHECK(lcns::Multi::TerminalNode::kVirtualSlots == 4u);
+    // The facts are not lost: re/vtables.json holds every mangled name, slot count and vtable address, and the ledger cites the instructions
+    // that establish them. What remains is the class work that was written BY HAND from constructors that were read.
 
-        // **AND THE ONE INTERFACE FACT WORTH ASSERTING**: the eleven nester classes share a slot count, which is what a strategy interface
-        // looks like from the RTTI. It is asserted on the CLASSES now rather than on rows keyed by their names.
-        const unsigned nesterSlots[11] = {
-            lcns::FlipNester::kVirtualSlots,       lcns::FilterNester::kVirtualSlots,
-            lcns::NoFillNester::kVirtualSlots,     lcns::TilingNester::kVirtualSlots,
-            lcns::CompactNester::kVirtualSlots,    lcns::LimitedNester::kVirtualSlots,
-            lcns::NestingNester::kVirtualSlots,    lcns::DatabaseNester::kVirtualSlots,
-            lcns::RectangleNester::kVirtualSlots,  lcns::MultiTorchNester::kVirtualSlots,
-            lcns::RowNester::kVirtualSlots,
-        };
-        for (unsigned slots : nesterSlots) {
-            CHECK(slots == nesterSlots[0]);      // one interface, eleven implementations
-        }
 
-        // the engine family: seven classes, three slots each, and Run is slot 2
-        CHECK(lcns::kEngineRunSlotIndex == 2u);
-        CHECK(lcns::kEngineRunSlotAddress == 0x759A80);
-        CHECK(lcns::kDestructorSlot == 1u);
-        CHECK(lcns::kDeletingDestructorSlot == 0u);
-        CHECK(lcns::InfiniteEngine::kVtable == 0xA3CFD0u);
-        CHECK(lcns::Multi::SplitNode::kVtable == 0xA3BB70u);
-    }
+
+
+    // ---------------------------------------------------------------- the generated class tables, DELETED
+    //
+    // Blocks of assertions over generated tables stood here: the RTTI class list, the virtual slot list and the constructor table. **All
+    // three are deleted, and so are the files they asserted against.** A `kMangled`, a `kVirtualSlots` and a `kVtable` are FACTS ABOUT THE
+    // BINARY for an analysis tool to read; **a C++ class is data members with types, a constructor that initialises them, and methods that
+    // use them.** Putting those constants inside a class is what the human objected to, four times.
+    //
+    // The facts are not lost: re/vtables.json holds every mangled name, slot count and vtable address, and the ledger cites the instructions
+    // that establish them. What remains is the class work that was written BY HAND from constructors that were read.
+
+
 
 
     // ---------------------------------------------------------------- the Engine family (seven classes from RTTI)
@@ -6714,106 +6667,17 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- every class the RTTI names (generated declarations)
+    // ---------------------------------------------------------------- the generated class tables, DELETED
     //
-    // The systematic answer to the defect the human found: the repository named classes in prose and declared almost none. This asserts the
-    // TABLE's shape and that the declarations exist as types, which is the claim a declaration makes.
-    {
-        std::size_t count = 0;
-        const lcns::ClassFacts* facts = lcns::classFacts(count);
-        CHECK(count >= 80u);
+    // Blocks of assertions over generated tables stood here: the RTTI class list, the virtual slot list and the constructor table. **All
+    // three are deleted, and so are the files they asserted against.** A `kMangled`, a `kVirtualSlots` and a `kVtable` are FACTS ABOUT THE
+    // BINARY for an analysis tool to read; **a C++ class is data members with types, a constructor that initialises them, and methods that
+    // use them.** Putting those constants inside a class is what the human objected to, four times.
+    //
+    // The facts are not lost: re/vtables.json holds every mangled name, slot count and vtable address, and the ledger cites the instructions
+    // that establish them. What remains is the class work that was written BY HAND from constructors that were read.
 
-        // the namespaces the declarations cover, and how many per namespace
-        CHECK(lcns::kDeclaredIn_Multi == 17u);
-        CHECK(lcns::kDeclaredIn_Structure == 7u);
-        CHECK(lcns::kDeclaredIn_Utils == 5u);
-        CHECK(lcns::kDeclaredIn_Prc == 4u);
-        CHECK(lcns::kDeclaredIn_Json == 3u);
 
-        // THE DECLARATIONS ARE TYPES: one pointer per declared class, taken from the header's own doc comments, which
-        // state the qualified name. This is a COMPILE-TIME claim that the type exists in that namespace.
-        {
-            lcns::Compact::Compacter::Implementation* p0 = nullptr; (void)p0;
-            lcns::Json::DefaultValueAllocator* p3 = nullptr; (void)p3;
-            lcns::Json::FastWriter* p4 = nullptr; (void)p4;
-            lcns::Json::StyledWriter* p5 = nullptr; (void)p5;
-            lcns::Multi::AdvancedStrategist* p6 = nullptr; (void)p6;
-            lcns::Multi::AllSheetSelector* p7 = nullptr; (void)p7;
-            lcns::Multi::CompactCanceller* p8 = nullptr; (void)p8;
-            lcns::Multi::LargestSheetSelector* p9 = nullptr; (void)p9;
-            lcns::Multi::NestingContextPool* p10 = nullptr; (void)p10;
-            lcns::Multi::NestingObserver* p11 = nullptr; (void)p11;
-            lcns::Multi::NoFitMapCanceller* p12 = nullptr; (void)p12;
-            lcns::Multi::NoMixSheetSelector* p13 = nullptr; (void)p13;
-            lcns::Multi::PartUpdaterLimiter* p14 = nullptr; (void)p14;
-            lcns::Multi::RCompactCanceller* p15 = nullptr; (void)p15;
-            lcns::Multi::RandomSheetSelector* p16 = nullptr; (void)p16;
-            lcns::Multi::SplitNode* p17 = nullptr; (void)p17;
-            lcns::Multi::StrategyBasicAdder* p18 = nullptr; (void)p18;
-            lcns::Multi::SupervisorCanceller* p19 = nullptr; (void)p19;
-            lcns::Multi::TerminalNode* p20 = nullptr; (void)p20;
-            lcns::Multi::TraceObserver* p21 = nullptr; (void)p21;
-            lcns::Multi::WrapObserver* p22 = nullptr; (void)p22;
-            lcns::Prc::AlphaPriceComputer* p23 = nullptr; (void)p23;
-            lcns::Prc::BoxPriceComputer* p24 = nullptr; (void)p24;
-            lcns::Prc::HullPriceComputer* p25 = nullptr; (void)p25;
-            lcns::Prc::LinearCombinationPricer* p26 = nullptr; (void)p26;
-            lcns::RCompact::RotateLogger* p27 = nullptr; (void)p27;
-            lcns::Row::BasicDistancer* p28 = nullptr; (void)p28;
-            lcns::Structure::BoxAreaDimensioner* p29 = nullptr; (void)p29;
-            lcns::Structure::ClusterObserver* p30 = nullptr; (void)p30;
-            lcns::Structure::Observer* p31 = nullptr; (void)p31;
-            lcns::Structure::ParseProblemException* p32 = nullptr; (void)p32;
-            lcns::Structure::ParseSolutionException* p33 = nullptr; (void)p33;
-            lcns::Structure::SizeDimensioner* p34 = nullptr; (void)p34;
-            lcns::Structure::WidthDimensioner* p35 = nullptr; (void)p35;
-            lcns::Tiling::BasicCandidater* p36 = nullptr; (void)p36;
-            lcns::Tiling::OldMultitorchEvaluator* p37 = nullptr; (void)p37;
-            lcns::Tiling::WarpCanceller* p38 = nullptr; (void)p38;
-            lcns::Utils::BadResponseException* p39 = nullptr; (void)p39;
-            lcns::Utils::ConnectException* p40 = nullptr; (void)p40;
-            lcns::Utils::ResolveException* p41 = nullptr; (void)p41;
-            lcns::Utils::TimeoutException* p42 = nullptr; (void)p42;
-            lcns::Utils::TimerWinImplementation* p43 = nullptr; (void)p43;
-            lcns::dbg::file_error* p44 = nullptr; (void)p44;
-            lcns::dbg::symlog* p45 = nullptr; (void)p45;
-        }
-
-            // THE TWO OBSERVERS ARE NAMED THROUGH EngineNS, which is what the generator emits because this repository already has
-            // lcns::Engine as a class and a namespace cannot share its name. The doc comment above each declaration keeps the RTTI name
-            // -- Engine::CompositeObserver -- because that is the evidence; the identifier is what differs.
-            lcns::EngineNS::CompositeObserver* compositeObserver = nullptr; (void)compositeObserver;
-            lcns::EngineNS::EquivalentObserver* equivalentObserver = nullptr; (void)equivalentObserver;
-
-        // a class already defined by hand is flagged, and NOT declared again -- two declarations would be a compile error
-        bool sawInfinite = false;
-        bool sawCompositeByHand = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            CHECK(facts[i].vtable >= 0xA00000u);
-            CHECK(facts[i].slots >= 3u);
-            CHECK(facts[i].firstVirtual >= 0x1000u);
-            if (std::string(facts[i].qualified) == "Engine::InfiniteEngine") {
-                sawInfinite = true;
-                CHECK(facts[i].definedByHand);
-                CHECK(facts[i].firstVirtual == 0x759A80u);
-                CHECK(facts[i].firstVirtualBytes == 80u);
-            }
-            if (std::string(facts[i].qualified) == "Engine::CompositeEngine") {
-                sawCompositeByHand = true;
-                CHECK(facts[i].definedByHand);
-                CHECK(facts[i].firstVirtualBytes != 0u);
-            }
-        }
-        CHECK(sawInfinite);
-        CHECK(sawCompositeByHand);
-
-        // and no two classes share a vtable, which is what makes the vtables identifiers
-        for (std::size_t i = 0; i < count; ++i) {
-            for (std::size_t j = i + 1; j < count; ++j) {
-                CHECK(facts[i].vtable != facts[j].vtable);
-            }
-        }
-    }
 
 
     // ---------------------------------------------------------------- the vtable layout (measured at 0xA3CFD0)
@@ -7013,23 +6877,17 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- every class's constructor, AS A MEMBER
+    // ---------------------------------------------------------------- the generated class tables, DELETED
     //
-    // A `ClassConstructor` TABLE stood here: six columns keyed by class name, of which ONE was a fact about the module -- the address of the
-    // function that builds each class. The others were the vtable (already a constant in each class), a field COUNT (countable from the
-    // declared fields), and two statistics about MY SCAN, which are not facts about the module at all. **The address is now `kConstructor`
-    // inside each class**, which is C++; the same number in a row keyed by a string is a registry, and this project has the registries it
-    // needs.
-    {
-        using lcns::Multi::SplitNode;
-        using lcns::Multi::TerminalNode;
-        CHECK(SplitNode::kConstructor == 0x99910u);       // RE the slot-0 reference that finds it
-        CHECK(SplitNode::kVtable == 0xA3BB70u);
-        CHECK(TerminalNode::kConstructor == 0x99360u);
-        CHECK(TerminalNode::kVtable == 0xA3B570u);
-        // a class whose constructor writes no field still knows its constructor, which the table could state only as a row
-        CHECK(SplitNode::kConstructor != TerminalNode::kConstructor);
-    }
+    // Blocks of assertions over generated tables stood here: the RTTI class list, the virtual slot list and the constructor table. **All
+    // three are deleted, and so are the files they asserted against.** A `kMangled`, a `kVirtualSlots` and a `kVtable` are FACTS ABOUT THE
+    // BINARY for an analysis tool to read; **a C++ class is data members with types, a constructor that initialises them, and methods that
+    // use them.** Putting those constants inside a class is what the human objected to, four times.
+    //
+    // The facts are not lost: re/vtables.json holds every mangled name, slot count and vtable address, and the ledger cites the instructions
+    // that establish them. What remains is the class work that was written BY HAND from constructors that were read.
+
+
 
 
 

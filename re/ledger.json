@@ -2286,6 +2286,30 @@
    "round": 670,
    "subject": "no-facts-structs",
    "witness": "the check is re/g_no_facts_structs.py, proved by re/g_prove_facts_check.py on the three shapes the human found; a first version of it was too broad and flagged RunRecord and PolymorphicRecord, which ARE things rather than descriptions"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a mangled name, a virtual count and a vtable address are facts for an analysis tool, not parts of a class; a class is data members, a constructor and methods",
+   "round": 671,
+   "subject": "rtti-constants-are-not-class-members",
+   "witness": "44 injected constant references removed from nester.hpp and engines.hpp, and three table-assertion blocks from the test; the facts live in re/vtables.json"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a store through rsp is a store to the STACK, so every member the field scanner derived from one was fabricated",
+   "round": 671,
+   "subject": "offsets-from-rsp-are-not-fields",
+   "witness": "class_definitions.hpp declared void* at_0020 from mov qword ptr [rsp + 0x20], rax and double at_0028 from movsd qword ptr [rsp + 0x28], xmm0 -- shadow space for outgoing calls"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an offset with an instruction is evidence only if the base register is the OBJECT, and the scanner's rule never checked that",
+   "round": 671,
+   "subject": "object-register-must-be-established",
+   "witness": "the nesters are sound because their constructors do mov rbx, rcx once and never change it; the classes where the base was rsp or a reassigned register are not"
   }
  ]
 }
