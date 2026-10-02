@@ -774,6 +774,22 @@
    "round": 588,
    "subject": "element.size-18",
    "witness": "0x23C30 lea rdi,[rax*8] after count*3; 0x78 is the stat walk's stride and equals five times 0x18, recorded as a coincidence rather than asserted as a composition"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "four functions stand between the two variant exports and completion; two are read",
+   "round": 589,
+   "subject": "variant.blocking-graph",
+   "witness": "0x132E0 (176 B, READ, variant.hpp) and 0x23BF0 (246 B, READ, the grow-and-append primitive) are done; 0x22E40 (the routine the begin/end/capacity triple is handed to) and 0x5CD5C0 (the box filler) are not; 0x64C940 is a fourth unread call"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the work to finish an export is its direct callees that are neither library nor already read; a closure is not a work list",
+   "round": 589,
+   "subject": "work-not-closure",
+   "witness": "three rounds gave three estimates for the same two exports: 596 functions and 121762 bytes by reachability, 1 unknown by the export's own callees, and 4 by reading the callees one level down; only the last is derived from reading"
   }
  ]
 }
