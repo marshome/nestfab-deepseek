@@ -1734,6 +1734,22 @@
    "round": 644,
    "subject": "option.keys-108",
    "witness": "re/g_param_split.py: 159 identifier-like strings precede a lookup and 108 are stored, while 51 are data including the MIPLIB instances air03, bell3a and egout; the self-check requires nesting_pow_boost among the parameters and air03 among the data"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "RE 0x2A3520 loads 49 MIPLIB benchmark instance names, so it is a benchmark harness rather than part of the nesting pipeline",
+   "round": 645,
+   "subject": "0x2A3520.benchmark-harness",
+   "witness": "the findings archive independently found 8 of the same strings by reading rodata and declined to name the function; the shared seven are exmip1, p0033, flugpl, enigma, mod011, probing and mas76"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the archive declined to name 0x2A3520 and this project does not name it either, recording the evidence and the one conclusion it supports",
+   "round": 645,
+   "subject": "archive.verdict-kept",
+   "witness": "the constant is kBenchmarkLoader rather than a name like MipLibRunner, because naming it would dress an inference as a fact"
   }
  ]
 }
