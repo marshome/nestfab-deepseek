@@ -38,6 +38,7 @@
 #include "lcns/module_switch.hpp"
 #include "lcns/parameter_report.hpp"
 #include "lcns/engine_defaults.hpp"
+#include "lcns/option_keys.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -6336,6 +6337,44 @@ int main() {
         for (std::size_t i = 0; i < count; ++i) {
             CHECK(table[i].site >= 0x4E5B0u);
             CHECK(table[i].site < 0x4E5B0u + 1574u);
+        }
+    }
+
+
+    // ---------------------------------------------------------------- the option keys (RE 0x82A3E0's call sites)
+    //
+    // The names the engine looks up and whose results reach a field. The assertions are about the TABLE: the count, the names known by
+    // hand, and the invariant that a name is looked up at least as often as it is stored.
+    {
+        std::size_t count = 0;
+        const lcns::OptionKey* table = lcns::optionKeys(count);
+        CHECK(count == lcns::kOptionKeyCount);
+        CHECK(count == 108u);
+        CHECK(lcns::kOptionKeysConfirmedTwice == 54u);
+        CHECK(lcns::kOptionKeysConfirmedTwice < lcns::kOptionKeyCount);
+
+        // the two names verified by hand: one from the store test and one from the archive's rodata table
+        bool sawPowBoost = false;
+        bool sawBeamWidth = false;
+        for (std::size_t i = 0; i < count; ++i) {
+            CHECK(table[i].stores > 0);            // every entry is here BECAUSE a store confirmed it
+            CHECK(table[i].lookups >= table[i].stores);
+            if (std::string(table[i].name) == "nesting_pow_boost") {
+                CHECK(table[i].stores >= 1u);
+                sawPowBoost = true;
+            }
+            if (std::string(table[i].name) == "beam_width") {
+                sawBeamWidth = true;
+            }
+        }
+        CHECK(sawPowBoost);
+        CHECK(sawBeamWidth);
+
+        // and the data-looking strings are NOT in the table, which is the whole point of the store test
+        for (std::size_t i = 0; i < count; ++i) {
+            CHECK(std::string(table[i].name) != "air03");
+            CHECK(std::string(table[i].name) != "bell3a");
+            CHECK(std::string(table[i].name) != "egout");
         }
     }
 

@@ -1,0 +1,813 @@
+{
+ "data": [
+  "air03",
+  "air04",
+  "air05",
+  "bell3a",
+  "bell5",
+  "blend2",
+  "cap6000",
+  "danoint",
+  "dcmulti",
+  "dsbmip",
+  "egout",
+  "enigma",
+  "exmip1",
+  "false",
+  "fiber",
+  "fixnet6",
+  "flugpl",
+  "gesa2",
+  "gesa2_o",
+  "gesa3",
+  "gesa3_o",
+  "khb05250",
+  "l152lav",
+  "markshare1",
+  "markshare2",
+  "mas76",
+  "misc03",
+  "misc06",
+  "misc07",
+  "mitre",
+  "mod008",
+  "mod010",
+  "mod011",
+  "modglob",
+  "noswot_z",
+  "p0033",
+  "p0201",
+  "p0282",
+  "p0548",
+  "p2756",
+  "plain",
+  "pp08a",
+  "pp08acuts",
+  "probing",
+  "qnet1",
+  "qnet1_o",
+  "rentacar",
+  "seymour",
+  "seymour_1",
+  "stein27",
+  "stein45"
+ ],
+ "parameters": {
+  "adaptative_price_max_random": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_advanced_width": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_buckets_per_part": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_distinct_angle": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_expert_width": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_flip_frequency_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_frequency_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "beam_width": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "boost_price_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "boost_price_max_random": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "combined_price_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "cut_nesting_probabilty": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "database_relax_every": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "default_enlarge": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "detect_overlap": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 2,
+   "stored": 1
+  },
+  "enable_beam": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_common_cut": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_floating": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_improve_common_cut": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_intermediate": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_multiplicity": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_optimizer": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_beautifier_reorganizer": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_best_float_filler": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_common_cut_filling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_common_cut_nesting": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_common_cut_relax_objective": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_common_cut_repair": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_common_cut_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_composite_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_database": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_database_float_filler": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_enlarge_and_postop": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_filter": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_flip": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_last_compaction": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_last_postop": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_multi_sheet": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_multi_thread": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_nesting_boost": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_oblique_pentagon_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_oblique_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_pentagon_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_rectangle": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_recursive_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "enable_rotate_compact_postop": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 3,
+   "stored": 1
+  },
+  "enable_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "float_filler_reduction_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "force_nb_max_active_parts": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "force_rectangle": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "force_single_orientation_asit": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "force_single_orientation_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "limited_intermediate": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "linear_fill_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "linear_price_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "max_cutting_cost_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "max_dual_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "min_cutting_cost_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "mono_relaxed_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "mono_relaxed_max_bonus": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_advanced_nesting": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_beam_advanced": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_beam_expert": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_beautifier_advanced": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_cut_nesting": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_enlarge": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_enlarge_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_expert_nesting": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_float_filler": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_free_parts": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_intermediate_beautifier": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_partial_multi_fill_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_postop": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_rectangle_advance": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_rectangle_dual": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_relaxed_mono": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_rotate_compact_postop": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 3,
+   "stored": 2
+  },
+  "nb_iterations_before_small_rotation_nesting": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_before_tiling_evaluated": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_iterations_first": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_max_nested_parts_float_filler": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_max_threads": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_rectangle_advance_try": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_rectangle_try": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_strips_default": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_strips_filling_advanced": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nb_strips_first": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nesting_max_context_size": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nesting_offset_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "nesting_pow_boost": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "per_worker_database": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "random_price_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "simple_fill_frequency": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "stable_results": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "stdin": {
+   "functions": [
+    "0x3F4780"
+   ],
+   "seen": 3,
+   "stored": 2
+  },
+  "stdout": {
+   "functions": [
+    "0x3F5070"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "tooling_with_rectangle": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "trace_best_solution": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "trace_dxf": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "trace_nesting": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "trace_solution": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "try_fill_free_parts": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "use_clusters": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "use_multitorch_tiling": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "use_old_evaluation_ratio": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  },
+  "verbose": {
+   "functions": [
+    "0x4EC00"
+   ],
+   "seen": 1,
+   "stored": 1
+  }
+ }
+}

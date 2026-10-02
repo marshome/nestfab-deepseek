@@ -1726,6 +1726,14 @@
    "round": 643,
    "subject": "param.175-was-an-over-count",
    "witness": "a lea of a rip-relative string precedes the lookup whether or not that string is a parameter name; the confirmed figure is 54 and about 105 more identifiers are unresolved"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the engine looks up 108 option names whose results reach a field, of which 54 are also in the archive's rodata-built table",
+   "round": 644,
+   "subject": "option.keys-108",
+   "witness": "re/g_param_split.py: 159 identifier-like strings precede a lookup and 108 are stored, while 51 are data including the MIPLIB instances air03, bell3a and egout; the self-check requires nesting_pow_boost among the parameters and air03 among the data"
   }
  ]
 }
