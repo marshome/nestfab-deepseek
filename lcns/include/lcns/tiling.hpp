@@ -186,15 +186,20 @@ private:
 // ---------------------------------------------------------------------------
 // evaluators -- RE Tiling::*Evaluator (4 virtual slots each)
 // ---------------------------------------------------------------------------
-/** **RE the eight tables below, and IT IS A BASE WITH THREE VIRTUALS.** Every instantiated derived class has FOUR slots:
+/** **RE the eight tables below, and EVERY ONE HAS FOUR SLOTS** -- which is TWO VIRTUALS beyond the destructor pair:
  *
  *      0x76E380..0x76FA00   the deleting destructor, 1 or 5 bytes, one per class
  *      0x76E390..0x76FA10   the destructor, one per class
- *      slot 2, varying       `name()`
- *      slot 3, 0x4E7E50 in SIX of the eight    `evaluate()` -- **THE BASE'S OWN IMPLEMENTATION**, 539 bytes
+ *      slot 2, POSITIVE IN EVERY CLASS, and which method it is has NOT been established
+ *      slot 3, 0x4E7E50 in SIX of the eight       **SHARED, AND ITS NAME IS NOT ESTABLISHED EITHER**
  *
- *  `ObliqueEvaluator` overrides slot 3 with 0x7E8970 and `QuantityEvaluator` with 0x7E8DA0, so **a slot address shared by several derived tables is
- *  the base's and one that differs is the override.** */
+ *  `ObliqueEvaluator` uses 0x7E8970 at slot 3 and `QuantityEvaluator` 0x7E8DA0, so the address differs in two of the eight.
+ *
+ *  **AND THE SHARING DOES NOT SETTLE WHICH SLOT IS WHICH.** In six of the eight, slot 3 is a routine that copies 0x60 bytes from its argument and
+ *  then DEEP COPIES a container of 0x90 byte elements, calling the allocator and a per-element copy -- **a copy constructor or a clone, and not a
+ *  scoring function**. So neither slot is named here: `name()` and `evaluate()` are this project's own words for them, arrived at before these
+ *  tables were measured, and an earlier note presented them as if the table had said so. **A name guessed from a shape is the placeholder this
+ *  project removes.** */
 class Evaluator {
 public:
     virtual ~Evaluator() = default;
@@ -202,42 +207,72 @@ public:
     virtual double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const = 0;
 };
 
-/** RE vtable 0xA3D210, FOUR slots: 0x76E390 and the destructor pair, slot 2 is `name()` at 0x7E8910, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
+/** RE vtable 0xA3D210, FOUR slots. Slot 0 is the deleting destructor 0x76E390, slot 1 the destructor, slot 2 is at 0x7E8910 (81 to 798 bytes) and
+ *  slot 3 is at 0x4E7E50 -- SHARED with five other evaluators.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class DensityEvaluator : public Evaluator {          // used area / sheet area
 public:
     const char* name() const override { return "DensityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
-/** RE vtable 0xA3D3C0, FOUR slots: 0x76F9F0 and the destructor pair, slot 2 is `name()` at 0x7EBFC0, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
+/** RE vtable 0xA3D3C0, FOUR slots. Slot 0 is the deleting destructor 0x76F9F0, slot 1 the destructor, slot 2 is at 0x7EBFC0 (81 to 798 bytes) and
+ *  slot 3 is at 0x4E7E50 -- SHARED with five other evaluators.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class UnlimitedDensityEvaluator : public Evaluator {  // density, ignoring the sheet border
 public:
     const char* name() const override { return "UnlimitedDensityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
-/** RE vtable 0xA3D3F0, FOUR slots: 0x76FA10 and the destructor pair, slot 2 is `name()` at 0x7EC210, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
+/** RE vtable 0xA3D3F0, FOUR slots. Slot 0 is the deleting destructor 0x76FA10, slot 1 the destructor, slot 2 is at 0x7EC210 (81 to 798 bytes) and
+ *  slot 3 is at 0x4E7E50 -- SHARED with five other evaluators.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class UnlimitedXDensityEvaluator : public Evaluator {  // density along x only
 public:
     const char* name() const override { return "UnlimitedXDensityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
-/** RE vtable 0xA3D270, FOUR slots: 0x76E410 and the destructor pair, slot 2 is `name()` at 0x7E8DD0, slot 3 is `evaluate()` at 0x7E8DA0 -- an OVERRIDE. */
+/** RE vtable 0xA3D270, FOUR slots. Slot 0 is the deleting destructor 0x76E410, slot 1 the destructor, slot 2 is at 0x7E8DD0 (81 to 798 bytes) and
+ *  slot 3 is at 0x7E8DA0 -- this class's own.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class QuantityEvaluator : public Evaluator {           // number of cells
 public:
     const char* name() const override { return "QuantityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
-/** RE vtable 0xA3D2A0, FOUR slots: 0x76E430 and the destructor pair, slot 2 is `name()` at 0x7E8F60, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
+/** RE vtable 0xA3D2A0, FOUR slots. Slot 0 is the deleting destructor 0x76E430, slot 1 the destructor, slot 2 is at 0x7E8F60 (81 to 798 bytes) and
+ *  slot 3 is at 0x4E7E50 -- SHARED with five other evaluators.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class ReusableEvaluator : public Evaluator {           // cells whose footprint leaves a usable offcut
 public:
     const char* name() const override { return "ReusableEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
-/** RE vtable 0xA3D240, FOUR slots: 0x76E3D0 and the destructor pair, slot 2 is `name()` at 0x7E8B30, slot 3 is `evaluate()` at 0x7E8970 -- an OVERRIDE. */
+/** RE vtable 0xA3D240, FOUR slots. Slot 0 is the deleting destructor 0x76E3D0, slot 1 the destructor, slot 2 is at 0x7E8B30 (81 to 798 bytes) and
+ *  slot 3 is at 0x7E8970 -- this class's own.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class ObliqueEvaluator : public Evaluator {            // rewards non axis aligned cells
 public:
     const char* name() const override { return "ObliqueEvaluator"; }
@@ -259,7 +294,12 @@ public:
  *  AND THE CALL SITE CONFIRMS IT: at 0x766DCF the class is constructed on the STACK -- `lea rbx, [rsp + 0xd0]` -- with the three values read
  *  out of an option, so the class is a stack handle whose whole state is the one allocated pointer.
  */
-/** RE vtable 0xA3D310, FOUR slots: 0x76F260 and the destructor pair, slot 2 is `name()` at 0x7E9240, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
+/** RE vtable 0xA3D310, FOUR slots. Slot 0 is the deleting destructor 0x76F260, slot 1 the destructor, slot 2 is at 0x7E9240 (81 to 798 bytes) and
+ *  slot 3 is at 0x4E7E50 -- SHARED with five other evaluators.
+ *  **SLOT 3 IS NOT NAMED HERE ON PURPOSE.** In six of the eight evaluators it is the SAME address, 0x4E7E50, and reading that routine
+ *  shows a 0x60 byte copy followed by a DEEP COPY of a container with 0x90 byte elements -- a copy constructor or a clone, NOT a
+ *  scoring function. An earlier annotation called it `evaluate()`; **what slot 3 is has not been established**, and a name guessed at
+ *  from a shape is the placeholder this project removes. */
 class MultitorchEvaluator : public Evaluator {
 public:
     /** RE 0x4E8410. **THE DECLARATION HAD ONE PARAMETER AND THE ROUTINE TAKES THREE** -- an int and two doubles, all three written into the

@@ -195,6 +195,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "vtable-slot-offset-vtable-rva-is-the-tab",
+  "rule": "vtable slot offset: vtable_rva is the table BASE (NULL at +0, typeinfo at +8) and slots[n] is the word at vtable_rva + 0x10 + n*8. The address of a slot is not the base of anything, and reading a slot VALUE as a table base produced a false slot-count claim and a false reading of a neighbouring table.",
+  "check": "re/g_check_vtable_slots.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
