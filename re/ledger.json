@@ -1446,6 +1446,30 @@
    "round": 628,
    "subject": "tooling.gap-closed-by-another-claim",
    "witness": "re/g_supersede_by.py marked rcx.type's SHAPE claim as superseded by round 545's MEASURED type-propagation claim; without it the ranking offers to close a gap that is already closed"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "assertion sites load three strings: the condition, the method and the file, and 0x1EE50's seven sites yield all of them",
+   "round": 629,
+   "subject": "assert.strings-decoded",
+   "witness": "conditions 'quality >= 0 && quality < 9' (GetLayerLeatherSheet, line 18) and 'quality >= 0 && quality < 100' (GetLayerRestrictedZoneSheet, line 45 and GetLayerRestrictedZonePart, line 39) in ../structure/border_property.hpp; 'external_rings.size() == 1u' (ComputeSheetGeometryRowMode, line 433) and 'structure_sheet' (CreateProblem, line 896) in internal.cpp"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "0x1EE50 line 649 asserts boost.find(order.multitorch_cutting_preference) != boost.end(), naming both a container and a field of the order",
+   "round": 629,
+   "subject": "assert.member-expression",
+   "witness": "the same field the ledger carries from a different site, so two independent assertions name it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "some assertion sites BUILD the file name from immediates and some LOAD it, and the two forms are what defeated a decode that generalised from one",
+   "round": 629,
+   "subject": "assert.two-forms",
+   "witness": "0x526160 builds '../structure\\\\stat.cpp' from three immediates; 0x1EE50 loads its strings with lea from a rip-relative address and calls 0x1B130"
   }
  ]
 }
