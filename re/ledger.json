@@ -110,6 +110,12 @@
    "predicate": "the first argument's type is unknown per function, which is why the width check cannot conclude",
    "round": 543,
    "subject": "rcx.type",
+   "superseded_by": {
+    "grade": "MEASURED",
+    "round": 545,
+    "subject": "type-propagation.result",
+    "why": "the type propagation of that round makes a per-function first-argument type known for 4486 functions, which is the thing the width check was waiting on"
+   },
    "witness": "101, 2599, 315 and 9 functions write 1, 2, 4 and 16 bytes at +0x10 through rcx; only their types separate them"
   },
   {
@@ -1432,6 +1438,14 @@
    "round": 627,
    "subject": "tooling.set-consistency-rule",
    "witness": "re/g_set_consistency.py refuses the element50 rows (3 distinct member sets) and passes an agreeing set; its own self-test runs when it is given nothing, so it cannot pass while broken"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a claim whose gap was closed by a DIFFERENT claim is superseded by it, which re/g_supersede.py cannot represent because it keys on a shared predicate",
+   "round": 628,
+   "subject": "tooling.gap-closed-by-another-claim",
+   "witness": "re/g_supersede_by.py marked rcx.type's SHAPE claim as superseded by round 545's MEASURED type-propagation claim; without it the ranking offers to close a gap that is already closed"
   }
  ]
 }
