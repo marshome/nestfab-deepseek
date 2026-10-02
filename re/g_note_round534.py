@@ -1,40 +1,32 @@
-## The shared structures, and how they were shown to be one (round 533)
+# -*- coding: utf-8 -*-
+"""Append the round 534 correction: the launch order is 0x2C0 bytes, and its layout is read out of NewLaunchingOrder.
 
-The question "which structures do many functions use" is a question about offsets, and the tool that answers it compares
-offset USER SETS rather than counting users. `re/g_same_type.py` prints, for two offsets, how many functions touch both and
-what fraction that is of each -- and `re/g_members.py` prints one function's offsets grouped by the register that carries the
-object, marking the register that holds the first argument, which is how a member list is read out of a function.
+Round 533 concluded that the offsets +0x1C8 to +0x800 belong to one object because their user sets overlap, and said the
+object was "at least a kilobyte". That was wrong in a way worth recording: the offsets do form a grid, but a grid is not an
+object, and the extent tool could not tell one object's members from another's on the same numbers.
 
-### The launch order
+Round 534 found the answer in the constructor instead of in the statistics:
 
-| offset | functions | some of the named users |
-|---|---:|---|
-| `+0x1C8` | 147 | `AddOrReplaceEquiv`, `DeleteLaunchingOrder`, `FillNestingAux`, `Implementation`, `NewLaunchingOrder` |
-| `+0x208` | 118 | `ComputeSheetGeometryRowMode`, `FillNestingAux`, `Implementation`, `Postop`, `SetCommonCutParameters` |
-| `+0x240` | 64 | `FillNestingAux`, `Implementation`, `InsertAllNext`, `InsertMonoMultiplicity`, `NewLaunchingOrder` |
-| `+0x2A8` | 97 | `AddOrReplaceEquiv`, `ComputeSheetGeometryRowMode`, `DeleteLaunchingOrder`, `Implementation` |
+    NewLaunchingOrder (0x14620)   mov ecx, 0x2C0 ; call operator new
+                                  then one store per field, +0x00 to +0x2B8
 
-Overlaps: `+0x240` and `+0x1C8` share 40 functions (62% of `+0x240`'s users); `+0x240` and `+0x2A8` share 37 (58%);
-`+0x2A8` and `+0x208` share 46 (47%). That is the same object, and the object is the LaunchingOrder -- `NewLaunchingOrder`,
-`DeleteLaunchingOrder`, `SetCommonCutParameters`, `SetMultiTorchParameters`, `FillNestingAux` and `Implementation` appear in
-the intersections. Both fractions are recorded for every pair so that a small accidental overlap cannot pass for a type.
+So the launch order is exactly 0x2C0 bytes, and the constructor writes every field, which makes its layout evidence rather
+than inference. The offsets above 0x2C0 that the extent tool reported belong to OTHER objects that happen to use the same
+low numbers, which is precisely the confusion the tool could not resolve and a constructor resolves at once.
 
-Two things follow for the LaunchLocalComputation objective:
+That also explains 0x5007C0, the destructor in this objective's closure: it receives the order, dereferences it, and walks
++0x1D0, +0x1F8, +0x208, +0x228, +0x230, +0x240, +0x250, +0x258, +0x268, +0x270, +0x280, +0x2A8 and +0x2B8 -- all inside
+0x2C0. And it explains why 0x22A20 allocates 0x1C8 while 0x5007C0 walks to 0x2B8: 0x22A20 is not building the launch
+order at all. Its 0x1C8 bytes have a vtable-like pointer at +0, a double at +0x40, a flag at +0x48, the constant 9 at
++0x4C, an empty container at +0x50 and three strings, and it reads its mode from [order + 0x240]. It is a candidate object
+that REFERS to the order, which is why the two layouts only look alike in the low offsets.
+"""
+import io
+import os
 
-* the mode that `0x22A20` reads at `[order + 0x240]` is a member of the launch order, so the iteration cap and the two
-  doubles it configures are the ORDER's mode, not the candidate's;
-* the offsets above `+0x1C8` -- `+0x1D0` to `+0x800`, still on the same eight byte grid, still touched by thirty to a hundred
-  and seventy functions -- belong to the same type in `0x5007C0` and `0x870070`. The `0x1C8` bytes `0x22A20` allocates are
-  the part the constructor initialises, not the end of the object.
+PATH = r"D:\Nesting\nestfab\re\findings_structures_shared.md"
 
-### The 0x48 byte node
-
-The one structure here whose layout is completely certain, because five registers in one function show it at once --
-`re/g_members.py 0x92B340` prints `r12`, `r13`, `r14`, `r15` and `rdi` each with exactly `+0x10:8 +0x18:8 +0x20:8 +0x30:8`:
-a back pointer at `+0x10`, a forward pointer at `+0x18`, an inline string at `+0x20` whose buffer is the node's own `+0x30`,
-a type dword at `+0`, and the double at `+0x40` that `0x9302C0` also copies. `0x9308C0` frees the string only when `+0x20` is
-not the node's own `+0x30`, which is what the inline buffer rule looks like in code.
-
+NOTE = """
 
 ## Correction (round 534): the launch order is 0x2C0 bytes, and NewLaunchingOrder says so
 
@@ -77,3 +69,18 @@ candidates and for checking that a claimed member set is plausible, but the mome
 authority: one function that writes every field in order gives the size, the field boundaries and the widths at once. The
 order to work in is therefore to look for the constructor FIRST -- `NewLaunchingOrder` was already in the recovered name list
 from the assertion channel before either round began.
+"""
+
+
+def main():
+    text = io.open(PATH, encoding="utf-8", newline="").read().replace("\r\n", "\n")
+    if "Correction (round 534)" in text:
+        print("already appended")
+        return 0
+    io.open(PATH, "w", encoding="utf-8", newline="\n").write(text.rstrip("\n") + "\n" + NOTE)
+    print("appended %d characters" % len(NOTE))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
