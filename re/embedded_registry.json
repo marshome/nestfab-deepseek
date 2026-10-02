@@ -271,6 +271,50 @@
     "sha256": "0bd76831f963660517c123629b68239771edc3f74587a380dcef90d1893c1a7b"
   },
   {
+    "rva": 6065232,
+    "size": 255,
+    "symbol": "lcns_orig_5c8c50",
+    "status": "callable",
+    "reason": "",
+    "note": "merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight",
+    "relocations": [],
+    "callers": 56,
+    "sha256": "d8758387497387c58502f9d8e53a217c10e968dd78489723b318c27dcb816f92"
+  },
+  {
+    "rva": 5394144,
+    "size": 1054,
+    "symbol": "lcns_orig_524ee0",
+    "status": "comment_only",
+    "reason": "call to 0x4F73E0 outside the block; call to 0x5203C0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block (+12 more)",
+    "note": "the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented",
+    "relocations": [],
+    "callers": 22,
+    "sha256": "6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070"
+  },
+  {
+    "rva": 5214720,
+    "size": 434,
+    "symbol": "lcns_orig_4f9200",
+    "status": "comment_only",
+    "reason": "call to 0x60A620 outside the block; call to 0x62F280 outside the block; call to 0x910BA0 outside the block; call to 0x9984B0 outside the block",
+    "note": "lazily initialised object: checks the byte at +0x100 and returns [rcx+0x108] when it is set, else constructs. 434 bytes, 97 instructions, 21 callers",
+    "relocations": [],
+    "callers": 21,
+    "sha256": "89cf114a758b4030a61a1d50f61151cec0d40937f597316d35f22b6d83ab612a"
+  },
+  {
+    "rva": 6084608,
+    "size": 610,
+    "symbol": "lcns_orig_5cd800",
+    "status": "comment_only",
+    "reason": "call to 0x5C5260 outside the block; call to 0x5C5F30 outside the block; call to 0x5C61D0 outside the block; call to 0x5CD360 outside the block (+4 more)",
+    "note": "container construction that itself merges boxes through 0x5C8C50: 610 bytes, 145 instructions, 112 callers",
+    "relocations": [],
+    "callers": 112,
+    "sha256": "07ad72bded390701cbc00ca615d0fd86eb1dccaec19277d433bf3810205c5761"
+  },
+  {
     "rva": 6064656,
     "size": 114,
     "symbol": "lcns_orig_5c8a10",

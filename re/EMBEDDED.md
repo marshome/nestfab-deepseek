@@ -26,6 +26,10 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0x55e190` | 258 | callable_relocated | 3 | segment length pair, min and max, with a square-root guard |
 | `0x62fe20` | 270 | comment_only | 89 | libm sqrt: the C library square root, identified in round 356 from its own error path (the name string "sqrt" at rva 0xA06820, EDOM=0x21 stored through the errno helper 0x63F4D8, then an __math_invalid-shaped call). Its 89 callers are geometry code taking lengths; round 340 read it as a classification guard, which this corrects |
 | `0x50fd40` | 270 | callable_relocated | 3 | accumulator over a range of 312-byte elements |
+| `0x5c8c50` | 255 | callable | 56 | merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight |
+| `0x524ee0` | 1054 | comment_only | 22 | the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented |
+| `0x4f9200` | 434 | comment_only | 21 | lazily initialised object: checks the byte at +0x100 and returns [rcx+0x108] when it is set, else constructs. 434 bytes, 97 instructions, 21 callers |
+| `0x5cd800` | 610 | comment_only | 112 | container construction that itself merges boxes through 0x5C8C50: 610 bytes, 145 instructions, 112 callers |
 | `0x5c8a10` | 114 | callable | 16 | the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it |
 | `0x24dd40` | 238 | comment_only | 1 | composition of two transformed fields with weights |
 | `0x4b81d0` | 78 | comment_only | 4 | builds the object whose first member is the 0.01 tolerance |
@@ -202,7 +206,7 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 | `0xe1f0` | 111 | comment_only | 0 | export UnLockLaunchingOrderOxy (ordinals 342,343) |
 | `0xa06820` | 32 | data | 0 | libm sqrt's constant cluster: the name string "sqrt" then -0.0, +inf and 1.0 -- the evidence that 0x62FE20 is the C library's square root and therefore toolchain, not domain code |
 
-191 blocks, 19 callable, 172 comment-only, 90508 bytes of original code embedded.
+195 blocks, 20 callable, 175 comment-only, 92861 bytes of original code embedded.
 
 ## `0x51d2f0` -- pointer getter: returns [rcx+0x60]
 
@@ -845,6 +849,586 @@ against a C++ reimplementation possible. Otherwise it is **comment_only**, with 
 0050fe44  addsd xmm0, xmm7
 0050fe48  addsd xmm7, xmm1
 0050fe4c  jmp 0x50fe0b
+```
+
+## `0x5c8c50` -- merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 callers -- the same box layout as 0x5C8A10, and a common step behind GetLength/GetHeight
+
+- size 255 bytes, 56 callers, status **callable**
+- sha256 `d8758387497387c58502f9d8e53a217c10e968dd78489723b318c27dcb816f92`
+
+```asm
+005c8c50  cmp byte ptr [rdx], 0
+005c8c53  je 0x5c8c60
+005c8c55  ret 
+005c8c56  nop word ptr cs:[rax + rax]
+005c8c60  cmp byte ptr [rcx], 0
+005c8c63  jne 0x5c8d10
+005c8c69  movsd xmm0, qword ptr [rdx + 8]
+005c8c6e  movsd xmm1, qword ptr [rcx + 8]
+005c8c73  ucomisd xmm1, xmm0
+005c8c77  jbe 0x5c8c88
+005c8c79  movsd qword ptr [rcx + 8], xmm0
+005c8c7e  movsd xmm0, qword ptr [rdx + 8]
+005c8c83  movsd xmm1, qword ptr [rcx + 8]
+005c8c88  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8c8d  jbe 0x5c8c94
+005c8c8f  movsd qword ptr [rcx + 0x18], xmm0
+005c8c94  movsd xmm0, qword ptr [rdx + 0x10]
+005c8c99  movsd xmm3, qword ptr [rcx + 0x10]
+005c8c9e  ucomisd xmm3, xmm0
+005c8ca2  jbe 0x5c8cb2
+005c8ca4  movsd qword ptr [rcx + 0x10], xmm0
+005c8ca9  movapd xmm3, xmm0
+005c8cad  movsd xmm0, qword ptr [rdx + 0x10]
+005c8cb2  movsd xmm2, qword ptr [rcx + 0x20]
+005c8cb7  ucomisd xmm0, xmm2
+005c8cbb  jbe 0x5c8cc6
+005c8cbd  movsd qword ptr [rcx + 0x20], xmm0
+005c8cc2  movapd xmm2, xmm0
+005c8cc6  movsd xmm0, qword ptr [rdx + 0x18]
+005c8ccb  ucomisd xmm1, xmm0
+005c8ccf  jbe 0x5c8cdb
+005c8cd1  movsd qword ptr [rcx + 8], xmm0
+005c8cd6  movsd xmm0, qword ptr [rdx + 0x18]
+005c8cdb  ucomisd xmm0, qword ptr [rcx + 0x18]
+005c8ce0  jbe 0x5c8ce7
+005c8ce2  movsd qword ptr [rcx + 0x18], xmm0
+005c8ce7  movsd xmm0, qword ptr [rdx + 0x20]
+005c8cec  ucomisd xmm3, xmm0
+005c8cf0  jbe 0x5c8cfc
+005c8cf2  movsd qword ptr [rcx + 0x10], xmm0
+005c8cf7  movsd xmm0, qword ptr [rdx + 0x20]
+005c8cfc  ucomisd xmm0, xmm2
+005c8d00  jbe 0x5c8c55
+005c8d06  movsd qword ptr [rcx + 0x20], xmm0
+005c8d0b  ret 
+005c8d0c  nop dword ptr [rax]
+005c8d10  mov r9, qword ptr [rdx + 8]
+005c8d14  mov byte ptr [rcx], 0
+005c8d17  mov r10, qword ptr [rdx + 0x10]
+005c8d1b  mov qword ptr [rcx + 8], r9
+005c8d1f  movsd xmm1, qword ptr [rcx + 8]
+005c8d24  mov qword ptr [rcx + 0x10], r10
+005c8d28  mov r9, qword ptr [rdx + 8]
+005c8d2c  mov r10, qword ptr [rdx + 0x10]
+005c8d30  movsd xmm3, qword ptr [rcx + 0x10]
+005c8d35  mov qword ptr [rcx + 0x18], r9
+005c8d39  mov qword ptr [rcx + 0x20], r10
+005c8d3d  movsd xmm0, qword ptr [rdx + 0x18]
+005c8d42  movsd xmm2, qword ptr [rcx + 0x20]
+005c8d47  ucomisd xmm1, xmm0
+005c8d4b  ja 0x5c8cd1
+005c8d4d  jmp 0x5c8cdb
+```
+
+## `0x524ee0` -- the subsystem behind GetLength's loop: 1054 bytes, 241 instructions, 12 calls and a RIP-relative table at 0x5FDE74. Read in round 376; embedded so the assembly is in the project while it stays unimplemented
+
+- size 1054 bytes, 22 callers, status **comment_only**
+- not callable because: call to 0x4F73E0 outside the block; call to 0x5203C0 outside the block; call to 0x5203D0 outside the block; call to 0x5203F0 outside the block (+12 more)
+- sha256 `6df109ae7e8553a19cc645051fe3f2341bcb74d41e4b2f9a2afb36e62172d070`
+
+```asm
+00524ee0  push r13
+00524ee2  push r12
+00524ee4  push rbp
+00524ee5  push rdi
+00524ee6  push rsi
+00524ee7  push rbx
+00524ee8  sub rsp, 0x108
+00524eef  movaps xmmword ptr [rsp + 0xf0], xmm7
+00524ef7  xor r8d, r8d
+00524efa  lea rdi, [rsp + 0x50]
+00524eff  mov r12, rdx
+00524f02  mov rbp, rcx
+00524f05  lea rdx, [rip + 0x5fde74]
+00524f0c  mov rcx, rdi
+00524f0f  call 0x5f4310
+00524f14  mov rcx, r12
+00524f17  call 0x520440
+00524f1c  test rax, rax
+00524f1f  je 0x5250b7
+00524f25  mov rcx, r12
+00524f28  call 0x5203c0
+00524f2d  mov rcx, r12
+00524f30  mov ebx, eax
+00524f32  call 0x520440
+00524f37  mov edx, ebx
+00524f39  mov rcx, rax
+00524f3c  call 0x4f73e0
+00524f41  mov rcx, rax
+00524f44  call 0x547620
+00524f49  lea r13, [rsp + 0x70]
+00524f4e  mov rdx, rax
+00524f51  mov rcx, r13
+00524f54  call 0x5c6be0
+00524f59  lea rcx, [rsp + 0x30]
+00524f5e  mov rdx, r12
+00524f61  call 0x5203d0
+00524f66  lea rbx, [rsp + 0xd0]
+00524f6e  mov rdx, r12
+00524f71  movdqu xmm7, xmmword ptr [rsp + 0x30]
+00524f77  mov rcx, rbx
+00524f7a  call 0x5203f0
+00524f7f  lea r9, [rsp + 0x20]
+00524f84  mov r8, rbx
+00524f87  mov rdx, r13
+00524f8a  movaps xmmword ptr [rsp + 0x20], xmm7
+00524f8f  lea rsi, [rsp + 0xb0]
+00524f97  mov rcx, rsi
+00524f9a  call 0x5d3ea0
+00524f9f  mov rdx, rsi
+00524fa2  mov rcx, rbp
+00524fa5  call 0x5cd800
+00524faa  mov r13, qword ptr [rsp + 0xb8]
+00524fb2  mov r12, qword ptr [rsp + 0xb0]
+00524fba  cmp r13, r12
+00524fbd  je 0x525017
+00524fbf  nop 
+00524fc0  mov rsi, qword ptr [r12 + 0x20]
+00524fc5  mov rbx, qword ptr [r12 + 0x18]
+00524fca  cmp rsi, rbx
+00524fcd  je 0x524feb
+00524fcf  nop 
+00524fd0  mov rcx, qword ptr [rbx]
+00524fd3  test rcx, rcx
+00524fd6  je 0x524fdd
+00524fd8  call 0x9984b0
+00524fdd  add rbx, 0x18
+00524fe1  cmp rsi, rbx
+00524fe4  jne 0x524fd0
+00524fe6  mov rbx, qword ptr [r12 + 0x18]
+00524feb  test rbx, rbx
+00524fee  je 0x524ff8
+00524ff0  mov rcx, rbx
+00524ff3  call 0x9984b0
+00524ff8  mov rcx, qword ptr [r12]
+00524ffc  test rcx, rcx
+00524fff  je 0x525006
+00525001  call 0x9984b0
+00525006  add r12, 0x30
+0052500a  cmp r13, r12
+0052500d  jne 0x524fc0
+0052500f  mov r12, qword ptr [rsp + 0xb0]
+00525017  test r12, r12
+0052501a  je 0x525024
+0052501c  mov rcx, r12
+0052501f  call 0x9984b0
+00525024  mov r13, qword ptr [rsp + 0x78]
+00525029  mov r12, qword ptr [rsp + 0x70]
+0052502e  cmp r13, r12
+00525031  je 0x525086
+00525033  mov rsi, qword ptr [r12 + 0x20]
+00525038  mov rbx, qword ptr [r12 + 0x18]
+0052503d  cmp rsi, rbx
+00525040  je 0x52505d
+00525042  mov rcx, qword ptr [rbx]
+00525045  test rcx, rcx
+00525048  je 0x52504f
+0052504a  call 0x9984b0
+0052504f  add rbx, 0x18
+00525053  cmp rsi, rbx
+00525056  jne 0x525042
+00525058  mov rbx, qword ptr [r12 + 0x18]
+0052505d  test rbx, rbx
+00525060  je 0x52506a
+00525062  mov rcx, rbx
+00525065  call 0x9984b0
+0052506a  mov rcx, qword ptr [r12]
+0052506e  test rcx, rcx
+00525071  je 0x525078
+00525073  call 0x9984b0
+00525078  add r12, 0x30
+0052507c  cmp r13, r12
+0052507f  jne 0x525033
+00525081  mov r12, qword ptr [rsp + 0x70]
+00525086  test r12, r12
+00525089  je 0x525093
+0052508b  mov rcx, r12
+0052508e  call 0x9984b0
+00525093  mov rcx, rdi
+00525096  call 0x5f4340
+0052509b  nop 
+0052509c  movaps xmm7, xmmword ptr [rsp + 0xf0]
+005250a4  mov rax, rbp
+005250a7  add rsp, 0x108
+005250ae  pop rbx
+005250af  pop rsi
+005250b0  pop rdi
+005250b1  pop rbp
+005250b2  pop r12
+005250b4  pop r13
+005250b6  ret 
+005250b7  lea rbx, [rsp + 0xd0]
+005250bf  xor r8d, r8d
+005250c2  mov qword ptr [rsp + 0x40], 0x28
+005250cb  lea rax, [rbx + 0x10]
+005250cf  mov rcx, rbx
+005250d2  lea rdx, [rsp + 0x40]
+005250d7  mov qword ptr [rsp + 0xd0], rax
+005250df  call 0x910ba0
+005250e4  mov rdx, qword ptr [rsp + 0x40]
+005250e9  mov qword ptr [rsp + 0xd0], rax
+005250f1  xor r8d, r8d
+005250f4  lea rsi, [rsp + 0xb0]
+005250fc  lea r13, [rsp + 0x90]
+00525104  mov rcx, r13
+00525107  mov qword ptr [rsp + 0xe0], rdx
+0052510f  movabs rdx, 0x705f64657473656e
+00525119  mov qword ptr [rax], rdx
+0052511c  movabs rdx, 0x747261702e747261
+00525126  mov qword ptr [rax + 8], rdx
+0052512a  movabs rdx, 0x7522202626202928
+00525134  mov qword ptr [rax + 0x10], rdx
+00525138  movabs rdx, 0x6e20646e756f626e
+00525142  mov qword ptr [rax + 0x18], rdx
+00525146  movabs rdx, 0x222e676e69747365
+00525150  mov qword ptr [rax + 0x20], rdx
+00525154  mov rax, qword ptr [rsp + 0x40]
+00525159  mov rdx, qword ptr [rsp + 0xd0]
+00525161  mov qword ptr [rsp + 0xd8], rax
+00525169  mov byte ptr [rdx + rax], 0
+0052516d  lea rax, [rsi + 0x10]
+00525171  movabs rdx, 0x676e69646e756f42
+0052517b  mov qword ptr [rsp + 0xb0], rax
+00525183  mov eax, 0x6f42
+00525188  mov qword ptr [rsp + 0xc0], rdx
+00525190  lea rdx, [rsp + 0x48]
+00525195  mov word ptr [rsi + 0x18], ax
+00525199  lea rax, [r13 + 0x10]
+0052519d  mov byte ptr [rsi + 0x1a], 0x78
+005251a1  mov qword ptr [rsp + 0x90], rax
+005251a9  mov qword ptr [rsp + 0xb8], 0xb
+005251b5  mov byte ptr [rsp + 0xcb], 0
+005251bd  mov qword ptr [rsp + 0x48], 0x16
+005251c6  call 0x910ba0
+005251cb  mov rdx, qword ptr [rsp + 0x48]
+005251d0  mov r9, rbx
+005251d3  mov r8, rsi
+005251d6  mov rcx, r13
+005251d9  mov qword ptr [rsp + 0x90], rax
+005251e1  mov qword ptr [rsp + 0xa0], rdx
+005251e9  movabs rdx, 0x63757274735c2e2e
+005251f3  mov qword ptr [rax], rdx
+005251f6  movabs rdx, 0x6174735c65727574
+00525200  mov qword ptr [rax + 8], rdx
+00525204  mov edx, 0x7070
+00525209  mov word ptr [rax + 0x14], dx
+0052520d  mov rdx, qword ptr [rsp + 0x90]
+00525215  mov dword ptr [rax + 0x10], 0x632e7374
+0052521c  mov rax, qword ptr [rsp + 0x48]
+00525221  mov qword ptr [rsp + 0x98], rax
+00525229  mov byte ptr [rdx + rax], 0
+0052522d  mov edx, 0x5a
+00525232  call 0x60a620
+00525237  mov rcx, qword ptr [rsp + 0x90]
+0052523f  add r13, 0x10
+00525243  cmp rcx, r13
+00525246  je 0x52524d
+00525248  call 0x9984b0
+0052524d  mov rcx, qword ptr [rsp + 0xb0]
+00525255  add rsi, 0x10
+00525259  cmp rcx, rsi
+0052525c  je 0x525263
+0052525e  call 0x9984b0
+00525263  mov rcx, qword ptr [rsp + 0xd0]
+0052526b  add rbx, 0x10
+0052526f  cmp rcx, rbx
+00525272  je 0x524f25
+00525278  call 0x9984b0
+0052527d  jmp 0x524f25
+00525282  mov rcx, qword ptr [rsp + 0x90]
+0052528a  add r13, 0x10
+0052528e  mov rbp, rax
+00525291  cmp rcx, r13
+00525294  je 0x52529b
+00525296  call 0x9984b0
+0052529b  mov rcx, qword ptr [rsp + 0xb0]
+005252a3  add rsi, 0x10
+005252a7  cmp rcx, rsi
+005252aa  je 0x5252b1
+005252ac  call 0x9984b0
+005252b1  mov rcx, qword ptr [rsp + 0xd0]
+005252b9  add rbx, 0x10
+005252bd  cmp rcx, rbx
+005252c0  je 0x5252c7
+005252c2  call 0x9984b0
+005252c7  mov rbx, rbp
+005252ca  mov rcx, rdi
+005252cd  call 0x5f4340
+005252d2  mov rcx, rbx
+005252d5  call 0x62f280
+005252da  mov rbp, rax
+005252dd  jmp 0x52529b
+005252df  mov rcx, rsi
+005252e2  mov rbx, rax
+005252e5  call 0x8c5090
+005252ea  mov rcx, r13
+005252ed  call 0x8c5090
+005252f2  jmp 0x5252ca
+005252f4  mov rbx, rax
+005252f7  jmp 0x5252ea
+005252f9  mov rbx, rax
+005252fc  jmp 0x5252ca
+```
+
+## `0x4f9200` -- lazily initialised object: checks the byte at +0x100 and returns [rcx+0x108] when it is set, else constructs. 434 bytes, 97 instructions, 21 callers
+
+- size 434 bytes, 21 callers, status **comment_only**
+- not callable because: call to 0x60A620 outside the block; call to 0x62F280 outside the block; call to 0x910BA0 outside the block; call to 0x9984B0 outside the block
+- sha256 `89cf114a758b4030a61a1d50f61151cec0d40937f597316d35f22b6d83ab612a`
+
+```asm
+004f9200  push rbp
+004f9201  push rdi
+004f9202  push rsi
+004f9203  push rbx
+004f9204  sub rsp, 0x98
+004f920b  cmp byte ptr [rcx + 0x100], 0
+004f9212  mov rbx, rcx
+004f9215  je 0x4f9230
+004f9217  lea rax, [rbx + 0x108]
+004f921e  add rsp, 0x98
+004f9225  pop rbx
+004f9226  pop rsi
+004f9227  pop rdi
+004f9228  pop rbp
+004f9229  ret 
+004f922a  nop word ptr [rax + rax]
+004f9230  lea rdi, [rsp + 0x70]
+004f9235  mov ecx, 0x7274
+004f923a  xor r8d, r8d
+004f923d  mov qword ptr [rsp + 0x78], 0xf
+004f9246  lea rax, [rdi + 0x10]
+004f924a  mov byte ptr [rsp + 0x68], 0
+004f924f  movabs rsi, 0x675f657661685f6d
+004f9259  lea rbp, [rsp + 0x50]
+004f925e  mov qword ptr [rsp + 0x70], rax
+004f9263  lea rax, [rbp + 0x10]
+004f9267  mov qword ptr [rsp + 0x80], rsi
+004f926f  mov qword ptr [rsp + 0x50], rax
+004f9274  lea rsi, [rsp + 0x30]
+004f9279  movabs rax, 0x797274656d6f6567
+004f9283  mov word ptr [rdi + 0x1c], cx
+004f9287  lea rdx, [rsp + 0x28]
+004f928c  mov rcx, rsi
+004f928f  mov dword ptr [rdi + 0x18], 0x656d6f65
+004f9296  mov byte ptr [rdi + 0x1e], 0x79
+004f929a  mov qword ptr [rsp + 0x60], rax
+004f929f  lea rax, [rsi + 0x10]
+004f92a3  mov byte ptr [rsp + 0x8f], 0
+004f92ab  mov qword ptr [rsp + 0x58], 8
+004f92b4  mov qword ptr [rsp + 0x30], rax
+004f92b9  mov qword ptr [rsp + 0x28], 0x16
+004f92c2  call 0x910ba0
+004f92c7  mov rdx, qword ptr [rsp + 0x28]
+004f92cc  mov qword ptr [rsp + 0x30], rax
+004f92d1  mov r9, rdi
+004f92d4  mov r8, rbp
+004f92d7  mov rcx, rsi
+004f92da  mov qword ptr [rsp + 0x40], rdx
+004f92df  movabs rdx, 0x63757274735c2e2e
+004f92e9  mov qword ptr [rax], rdx
+004f92ec  movabs rdx, 0x6568735c65727574
+004f92f6  mov qword ptr [rax + 8], rdx
+004f92fa  mov edx, 0x7070
+004f92ff  mov word ptr [rax + 0x14], dx
+004f9303  mov rdx, qword ptr [rsp + 0x30]
+004f9308  mov dword ptr [rax + 0x10], 0x632e7465
+004f930f  mov rax, qword ptr [rsp + 0x28]
+004f9314  mov qword ptr [rsp + 0x38], rax
+004f9319  mov byte ptr [rdx + rax], 0
+004f931d  mov edx, 0x13b
+004f9322  call 0x60a620
+004f9327  mov rcx, qword ptr [rsp + 0x30]
+004f932c  add rsi, 0x10
+004f9330  cmp rcx, rsi
+004f9333  je 0x4f933a
+004f9335  call 0x9984b0
+004f933a  mov rcx, qword ptr [rsp + 0x50]
+004f933f  add rbp, 0x10
+004f9343  cmp rcx, rbp
+004f9346  je 0x4f934d
+004f9348  call 0x9984b0
+004f934d  mov rcx, qword ptr [rsp + 0x70]
+004f9352  add rdi, 0x10
+004f9356  cmp rcx, rdi
+004f9359  je 0x4f9217
+004f935f  call 0x9984b0
+004f9364  jmp 0x4f9217
+004f9369  mov rbx, rax
+004f936c  mov rcx, qword ptr [rsp + 0x50]
+004f9371  add rbp, 0x10
+004f9375  cmp rcx, rbp
+004f9378  je 0x4f937f
+004f937a  call 0x9984b0
+004f937f  mov rcx, qword ptr [rsp + 0x70]
+004f9384  add rdi, 0x10
+004f9388  cmp rcx, rdi
+004f938b  je 0x4f9392
+004f938d  call 0x9984b0
+004f9392  mov rcx, rbx
+004f9395  call 0x62f280
+004f939a  mov rcx, qword ptr [rsp + 0x30]
+004f939f  add rsi, 0x10
+004f93a3  mov rbx, rax
+004f93a6  cmp rcx, rsi
+004f93a9  je 0x4f936c
+004f93ab  call 0x9984b0
+004f93b0  jmp 0x4f936c
+```
+
+## `0x5cd800` -- container construction that itself merges boxes through 0x5C8C50: 610 bytes, 145 instructions, 112 callers
+
+- size 610 bytes, 112 callers, status **comment_only**
+- not callable because: call to 0x5C5260 outside the block; call to 0x5C5F30 outside the block; call to 0x5C61D0 outside the block; call to 0x5CD360 outside the block (+4 more)
+- sha256 `07ad72bded390701cbc00ca615d0fd86eb1dccaec19277d433bf3810205c5761`
+
+```asm
+005cd800  push r12
+005cd802  push rbp
+005cd803  push rdi
+005cd804  push rsi
+005cd805  push rbx
+005cd806  sub rsp, 0xa0
+005cd80d  mov rdi, rcx
+005cd810  mov rcx, rdx
+005cd813  mov rbx, rdx
+005cd816  call 0x5c61d0
+005cd81b  mov rsi, qword ptr [rax + 8]
+005cd81f  cmp qword ptr [rax], rsi
+005cd822  je 0x5cd8a0
+005cd824  lea rsi, [rsp + 0x70]
+005cd829  mov rcx, rbx
+005cd82c  call 0x5c61d0
+005cd831  mov rcx, qword ptr [rax]
+005cd834  call 0x5c5f30
+005cd839  mov rcx, rax
+005cd83c  call 0x5c5260
+005cd841  mov rcx, rdi
+005cd844  mov rdx, rax
+005cd847  call 0x5cd360
+005cd84c  mov rcx, rbx
+005cd84f  call 0x5c61d0
+005cd854  mov rbp, qword ptr [rax + 8]
+005cd858  mov rbx, qword ptr [rax]
+005cd85b  cmp rbx, rbp
+005cd85e  je 0x5cd88f
+005cd860  mov rcx, rbx
+005cd863  add rbx, 0x30
+005cd867  call 0x5c5f30
+005cd86c  mov rcx, rax
+005cd86f  call 0x5c5260
+005cd874  mov rcx, rsi
+005cd877  mov rdx, rax
+005cd87a  call 0x5cd360
+005cd87f  mov rdx, rsi
+005cd882  mov rcx, rdi
+005cd885  call 0x5c8c50
+005cd88a  cmp rbp, rbx
+005cd88d  jne 0x5cd860
+005cd88f  mov rax, rdi
+005cd892  add rsp, 0xa0
+005cd899  pop rbx
+005cd89a  pop rsi
+005cd89b  pop rdi
+005cd89c  pop rbp
+005cd89d  pop r12
+005cd89f  ret 
+005cd8a0  lea rbp, [rsp + 0x50]
+005cd8a5  xor r8d, r8d
+005cd8a8  mov qword ptr [rsp + 0x50], 0x19
+005cd8b1  lea rsi, [rsp + 0x70]
+005cd8b6  mov rdx, rbp
+005cd8b9  lea rax, [rsi + 0x10]
+005cd8bd  mov rcx, rsi
+005cd8c0  mov qword ptr [rsp + 0x70], rax
+005cd8c5  lea r12, [rsp + 0x30]
+005cd8ca  call 0x910ba0
+005cd8cf  mov rdx, qword ptr [rsp + 0x50]
+005cd8d4  mov ecx, 0x6f42
+005cd8d9  xor r8d, r8d
+005cd8dc  mov qword ptr [rsp + 0x70], rax
+005cd8e1  mov qword ptr [rsp + 0x80], rdx
+005cd8e9  movabs rdx, 0x702e69746c756d21
+005cd8f3  mov qword ptr [rax], rdx
+005cd8f6  movabs rdx, 0x28736e6f67796c6f
+005cd900  mov qword ptr [rax + 8], rdx
+005cd904  movabs rdx, 0x287974706d652e29
+005cd90e  mov qword ptr [rax + 0x10], rdx
+005cd912  mov byte ptr [rax + 0x18], 0x29
+005cd916  mov rax, qword ptr [rsp + 0x50]
+005cd91b  mov rdx, qword ptr [rsp + 0x70]
+005cd920  mov qword ptr [rsp + 0x78], rax
+005cd925  mov byte ptr [rdx + rax], 0
+005cd929  lea rax, [rbp + 0x10]
+005cd92d  movabs rdx, 0x676e69646e756f42
+005cd937  mov qword ptr [rsp + 0x50], rax
+005cd93c  lea rax, [r12 + 0x10]
+005cd941  mov qword ptr [rsp + 0x60], rdx
+005cd946  lea rdx, [rsp + 0x28]
+005cd94b  mov word ptr [rbp + 0x18], cx
+005cd94f  mov rcx, r12
+005cd952  mov byte ptr [rbp + 0x1a], 0x78
+005cd956  mov qword ptr [rsp + 0x30], rax
+005cd95b  mov qword ptr [rsp + 0x58], 0xb
+005cd964  mov byte ptr [rsp + 0x6b], 0
+005cd969  mov qword ptr [rsp + 0x28], 0x16
+005cd972  call 0x910ba0
+005cd977  mov rdx, qword ptr [rsp + 0x28]
+005cd97c  mov qword ptr [rsp + 0x30], rax
+005cd981  mov r9, rsi
+005cd984  mov r8, rbp
+005cd987  mov rcx, r12
+005cd98a  mov qword ptr [rsp + 0x40], rdx
+005cd98f  movabs rdx, 0x5c6d6f65675c2e2e
+005cd999  mov qword ptr [rax], rdx
+005cd99c  movabs rdx, 0x69747265706f7270
+005cd9a6  mov qword ptr [rax + 8], rdx
+005cd9aa  mov edx, 0x7070
+005cd9af  mov word ptr [rax + 0x14], dx
+005cd9b3  mov rdx, qword ptr [rsp + 0x30]
+005cd9b8  mov dword ptr [rax + 0x10], 0x632e7365
+005cd9bf  mov rax, qword ptr [rsp + 0x28]
+005cd9c4  mov qword ptr [rsp + 0x38], rax
+005cd9c9  mov byte ptr [rdx + rax], 0
+005cd9cd  mov edx, 0x99
+005cd9d2  call 0x60a620
+005cd9d7  mov rcx, qword ptr [rsp + 0x30]
+005cd9dc  add r12, 0x10
+005cd9e0  cmp rcx, r12
+005cd9e3  je 0x5cd9ea
+005cd9e5  call 0x9984b0
+005cd9ea  mov rcx, qword ptr [rsp + 0x50]
+005cd9ef  add rbp, 0x10
+005cd9f3  cmp rcx, rbp
+005cd9f6  je 0x5cd9fd
+005cd9f8  call 0x9984b0
+005cd9fd  mov rcx, qword ptr [rsp + 0x70]
+005cda02  add rsi, 0x10
+005cda06  cmp rcx, rsi
+005cda09  je 0x5cd824
+005cda0f  call 0x9984b0
+005cda14  jmp 0x5cd824
+005cda19  mov rbx, rax
+005cda1c  mov rcx, qword ptr [rsp + 0x50]
+005cda21  add rbp, 0x10
+005cda25  cmp rcx, rbp
+005cda28  je 0x5cda2f
+005cda2a  call 0x9984b0
+005cda2f  mov rcx, qword ptr [rsp + 0x70]
+005cda34  add rsi, 0x10
+005cda38  cmp rcx, rsi
+005cda3b  je 0x5cda42
+005cda3d  call 0x9984b0
+005cda42  mov rcx, rbx
+005cda45  call 0x62f280
+005cda4a  mov rcx, qword ptr [rsp + 0x30]
+005cda4f  add r12, 0x10
+005cda53  mov rbx, rax
+005cda56  cmp rcx, r12
+005cda59  je 0x5cda1c
+005cda5b  call 0x9984b0
+005cda60  jmp 0x5cda1c
 ```
 
 ## `0x5c8a10` -- the box accumulator it calls: init-or-extend a min/max box with one pair (flag at +0x00, then minX +0x08, minY +0x10, maxX +0x18, maxY +0x20); the flag means UNINITIALISED when non-zero, which is why the caller sets it to 1 before the loop and the first call clears it
