@@ -68,6 +68,8 @@ BLOCKS = [
     (0x4F73E0, None, '530 bytes, 12 callers, reached from 0x524EE0'),
     (0x547620, None, 'five-byte accessor: lea rax, [rcx + 0x18]; 4 callers'),
     (0x5C6BE0, None, '65 bytes, 46 callers, reached from 0x524EE0'),
+    (0x526160, None, 'the implementer behind GetLength: walks 120-byte elements, merges boxes with 0x5C8C50, returns one of two box differences or zero'),
+    (0x5266A0, None, 'the implementer behind GetHeight: differs from 0x526160 in one callee of the 0x52F8xx family'),
     (0x5C8C50, None,
      "merge two min/max boxes: if the source's flag byte is non-zero nothing happens, if the destination's is non-zero it is "
      "re-initialised from the source, otherwise the four doubles are min/max combined. 62 instructions, no calls, 56 "

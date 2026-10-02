@@ -337,6 +337,28 @@
     "sha256": "213123586aab2df6d4d2a81bb752ae4b7d48e0a3f6bfc973c8dffd23f7880374"
   },
   {
+    "rva": 5398880,
+    "size": 757,
+    "symbol": "lcns_orig_526160",
+    "status": "comment_only",
+    "reason": "call to 0x4F9200 outside the block; call to 0x51D0C0 outside the block; call to 0x524EE0 outside the block; call to 0x52F810 outside the block (+5 more)",
+    "note": "the implementer behind GetLength: walks 120-byte elements, merges boxes with 0x5C8C50, returns one of two box differences or zero",
+    "relocations": [],
+    "callers": 3,
+    "sha256": "b5c2c864658c15d2efd064ea6d706039d812c6b9f25355a47f8406289c6b4a19"
+  },
+  {
+    "rva": 5400224,
+    "size": 759,
+    "symbol": "lcns_orig_5266a0",
+    "status": "comment_only",
+    "reason": "call to 0x4F9200 outside the block; call to 0x51D0C0 outside the block; call to 0x524EE0 outside the block; call to 0x52F830 outside the block (+5 more)",
+    "note": "the implementer behind GetHeight: differs from 0x526160 in one callee of the 0x52F8xx family",
+    "relocations": [],
+    "callers": 2,
+    "sha256": "4bdd47f664099c5f9147678f8e369d7ccb73d13671b3a4ba908cbd5c1ef30055"
+  },
+  {
     "rva": 6065232,
     "size": 255,
     "symbol": "lcns_orig_5c8c50",
