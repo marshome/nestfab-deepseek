@@ -1326,6 +1326,22 @@
    "round": 619,
    "subject": "0x765460.assertion-cluster",
    "witness": "a long routine whose guarded decisions cluster in its last fifth"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "six rounds of a wrong file-name decoder were refused at the first line because the tool asks one question whose answer is on record",
+   "round": 620,
+   "subject": "tooling.selfcheck-paid-for-itself",
+   "witness": "every attempt printed 'REFUSING TO REPORT' instead of five rounds of wrong names reaching the ledger; first direct payoff of the self-check rule adopted four rounds ago"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the assertion file names are an open problem with a stated failure: the line register is reused for two bytes of the name, in the middle of the assembly",
+   "round": 620,
+   "subject": "assert.file-names-are-open",
+   "witness": "0x526397 mov edx,0x7070 then 0x52639C mov word [rax+0x14],dx then 0x5263BA mov edx,0x9a; a backwards walk stopping at the first line-register assignment loses the two movabs pieces"
   }
  ]
 }
