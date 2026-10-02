@@ -2710,6 +2710,30 @@
    "round": 694,
    "subject": "the-nester-base-class-is-missing",
    "witness": "NoFillNester's slot 5 at 0x7F240 stores through rbp (= rcx at 0x7F266) at +0x10, +0x18, +0x20 through +0x90, with immediate zeros at 0x7F41F, 0x7F426 and 0x7F445, and NestingNester has the same 0x10 base gap"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "Multi::CompositeNester is the base of NoFillNester, CompactNester, FilterNester, FlipNester, LimitedNester and MultiTorchNester, between them and Multi::Nester",
+   "round": 695,
+   "subject": "CompositeNester-is-the-missing-base",
+   "witness": "the module's own typeinfo strings: NoFillNester at 0xA18010 is N5Multi12NoFillNesterE, whose +0x10 points at 0xA18150 named N5Multi15CompositeNesterE, whose +0x10 points at 0xA18380 named N5Multi6NesterE"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "Row::Squeezer derives from Row::Distancer, and the base's only virtual method returns the double at +8",
+   "round": 695,
+   "subject": "Squeezer-derives-from-Distancer",
+   "witness": "the module's typeinfo: Squeezer at 0xA17E00 has +0x10 pointing at 0xA17E60 named N3Row9DistancerE; the sibling BasicDistancer's slot 2 at 0x7CA810 is movsd xmm0,[rcx+8] then ret"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an abstract base has no instantiated vtable and is therefore not a key in re/vtables.json, which is why the whole base layer went unnoticed",
+   "round": 695,
+   "subject": "abstract-bases-are-absent-from-vtables-json",
+   "witness": "Multi::Nester, Multi::CompositeNester, Row::Distancer, Engine::Engine, Tiling::Evaluator and nine more are all absent from the JSON and all present in the module's typeinfo"
   }
  ]
 }
