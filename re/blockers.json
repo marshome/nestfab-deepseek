@@ -9,7 +9,20 @@
    "tried": [
     "window of N instructions after the key (g_json_fields.py): four keys onto +0x10",
     "comparison-bounded span (g_keys_bound.py): 96 pairs, 0 agreeing with the layout",
-    "span + first-argument register tracking + nested-serialiser cut + contradiction drop (g_pair2.py): 13 keys survive, 4 offsets claimed by several keys"
+    "span + first-argument register tracking + nested-serialiser cut + contradiction drop (g_pair2.py): 13 keys survive, 4 offsets claimed by several keys",
+    "re/g_serialiser_owner.py against re/TYPES.md: 4828 typed functions, and only 0x5070E0 (Engine, by CALL) among the fifteen serialisers"
+   ]
+  },
+  {
+   "at": "2026-10-02T13:40:52Z",
+   "id": "StatBox::fold rewrite",
+   "reason": "the committed StatBox::fold does not implement RE 0x5C8C50: four element doubles reach the accumulator in two passes, and the flag's polarity is the opposite of what the struct assumes",
+   "resolved": null,
+   "round": 647,
+   "tried": [
+    "attempt 1: one axis, flag set on the first fold -- the test failed on the second axis",
+    "attempt 2: two axes set together, flag cleared -- the test failed because the flag-zero path compares rather than installs",
+    "attempt 3: read the body in full -- the structure is four doubles in two passes, and the flag-zero path is the compare path"
    ]
   }
  ]
