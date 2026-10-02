@@ -334,7 +334,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 29u);
+        CHECK(ex::forwardedCount() == 30u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -343,7 +343,7 @@ int main() {
                                   e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286 ||
                                   e->ordinal0 == 146 || e->ordinal0 == 188 || e->ordinal0 == 222 ||
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
-                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82;
+                                  e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82 || e->ordinal0 == 270;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -555,6 +555,18 @@ int main() {
                 CHECK(lcns::dll::exports::impl::clampMaximumThreads(hw, want) == expected);
             }
         }
+    }
+
+    // ------------------- the module switch, whose whole closure is sixteen bytes
+    {
+        lcns::dll::exports::impl::setModuleSwitch(0);
+        CHECK(lcns::dll::exports::impl::moduleSwitch() == 0);
+        lcns::dll::exports::impl::setModuleSwitch(7);
+        CHECK(lcns::dll::exports::impl::moduleSwitch() == 1);    // any non-zero becomes exactly one (RE 0xAFE2)
+        lcns::dll::exports::impl::setModuleSwitch(-1);
+        CHECK(lcns::dll::exports::impl::moduleSwitch() == 1);
+        lcns::dll::exports::impl::setModuleSwitch(0);
+        CHECK(lcns::dll::exports::impl::moduleSwitch() == 0);
     }
 
     return check::finish("exports");

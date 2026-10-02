@@ -144,6 +144,21 @@ void setLocalMaximumThreads(void* object, int value) {
     static_cast<LocalEngineCarrier*>(object)->maxThreads = clampMaximumThreads(platformConcurrency(), value);
 }
 
+namespace {
+// RE 0x60A610 writes the byte at rip + 0x518D3A. The address is the original image's and cannot be reproduced, but the
+// value can, and that is what any caller can observe.
+unsigned char g_moduleSwitch = 0;
+}  // namespace
+
+void setModuleSwitch(int value) {
+    // RE 0xAFE0: test, setne, movzx -- any non-zero becomes exactly one
+    g_moduleSwitch = (value != 0) ? static_cast<unsigned char>(1) : static_cast<unsigned char>(0);
+}
+
+unsigned char moduleSwitch() {
+    return g_moduleSwitch;
+}
+
 void setShearMode(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field44 = value; }
 void setNoMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field18 = value; }
 void setNoSheetMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field1C = value; }
