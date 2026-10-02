@@ -1126,6 +1126,14 @@
    "round": 608,
    "subject": "0x8A9510",
    "witness": "profile callers = 3; 0x8A9520 mov dword ptr [rcx], edx and 0x8A9525 mov qword ptr [rcx+0x10], 0x2e"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the real leverage is an order of magnitude smaller than the closure-based column suggested: 4 direct-shared functions against 74 closure-shared",
+   "round": 609,
+   "subject": "leverage.true-figure",
+   "witness": "the corrected g_cheapest.py prints reach>1 and direct>1 side by side: for ordinal 55 both are 74 and 4; 0x8A9510 is in 121 closures and called directly by ZERO unforwarded exports"
   }
  ]
 }

@@ -51,14 +51,25 @@ def main(argv):
     table = json.loads(open(os.path.join(HERE, "exports_table.json"), encoding="utf-8").read())
     forwarded = L.forwarded_ordinals()
 
-    # how many unforwarded exports each function is in, so a shared leaf shows its leverage
+    # LEVERAGE, measured two ways, because the first version confused them and reported a reachable set as a caller count.
+    #
+    #   counts   -- in how many unforwarded exports' CLOSURES the function appears. Reachability. True and not leverage: it says
+    #               the function is somewhere below those exports, which a function three levels down satisfies.
+    #   direct   -- in how many unforwarded exports the function is a DIRECT callee. This is the leverage figure, because a direct
+    #               callee is one the export actually hands its work to.
+    #
+    # The round that found this: g_cheapest.py printed "in 121 exports" for 0x8A9510, whose profile callers number THREE. A reachable
+    # set is not a work list and is not a caller count -- the third tool in this project to need that distinction.
     counts = {}
+    direct = {}
     rows = []
     for entry in table:
         ordinal = (entry.get("ords") or [0])[0]
         if ordinal in forwarded:
             continue
         root = entry["rva"]
+        for address in set((profile.get(root) or {}).get("callees") or []):
+            direct[address] = direct.get(address, 0) + 1
         closure = domain_of(root, profile)
         domain = [a for a in closure
                   if not (a in T.BOILERPLATE or a in getattr(T, "IMPLEMENTED", ()) or a in L.VERIFIED)]
@@ -71,23 +82,29 @@ def main(argv):
         total = sum((profile.get(a) or {}).get("size") or 0 for a in domain)
         largest = max(((profile.get(a) or {}).get("size") or 0 for a in domain), default=0)
         shared = sum(1 for a in domain if counts.get(a, 0) > 1)
-        ranked.append((total, largest, len(domain), shared, ordinal, root, domain))
+        called = sum(1 for a in domain if direct.get(a, 0) > 1)
+        ranked.append((total, largest, len(domain), shared, ordinal, root, domain, called))
     ranked.sort()
 
     print("the unforwarded exports ranked by BYTES of body to read:")
     print("")
-    print("%-9s %-9s %-7s %-7s %-8s %s" % ("bytes", "largest", "count", "shared", "ordinal", "export"))
-    for total, largest, count, shared, ordinal, root, domain in ranked[:args.top]:
+    print("%-9s %-9s %-7s %-7s %-9s %-8s %s" % ("bytes", "largest", "count", "reach>1", "direct>1", "ordinal", "export"))
+    for total, largest, count, shared, ordinal, root, domain, called in ranked[:args.top]:
         label = L.VERIFIED.get(root) or ""
-        print("%-9d %-9d %-7d %-7d %-8d 0x%X %s" % (total, largest, count, shared, ordinal, root, label))
+        print("%-9d %-9d %-7d %-7d %-9d %-8d 0x%X %s" % (total, largest, count, shared, called, ordinal, root, label))
+    print("")
+    print("reach>1 counts functions that appear in more than one export's CLOSURE, which is reachability. direct>1 counts functions")
+    print("that more than one export CALLS, which is leverage. The two differ by a lot and only the second is a reason to read a body:")
+    print("the first version of this tool printed the first as if it were the second, and reported 121 for a function with 3 callers.")
     print("")
 
-    total, largest, count, shared, ordinal, root, domain = ranked[0]
+    total, largest, count, shared, ordinal, root, domain, called = ranked[0]
     print("the cheapest, in detail: ordinal %d, export 0x%X, %d bytes over %d functions" % (ordinal, root, total, count))
     for address in sorted(domain, key=lambda a: -((profile.get(a) or {}).get("size") or 0)):
         size = (profile.get(address) or {}).get("size") or 0
         label = L.VERIFIED.get(address) or ""
-        print("    0x%-8X %5d B  in %d exports  %s" % (address, size, counts.get(address, 0), label))
+        print("    0x%-8X %5d B  in %d closures, called by %d exports  %s"
+              % (address, size, counts.get(address, 0), direct.get(address, 0), label))
     print("")
     print("A wall of 75 FUNCTIONS is not a wall of work: rank by bytes and the question becomes which few bodies to read.")
     return 0
