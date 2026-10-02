@@ -1,18 +1,15 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""What the audit CANNOT see: members whose NAME and TYPE no instruction supports.
+"""Make the support audit count READS as well as writes, and treat a constructor that was NOT found as a separate verdict.
 
-The full audit catches SHAPES -- `at_0020`, a stack store cited as a field, a placeholder class. **It cannot catch a member called `ratio_` whose
-instruction does not exist**, because there is nothing to compare against: the member was never placed by anything.
+TWO DEFECTS IN THE AUDIT, both found by running it on a class that had just been corrected:
 
-This checks the other direction. For every hand-written class, it asks whether the class's RECOVERED CONSTRUCTOR actually writes the members the
-class declares:
+  1. IT ONLY COUNTED WRITES. `BestObserver::sink_` at +0x10 IS placed by an instruction -- `0x755A40 mov rcx, [rcx + 0x10]` READS it and jumps
+     into its vtable -- and the audit called the class unsupported because its constructor is a destructor pair that only writes the vtable.
+     **A member proven by a read is as supported as one proven by a write**, and the tool was reporting the class as one of the seven.
+  2. IT DID NOT SEPARATE "the constructor was not found" FROM "the constructor does not place them". Those are different findings: the first is a
+     gap in the scan, the second is a defect in the declaration. `re/g_find_real_ctor.py` decides which.
 
-    FilterNester   rng_ at +0x20 and index at +0x9E0 -- RE 0xB3AB0 and 0xB3AC1 write both.  SUPPORTED
-    FlipNester     record_, compare_ at +0x20 and +0x21 -- RE 0x4B59B and 0x4B5AE write both.   SUPPORTED
-    LimitedNester  maxParts_, maxAngles_ -- WHICH INSTRUCTION WRITES +0x08 AND +0x0C? If none, they are a guess.
-
-    python g_members_without_instructions.py [--class LimitedNester]
+    python g_members_without_instructions.py [--class X]
 """
 import argparse
 import glob
@@ -28,12 +25,23 @@ sys.path.insert(0, HERE)
 
 from lib import disasm, load_prof  # noqa: E402
 
-STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\], ")
-MEMBER = re.compile(r"^ {4,}([\w:<>,\s\*&]+?)\s+(\w+)\s*(?:=\s*[^;]*)?;", re.M)
+FREE = 0x9984B0
+ACCESS = re.compile(r"\[(\w+)(?: \+ (0x[0-9a-f]+))?\]")
+MEMBER = re.compile(r"^ {4,}([\w:<>,\s\*&]+?)\s+(\w+)\s*(?:\{\})?\s*(?:=\s*[^;]*)?;", re.M)
 
 
-def written_offsets(function, profile):
-    """The offsets one function writes through a base register loaded from rcx, with that register's own evidence."""
+def is_destructor(function, profile):
+    size = (profile.get(function) or {}).get("size") or 0
+    for instruction in disasm(function):
+        if instruction.address >= function + size:
+            break
+        if instruction.mnemonic == "jmp" and instruction.op_str.strip() == "0x%x" % FREE:
+            return True
+    return False
+
+
+def accessed_offsets(function, profile):
+    """Every offset touched through a register loaded from rcx, read OR written -- because a read places a member too."""
     size = (profile.get(function) or {}).get("size") or 0
     if not size:
         return set()
@@ -42,12 +50,9 @@ def written_offsets(function, profile):
     for instruction in disasm(function):
         if instruction.address >= function + size:
             break
-        match = STORE.match(instruction.op_str)
-        if match:
-            base, offset = match.group(2), match.group(3)
-            if base in holds and offset:
-                offsets.add(int(offset, 16))
-            continue
+        for match in ACCESS.finditer(instruction.op_str):
+            if match.group(1) in holds and match.group(2):
+                offsets.add(int(match.group(2), 16))
         copy = re.match(r"^(\w+), (\w+)$", instruction.op_str)
         if instruction.mnemonic == "mov" and copy:
             destination, source = copy.group(1), copy.group(2)
@@ -65,44 +70,45 @@ def main(argv):
 
     profile = load_prof()
     data = json.loads(io.open(os.path.join(HERE, "all_class_fields.json"), encoding="utf-8").read())
-    by_short = {}
-    for entry in data["classes"]:
-        if entry.get("constructor"):
-            by_short[entry["class"].split("::")[-1]] = int(entry["constructor"], 16)
+    by_short = {e["class"].split("::")[-1]: int(e["constructor"], 16) for e in data["classes"] if e.get("constructor")}
 
     rows = []
     for path in sorted(glob.glob(os.path.join(ROOT, "lcns", "include", "lcns", "*.hpp"))):
         name = os.path.basename(path)
-        if name in ("exports_impl.hpp", "parameter_report.hpp", "option_keys.hpp", "miplib_names.hpp", "recovery.hpp"):
-            continue
         text = io.open(path, encoding="utf-8", errors="replace").read()
-        # the hand-written classes in this header, and the members each declares in its private section
         for match in re.finditer(r"^class (\w+)[^\{]*\{(?P<body>.*?)^\};", text, re.M | re.S):
             short = match.group(1)
             if short not in by_short:
                 continue
-            body = match.group("body")
-            members = [(m.group(1).strip(), m.group(2)) for m in MEMBER.finditer(body)]
+            members = [(m.group(1).strip(), m.group(2)) for m in MEMBER.finditer(match.group("body")) if "static" not in m.group(1)]
             if not members:
                 continue
-            written = written_offsets(by_short[short], profile)
-            rows.append((name, short, by_short[short], written, members))
+            function = by_short[short]
+            offsets = accessed_offsets(function, profile)
+            # AND THE CLASS'S OWN SLOTS, because a forwarder proves a member its constructor never touches
+            for slot in (profile.get(function) or {}).get("callers") or []:
+                offsets |= accessed_offsets(slot, profile)
+            rows.append((name, short, function, is_destructor(function, profile), offsets, members))
 
     if args.owner:
         rows = [r for r in rows if r[1] == args.owner]
 
-    print("hand-written classes whose recovered constructor can be checked: %d" % len(rows))
+    print("%-22s %-16s %-10s %-9s %-12s %s" % ("class", "header", "fn", "kind", "offsets seen", "declared members"))
+    unsupported = 0
+    for name, short, function, destructor, offsets, members in rows:
+        kind = "DESTRUCTOR" if destructor else "constructor"
+        if not offsets and destructor:
+            kind = "NOT FOUND"
+        if not offsets:
+            unsupported += 1
+        print("%-22s %-16s 0x%-8X %-9s %-12s %s"
+              % (short[:22], name[:16], function, kind,
+                 " ".join("+0x%X" % o for o in sorted(offsets)[:4]) or "-- none --",
+                 ", ".join(m[1] for m in members)[:36]))
     print("")
-    print("%-22s %-18s %-10s %-10s %s" % ("class", "header", "ctor", "writes", "declared members"))
-    for name, short, ctor, written, members in rows:
-        print("%-22s %-18s 0x%-8X %-10s %s"
-              % (short[:22], name[:18], ctor,
-                 " ".join("+0x%X" % o for o in sorted(written)[:4]) or "-- none --",
-                 ", ".join(m[1] for m in members)[:44]))
-    print("")
-    print("WHERE `writes` IS EMPTY, the class's members have NO INSTRUCTION BEHIND THEM from that constructor -- **which is the case the full")
-    print("audit cannot see**, and the one the human found four times. It does not prove the members wrong; it says no instruction in the")
-    print("recovered constructor places them, and that has to be resolved by reading or by removing them.")
+    print("classes where NO offset of the object is touched by the function the field scan paired with them, nor by its callers: %d" % unsupported)
+    print("**AND `NOT FOUND` IS A DIFFERENT FINDING FROM AN UNSUPPORTED MEMBER**: it means the scan did not locate the class's constructor, so")
+    print("nothing can be concluded about the members either way. re/g_find_real_ctor.py settles which case a class is in.")
     return 0
 
 

@@ -2454,6 +2454,22 @@
    "round": 677,
    "subject": "declarations-were-never-re-read",
    "witness": "FlipNester had an invented ratio_, InfiniteEngine an inner_ that was the second argument, and BestObserver four members where it forwards"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a member proven by a READ is as supported as one proven by a write; the support audit counted only writes and called a corrected class unsupported",
+   "round": 678,
+   "subject": "a-member-can-be-proven-by-a-read",
+   "witness": "BestObserver::sink_ at +0x10 is read by 0x755A40, which jumps into its vtable, and the audit's write-only rule missed it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the function paired with a class not touching the object is a GAP IN THE SCAN, while members nothing places is a DEFECT IN THE DECLARATION, and they have different remedies",
+   "round": 678,
+   "subject": "scan-gap-is-not-a-declaration-defect",
+   "witness": "the support audit reported both as one count; three of the five classes with no offsets seen are paired with a DESTRUCTOR, which is the same pairing defect that produced InfiniteEngine's phantom inner_"
   }
  ]
 }
