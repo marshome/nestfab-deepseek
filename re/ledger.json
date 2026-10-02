@@ -694,6 +694,22 @@
    "round": 583,
    "subject": "tooling.shell-quoting",
    "witness": "the same command re-run from a Python file found 33 direct calls over 16 targets; this is the fifth impossible number this session and the first whose cause was the shell rather than a script"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "0x520440 builds a message from immediates whose pieces include part and .cpp",
+   "round": 584,
+   "subject": "internal.cpp.build",
+   "witness": "immediate stores at 0x5204A2 (0x222E676E), 0x5204FF (0x74726170), 0x520538 (0x7070632E); the buffer is 0x1C bytes and 0x910BA0 allocates it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a string the module builds from immediates is invisible to a string search and still readable; this is the SECOND such finding",
+   "round": 584,
+   "subject": "byte-built-strings",
+   "witness": "0x526160 built ../structure stat.cpp from three immediates; 0x520440 builds a message ending in /internal.cpp from three more"
   }
  ]
 }
