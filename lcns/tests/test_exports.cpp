@@ -335,7 +335,7 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
         }
         // The 14 are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 40u);
+        CHECK(ex::forwardedCount() == 43u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
@@ -346,7 +346,11 @@ int main() {
                                   e->ordinal0 == 304 || e->ordinal0 == 76 ||
                                   e->ordinal0 == 84 || e->ordinal0 == 29 || e->ordinal0 == 144 || e->ordinal0 == 166 || e->ordinal0 == 182 || e->ordinal0 == 312 || e->ordinal0 == 330 || e->ordinal0 == 316 || e->ordinal0 == 336 || e->ordinal0 == 338 || e->ordinal0 == 334 || e->ordinal0 == 78 || e->ordinal0 == 212 || e->ordinal0 == 238 || e->ordinal0 == 73 || e->ordinal0 == 82 || e->ordinal0 == 270 || e->ordinal0 == 208 ||
                                   // round 537: the nine setters re/g_ready.py found ready
-                                  e->ordinal0 == 86 || e->ordinal0 == 154 || e->ordinal0 == 128 || e->ordinal0 == 140 || e->ordinal0 == 150 || e->ordinal0 == 176 || e->ordinal0 == 298 || e->ordinal0 == 300 || e->ordinal0 == 246;
+                                  e->ordinal0 == 86 || e->ordinal0 == 154 || e->ordinal0 == 128 || e->ordinal0 == 140 || e->ordinal0 == 150 || e->ordinal0 == 176 || e->ordinal0 == 298 || e->ordinal0 == 300 || e->ordinal0 == 246 ||
+                                  // round 557: the build metadata, whose whole body is a logger call and one std::string data
+                                  // pointer. They were never blocked -- the 256 function closure they appeared to carry was the
+                                  // LOGGER's reachable graph, not their own need.
+                                  e->ordinal0 == 88 || e->ordinal0 == 90 || e->ordinal0 == 92;
             CHECK(ex::forwards(i) == expected);
         }
     }
@@ -702,6 +706,21 @@ int main() {
         std::memset(order.data(), 0, order.size());
         ex::impl::setMultiplicityPreference_0D1A0(order.data(), 4);
         CHECK(dbl(kMultiplicityPreference) == 2.0);
+    }
+
+    // ---------------------------------------------------------------- the build metadata (round 557)
+    //
+    // Three exports whose body is a logger call and one load, so their evidence is entirely in the disassembly: the global
+    // each reads, the std::string it points at, and the bytes of that string's data in the image. The address of every step
+    // is in the comments beside the implementation.
+    {
+        // RE 0xB470, and RE 0xB1F410 is where "Jun 28 2019" sits as the string's data.
+        CHECK(std::string(lcns::dll::exports::impl::getBuildDate()) == "Jun 28 2019");
+        // RE 0xB450, and RE 0xB1F430 holds "5.0"; the declared return is int, so the low byte is the character '5'.
+        CHECK(lcns::dll::exports::impl::getMajorVersion() == '5');
+        // RE 0xB490: the std::string at 0x6BFDF3C0 is EMPTY in the image, so the value is produced at load time. nullptr is
+        // the documented unknown, and this check exists so that "unknown" stays distinguishable from "recovered as empty".
+        CHECK(lcns::dll::exports::impl::getBuildVersion() == nullptr);
     }
 
     return check::finish("exports");

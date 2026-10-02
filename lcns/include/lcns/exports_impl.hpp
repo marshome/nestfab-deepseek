@@ -102,6 +102,14 @@ void setSpecificSheetObjective_13FE0(void* order, int value);
 /** RE 0x189FA, 0x18A09 and 0x18A10 (246, SetMarkMode): xmm2 to +0xE8, +0xE0 = (flag != 0), xmm3 to +0xF0. */
 void setMarkMode_188D0(void* order, int flag, double first, double second);
 
+/** RE 0xB490 (88, GetBuildVersion): a logger call, then the data pointer of the std::string the global at 0xA07660 holds.
+ *  That string is EMPTY in the image, so its value is produced at load time and is not recoverable. */
+const char* getBuildVersion();
+/** RE 0xB470 (90, GetBuildDate): the same shape; the global at 0xA07690 holds a std::string whose data is "Jun 28 2019". */
+const char* getBuildDate();
+/** RE 0xB450 (92, GetMajorVersion): the same shape; the global at 0xA07670 holds a std::string whose data is "5.0". */
+int getMajorVersion();
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll

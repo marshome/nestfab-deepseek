@@ -249,6 +249,40 @@ void setMarkMode_188D0(void* order, int flag, double first, double second) {
     order_fields(order)->markModeSecond = second;                                           // RE 0x18A10, from xmm3
 }
 
+// ---------------------------------------------------------------- the build metadata (RE round 557)
+//
+// Three exports whose whole body is a logger call and one load, and whose evidence is therefore entirely in the disassembly:
+//
+//     0xB470  sub rsp, 0x28
+//             lea rcx, [rip+0x9a154c]     ; the logger's own-name string, which is how the export is NAMED
+//             call 0x64AEA0               ; the toolchain logger: classified, not reproduced, no effect on the return
+//             mov rax, [rip+0x9fc209]     ; the global, which holds the address of a std::string
+//             mov rax, [rax]              ; its DATA pointer, field +0x00 of libstdc++'s std::string
+//             ret
+//
+// and the strings are in the image at fixed addresses:
+//
+//     GetBuildDate     0xB470   global 0xA07690 -> std::string 0x6BFDF400 -> "Jun 28 2019"
+//     GetMajorVersion  0xB450   global 0xA07670 -> std::string 0x6BFDF420 -> "5.0"
+//     GetBuildVersion  0xB490   global 0xA07660 -> std::string 0x6BFDF3C0 -> empty in the image
+
+const char* getBuildVersion() {
+    // RE 0xB490. The std::string at 0x6BFDF3C0 is empty in the image, so this module fills it at load time and the value is
+    // not in the file. nullptr is the documented unknown; inventing a version string would be the guess this project refuses.
+    return nullptr;
+}
+
+const char* getBuildDate() {
+    // RE 0xB470 and RE 0xB1F410, where the bytes "Jun 28 2019" sit as the string's data.
+    return "Jun 28 2019";
+}
+
+int getMajorVersion() {
+    // RE 0xB450 and RE 0xB1F430, where the string's data is "5.0". The declared return is int, so the ABI reads the dword
+    // the data points at and the low byte is the character '5'.
+    return '5';
+}
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll

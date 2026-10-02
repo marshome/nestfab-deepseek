@@ -316,22 +316,23 @@ extern "C" void SetOrigin(Order, NestingOrigin) {
 // ordinal 88/89  rva 0x0B490  31 bytes
 // signature from the inferred typed table
 extern "C" const char* GetBuildVersion() {
-    lcns::dll::exports::notReversed(42u);
-    return nullptr;
+    // RE 0xB490, implemented in exports_impl.cpp: a logger call, then the data pointer of the std::string held by the
+    // global at 0xA07660. That string is empty in the image, so the value is not recoverable and the implementation says so.
+    return lcns::dll::exports::impl::getBuildVersion();
 }
 
 // ordinal 90/91  rva 0x0B470  31 bytes
 // signature from the inferred typed table
 extern "C" const char* GetBuildDate() {
-    lcns::dll::exports::notReversed(43u);
-    return nullptr;
+    // RE 0xB470: same shape; the global at 0xA07690 holds a std::string whose data, at 0xB1F410, is "Jun 28 2019".
+    return lcns::dll::exports::impl::getBuildDate();
 }
 
 // ordinal 92/93  rva 0x0B450  31 bytes
 // signature from the inferred typed table
 extern "C" int GetMajorVersion() {
-    lcns::dll::exports::notReversed(44u);
-    return 0;
+    // RE 0xB450: same shape; the global at 0xA07670 holds a std::string whose data, at 0xB1F430, is "5.0".
+    return lcns::dll::exports::impl::getMajorVersion();
 }
 
 // ordinal 94/95  rva 0x10CE0  584 bytes
