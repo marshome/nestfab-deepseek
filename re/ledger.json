@@ -758,6 +758,22 @@
    "round": 587,
    "subject": "closure.defect-again",
    "witness": "the closure of 0x132E0 contains 388 unknown functions because it reaches into the whole program; re/g_export_sizes.py's per-export count of direct callees gave the right answer, and this is the second time the two measures have disagreed"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x23BF0 is a grow-and-append: count*3*8 allocated, the source memcpy'd in, and a three-slot begin/end/capacity handed to 0x22E40",
+   "round": 588,
+   "subject": "0x23BF0.grow",
+   "witness": "0x23C14 lea rax,[rcx+rcx*2]; 0x23C30 lea rdi,[rax*8]; 0x23C4D call 0x998500; 0x23C69 call 0x63F2F8 (memcpy); 0x23C8A lea rcx,[rsp+0x30] with the slots at +0x30/+0x38/+0x40; 0x23C9D call 0x22E40"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "the grow primitive's element is 0x18 = 24 bytes, three eight-byte accesses",
+   "round": 588,
+   "subject": "element.size-18",
+   "witness": "0x23C30 lea rdi,[rax*8] after count*3; 0x78 is the stat walk's stride and equals five times 0x18, recorded as a coincidence rather than asserted as a composition"
   }
  ]
 }
