@@ -110,17 +110,17 @@ feeling of compliance.
   "since": "round 558"},
 
  {"id": "assertions-are-leads",
-  "rule": "断言里的信息可能和实际代码不一致——代码更新了断言没更新，所以断言只作线索，不作证明",
-  "check": "every claim whose witness is an assertion STRING must also carry an INSTRUCTION witness for the offset it names; re/g_stale.py lists the ones that do not",
-  "where": "re/g_stale.py, and re/LEDGER.md's grade table",
-  "since": "round 572",
+  "rule": "断言可用；只有与代码冲突时才不采信（没有冲突就用断言的名字）",
+  "check": "re/g_conflict.py reports an ORPHAN: an assertion names order.<field> and nothing else in the module uses that name. Zero orphans means the assertions may be used.",
+  "where": "re/g_conflict.py",
+  "since": "round 572, refined in 573",
 },
 
  {"id": "oracle-needs-instruction",
-  "rule": "名字可以从 oracle 来，但字段的偏移必须另有指令级见证",
-  "check": "re/g_stale.py compares each ORACLE name against the instruction witnesses in the ledger",
-  "where": "re/g_stale.py",
-  "since": "round 572"},
+  "rule": "断言可以命名字段，但偏移只能由指令确定（名字是词、可查冲突；偏移是位置、断言不含它）",
+  "check": "re/g_conflict.py reports the orphans and re/g_stale.py the unanchored offsets",
+  "where": "re/g_conflict.py, re/g_stale.py",
+  "since": "round 572, refined in 573"},
 
 ## What is deliberately NOT a rule here
 

@@ -582,6 +582,14 @@
    "round": 572,
    "subject": "assertion.staleness-risk",
    "witness": "this project's own instance: the comment in launching_order.hpp quoting a constant at 0x9DE958, an address that does not exist in the module"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the four assertion names are ACCEPTED because nothing contradicts them",
+   "round": 573,
+   "subject": "LaunchingOrder.assertion-names-accepted",
+   "witness": "re/g_conflict.py: 0 orphans. common_cut_safety_preference and multitorch_cutting_preference also have setter witnesses; parts occurs 70 times in the image and sheets 12, so both are used throughout the code and not stale labels"
   }
  ]
 }
