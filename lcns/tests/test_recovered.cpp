@@ -6255,7 +6255,7 @@ int main() {
         std::size_t count = 0;
         const lcns::ConfigParameter* table = lcns::configParameters(count);
         CHECK(count == lcns::config::kConfigParameterCount);
-        CHECK(count == 59u);
+        CHECK(count == 107u);
 
         // the one site verified by hand: nesting_pow_boost at +0x100
         CHECK(lcns::config::knesting_pow_boost == 0x100);
@@ -6282,7 +6282,7 @@ int main() {
             CHECK(table[i].offset > table[i - 1].offset);
         }
         // and they all fall inside the largest offset the parser writes
-        CHECK(table[count - 1].offset == 0x344);
+        CHECK(table[count - 1].offset == 0x34F);
     }
 
     return check::finish("test_recovered");

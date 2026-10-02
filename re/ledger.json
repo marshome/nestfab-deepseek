@@ -1638,6 +1638,22 @@
    "round": 638,
    "subject": "config.59-fields",
    "witness": "re/g_param_layouts.py: the function's 112 lookup sites with a field, no duplicate offset in the chosen base rsi; the header lcns/config_parameters.hpp carries each name with a static_assert on its offset"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RE 0x4EC00 writes 107 named parameters into one object, +0x1C to +0x34F, once the store window widens to 24 instructions",
+   "round": 639,
+   "subject": "config.107-fields",
+   "witness": "the first version with an 8 instruction window found 59 and left +0x58..+0x5E as a gap; the wider one shows a run of tiling toggles: enable_flip, enable_tiling, enable_oblique_tiling, enable_pentagon_tiling, enable_oblique_pentagon_tiling, enable_composite_tiling, enable_common_cut_tiling"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "93 of 224 parameter stores land in [rsp + offset] and are stack locals receiving immediates, so the exclusion is a fact rather than a threshold",
+   "round": 639,
+   "subject": "tooling.rsp-is-never-a-field",
+   "witness": "0x12C2F8 stores 0x2d and 0x12C4F5 stores 0x31 into rsp slots; the tool reports the base registers so the exclusion is visible"
   }
  ]
 }
