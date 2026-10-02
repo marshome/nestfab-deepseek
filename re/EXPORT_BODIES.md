@@ -1313,3 +1313,37 @@ a deep geometric algorithm, and that is wrong: the dependency behind GetLength a
 plus a trigonometry call, and this project already has an angle transform model (row::AngleTransform, with a, b, c, d,
 tx and ty) plus the sine and cosine work recorded in re/HELPERS.md. What still has to be read is what the three
 remaining quadrants do, whether 0x634CA0 is sin or sincos, and where the loop that follows writes its results.
+
+## The angle constants: one turn is 3.6e12 units, and the axes are exact (rounds 492 and 493)
+
+Round 492 first read the wrong addresses, because a rip-relative displacement is relative to the NEXT instruction, so
+the constant behind movsd xmm8, [rip + 0x40A3F8] at 0x5D452F lives at 0x5D4538 + 0x40A3F8. With that corrected, the
+constants are:
+
+| rva | bytes | value |
+|---|---|---|
+| 0x9DE930 | 000000000000f03f | 1.0 |
+| 0x9DE938 | 0000000000000000 | 0.0 |
+| 0x9DE940 | 000000000000f0bf | -1.0 |
+| 0x9DE948 | 0000000000000080 | -0.0, negative zero |
+| 0x9DE950 | 000000c585318a42 | 3600000000000.0 |
+
+This closes the reading of 0x5D3EA0. Its remainder step subtracts a multiple of 0x34630B8A000, and that constant is
+exactly 3600000000000, the same number as the double at 0x9DE950, so an angle is carried in units of 1e-12 of a
+degree and one turn is 3.6e12 of them. The four remainders it special cases are then exactly the four axes:
+
+    0                   0 degrees
+    0xD18C2E2800        900000000000   = 3.6e12 / 4,   90 degrees
+    0x1A3185C5000       1800000000000  = 3.6e12 / 2,  180 degrees
+    0x274A48A7800       2700000000000  = 3.6e12 * 3/4, 270 degrees
+
+So 0x5D3EA0 reduces the angle into one turn, returns exact axis values for the four axes instead of asking the
+trigonometry to round them, truncates precision with a divide and multiply by the same constant, and otherwise calls
+0x634CA0, which is a single-value trigonometry routine: xmm0 in, xmm0 out, with the IEEE special cases at zero and at
+infinity or NaN. That makes 0x634CA0 a maths library boundary of the same kind as the libm sqrt at 0x62FE20, not
+something to reverse.
+
+One detail matters for any reimplementation: the axis branch loads NEGATIVE zero at 0x9DE948, not zero. The sign of a
+zero is observable through division and through the sign bit, and this project has already had to fix exactly that
+class of bug once, in the affine inverse where negating a sum and summing the negations differ. A test that only
+compares values will not catch it; the comparison has to be on the bits.
