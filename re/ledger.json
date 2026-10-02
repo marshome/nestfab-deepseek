@@ -1379,6 +1379,22 @@
    "round": 623,
    "subject": "0x9AF0.shape",
    "witness": "both store a zero byte and the object's address to [rsp+0x28] and [rsp+0x20] before calling 0x63F6C0; a global reached from two unrelated closures is shared state and not a local convenience"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "no caller of 0x64AEA0 reads its return value, verified by instruction for 46 of 53 callers with 7 still undecided and listed by address",
+   "round": 624,
+   "subject": "logger.no-caller-reads-it",
+   "witness": "re/g_logger_rax.py reproduces 0xB470, the one caller decided by hand, and finds 0 readers; 30 callers are confirmed by an intervening call or a jmp and 7 remain inconclusive"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a checker that labels a proof as inconclusive under-reports the check that was actually performed",
+   "round": 624,
+   "subject": "tooling.pessimistic-mislabelling",
+   "witness": "re/g_logger_rax.py reported 'another call first' and 'no read before jmp' as unknown when both prove the value was not read, discarding thirty proofs; this project's tools have more often over-reported, so the failure direction is worth noting"
   }
  ]
 }
