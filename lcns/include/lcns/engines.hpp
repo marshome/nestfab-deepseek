@@ -28,6 +28,8 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "lcns/engines_composite.hpp"
+
 namespace lcns {
 
 /** The vtable slot of `Run`, RE 0x2516E: `call qword ptr [rax + 0x10]`. */
@@ -187,6 +189,74 @@ inline const EngineClass* engineFamily(std::size_t& count) {
 }
 
 constexpr std::size_t kEngineFamilyCount = 7;
+// ------------------------------------------------------------------------------------------------
+// THE OTHER SIX, DECLARED.
+//
+// Each is an Engine with the same three slots and the same Run signature, which is everything the RTTI and the call site
+// establish. **Members are not invented**: the vtable says how many virtuals a class has and nothing about its data, so a
+// declaration here carries what is known and the comment says which body remains unread.
+//
+// A constant named kCompositeEngineRun is NOT a class, and a header that gives six classes an address and declares none of
+// them invites exactly that misreading -- which happened, and is why these exist.
+
+/** Engine::MultiEngine, Run at 0x755050, vtable 0xA3CF00.
+ *
+ *  Not read.
+ */
+class MultiEngine : public EngineBase {
+public:
+    MultiEngine() = default;
+
+    void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+};
+
+/** Engine::DelayedEngine, Run at 0x756EC0, vtable 0xA3CF70.
+ *
+ *  Not read.
+ */
+class DelayedEngine : public EngineBase {
+public:
+    DelayedEngine() = default;
+
+    void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+};
+
+/** Engine::NestingEngine, Run at 0x757250, vtable 0xA3CFA0.
+ *
+ *  Not read.
+ */
+class NestingEngine : public EngineBase {
+public:
+    NestingEngine() = default;
+
+    void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+};
+
+// CompositeEngine is declared in lcns/engines_composite.hpp, which carries the evidence for it.
+
+/** Engine::EquivalentEngine, Run at 0x75BCC0, vtable 0xA3D030.
+ *
+ *  Not read.
+ */
+class EquivalentEngine : public EngineBase {
+public:
+    EquivalentEngine() = default;
+
+    void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+};
+
+/** Engine::CloudEngine, Run at 0x26A60, vtable 0xA3CED0.
+ *
+ *  Not read.
+ */
+class CloudEngine : public EngineBase {
+public:
+    CloudEngine() = default;
+
+    void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+};
+
+
 static_assert(kEngineRunSlot == 0x10, "RE 0x2516E: call qword ptr [rax + 0x10]");
 static_assert(kUnlimitedTime == -1.0, "the double at rva 0x9AE740");
 static_assert(kInfiniteEngineRun == 0x759A80, "the slot this class implements");

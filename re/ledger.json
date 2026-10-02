@@ -1942,6 +1942,14 @@
    "round": 655,
    "subject": "Engine.family-not-defined",
    "witness": "the human asked where CompositeEngine's implementation is; grepping engines.hpp finds class EngineBase, class InfiniteEngine and struct EngineClass, and CompositeEngine appears only as four constexpr constants and a row"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "17 places name one of the module's own classes more than once in a hand-written header and declare it nowhere, which is a repository-wide pattern and not one round's slip",
+   "round": 656,
+   "subject": "classes.named-without-being-declared",
+   "witness": "re/g_defined_classes.py, after excluding substituted template parameters: engines_composite.hpp 1, nester.hpp 3, recovery.hpp 7, row.hpp 1, engine.hpp 3, engines.hpp 1, model.hpp 1 -- including Multi::NestingNester, Multi::SplitNode, Multi::TerminalNode, Row::Squeezer and Compact::Compacter::Implementation"
   }
  ]
 }

@@ -60,4 +60,37 @@ static_assert(kCompositeContainerEnd > kCompositeContainerBegin, "the end is aft
 /** The engines CompositeEngine does NOT call, listed because their absence is the finding. */
 constexpr std::uintptr_t kEnginesNotCalled[] = {0x755050, 0x756EC0, 0x757250, 0x759A80, 0x75BCC0, 0x26A60};
 
+// ------------------------------------------------------------------------------------------------
+// THE CLASS ITSELF, declared rather than described.
+//
+// A header that names a class five times and declares it nowhere is the defect the human found in engines.hpp: a reader -- and a commit
+// message -- can take constants for a definition. So CompositeEngine is declared here with what is known: it is an Engine, its Run is
+// 0x759B70, and it holds the count and the stride its prologue computes. **No member is invented beyond those two**, because the vtable
+// says nothing about a class's data.
+
+/** Engine::CompositeEngine, Run at 0x759B70, vtable 0xA3D000.
+ *
+ *  THE NAME DOES NOT DESCRIBE THE BEHAVIOUR. Its Run calls NO other engine's Run -- the six addresses it does not call are listed below --
+ *  and instead walks a container of 16 byte records reached through its second argument's +0x10 and +0x18, accumulating into locals.
+ *
+ *  IT DOES NOT NAME ITS BASE HERE, because engines.hpp includes THIS header and a cycle is not a dependency. That its Run overrides
+ *  EngineBase::run is stated in engines.cpp where the definition lives; a declaration without the base is enough to say the class exists.
+ */
+class CompositeEngine {
+public:
+    CompositeEngine() = default;
+
+    /** RE 0x759BAA: `sar rax, 4`, so the count is the range divided by the stride. */
+    static std::size_t elementCount(std::size_t begin, std::size_t end) {
+        return compositeElementCount(begin, end);
+    }
+
+    void* run(const void* problem, double timeLimit, void* observer, void* result);
+
+private:
+    // RE 0x759BBC: the eight quadwords its prologue zeroes are LOCALS, not members -- they live at rsp+0xe0 upward. The only thing this
+    // class is known to hold is the container it walks, and that belongs to the Problem its Run is handed rather than to the engine, so
+    // there is nothing to put here yet and saying so is more useful than a placeholder.
+};
+
 }  // namespace lcns

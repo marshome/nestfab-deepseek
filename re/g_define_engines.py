@@ -1,27 +1,10 @@
-// lcns/src/engines.cpp -- InfiniteEngine::run, the one Engine subclass whose body has been read.
-#include "lcns/engines.hpp"
+# -*- coding: utf-8 -*-
+"""Define the six engines' run stubs, so the declarations link, and say at each one what is unread."""
+import io
 
-namespace lcns {
+PATH = r"D:\Nesting\nestfab\lcns\src\engines.cpp"
 
-void* InfiniteEngine::run(const void* /*problem*/, double timeLimit, void*, void* result) {
-    // The routine's own content is the DECISION, and it lives in dispatch() so a test can drive both branches without an engine to call.
-    // Here the two branches are the module's: the unlimited case enters the nesting engine at 0x757AE0, and the other delegates to the
-    // inner engine's Run slot. Neither of those is implemented yet, so this says so rather than pretending.
-    //
-    // RE 0x759A80's two arms:
-    //     0x759A94  mov r9, [rsp + 0x60] / 0x759A99 call 0x757AE0      ; unlimited
-    //     0x759AB0  mov rdx, [rdx + 0x10] / 0x759AC4 call [rax + 0x10] ; otherwise, through the inner engine's vtable
-    return dispatch(timeLimit, result,
-                    [](void* r) -> void* {
-                        (void)r;                      // the buffer would be filled by RE 0x757AE0, which has not been read
-                        return nullptr;               // so the unlimited arm is RECORDED and not implemented, and returns nothing
-                    },
-                    [](EngineBase* inner, void* r) -> void* {
-                        (void)inner;
-                        return r;                    // the delegating arm returns the buffer, which is what 0x759AC7 does
-                    });
-}
-
+STUBS = '''
 // The other six. Each is UNREAD beyond what its declaration records, and each says so at its own body rather than in a comment elsewhere
 // -- a stub that returns nullptr silently would be indistinguishable from an engine that does nothing, which is the same class of
 // mistake as a constant standing in for a class.
@@ -52,4 +35,21 @@ void* CloudEngine::run(const void*, double, void*, void* result) {
     return result;      // RE 0x26A60 is 2284 bytes and NOT READ; the cloud gate is 0x2AB0, a different function
 }
 
-}  // namespace lcns
+'''
+
+
+def main():
+    text = io.open(PATH, encoding="utf-8", newline="").read().replace("\r\n", "\n")
+    if "MultiEngine::run" in text:
+        print("already defined")
+        return 0
+    marker = "}  // namespace lcns"
+    assert marker in text, "the namespace close is gone"
+    text = text.replace(marker, STUBS.strip("\n") + "\n\n" + marker, 1)
+    io.open(PATH, "w", encoding="utf-8", newline="\n").write(text)
+    print("six stubs added, each naming what is unread")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
