@@ -1064,3 +1064,26 @@ container construction of 0x5CD800.
 005c8d4b  ja 0x5c8cd1
 005c8d4d  jmp 0x5c8cdb
 ```
+
+## GetFillRatio implementer 0x5297C0, head read (round 409)
+
+881 bytes, 175 instructions, 20 calls. The entry hands it the NESTING CONTAINER (rcx = order + 0x50, i.e.
+NestingOwner::nestings) and jumps. What the head shows:
+
+    5297DD  rbx = rcx                       ; the container address
+    5297E0  call 0x51C020                   ; a begin/end view of it
+    5297E5  rdi = [rax] ; cmp [rax+8], rdi ; je 0x529AC5   ; EMPTY CONTAINER returns early
+    529802  rcx = [rax+8] - 0x138           ; the LAST element, stride 312 again
+    52980D  call 0x51D2F0                   ; its sub-object pointer
+    529824  call 0x4F8D30                   ; fills a stack object from it
+    529838  call 0x52F8C0                   ; writes +0x08 and +0x10 (read in round 375)
+    529844  call 0x52F8B0                   ; writes +0x18
+    52984C  call 0x522D60                   ; one more value
+
+Three things this settles. First, the 312-byte stride appears again (sub rcx, 0x138), which is now four independent
+confirmations of the element size: 0xB0C0, 0x50FD40, 0x5C8C50 and this. Second, an empty container has an early return,
+which any implementation must reproduce. Third, it reuses the two small writers read in round 375, so it builds a
+window or range object rather than computing a bare number.
+
+The second half (0x52988A to 0x529B2C), with its loop and its 0x62F280 and 0x9984B0 calls, is where the ratio itself
+and the cleanup live, and it is what must be read next before this export can be implemented.
