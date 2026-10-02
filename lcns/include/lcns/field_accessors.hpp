@@ -591,6 +591,18 @@ inline bool notNullMember_822590(const void* object) {
     return member != nullptr;
 }
 
+/** RE 0x51BFC0: clears a container and points its begin and end at the inline buffer at +0x28. */
+inline void initEmptyContainer_51BFC0(void* object) {
+    unsigned char* base = static_cast<unsigned char*>(object);
+    for (std::size_t offset = 0x00; offset <= 0x48; offset += 8) {
+        std::uint64_t zero = 0;
+        std::memcpy(base + offset, &zero, sizeof(zero));
+    }
+    void* buffer = base + 0x28;
+    std::memcpy(base + 0x38, &buffer, sizeof(buffer));
+    std::memcpy(base + 0x40, &buffer, sizeof(buffer));
+}
+
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

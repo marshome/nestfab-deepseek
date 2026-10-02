@@ -676,5 +676,25 @@ int main() {
         CHECK(!lcns::dll::accessors::notNullMember_822590(outer));  // and now it is not
     }
 
+    // ------------------- the empty container initialiser
+    {
+        unsigned char container[0x60];
+        std::memset(container, 0xA5, sizeof(container));
+        lcns::dll::accessors::initEmptyContainer_51BFC0(container);
+        std::uint64_t zero = 1;
+        std::memcpy(&zero, container + 0x00, sizeof(zero));
+        CHECK(zero == 0u);
+        std::memcpy(&zero, container + 0x20, sizeof(zero));
+        CHECK(zero == 0u);
+        std::memcpy(&zero, container + 0x48, sizeof(zero));
+        CHECK(zero == 0u);
+        void* begin = nullptr;
+        void* end = nullptr;
+        std::memcpy(&begin, container + 0x38, sizeof(begin));
+        std::memcpy(&end, container + 0x40, sizeof(end));
+        CHECK(begin == container + 0x28);              // RE 0x51BFFA
+        CHECK(end == container + 0x28);                // RE 0x51BFFE, empty
+    }
+
     return check::finish("boxacc");
 }

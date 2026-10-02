@@ -86,6 +86,13 @@ BOILERPLATE = {
     0x826C60,  # atomic increment of a global then stores the new value: an id or refcount generator
     0x8AA7E0,  # hands two rip literals to an import stub and returns a global: runtime initialisation
     0x63F170,  # word by word scan of a string, the strcmp family
+    0x921970,  # installs a vtable from the image and stores whether the argument was null: ABI, and the vtable address cannot be reproduced
+    0x921B40,  # the same constructor shape as 0x921970
+    0x944690,  # the same constructor shape as 0x921970
+    0x944860,  # the same constructor shape as 0x921970
+    0x9A0700,  # takes a global, calls an import stub, allocates eight bytes, stores a vtable and throws
+    0x62FF40,  # special cases minus one and builds six bytes on the stack for a library routine
+    0x8771C0,  # tests the first member and a flag then clears: a release or reset path
     0xB81F0,  # returns the constant 100: a default override, not a computation
     0x877120,  # loads a member and calls the runtime stub 0x63F4B8
     0x63F140,  # a bounded byte scan, the strlen shape
@@ -305,6 +312,7 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x51BFC0,   # batch six, lcns/field_accessors.hpp
     0x4FBE70, 0x822590,   # batch five, lcns/field_accessors.hpp
     0x8774E0,   # eaten by g_eat_leaves.py
     0x54CBC0, 0x4F7690, 0x4F7660, 0x4F7640, 0x4F7680,   # eaten by g_eat_leaves.py
