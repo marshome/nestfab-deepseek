@@ -1174,6 +1174,30 @@
    "round": 611,
    "subject": "tooling.compare-must-normalise-targets",
    "witness": "re/g_pair_verify.py reported the first difference as 'jle 0x87cbc5' vs 'jle 0x87c625' -- the same instruction -- in all five cases, scoring identical bodies as differing at instruction 48 and 12; its SELF-CHECK passed because a function compared with itself has the same targets, the one input where the defect cannot appear"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "2997 functions are identical to at least one other modulo their own addresses, in 886 groups",
+   "round": 612,
+   "subject": "identical.2997-functions",
+   "witness": "re/g_identical_functions.py normalises code addresses away and keeps constants: 105 copies of a 10-instruction routine, 38 copies of an 8-instruction one, 35 copies of a 113-instruction one, 22 of 67, 18 of 80"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the two 203-instruction functions ARE byte-identical modulo their addresses; the previous round's family conclusion was also wrong",
+   "round": 612,
+   "subject": "cmppairs.corrected-again",
+   "witness": "with normalisation they agree for 203 of 203 instructions, against 48 of 203 before it; two rounds produced two wrong conclusions about the same two functions from the same missing normalisation"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a self-check must exercise the code on an input where the suspected defect would show",
+   "round": 612,
+   "subject": "tooling.selfcheck-must-exercise-the-defect",
+   "witness": "the previous tool compared a function with itself, the one input where an address difference cannot appear, and passed while broken; this one requires two word-for-word-alike functions to agree FURTHER than before"
   }
  ]
 }
