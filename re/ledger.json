@@ -534,6 +534,30 @@
    "round": 570,
    "subject": "candidate.constructor",
    "witness": "0x22E30: movzx r9d,r9b / jmp 0x22A20 (9 bytes). 0x22A20: mov rbx,rcx / mov rdi,rdx / movapd xmm6,xmm2 / mov [rbx],rdx, then 1037 bytes with 0x1C8 allocated and the mode read"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the module names four launch-order fields in its own assertion strings: common_cut_safety_preference, multitorch_cutting_preference, parts, sheets",
+   "round": 571,
+   "subject": "LaunchingOrder.names-4",
+   "witness": "0x9ADE98 and 0x9ADEE8 are asserted in 0x1EE50 as order.common_cut_safety_preference and order.multitorch_cutting_preference; 0x9AC698 and 0x9AC6D8 in 0x668F20 as order.parts.size() and order.sheets.size()"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the assertion field names and the JSON keys are the SAME snake_case name, which is why the key-to-offset pairing failed while it was comparing against the camelCase C++ names",
+   "round": 571,
+   "subject": "LaunchingOrder.snake-case-keys",
+   "witness": "order.common_cut_safety_preference (+0x6C) and the JSON key common_cut_safety_preference; order.multitorch_cutting_preference (+0x9C) and multitorch_cutting_preference; both were already named in the ledger from the setters"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the order holds a parts container and a sheets container",
+   "round": 571,
+   "subject": "LaunchingOrder.parts-and-sheets",
+   "witness": "RE 0x9AC698: m_equivalent_problem->GetNumberOfParts() == order->parts.size(); RE 0x9AC6D8 the same for sheets"
   }
  ]
 }
