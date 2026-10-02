@@ -1654,6 +1654,22 @@
    "round": 639,
    "subject": "tooling.rsp-is-never-a-field",
    "witness": "0x12C2F8 stores 0x2d and 0x12C4F5 stores 0x31 into rsp slots; the tool reports the base registers so the exclusion is visible"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "re/g_gen_config.py read a file that a later round overwrote, so its source of truth was narrowed while its output looked fine",
+   "round": 640,
+   "subject": "tooling.input-replaced-under-the-generator",
+   "witness": "it now reads re/param_fields2.json directly; the same shape as the unindexed archive, and caught because the count is written into the generated header and into a test"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x4EC00 is the only function that fills a parameters object; the other fifty callers of the lookup read individual parameters without filling a struct",
+   "round": 640,
+   "subject": "config.one-object",
+   "witness": "asking for other parameter objects returns only single stores and mis-attributions such as 'stdin' -> rax+0x18, so configuration is centralised rather than per-class"
   }
  ]
 }

@@ -13,6 +13,12 @@ fails the build instead of drifting.
 import io
 import json
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import lib as LIB
+from lib import rva2off
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -73,18 +79,28 @@ inline const ConfigParameter* configParameters(std::size_t& count) {
 
 
 def main():
-    data = json.loads(io.open(os.path.join(HERE, "param_names.json"), encoding="utf-8").read())
+    # THE SOURCE IS re/param_fields2.json, which holds every lookup site with its base register and offset. An earlier version read
+    # re/param_names.json, and a later round OVERWROTE that file while enlarging the window -- so the generator's input was silently
+    # replaced by a narrower table. Reading the wider file directly removes the intermediate that can be lost.
+    data = json.loads(io.open(os.path.join(HERE, "param_fields2.json"), encoding="utf-8").read())
+    blob = LIB.data() if callable(getattr(LIB, "data", None)) else LIB.data
     rows = []
-    for entry in data["parameters"].get("0x4EC00", []):
-        field = entry.get("field")
-        name = entry.get("name")
-        if not field or not name:
+    for entry in data["sites"].get("0x4EC00", []):
+        if entry.get("base") != "rsi" or not entry.get("name_rva") or not entry.get("offset"):
             continue
-        offset = int(field.split("+")[1], 16)
-        rows.append((offset, name))
+        offset = rva2off(int(entry["name_rva"], 16))
+        if offset is None:
+            continue
+        end = blob.find(b"\x00", offset)
+        if end <= offset:
+            continue
+        name = blob[offset:end].decode("ascii", "replace")
+        if not name or not name[0].isalpha():
+            continue
+        rows.append((int(entry["offset"], 16), name))
     rows.sort()
     if not rows:
-        print("REFUSING: re/param_names.json has no fields for 0x4EC00")
+        print("REFUSING: re/param_fields2.json has no named rsi fields for 0x4EC00")
         return 2
 
     constants = []
