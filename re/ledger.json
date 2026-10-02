@@ -1502,6 +1502,22 @@
    "round": 631,
    "subject": "assert.built-form-partial",
    "witness": "0x526160 yields line 154 and '..\\struc'; the three stores at +0, +8 and +0x10 should all land, so the walk stops early or the word store at +0x14 discards rdx's pending value"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "type propagation has reached ONE of the fifteen serialisers, so the pairing blocker's premise holds for fourteen of them",
+   "round": 632,
+   "subject": "pairing.blocker-unchanged",
+   "witness": "re/g_serialiser_owner.py against re/TYPES.md: 4828 typed functions with Multi 2562 and Engine 1637, and only 0x5070E0 (Engine, by CALL) among the fifteen"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a tool said the blocker's premise no longer held when one of fifteen was typed, which is the same defect as the count-over-the-wrong-set errors but in the optimistic direction",
+   "round": 632,
+   "subject": "tooling.optimistic-threshold-again",
+   "witness": "the first version branched on a merely non-zero count; it now branches on whether all are typed"
   }
  ]
 }
