@@ -12,5 +12,9 @@ const Forwarding kForwarding[] = {
     {23, reinterpret_cast<void*>(&lcns::dll::exports::impl::getNumberOfNestedParts)},   // GetNumberOfNestedParts
     {17, reinterpret_cast<void*>(&lcns::dll::exports::impl::getMultiplicity)},   // GetMultiplicity
     {27, reinterpret_cast<void*>(&lcns::dll::exports::impl::getPartUserString)},   // GetPartUserString
+    {210, reinterpret_cast<void*>(&lcns::dll::exports::impl::getUserStringAt1B8)},  // sub_16CF0 (no label)
+    {288, reinterpret_cast<void*>(&lcns::dll::exports::impl::setByteAtF8)},         // sub_AFF0 (no label)
+    {286, reinterpret_cast<void*>(&lcns::dll::exports::impl::setDoubleAndFlag)},    // sub_B000 (no label)
+    {33, reinterpret_cast<void*>(&lcns::dll::exports::impl::getSolutionIdentity)},  // GetSolution
 };
 const std::size_t kForwardingCount = sizeof(kForwarding) / sizeof(kForwarding[0]);

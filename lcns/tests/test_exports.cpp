@@ -216,12 +216,60 @@ int main() {
         CHECK(ex::impl::getPartUserString(part.data()) == text);
         CHECK(std::strcmp(ex::impl::getPartUserString(part.data()), "user string") == 0);
 
-        // The four are exactly the entries the hand-written map forwards to.
-        CHECK(ex::forwardedCount() == 4u);
+        // GetSolution (0xB0A0): an identity over any pointer, including null.
+        {
+            int dummy = 0;
+            CHECK(ex::impl::getSolutionIdentity(&dummy) == &dummy);
+            CHECK(ex::impl::getSolutionIdentity(nullptr) == nullptr);
+        }
+
+        // sub_16CF0 (210/211): the same getter as GetPartUserString, without the logger call.
+        {
+            std::vector<unsigned char> obj(0x1C0, 0);
+            const char* text = "another string";
+            const std::uint64_t p = reinterpret_cast<std::uint64_t>(text);
+            std::memcpy(obj.data() + 0x1B8, &p, 8);
+            CHECK(ex::impl::getUserStringAt1B8(obj.data()) == text);
+            CHECK(ex::impl::getUserStringAt1B8(obj.data()) == ex::impl::getPartUserString(obj.data()));
+        }
+
+        // sub_AFF0 (288/289): the stored byte is (arg != 0), and nothing else is written.
+        {
+            std::vector<unsigned char> obj(0x100, 0xAA);
+            ex::impl::setByteAtF8(obj.data(), 1);
+            CHECK(obj[0xF8] == 1u);
+            ex::impl::setByteAtF8(obj.data(), 0);
+            CHECK(obj[0xF8] == 0u);
+            ex::impl::setByteAtF8(obj.data(), 256);
+            CHECK(obj[0xF8] == 1u);
+            ex::impl::setByteAtF8(obj.data(), -1);
+            CHECK(obj[0xF8] == 1u);
+            CHECK(obj[0xF7] == 0xAAu && obj[0xF9] == 0xAAu);
+        }
+
+        // sub_B000 (286/287): one double at +0x100 and one flag at +0xF9.
+        {
+            std::vector<unsigned char> obj(0x110, 0xAA);
+            ex::impl::setDoubleAndFlag(obj.data(), 3, 5.5);
+            double stored = 0.0;
+            std::memcpy(&stored, obj.data() + 0x100, 8);
+            CHECK(stored == 5.5);
+            CHECK(obj[0xF9] == 1u);
+            ex::impl::setDoubleAndFlag(obj.data(), 0, 0.0);
+            std::memcpy(&stored, obj.data() + 0x100, 8);
+            CHECK(stored == 0.0);
+            CHECK(obj[0xF9] == 0u);
+            CHECK(obj[0xF8] == 0xAAu);
+        }
+
+        // The eight are exactly the entries the hand-written map forwards to.
+        CHECK(ex::forwardedCount() == 8u);
         for (std::size_t i = 0; i < ex::count(); ++i) {
             const ex::Entry* e = &ex::entries()[i];
             const bool expected = sameName(e->name, "GetNumberOfNestings") || sameName(e->name, "GetNumberOfNestedParts") ||
-                                  sameName(e->name, "GetMultiplicity") || sameName(e->name, "GetPartUserString");
+                                  sameName(e->name, "GetMultiplicity") || sameName(e->name, "GetPartUserString") ||
+                                  sameName(e->name, "GetSolution") ||
+                                  e->ordinal0 == 210 || e->ordinal0 == 288 || e->ordinal0 == 286;
             CHECK(ex::forwards(i) == expected);
         }
     }

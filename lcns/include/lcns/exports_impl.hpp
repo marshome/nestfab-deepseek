@@ -50,6 +50,11 @@ std::uint32_t getMultiplicity(void* part);
  * side effect is not reproduced and is recorded in re/EXPORT_IMPLS.md.
  * Established by: behavioural test.
  */
+const char* getUserStringAt1B8(void* part);   // RE 0x16CF0 (210/211): pointer at +0x1B8, no logging
+void setByteAtF8(void* object, int value);    // RE 0x0AFF0 (288/289): byte +0xF8 = (value != 0)
+void setDoubleAndFlag(void* object, int flag, double value);   // RE 0x0B000 (286/287): double +0x100, byte +0xF9
+void* getSolutionIdentity(void* handle);      // RE 0x0B0A0 (33/34): returns its argument, touches no memory
+
 const char* getPartUserString(void* part);
 
 }  // namespace impl

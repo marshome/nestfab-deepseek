@@ -49,6 +49,24 @@ std::uint32_t getMultiplicity(void* part) {
     return v;
 }
 
+const char* getUserStringAt1B8(void* part) {
+    return static_cast<const char*>(loadPointer(part, 0x1B8));   // the same load as 0xC5E0, without the logger call
+}
+
+void setByteAtF8(void* object, int value) {
+    // `setne` writes 1 or 0, never the argument: a 32-bit test, so 256 stores 1.
+    static_cast<unsigned char*>(object)[0xF8] = (value != 0) ? 1u : 0u;
+}
+
+void setDoubleAndFlag(void* object, int flag, double value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x100, &value, sizeof(value));
+    static_cast<unsigned char*>(object)[0xF9] = (flag != 0) ? 1u : 0u;
+}
+
+void* getSolutionIdentity(void* handle) {
+    return handle;   // the body is `mov rax, rbx; ret` after the logger call: no memory is touched
+}
+
 const char* getPartUserString(void* part) {
     return static_cast<const char*>(loadPointer(part, 0x1B8));
 }
