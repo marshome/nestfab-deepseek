@@ -419,6 +419,9 @@ int main() {
         CHECK(offsetof(lcns::dll::BadGeometryCarrier, geometry) == 0xA0);
     }
 
+        CHECK(sizeof(lcns::dll::Element48) == 48);
+        CHECK(lcns::dll::modularInverse(3) == 0xAAAAAAAAAAAAAAABull);
+
     return check::finish("exports");
 }
 
