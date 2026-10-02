@@ -277,5 +277,40 @@ int main() {
         CHECK(lcns::dll::exports::impl::windowSpanHeight(window, box, true) == 15.0);
     }
 
+    // ---------------- 0x5203D0 and 0x5203F0 against the original, which is callable for both
+#if defined(LCNS_HAS_EMBEDDED_ASM)
+    {
+        auto orig38 = reinterpret_cast<void (*)(void*, const void*)>(emb::originalOf(0x5203D0u));
+        auto orig28 = reinterpret_cast<void (*)(void*, const void*)>(emb::originalOf(0x5203F0u));
+        CHECK(orig38 != nullptr);
+        CHECK(orig28 != nullptr);
+        if (orig38 != nullptr && orig28 != nullptr) {
+            // Awkward bit patterns, and the two pairs deliberately swapped in value, so reading the wrong offset fails.
+            const std::uint64_t bits28[4] = {0x8000000000000000ull, 0x0000000000000001ull,
+                                             0x3FF0000000000000ull, 0xBFF8000000000000ull};
+            const std::uint64_t bits38[4] = {0x7FEFFFFFFFFFFFFFull, 0x0000000000000000ull,
+                                             0x400921FB54442D18ull, 0xC01921FB54442D18ull};
+            unsigned char element[0x60];
+            std::memset(element, 0x5A, sizeof(element));   // fills everything else with noise
+            std::memcpy(element + 0x28, bits28, sizeof(bits28));
+            std::memcpy(element + 0x38, bits38, sizeof(bits38));
+            unsigned char mine[16];
+            unsigned char theirs[16];
+            for (int which = 0; which < 2; ++which) {
+                std::memset(mine, 0, sizeof(mine));
+                std::memset(theirs, 0, sizeof(theirs));
+                if (which == 0) {
+                    lcns::dll::exports::impl::copyPair38(mine, element);
+                    orig38(theirs, element);
+                } else {
+                    lcns::dll::exports::impl::copyPair28(mine, element);
+                    orig28(theirs, element);
+                }
+                CHECK(std::memcmp(mine, theirs, sizeof(mine)) == 0);   // bit for bit, not approximately
+            }
+        }
+    }
+#endif
+
     return check::finish("boxacc");
 }

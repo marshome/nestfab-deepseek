@@ -118,6 +118,28 @@ double windowSpanHeight(const lcns::dll::WindowSlots& window, const void* boxBas
     return maxY - window.slot10;
 }
 
+void copyPair38(void* destination, const void* element) {
+    const unsigned char* src = static_cast<const unsigned char*>(element);
+    unsigned char* dst = static_cast<unsigned char*>(destination);
+    double first = 0.0;    // RE 0x5203D0: r9 = [rdx + 0x38]
+    double second = 0.0;   // RE 0x5203D4: r10 = [rdx + 0x40]
+    std::memcpy(&first, src + 0x38, sizeof(first));
+    std::memcpy(&second, src + 0x40, sizeof(second));
+    std::memcpy(dst, &first, sizeof(first));        // RE 0x5203DB: [rcx] = r9
+    std::memcpy(dst + 8, &second, sizeof(second));  // RE 0x5203DE: [rcx + 8] = r10
+}
+
+void copyPair28(void* destination, const void* element) {
+    const unsigned char* src = static_cast<const unsigned char*>(element);
+    unsigned char* dst = static_cast<unsigned char*>(destination);
+    double first = 0.0;    // RE 0x5203F0: r9 = [rdx + 0x28]
+    double second = 0.0;   // RE 0x5203F4: r10 = [rdx + 0x30]
+    std::memcpy(&first, src + 0x28, sizeof(first));
+    std::memcpy(&second, src + 0x30, sizeof(second));
+    std::memcpy(dst, &first, sizeof(first));        // RE 0x5203FB: [rcx] = r9
+    std::memcpy(dst + 8, &second, sizeof(second));  // RE 0x5203FE: [rcx + 8] = r10
+}
+
 }  // namespace impl
 }  // namespace exports
 }  // namespace dll

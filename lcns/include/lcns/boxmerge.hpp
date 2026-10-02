@@ -19,6 +19,9 @@ void mergeBoxInto(void* dstBase, const void* srcBase);
  */
 double windowSpanLength(const lcns::dll::WindowSlots& window, const void* boxBase, bool hasGeometry);
 double windowSpanHeight(const lcns::dll::WindowSlots& window, const void* boxBase, bool hasGeometry);
+void copyPair38(void* destination, const void* element);   // RE 0x5203D0 -- first argument is the destination, per RCX/RDX: the pair at +0x38 and +0x40
+void copyPair28(void* destination, const void* element);   // RE 0x5203F0 -- first argument is the destination, per RCX/RDX: the pair at +0x28 and +0x30
+
 
 
 }  // namespace impl
