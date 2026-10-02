@@ -41,7 +41,7 @@ void* InfiniteEngine::run(const void* problem, double timeLimit, void*, void* re
 // mistake as a constant standing in for a class.
 
 void* MultiEngine::run(const void*, double, void*, void* result) {
-    return result;      // RE 0x755050 is 3795 bytes and NOT READ; the buffer is what every Run in this family returns
+    return result;      // RE 0x755050 is 2329 bytes, MEASURED -- an earlier note said 3795 and the table says 2329 and NOT READ; the buffer is what every Run in this family returns
 }
 
 void* DelayedEngine::run(const void*, double, void*, void* result) {

@@ -54,8 +54,18 @@ constexpr std::uintptr_t kNestingEngineRunDirect = 0x757AE0;
  *
  * The result is returned as a POINTER rather than by value because the caller passes a buffer and the slot hands it back -- and because
  * the recovered `Run`s end with `mov rax, rbx` where rbx is that buffer.
- */
-class EngineBase {
+ *
+ * **AND THE SEVEN TABLES MEASURE THE BASE'S SURFACE: ONE VIRTUAL, AND IT IS `run`.** Every concrete engine has exactly three slots --
+ *
+ *      slot 0   70 to 137 bytes     the deleting destructor
+ *      slot 1   71 to 129 bytes     the destructor
+ *      slot 2   80 to 15430 bytes   `run`, and its ADDRESS DIFFERS IN ALL SEVEN
+ *
+ * -- and those counts are MEASURED rather than estimated: `CloudEngine` is 70, 71 and 15430, `InfiniteEngine` is 71, 76 and 80, and
+ * `CompositeEngine` is 137, 129 and 8230. **So the base's whole surface is that one method**, and it is abstract because every derived class
+ * implements it. There is no vtable for `Engine::Engine` ITSELF in re/vtables.json because an abstract base has no instantiated table, which is the
+ * same reason the whole base layer was missing from this tree.
+ */class EngineBase {
 public:
     virtual ~EngineBase() = default;
 
@@ -63,6 +73,8 @@ public:
     virtual void* run(const void* problem, double timeLimit, void* observer, void* result) = 0;
 };
 
+/** RE vtable 0xA3CFD0, THREE slots. Slot 0 is the deleting destructor 0x759B20, slot 1 the destructor 0x759AD0, and slot 2 is `run` at 0x759A80, 80 bytes.
+ *  **The slot-2 address DIFFERS IN ALL SEVEN ENGINES**, which is why slot 2 is the class's one virtual and the base is abstract. */
 /** What RE 0x759AB0 reads out of the SECOND argument: the engine it delegates to sits at +0x10 of the problem. */
 struct ProblemView {
     std::byte header[0x10]{};

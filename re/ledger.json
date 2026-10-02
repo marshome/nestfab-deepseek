@@ -2734,6 +2734,30 @@
    "round": 695,
    "subject": "abstract-bases-are-absent-from-vtables-json",
    "witness": "Multi::Nester, Multi::CompositeNester, Row::Distancer, Engine::Engine, Tiling::Evaluator and nine more are all absent from the JSON and all present in the module's typeinfo"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "Tiling::Evaluator has two virtuals of its own, and slot 3 at 0x4E7E50 is the BASE's implementation, shared by six of its eight derived classes",
+   "round": 696,
+   "subject": "Evaluator.slot3-is-the-base-implementation",
+   "witness": "measuring the eight tables: slot 3 is 0x4E7E50, 539 bytes, in Density, Reusable, Multitorch, OldMultitorch, UnlimitedDensity and UnlimitedXDensity, while ObliqueEvaluator overrides with 0x7E8970 and QuantityEvaluator with 0x7E8DA0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "Engine::Engine has one virtual of its own, run at slot 2, and its address differs in all seven concrete engines",
+   "round": 696,
+   "subject": "Engine.slot2-differs-in-all-seven",
+   "witness": "the seven tables give slot 2 as 0x26A60, 0x755050, 0x756EC0, 0x757250, 0x759A80, 0x759B70 and 0x75BCC0 with sizes 15430, 2329, 750, 1975, 80, 8230 and 3569"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "width",
+   "predicate": "the seven engines' slot sizes are 70..137 for the deleting destructor, 71..129 for the destructor and 80..15430 for run",
+   "round": 696,
+   "subject": "engine-byte-counts",
+   "witness": "measured through the function profile; the note in engines.cpp said RE 0x755050 is 3795 bytes and the profile says 2329, so the note was wrong"
   }
  ]
 }

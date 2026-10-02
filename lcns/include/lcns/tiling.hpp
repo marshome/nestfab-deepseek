@@ -186,6 +186,15 @@ private:
 // ---------------------------------------------------------------------------
 // evaluators -- RE Tiling::*Evaluator (4 virtual slots each)
 // ---------------------------------------------------------------------------
+/** **RE the eight tables below, and IT IS A BASE WITH THREE VIRTUALS.** Every instantiated derived class has FOUR slots:
+ *
+ *      0x76E380..0x76FA00   the deleting destructor, 1 or 5 bytes, one per class
+ *      0x76E390..0x76FA10   the destructor, one per class
+ *      slot 2, varying       `name()`
+ *      slot 3, 0x4E7E50 in SIX of the eight    `evaluate()` -- **THE BASE'S OWN IMPLEMENTATION**, 539 bytes
+ *
+ *  `ObliqueEvaluator` overrides slot 3 with 0x7E8970 and `QuantityEvaluator` with 0x7E8DA0, so **a slot address shared by several derived tables is
+ *  the base's and one that differs is the override.** */
 class Evaluator {
 public:
     virtual ~Evaluator() = default;
@@ -193,36 +202,42 @@ public:
     virtual double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const = 0;
 };
 
+/** RE vtable 0xA3D210, FOUR slots: 0x76E390 and the destructor pair, slot 2 is `name()` at 0x7E8910, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
 class DensityEvaluator : public Evaluator {          // used area / sheet area
 public:
     const char* name() const override { return "DensityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
+/** RE vtable 0xA3D3C0, FOUR slots: 0x76F9F0 and the destructor pair, slot 2 is `name()` at 0x7EBFC0, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
 class UnlimitedDensityEvaluator : public Evaluator {  // density, ignoring the sheet border
 public:
     const char* name() const override { return "UnlimitedDensityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
+/** RE vtable 0xA3D3F0, FOUR slots: 0x76FA10 and the destructor pair, slot 2 is `name()` at 0x7EC210, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
 class UnlimitedXDensityEvaluator : public Evaluator {  // density along x only
 public:
     const char* name() const override { return "UnlimitedXDensityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
+/** RE vtable 0xA3D270, FOUR slots: 0x76E410 and the destructor pair, slot 2 is `name()` at 0x7E8DD0, slot 3 is `evaluate()` at 0x7E8DA0 -- an OVERRIDE. */
 class QuantityEvaluator : public Evaluator {           // number of cells
 public:
     const char* name() const override { return "QuantityEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
+/** RE vtable 0xA3D2A0, FOUR slots: 0x76E430 and the destructor pair, slot 2 is `name()` at 0x7E8F60, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
 class ReusableEvaluator : public Evaluator {           // cells whose footprint leaves a usable offcut
 public:
     const char* name() const override { return "ReusableEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
+/** RE vtable 0xA3D240, FOUR slots: 0x76E3D0 and the destructor pair, slot 2 is `name()` at 0x7E8B30, slot 3 is `evaluate()` at 0x7E8970 -- an OVERRIDE. */
 class ObliqueEvaluator : public Evaluator {            // rewards non axis aligned cells
 public:
     const char* name() const override { return "ObliqueEvaluator"; }
@@ -244,6 +259,7 @@ public:
  *  AND THE CALL SITE CONFIRMS IT: at 0x766DCF the class is constructed on the STACK -- `lea rbx, [rsp + 0xd0]` -- with the three values read
  *  out of an option, so the class is a stack handle whose whole state is the one allocated pointer.
  */
+/** RE vtable 0xA3D310, FOUR slots: 0x76F260 and the destructor pair, slot 2 is `name()` at 0x7E9240, slot 3 is `evaluate()` at 0x4E7E50 -- the BASE's own implementation. */
 class MultitorchEvaluator : public Evaluator {
 public:
     /** RE 0x4E8410. **THE DECLARATION HAD ONE PARAMETER AND THE ROUTINE TAKES THREE** -- an int and two doubles, all three written into the
