@@ -38,7 +38,28 @@ namespace base_chain {
 // THIS IS WHERE THE +0x10 BASE GAP COMES FROM. `Multi::Nester` declares no data members here, and `NoFillNester`'s slot 5 at 0x7F240 stores
 // through its object at +0x10, +0x18, +0x20 .. +0x130 with IMMEDIATE ZEROS at +0x70, +0x78 and +0x90 -- `mov qword [rbp + 0x78], 0` is a member
 // being initialised and not an argument being saved. **THE FIELDS BELONG TO CompositeNester, WHOSE OWN TYPEINFO IS AT 0xA18150 AND WHOSE NAME
-// IS "N5Multi15CompositeNesterE".**
+// IS "N5Multi15CompositeNesterE".** Verified by walking NoFillNester's own typeinfo chain: NoFillNester 0xA18010 -> CompositeNester 0xA18150 ->
+// Nester 0xA18380.
+//
+// **AND BOTH BASES' INTERFACES ARE MEASURABLE, because a slot address SHARED by several derived tables is the base's own implementation and one
+// that differs is the derived class's override.** Every class in this family has SIX slots:
+//
+//     Multi::Nester             slot 0  91 bytes    the deleting destructor, one per class
+//                               slot 1  99 bytes    the destructor, one per class
+//                               slot 2   4 bytes    **SHARED by FOUR of its five derived classes, at 0xB4430**
+//                               slot 3  39 bytes    one per class
+//                               slot 4  82 bytes    one per class
+//                               slot 5  16258 bytes one per class -- the Run
+//
+//     Multi::CompositeNester    slot 0  15 or 59 bytes  one per class
+//                               slot 1  36 or 67 bytes  one per class
+//                               slot 2  31 bytes        **SHARED by FOUR of its six, at 0xB4440**
+//                               slot 3  211 bytes       one per class
+//                               slot 4  894 bytes       **SHARED by THREE, at 0xB46F0**
+//                               slot 5  3496 bytes      one per class -- the Run
+//
+// **SO BOTH BASES HAVE SIX VIRTUALS AND EACH IMPLEMENTS AT LEAST ONE OF THEM.** The four-byte slot 2 of `Nester` is a `const char*` accessor -- the
+// `name()` this project already declares -- and `0xB4430` and `0xB4440` are four bytes apart, which is two adjacent accessors of the same kind.
 inline constexpr const char* kNester = "N5Multi6NesterE";
 inline constexpr const char* kCompositeNester = "N5Multi15CompositeNesterE";
 

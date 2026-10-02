@@ -2758,6 +2758,14 @@
    "round": 696,
    "subject": "engine-byte-counts",
    "witness": "measured through the function profile; the note in engines.cpp said RE 0x755050 is 3795 bytes and the profile says 2329, so the note was wrong"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "Multi::Nester and Multi::CompositeNester each have six slots, and each implements at least one of them for its derived classes",
+   "round": 697,
+   "subject": "both-nester-bases-have-six-virtuals",
+   "witness": "Nester's slot 2 at 0xB4430 is shared by four of its five derived classes; CompositeNester's slot 2 at 0xB4440 is shared by four of its six and its slot 4 at 0xB46F0 by three"
   }
  ]
 }
