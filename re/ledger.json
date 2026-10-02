@@ -1214,6 +1214,22 @@
    "round": 613,
    "subject": "tooling.warning-is-a-measurement",
    "witness": "-Warray-bounds reported 'array subscript 7 outside array bounds of Node [3]' twice because linkAt reads +0x18 while the test's node was 0x10 bytes; dismissing both led to a segfault in the recovered test"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "886 groups cover 2997 function addresses, so one implementation per group needs 886 reads instead of 2997",
+   "round": 614,
+   "subject": "identical.groups-index",
+   "witness": "re/identical_groups.json with a self-check that refuses to write unless it finds the 35-copy group 0x923110 that a DIFFERENT tool established: 105 copies of 10 instructions, 38 of 8, 37 of 14, 36 of 16, 35 of 113"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "every dependency graph this project draws has up to 35 nodes where there is one implementation, so 2997 minus 886 is 2111 reads that never needed to happen",
+   "round": 614,
+   "subject": "planning.886-not-2997",
+   "witness": "the four stat exports' 75-function layer may shrink by a similar proportion once the groups are applied"
   }
  ]
 }
