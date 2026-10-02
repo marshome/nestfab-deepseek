@@ -1854,6 +1854,30 @@
    "round": 651,
    "subject": "virtual.strategy-interface",
    "witness": "FlipNester FilterNester NoFillNester TilingNester CompactNester LimitedNester NestingNester DatabaseNester RectangleNester MultiTorchNester RowNester, six slots each -- the bottleneck the archive named, now a shape rather than a word"
+  },
+  {
+   "grade": "ORACLE",
+   "kind": "name",
+   "predicate": "the eleven nesters implement six virtuals, of which slot 2 has three distinct addresses and slot 4 is shared by six, while slots 3 and 5 differ in every class",
+   "round": 652,
+   "subject": "nester.interface-shape",
+   "witness": "read by joining re/vtables.json's slots to the profile: slot 4 is 0xB46F0 in FilterNester, NoFillNester and CompactNester, and slots 3 and 5 are unique to each nester"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the archive's one complete dossier, 0x378E0 at 14374 bytes, is slot 5 of Multi::NestingNester",
+   "round": 652,
+   "subject": "0x378E0.is-NestingNester-slot-5",
+   "witness": "re/g_vslot_impl.py --class Multi::NestingNester reads slot 5 as 0x378E0, which identifies the fully analysed function's class and which of its virtuals it implements"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "six Tiling evaluator classes share the function 0x4E7E50 at 539 bytes for one slot",
+   "round": 652,
+   "subject": "tiling.evaluators-share-an-implementation",
+   "witness": "DensityEvaluator, MultitorchEvaluator, OldMultitorchEvaluator, ReusableEvaluator, UnlimitedDensityEvaluator and UnlimitedXDensityEvaluator all point one slot there"
   }
  ]
 }
