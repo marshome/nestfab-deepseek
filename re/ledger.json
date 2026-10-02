@@ -790,6 +790,22 @@
    "round": 589,
    "subject": "work-not-closure",
    "witness": "three rounds gave three estimates for the same two exports: 596 functions and 121762 bytes by reachability, 1 unknown by the export's own callees, and 4 by reading the callees one level down; only the last is derived from reading"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x22E40 walks with a 0x18 stride, confirming the element size the grow primitive computed from its allocation",
+   "round": 590,
+   "subject": "element.18-confirmed",
+   "witness": "0x22E97 mov rsi,[rbx] / 0x22E9A mov rdi,[rbx+8] / 0x22EB6 lea rax,[rsi+0x18] / 0x22EC1 add rax,0x18; and 0x23BF0 computed count*3*8 for the same element, so two independent readings agree on 24 bytes"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the element carries a double at +0x10 and 0x22E40 compares it against zero with a NaN branch",
+   "round": 590,
+   "subject": "element.double-at-10",
+   "witness": "0x22EAB ucomisd xmm7, [rsi+0x10] with pxor xmm7,xmm7 before it and 0x22EB0 jp to a separate path"
   }
  ]
 }
