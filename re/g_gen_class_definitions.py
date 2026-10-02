@@ -106,6 +106,10 @@ def main():
         table_rows.append('        {"%s", 0x%X, %d, 0x%X, %d, %s},\n'
                           % (qualified.replace('"', "'"), vtable, slots, first, size, "true" if byhand else "false"))
 
+    # A HAND-WRITTEN HEADER SUPERSEDES A GENERATED ROW. These classes have real definitions now, with members placed by their
+    # constructors, so the generator must not emit a placeholder that would collide with them.
+    SUPERSEDED = {"NestingNester"}
+
     # ONE NAMESPACE COLLIDES AND IS RENAMED. `Engine` in the RTTI is a namespace; this repository already has `lcns::Engine` as a
     # class, and a namespace and a class cannot share a name. The generated namespace is `EngineNS` and the table keeps the RTTI's own
     # qualified name, so nothing is lost -- only the emitted identifier differs, and it says why.

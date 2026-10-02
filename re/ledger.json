@@ -2070,6 +2070,38 @@
    "round": 661,
    "subject": "tooling.checks-need-precision",
    "witness": "the count went from 17 to 20 with all three new rows being headers citing a class declared in another file"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::NestingNester embeds a Mersenne Twister: state at +0x38, twist index at +0x9F8, seed at +0x28",
+   "round": 662,
+   "subject": "NestingNester.embeds-MT19937",
+   "witness": "RE 0x3434B imul eax,eax,0x6c078965 -- the standard seeding multiplier 1812433253; 0x34354 stores a dword to [rbx+rdx*4+0x38]; 0x3435C cmp rdx,0x270 which is 624; 0x3436D writes 0x270 to [rbx+0x9f8]"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the 0x9F8 offset is the twist index of the 624 word state array, not an independent field -- a table of distinct offsets cannot tell a member from an element count",
+   "round": 662,
+   "subject": "0x9F8.is-an-array-index-not-a-field",
+   "witness": "the state begins at +0x38 and 0x38 + 624*4 = 0x9F8, and the constructor writes 0x270 there and loops rdx to 0x270 at 0x3435C"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "offsetof on a polymorphic class is only conditionally supported, so a layout stated for this project must be a standard-layout struct with the vtable pointer named as an offset",
+   "round": 662,
+   "subject": "cpp.offsetof-needs-standard-layout",
+   "witness": "GCC answered the first version with -Winvalid-offsetof; the condition it warns about is the vtable pointer the measurement is about"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "an offset that depends on a member whose size is not established is not a measurement, so 0xa00 is a constant with its instruction rather than an asserted offsetof",
+   "round": 662,
+   "subject": "fields.size-must-be-known-to-assert-past-it",
+   "witness": "RE 0x34388 lea rcx,[rbx+0xa00] says a sub-object begins there and nothing about its length; two attempts to derive an offset past it failed their static_asserts"
   }
  ]
 }
