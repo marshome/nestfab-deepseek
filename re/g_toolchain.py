@@ -58,7 +58,19 @@ BOILERPLATE = {
     0x86B6B0,  # std::string range constructor using the strlen stub
     0x9988C0,  # allocator with a 0xA0 byte header, zeroed, returns past the header
     0x97AB50,  # allocates, installs a vtable, throws, then releases
+    0x998A60,  # runtime allocation family (restored: an earlier patch dropped the anchor line it replaced)
+    0x7C4A80,  # allocates eight bytes, stores a vtable and calls the throw entry (restored for the same reason)
     0x910C20,  # std::string internal: data, length and small buffer, calls the growth routine
+    0x62DBE0,  # four bytes: mov rax,rcx ; ret -- returns the first argument
+    0x62DBF0,  # four bytes: mov rax,rcx ; ret -- the same identity
+    0x62EFC0,  # vector subscript: base at [rdx+8] plus a 32-bit index taken through [rdx+0x10]
+    0x86B750,  # shared_ptr copy: loads the control block and increments its count atomically
+    0x86A370,  # container growth: base plus requested size, doubling policy
+    0x86A3E0,  # container growth: clamps against 0x3FFFFFFFFFFFFFF9 and doubles
+    0x653190,  # container helper built on the vector subscript above
+    0x6533B0,  # jump table dispatch on a low nibble: a library character or format classifier
+    0x97A6D0,  # reads a field of a runtime global and returns whether it is non zero
+    0x62D860,  # calls 0x62D7B0 then returns minus one when the result is zero
     0x90ECB0,  # std::string internal: same three words, clamps against max_size
 }
 
