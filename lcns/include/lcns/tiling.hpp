@@ -177,14 +177,44 @@ public:
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 };
 
-class MultitorchEvaluator : public Evaluator {         // rewards cells sharing torch lines
+/** RE 0xA3D310, four slots. **ITS OWN STATE IS ONE POINTER AT +0**, and the object it points at is 0x20 bytes with three members.
+ *
+ *  RE 0x4E8410, 81 bytes, nearly a declaration in assembly:
+ *
+ *      0x4E841B  mov rbx, rcx                     ; this
+ *      0x4E8419  mov ecx, 0x20 / call 0x998500     ; AN OBJECT OF 0x20 BYTES
+ *      0x4E8437  lea rdx, [rip + 0x554ee2]         ; its own vtable, which is NOT 0xA3D320
+ *      0x4E8447  mov dword [rax + 8], esi          ; ITS int    -- the constructor's second argument
+ *      0x4E844A  movsd [rax + 0x10], xmm2          ; ITS double -- the third
+ *      0x4E844F  movsd [rax + 0x18], xmm3          ; ITS double -- the fourth
+ *      0x4E8454  mov [rbx], rax                    ; stored at MultitorchEvaluator + 0
+ *
+ *  AND THE CALL SITE CONFIRMS IT: at 0x766DCF the class is constructed on the STACK -- `lea rbx, [rsp + 0xd0]` -- with the three values read
+ *  out of an option, so the class is a stack handle whose whole state is the one allocated pointer.
+ */
+class MultitorchEvaluator : public Evaluator {
 public:
-    explicit MultitorchEvaluator(int nbTorches = 2) : nbTorches_(nbTorches) {}
+    /** RE 0x4E8410. **THE DECLARATION HAD ONE PARAMETER AND THE ROUTINE TAKES THREE** -- an int and two doubles, all three written into the
+     *  object this class allocates. */
+    MultitorchEvaluator(int torches, double first, double second);
+
     const char* name() const override { return "MultitorchEvaluator"; }
     double evaluate(const std::vector<PatternCell>& cells, double sheetArea) const override;
 
+    int torches() const { return impl_.torches; }        // RE 0x4E8447: [impl + 8]
+    double first() const { return impl_.first; }         // RE 0x4E844A: [impl + 0x10]
+    double second() const { return impl_.second; }       // RE 0x4E844F: [impl + 0x18]
+
 private:
-    int nbTorches_;
+    /** The 0x20 byte object RE 0x4E8419 allocates, with its OWN vtable at +0. */
+    struct Impl {
+        void** vtable = nullptr;       // +0x00, RE 0x4E8444
+        int torches = 0;               // +0x08, RE 0x4E8447 -- the second argument
+        double first = 0.0;            // +0x10, RE 0x4E844A -- the third
+        double second = 0.0;           // +0x18, RE 0x4E844F -- the fourth
+    };
+
+    Impl impl_{};                      // +0x00, RE 0x4E8454: `mov [rbx], rax`, so this object holds the allocated Impl
 };
 
 // RE Tiling::SqueezeMultiTiler / BoxMultiTiler: pick the tiler whose pattern scores best.

@@ -104,7 +104,8 @@ int main() {
         for (auto& c : tilted) c.angle = 0.7;
         CHECK(oblique.evaluate(tilted, sheetArea) > 0.9);
 
-        MultitorchEvaluator torch(4);
+        // RE 0x4E8410: the constructor takes an int and TWO DOUBLES, all three written into the object it allocates
+        MultitorchEvaluator torch(4, 1.0, 1.0);
         CHECK(torch.evaluate(cells, sheetArea) > 0.0);
         CHECK_NEAR(torch.evaluate({}, sheetArea), 0.0, 1e-12);
     }

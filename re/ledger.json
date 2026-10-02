@@ -2582,6 +2582,22 @@
    "round": 685,
    "subject": "handle-field-one-level-down",
    "witness": "in all three the offsets the declaration used are real and belong one level down, which is why the support audit reported the class as unsupported"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Tiling::MultitorchEvaluator's constructor takes (int, double, double) and writes all three into a 0x20 byte object it allocates and stores at +0",
+   "round": 686,
+   "subject": "MultitorchEvaluator.takes-three",
+   "witness": "0x4E8447 mov dword [rax+8],esi, 0x4E844A movsd [rax+0x10],xmm2, 0x4E844F movsd [rax+0x18],xmm3 and 0x4E8454 mov [rbx],rax; the declaration took one int and dropped three values"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the class is constructed on the stack at 0x766DCF with lea rbx,[rsp+0xd0], and its whole state is the one allocated pointer",
+   "round": 686,
+   "subject": "MultitorchEvaluator.is-a-stack-handle",
+   "witness": "0x766DBA lea rbx,[rsp+0xd0] then 0x766DCF call 0x4E8410; inside, 0x4E8454 stores the allocated object at [rbx]"
   }
  ]
 }

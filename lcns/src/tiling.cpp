@@ -189,8 +189,15 @@ double ObliqueEvaluator::evaluate(const std::vector<PatternCell>& cells, double 
 }
 
 LCNS_SUBSTITUTED(tiling.eval.multitorch);
+// RE 0x4E8410: (this, int, double, double), all three written into the object the constructor allocates.
+MultitorchEvaluator::MultitorchEvaluator(int torches, double first, double second) {
+    impl_.torches = torches;      // RE 0x4E8447: mov dword [rax + 8], esi
+    impl_.first = first;          // RE 0x4E844A: movsd [rax + 0x10], xmm2
+    impl_.second = second;        // RE 0x4E844F: movsd [rax + 0x18], xmm3
+}
+
 double MultitorchEvaluator::evaluate(const std::vector<PatternCell>& cells, double sheetArea) const {
-    if (cells.empty() || nbTorches_ <= 1) return 0.0;
+    if (cells.empty() || impl_.torches <= 1) return 0.0;
     // count how many distinct torch lines the pattern uses; fewer lines means fewer
     // reconfigurations, which is what the original rewards
     std::vector<double> lines;

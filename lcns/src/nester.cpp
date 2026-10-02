@@ -568,7 +568,9 @@ Solution TilingNester::run(SolveContext& ctx) {
         tiler.add(std::make_shared<tiling::DensityEvaluator>());
         tiler.add(std::make_shared<tiling::QuantityEvaluator>());
         if (order.multitorchAllowed) {
-            tiler.add(std::make_shared<tiling::MultitorchEvaluator>(order.multitorchNbTorches));
+            // RE 0x4E8410 takes (int, double, double); the call site at 0x766DBA reads all three out of one option object
+    tiler.add(std::make_shared<tiling::MultitorchEvaluator>(order.multitorchNbTorches, order.multitorchCostRatio,
+                                                            order.multitorchReconfig));
         }
         double patternScore = 0.0;
         std::vector<tiling::PatternCell> cells =
