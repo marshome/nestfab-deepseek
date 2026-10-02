@@ -2502,6 +2502,30 @@
    "round": 680,
    "subject": "port-state-must-be-marked",
    "witness": "Supervisor holds the module's single member at +8 and five members the port needs; the five are marked as the model's because 0x32700 and 0x827F0 have not been read"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a named function per offset with no owning type is a calling convention and not a program; field_accessors.hpp held 96 of them and is deleted",
+   "round": 681,
+   "subject": "accessors-are-not-cpp",
+   "witness": "each was a memcpy wrapper named after its own offset and RVA, and its own header said the field meanings are not recoverable from the code"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a test that writes a value through a function and reads it back through the same path proves the path and not the module",
+   "round": 681,
+   "subject": "a-tautological-test-proves-nothing",
+   "witness": "355 lines of test_boxacc.cpp wrote into a local buffer with memcpy and read it back with memcpy, so they tested memcpy; they are deleted with the file"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the named operations in the accessor file are wrappers AROUND the offset accessors, so the two cannot be split",
+   "round": 681,
+   "subject": "semantic-and-trivial-accessors-are-not-separable",
+   "witness": "assignTimer_5F3900 calls timerObject_5F47C0; keeping only the named ones does not compile, which is why all 96 were deleted and the seven are recorded as work"
   }
  ]
 }
