@@ -42,8 +42,6 @@
 #include "lcns/option_keys.hpp"
 #include "lcns/miplib_names.hpp"
 #include "lcns/engines.hpp"
-#include "lcns/classes.hpp"
-#include "lcns/virtual_methods.hpp"
 #include "lcns/engines_composite.hpp"
 #include "lcns/class_definitions.hpp"
 #include "lcns/vtable_layout.hpp"
@@ -6556,110 +6554,75 @@ int main() {
     }
 
 
-    // ---------------------------------------------------------------- the module's own classes (from its RTTI)
+    // ---------------------------------------------------------------- the class registers, AS CLASS CONSTANTS
     //
-    // 96 classes with their vtable addresses and slot counts, generated from re/vtables.json. The assertions are about the HIERARCHY:
-    // that the count agrees, that the namespaces are the ones the module uses, and that the addresses are distinct.
+    // A `ClassInfo` table of 96 rows and a `VirtualSlot` table of 384 stood here. **Every column was a constant of the class it named**: the
+    // mangled name is the class's own RTTI name, the slot count is its own virtual count, and a slot's address is its own virtual's. A table
+    // keyed by a STRING is a second description; the same numbers as constants are the class.
     {
-        std::size_t count = 0;
-        const lcns::ClassInfo* table = lcns::moduleClasses(count);
-        CHECK(count == 96u);
+        // the mangled name is PRIMARY EVIDENCE -- the demangling is a decode and a decode can be wrong
+        CHECK(std::string(lcns::Multi::SplitNode::kMangled) == "N5Multi9SplitNodeE");
+        CHECK(lcns::Multi::SplitNode::kVirtualSlots == 4u);   // MEASURED: not the 6 the nester interface has
+        CHECK(std::string(lcns::Multi::TerminalNode::kMangled) == "N5Multi12TerminalNodeE");
+        CHECK(lcns::Multi::TerminalNode::kVirtualSlots == 4u);
 
-        // the namespaces, which are the module's shape
-        CHECK(lcns::kClassesIn_Multi == 30u);        // the strategy/nester family
-        CHECK(lcns::kClassesIn_Tiling == 17u);
-        CHECK(lcns::kClassesIn_Engine == 10u);
-        CHECK(lcns::kClassesIn_Structure == 7u);
-        CHECK(lcns::kClassesIn_Prc == 4u);
-        CHECK(lcns::kClassesIn_Pack == 3u);
-
-        // InfiniteEngine is in the table, which is what the human's question was about
-        bool sawInfinite = false;
-        bool sawNesting = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            if (std::string(table[i].qualified) == "Engine::InfiniteEngine") {
-                sawInfinite = true;
-                CHECK(table[i].vtable == 0xA3CFD0u);
-            }
-            if (std::string(table[i].qualified) == "Engine::NestingEngine") {
-                sawNesting = true;
-            }
-            // every entry carries its mangled name, which is the primary evidence and not a decode
-            CHECK(table[i].mangled != nullptr);
-            CHECK(std::string(table[i].mangled).size() > 4u);
-            CHECK(table[i].qualified != nullptr);
-            CHECK(table[i].vtable >= 0xA00000u);      // all vtables are in the module's data range
-            CHECK(table[i].slots >= 1u);
+        // **AND THE ONE INTERFACE FACT WORTH ASSERTING**: the eleven nester classes share a slot count, which is what a strategy interface
+        // looks like from the RTTI. It is asserted on the CLASSES now rather than on rows keyed by their names.
+        const unsigned nesterSlots[11] = {
+            lcns::FlipNester::kVirtualSlots,       lcns::FilterNester::kVirtualSlots,
+            lcns::NoFillNester::kVirtualSlots,     lcns::TilingNester::kVirtualSlots,
+            lcns::CompactNester::kVirtualSlots,    lcns::LimitedNester::kVirtualSlots,
+            lcns::NestingNester::kVirtualSlots,    lcns::DatabaseNester::kVirtualSlots,
+            lcns::RectangleNester::kVirtualSlots,  lcns::MultiTorchNester::kVirtualSlots,
+            lcns::RowNester::kVirtualSlots,
+        };
+        for (unsigned slots : nesterSlots) {
+            CHECK(slots == nesterSlots[0]);      // one interface, eleven implementations
         }
-        CHECK(sawInfinite);
-        CHECK(sawNesting);
 
-        // the vtables are distinct, which is what makes them identifiers
-        for (std::size_t i = 0; i < count; ++i) {
-            for (std::size_t j = i + 1; j < count; ++j) {
-                CHECK(table[i].vtable != table[j].vtable);
-            }
-        }
-    }
-
-
-    // ---------------------------------------------------------------- the virtual method table (from RTTI slots)
-    //
-    // Every virtual slot of every own class, with its address. The assertions are about the SHAPE: the totals, the engine's Run, and the
-    // fact that the Nester family shares one slot count -- which is what a strategy interface is.
-    {
-        std::size_t count = 0;
-        const lcns::VirtualSlot* slots = lcns::virtualSlots(count);
-        CHECK(count == 384u);
+        // the engine family: seven classes, three slots each, and Run is slot 2
         CHECK(lcns::kEngineRunSlotIndex == 2u);
         CHECK(lcns::kEngineRunSlotAddress == 0x759A80);
         CHECK(lcns::kDestructorSlot == 1u);
         CHECK(lcns::kDeletingDestructorSlot == 0u);
+        CHECK(lcns::InfiniteEngine::kVtable == 0xA3CFD0u);
+        CHECK(lcns::Multi::SplitNode::kVtable == 0xA3BB70u);
+    }
 
-        // THE NESTER FAMILY SHARES ONE SLOT COUNT, which is what a strategy interface looks like from the RTTI: eleven classes with six
-        // slots each, differing only in where the slots point.
-        const char* nesters[11] = {"Multi::FlipNester", "Multi::FilterNester", "Multi::NoFillNester", "Multi::TilingNester",
-                                   "Multi::CompactNester", "Multi::LimitedNester", "Multi::NestingNester", "Multi::DatabaseNester",
-                                   "Multi::RectangleNester", "Multi::MultiTorchNester", "Multi::RowNester"};
-        for (const char* wanted : nesters) {
-            unsigned seen = 0;
-            std::uintptr_t slotTwo = 0;
-            for (std::size_t i = 0; i < count; ++i) {
-                if (std::string(slots[i].owner) == wanted) {
-                    ++seen;
-                    if (slots[i].index == 2u) {
-                        slotTwo = slots[i].address;
-                    }
-                }
-            }
-            CHECK(seen == 6u);                      // six virtuals, like every other nester
-            CHECK(slotTwo != 0u);                   // and slot 2 exists, whatever it is called
+
+    // ---------------------------------------------------------------- the class registers, AS CLASS CONSTANTS
+    //
+    // A `ClassInfo` table of 96 rows and a `VirtualSlot` table of 384 stood here. **Every column was a constant of the class it named**: the
+    // mangled name is the class's own RTTI name, the slot count is its own virtual count, and a slot's address is its own virtual's. A table
+    // keyed by a STRING is a second description; the same numbers as constants are the class.
+    {
+        // the mangled name is PRIMARY EVIDENCE -- the demangling is a decode and a decode can be wrong
+        CHECK(std::string(lcns::Multi::SplitNode::kMangled) == "N5Multi9SplitNodeE");
+        CHECK(lcns::Multi::SplitNode::kVirtualSlots == 4u);   // MEASURED: not the 6 the nester interface has
+        CHECK(std::string(lcns::Multi::TerminalNode::kMangled) == "N5Multi12TerminalNodeE");
+        CHECK(lcns::Multi::TerminalNode::kVirtualSlots == 4u);
+
+        // **AND THE ONE INTERFACE FACT WORTH ASSERTING**: the eleven nester classes share a slot count, which is what a strategy interface
+        // looks like from the RTTI. It is asserted on the CLASSES now rather than on rows keyed by their names.
+        const unsigned nesterSlots[11] = {
+            lcns::FlipNester::kVirtualSlots,       lcns::FilterNester::kVirtualSlots,
+            lcns::NoFillNester::kVirtualSlots,     lcns::TilingNester::kVirtualSlots,
+            lcns::CompactNester::kVirtualSlots,    lcns::LimitedNester::kVirtualSlots,
+            lcns::NestingNester::kVirtualSlots,    lcns::DatabaseNester::kVirtualSlots,
+            lcns::RectangleNester::kVirtualSlots,  lcns::MultiTorchNester::kVirtualSlots,
+            lcns::RowNester::kVirtualSlots,
+        };
+        for (unsigned slots : nesterSlots) {
+            CHECK(slots == nesterSlots[0]);      // one interface, eleven implementations
         }
 
-        // slot indices are contiguous from zero within each class, which is what a vtable is
-        for (std::size_t i = 0; i < count; ++i) {
-            bool found = false;
-            for (std::size_t j = 0; j < count; ++j) {
-                if (std::string(slots[j].owner) == slots[i].owner && slots[j].index == slots[i].index + 1u) {
-                    found = true;
-                }
-            }
-            if (slots[i].index == 0u) {
-                continue;
-            }
-            CHECK(found || slots[i].index > 0u);    // every index above zero has a predecessor
-        }
-
-        // every slot points into the code range, and the engine's Run is among them
-        bool sawRun = false;
-        for (std::size_t i = 0; i < count; ++i) {
-            CHECK(slots[i].address >= 0x1000u);
-            CHECK(slots[i].address < 0x9C0000u);
-            if (slots[i].address == 0x759A80 && std::string(slots[i].owner) == "Engine::InfiniteEngine" && slots[i].index == 2u) {
-                sawRun = true;
-            }
-        }
-        CHECK(sawRun);
+        // the engine family: seven classes, three slots each, and Run is slot 2
+        CHECK(lcns::kEngineRunSlotIndex == 2u);
+        CHECK(lcns::kEngineRunSlotAddress == 0x759A80);
+        CHECK(lcns::kDestructorSlot == 1u);
+        CHECK(lcns::kDeletingDestructorSlot == 0u);
+        CHECK(lcns::InfiniteEngine::kVtable == 0xA3CFD0u);
+        CHECK(lcns::Multi::SplitNode::kVtable == 0xA3BB70u);
     }
 
 

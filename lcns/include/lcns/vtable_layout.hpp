@@ -64,6 +64,18 @@ constexpr std::uintptr_t kNestingNesterCtor = 0x342E0;           // 422 bytes, 1
 constexpr std::uintptr_t kNestingNesterBaseCtor = 0xB4470;       // RE 0x342F5
 constexpr std::size_t kNestingNesterVtableField = 0x00;          // RE 0x34308: mov [rbx], rax
 
+// ------------------------------------------------------------------------------------------------
+// THE SLOT POSITIONS, from the same dump. The first two are the destructor pair for every polymorphic class in this ABI, so slot 2 is the
+// first DECLARED virtual -- which is why an Engine's slot 2 is `Run` and a Nester's slot 2 is not.
+
+/** Slot 2, what the engine call site at 0x2516E reaches. */
+constexpr unsigned kEngineRunSlotIndex = 2;
+constexpr std::uintptr_t kEngineRunSlotAddress = 0x759A80;   // RE 0x759A80 is slot 2 of Engine::InfiniteEngine
+
+/** The destructor pair, by POSITION: the names are this ABI's and not the module's, which is why they are named for where they sit. */
+constexpr unsigned kDeletingDestructorSlot = 0;
+constexpr unsigned kDestructorSlot = 1;
+
 static_assert(kVtableAddressPointOffset == 0x10, "the dump at 0xA3CFD0: the typeinfo is at +8 and slot 0 at +0x10");
 static_assert(kInfiniteEngineSlot0Address == 0xA3CFE0, "the address RE 0x759AD6 loads");
 static_assert(kInfiniteEngineSlot2Value == 0x759A80, "Run, which this project implements for that class");

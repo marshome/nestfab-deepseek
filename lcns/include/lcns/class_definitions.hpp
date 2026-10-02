@@ -145,6 +145,10 @@ class Implementation {
 public:
     virtual ~Implementation() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N7Compact9Compacter14ImplementationE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x266E00: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x266E00;
     static constexpr std::uintptr_t kVtable = 0xA3D470;
@@ -174,6 +178,10 @@ class CompositeObserver {
 public:
     virtual ~CompositeObserver() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N6Engine17CompositeObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
+
     /** RE 0x8D4500: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x8D4500;
     static constexpr std::uintptr_t kVtable = 0xA3D060;
@@ -198,6 +206,10 @@ class EquivalentObserver {
 public:
     virtual ~EquivalentObserver() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N6Engine18EquivalentObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
+
     /** RE 0x75E0E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x75E0E0;
     static constexpr std::uintptr_t kVtable = 0xA3D0A0;
@@ -218,6 +230,10 @@ namespace Json {
 class DefaultValueAllocator {
 public:
     virtual ~DefaultValueAllocator() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N4Json21DefaultValueAllocatorE";
+    static constexpr unsigned kVirtualSlots = 6;
 };
 
 /** Json::FastWriter -- vtable 0xA3B2F0, 3 virtual slot(s).
@@ -229,6 +245,10 @@ public:
 class FastWriter {
 public:
     virtual ~FastWriter() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N4Json10FastWriterE";
+    static constexpr unsigned kVirtualSlots = 3;
 };
 
 /** Json::StyledWriter -- vtable 0xA3B320, 3 virtual slot(s).
@@ -240,6 +260,10 @@ public:
 class StyledWriter {
 public:
     virtual ~StyledWriter() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N4Json12StyledWriterE";
+    static constexpr unsigned kVirtualSlots = 3;
 };
 }  // namespace
 
@@ -254,6 +278,10 @@ namespace Multi {
 class AdvancedStrategist {
 public:
     virtual ~AdvancedStrategist() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi18AdvancedStrategistE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x2EC50: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x2EC50;
@@ -295,6 +323,10 @@ class AllSheetSelector {
 public:
     virtual ~AllSheetSelector() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi16AllSheetSelectorE";
+    static constexpr unsigned kVirtualSlots = 4;
+
     /** RE 0xB00E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0xB00E0;
     static constexpr std::uintptr_t kVtable = 0xA3B840;
@@ -309,6 +341,10 @@ public:
 class CompactCanceller {
 public:
     virtual ~CompactCanceller() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi16CompactCancellerE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x68A6E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x68A6E0;
@@ -347,6 +383,10 @@ class LargestSheetSelector {
 public:
     virtual ~LargestSheetSelector() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi20LargestSheetSelectorE";
+    static constexpr unsigned kVirtualSlots = 4;
+
     /** RE 0xB0000: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0xB0000;
     static constexpr std::uintptr_t kVtable = 0xA3BAC0;
@@ -361,6 +401,10 @@ public:
 class NestingContextPool {
 public:
     virtual ~NestingContextPool() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi18NestingContextPoolE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x32700: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x32700;
@@ -430,6 +474,10 @@ public:
 class NestingObserver {
 public:
     virtual ~NestingObserver() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi15NestingObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
 
     /** RE 0x378E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x378E0;
@@ -619,6 +667,10 @@ class NoFitMapCanceller {
 public:
     virtual ~NoFitMapCanceller() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi17NoFitMapCancellerE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x32700: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x32700;
     static constexpr std::uintptr_t kVtable = 0xA3B8E0;
@@ -688,6 +740,10 @@ class NoMixSheetSelector {
 public:
     virtual ~NoMixSheetSelector() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi18NoMixSheetSelectorE";
+    static constexpr unsigned kVirtualSlots = 4;
+
     /** RE 0xAFD60: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0xAFD60;
     static constexpr std::uintptr_t kVtable = 0xA3B9D0;
@@ -726,6 +782,10 @@ class PartUpdaterLimiter {
 public:
     virtual ~PartUpdaterLimiter() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi18PartUpdaterLimiterE";
+    static constexpr unsigned kVirtualSlots = 4;
+
     /** RE 0x695C70: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x695C70;
     static constexpr std::uintptr_t kVtable = 0xA3BA00;
@@ -749,6 +809,10 @@ public:
 class RCompactCanceller {
 public:
     virtual ~RCompactCanceller() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi17RCompactCancellerE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x67460: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x67460;
@@ -935,6 +999,10 @@ class RandomSheetSelector {
 public:
     virtual ~RandomSheetSelector() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi19RandomSheetSelectorE";
+    static constexpr unsigned kVirtualSlots = 4;
+
     /** RE 0xB0040: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0xB0040;
     static constexpr std::uintptr_t kVtable = 0xA3BA60;
@@ -956,6 +1024,10 @@ public:
 class SplitNode {
 public:
     virtual ~SplitNode() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi9SplitNodeE";
+    static constexpr unsigned kVirtualSlots = 4;
 
     /** RE 0x99910: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x99910;
@@ -985,6 +1057,10 @@ class StrategyBasicAdder {
 public:
     virtual ~StrategyBasicAdder() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi18StrategyBasicAdderE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0xAF750: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0xAF750;
     static constexpr std::uintptr_t kVtable = 0xA3BA30;
@@ -1005,6 +1081,10 @@ public:
 class SupervisorCanceller {
 public:
     virtual ~SupervisorCanceller() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi19SupervisorCancellerE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x30A30: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x30A30;
@@ -1027,6 +1107,10 @@ public:
 class TerminalNode {
 public:
     virtual ~TerminalNode() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi12TerminalNodeE";
+    static constexpr unsigned kVirtualSlots = 4;
 
     /** RE 0x99360: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x99360;
@@ -1067,6 +1151,10 @@ class TraceObserver {
 public:
     virtual ~TraceObserver() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi13TraceObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
+
     /** RE 0x5F000: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x5F000;
     static constexpr std::uintptr_t kVtable = 0xA3B700;
@@ -1088,6 +1176,10 @@ public:
 class WrapObserver {
 public:
     virtual ~WrapObserver() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi12WrapObserverE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x83DC0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x83DC0;
@@ -1141,6 +1233,10 @@ class AlphaPriceComputer {
 public:
     virtual ~AlphaPriceComputer() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3Prc18AlphaPriceComputerE";
+    static constexpr unsigned kVirtualSlots = 5;
+
     /** RE 0x4D9B30: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4D9B30;
     static constexpr std::uintptr_t kVtable = 0xA3B130;
@@ -1159,6 +1255,10 @@ class BoxPriceComputer {
 public:
     virtual ~BoxPriceComputer() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3Prc16BoxPriceComputerE";
+    static constexpr unsigned kVirtualSlots = 5;
+
     /** RE 0x4D9AD0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4D9AD0;
     static constexpr std::uintptr_t kVtable = 0xA3B0B0;
@@ -1174,6 +1274,10 @@ class HullPriceComputer {
 public:
     virtual ~HullPriceComputer() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3Prc17HullPriceComputerE";
+    static constexpr unsigned kVirtualSlots = 5;
+
     /** RE 0x4D9B00: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4D9B00;
     static constexpr std::uintptr_t kVtable = 0xA3B0F0;
@@ -1188,6 +1292,10 @@ public:
 class LinearCombinationPricer {
 public:
     virtual ~LinearCombinationPricer() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3Prc23LinearCombinationPricerE";
+    static constexpr unsigned kVirtualSlots = 5;
 
     /** RE 0x4D9CD0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4D9CD0;
@@ -1214,6 +1322,10 @@ namespace RCompact {
 class RotateLogger {
 public:
     virtual ~RotateLogger() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N8RCompact12RotateLoggerE";
+    static constexpr unsigned kVirtualSlots = 8;
 
     /** RE 0x24A1C0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x24A1C0;
@@ -1292,6 +1404,10 @@ class BasicDistancer {
 public:
     virtual ~BasicDistancer() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3Row14BasicDistancerE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x136AE0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x136AE0;
     static constexpr std::uintptr_t kVtable = 0xA3B1B0;
@@ -1313,6 +1429,10 @@ class BoxAreaDimensioner {
 public:
     virtual ~BoxAreaDimensioner() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure18BoxAreaDimensionerE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x5247F0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x5247F0;
     static constexpr std::uintptr_t kVtable = 0xA534C0;
@@ -1330,6 +1450,10 @@ public:
 class ClusterObserver {
 public:
     virtual ~ClusterObserver() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure15ClusterObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
 
     /** RE 0x553100: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x553100;
@@ -1352,6 +1476,10 @@ public:
 class Observer {
 public:
     virtual ~Observer() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure8ObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
 
     /** RE 0x83DC0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x83DC0;
@@ -1402,6 +1530,10 @@ class ParseProblemException {
 public:
     virtual ~ParseProblemException() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure21ParseProblemExceptionE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x50CF70: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x50CF70;
     static constexpr std::uintptr_t kVtable = 0xA534F0;
@@ -1426,6 +1558,10 @@ class ParseSolutionException {
 public:
     virtual ~ParseSolutionException() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure22ParseSolutionExceptionE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x50FA10: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x50FA10;
     static constexpr std::uintptr_t kVtable = 0xA53520;
@@ -1448,6 +1584,10 @@ class SizeDimensioner {
 public:
     virtual ~SizeDimensioner() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure15SizeDimensionerE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x5247D0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x5247D0;
     static constexpr std::uintptr_t kVtable = 0xA53460;
@@ -1465,6 +1605,10 @@ public:
 class WidthDimensioner {
 public:
     virtual ~WidthDimensioner() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N9Structure16WidthDimensionerE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x5247B0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x5247B0;
@@ -1487,6 +1631,10 @@ class BasicCandidater {
 public:
     virtual ~BasicCandidater() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N6Tiling15BasicCandidaterE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x4F3630: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4F3630;
     static constexpr std::uintptr_t kVtable = 0xA3D190;
@@ -1505,6 +1653,10 @@ class OldMultitorchEvaluator {
 public:
     virtual ~OldMultitorchEvaluator() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N6Tiling22OldMultitorchEvaluatorE";
+    static constexpr unsigned kVirtualSlots = 4;
+
     /** RE 0x4E83E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4E83E0;
     static constexpr std::uintptr_t kVtable = 0xA3D340;
@@ -1519,6 +1671,10 @@ public:
 class WarpCanceller {
 public:
     virtual ~WarpCanceller() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N6Tiling13WarpCancellerE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x4ED480: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x4ED480;
@@ -1576,6 +1732,10 @@ class BadResponseException {
 public:
     virtual ~BadResponseException() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Utils20BadResponseExceptionE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x2B660: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x2B660;
     static constexpr std::uintptr_t kVtable = 0xA3BC80;
@@ -1628,6 +1788,10 @@ class ConnectException {
 public:
     virtual ~ConnectException() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Utils16ConnectExceptionE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x6D3240: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x6D3240;
     static constexpr std::uintptr_t kVtable = 0xA3BBF0;
@@ -1642,6 +1806,10 @@ public:
 class ResolveException {
 public:
     virtual ~ResolveException() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Utils16ResolveExceptionE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x6D3280: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x6D3280;
@@ -1658,6 +1826,10 @@ class TimeoutException {
 public:
     virtual ~TimeoutException() = default;
 
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Utils16TimeoutExceptionE";
+    static constexpr unsigned kVirtualSlots = 3;
+
     /** RE 0x6D32C0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x6D32C0;
     static constexpr std::uintptr_t kVtable = 0xA3BC50;
@@ -1672,6 +1844,10 @@ public:
 class TimerWinImplementation {
 public:
     virtual ~TimerWinImplementation() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N5Utils22TimerWinImplementationE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x5F47C0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x5F47C0;
@@ -1690,6 +1866,10 @@ namespace dbg {
 class file_error {
 public:
     virtual ~file_error() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3dbg10file_errorE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x60C160: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x60C160;
@@ -1717,6 +1897,10 @@ public:
 class symlog {
 public:
     virtual ~symlog() = default;
+
+    /** The class's RTTI identifiers: its mangled name, which is PRIMARY EVIDENCE, and its virtual count. */
+    static constexpr const char* kMangled = "N3dbg6symlogE";
+    static constexpr unsigned kVirtualSlots = 3;
 
     /** RE 0x60B4E0: the function that BUILDS this class, found by the vtable slot-0 address it installs. */
     static constexpr std::uintptr_t kConstructor = 0x60B4E0;

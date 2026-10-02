@@ -176,6 +176,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "classname-members-layout-fields-info-fa",
+  "rule": "不要为已存在的类生成第二份描述：名为 <ClassName><Members|Layout|Fields|Info|Facts> 的类型就是该类的说明书。规则检查见 re/g_no_facts_structs.py，该检查用植入的四种形状验证过。",
+  "check": "re/g_no_facts_structs.py",
+  "where": "re/RULES.md, added 2026-10-02",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

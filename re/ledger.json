@@ -2270,6 +2270,22 @@
    "round": 669,
    "subject": "checks-must-be-proved-by-failure",
    "witness": "re/g_prove_duplicate_check.py writes a synthetic duplicate, runs the check, observes exit 1 and the name in the output, and removes the file"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the mangled name, the virtual count and the vtable address are constants of the class they name, and the two tables keyed by class name are deleted",
+   "round": 670,
+   "subject": "class-tables-folded-into-classes",
+   "witness": "46 generated classes, 16 hand-written ones in nester.hpp and the seven Engine classes now carry kMangled, kVirtualSlots and kVtable; classes.hpp and virtual_methods.hpp are gone"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "no type may be named <AnExistingClass><Members|Layout|Fields|Info|Facts>: that is a description of a class, and the class is where the facts belong",
+   "round": 670,
+   "subject": "no-facts-structs",
+   "witness": "the check is re/g_no_facts_structs.py, proved by re/g_prove_facts_check.py on the three shapes the human found; a first version of it was too broad and flagged RunRecord and PolymorphicRecord, which ARE things rather than descriptions"
   }
  ]
 }

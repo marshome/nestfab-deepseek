@@ -50,6 +50,11 @@ private:
 // ---------------------------------------------------------------------------
 class Canceller {
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Utils9CancellerE";
+    static constexpr unsigned kVirtualSlots = 3;
+    static constexpr std::uintptr_t kVtable = 0xA3BD70;
+
     virtual ~Canceller() = default;
     virtual bool probeCancel() { return cancelled_; }
     void cancel() { cancelled_ = true; }
@@ -125,6 +130,11 @@ struct Observers {
 // RE Engine::BestObserver / CompositeObserver: keeps the best solution seen.
 class BestObserver {
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N6Engine12BestObserverE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3CF30;
+
     void offer(const Solution& s, double score);
     bool hasSolution() const { return has_; }
     const Solution& best() const { return best_; }
@@ -317,6 +327,11 @@ struct Mt19937 {
  */
 class NestingNester : public Nester {          // RE 0xA3B690, Run = 0x378E0
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi13NestingNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B690;
+
     const char* name() const override { return "NestingNester"; }
     double estimate(const SolveContext&) const override;
     Solution run(SolveContext&) override;
@@ -358,6 +373,11 @@ static_assert(Mt19937::kSeedMultiplier == 1812433253u, "RE 0x3434B: imul eax, ea
 
 class FlipNester : public Nester {             // RE 0xA3B490, Run = 0x4B870
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi10FlipNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B490;
+
     explicit FlipNester(double flipPartsRatio = 1.0) : ratio_(flipPartsRatio) {}
     const char* name() const override { return "FlipNester"; }
     const char* tracePrefix() const override { return kTraceFlip; }   // RE verbatim
@@ -368,6 +388,11 @@ private:
 
 class FilterNester : public Nester {           // RE 0xA3B4F0, Run = 0xB3AE0
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi12FilterNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B4F0;
+
     const char* name() const override { return "FilterNester"; }
     const char* tracePrefix() const override { return kTraceFilter; }   // RE verbatim
     double estimate(const SolveContext&) const override;
@@ -376,6 +401,11 @@ public:
 
 class NoFillNester : public Nester {           // RE 0xA3B530, Run = 0x7F240
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi12NoFillNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B530;
+
     const char* name() const override { return "NoFillNester"; }
     const char* tracePrefix() const override { return kTraceNoFill; }   // RE verbatim
     Solution run(SolveContext&) override;
@@ -383,18 +413,33 @@ public:
 
 class TilingNester : public Nester {           // RE 0xA3B5A0, Run = 0x46940 (largest)
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi12TilingNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B5A0;
+
     const char* name() const override { return "TilingNester"; }
     Solution run(SolveContext&) override;
 };
 
 class CompactNester : public Nester {          // RE 0xA3B610, Run = 0xB13D0
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi13CompactNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B610;
+
     const char* name() const override { return "CompactNester"; }
     Solution run(SolveContext&) override;
 };
 
 class LimitedNester : public Nester {          // RE 0xA3B650, Run = 0x4AB40
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi13LimitedNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B650;
+
     LimitedNester(int maxParts, int maxAngles) : maxParts_(maxParts), maxAngles_(maxAngles) {}
     const char* name() const override { return "LimitedNester"; }
     Solution run(SolveContext&) override;
@@ -405,6 +450,11 @@ private:
 
 class DatabaseNester : public Nester {         // RE 0xA3B740, Run = 0x5B250
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi14DatabaseNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B740;
+
     const char* name() const override { return "DatabaseNester"; }
     Solution run(SolveContext&) override;
     // RE: ..\nesting\algos\tree_db.cpp (FindNode 0x1C12D0)
@@ -473,6 +523,11 @@ inline bool isShutdownState(int state) {
 
 class RectangleNester : public Nester {        // RE 0xA3B800, Run = 0x75FB0
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi15RectangleNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B800;
+
     const char* name() const override { return "RectangleNester"; }
     Solution run(SolveContext&) override;
 };
@@ -549,6 +604,11 @@ private:
 
 class RowNester : public Nester {              // RE 0xA3BB40, ctor 0x8F210, Run slot5 = 0x913E0
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi9RowNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3BB30;
+
     explicit RowNester(bool pipe = false) : pipe_(pipe) {}
     const char* name() const override { return pipe_ ? "RowNester(pipe)" : "RowNester"; }
     Solution run(SolveContext&) override;
@@ -576,6 +636,11 @@ private:
 
 class MultiTorchNester : public Nester {       // RE 0xA3B8A0, Run = 0x7BCC0
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N5Multi16MultiTorchNesterE";
+    static constexpr unsigned kVirtualSlots = 6;
+    static constexpr std::uintptr_t kVtable = 0xA3B8A0;
+
     const char* name() const override { return "MultiTorchNester"; }
     Solution run(SolveContext&) override;
 };
@@ -593,6 +658,11 @@ namespace pack {
 // RE Pack::BestNester 0xA3B400 / KnapsackNester 0xA3B430 / RecursiveNester 0xA3B460
 class BestNester : public Nester {
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N4Pack10BestNesterE";
+    static constexpr unsigned kVirtualSlots = 3;
+    static constexpr std::uintptr_t kVtable = 0xA3B400;
+
     void add(std::shared_ptr<Nester> n) { children_.push_back(std::move(n)); }
     const char* name() const override { return "Pack::BestNester"; }
     Solution run(SolveContext&) override;
@@ -601,11 +671,21 @@ private:
 };
 class KnapsackNester : public Nester {
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N4Pack14KnapsackNesterE";
+    static constexpr unsigned kVirtualSlots = 3;
+    static constexpr std::uintptr_t kVtable = 0xA3B430;
+
     const char* name() const override { return "Pack::KnapsackNester"; }
     Solution run(SolveContext&) override;
 };
 class RecursiveNester : public Nester {
 public:
+    /** The class's RTTI identifiers: the MANGLED name, which is primary evidence, and its virtual count. */
+    static constexpr const char* kMangled = "N4Pack15RecursiveNesterE";
+    static constexpr unsigned kVirtualSlots = 3;
+    static constexpr std::uintptr_t kVtable = 0xA3B460;
+
     const char* name() const override { return "Pack::RecursiveNester"; }
     Solution run(SolveContext&) override;
 };
