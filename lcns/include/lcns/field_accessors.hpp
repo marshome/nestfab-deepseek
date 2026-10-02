@@ -158,6 +158,98 @@ inline std::uint32_t getDword20_548390(const void* object) {
     std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x20, sizeof(value));
     return value;
 }
+/** RE 0x52F930: reads the 8-bit value at +0x20. */
+inline std::uint8_t getByte20_52F930(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x20, sizeof(value));
+    return value;
+}
+
+/** RE 0x52F940: reads the 8-bit value at +0x21. */
+inline std::uint8_t getByte21_52F940(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x21, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7350: reads the 8-bit value at +0x68. */
+inline std::uint8_t getByte68_4F7350(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x68, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7360: reads the 8-bit value at +0x69. */
+inline std::uint8_t getByte69_4F7360(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x69, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F73A0: reads the 8-bit value at +0x6A. */
+inline std::uint8_t getByte6A_4F73A0(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x6A, sizeof(value));
+    return value;
+}
+
+/** RE 0x5FBC70: reads the 8-bit value at +0x08. */
+inline std::uint8_t getByte08_5FBC70(const void* object) {
+    std::uint8_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x08, sizeof(value));
+    return value;
+}
+
+/** RE 0x5C4CE0: reads the 64-bit value at +0x08. */
+inline std::uint64_t getPtr08_5C4CE0(const void* object) {
+    std::uint64_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x08, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F73C0: returns the address of the member at +0x70, not its value. */
+inline void* addr70_4F73C0(void* object) {
+    return static_cast<unsigned char*>(object) + 0x70;
+}
+
+/** RE 0x5C5F40: returns the address of the member at +0x18, not its value. */
+inline void* addr18_5C5F40(void* object) {
+    return static_cast<unsigned char*>(object) + 0x18;
+}
+
+/** RE 0x54D120: returns the address of the member at +0x08, not its value. */
+inline void* addr08_54D120(void* object) {
+    return static_cast<unsigned char*>(object) + 0x08;
+}
+
+/** RE 0x5C5F60: returns the address of the member at +0x18, not its value. */
+inline void* addr18_5C5F60(void* object) {
+    return static_cast<unsigned char*>(object) + 0x18;
+}
+
+/** RE 0x5483B0: returns the address of the member at +0x38, not its value. */
+inline void* addr38_5483B0(void* object) {
+    return static_cast<unsigned char*>(object) + 0x38;
+}
+
+/** RE 0x5483A0: returns the address of the member at +0x28, not its value. */
+inline void* addr28_5483A0(void* object) {
+    return static_cast<unsigned char*>(object) + 0x28;
+}
+
+/** RE 0x54CE60: copies one dword from the second argument to the first. */
+inline void copyDword_54CE60(void* destination, const void* source) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, source, sizeof(value));
+    std::memcpy(destination, &value, sizeof(value));
+}
+
+/** RE 0x52F8A0: copies one dword from the second argument to the first. */
+inline void copyDword_52F8A0(void* destination, const void* source) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, source, sizeof(value));
+    std::memcpy(destination, &value, sizeof(value));
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns

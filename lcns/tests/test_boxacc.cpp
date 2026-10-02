@@ -495,5 +495,80 @@ int main() {
         }
     }
 
+    // ------------------- field accessors, fourth batch: values, addresses and a copy
+    {
+        unsigned char object[0x80];
+        std::memset(object, 0xA5, sizeof(object));
+        {
+            const std::uint8_t put = 0x5Aull;
+            std::memcpy(object + 0x20, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getByte20_52F930(object) == put);   // RE 0x52F930
+        }
+        {
+            const std::uint8_t put = 0x5Aull;
+            std::memcpy(object + 0x21, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getByte21_52F940(object) == put);   // RE 0x52F940
+        }
+        {
+            const std::uint8_t put = 0x5Aull;
+            std::memcpy(object + 0x68, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getByte68_4F7350(object) == put);   // RE 0x4F7350
+        }
+        {
+            const std::uint8_t put = 0x5Aull;
+            std::memcpy(object + 0x69, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getByte69_4F7360(object) == put);   // RE 0x4F7360
+        }
+        {
+            const std::uint8_t put = 0x5Aull;
+            std::memcpy(object + 0x6A, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getByte6A_4F73A0(object) == put);   // RE 0x4F73A0
+        }
+        {
+            const std::uint8_t put = 0x5Aull;
+            std::memcpy(object + 0x08, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getByte08_5FBC70(object) == put);   // RE 0x5FBC70
+        }
+        {
+            const std::uint64_t put = 0x1122334455667788ull;
+            std::memcpy(object + 0x08, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getPtr08_5C4CE0(object) == put);   // RE 0x5C4CE0
+        }
+        CHECK(lcns::dll::accessors::addr70_4F73C0(object) == object + 0x70);   // RE 0x4F73C0, an address not a value
+        CHECK(lcns::dll::accessors::addr18_5C5F40(object) == object + 0x18);   // RE 0x5C5F40, an address not a value
+        CHECK(lcns::dll::accessors::addr08_54D120(object) == object + 0x08);   // RE 0x54D120, an address not a value
+        CHECK(lcns::dll::accessors::addr18_5C5F60(object) == object + 0x18);   // RE 0x5C5F60, an address not a value
+        CHECK(lcns::dll::accessors::addr38_5483B0(object) == object + 0x38);   // RE 0x5483B0, an address not a value
+        CHECK(lcns::dll::accessors::addr28_5483A0(object) == object + 0x28);   // RE 0x5483A0, an address not a value
+        {
+            unsigned char source[8];
+            unsigned char destination[8];
+            const std::uint32_t put = 0x0BADF00Du;
+            std::memcpy(source, &put, sizeof(put));
+            std::memset(destination, 0, sizeof(destination));
+            lcns::dll::accessors::copyDword_54CE60(destination, source);   // RE 0x54CE60
+            std::uint32_t got = 0;
+            std::memcpy(&got, destination, sizeof(got));
+            CHECK(got == put);
+            std::uint32_t untouched = 0;
+            std::memcpy(&untouched, destination + 4, sizeof(untouched));
+            CHECK(untouched == 0u);   // exactly one dword is copied, not two
+        }
+        {
+            unsigned char source[8];
+            unsigned char destination[8];
+            const std::uint32_t put = 0x0BADF00Du;
+            std::memcpy(source, &put, sizeof(put));
+            std::memset(destination, 0, sizeof(destination));
+            lcns::dll::accessors::copyDword_52F8A0(destination, source);   // RE 0x52F8A0
+            std::uint32_t got = 0;
+            std::memcpy(&got, destination, sizeof(got));
+            CHECK(got == put);
+            std::uint32_t untouched = 0;
+            std::memcpy(&untouched, destination + 4, sizeof(untouched));
+            CHECK(untouched == 0u);   // exactly one dword is copied, not two
+        }
+    }
+
     return check::finish("boxacc");
 }

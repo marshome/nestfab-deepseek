@@ -92,6 +92,7 @@ BOILERPLATE = {
     0x547610,  # mov rax, rcx ; ret -- returns its own argument, a pointer adjustment
     0x5C5F30,  # mov rax, rcx ; ret -- returns its own argument, a pointer adjustment
     0x5C5F50,  # mov rax, rcx ; ret -- returns its own argument, a pointer adjustment
+    0x5C5270,  # mov rax, rcx ; ret -- returns its own argument
     0x90ECB0,  # std::string internal: same three words, clamps against max_size
 }
 
@@ -199,6 +200,7 @@ if __name__ == "__main__":
 # Functions already implemented in lcns/src. The closure tools treat these as done, so the denominator falls as work
 # lands instead of only when a function is classified as library. Each entry says where it lives.
 IMPLEMENTED = {
+    0x52F930, 0x52F940, 0x4F7350, 0x4F7360, 0x4F73A0, 0x5FBC70, 0x5C4CE0, 0x4F73C0, 0x5C5F40, 0x54D120, 0x5C5F60, 0x5483B0, 0x5483A0, 0x54CE60, 0x52F8A0,   # batch four, lcns/field_accessors.hpp
     0x54D100, 0x5C4CD0, 0x4F7050, 0x4FC1D0, 0x5FC7E0, 0x4FC200, 0x4F8C70, 0x4F76B0, 0x548390,   # batch three, lcns/field_accessors.hpp
     0x4F7380, 0x4F8360, 0x4F8CD0, 0x4F7060, 0x4F76D0, 0x52F8D0, 0x52F8E0,   # batch two, lcns/field_accessors.hpp
     0x52F920, 0x54CE90, 0x54D110, 0x4F8C60, 0x4F8CC0, 0x4F76C0, 0x4F7270, 0x4F7290,   # lcns/field_accessors.hpp
