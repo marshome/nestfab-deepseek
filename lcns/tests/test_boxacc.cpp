@@ -398,5 +398,49 @@ int main() {
         }
     }
 
+    // ------------------- field accessors, second batch
+    {
+        unsigned char object[0x80];
+        std::memset(object, 0xA5, sizeof(object));
+        lcns::dll::accessors::setByte6A_4F7380(object, 0x5A);   // RE 0x4F7380
+        {
+            std::uint8_t got = 0;
+            std::memcpy(&got, object + 0x6A, sizeof(got));
+            CHECK(got == 0x5A);
+        }
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x20, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword20_4F8360(object) == put);   // RE 0x4F8360
+        }
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x64, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword64_4F8CD0(object) == put);   // RE 0x4F8CD0
+        }
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x24, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword24_4F7060(object) == put);   // RE 0x4F7060
+        }
+        {
+            const std::uint32_t put = 0x12345678;
+            std::memcpy(object + 0x6C, &put, sizeof(put));
+            CHECK(lcns::dll::accessors::getDword6C_4F76D0(object) == put);   // RE 0x4F76D0
+        }
+        lcns::dll::accessors::setByte20_52F8D0(object, 0x5A);   // RE 0x52F8D0
+        {
+            std::uint8_t got = 0;
+            std::memcpy(&got, object + 0x20, sizeof(got));
+            CHECK(got == 0x5A);
+        }
+        lcns::dll::accessors::setByte21_52F8E0(object, 0x5A);   // RE 0x52F8E0
+        {
+            std::uint8_t got = 0;
+            std::memcpy(&got, object + 0x21, sizeof(got));
+            CHECK(got == 0x5A);
+        }
+    }
+
     return check::finish("boxacc");
 }

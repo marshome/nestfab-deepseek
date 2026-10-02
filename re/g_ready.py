@@ -47,7 +47,7 @@ def main():
     table = json.loads(io.open(os.path.join(L.ROOT, "re", "exports_table.json"), encoding="utf-8").read())
 
     def domain(addr):
-        if addr in L.VERIFIED or addr in T.BOILERPLATE:
+        if addr in L.VERIFIED or addr in T.BOILERPLATE or addr in getattr(T, 'IMPLEMENTED', ()):
             return False
         if addr not in profile:
             return False

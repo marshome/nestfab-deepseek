@@ -30,7 +30,7 @@ def main(argv):
     kinds = {}
 
     def domain(addr):
-        if addr in L.VERIFIED or addr in T.BOILERPLATE:
+        if addr in L.VERIFIED or addr in T.BOILERPLATE or addr in getattr(T, 'IMPLEMENTED', ()):
             return False
         if addr not in profile:
             return False

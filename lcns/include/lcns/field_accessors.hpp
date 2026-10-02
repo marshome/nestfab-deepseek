@@ -58,6 +58,48 @@ inline void setByte2C_4F7290(void* object, std::uint8_t value) {
     std::memcpy(static_cast<unsigned char*>(object) + 0x2C, &value, sizeof(value));
 }
 
+/** RE 0x4F7380: writes the 8-bit field at +0x6A and nothing else. */
+inline void setByte6A_4F7380(void* object, std::uint8_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x6A, &value, sizeof(value));
+}
+
+/** RE 0x4F8360: reads the 32-bit field at +0x20. */
+inline std::uint32_t getDword20_4F8360(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x20, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F8CD0: reads the 32-bit field at +0x64. */
+inline std::uint32_t getDword64_4F8CD0(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x64, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F7060: reads the 32-bit field at +0x24. */
+inline std::uint32_t getDword24_4F7060(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x24, sizeof(value));
+    return value;
+}
+
+/** RE 0x4F76D0: reads the 32-bit field at +0x6C. */
+inline std::uint32_t getDword6C_4F76D0(const void* object) {
+    std::uint32_t value = 0;
+    std::memcpy(&value, static_cast<const unsigned char*>(object) + 0x6C, sizeof(value));
+    return value;
+}
+
+/** RE 0x52F8D0: writes the 8-bit field at +0x20 and nothing else. */
+inline void setByte20_52F8D0(void* object, std::uint8_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x20, &value, sizeof(value));
+}
+
+/** RE 0x52F8E0: writes the 8-bit field at +0x21 and nothing else. */
+inline void setByte21_52F8E0(void* object, std::uint8_t value) {
+    std::memcpy(static_cast<unsigned char*>(object) + 0x21, &value, sizeof(value));
+}
 }  // namespace accessors
 }  // namespace dll
 }  // namespace lcns
