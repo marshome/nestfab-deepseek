@@ -1102,6 +1102,30 @@
    "round": 606,
    "subject": "tooling.selfcheck-coverage",
    "witness": "re/g_extractor_selfcheck.py examines 287 tools; the strongest pattern is 'asserts something' and the matching tools are scripts like g_add29.py and g_add_batch7.py"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "constant",
+   "predicate": "only 4 of 152 count-reporting extractors tie a self-check to a concrete expected value",
+   "round": 607,
+   "subject": "tooling.selfcheck-real",
+   "witness": "after tightening to require a REFUSING path, a named SELF-CHECK, an EXPECTED/KNOWN_ value or a self_check() call: g_final_check.py, g_selfcheck.py, g_strategy_methods.py and g_vector_test.py; the previous bare-assert rule reported 30 and the matches validated arguments rather than extraction"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a reachable set is not a work list and is not a caller count; three of this project's tools have confused them",
+   "round": 608,
+   "subject": "tooling.reachability-third-time",
+   "witness": "0x132E0's closure reported 596 functions for a 4-function job; g_export_sizes.py counts direct callees and understates by one level; g_cheapest.py's shared column reports 121 for a function with THREE callers"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "0x8A9510 is 4479 bytes with THREE callers, and opens by storing 0x2E into [rcx+0x10], a domain-shaped write rather than a container header",
+   "round": 608,
+   "subject": "0x8A9510",
+   "witness": "profile callers = 3; 0x8A9520 mov dword ptr [rcx], edx and 0x8A9525 mov qword ptr [rcx+0x10], 0x2e"
   }
  ]
 }
