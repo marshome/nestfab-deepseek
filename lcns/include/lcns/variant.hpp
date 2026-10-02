@@ -1,39 +1,45 @@
-// lcns/include/lcns/variant.hpp -- the shared variant scale rule, RE 0x132E0.
+// lcns/include/lcns/variant.hpp -- the variant scale rule, RE 0x132E0, now with the extent step it was missing.
 //
 // RE 0x132E0 (176 bytes) is the target of TWO exports -- ordinal 196 AddHoleToPartVariant at 0x16D00 and ordinal 198
-// CNS_AddExternalBoundaryToPartVariant at 0x16D40 -- so reading it once completes two entry points. Its caller list contains
-// ITSELF as well, so it walks a recursive structure.
+// CNS_AddExternalBoundaryToPartVariant at 0x16D40 -- so reading it once completes two entry points. Its caller list contains ITSELF as
+// well, so it walks a recursive structure.
 //
-// The body, read in full:
+// THE WHOLE BODY, in order. A first version of this header recorded only the multiplication and left the extent computation as a
+// comment; that was half a rule, and the half it omitted is the half that says WHICH number is scaled.
 //
-//     0x132E9  mov  rbx, rcx                  ; the object, which the offsets below identify as the LAUNCH ORDER
-//     0x13315  lea  rdx, [rbx + 0x50]         ; +0x50 is where the ledger PROVED CommonCutProperties is embedded
-//     0x13319  call 0x5CD5C0                  ; fill a box from that sub-object
+//     0x13310  lea  rcx, [rsp + 0x50]         ; the BOX, at rsp+0x50
+//     0x13315  lea  rdx, [rbx + 0x50]         ; +0x50 of the order is where the ledger PROVED CommonCutProperties sits
+//     0x13319  call 0x5CD5C0                  ; fill the box from that sub-object
 //     0x1331E  cmp  byte ptr [rsp + 0x50], 0  ; the box's valid flag, the same one 0x5C8C50 tests
-//     0x13327  jne  -> 0x1334F                ; an INVALID box skips the scaling entirely
-//     0x13335  subsd xmm3, [rsp + 0x60]       ; extent on one axis = max - min
-//     0x1333B  subsd xmm0, [rsp + 0x58]       ; and on the other
+//     0x13327  jne  -> 0x1334F                ; invalid -> no scaling at all
+//     0x13329  movsd xmm3, [rsp + 0x70]       ; box+0x20 = high1
+//     0x1332F  movsd xmm0, [rsp + 0x68]       ; box+0x18 = high0
+//     0x13335  subsd xmm3, [rsp + 0x60]       ; minus box+0x10 = low1   -> extent of the SECOND axis
+//     0x1333B  subsd xmm0, [rsp + 0x58]       ; minus box+0x08 = low0   -> extent of the FIRST axis
 //     0x13341  ucomisd xmm3, xmm0
-//     0x13345  jbe  -> 0x13382                ; WHICH EXTENT IS LARGER CHOOSES THE SCALE FACTOR
-//     0x13347  mulsd xmm3, [rip + 0x99a679]   ; one constant
-//     0x13382  mulsd xmm0, [rip + 0x99a63e]   ; the other
+//     0x13345  jbe  -> 0x13382                ; which extent is larger chooses the ARM
+//     0x13347  mulsd xmm3, [rip + 0x99a679]   ; 0x9AD9C8 = 0.0001
+//     0x13382  mulsd xmm0, [rip + 0x99a63e]   ; 0x9AD9C8 = THE SAME DOUBLE
+//     0x1334F  mov dword ptr [rsp + 0x28], 1
 //     0x1335F  lea  rax, [rbx + 0x208]
 //     0x13366  add  rbx, 0x68
-//     0x13374  call 0x23BF0                   ; with both sub-object addresses
+//     0x13374  call 0x23BF0                   ; the grow-and-append primitive
 //
-// so the routine measures a sub-object's two extents, compares them, and multiplies by one of two constants depending on which is
-// larger -- the shape a variant takes when it has to fit a part into an opening whose limiting dimension may be either one.
+// so the rule is: fill a box from the sub-object at order+0x50, take the extent of each axis, and scale the LARGER one by 0.0001. The two
+// `mulsd` instructions have different DISPLACEMENTS that resolve to the same ADDRESS, which is why an earlier record called them two
+// constants and read the comparison as choosing a FACTOR -- it chooses an ARM, and both arms multiply by one double.
 //
-// The two offsets +0x68 and +0x208 are also fields of the 0x2C0 launch order, and all three are inside the size its constructor
-// allocates, which is the containment argument this project uses to say that a routine operates on a given object.
+// The box offsets are StatBox's, which is the check that this routine and the stat accumulator use one representation:
 //
-// What is written here is the RULE and the two constants' addresses; the constants themselves and the 0x23BF0 call are left
-// unread on purpose, because a value guessed at would be the failure the ledger exists to refuse. The rule is what a reader needs
-// and it is fully determined by the instructions above.
+//     box+0x00 valid   box+0x08 low0   box+0x10 low1   box+0x18 high0   box+0x20 high1
+//
+// and that is exactly lcns/stat.hpp's StatBox, so the structure is shared rather than similar.
 #pragma once
 
 #include <cstddef>
 #include <cstdint>
+
+#include "lcns/stat.hpp"
 
 namespace lcns {
 
@@ -42,29 +48,15 @@ constexpr std::size_t kVariantSource = 0x50;    // RE 0x13315: lea rdx, [rbx+0x5
 constexpr std::size_t kVariantTargetA = 0x68;   // RE 0x13366: add rbx, 0x68
 constexpr std::size_t kVariantTargetB = 0x208;  // RE 0x1335F: lea rax, [rbx+0x208]
 
-/** RE 0x13347 and RE 0x13382: the scale constant, and BOTH branches load the SAME one.
- *
- * The instructions are:
- *
- *     0x13347  f2 0f 59 1d 79 a6 99 00   mulsd xmm3, [rip + 0x99a679]   disp 10069625 -> 0x9AD9C8
- *     0x13382  f2 0f 59 05 3e a6 99 00   mulsd xmm0, [rip + 0x99a63e]   disp 10069566 -> 0x9AD9C8
- *
- * two different displacements that resolve to the SAME address, where the double is 0.0001. So the branch that compares the two
- * extents exists in the code and its two arms compute the same product: **the scale is `extent * 0.0001` on either path.**
- *
- * An earlier record of this called the two constants by their DISPLACEMENTS (0x99A679 and 0x99A63E) as if they were addresses, and
- * therefore reported them as two different factors. Two displacements are not two values, and the correction is here rather than
- * only in the ledger because a header with the wrong constants in it is worse than a header with none.
- */
-constexpr std::uintptr_t kVariantScaleConstant = 0x9AD9C8;   // both mulsd instructions land here
-constexpr double kVariantScale = 0.0001;                     // the double at 0x9AD9C8
+/** RE 0x13347 and RE 0x13382: the scale, ONE double that both arms load. */
+constexpr std::uintptr_t kVariantScaleConstant = 0x9AD9C8;
+constexpr double kVariantScale = 0.0001;
 
-/** RE 0x132E0's rule: multiply the extent by the scale, and scale nothing when the box is invalid.
+/** The scaled extent given the two extents directly, kept because it is what the two arms compute.
  *
- * The extents are computed with `subsd` at 0x13335 and 0x1333B and compared at 0x13341; the comparison selects which arm runs, and
- * both arms multiply by kVariantScale, so the comparison does not change the RESULT. What it does change is which extent is
- * multiplied when they differ -- `extentA * scale` on one arm and `extentB * scale` on the other -- so a caller that cares which
- * dimension was the larger still gets that, and a caller that only wants the scaled value gets `max(extentA, extentB) * 0.0001`.
+ * `extentA` is the SECOND axis and `extentB` the FIRST, in the order the instructions load them into xmm3 and xmm0 -- recorded that way
+ * rather than renamed, because the arm taken decides which of the two is scaled and a caller that cares which axis won needs the
+ * correspondence to the machine code.
  */
 inline double variantScale(bool valid, double extentA, double extentB, double scale) {
     if (!valid) {                                     // RE 0x13327: jne past both multiplies
@@ -76,6 +68,31 @@ inline double variantScale(bool valid, double extentA, double extentB, double sc
     return extentB * scale;                           // RE 0x13382
 }
 
+/** RE 0x132E0's rule COMPLETE: the larger extent of a box, times the scale, and nothing at all when the box is invalid.
+ *
+ * `box` is the value filled by RE 0x5CD5C0 from whatever sub-object the caller points at -- which for both exports is order+0x50. The
+ * extents are `high - low` per axis, exactly as 0x13335 and 0x1333B compute them, and the comparison at 0x13341 chooses which of the
+ * two is multiplied. Since both arms load the same double, the result is `max(extentA, extentB) * kVariantScale` and the branch exists
+ * only in the machine code.
+ *
+ * The returned zero for an invalid box is the routine skipping both multiplies at 0x13327, not a sentinel chosen here.
+ */
+inline double variantScaleOfBox(const StatBox& box) {
+    if (!box.valid) {                                   // RE 0x1331E and 0x13327
+        return 0.0;
+    }
+    const double extentFirst = box.high0 - box.low0;     // RE 0x1333B: [rsp+0x68] - [rsp+0x58]
+    const double extentSecond = box.high1 - box.low1;    // RE 0x13335: [rsp+0x70] - [rsp+0x60]
+    return variantScale(true, extentSecond, extentFirst, kVariantScale);
+}
+
+/** The append the rule's result feeds: RE 0x13374 calls the grow-and-append primitive 0x23BF0 with [rbx+0x208] and [rbx+0x68]. */
+constexpr std::uintptr_t kVariantAppend = 0x23BF0;
+
+static_assert(offsetof(StatBox, low0) == 0x08, "RE 0x1333B subtracts from box+0x08");
+static_assert(offsetof(StatBox, low1) == 0x10, "RE 0x13335 subtracts from box+0x10");
+static_assert(offsetof(StatBox, high0) == 0x18, "RE 0x1332F loads box+0x18");
+static_assert(offsetof(StatBox, high1) == 0x20, "RE 0x13329 loads box+0x20");
 static_assert(kVariantSource == 0x50, "RE 0x13315");
 static_assert(kVariantTargetA == 0x68, "RE 0x13366");
 static_assert(kVariantTargetB == 0x208, "RE 0x1335F");

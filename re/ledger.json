@@ -1750,6 +1750,22 @@
    "round": 645,
    "subject": "archive.verdict-kept",
    "witness": "the constant is kBenchmarkLoader rather than a name like MipLibRunner, because naming it would dress an inference as a fact"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RE 0x132E0's rule is complete in C++: fill a box from order+0x50, take high-low per axis, scale the larger by 0.0001",
+   "round": 646,
+   "subject": "variant.rule-complete",
+   "witness": "0x13329/0x1332F load box+0x20 and box+0x18 and 0x13335/0x1333B subtract box+0x10 and box+0x08; 0x13341 compares and both arms multiply by the same 0x9AD9C8"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RE 0x132E0's box and the stat accumulator's StatBox are one representation: valid at +0, low0 +8, low1 +0x10, high0 +0x18, high1 +0x20",
+   "round": 646,
+   "subject": "box.shared-between-two-routines",
+   "witness": "the offsets came out of reading 0x13329 through 0x1333B against stat.hpp's struct, and the header now asserts four of them"
   }
  ]
 }

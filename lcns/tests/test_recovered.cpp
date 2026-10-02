@@ -6124,6 +6124,38 @@ int main() {
     // The rule two exports share, and the three behaviours its instructions express: an invalid box scales nothing (0x13327 jumps
     // past both multiplies), and the LARGER of the two extents chooses which constant is used (0x13341, 0x13345 and 0x13382).
     {
+        // THE COMPLETE RULE, which the header previously carried only as the multiplication. RE 0x132E0 fills a box at rsp+0x50 and
+        // takes high - low per axis -- [rsp+0x70]-[rsp+0x60] for the second and [rsp+0x68]-[rsp+0x58] for the first -- then scales the
+        // larger. The box's offsets are StatBox's, so one representation is shared with the stat accumulator.
+        {
+            lcns::StatBox box;
+            CHECK(box.valid == 0);
+            CHECK(lcns::variantScaleOfBox(box) == 0.0);        // RE 0x13327: an invalid box scales nothing
+
+            box.valid = 1;
+            box.low0 = 2.0;  box.high0 = 9.0;                   // the first axis: extent 7
+            box.low1 = 0.0;  box.high1 = 3.0;                   // the second: extent 3
+            CHECK(box.high0 - box.low0 == 7.0);
+            CHECK(box.high1 - box.low1 == 3.0);
+            // the larger extent is scaled, and the scale is 0.0001 in the module
+            CHECK(lcns::variantScaleOfBox(box) == 7.0 * lcns::kVariantScale);
+            CHECK(lcns::variantScaleOfBox(box) == 0.0007);
+
+            // swap which axis is larger, and the answer must follow
+            box.low0 = 0.0;  box.high0 = 1.0;                   // first: 1
+            box.low1 = 0.0;  box.high1 = 40.0;                  // second: 40
+            CHECK(lcns::variantScaleOfBox(box) == 40.0 * lcns::kVariantScale);
+
+            // equal extents take the not-greater arm, as the ucomisd and jbe at 0x13341/0x13345 say
+            box.low0 = 5.0;  box.high0 = 15.0;
+            box.low1 = 0.0;  box.high1 = 10.0;
+            CHECK(lcns::variantScaleOfBox(box) == 10.0 * lcns::kVariantScale);
+
+            // and the correspondence the header records: extentA is the SECOND axis
+            CHECK(lcns::variantScale(true, 3.0, 7.0, lcns::kVariantScale) == 7.0 * lcns::kVariantScale);
+            CHECK(lcns::kVariantAppend == 0x23BF0);
+        }
+
         // an invalid box returns zero, which is the routine jumping past BOTH multiplies
         CHECK(lcns::variantScale(false, 10.0, 1.0, 0.5) == 0.0);
         // the first extent larger: extentA * scale
