@@ -29,6 +29,7 @@
 #include "lcns/recovery.hpp"
 #include "lcns/row.hpp"
 #include "lcns/tiling.hpp"
+#include "lcns/launching_order.hpp"
 
 #ifdef LCNS_HAS_BOOST
 #include <boost/version.hpp>   // vendored boost 1.63.0 (third_party/README.md)
@@ -5876,6 +5877,28 @@ int main() {
         CHECK(!isEmpty(base, static_cast<const void*>(obj.buf + 1)));
         CHECK(kToleranceObjectBytes > kRangeEnd);
         CHECK(kAllocatorSightings7 > kAccumulateCallers);
+    }
+
+    // --- the launch order's layout, read out of its constructor (RE 0x14620 NewLaunchingOrder) ---
+    //
+    // The evidence is one function: it allocates 0x2C0 bytes through operator new at 0x998500 and then writes 96 fields,
+    // the largest at +0x2B8 and nothing above 0x2C0. The static_asserts in lcns/launching_order.hpp hold the offsets; these
+    // checks hold the two facts a reader needs from here -- the size, and the widths at the offsets the constructor writes.
+    {
+        CHECK(sizeof(lcns::dll::LaunchingOrderLayout) == 0x2C0);      // RE 0x14636, mov ecx, 0x2C0
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot000) == 0x000);   // RE 0x1464C, movsd
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot068) == 0x068);   // RE 0x146C5, byte = 1
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot06C) == 0x06C);   // RE 0x146C9, dword = 1
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot09C) == 0x09C);   // RE 0x14712, dword = 2
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot110) == 0x110);   // RE 0x14793, the marker
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, slot1B8) == 0x1B8);   // RE 0x14855
+        // The destructor in the same closure walks to +0x2B8, so every offset it touches is inside this size.
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, tail) + sizeof(lcns::dll::LaunchingOrderLayout::tail) == 0x2C0);
+        CHECK(offsetof(lcns::dll::LaunchingOrderLayout, tail) == 0x1C0);
+        // The mode LaunchLocalComputation reads lives in this object, past the fields named above (RE 0x22BC1).
+        CHECK(0x240 >= offsetof(lcns::dll::LaunchingOrderLayout, tail));
+        CHECK(0x2A8 < sizeof(lcns::dll::LaunchingOrderLayout));       // RE 0x5007C0 walks the node list here
+        CHECK(lcns::dll::LaunchingOrderLayout::kEmptySlotMarker == 0x3FFFFFFFu);
     }
 
     return check::finish("test_recovered");
