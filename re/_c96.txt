@@ -1,0 +1,31 @@
+lcns: the `Nester` base part is 0x10 -- which the direct children's first offset says, and which makes the two dwords the COMPOSITE's
+
+**THE QUESTION WAS "does `0xB4470`'s +0x10/+0x14 pair belong to `Nester` or to `CompositeNester`", and the direct children answer it.**
+
+**A CLASS THAT DERIVES STRAIGHT FROM `Nester` PUTS ITS FIRST OWN MEMBER AT +0x18, AND NEVER TOUCHES +0x10 OR +0x14:**
+
+    NestingNester   typeinfo base N5Multi6NesterE   ctor 0x342E0 writes 0x18, 0x20, 0x28, 0x30, 0x38, then 0x9F8, 0xA00, 0xA18
+    DatabaseNester  typeinfo base N5Multi6NesterE   (the same family)
+
+**and `lcns/tests/test_recovered.cpp` already asserted `atSeedP == 0x18`** -- which is `NestingNester`'s first own member measured from the object's start. **So the base part is 0x10 bytes: a vptr and the one pointer at +0x08.** **The two dwords `0xB4470` writes at +0x10 and +0x14 therefore belong to the class that owns that constructor, and `Nester` is not it.**
+
+**AND NONE OF THE FIVE CALLERS OF `0xB4470` WRITES ITS FIRST OWN MEMBER BELOW +0x18 EITHER**, so the 0x10 is the base's data in every one of them -- which is what makes this a measurement across five classes rather than one.
+
+## And the one thing this does NOT settle is stated rather than guessed
+
+**A `std::vector` at `CompositeNester`'s +0x18 WOULD MAKE IT 0x30, AND THE MODULE ALLOCATES 0x28 FOR `FlipNester`:**
+
+    02C953  mov ecx, 0x28      ; FlipNester's block
+    02C958  call 0x998500
+    02C96C  call 0x4B570       ; its constructor
+
+**while `LimitedNester`'s constructor writes what a vector looks like** -- `0x4AAFA mov qword [rbx + 0x20], rax` from `r9` and `0x4AAF6 mov qword [rbx + 0x28], rdx` from `[r9 + 8]`, a begin/capacity pair.
+
+**BOTH CANNOT BE TRUE AND THIS ROUND DOES NOT ESTABLISH WHICH.** So the four `CompositeNester` declarations stay reverted, **and the check that would catch a wrong resolution now exists**: `static_assert(sizeof(T) <= the allocation)` in the suite, added last round, which `FlipNester` at 0x30 would fail.
+
+**AND THAT IS THE POINT OF HAVING PUT IT THERE**: this contradiction has now been carried for two rounds without being shipped, **because the assertion that can fail is in the build rather than in a note.**
+
+    lcns/tests/test_recovered.cpp   the eight assertions and the one line that prints every size
+    re/g_add_size_assertions.py     the generator, with RowNester's documented exception
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green, and two claims added -- **one of them the contradiction itself.**
