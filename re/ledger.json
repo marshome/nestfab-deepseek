@@ -3470,6 +3470,14 @@
       "predicate": "the address-resolving stack check reports rather than gates, because it cannot tell a spill slot from an object field and names two false positives in row.hpp",
       "witness": "0x5C4950 spills its arguments to [rsp + 0x120] at 0x5C496B and its callee-saved registers to [rsp + 0xb8] at 0x5C4A45, so row.hpp lo and hi cite stack stores that never go through the object. Telling the two apart needs the base register provenance, which the check approximates by asking whether the base is rcx at the function entry",
       "round": 751
+    },
+    {
+      "subject": "the-stack-check-gates-on-a-width-claim",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the stack check gates only when the member annotation CLAIMS A WIDTH, and reports a value claim, because a width claim says the store places the member and a value claim does not",
+      "witness": "launching_order.hpp unnamed028 said narrowest store is 1 byte(s) at RE 0xD062, a width claim whose instruction is mov byte [rsp + 0x28], 0 in 0xD050 whose prologue puts the object in rbp; row.hpp lo says RE 0x5C4A45: a fixed-degree ANGLE, a value claim in 0x5C4950 whose prologue puts the object NOWHERE. re/g_prove_full_audit.py plants both and requires the first to fail the audit and the second not to",
+      "round": 752
     }
   ]
 }

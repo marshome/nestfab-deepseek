@@ -61,6 +61,15 @@ FABRICATED = [
 # A MEMBER DECLARATION WHOSE COMMENT CITES AN ADDRESS, so the instruction behind the address can be read.
 MEMBER_ANNOTATION = re.compile(r"^ {4,}(?P<member>[^;{}()]+?)\s*;\s*//(?P<comment>[^\n]*?)\bRE 0x(?P<address>[0-9A-Fa-f]{4,})", re.M)
 STACK_WRITE = re.compile(r"\[(?:rsp|esp)(?:\s*[+-]\s*0x[0-9a-f]+)?\]")
+# **THE WORDS THAT MAKE A STORE THE EVIDENCE FOR A MEMBER'S SIZE, AS OPPOSED TO ITS VALUE.** The distinction is the annotation's own:
+#
+#     `narrowest store is 1 byte(s) at RE 0xD062`          **a WIDTH claim** -- the store IS the member's size, so a stack store cannot be the object  <- the defect
+#     `RE 0x5C4A45: a fixed-degree ANGLE (0x5C4CE0 value)` **a VALUE claim** -- the address says where the number comes from, and it neither places nor sizes
+#
+# **SO THIS IS THE GATE.** An earlier version gated on any stack-citing annotation and therefore named `row.hpp`'s `lo` and `hi`, which are cross-references in a
+# function that never receives the object at all -- **and a check that flags correct code gets switched off.** That is why the two kinds are told apart by the
+# annotation's own words rather than by the instruction alone.
+WIDTH_CLAIM = re.compile(r"narrowest store|written by|writes? (?:a |the )?\d+ ?byte|byte store|width", re.I)
 
 PLACEHOLDER = re.compile(r"(?:class|struct)\s+(\w+)\s*\{(?P<body>[^}]*)\}", re.S)
 ONLY_DESTRUCTOR = re.compile(r"^\s*(?:virtual\s+)?~\w+\s*\(\s*\)\s*=\s*default\s*;", re.M)
@@ -129,7 +138,8 @@ def stack_store_members(text):
                     continue                           # rbp holds the OBJECT; this is a real field write
             else:
                 continue
-        out.append((member, match.group("address"), first.mnemonic + " " + first.op_str))
+        out.append((member, match.group("address"), first.mnemonic + " " + first.op_str,
+                    bool(WIDTH_CLAIM.search(match.group("comment")))))
     return out, True
 
 
@@ -153,13 +163,20 @@ def audit(path):
     # never go through the object at all. **Telling a spill slot from an object field needs register provenance tracking** -- the base register's origin -- and this
     # check approximates it by asking whether the base is `rcx` at the function's entry. So it is a REPORT: gating on it would switch off a check that has already
     # found one real defect, and the gating test above stays the strictly-narrower regex.
+    # **THE GATING FORM: a member whose annotation CLAIMS A WIDTH and cites a stack store.** A width claim says the store is the member's size, and the stack is not
+    # the object -- `launching_order.hpp`'s `unnamed028` said "narrowest store is 1 byte(s) at RE 0xD062" and 0xD062 is `mov byte [rsp + 0x28], 0`. **A VALUE claim
+    # is reported and not gated**, because it says where a number comes from and neither places nor sizes the member.
     stack_members, checked = stack_store_members(text)
+    width_defects = [entry for entry in stack_members if entry[3]]
+    if width_defects:
+        fabricated_hits.append(("a MEMBER whose width claim cites a STACK store", len(width_defects)))
     reported = []
     if not checked:
         reported.append(("the stack check could not run: the memory dump is unavailable", 1))
-    for member, address, instruction in stack_members:
-        reported.append(("a member whose cited instruction writes the STACK (may be a spill slot)", 1))
-        reported.append(("%s at RE 0x%s: %s" % (member, address, instruction), 0))
+    for member, address, instruction, is_width in stack_members:
+        if is_width:
+            continue
+        reported.append(("%s at RE 0x%s: %s" % (member.strip()[:40], address, instruction), 0))
 
     placeholders = []
     for match in PLACEHOLDER.finditer(text):

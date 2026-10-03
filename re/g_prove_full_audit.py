@@ -21,10 +21,11 @@ CASES = [
      "struct Probe {\n    void* at_0020 = {};\n};\n"),
     ("a member whose comment cites a stack store",
      "struct Probe {\n    void* slot = {}; // +0x20, RE 0x50CFCA: mov qword ptr [rsp + 0x20], rax\n};\n"),
-    # **AND THE ADDRESS-ONLY FORM IS PROVED SEPARATELY, BECAUSE IT IS A REPORT AND NOT A GATE.** Every real annotation says `RE 0xD062` and leaves the instruction in
-    # the image; **the first version of the stack check matched only literal instruction text, so it reported 0 while `launching_order.hpp`'s `unnamed028` cited a
-    # stack store for its width** -- and the plant above passed, because the plant wrote the instruction out. **A proof whose fixture is a shape the repository does
-    # not produce proves nothing about it**, so this shape is planted and the REPORT is required to name it.
+    # **AND THE ADDRESS-ONLY FORM IS PROVED SEPARATELY, BECAUSE ONLY A WIDTH CLAIM GATES.** Every real annotation says `RE 0xD062` and leaves the instruction in the
+    # image; **the first version of the stack check matched only literal instruction text, so it reported 0 while `launching_order.hpp`'s `unnamed028` cited a stack
+    # store for its width** -- and the plant above passed, because that plant writes the instruction out. **A proof whose fixture is a shape the repository does not
+    # produce proves nothing about the repository.** So this one plants the address-only form and requires the REPORT to name it while the exit code stays 0.
+    # **THE WIDTH CLAIM IS THE ONE THAT GATES**, and it is planted below this loop.
     ("an unplaced byte region standing in for a type",
      "struct Probe {\n    std::byte unplaced_0008[0x18]{};\n};\n"),
     ("a placeholder class",
@@ -48,24 +49,37 @@ def main():
     # version of the stack check matched only literal instruction text, so it reported 0 while `launching_order.hpp`'s `unnamed028` cited a stack store for its
     # width** -- and the plant above passed, because that plant writes the instruction out. **A proof whose fixture is a shape the repository does not produce proves
     # nothing about the repository.** So this one plants the address-only form and requires the REPORT to name it while the exit code stays 0.
+    # **THE WIDTH CLAIM IS THE ONE THAT GATES, AND IT IS PLANTED TOO.** A width claim says the store IS the member's size, so a stack store cannot be the object --
+    # this is `launching_order.hpp`'s `unnamed028` exactly, whose comment read "narrowest store is 1 byte(s) at RE 0xD062" and 0xD062 is `mov byte [rsp + 0x28], 0`.
     io.open(PLANT, "w", encoding="utf-8", newline="\n").write(
         "#pragma once\n#include <cstddef>\nnamespace lcns {\nstruct Probe {\n"
-        "    std::int64_t slot = 0;   // +0x028  RE 0xD062: the width was read off a stack store\n};\n}\n")
+        "    std::uint8_t slot;   // +0x028  narrowest store is 1 byte(s) at RE 0xD062\n};\n}\n")
     result = subprocess.run([sys.executable, AUDIT], capture_output=True, text=True, encoding="utf-8", errors="replace")
-    output = result.stdout or ""
-    reported = "_probe_fabricated.hpp" in output and "STACK-STORE REPORTS" in output
+    named = [line.strip() for line in (result.stdout or "").split("\n") if "_probe_fabricated.hpp" in line]
+    caught = result.returncode != 0 and bool(named)
+    print("planted %-52s -> exit %d  %s"
+          % ("a member whose WIDTH claim cites a stack store", result.returncode, named[0][:52] if named else "NOT NAMED"))
+    if not caught:
+        failures.append("the address-only width claim")
+    os.remove(PLANT)
+
+    # **AND A VALUE CLAIM MUST NOT GATE.** `row.hpp`'s `lo` cites `RE 0x5C4A45` and says "a fixed-degree ANGLE", which is where the number comes from and says nothing
+    # about the member's size or position. **Gating on that would fail the build on correct code**, so this case requires the exit code to stay 0.
+    io.open(PLANT, "w", encoding="utf-8", newline="\n").write(
+        "#pragma once\n#include <cstddef>\nnamespace lcns {\nstruct Probe {\n"
+        "    std::int64_t slot = 0;   // [+0x08]  RE 0x5C4A45: a fixed-degree ANGLE (0x5C4CE0 value)\n};\n}\n")
+    result = subprocess.run([sys.executable, AUDIT], capture_output=True, text=True, encoding="utf-8", errors="replace")
     gated = result.returncode != 0
-    print("planted %-52s -> exit %d  reported=%s gated=%s"
-          % ("a member citing an ADDRESS that writes the stack", result.returncode, reported, gated))
-    if not reported or gated:
-        failures.append("the address-only stack form (reported=%s, gated=%s)" % (reported, gated))
+    print("planted %-52s -> exit %d  gated=%s (must be False)" % ("a member whose VALUE claim cites a stack store", result.returncode, gated))
+    if gated:
+        failures.append("the value-claim case was gated, which would fail the build on correct code")
     os.remove(PLANT)
 
     print("")
     if failures:
         print("FAILING: the audit did not catch %s, so its PASS means nothing." % "; ".join(failures))
         return 1
-    print("PASS: the audit fails on all %d shapes, and names the file." % len(CASES))
+    print("PASS: the audit fails on all %d gating shapes and refuses to gate the value-claim shape." % len(CASES))
     print("")
     print("WHAT IT CANNOT CATCH, stated so the gap is known rather than assumed:")
     print("   * a member whose NAME is wrong but whose position is right -- `ratio_` where the module has two booleans. There is no")
