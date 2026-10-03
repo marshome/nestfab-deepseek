@@ -27,11 +27,33 @@ FREE = 0x9984B0
 
 
 def touches(function, profile):
-    """The offsets read and written ON THE OBJECT, with `this` taken from rcx and followed until reassigned."""
+    """The offsets read and written ON THE OBJECT, with `this` taken from rcx and followed until reassigned.
+
+    **AND `rcx` IS NOT ALWAYS THE OBJECT, WHICH THE FIRST VERSION GOT WRONG.** `Multi::AllSheetSelector`'s slot 2 at 0x7D2500 begins
+
+        7D250E  mov r12, rcx          ; this
+        7D2511  mov qword [rcx], 0    ; and rcx is the DESTINATION this method FILLS
+        7D2518  mov rsi, rdx          ; the argument
+        7D251E  mov qword [rcx + 8], 0
+        7D2526  mov qword [rcx + 0x10], 0
+
+    **so the writes the first version reported at "+0x0" and "+0x10" are the CALLER'S BUFFER and not the object at all.** The object is what a register is
+    COPIED OUT OF `rcx` at the top -- here `r12` -- and that is what this follows once it sees one. **It still reports `rcx` when nothing copies it**, because
+    for the four node accessors `[rcx + 0x48]` genuinely is the object; the difference is stated per function rather than assumed.
+    """
     size = (profile.get(function) or {}).get("size") or 0
     if not size:
         return set(), set()
     holds = {"rcx"}
+    # **THE OBJECT REGISTER, ESTABLISHED FIRST.** A `mov <reg>, rcx` before the first store means `rcx` is a destination and `<reg>` is the object.
+    for instruction in disasm(function, count=14):
+        if instruction.address >= function + size:
+            break
+        copy = re.match(r"^(\w+), rcx$", instruction.op_str)
+        if instruction.mnemonic == "mov" and copy:
+            holds.add(copy.group(1))
+            if STORE.match(instruction.op_str) is None:
+                holds.discard("rcx")
     reads, writes = set(), set()
     for instruction in disasm(function):
         if instruction.address >= function + size:
