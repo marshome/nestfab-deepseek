@@ -7012,5 +7012,90 @@ int main() {
                       "sizeof(Pattern) is ONE WORD, which is why a derived first member landing at +8 is unexplained");
     }
 
+
+    // ---------------------------------------------------------------- does Order's layout match its own comments?
+    //
+    // **A COMMENT THAT SAYS `+0x44` IS A CLAIM ABOUT A LAYOUT**, and C++ can check it against the declaration that carries it. If the members do not land
+    // where the comments say, then the offsets were derived from individual STORES and the struct does not reproduce the module -- the distinction this
+    // project settles by MEASURING rather than by declaring.
+    {
+        lcns::Order probe;
+        const unsigned char* base = reinterpret_cast<const unsigned char*>(&probe);
+        struct Row { const char* name; unsigned claimed; unsigned measured; };
+        const Row rows[] = {
+            { "objective", 0x8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.objective) - base) },
+            { "origin", 0xC, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.origin) - base) },
+            { "usedSurfaceUsableOffcutRatio", 0x44, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.usedSurfaceUsableOffcutRatio) - base) },
+            { "shear", 0x44, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.shear) - base) },
+            { "shearCorner", 0x48, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.shearCorner) - base) },
+            { "shearGap", 0x50, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.shearGap) - base) },
+            { "shearRepulseFromBorders", 0x58, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.shearRepulseFromBorders) - base) },
+            { "commonCutModeA", 0x5C, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutModeA) - base) },
+            { "commonCutModeB", 0x60, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutModeB) - base) },
+            { "commonCutSafetyFlag", 0x68, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutSafetyFlag) - base) },
+            { "commonCutPresetIndex", 0x6C, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutPresetIndex) - base) },
+            { "commonCutNoHoles", 0x84, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutNoHoles) - base) },
+            { "commonCutOnlyBiModules", 0x85, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutOnlyBiModules) - base) },
+            { "commonCutModeTag", 0x88, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutModeTag) - base) },
+            { "commonCutPresetIndex2", 0x8C, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutPresetIndex2) - base) },
+            { "commonCutObjectiveNum", 0x90, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutObjectiveNum) - base) },
+            { "commonCutObjectiveDen", 0x98, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutObjectiveDen) - base) },
+            { "multitorchModeTag", 0x98, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchModeTag) - base) },
+            { "multitorchPresetIndex", 0x9C, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchPresetIndex) - base) },
+            { "multitorchAllowed", 0xA8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchAllowed) - base) },
+            { "multitorchCostRatio", 0xB0, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchCostRatio) - base) },
+            { "multitorchReconfig", 0xB8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchReconfig) - base) },
+            { "multitorchNbTorches", 0xC0, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchNbTorches) - base) },
+            { "multitorchMinDistance", 0xC8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchMinDistance) - base) },
+            { "multitorchMaxDistance", 0xD0, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchMaxDistance) - base) },
+            { "multitorchA", 0xD8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.multitorchA) - base) },
+            { "reorganizeBiggestPartNearOrigin", 0x22, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.reorganizeBiggestPartNearOrigin) - base) },
+            { "reorganizeLongestPartNearOrigin", 0x23, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.reorganizeLongestPartNearOrigin) - base) },
+            { "evaluateIntermediateNestingsAsLast", 0x41, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.evaluateIntermediateNestingsAsLast) - base) },
+            { "defectGap", 0x118, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.defectGap) - base) },
+            { "automaticStop", 0x240, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.automaticStop) - base) },
+            { "unlockMode", 0x244, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.unlockMode) - base) },
+            { "licenseKey1", 0x248, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.licenseKey1) - base) },
+            { "licenseKey2", 0x268, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.licenseKey2) - base) },
+            { "localEngine", 0x200, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.localEngine) - base) },
+            { "maxThreads", 0x1F8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.maxThreads) - base) },
+            { "maxIterations", 0x1FC, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.maxIterations) - base) },
+            { "incompatibleSheets", 0x170, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.incompatibleSheets) - base) },
+            { "commonCutBlockSet", 0x1A0, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutBlockSet) - base) },
+            { "commonCutAt1A8", 0x1A8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutAt1A8) - base) },
+            { "commonCutAt1B0", 0x1B0, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutAt1B0) - base) },
+            { "commonCutAt1B8", 0x1B8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutAt1B8) - base) },
+            { "commonCutAt1C0", 0x1C0, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.commonCutAt1C0) - base) },
+            { "rowAlternate", 0x158, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.rowAlternate) - base) },
+            { "cfgAt188", 0x20, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.cfgAt188) - base) },
+            { "cfgAt190", 0x18, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.cfgAt190) - base) },
+            { "cfgAt198", 0x38, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.cfgAt198) - base) },
+            { "markMode", 0xE8, static_cast<unsigned>(reinterpret_cast<const unsigned char*>(&probe.markMode) - base) },
+        };
+        unsigned mismatches = 0;
+        for (const Row& row : rows) {
+            if (row.claimed != row.measured) {
+                ++mismatches;
+                if (mismatches <= 8) {
+                    std::printf("Order layout: %s says +0x%X and measures +0x%X\n", row.name, row.claimed, row.measured);
+                }
+            }
+        }
+        std::printf("Order layout: %u of %u field(s) land where their comment says, size %u\n",
+                    static_cast<unsigned>(sizeof(rows) / sizeof(rows[0])) - mismatches,
+                    static_cast<unsigned>(sizeof(rows) / sizeof(rows[0])),
+                    static_cast<unsigned>(sizeof(lcns::Order)));
+
+        // **AND NOT ONE OF THEM AGREES, WHICH IS THE ASSERTION.** I first claimed a constant 8 byte shift -- the first three rows read that way -- and
+        // **the measurement refuted it: 2 of 48**, because `shear` is a 0x24 gap rather than 8. **A pattern seen in three examples is not a pattern**, so
+        // what is asserted here is only what covers EVERY row.
+        CHECK(mismatches == sizeof(rows) / sizeof(rows[0]));
+
+        // **AND THE SIZE IS SMALLER THAN THE MODULE'S OBJECT**: 552 against 0x2C0 = 704, so this declaration is missing the prefix AND has gaps. The
+        // comparison is printed rather than asserted as an inequality, because an inequality is satisfied by a half-fix.
+        std::printf("Order layout: sizeof(Order) = %u, the module's object = 0x2C0 = %u\n",
+                    static_cast<unsigned>(sizeof(lcns::Order)), 0x2C0u);
+    }
+
     return check::finish("test_recovered");
 }
