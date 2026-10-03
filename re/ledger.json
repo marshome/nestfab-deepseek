@@ -4370,6 +4370,33 @@
       "witness": "`sizeof(lcns::EquivalentEngine)` with the members the constructor's stores place is **0x28**, which the compiler reports as `(40 == 0)` against the 0x30 asserted from the allocation. **The eight bytes are NOT given a member**: either something lives at +0x28 that this constructor does not initialise, or the block is rounded -- **and inventing a member to close an allocation gap is exactly the shape-matching this project forbids.** The assertion is the 0x28 the INSTRUCTIONS place, with the 0x30 named beside it as the difference",
       "tool": "measurement",
       "round": 783
+    },
+    {
+      "subject": "enginebase-is-confirmed-by-four-constructors",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "four independent engine constructors zero a BYTE at +0x08 and a DWORD at +0x0C before installing their vtable, then place their first own member at +0x10 -- so `EngineBase` is 0x10 bytes",
+      "witness": "`0x24AB0` (EquivalentEngine) at 024ACA/024ACE, `0x240D0` (MultiEngine) at 024100/024104, `0x24B80` (DelayedEngine) at 024BA6/024BAA, and `0x24FD0` (InfiniteEngine) at 024FFC/025006 -- **all four write +0x08 as a BYTE and +0x0C as a DWORD, all four install their vtable AFTER those two stores, and all four then write +0x10 as their first own member.** Four classes with the same base is a base",
+      "tool": "instruction",
+      "round": 784
+    },
+    {
+      "subject": "vtable_rva-is-the-slot-table-and-the-vptr-is-it-plus-0x10",
+      "grade": "MEASURED",
+      "kind": "offset",
+      "predicate": "`re/vtables.json`'s `vtable_rva` is the SLOT TABLE -- its first word is slot 0 -- while the value a constructor stores into an object is `vtable_rva + 0x10`, with an eight-byte typeinfo pointer in front of the slots",
+      "witness": "read directly: for `NestingEngine`, recorded 0xA3CFA0 holds `0x0, 0x6BED90D0, 0x6BC17A70, 0x6BC17A10` -- **so slot 0 (0x757A70) is the THIRD word, at 0xA3CFB0** -- and `0x24B80`'s constructor installs exactly 0xA3CFB0. The same for `MultiEngine` (recorded 0xA3CF00, slot 0 0x7559E0 at 0xA3CF10, and 0x240D0 installs 0xA3CF10) and `EquivalentEngine` (recorded 0xA3D030, slot 0 0x75CB40 at 0xA3D040, installed by 0x24AB0). **The eight bytes between are the typeinfo pointer**, and `re/vtables.json`'s slot lists are right because they name the functions the table holds",
+      "tool": "measurement",
+      "round": 784
+    },
+    {
+      "subject": "six-engines-place-nothing-past-their-shared-range",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "read from their constructors, `MultiEngine`, `DelayedEngine` and `InfiniteEngine` place members only up to +0x40, +0x20 and +0x20 respectively, so the shared +0x10..+0x50 range is not fully accounted for by any one of them",
+      "witness": "`0x240D0` (MultiEngine, 431 bytes) places +0x08 +0x0C +0x10 +0x14 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40; `0x24B80` (DelayedEngine, 192 bytes) places +0x08 +0x0C +0x10 +0x18 +0x20; `0x24FD0` (InfiniteEngine, 209 bytes) places +0x08 +0x0C +0x10 +0x18 +0x20. **So `MultiEngine` reaches +0x40 and the other two stop at +0x20, while their `run` bodies all touch up to +0x50** -- which means the range is a shared own layout whose members are NOT all placed by any constructor read so far, **and the +0x48 and +0x50 reads remain unattributed**",
+      "tool": "instruction",
+      "round": 784
     }
   ]
 }
