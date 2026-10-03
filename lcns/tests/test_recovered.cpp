@@ -6699,6 +6699,10 @@ int main() {
             //     at28 0x28 | at30 0x30       | at38 0x38      | at40 0x40                ->  0x48
             //
             // **so the model REPRODUCES the allocation instead of being asserted against it**, which is the difference between this assertion and the two above it.
+            // **AND `CompositeEngine`'S 0x28 CLOSES TOO**: 0x10 of base plus three words is exactly what `024C4E mov ecx, 0x28` allocates -- and unlike
+            // `EquivalentEngine` there is no gap between what is placed and what is allocated.
+            static_assert(sizeof(lcns::CompositeEngine) == 0x28,
+                          "RE 0x24C4E mov ecx, 0x28 -- and the base plus at10, at18 and at20 is the same number");
             static_assert(sizeof(lcns::MultiEngine) == 0x48,
                           "RE 0x240E7 mov ecx, 0x48 -- and the model's own arithmetic lands on the same number");
         }

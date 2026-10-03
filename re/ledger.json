@@ -4496,6 +4496,15 @@
       "witness": "the composite header said so itself -- IT DOES NOT NAME ITS BASE HERE, because engines.hpp includes THIS header and a cycle is not a declaration -- and its class was written class CompositeEngine { with \u000boid* run(...) and no override. **The module says it is an engine**: re/vtables.json has N6Engine15CompositeEngineE at vtable 0xA3D000 with the same three slots as the other six, its run is 0x759B70, and the call site reaches every engine through call qword ptr [rax + 0x10]. After the split the class derives from EngineBase and its run is an override, and the build is clean",
       "tool": "instruction",
       "round": 791
+    },
+    {
+      "subject": "the-three-engines-share-a-LAYOUT-but-not-a-MEANING",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "InfiniteEngine, EquivalentEngine, DelayedEngine and CompositeEngine all put their first three own words at +0x10, +0x18 and +0x20, but the words mean different things in CompositeEngine than in the others",
+      "witness": "CompositeEngine at 0x24C40 writes 024C7B qword [rbx+0x10],0 and 024CCB qword [rbx+0x10],rax where rax comes from [rbp+8], 024C86/024CCF the same at +0x18 from [rbp], and 024CD3 qword [rbx+0x20],rdi where 024C83 sub rdi, rdx -- **so +0x10 and +0x18 are a range END and BEGIN and +0x20 is the range LENGTH in bytes**, confirmed by 024C99 sar rax, 4 against the class own stride of 16. **DelayedEngine at 0x24B80 puts a shared_ptr control block at +0x10, its pointer at +0x18 and a double at +0x20.** So the same three offsets carry a container in one class and a refcounted pointer in another: **an agreement count over offsets says the LAYOUT is shared and says nothing about the MEANING, which is why the fields must be read per class**",
+      "tool": "instruction",
+      "round": 792
     }
   ]
 }

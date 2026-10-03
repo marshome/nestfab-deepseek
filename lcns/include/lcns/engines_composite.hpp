@@ -96,9 +96,30 @@ public:
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
 
 private:
-    // RE 0x759BBC: the eight quadwords its prologue zeroes are LOCALS, not members -- they live at rsp+0xe0 upward. The only thing this
-    // class is known to hold is the container it walks, and that belongs to the Problem its Run is handed rather than to the engine, so
-    // there is nothing to put here yet and saying so is more useful than a placeholder.
+    /** **THREE WORDS, AND ITS CONSTRUCTOR PLACES ALL THREE -- WHERE THIS COMMENT USED TO SAY "there is nothing to put here yet".**
+     *
+     *  RE 0x24C40, 334 bytes. **`rsi` is the FIRST argument and it is a DESTINATION**: the constructor allocates its own object at `024C4E mov ecx, 0x28` / `024C53 call
+     *  0x998500`, keeps it in `rbx`, and writes it to `[rsi]` at `024D13`. **The stores to the object are:**
+     *
+     *      024C63  mov byte  ptr [rax + 8], 0        ; the base's byte, BEFORE the vtable
+     *      024C67  mov dword ptr [rax + 0xc], 0      ; the base's dword, likewise
+     *      024C75  mov qword ptr [rbx], rax          ; its vtable
+     *      024C7B  mov qword ptr [rbx + 0x10], 0     ; **+0x10, zeroed and then written**
+     *      024C86  mov qword ptr [rbx + 0x18], 0     ; **+0x18, likewise**
+     *      024C91  mov qword ptr [rbx + 0x20], 0     ; **+0x20, likewise**
+     *      024CCB  mov qword ptr [rbx + 0x10], rax   ; written from a range's END
+     *      024CCF  mov qword ptr [rbx + 0x18], rax   ; and its BEGIN
+     *      024CD3  mov qword ptr [rbx + 0x20], rdi   ; **+0x20 = `024C83 sub rdi, rdx` -- the RANGE LENGTH in bytes**
+     *
+     *  **AND `024C99 sar rax, 4` ON THAT LENGTH CONFIRMS IT**: the class's own `elementCount` divides a range by the stride, and `re` has that stride as 16. **So +0x20 holds
+     *  a length in BYTES while `elementCount` returns a COUNT**, which is why the two numbers are not the same one.
+     *
+     *  **THE THREE OFFSETS ARE THE SAME THREE `InfiniteEngine`, `EquivalentEngine` AND `DelayedEngine` USE** -- 0x10, 0x18 and 0x20 -- **and here they are a range and its
+     *  length rather than a `shared_ptr`.** **So the shared LAYOUT is not a shared MEANING**, which is what an agreement count alone could never have said. **What +0x10 and
+     *  +0x18 point at is not established beyond their coming from a begin/end pair.** */
+    void* at10 = nullptr;              // +0x10, RE 0x024C7B zeroes it and 0x024CCB writes a range's END into it
+    void* at18 = nullptr;              // +0x18, RE 0x024C86 zeroes it and 0x024CCF writes the range's BEGIN
+    std::size_t at20 = 0;              // +0x20, RE 0x024CD3 `mov qword ptr [rbx + 0x20], rdi`, where 024C83 is `sub rdi, rdx`
 };
 
 }  // namespace lcns
