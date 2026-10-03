@@ -115,10 +115,14 @@ extern "C" int GetNumberOfNestedParts(Nesting) {
 }
 
 // ordinal 25/26  rva 0x0B0C0  52 bytes
-// signature from the inferred typed table
-extern "C" int GetNumberOfNestings(Solution) {
-    lcns::dll::exports::notReversed(12u);
-    return 0;
+// ordinal 25/26  rva 0x0B0C0  52 bytes
+// **RESTORED: THIS EXPORT WAS FORWARDED IN AN EARLIER ROUND AND HAD REGRESSED TO A STUB.** `kForwarding` names `impl::getNumberOfNestings` at ordinal 25 and
+// this wrapper reported the ordinal instead -- so the list claimed a behaviour the code did not have, which `re/g_forwarding_gap.py` counts.
+//
+// **AND THE PARAMETER IS A POINTER.** The inferred table said `(Solution)` by value, while 0xB0C5 is `mov rbx, rcx` and 0xB0D4 reads `[rbx + 0x58]` -- so rcx
+// holds the ADDRESS of the object whose vector is being measured.
+extern "C" std::size_t GetNumberOfNestings(Solution* solution) {
+    return lcns::dll::exports::impl::getNumberOfNestings(static_cast<void*>(solution));
 }
 
 // ordinal 27/28  rva 0x0C5E0  36 bytes
@@ -1386,7 +1390,7 @@ const Entry kEntries[] = {
     {"GetNestedPart", 19, 20, 0x0D460u, 688u, Status::NotReversed, "cns.cpp"},
     {"GetNesting", 21, 22, 0x10F30u, 490u, Status::NotReversed, "cns.cpp"},
     {"GetNumberOfNestedParts", 23, 24, 0x0B190u, 63u, Status::NotReversed, ""},
-    {"GetNumberOfNestings", 25, 26, 0x0B0C0u, 52u, Status::NotReversed, ""},
+    {"GetNumberOfNestings", 25, 26, 0x0B0C0u, 52u, Status::Forwarded, "// kForwarding 25 -> impl::getNumberOfNestings; restored after a regression to a stub"},
     {"GetPartUserString", 27, 28, 0x0C5E0u, 36u, Status::NotReversed, ""},
     {"GetPartWithBadGeometry", 29, 30, 0x0B510u, 43u, Status::NotReversed, ""},
     {"GetSheet", 31, 32, 0x0B600u, 332u, Status::NotReversed, "number <= order->sheets.size()"},
