@@ -7115,5 +7115,45 @@ int main() {
                     static_cast<unsigned>(sizeof(lcns::Order)), 0x2C0u);
     }
 
+
+    // ---------------------------------------------------------------- Order's +0x1F8..+0x208 range (RE 0xD370 and RE 0xDE80)
+    //
+    // **FIVE FIELDS FROM THREE EXPORTS, AND THE TEST MEASURES THEM RATHER THAN TRUSTING THE COMMENT.** `SetLocalEngine` at 0xD370 writes a byte at +0x200 and
+    // another at +0x201; `SetLocalEngineThreads` at 0xDE80 writes a dword at +0x204 and another at +0x208; and `exports_impl.cpp` reads 0xD3D5, 0xD3E7, 0xD390
+    // and 0xD3A0 into a LocalEngineCarrier whose `maxThreads` is at +0x1F8.
+    {
+        lcns::Order probe;
+        const unsigned char* base = reinterpret_cast<const unsigned char*>(&probe);
+
+        // **EACH FIELD'S ADDRESS AND ITS WIDTH, WHICH IS THE WHOLE CLAIM.** A declaration whose comment and member disagree fails here, and a width that is
+        // wrong shows up as the NEXT field being in the wrong place -- which is why every offset in the range is measured and not only the first.
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.maxThreads) == base + 0x1F8);
+        CHECK(sizeof(probe.maxThreads) == 4);
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.maxIterations) == base + 0x1FC);
+        CHECK(sizeof(probe.maxIterations) == 4);
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.engineLo) == base + 0x200);
+        CHECK(sizeof(probe.engineLo) == 1);                    // RE 0xD390: mov byte [rsi + 0x200], al
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.engineHi) == base + 0x201);
+        CHECK(sizeof(probe.engineHi) == 1);                    // RE 0xD3A0: mov byte [rsi + 0x201], bl
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.threadsA) == base + 0x204);
+        CHECK(sizeof(probe.threadsA) == 4);                    // RE 0xDF73: mov dword [rdi + 0x204], r12d
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.threadsB) == base + 0x208);
+        CHECK(sizeof(probe.threadsB) == 4);                    // RE 0xDF7A: mov dword [rdi + 0x208], ebp
+
+        // **AND THE TWO BYTES NOTHING WRITES ARE ACCOUNTED FOR BY THE GAP ITSELF**, which the permutation fills: the test asserts the NEXT field starts at
+        // +0x204, so a hole at +0x202 that no field explains fails the threadsA check above.
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.threadsA) - base == 0x204);
+
+        // and the ORDER, which is what makes the addresses above a range and not six unrelated facts
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.maxThreads) < reinterpret_cast<const unsigned char*>(&probe.maxIterations));
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.maxIterations) < reinterpret_cast<const unsigned char*>(&probe.engineLo));
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.engineHi) < reinterpret_cast<const unsigned char*>(&probe.threadsA));
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.threadsA) < reinterpret_cast<const unsigned char*>(&probe.threadsB));
+
+        // **AND THE EXPORT'S ARGUMENT MAPPING IS RECORDED WHERE THE FIELDS ARE**: argument 2 is what 0xDE8D moves from edx and 0xDF73 stores at +0x204, and
+        // argument 3 is what 0xDE90 moves from r8d and 0xDF7A stores at +0x208. **The module carries no string for either, so the names stay placeholders.**
+        static_assert(sizeof(lcns::Order) >= 0x2C0, "the module's object is 0x2C0 and the port's own members follow it");
+    }
+
     return check::finish("test_recovered");
 }
