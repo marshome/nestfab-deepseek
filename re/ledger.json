@@ -4568,6 +4568,15 @@
       "witness": "0x755050 call 045D2 -> 0x9302C0, and that function begins 9302CF mov rbp, rcx / 9302CC mov rbx, rdx / 9302D2 mov ecx, 0x48 / 9302DD call 0x998500 / 9302E2 mov rdx, qword ptr [rbx + 0x20]. **0x48 is the allocation 0x240D0 makes for MultiEngine itself** (0240E7 mov ecx, 0x48), and the function takes four register arguments (rcx, rdx, r8, r9). **So the engine builds a same-sized object rather than delegating to a different one** -- which is the opposite of the delegation tree the family was expected to be, and matches the earlier measurement that NONE of the five run bodies calls another engine through a vtable",
       "tool": "instruction",
       "round": 797
+    },
+    {
+      "subject": "multiengine-run-clones-the-engine-tree-first",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "MultiEngine::run begins by calling 0x9302C0, a RECURSIVE CLONE of a MultiEngine tree: it allocates 0x48 per node, copies +0x00 and +0x40, walks the [+0x10] chain in a loop and recurses on [+0x18]",
+      "witness": "0x755050 calls 0x9302C0 at 045D2, and 0x9302C0 itself calls 0x9302C0 at 930338 and 9303B1 (two recursion sites). Its loop is 930350 mov ecx, 0x48 / 930355 call 0x998500 / 930365 mov qword ptr [rbx+0x20], rax / 93037E mov eax, dword [rsi] / 930399 mov dword [rbx], eax / 930379 movsd xmm0, qword [rsi+0x40] / 93038C movsd qword [rbx+0x40], xmm0 / 9303BA mov rsi, qword [rsi+0x10] / 9303C4 jne 0x930350, with 93033D mov qword [r13+0x18], rax storing the recursive result and 930399/9303A2 setting the +0x10/+0x18 links. **So it copies a tree of same-sized engines field by field**, and its two failure paths call 0x9989A0, 0x9984B0 and 0x62F280 -- the module is destructor, operator delete and the C++ throw path",
+      "tool": "instruction",
+      "round": 798
     }
   ]
 }
