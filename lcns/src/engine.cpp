@@ -242,8 +242,11 @@ EngineResult Engine::run(const Order& order, const EngineParams& params, Observe
         prepareInflatedShapes(prepared, order.interpartGap * 0.5);
     }
 
-    TimeCanceller canceller(params.timeLimitSeconds > 0.0 ? params.timeLimitSeconds
-                                                          : order.timeLimitSeconds);
+    // **`TimeLimitCanceller` AND NOT THE MODULE'S OWN CANCELLER, WHICH THIS PORT CANNOT WIRE.** The recovered one is
+    // `SupervisorCanceller`, and it reaches the elapsed value and the limit THROUGH ITS SINK at +0x08. The mechanism below is the
+    // module's -- RE 0x3008A `divsd` then 0x30092 `ucomisd`, elapsed / limit against a rodata double -- and the clock is the port's.
+    TimeLimitCanceller canceller(params.timeLimitSeconds > 0.0 ? params.timeLimitSeconds
+                                                              : order.timeLimitSeconds);
     NoFitMap nfp;
     nfp.setMaximumComplexity(NoFitMap::kDefaultMaxComplexity);
     Random rng(params.seed != 0 ? params.seed : 5489u);

@@ -56,18 +56,104 @@ public:
     void cancel() { cancelled_ = true; }
     void reset() { cancelled_ = false; }
 protected:
+    /** **THIS IS AT +0x08 IN THE MODEL AND AT +0x30 IN `SupervisorCanceller` -- AND THAT IS A CONTRADICTION THIS ROUND FOUND AND DID NOT RESOLVE.**
+     *
+     *  RE 0x30030 reads and writes the flag at `[rbx + 0x30]`, three times (`0x30049 movzx`, `0x30072`, `0x300A4`), and its constructor `0x30A30`
+     *  clears it at `0x30A91`. **But `0x30A30` is the DERIVED class's constructor and it never CALLS a base constructor**: its first two stores are
+     *  `0x30A42 mov qword ptr [rcx], rax` (the vtable) and `0x30A48 mov qword ptr [rcx + 8], rdx` (its own first member). **So where the BASE's data
+     *  begins is not shown by any instruction this round read**, and an attempt to make this member land on +0x30 by padding the base put that padding
+     *  on top of the derived class's own +0x08 and +0x10 -- a second wrong layout rather than one right one.
+     *
+     *  **A `Canceller` that is a vptr and a bool is what the port had, it is what the other three cancellers are consistent with, and it is left alone.**
+     *  `SupervisorCanceller` below records the +0x30 flag as the thing to explain, and its own `probeCancel` reads its `cancelled_` -- so the model's
+     *  behaviour is the module's and the model's OFFSET is not claimed to be. */
     bool cancelled_ = false;
 };
 
-// RE Multi::SupervisorCanceller::ProbeCancel (0x30030): elapsed / limit > 1.0
-class TimeCanceller : public Canceller {
+/** **`Multi::SupervisorCanceller`, WHICH IS THE CLASS `0x30030` ACTUALLY BELONGS TO -- AND ITS DECLARATION HERE
+ *  USED TO SAY `TimeCanceller` WITH A `limit_` AND A `t0_` THAT NO INSTRUCTION IN THE BODY EVER TOUCHES.**
+ *
+ *  The identity is the vtable and not the name: `re/vtables.json` has `N5Multi19SupervisorCancellerE` at vtable 0xA3BA90 with
+ *  slots `0x69A6D0 0x69A690 0x30030`, **so slot 2 -- the probe -- IS 0x30030**, and the constructor `0x30A30` installs the table
+ *  0x10 further on, which is the same family.
+ *
+ *  **WHAT THE 485 BYTES ESTABLISH** (every offset read or written through `rcx`/`rbx`, with the storing instruction):
+ *
+ *      03003B  cmp qword ptr [rcx + 8], 0          ; **+0x08, a POINTER that can be null** -- and the first thing checked
+ *      030040  mov rbx, rcx                        ; the object register is rbx
+ *      030049  movzx eax, byte ptr [rbx + 0x30]    ; **+0x30, a BYTE, and the cancel flag**
+ *      030072  mov byte ptr [rbx + 0x30], 0        ; cleared
+ *      0300A4  mov byte ptr [rbx + 0x30], 1        ; set
+ *      0300D5  mov rdx, qword ptr [rbx + 0x10]     ; +0x10
+ *      0300D9  mov r8,  qword ptr [rbx + 0x18]     ; +0x18
+ *
+ *  **and the constructor says what +0x10 is**: `0x30A4C lea rcx, [rcx + 0x20]` then `0x30A50 mov qword ptr [rbx + 0x10], rcx`
+ *  -- **a `std::string`'s data pointer aimed at its own inline buffer 0x10 bytes in** -- with the length at +0x18, the small-string
+ *  byte at +0x20, and the size compared against `0xf` at `0x30A70`.
+ *
+ *  **SO +0x08 IS A POINTER TO SOMETHING THAT CARRIES THE TIME LIMIT**: the probe reads `[rsi + 0x408]` through it at `0x3005D` and
+ *  again at `0x3008A`, where it divides `0x5F3980`'s result by it and compares against `[rip + 0x97edee]` -- **the rodata double the
+ *  old comment called `1.0`, reached through a different path than it described.** */
+class SupervisorCanceller : public Canceller {
 public:
-    explicit TimeCanceller(double limitSeconds);
-    void start();
-    void setLimit(double seconds);
-    double limit() const { return limit_; }
-    double elapsed() const;
+    /** RE 0x30A30, 187 bytes. It installs the table at +0x00, stores its second argument at +0x08, builds the `std::string` at
+     *  +0x10 from `[r8]` and `[r8 + 8]`, and clears the flag at +0x30. **The first argument is the destination**, which is why
+     *  `0x30A48` stores `rdx` and not `rcx`. */
+    SupervisorCanceller(void* destination, void* limitSource, const std::string& label);
+
+    /** RE 0x30030, slot 2, 485 bytes. A null `sink_` short-circuits to false at `0x30043`; otherwise the flag at +0x30 is
+     *  consulted first and the message at +0x10 and +0x18 is used in the logger call at `0x300E4`. */
     bool probeCancel() override;
+
+private:
+    void* sink_ = nullptr;             // +0x08, RE 0x3003B `cmp qword ptr [rcx + 8], 0`
+    std::string label_;                // +0x10, an INLINE std::string: data pointer at +0x10 aimed at +0x20, size at +0x18
+    /** **+0x20 TO +0x2F IS THIS `std::string`'s SMALL-STRING BUFFER AND +0x30 IS THE FLAG -- AND WHICH CLASS OWNS THE FLAG IS NOT ESTABLISHED.**
+     *
+     *  Three stores put the flag at +0x30 (`0x30049` reads it, `0x30072` clears it, `0x300A4` sets it) and the constructor clears it at `0x30A91`.
+     *  **If the base owned it, the base would be 0x38 bytes with a 0x2F-byte hole in it -- and this round tried exactly that and had to revert it**,
+     *  because the padding landed on top of the derived class's own +0x08 and +0x10. **So it is declared here, on the class whose constructor and whose
+     *  probe the instructions belong to.** **`Canceller::cancelled_` is a separate byte and its note records the contradiction**; a model cannot have
+     *  two flags, so this one is the SUBSTITUTED body's and the offset claim is not made. */
+    std::byte stringBuffer20_[0xF]{};  // +0x20 .. +0x2E, the std::string's inline buffer
+    bool flag30_ = false;              // +0x30, RE 0x30049 / 0x30072 / 0x300A4 / 0x30A91
+};
+
+/** **A PORT-LOCAL CLOCK CANCELLER, AND IT IS MARKED AS ONE.**
+ *
+ *  `Engine::run` needs a deadline, and **the module's own deadline canceller is `SupervisorCanceller` above, which reaches both the
+ *  elapsed value and the limit THROUGH ITS SINK** (`0x5F3980` for the first, `[sink + 8]` then `+0x408` for the second). **This port has
+ *  no sink of that kind**, so rather than pretend the recovered class is in use, this is a substituted implementation with the mechanism
+ *  the module's own arithmetic has: `elapsed / limit > 1.0`, which is exactly what `0x3008A divsd` and `0x30092 ucomisd` do.
+ *
+ *  **IT IS `LCNS_SUBSTITUTED` AND NOT `LCNS_RECOVERED`, BECAUSE ITS CLOCK SOURCE IS MINE AND NOT THE MODULE'S** -- and the class the
+ *  declaration used to call `TimeCanceller` claimed the RE address 0x30030, which belongs to `SupervisorCanceller` instead. */
+class TimeLimitCanceller : public Canceller {
+public:
+    explicit TimeLimitCanceller(double limitSeconds) : limit_(limitSeconds), t0_(std::chrono::steady_clock::now()) {}
+
+    void setLimit(double seconds) { limit_ = seconds; }
+    double limit() const { return limit_; }
+    double elapsed() const {
+        return std::chrono::duration<double>(std::chrono::steady_clock::now() - t0_).count();
+    }
+
+    /** RE 0x3008A and 0x30092: the module divides by the limit and compares against a rodata double. **The comparison is the module's;
+     *  the clock it divides is this port's.** */
+    bool probeCancel() override {
+        if (cancelled_) {
+            return true;
+        }
+        if (limit_ <= 0.0) {
+            return false;
+        }
+        if (elapsed() / limit_ > 1.0) {
+            cancelled_ = true;
+            return true;
+        }
+        return false;
+    }
+
 private:
     double limit_ = 10.0;
     std::chrono::steady_clock::time_point t0_{};

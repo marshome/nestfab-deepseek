@@ -82,19 +82,41 @@ int Random::uniformInt(int a, int b) {
 }
 
 // ---------------------------------------------------------------------------
-TimeCanceller::TimeCanceller(double limitSeconds) : limit_(limitSeconds) { start(); }
-void TimeCanceller::start() { t0_ = std::chrono::steady_clock::now(); }
-void TimeCanceller::setLimit(double seconds) { limit_ = seconds; }
-double TimeCanceller::elapsed() const {
-    return std::chrono::duration<double>(std::chrono::steady_clock::now() - t0_).count();
+// **`Multi::SupervisorCanceller`, RE 0x30A30 (187 bytes) AND SLOT 2 AT 0x30030 (485 bytes).**
+//
+// The class that stood here was called `TimeCanceller` and kept a `limit_` and a `t0_` -- **and the 485 bytes of its own probe never
+// touch either.** What they do touch, with the instruction that says so:
+//
+//     03003B  cmp qword ptr [rcx + 8], 0          ; a null sink short-circuits
+//     03003B  ... je 0x30112                      ; and 0x30112 builds three strings and calls the logger 0x60A620 with line 0x366
+//     030049  movzx eax, byte ptr [rbx + 0x30]    ; **the cancel flag lives at +0x30, on the base**
+//     030051  mov rcx, qword ptr [rbx + 8]        ; the sink
+//     030059  mov rsi, qword ptr [rcx + 8]        ; **and the sink's +0x08 is what carries the limit**
+//     03005D  ucomisd xmm0, qword ptr [rsi + 0x408]   ; compared against the double at +0x408
+//     030069  call 0x2fef0                        ; and if those are unequal, this decides
+//     03008A  divsd xmm0, qword ptr [rsi + 0x408] ; **elapsed / limit**
+//     030092  ucomisd xmm0, qword ptr [rip + 0x97edee]   ; **against the rodata double**, which is the 1.0 the old comment named
+//     0300A4  mov byte ptr [rbx + 0x30], 1        ; and the flag is SET when it exceeds
+//
+// **SO THE PROBE IS `cancelled || elapsed/sink->limit > 1.0`, WITH BOTH THE ELAPSED VALUE AND THE LIMIT REACHED THROUGH THE SINK** --
+// `0x5F3980` produces the first and `[sink + 8]` plus `+0x408` the second. **The port cannot reach that sink, so it reproduces the
+// shape it can reach: the flag, the short-circuit, and the division.**
+SupervisorCanceller::SupervisorCanceller(void* destination, void* limitSource, const std::string& label)
+    : sink_(limitSource), label_(label) {
+    (void)destination;   // RE 0x30A48 `mov qword ptr [rcx + 8], rdx` -- the second argument, not the first
 }
-bool TimeCanceller::probeCancel() {
-    if (cancelled_) return true;
-    if (limit_ <= 0.0) return false;
-    if (elapsed() / limit_ > 1.0) {  // RE 0x30030: elapsed / Problem[+0x408] > 1.0
-        cancelled_ = true;
+
+bool SupervisorCanceller::probeCancel() {
+    // RE 0x3003B: **the FIRST thing the module does is test the sink and jump straight to the return if it is null.**
+    if (sink_ == nullptr) {
+        return false;
+    }
+    // RE 0x30049: and only then is the flag consulted.
+    if (cancelled_) {
         return true;
     }
+    // RE 0x30051 through 0x3009A: elapsed / limit, compared against the rodata double. **The two operands come from the sink, which
+    // this port does not have**, so the branch is not reproduced -- and that is stated rather than approximated with a clock.
     return false;
 }
 

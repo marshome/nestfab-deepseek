@@ -4253,6 +4253,33 @@
       "witness": "the static_assert `sizeof(lcns::CompositeObserver) == 2 * sizeof(void*)` FAILED at build, and the class is `sizeof(void*)` because **nothing places a pointer in it**: its slot 0 at 0x75DDC0 is a ONE-BYTE `ret` and its slot 1 at 0x75DDB0 is a five-byte `jmp 0x9984b0`, which is operator delete, so it has no destructor body and no constructor in the profile. **Inventing a sink_ so that it matched its siblings is the shape-matching this project forbids, and the assertion is what stopped it** -- the same way the nester size assertions stopped a wrong base layout",
       "tool": "g_observer_slots.py",
       "round": 776
+    },
+    {
+      "subject": "the-class-at-0x30030-is-SupervisorCanceller",
+      "grade": "ORACLE",
+      "kind": "name",
+      "predicate": "the class whose probe is 0x30030 is `Multi::SupervisorCanceller`, and the declaration that called it `TimeCanceller` was wrong",
+      "witness": "re/vtables.json has `N5Multi19SupervisorCancellerE` at vtable 0xA3BA90 with slots `0x69A6D0 0x69A690 0x30030` -- **so slot 2, the probe, IS the address the old declaration cited** -- and the constructor 0x30A30 installs the table at rva 0xA3BAA0, 0x10 further on, which is the same family. **The mangled name is the module's own and is an oracle**: the name it gives is `SupervisorCanceller` and the name the port had invented was `TimeCanceller`, with a `limit_` and a `t0_` that the 485 bytes of the probe never read",
+      "tool": "re/vtables.json",
+      "round": 777
+    },
+    {
+      "subject": "SupervisorCancellers-object-shape",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the object is a vptr, a sink pointer at +0x08, an inline std::string at +0x10 whose data pointer aims at +0x20, and a byte flag at +0x30",
+      "witness": "RE 0x3003B `cmp qword ptr [rcx + 8], 0` and `je 0x30112` -- a null sink short-circuits FIRST; 0x30040 `mov rbx, rcx` establishes the object register; 0x30049 `movzx eax, byte ptr [rbx + 0x30]`, 0x30072 clearing it and 0x300A4 setting it are the flag; 0x30051 `mov rcx, [rbx + 8]` then 0x30059 `mov rsi, [rcx + 8]` reach the limit THROUGH the sink; 0x3008A `divsd xmm0, [rsi + 0x408]` and 0x30092 `ucomisd xmm0, [rip + 0x97edee]` are elapsed/limit against a rodata double. **And the constructor 0x30A4C/0x30A50 is an inline std::string**: `lea rcx, [rcx + 0x20]` then `mov qword ptr [rbx + 0x10], rcx`, with the length at +0x18 and the size compared against 0xf at 0x30A70",
+      "tool": "instruction",
+      "round": 777
+    },
+    {
+      "subject": "where-the-canceller-bases-data-begins-is-unresolved",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "where `Canceller`'s own data begins is NOT established: the only constructor read, 0x30A30, is the derived class's and calls no base constructor",
+      "witness": "0x30A42 `mov qword ptr [rcx], rax` installs the vtable and 0x30A48 `mov qword ptr [rcx + 8], rdx` writes the DERIVED class's first member -- **there is no call to a base constructor before them**, so the base's data boundary is not shown. **An attempt to place `cancelled_` at +0x30 by padding the base to 0x38 bytes HAD TO BE REVERTED**, because the 0x2F-byte padding covered the derived class's own +0x08 and +0x10 -- a second wrong layout rather than one right one. `Canceller` keeps a vptr and a bool, which is what it had and what the other three cancellers are consistent with, and the +0x30 flag is recorded on `SupervisorCanceller` as the thing to explain",
+      "tool": "instruction",
+      "round": 777
     }
   ]
 }

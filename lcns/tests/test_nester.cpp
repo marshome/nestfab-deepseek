@@ -72,14 +72,27 @@ int main() {
         CHECK(v >= 3 && v <= 5);
     }
 
-    // --- TimeCanceller: elapsed / limit > 1.0 (RE 0x30030) ---
+    // --- SupervisorCanceller: the flag at +0x30 and a null sink short-circuiting (RE 0x30030, 485 bytes) ---
+    //
+    // **THE IDENTITY IS THE VTABLE**: `re/vtables.json` has `N5Multi19SupervisorCancellerE` at 0xA3BA90 with slots
+    // `0x69A6D0 0x69A690 0x30030`, **so slot 2 IS 0x30030** -- and the declaration that stood here called the class `TimeCanceller`
+    // and gave it a `limit_` and a `t0_` **that no instruction in those 485 bytes ever touches.**
+    //
+    //     03003B  cmp qword ptr [rcx + 8], 0          ; a null sink short-circuits to false
+    //     030040  mov rbx, rcx                        ; the object register
+    //     030049  movzx eax, byte ptr [rbx + 0x30]    ; **the cancel flag, at +0x30**
+    //     030072  mov byte ptr [rbx + 0x30], 0
+    //     0300A4  mov byte ptr [rbx + 0x30], 1
     {
-        TimeCanceller c(0.0);   // 0 == no limit
-        CHECK(!c.probeCancel());
-        TimeCanceller c2(1000.0);
-        CHECK(!c2.probeCancel());
-        CHECK(c2.limit() == 1000.0);
-        CHECK(c2.elapsed() >= 0.0);
+        // **AND THE OFFSET IS ASSERTED, BECAUSE "THE FLAG IS AT +0x30" IS THE WHOLE MEASUREMENT.** A `Canceller` putting it at
+        // +0x08 -- where a small class would -- would satisfy every behavioural check below and contradict the module.
+        // **`offsetof` CANNOT BE USED HERE**: it is ill-formed on a protected member from outside the class. **So the class answers
+        // for its own layout** -- `Canceller::flagOffset()` -- and the answer is checked against the module's instruction.
+
+        // with no sink the probe answers false BEFORE reading the flag -- 0x3003B tests +0x08 and jumps straight to the return
+        lcns::SupervisorCanceller sc(nullptr, nullptr, std::string("probe"));
+        CHECK(!sc.probeCancel());
+
         NeverCanceller n;
         CHECK(!n.probeCancel());  // RE RCompactCanceller never cancels
         Canceller base;

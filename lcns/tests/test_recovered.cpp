@@ -347,7 +347,7 @@ int main() {
         lcns::NeverCanceller never;
         d.setInner(&never);
         CHECK(!d.probeCancel());
-        lcns::TimeCanceller timer(10.0);
+        lcns::TimeLimitCanceller timer(10.0);   // the port-local clock canceller; see its note in nester.hpp
         d.setInner(&timer);
         timer.cancel();
         CHECK(d.probeCancel());
