@@ -4586,6 +4586,24 @@
       "witness": "three independent signals: (1) **179 callers spread across the whole module** -- 0x2AB0, 0x33A0, 0x44E0, 0x6100, 0x85D0, 0x9550, 0x118F0, 0x1C5F0 and more -- where an engine helper would have engine callers; (2) it lives at 0x92Exxx beside 0x9984B0 operator delete, 0x998500 operator new and 0x910BA0 basic_string::_M_create, which is the runtime region; (3) it walks DOWN through [obj + 0x18] testing for null at each level (92ECDC mov rax, [rax+0x18] / 92ECE0 test rax,rax / 92ECE8 je, then again at 92ECEE), and +0x18 is a parent link, which is a tree descent. **So the second of MultiEngine::run helper calls is the library, and only 0x9302C0 is the engine own code**",
       "tool": "instruction",
       "round": 799
+    },
+    {
+      "subject": "multiengine-run-branches-on-the-flag-and-builds-the-string-seed",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "MultiEngine::run branches on the EngineBase flag: when set it builds the std::string seed inline and when clear it reads its own +0x10 and +0x14 and calls 0x2F860",
+      "witness": "755130 test al,al / 755132 je 0x755233 -- and note the instructions between the accessor call and the branch (755128 lea, 75512E mov) touch no flags, so the branch reads the ACCESSOR answer. The set side: 755144 mov dword ptr [rsp + 0xb0], 0x64656573 -- **little-endian s,e,e,d** -- with 755157 mov qword ptr [rsp + 0xa8], 4 as the length and 755163 a terminator byte, which is libstdc++ inline std::string construction. The clear side: 755233 mov r8d, dword ptr [rbp + 0x10] and 755243 movzx eax, byte ptr [rbp + 0x14] then 755260 call 0x2F860, and +0x10 and +0x14 are the members 024116 and 024124 place in the constructor",
+      "tool": "instruction",
+      "round": 800
+    },
+    {
+      "subject": "an-immediate-string-is-invisible-to-a-data-reference-scan",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "re/g_read_engine_run.py reported zero strings for MultiEngine::run while the function builds the four-character string seed from an immediate",
+      "witness": "the tool reads the profile strings list, which holds RIP-RELATIVE data references, and 755144 mov dword ptr [rsp + 0xb0], 0x64656573 is a four-byte immediate -- **so the tool was right about what it measures and the measurement was not the question**. A short literal built in a register never appears as a data reference. **This is the same failure mode as the allocation constant two rounds ago**: the thing being looked for was in the instruction stream and the tool consulted measures something adjacent to it",
+      "tool": "instruction",
+      "round": 800
     }
   ]
 }
