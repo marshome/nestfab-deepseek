@@ -3078,6 +3078,22 @@
    "round": 724,
    "subject": "mt-zero-is-the-seed-not-an-index",
    "witness": "0x0B007F mov edx, 1; 0x0B0084 mov dword [rbx + 0x18], 1; 0x0B00A0 mov dword [rbx + rdx*4 + 0x18], ecx writes mt[1] at +0x1C through mt[623] at +0x9D7, so mt spans +0x18..+0x9D7 and mti at +0x9D8 does not overlap it, and 0x9D8 + 8 = 0x9e0 is the allocation"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "of the 168 export rows, 161 wrappers call only notReversed and NONE calls a body, so the 54 bodies in exports_impl.cpp are unreachable from the export table",
+   "round": 725,
+   "subject": "the-export-table-dispatches-to-nothing",
+   "witness": "re/g_export_progress.py counts rows, bodies and dispatching wrappers from lcns/src/api_exports.cpp and exports_impl.cpp: the table has 168 rows all NotReversed, exports_impl.cpp defines 54 functions, andexports_impl:: appears zero times in the export table"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Order's maxThreads at +0x1F8 and maxIterations at +0x1FC are named by the module's own exports SetLocalMaximumThreads and SetLocalMaximumIterations, each of which writes exactly that offset",
+   "round": 725,
+   "subject": "the-local-setter-names-are-the-oracle",
+   "witness": "0xD3B0 SetLocalMaximumThreads writes dword [rsi + 0x1f8] at 0xD3D5 after clamping with 0xD3CB call 0xb5b70 and 0xD3D2 cmova; 0xD400 SetLocalMaximumIterations writes dword [rsi + 0x1fc] at 0xD417"
   }
  ]
 }
