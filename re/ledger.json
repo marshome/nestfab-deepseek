@@ -2942,6 +2942,22 @@
    "round": 712,
    "subject": "a-regex-that-crosses-a-newline-finds-the-next-line",
    "witness": "the measurement recorded commonCutObjectiveDen as claiming +0x98, a claim it never made, and matched the header // --- multi torch (+0x98..+0xD8) --- instead; requiring the comment to be on the same line fixed it and the field count went from 57 to 55"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "offset",
+   "predicate": "the two placed layouts of the module's 0x2C0 object share 67 offsets, with 60 existing only in LaunchingOrderLayout (54 of them unnamedXXX) and 15 only in Order",
+   "round": 713,
+   "subject": "Order-and-the-layout-share-67-offsets",
+   "witness": "re/g_order_union.py reads both by the same same-line-comment rule: Order has 82 offset fields and the layout 127, and the 15 Order-only offsets are the ones whose comments the last two rounds corrected"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "offset",
+   "predicate": "of the two placed layouts of the module's object, 68 offsets are shared, 60 exist only in LaunchingOrderLayout and 54 of those carry an unnamedXXX name, and 15 exist only in Order",
+   "round": 714,
+   "subject": "the-Order-duplication-division",
+   "witness": "re/g_order_union.py reads both by the same same-line-comment rule; the 54 unnamedXXX names are the offset-derived shape the module never supplies, and the 15 Order-only offsets are the fields whose comments the last two rounds corrected"
   }
  ]
 }

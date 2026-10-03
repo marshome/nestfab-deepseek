@@ -42,8 +42,10 @@ NOT_DUPLICATES = {
 # this a task with two lists rather than a choice between two structs.
 KNOWN_DUPLICATES = {
     frozenset({("model.hpp", "Order"), ("launching_order.hpp", "LaunchingOrderLayout")}):
-        "45 shared offsets, 96% of the smaller: ONE object described twice. re/g_adjudicate.py gives the WIDTHS to LaunchingOrderLayout 20-0 and the "
-        "EXPORT-DERIVED NAMES to Order, so the reconciliation keeps Order's names and the layout's widths",
+        "ONE object described twice, and the MEASURED division is in re/ORDER_UNION.md: 68 shared offsets, 60 that only the layout has -- 54 of them carrying "
+        "an unnamedXXX name, which is the offset-derived shape this objective removes -- and 15 that only Order has. **So NEITHER is the module's object "
+        "alone, and the merge direction is a real decision rather than a preference**: taking Order and adding the 60 puts 54 unnamedXXX members into the file "
+        "being cleaned, and taking the layout deletes 234 call sites' names and the export-derived witnesses with them",
 }
 
 # **HOW TO TELL TWO STRUCTS OVER THE SAME OFFSETS APART FROM TWO STRUCTS THAT MERELY ALIGN, MEASURED RATHER THAN GUESSED.**
@@ -61,10 +63,9 @@ KNOWN_DUPLICATES = {
 #     Order (49 offsets)           vs LaunchingOrderLayout (127):  45 shared, AND the shared ones are the SAME FIELDS with the same understanding
 #
 # **SO THE TEST IS SHARED OFFSETS COVERING MOST OF THE SMALLER STRUCT, AND *NOT* THE FIELD NAMES.** An earlier version also required a quarter of the
-# shared offsets to carry the same name -- and that EXCLUDED `Order` against `LaunchingOrderLayout`, which agree on only TWO names out of 45, because one
-# names a field by the export that sets it and the other by its offset. **A rule that excludes the case it was written for is the wrong rule**, and the
-# coverage test separates the same two pairs without it: `ScoreNode` covers 17 of its 17 against the layout and IS arithmetic alone, while `Order` covers
-# 45 of its 47.
+# shared offsets to carry the same name -- and that EXCLUDED `Order` against `LaunchingOrderLayout`, which agree on only TWO names, because one names a field by
+# the export that sets it and the other by its offset. **A rule that excludes the case it was written for is the wrong rule**, and the coverage test separates
+# the same two pairs without it: `ScoreNode` covers 17 of its 17 against the layout and IS arithmetic alone, while `Order` covers most of its own.
 MIN_SHARED = 20
 SMALLER_COVERED = 0.6
 
