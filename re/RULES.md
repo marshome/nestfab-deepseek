@@ -225,6 +225,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-03",
   "since": "round 135"}
 
+{"id": "requirement",
+  "rule": "逆向不要只看构造函数：所有函数都要读，各种参数、变量、字段、调用链，从各个角度推进",
+  "check": "no check yet, which is recorded rather than hidden",
+  "where": "re/RULES.md, added 2026-10-03",
+  "since": "round 142"}
+
 ## What is deliberately NOT a rule here
 
  {"id": "push-every-thirty-rounds",

@@ -4406,6 +4406,24 @@
       "witness": "0240E7 mov ecx, 0x48 / call 0x998500 is the allocation, and the stores are 024116 dword [rbx+0x10] (a dword), 024124 byte [rbx+0x14] (a byte), 024226 [rax+0x18], 024128 dword [rbx+0x20], 02412F [rbx+0x28], 02413F [rbx+0x30], 024143 [rbx+0x38] and 024137 [rbx+0x40]. **Laid out from the widths the instructions give, those land on +0x10, +0x14, +0x18, +0x20, +0x28, +0x30, +0x38 and +0x40 and end at 0x48** -- which is the allocation. **The first class in this tree whose derived offsets and total size both match the module, and the assertion is on the arithmetic rather than on the instruction alone**",
       "tool": "measurement",
       "round": 785
+    },
+    {
+      "subject": "delayedengine-returns-through-its-first-argument",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "`DelayedEngine`'s constructor allocates its own object, constructs it, and hands it out through its FIRST ARGUMENT, so `rcx` is a destination rather than `this`",
+      "witness": "`0x24B80`: `024B87 mov rsi, rcx`, then `024B8A mov ecx, 0x28` / `024B98 call 0x998500` to ALLOCATE, then `024BA3 mov rbx, rax` -- **so `rbx` is the new object and not `rcx`** -- and at the end `024BDE mov qword ptr [rsi], rbx` **writes the object to where the first argument points**, with `024C0A mov qword ptr [rsi + 8], rax` beside it. **The allocation is 0x28**, and the six stores are the base's byte and dword, a vtable, three words and a double",
+      "tool": "instruction",
+      "round": 786
+    },
+    {
+      "subject": "the-shared-plus-0x10-member-is-a-shared-ptr",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the `+0x10` and `+0x18` that `MultiEngine`, `NestingEngine`, `CloudEngine`, `EquivalentEngine` and `DelayedEngine` share are a `std::shared_ptr` pair, which is why five constructors agree on them",
+      "witness": "`0x24B80` builds it as `024BBB mov rax, qword ptr [rdi]` / `024BBE mov qword ptr [rbx + 0x10], rax` / `024BC2 mov rax, qword ptr [rdi + 8]` / `024BC9 mov qword ptr [rbx + 0x18], rax` / **`024BCF lock add dword ptr [rax + 8], 1`** -- and `0x24AB0` (`EquivalentEngine`) builds the same pair with the same `lock add` at `024AF3`. **A `shared_ptr` is two words, so `+0x10` and `+0x18` are ONE member and not two**, which is what an agreement count alone could not say. **And `+0x20` differs between the two classes** -- a `double` in `DelayedEngine` (`024BD4 movsd qword ptr [rbx + 0x20], xmm2`) and a dword in `MultiEngine` (`024128 mov dword ptr [rbx + 0x20], 0`) -- **so the layouts are not the same above +0x18**",
+      "tool": "instruction",
+      "round": 786
     }
   ]
 }
