@@ -1,0 +1,44 @@
+lcns: `EngineBase` IS A VPTR, A BYTE AND A DWORD -- the eleven-member declaration is GONE, and the constructor preamble is what replaced it
+
+**THE HEADER NOW SAYS WHAT A CONSTRUCTOR SAYS, AND THE OLD DECLARATION IS DELETED RATHER THAN CORRECTED IN PLACE**, because every one of its eleven members belonged to some
+other class.
+
+## `EngineBase` is 0x10 bytes
+
+    0x24AB0  EquivalentEngine                     0x240D0  MultiEngine
+    024ABA  mov ecx, 0x30 / call 0x998500         0240E7  mov ecx, 0x48 / call 0x998500
+    024ACA  mov byte  ptr [rax + 8], 0            024100  mov byte  ptr [rax + 8], 0     ; **+0x08, a BYTE**
+    024ACE  mov dword ptr [rax + 0xc], 0          024104  mov dword ptr [rax + 0xc], 0   ; **+0x0C, a DWORD**
+    024ADC  mov qword ptr [rbx], rax              02411A  mov qword ptr [rbx], rax       ; the vtable, AFTER
+    024AE2  mov qword ptr [rbx + 0x10], rax       024116  mov dword ptr [rbx + 0x10], r13d   ; **the first own member**
+
+**TWO INDEPENDENT CONSTRUCTORS WRITE +0x08 AND +0x0C BEFORE INSTALLING THEIR VTABLE**, which is what constructing a base sub-object looks like. **And `0x23E70`
+(`NestingEngine`) writes the same two offsets with the value 1**, which is why they are flags or counters and not a pointer.
+
+**SO `static_assert(sizeof(EngineBase) == 0x10)` REPLACES THE 0x60 THAT PINNED A WRONG LAYOUT**, and the note says plainly what the deleted declaration had actually
+captured: **an agreement between FOUR SIBLINGS about their own shared layout** -- `InfiniteEngine`, `MultiEngine`, `DelayedEngine`, `NestingEngine` and `CompositeEngine`
+all touch +0x10 through +0x50 -- **and an agreement between siblings is not an inherited member.**
+
+## And `EquivalentEngine`'s own area is a `std::shared_ptr`
+
+    024ADF  mov rax, qword ptr [rdi]
+    024AE2  mov qword ptr [rbx + 0x10], rax    ; **a CONTROL BLOCK**
+    024AED  mov qword ptr [rbx + 0x18], rax    ; **the pointer**
+    024AF3  lock add dword ptr [rax + 8], 1    ; **an atomic increment eight bytes into it -- a shared_ptr's use count**
+    024AF8  mov qword ptr [rbx + 0x20], 0
+
+**AND `024ABA mov ecx, 0x30` ASKS FOR 0x30 WHILE THOSE STORES PLACE 0x28.** The compiler reports it as `(40 == 0)`. **The assertion is the 0x28 the instructions place, with
+0x30 named beside it as the difference, and the eight bytes are NOT given a member** -- either something lives at +0x28 that this constructor does not initialise or the
+block is rounded, **and inventing a member to close an allocation gap is exactly the shape-matching this project forbids.**
+
+## What is left, stated so the next round starts from it
+
+**`+0x28` THROUGH `+0x50` ARE STILL UNATTRIBUTED.** Five `run` bodies touch them and no constructor has been read for `InfiniteEngine`, `DelayedEngine`,
+`CompositeEngine` or `CloudEngine` -- **the three found so far are `0x23E70` (`NestingEngine`), `0x240D0` (`MultiEngine`) and `0x24AB0` (`EquivalentEngine`), and two of
+those three place nothing past +0x10.** **Reading a `run` body cannot tell an inherited member from a sibling's identical own one, and that is the whole remaining
+question.**
+
+    lcns/include/lcns/engines.hpp   EngineBase reduced to its three real members; EquivalentEngine's shared_ptr and its 0x28-versus-0x30 gap
+    lcns/tests/test_recovered.cpp   sizeof(EngineBase) == 0x10 and sizeof(EquivalentEngine) == 0x28, both from constructors
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the seven checks green, FABRICATED 0, 484 claims with 0 problems.

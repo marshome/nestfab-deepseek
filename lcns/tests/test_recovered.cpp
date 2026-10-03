@@ -6676,8 +6676,22 @@ int main() {
             // derived class's own two pointers land.** An earlier version reached into the protected members through `offsetOfAtNN()` functions declared ON the
             // classes, which was a class growing an API so that a test could ask a question the class should answer at compile time; these two numbers say the same
             // thing with none of that, and `static_assert` says it before the program runs.
-            static_assert(sizeof(lcns::EngineBase) == 0x60, "the base's data plus the alignment the compiler inserts after at30");
-            static_assert(sizeof(lcns::EquivalentEngine) == 0x70, "so its own at58 and at60 land at 0x60 and 0x68, where RE reads 0x58 and 0x60");
+            // **THE BASE IS 0x10 AND `EquivalentEngine` IS 0x30, AND BOTH NUMBERS NOW COME FROM A CONSTRUCTOR RATHER THAN FROM A DECLARATION'S OWN ARITHMETIC.**
+            // The base is a vptr, a byte at +0x08 and a dword at +0x0C -- two independent constructors zero those two offsets BEFORE installing their vtable, which
+            // is what constructing a base sub-object looks like -- and `0x24ABA mov ecx, 0x30` is `EquivalentEngine`'s own allocation.
+            static_assert(sizeof(lcns::EngineBase) == 0x10, "vptr + byte at +0x08 + dword at +0x0C -- RE 0x24ACA, 0x24ACE, 0x240100, 0x24104");
+            // **THE ALLOCATION IS 0x30 AND THE WRITES ACCOUNT FOR 0x28, SO EIGHT BYTES ARE UNACCOUNTED FOR AND ARE RECORDED AS SUCH.**
+            //
+            //   EngineBase      0x10   vptr, a byte at +0x08, a dword at +0x0C
+            //   +0x10, +0x18    0x10   RE 0x24AE2 and 0x24AED -- a shared_ptr control block and its pointer
+            //   +0x20           0x08   RE 0x24AF8 `mov qword ptr [rbx + 0x20], 0`
+            //                   ----
+            //                   0x28   what the constructor's stores place
+            //
+            // **and `024ABA mov ecx, 0x30` asks the allocator for eight more.** So either there is a member at +0x28 that this constructor happens not to initialise, or
+            // the block is rounded. **The assertion is the 0x28 the instructions PLACE** -- asserting 0x30 would be a claim that a member exists where no instruction
+            // writes one, which is the mistake this project's rules are for.
+            static_assert(sizeof(lcns::EquivalentEngine) == 0x28, "what the constructor's stores place; RE 0x24ABA allocates 0x30, so eight bytes are unaccounted for");
         }
     }
 

@@ -4343,6 +4343,33 @@
       "witness": "`0x23E70` installs 0xA3CFB0 where the table is recorded at 0xA3CFA0; `0x240D0` installs 0xA3CF10 against 0xA3CF00; `0x24AB0` installs 0xA3D040 against 0xA3D030. **In all three the recorded value is the installed one MINUS 0x10**, and `0xA3CFA0`, `0xA3CF00` and `0xA3D030` are exactly `NestingEngine`, `MultiEngine` and `EquivalentEngine`. **GETTING THIS WRONG COST TWO ROUNDS**: one scan looked 0x10 too high and concluded that nothing installs an engine vtable, and the next compared the values directly and found nothing at all -- **both times the addresses were right and the arithmetic between them was wrong**",
       "tool": "measurement",
       "round": 781
+    },
+    {
+      "subject": "enginebase-is-a-vptr-a-byte-and-a-dword",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "`EngineBase` is a vptr at +0x00, a BYTE at +0x08 and a DWORD at +0x0C -- 0x10 bytes -- and every engine's own data starts at +0x10",
+      "witness": "two independent constructors write those two offsets BEFORE installing their vtable, which is what a base sub-object being constructed looks like: `0x24AB0` does `024ACA mov byte ptr [rax + 8], 0` and `024ACE mov dword ptr [rax + 0xc], 0` then `024ADC mov qword ptr [rbx], rax`; `0x240D0` does `024100 mov byte ptr [rax + 8], 0` and `024104 mov dword ptr [rax + 0xc], 0` then `02411A mov qword ptr [rbx], rax`. **And `0x23E70` writes the SAME two offsets with the value 1** (`023F93 dword ptr [rax + 8], 1` and `023F9A dword ptr [rax + 0xc], 1`), **which is why they are flags or counters and not a pointer** -- the correction to the previous round's reading. Both constructors then write +0x10 as their first own member",
+      "tool": "instruction",
+      "round": 782
+    },
+    {
+      "subject": "equivalentengine-holds-a-shared-pointer-in-its-own-area",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "`EquivalentEngine`'s own area holds a `std::shared_ptr`: a control block at +0x10, a pointer at +0x18 and a zero at +0x20",
+      "witness": "`024ADF mov rax, qword ptr [rdi]` then `024AE2 mov qword ptr [rbx + 0x10], rax`; `024AE6 mov rax, qword ptr [rdi + 8]` then `024AED mov qword ptr [rbx + 0x18], rax`; and **`024AF3 lock add dword ptr [rax + 8], 1`** -- an atomic increment of a field eight bytes into the object `[rdi + 8]` points at, **which is a `std::shared_ptr` control block's use count.** `024AF8 mov qword ptr [rbx + 0x20], 0` follows. **The allocation is `ecx = 0x30` at 024ABA**, so the whole object is 0x30 bytes: 0x10 of base and 0x20 of `EquivalentEngine`",
+      "tool": "instruction",
+      "round": 782
+    },
+    {
+      "subject": "equivalentengines-placed-layout-is-0x28-and-its-allocation-is-0x30",
+      "grade": "MEASURED",
+      "kind": "width",
+      "predicate": "`EquivalentEngine`'s constructor places 0x28 bytes of object -- 0x10 of base, a shared_ptr control block at +0x10, its pointer at +0x18 and a zero at +0x20 -- while `024ABA mov ecx, 0x30` asks the allocator for 0x30, so eight bytes are unaccounted for",
+      "witness": "`sizeof(lcns::EquivalentEngine)` with the members the constructor's stores place is **0x28**, which the compiler reports as `(40 == 0)` against the 0x30 asserted from the allocation. **The eight bytes are NOT given a member**: either something lives at +0x28 that this constructor does not initialise, or the block is rounded -- **and inventing a member to close an allocation gap is exactly the shape-matching this project forbids.** The assertion is the 0x28 the INSTRUCTIONS place, with the 0x30 named beside it as the difference",
+      "tool": "measurement",
+      "round": 783
     }
   ]
 }

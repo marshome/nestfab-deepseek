@@ -97,57 +97,27 @@ public:
     virtual void* run(const void* problem, double timeLimit, void* observer, void* result) = 0;
 
 protected:
-    /** **EVERY MEMBER BELOW IS EIGHT BYTES LOWER THAN THE INSTRUCTION THAT PUTS IT THERE, AND THAT IS WRITTEN DOWN RATHER THAN HIDDEN.**
+    /** **THE BASE IS A VPTR, A BYTE AND A DWORD -- AND THE ELEVEN MEMBERS THAT STOOD HERE WERE NOT THE BASE'S AT ALL.**
      *
-     * The measured arithmetic for this declaration is:
+     * **WHAT SETTLED IT WAS A CONSTRUCTOR PREAMBLE, WHICH IS THE EVIDENCE NINE ROUNDS OF READING `run` BODIES COULD NOT GIVE.** Two independent engine constructors
+     * zero these two offsets **BEFORE** installing their vtable, which is what constructing a base sub-object looks like:
      *
-     *      member    MODEL    the instruction says
-     *      state00   +0x08    +0x00        <- and `state00` is an `int32`, so the 8-byte vptr above it pushes it down
-     *      at08      +0x10    +0x08        <- RE 0x756F27, 0x7552A0
-     *      at10      +0x18    +0x10        <- RE 0x756F2F, 0x75A6E9
-     *      at18      +0x20    +0x18        <- RE 0x756F37, 0x75A6D5
-     *      at20      +0x28    +0x20        <- RE 0x756FEB, 0x75C4A0
-     *      at28      +0x30    +0x28        <- RE 0x756FC9, 0x75C495
-     *      at30      +0x38    +0x30        <- RE 0x756FCD, 0x75C48E
-     *      at38      +0x40    +0x38        <- RE 0x756FD4, 0x75C4A4
-     *      at40      +0x48    +0x40        <- RE 0x756FE7
-     *      at48      +0x50    +0x48        <- RE 0x756FEF
-     *      at50      +0x58    +0x50        <- RE 0x756FDC, 0x75C4AC
+     *      0x24AB0  EquivalentEngine     0x240D0  MultiEngine
+     *      024ACA  byte  ptr [rax+8], 0          024100  byte  ptr [rax+8], 0
+     *      024ACE  dword ptr [rax+0xc], 0        024104  dword ptr [rax+0xc], 0
+     *      024ADC  qword ptr [rbx], rax          02411A  qword ptr [rbx], rax      ; the vtable, AFTER
+     *      024AE2  qword ptr [rbx+0x10], rax     024116  dword ptr [rbx+0x10], r13d   ; **the first own member**
      *
-     * **ELEVEN OF ELEVEN DIFFER, EACH BY EIGHT**, so the model's arithmetic is internally consistent and wrong as a whole. **The cause is `state00`: a 32-bit member
-     * declared first, with the vptr's 8-byte alignment pushing everything after it down.** `sizeof(EngineBase)` is 0x60 for that reason and not because the class has
-     * 0x58 of data.
+     * **AND `0x23E70` (`NestingEngine`) WRITES THE SAME TWO OFFSETS WITH THE VALUE 1** -- `023F93 dword ptr [rax + 8], 1` and `023F9A dword ptr [rax + 0xc], 1` --
+     * **which is why they are flags or counters and not a pointer.**
      *
-     * **AND TWO READINGS SURVIVE, NEITHER OF WHICH IS ADOPTED HERE:**
-     *
-     *   1. **`+0x00` IS NOT A MEMBER AT ALL.** `RE 0x756F1C mov dword ptr [rdi], 0` writes the bottom half of a location the vptr already occupies -- which a
-     *      constructor may legitimately do **when it is about to install a vtable there**, and `0x756EFD lea r12, [rsp + 0x40]` / `call 0x51BFC0` immediately before
-     *      suggests the surrounding code is building something on the stack rather than on `this`. **On this reading `state00` is not a member, the class's data
-     *      starts at +0x08, and every other offset is correct as an instruction.**
-     *   2. **`rdi` IS NOT `this` FOR THIS FUNCTION**, because the `call 0x51BFC0` before the store could leave `rdi` pointing elsewhere -- **though `0x756EEA mov rdi,
-     *      rcx` establishes it at the top and nothing between the two overwrites it.**
-     *
-     * **AND `+0x54` IS A THIRD ONE**: `RE 0x75C71E mov eax, dword ptr [rsi + 0x54]` reads a dword where reading 1 would put `at50`'s tail. **So reading 1 also leaves
-     * `at50` needing to be a dword rather than a pointer**, or the members are not a single contiguous run of declarations at all.
-     *
-     * **WHAT WOULD SETTLE IT IS THE CONSTRUCTOR THAT INSTALLS THIS CLASS'S VTABLE** -- the function whose `lea rax, [rip + N]` resolves to 0xA3BAA0's neighbourhood and
-     * whose first stores are `[rcx]` and then `[rcx + 8]`. **`0x30A30` is such a constructor and it is the DERIVED class's, so it writes its own +0x08 and never calls
-     * this base's -- which is exactly why the boundary is unresolved.**
-     *
-     * **SO THE MEMBERS STAY AS THEY ARE, WITH A REAL COMMENT EACH, AND THIS NOTE IS THE TRUTH ABOUT THEM**: they are the offsets the instructions USE, placed in an
-     * order that does not reproduce them. **A model bent to fit one offset stops being a model of the others.**
-     */
-    std::int32_t state00 = 0;      // the module writes a DWORD at [this + 0x00] -- see the note; the model puts this at +0x08
-    void* at08 = nullptr;          // RE 0x756F27 zeroes it, 0x7552A0 reads it -- the module's +0x08
-    void* at10 = nullptr;          // RE 0x756F2F zeroes it, 0x75A6E9 reads it -- the module's +0x10
-    void* at18 = nullptr;          // RE 0x756F37 zeroes it, 0x75A6D5 reads it -- the module's +0x18
-    void* at20 = nullptr;          // RE 0x756FEB and 0x75C4A0 write it -- the module's +0x20
-    void* at28 = nullptr;          // RE 0x756FC9 takes its ADDRESS, 0x75C495 reads it -- the module's +0x28
-    std::int32_t at30 = 0;         // RE 0x756FCD and 0x75C48E are DWORD stores -- the module's +0x30
-    void* at38 = nullptr;          // RE 0x756FD4 and 0x75C4A4 write it -- the module's +0x38
-    void* at40 = nullptr;          // RE 0x756FE7 `mov qword ptr [rdi + 0x40], r8` -- the module's +0x40
-    void* at48 = nullptr;          // RE 0x756FEF `mov qword ptr [rdi + 0x48], r8` -- the module's +0x48
-    void* at50 = nullptr;          // RE 0x756FDC and 0x75C4AC write it -- the module's +0x50
+     * **SO THE BASE ENDS AT 0x10 AND THE DERIVED CLASSES START THERE.** The declaration that stood here held eleven members from +0x00 to +0x50, **all of them eight bytes
+     * lower than the instruction that uses each one**, and `static_assert(sizeof(EngineBase) == 0x60)` was pinning that wrong layout. **What that declaration actually
+     * captured was an agreement between FOUR SIBLINGS about their OWN shared layout** -- `InfiniteEngine`, `MultiEngine`, `DelayedEngine`, `NestingEngine` and
+     * `CompositeEngine` all touch +0x10 through +0x50 -- **and an agreement between siblings is not an inherited member.** Which class those offsets belong to is the next
+     * question, and it is asked in the note on `EquivalentEngine` below rather than answered here. */
+    std::uint8_t at08 = 0;         // +0x08, RE 0x024ACA `mov byte ptr [rax + 8], 0` and 0x023F93 `dword ptr [rax + 8], 1`
+    std::uint32_t at0C = 0;        // +0x0C, RE 0x024ACE `mov dword ptr [rax + 0xc], 0` and 0x023F9A `dword ptr [rax + 0xc], 1`
 };
 
 /** RE vtable 0xA3CFD0, THREE slots. Slot 0 is the deleting destructor 0x759B20, slot 1 the destructor 0x759AD0, and slot 2 is `run` at 0x759A80, 80 bytes.
@@ -339,24 +309,25 @@ public:
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
 
 private:
-    /** **THE MODULE READS +0x54, +0x58 AND +0x60 HERE; THE MODEL CANNOT PUT THEM THERE, AND THAT IS MEASURED RATHER THAN GUESSED.**
+    /** **THIS CLASS'S OWN AREA STARTS AT +0x10, AND IT HOLDS A `std::shared_ptr`.** RE 0x24AB0, 190 bytes, and its allocation is `024ABA mov ecx, 0x30` -- **so the whole
+     *  object is 0x30 bytes: 0x10 of `EngineBase` and 0x20 of this class.**
      *
-     *      RE 0x75C71E  mov eax, dword ptr [rsi + 0x54]     ; a DWORD below this class's first pointer
-     *      RE 0x75C72C  mov r15, qword ptr [rsi + 0x58]     ; **this class's first own member, per the module**
-     *      RE 0x75C703  mov rdi, qword ptr [rsi + 0x60]
+     *      024ADF  mov rax, qword ptr [rdi]        ; the source shared_ptr
+     *      024AE2  mov qword ptr [rbx + 0x10], rax ; **+0x10, a CONTROL BLOCK**
+     *      024AE6  mov rax, qword ptr [rdi + 8]
+     *      024AED  mov qword ptr [rbx + 0x18], rax ; **+0x18, the pointer**
+     *      024AF3  lock add dword ptr [rax + 8], 1 ; **an ATOMIC INCREMENT eight bytes into what +0x18 points at**
+     *      024AF8  mov qword ptr [rbx + 0x20], 0   ; +0x20
      *
-     *  **AND `sizeof` SAYS THE BASE IS 0x60, NOT 0x58** -- so these two members land at 0x60 and 0x68 and the dword at +0x54 has nowhere to go. **The cause is the
-     *  base's DECLARATION ORDER and not a typo**: its members are a dword, five pointers, a dword, four pointers and a pointer, which is 0x50 of DATA, and the
-     *  compiler's alignment padding after the second dword pushes every member from `at38` upward by eight. **That is this project's own rule -- an offset that needs
-     *  arithmetic to reach is an offset the model does not have -- and the fix is to find the members' real widths and order, which is the next round's job.**
-     *  **Nothing here is reordered to make one assertion pass**, because a model bent to fit one offset stops being a model of the others.
+     *  **THE `lock add` IS WHAT IDENTIFIES IT**: a `std::shared_ptr` control block's use count, incremented atomically on copy. **And `RE 0x75C72C` and `0x75C703` read
+     *  +0x58 and +0x60 as qwords, `RE 0x75C71E` reads +0x54 as a dword -- all three INSIDE this class's own area and none of them the base's.**
      *
-     *  **THE TWO MEMBERS BELOW LAND AT 0x60 AND 0x68 BECAUSE OF THAT, AND THE TEST ASSERTS THE SIZES RATHER THAN REACHING IN FOR THE FIELDS.** An earlier version of
-     *  this file gave both classes a static `offsetOfAtNN()` so a test could read a protected offset -- **which is a class growing an API so that a test can ask a
-     *  question the class should answer at compile time, and it is not C++ anyone would write after reading the module.** `sizeof(EngineBase) == 0x60` and
-     *  `sizeof(EquivalentEngine) == 0x70` pin the same arithmetic with no accessor at all. */
-    void* at58 = nullptr;              // +0x58 per RE 0x75C72C; the model puts it at 0x60 -- see above
-    void* at60 = nullptr;              // +0x60 per RE 0x75C703; the model puts it at 0x68 -- see above
+     *  **AND WHAT +0x28 THROUGH +0x50 ARE IS NOT ESTABLISHED HERE.** `InfiniteEngine`, `MultiEngine`, `DelayedEngine`, `NestingEngine` and `CompositeEngine` all touch
+     *  that range in their `run` bodies, **so it is a shared layout -- but the five constructors that would say WHOSE have not all been read**, and reading a `run` body
+     *  cannot tell an inherited member from a sibling's identical own one. **This class declares only what its constructor places**, which is the three words above. */
+    void* control10 = nullptr;         // +0x10, RE 0x24AE2 -- a std::shared_ptr control block
+    void* pointed18 = nullptr;         // +0x18, RE 0x24AED -- and 0x24AF3 increments its +0x08 atomically
+    void* at20 = nullptr;              // +0x20, RE 0x24AF8 zeroes it
 };
 
 /** Engine::CloudEngine, Run at 0x26A60, vtable 0xA3CED0.
