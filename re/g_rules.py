@@ -516,29 +516,27 @@ def check_four_conditions():
 
 
 def check_push_every_thirty_rounds():
-    """每30轮push一次 -- at the thirty-round sync, local must be level with origin.
+    """Report how many local commits origin lacks -- and DO NOT FAIL on it.
 
-    The human's instruction at round 92 is "每30轮push一下吧", which replaces the default of never pushing with a cadence. The sync is the same thirty rounds
-    `sync-every-thirty-rounds` counts, so the condition is: **when the sync is due, `origin/main..HEAD` must be empty.**
+    **THE HUMAN RETIRED THE THIRTY-ROUND PUSH AT ROUND 113: "网络不太好，减少push吧".** So this reports and does not gate, and the default is back to
+    `local-commits-only`: **a commit is made every round, and a push happens when the human asks or when the network allows** -- which is not something a per-round
+    check can decide.
 
-    **AND AN UNREACHABLE REMOTE IS UNCHECKED AND NOT A FAILURE.** This project's origin has been unreachable for long stretches, and a rule that reports the tree
-    as broken because GitHub is down is a rule that lies. The check says UNCHECKED with the git error beside it, so the difference between "not pushed" and "could
-    not ask" stays visible.
+    **AND `sync-every-thirty-rounds` IS A DIFFERENT RULE AND NOW STANDS ALONE.** That one is "每30轮和我同步一次" -- report the state to the human -- and it had
+    been satisfied by pushing, which conflated two things: **telling the human where the work stands, and copying commits to a server.** A network that is down does
+    not stop the first, so the first must not depend on the second.
+
+    **AN UNREACHABLE REMOTE IS STILL NOT A FAILURE**, and now neither is a backlog: the check reports how many commits are local and whether origin could be
+    reached, while `re/g_backup.py` keeps a verified bundle -- **the backup that works when GitHub does not.**
     """
-    # **AND THE EXIT CODE IS THE OTHER WAY ROUND FROM THE FIRST VERSION.** `g_rounds.py --check` exits 4 once thirty rounds have passed WITHOUT a sync and 0
-    # while the sync is not yet due -- so `code != 0` means the sync IS due. The first version read it backwards, so it said "the sync is due and 3 commit(s) are
-    # not pushed" at TWO rounds of thirty, and would have passed silently at exactly the moment the rule exists for. **A check whose condition is inverted is
-    # worse than no check: it is green when it should fire and fires when it should not.**
-    code, out, _err = run([sys.executable, os.path.join(HERE, "g_rounds.py"), "--check"])
-    if code == 0:
-        return "PASS", "the sync is not due yet (%s), so no push is owed" % (out or "").strip()[:48]
     code, out, err = run(["git", "rev-list", "--count", "origin/main..HEAD"])
     if code != 0:
-        return "UNCHECKED", "the sync is due and origin is unreachable: %s" % (err or out).strip()[:64]
+        return "UNCHECKED", "origin is unreachable, so the backlog cannot be counted: %s" % (err or out).strip()[:56]
     behind = int((out or "0").strip() or 0)
-    if behind:
-        return "FAIL", "the sync is due and %d commit(s) are not pushed" % behind
-    return "PASS", "the sync is due and origin/main is level with HEAD"
+    if not behind:
+        return "PASS", "origin is level with HEAD"
+    return "PASS", ("**%d local commit(s) unpushed** -- pushing happens on request or when the network allows, and re/g_backup.py holds the verified "
+                    "bundle meanwhile" % behind)
 
 
 CHECKS = [

@@ -1,0 +1,34 @@
+re: the thirty-round PUSH rule is retired -- the human said the network is poor at round 113
+
+**"网络不太好，减少push吧".** So the default is back to `local-commits-only`: **a commit every round, and a push when the human asks or when the network allows** --
+which is not something a per-round check can decide, so the check no longer tries.
+
+## And the check had been conflating two different things
+
+    "每30轮和我同步一次"          **tell the human where the work stands**     -- independent, and network-free
+    "每30轮push一次"              **copy commits to a server**                 -- needs GitHub
+
+**the second had been made the mechanism of the first**, so a network that is down looked like a failure to report. `sync-every-thirty-rounds` now stands alone and
+`re/g_backup.py` keeps the verified bundle, **which is the backup that works when GitHub does not** -- and this session has been proving that: origin has been
+unreachable for most of it while the bundle verified every round.
+
+**AND THE CHECK NOW REPORTS AND NEVER FAILS:**
+
+    PASS   **1 local commit(s) unpushed** -- pushing happens on request or when the network allows, and re/g_backup.py holds the verified bundle meanwhile
+
+so a fresh session still sees the backlog, **and a red gate is reserved for things that are actually wrong.**
+
+## And recording the instruction produced a mangled id, which is worth naming
+
+`re/g_note.py requirement "网络不太好，减少 push..."` derives the rule's id from its text, **and the console here is GBK** -- so the entry landed as
+`push-push-push-30-push` with its Chinese text damaged. It is rewritten as `reduce-push-network-is-poor` with the text intact and the check named.
+
+**A REQUIREMENT WHOSE OWN TEXT IS DAMAGED IS WORSE THAN A MISSING ONE**, because `re/RULES.md` is where a fresh session reads the human's words -- which is exactly
+the drift this project's `AGENTS.md` warns about when it says not to keep a second copy of a rule in a second place.
+
+    re/g_rules.py            check_push_every_thirty_rounds reports and does not fail
+    re/RULES.md              reduce-push-network-is-poor, with its check recorded
+    re/g_fix_push_rule.py    the rewrite, refusing if the anchor is not where it is expected
+    re/g_check_rules_file.py the file's own check
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the five checks green, and 24 rules with 0 broken.

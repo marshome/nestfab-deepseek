@@ -97,8 +97,26 @@ def main():
     if start < 0 or end < 0:
         print("REFUSING: the measurement block is not where expected")
         return 2
-    body = body[:start] + BODY.replace("@@ROWS@@", "\n".join(rows)) + "\n" + body[end:]
-    io.open(TEST, "w", encoding="utf-8", newline="\n").write(body)
+    # **THE GUARD: THE REPLACEMENT MAY NOT REMOVE AN ASSERTION OR A CLASS NAME.**
+    #
+    # The first version replaced everything between the two markers, and because the measurement block had been inserted BEFORE the finish marker, every
+    # assertion appended after it lived inside that span. **One run deleted 217 lines -- Supervisor's, TimerWinImplementation's, the Node family's, the sheet
+    # selectors' and the two cancellers' tests -- and the only reason it was caught is that `check_recovery` then said five classes had no test.** A tool that
+    # rewrites a span it did not create has to be checked by what the span contains.
+    rebuilt = body[:start] + BODY.replace("@@ROWS@@", "\n".join(rows)) + "\n" + body[end:]
+
+    def evidence(text):
+        return (len(re.findall(r"\bCHECK\(", text)),
+                len(re.findall(r"\bstatic_assert\(", text)),
+                len(set(re.findall(r"lcns::(\w+)", text))))
+
+    before, after = evidence(body), evidence(rebuilt)
+    if any(after[index] < before[index] for index in range(3)):
+        print("REFUSING: the rewrite would remove evidence. checks %d->%d, static_asserts %d->%d, class names %d->%d"
+              % (before[0], after[0], before[1], after[1], before[2], after[2]))
+        return 2
+
+    io.open(TEST, "w", encoding="utf-8", newline="\n").write(rebuilt)
     print("rewrote the measurement with %d field(s), checking ORDER rather than a baked list" % len(rows))
     return 0
 

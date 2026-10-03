@@ -207,6 +207,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-03",
   "since": "round now"}
 
+{"id": "reduce-push-network-is-poor",
+  "rule": "网络不太好，减少 push -- 默认回到本地提交、不 push；push 只在人类明确要求时、或网络允许时进行。每 30 轮与人类同步进度这件事独立保留，不再靠 push 来满足",
+  "check": "re/g_rules.py check_push_every_thirty_rounds now REPORTS the local backlog and never fails: it names how many commits origin lacks and whether the remote could be reached, while re/g_backup.py keeps a verified bundle. **The thirty-round push it replaced was retired by this instruction.**",
+  "where": "re/g_rules.py",
+  "since": "round 113, the human's instruction 网络不太好，减少push吧"}
+
 ## What is deliberately NOT a rule here
 
  {"id": "push-every-thirty-rounds",
