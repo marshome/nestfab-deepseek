@@ -4424,6 +4424,24 @@
       "witness": "`0x24B80` builds it as `024BBB mov rax, qword ptr [rdi]` / `024BBE mov qword ptr [rbx + 0x10], rax` / `024BC2 mov rax, qword ptr [rdi + 8]` / `024BC9 mov qword ptr [rbx + 0x18], rax` / **`024BCF lock add dword ptr [rax + 8], 1`** -- and `0x24AB0` (`EquivalentEngine`) builds the same pair with the same `lock add` at `024AF3`. **A `shared_ptr` is two words, so `+0x10` and `+0x18` are ONE member and not two**, which is what an agreement count alone could not say. **And `+0x20` differs between the two classes** -- a `double` in `DelayedEngine` (`024BD4 movsd qword ptr [rbx + 0x20], xmm2`) and a dword in `MultiEngine` (`024128 mov dword ptr [rbx + 0x20], 0`) -- **so the layouts are not the same above +0x18**",
       "tool": "instruction",
       "round": 786
+    },
+    {
+      "subject": "the-shared-ptr-control-block-destructor-pattern",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "a `std::shared_ptr` control block destructor decrements a STRONG count at +0x08 and a WEAK count at +0x0C with `lock sub`, calls a virtual at slot 2, and releases when the weak count reaches zero -- the Itanium layout",
+      "witness": "`0x24860`, 71 bytes, read in full: `02486C mov rbx, qword ptr [rcx + 0x18]` takes the block, `024873 mov qword ptr [rcx], rax` installs a vtable on `rcx`, `024878 lock sub dword ptr [rbx + 8], 1` decrements the strong count and branches to the release path, `02488B call qword ptr [rax + 0x10]` is **the virtual at slot 2**, `02488E lock sub dword ptr [rbx + 0xc], 1` decrements the weak count, and `024895`-`0248A4` reload the vtable and `jmp` slot 3. **`0x248B0`, `0x24900`, `0x24950` and `0x249A0` are the same 71-to-107 byte shape** -- so this is a PATTERN, and a pattern of five is what a family of refcounted types looks like. **The two counts are at +0x08 and +0x0C on the BLOCK, which is a different object from any engine**",
+      "tool": "instruction",
+      "round": 143
+    },
+    {
+      "subject": "adjacency-in-the-code-is-not-family-membership",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "functions that sit between an engine's constructors in the address space are not thereby engine members: `0x24860` lies between `0x240D0` and `0x24AB0` and belongs to a `shared_ptr` control block",
+      "witness": "`0x24860` reads `rbx` from `[rcx + 0x18]` and installs its own vtable on `rcx`, **so its object is neither an engine nor an `EngineBase`** -- and a sweep that treated it as engine-family because of where it sits produced a claim about `EngineBase`'s fields that had to be dropped. **What distinguishes family membership is the VTABLE a function's object carries, not the address it occupies**, which is the same rule that identified `N5Multi19SupervisorCancellerE` from `re/vtables.json` rather than from a guessed range",
+      "tool": "instruction",
+      "round": 143
     }
   ]
 }
