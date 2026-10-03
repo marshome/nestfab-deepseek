@@ -35,7 +35,10 @@ def main(argv):
 
     rows = re.findall(r'\{"([^"]+)",\s*\d+,\s*\d+,\s*0x([0-9A-Fa-f]+)u,\s*(\d+)u,\s*Status::(\w+)', api)
     stubs = len(re.findall(r"notReversed\(", api))
-    dispatching = len(re.findall(r"exports_impl::", api))
+    # **THE PATTERN HAS TO BE THE FULL CALL SHAPE AND NOT A SUBSTRING.** `exports_impl::` found 0 because the forwarders say `impl::`; then a loose `impl::` found
+    # 75, which is more than the 54 bodies that exist -- because the substring also occurs in comments and inside `exports_impl`. **So this counts the CALL and
+    # reconciles it against the stubs**: a wrapper either calls `exports::impl::<name>(` or it calls `notReversed`, and the two must sum to the wrappers there are.
+    dispatching = len(re.findall(r"exports::impl::\w+\(", api))
     bodies = re.findall(r"^(?:extern \"C\" )?[\w:<>*&\s]*?\b(\w+)\s*\([^;{]*\)\s*\{", impl, re.M)
     declared = set(re.findall(r"\b(\w+)\s*\([^;]*\)\s*;", header))
 

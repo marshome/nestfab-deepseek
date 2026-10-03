@@ -3206,6 +3206,14 @@
       "predicate": "GetNumberOfNestings, ordinal 25 at rva 0x0B0C0, dispatches again: its wrapper takes `Solution*` and returns `std::size_t`, calling `impl::getNumberOfNestings`, after a table regeneration had replaced it with a `notReversed` stub",
       "witness": "kForwarding names `impl::getNumberOfNestings` at ordinal 25 and lcns/tests/test_exports.cpp has a runtime test for it with four 312-byte elements; the wrapper was `extern \"C\" int GetNumberOfNestings(Solution)` BY VALUE, reporting the ordinal and returning 0; 0xB0C5 is `mov rbx, rcx` and 0xB0D4 is `mov rax, [rbx + 0x58]`, so rcx holds the address; the arithmetic is `0x6f96f96f96f96f97 * 3 = 0xAAAAAAAAAAAAAAAB`, which the implementation calls `modularInverse(3)`, and 312/8 = 39 which is the stride the instruction encodes",
       "round": 735
+    },
+    {
+      "subject": "forty-exports-dispatch",
+      "grade": "CONSTRUCTION",
+      "kind": "call",
+      "predicate": "40 of the 168 export wrappers call a recovered implementation and 128 still report their ordinal, and the 40 are 40 of the 47 kForwarding ordinals with 7 refused on an arity mismatch",
+      "witness": "re/g_forwarding_gap.py joins kForwarding to api_exports.cpp's wrappers and reports 40 dispatching and 7 not, and re/g_export_status.py counts the call shape `exports::impl::<name>(` and the `notReversed(` stubs, which sum to 168. All 31 rewrites this round used the argument registers read by re/g_forwarding_signatures.py, and the build passes with 0 warnings after the return types and parameter types were taken from the implementations' declarations rather than from the inferred table",
+      "round": 736
     }
   ]
 }

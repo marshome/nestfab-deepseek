@@ -88,9 +88,9 @@ extern "C" int GetComputationStatus(void*) {
 
 // ordinal 17/18  rva 0x0B100  34 bytes
 // signature from the inferred typed table
-extern "C" int GetMultiplicity(Part) {
-    lcns::dll::exports::notReversed(8u);
-    return 0;
+extern "C" std::uint32_t GetMultiplicity(Part* object) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xB100's body reads through rcx.
+    return lcns::dll::exports::impl::getMultiplicity(static_cast<void*>(object));
 }
 
 // ordinal 19/20  rva 0x0D460  688 bytes  cns.cpp
@@ -127,16 +127,16 @@ extern "C" std::size_t GetNumberOfNestings(Solution* solution) {
 
 // ordinal 27/28  rva 0x0C5E0  36 bytes
 // signature from the inferred typed table
-extern "C" int GetPartUserString(Part, const char**) {
-    lcns::dll::exports::notReversed(13u);
-    return 0;
+extern "C" const char* GetPartUserString(Part* object) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xC5E0's body reads through rcx.
+    return lcns::dll::exports::impl::getPartUserString(static_cast<void*>(object));
 }
 
 // ordinal 29/30  rva 0x0B510  43 bytes
 // signature from the inferred typed table
-extern "C" int GetPartWithBadGeometry(Order) {
-    lcns::dll::exports::notReversed(14u);
-    return 0;
+extern "C" void* GetPartWithBadGeometry(Order* object) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xB510's body reads through rcx.
+    return lcns::dll::exports::impl::getPartWithBadGeometry(static_cast<void*>(object));
 }
 
 // ordinal 31/32  rva 0x0B600  332 bytes  number <= order->sheets.size()
@@ -148,9 +148,9 @@ extern "C" Sheet GetSheet(Order, int) {
 
 // ordinal 33/34  rva 0x0B0A0  29 bytes
 // signature from the inferred typed table
-extern "C" Solution GetSolution(Order) {
-    lcns::dll::exports::notReversed(16u);
-    return 0;
+extern "C" void* GetSolution(Order* object) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xB0A0's body reads through rcx.
+    return lcns::dll::exports::impl::getSolutionIdentity(static_cast<void*>(object));
 }
 
 // ordinal 35/36  rva 0x06100  3894 bytes  c:/Temp/cns.pb.json
@@ -276,21 +276,23 @@ extern "C" int AddPolygonDefectToSheet(Sheet, const double*) {
 
 // ordinal 73/74  rva 0x0D370  61 bytes
 // signature from the inferred typed table
-extern "C" void SetLocalEngine(Order, int, int) {
-    lcns::dll::exports::notReversed(35u);
+extern "C" void SetLocalEngine(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD370's body reads through rcx.
+    lcns::dll::exports::impl::setLocalEngine(static_cast<void*>(object), value);
 }
 
 // ordinal 76/77  rva 0x0D430  36 bytes
 // signature from the inferred typed table
-extern "C" int UnLockLaunchingOrder(Order, int) {
-    lcns::dll::exports::notReversed(36u);
-    return 0;
+extern "C" void UnLockLaunchingOrder(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD430's body reads through rcx.
+    lcns::dll::exports::impl::unlockLaunchingOrder(static_cast<void*>(object), value);
 }
 
 // ordinal 78/79  rva 0x0CEC0  45 bytes
 // signature from the inferred typed table
-extern "C" void SetObjective(Order, Objective) {
-    lcns::dll::exports::notReversed(37u);
+extern "C" void SetObjective(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xCEC0's body reads through rcx.
+    lcns::dll::exports::impl::setObjective(static_cast<void*>(object), value);
 }
 
 // ordinal 80/81  rva 0x109C0  388 bytes
@@ -301,8 +303,9 @@ extern "C" void SetDefectGap(Order, double) {
 
 // ordinal 82/83  rva 0x0D3B0  68 bytes
 // signature from the inferred typed table
-extern "C" void SetLocalMaximumThreads(Order, int) {
-    lcns::dll::exports::notReversed(39u);
+extern "C" void SetLocalMaximumThreads(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD3B0's body reads through rcx.
+    lcns::dll::exports::impl::setLocalMaximumThreads(static_cast<void*>(object), value);
 }
 
 // ordinal 84/85  rva 0x0D400  36 bytes
@@ -318,8 +321,9 @@ extern "C" void SetLocalMaximumIterations(Order* order, int iterations) {
 
 // ordinal 86/87  rva 0x0D050  334 bytes
 // signature from the inferred typed table
-extern "C" void SetOrigin(Order, NestingOrigin) {
-    lcns::dll::exports::notReversed(41u);
+extern "C" void SetOrigin(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD050's body reads through rcx.
+    lcns::dll::exports::impl::setOrigin_0D050(static_cast<void*>(object), value);
 }
 
 // ordinal 88/89  rva 0x0B490  31 bytes
@@ -451,9 +455,9 @@ extern "C" void SetPartPriority(Order, int, int) {
 // ordinal 128/129  rva 0x0D1A0  353 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 1 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" double CNS_SetMultiplicityPreference(std::intptr_t, std::intptr_t, double) {
-    lcns::dll::exports::notReversed(60u);
-    return std::numeric_limits<double>::quiet_NaN();
+extern "C" void CNS_SetMultiplicityPreference(std::intptr_t* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD1A0's body reads through rcx.
+    lcns::dll::exports::impl::setMultiplicityPreference_0D1A0(static_cast<void*>(object), value);
 }
 
 // ordinal 130/131  rva 0x15480  404 bytes  // AddCircularPart
@@ -493,8 +497,9 @@ extern "C" int AddOptionalQuantityToPart(Part, int) {
 
 // ordinal 140/141  rva 0x0E010  353 bytes
 // signature from the inferred typed table
-extern "C" void SetAutomaticStop(Order, int) {
-    lcns::dll::exports::notReversed(66u);
+extern "C" void SetAutomaticStop(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xE010's body reads through rcx.
+    lcns::dll::exports::impl::setAutomaticStop_0E010(static_cast<void*>(object), value);
 }
 
 // ordinal 142/143  rva 0x0E2D0  399 bytes
@@ -505,14 +510,16 @@ extern "C" void SetOffcutEvaluation(Order, double, double, double) {
 
 // ordinal 144/145  rva 0x0DD90  36 bytes
 // signature from the inferred typed table
-extern "C" void SetFillLastNestingStrategy(Order, int) {
-    lcns::dll::exports::notReversed(68u);
+extern "C" void SetFillLastNestingStrategy(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD90's body reads through rcx.
+    lcns::dll::exports::impl::setFillLastNestingStrategy(static_cast<void*>(object), value);
 }
 
 // ordinal 146/147  rva 0x0DDC0  33 bytes
 // signature from the inferred typed table
-extern "C" void SetShearMode(Order, int) {
-    lcns::dll::exports::notReversed(69u);
+extern "C" void SetShearMode(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDDC0's body reads through rcx.
+    lcns::dll::exports::impl::setShearMode(static_cast<void*>(object), value);
 }
 
 // ordinal 148/149  rva 0x0E460  404 bytes
@@ -523,8 +530,9 @@ extern "C" void SetCommonCutMode(Order, int, int) {
 
 // ordinal 150/151  rva 0x0E940  354 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutSafetyPreference(Order, int, int) {
-    lcns::dll::exports::notReversed(71u);
+extern "C" void SetCommonCutSafetyPreference(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xE940's body reads through rcx.
+    lcns::dll::exports::impl::setCommonCutSafetyPreference_0E940(static_cast<void*>(object), value);
 }
 
 // ordinal 152/153  rva 0x0EAB0  468 bytes
@@ -535,8 +543,9 @@ extern "C" void SetCommonCutAuthorizations(Order, int, int, int) {
 
 // ordinal 154/155  rva 0x0EC90  340 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutCuttingPreference(Order, int, int) {
-    lcns::dll::exports::notReversed(73u);
+extern "C" void SetCommonCutCuttingPreference(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xEC90's body reads through rcx.
+    lcns::dll::exports::impl::setCommonCutCuttingPreference_0EC90(static_cast<void*>(object), value);
 }
 
 // ordinal 156/157  rva 0x0EDF0  337 bytes
@@ -575,8 +584,9 @@ extern "C" void* LaunchLimitedLocalComputation(Order, double) {
 
 // ordinal 166/167  rva 0x0DE50  36 bytes
 // signature from the inferred typed table
-extern "C" void SetPartCommonCutMode(Order, int, int) {
-    lcns::dll::exports::notReversed(79u);
+extern "C" void SetPartCommonCutMode(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDE50's body reads through rcx.
+    lcns::dll::exports::impl::setPartCommonCutMode(static_cast<void*>(object), value);
 }
 
 // ordinal 168/169  rva 0x0B4B0  34 bytes
@@ -626,9 +636,9 @@ extern "C" void SetExtraGapOnPart(Order, int, double) {
 // ordinal 182/183  rva 0x0DD30  36 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_SetFloatingMode(std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(87u);
-    return 0;
+extern "C" void CNS_SetFloatingMode(std::intptr_t* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD30's body reads through rcx.
+    lcns::dll::exports::impl::setFloatingMode(static_cast<void*>(object), value);
 }
 
 // ordinal 184/185  rva 0x0D870  826 bytes  cns.cpp
@@ -647,9 +657,9 @@ extern "C" void SetDetailedMultiTorchObjective(Order, double, double, double, do
 // ordinal 188/189  rva 0x0D310  33 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_SetNoMixPreference(std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(90u);
-    return 0;
+extern "C" void CNS_SetNoMixPreference(std::intptr_t* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD310's body reads through rcx.
+    lcns::dll::exports::impl::setNoMixPreference(static_cast<void*>(object), value);
 }
 
 // ordinal 190/191  rva 0x0DBB0  382 bytes
@@ -732,17 +742,17 @@ extern "C" NestedPart GetNestedPartPartVariant(Nesting, int) {
 // ordinal 208/209  rva 0x16CB0  57 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t sub_16CB0(std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(100u);
-    return 0;
+extern "C" void sub_16CB0(std::intptr_t* object, const char* value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x16CB0's body reads through rcx.
+    lcns::dll::exports::impl::setUserStringAt1B8(static_cast<void*>(object), value);
 }
 
 // ordinal 210/211  rva 0x16CF0  8 bytes
 // signature synthesized from the register analysis: 1 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t sub_16CF0(std::intptr_t) {
-    lcns::dll::exports::notReversed(101u);
-    return 0;
+extern "C" const char* sub_16CF0(std::intptr_t* object) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0x16CF0's body reads through rcx.
+    return lcns::dll::exports::impl::getUserStringAt1B8(static_cast<void*>(object));
 }
 
 // ordinal 212/213  rva 0x0CEF0  45 bytes
@@ -779,9 +789,9 @@ extern "C" void AddPartToSuggestedPartsGrouping(Order, int, int) {
 // ordinal 222/223  rva 0x0D340  33 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_SetNoSheetMixPreference(std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(107u);
-    return 0;
+extern "C" void CNS_SetNoSheetMixPreference(std::intptr_t* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD340's body reads through rcx.
+    lcns::dll::exports::impl::setNoSheetMixPreference(static_cast<void*>(object), value);
 }
 
 // ordinal 224/225  rva 0x0BF70  148 bytes
@@ -943,9 +953,11 @@ extern "C" void SetLocalEngineThreads(Order, int, int) {
 // ordinal 270/271  rva 0x0AFE0  13 bytes
 // signature synthesized from the register analysis: 1 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t sub_0AFE0(std::intptr_t) {
-    lcns::dll::exports::notReversed(131u);
-    return 0;
+// **AND `sub_0AFE0` IS THE ONE FORWARDED ENTRY WHOSE FIRST ARGUMENT IS NOT A POINTER.** Its body is `test ecx, ecx` / `setne cl` / `movzx ecx, cl` / `jmp 0x1b270`
+// -- it READS the value in ecx and normalises it to zero or one, so the argument is an int and not an object's address. **The rule that argument 1 is a pointer
+// holds for the other thirty and not for this one**, and the build said so: `invalid conversion from 'void*' to 'int'`.
+extern "C" void sub_0AFE0(std::intptr_t value) {
+    lcns::dll::exports::impl::setModuleSwitch(static_cast<int>(value));
 }
 
 // ordinal 272/273  rva 0x19C40  411 bytes
@@ -1037,14 +1049,16 @@ extern "C" int AddHoleInToolPath(Part, int, const double*) {
 
 // ordinal 298/299  rva 0x13E30  417 bytes
 // signature from the inferred typed table
-extern "C" void SetSpecificSheetOrigin(Order, int, double, double) {
-    lcns::dll::exports::notReversed(145u);
+extern "C" void SetSpecificSheetOrigin(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x13E30's body reads through rcx.
+    lcns::dll::exports::impl::setSpecificSheetOrigin_13E30(static_cast<void*>(object), value);
 }
 
 // ordinal 300/301  rva 0x13FE0  417 bytes
 // signature from the inferred typed table
-extern "C" void SetSpecificSheetObjective(Order, int, int) {
-    lcns::dll::exports::notReversed(146u);
+extern "C" void SetSpecificSheetObjective(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x13FE0's body reads through rcx.
+    lcns::dll::exports::impl::setSpecificSheetObjective_13FE0(static_cast<void*>(object), value);
 }
 
 // ordinal 302/303  rva 0x1A8F0  411 bytes
@@ -1055,8 +1069,9 @@ extern "C" void CNS_ForcePartOnBottomBorder(Order, int, int) {
 
 // ordinal 304/305  rva 0x0DE20  33 bytes
 // signature from the inferred typed table
-extern "C" void SetShearRepulseFromBorders(Order, int) {
-    lcns::dll::exports::notReversed(148u);
+extern "C" void SetShearRepulseFromBorders(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDE20's body reads through rcx.
+    lcns::dll::exports::impl::setShearRepulseFromBorders(static_cast<void*>(object), value);
 }
 
 // ordinal 306/307  rva 0x12F40  894 bytes
@@ -1082,9 +1097,9 @@ extern "C" void CNS_AddAssemblyGroupPart(Order, int, int, int) {
 // ordinal 312/313  rva 0x0DD60  36 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_SetOriginPackingMode(std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(152u);
-    return 0;
+extern "C" void CNS_SetOriginPackingMode(std::intptr_t* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD60's body reads through rcx.
+    lcns::dll::exports::impl::setOriginPackingMode(static_cast<void*>(object), value);
 }
 
 // ordinal 314/315  rva 0x12D10  552 bytes
@@ -1098,9 +1113,9 @@ extern "C" std::intptr_t CNS_AddOpenToolPathToPart(std::intptr_t, std::intptr_t,
 // ordinal 316/317  rva 0x10440  42 bytes
 // signature synthesized from the register analysis: 2 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t CNS_SetEvaluateIntermediateNestingsAsLast(std::intptr_t, std::intptr_t) {
-    lcns::dll::exports::notReversed(154u);
-    return 0;
+extern "C" void CNS_SetEvaluateIntermediateNestingsAsLast(std::intptr_t* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x10440's body reads through rcx.
+    lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(static_cast<void*>(object), value);
 }
 
 // ordinal 318/319  rva 0x09330  449 bytes  // NewNoFitNesting
@@ -1145,8 +1160,9 @@ extern "C" int NoFitGenerateSvgGeometry(NoFitGeometry, const char*) {
 
 // ordinal 330/331  rva 0x0DDF0  36 bytes
 // signature from the inferred typed table
-extern "C" void SetPartialShearMode(Order, int) {
-    lcns::dll::exports::notReversed(161u);
+extern "C" void SetPartialShearMode(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDDF0's body reads through rcx.
+    lcns::dll::exports::impl::setPartialShearMode(static_cast<void*>(object), value);
 }
 
 // ordinal 332/333  rva 0x0B750  384 bytes  cns.cpp
@@ -1159,21 +1175,23 @@ extern "C" int GetNestingBoundingBox(Order, double*, double*, double*, double*) 
 // ordinal 334/335  rva 0x0C610  43 bytes
 // signature synthesized from the register analysis: 1 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t ForcePartInsideHole(std::intptr_t) {
-    lcns::dll::exports::notReversed(163u);
-    return 0;
+extern "C" void ForcePartInsideHole(std::intptr_t* object) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xC610's body reads through rcx.
+    lcns::dll::exports::impl::forcePartInsideHole(static_cast<void*>(object));
 }
 
 // ordinal 336/337  rva 0x10470  42 bytes
 // signature from the inferred typed table
-extern "C" void SetReorganizeBiggestPartNearOrigin(Order, int) {
-    lcns::dll::exports::notReversed(164u);
+extern "C" void SetReorganizeBiggestPartNearOrigin(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x10470's body reads through rcx.
+    lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin(static_cast<void*>(object), value);
 }
 
 // ordinal 338/339  rva 0x104A0  42 bytes
 // signature from the inferred typed table
-extern "C" void SetReorganizeLongestPartNearOrigin(Order, int) {
-    lcns::dll::exports::notReversed(165u);
+extern "C" void SetReorganizeLongestPartNearOrigin(Order* object, int value) {
+    // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x104A0's body reads through rcx.
+    lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin(static_cast<void*>(object), value);
 }
 
 // ordinal 340/341  rva 0x09930  443 bytes
@@ -1386,15 +1404,15 @@ const Entry kEntries[] = {
     {"GenerateHtmlSolutionReport", 11, 12, 0x0B350u, 247u, Status::NotReversed, ""},
     {"GenerateLaunchingOrderProblem", 13, 14, 0x0B8D0u, 378u, Status::NotReversed, "source_version"},
     {"GetComputationStatus", 15, 16, 0x107E0u, 155u, Status::NotReversed, "// GetComputationStatus"},
-    {"GetMultiplicity", 17, 18, 0x0B100u, 34u, Status::NotReversed, ""},
+    {"GetMultiplicity", 17, 18, 0x0B100u, 34u, Status::Forwarded, "// kForwarding -> impl::getMultiplicity"},
     {"GetNestedPart", 19, 20, 0x0D460u, 688u, Status::NotReversed, "cns.cpp"},
     {"GetNesting", 21, 22, 0x10F30u, 490u, Status::NotReversed, "cns.cpp"},
     {"GetNumberOfNestedParts", 23, 24, 0x0B190u, 63u, Status::NotReversed, ""},
     {"GetNumberOfNestings", 25, 26, 0x0B0C0u, 52u, Status::Forwarded, "// kForwarding 25 -> impl::getNumberOfNestings; restored after a regression to a stub"},
-    {"GetPartUserString", 27, 28, 0x0C5E0u, 36u, Status::NotReversed, ""},
-    {"GetPartWithBadGeometry", 29, 30, 0x0B510u, 43u, Status::NotReversed, ""},
+    {"GetPartUserString", 27, 28, 0x0C5E0u, 36u, Status::Forwarded, "// kForwarding -> impl::getPartUserString"},
+    {"GetPartWithBadGeometry", 29, 30, 0x0B510u, 43u, Status::Forwarded, "// kForwarding -> impl::getPartWithBadGeometry"},
     {"GetSheet", 31, 32, 0x0B600u, 332u, Status::NotReversed, "number <= order->sheets.size()"},
-    {"GetSolution", 33, 34, 0x0B0A0u, 29u, Status::NotReversed, ""},
+    {"GetSolution", 33, 34, 0x0B0A0u, 29u, Status::Forwarded, "// kForwarding -> impl::getSolutionIdentity"},
     {"LaunchComputation", 35, 36, 0x06100u, 3894u, Status::NotReversed, "c:/Temp/cns.pb.json"},
     {"NewLaunchingOrder", 37, 38, 0x14620u, 1081u, Status::NotReversed, ""},
     {"SetInterpartGap", 39, 40, 0x0CF20u, 303u, Status::NotReversed, "cns.cpp"},
@@ -1413,13 +1431,13 @@ const Entry kEntries[] = {
     {"SetSheetPriority", 67, 68, 0x13C90u, 411u, Status::NotReversed, ""},
     {"AddNonRectangularPolygonSheet", 69, 70, 0x16B20u, 353u, Status::NotReversed, "// AddNonRectangularPolygonSheet"},
     {"AddPolygonDefectToSheet", 71, 72, 0x16970u, 426u, Status::NotReversed, "// AddPolygonDefectToSheet"},
-    {"SetLocalEngine", 73, 74, 0x0D370u, 61u, Status::NotReversed, ""},
-    {"UnLockLaunchingOrder", 76, 77, 0x0D430u, 36u, Status::NotReversed, ""},
-    {"SetObjective", 78, 79, 0x0CEC0u, 45u, Status::NotReversed, ""},
+    {"SetLocalEngine", 73, 74, 0x0D370u, 61u, Status::Forwarded, "// kForwarding -> impl::setLocalEngine"},
+    {"UnLockLaunchingOrder", 76, 77, 0x0D430u, 36u, Status::Forwarded, "// kForwarding -> impl::unlockLaunchingOrder"},
+    {"SetObjective", 78, 79, 0x0CEC0u, 45u, Status::Forwarded, "// kForwarding -> impl::setObjective"},
     {"SetDefectGap", 80, 81, 0x109C0u, 388u, Status::NotReversed, ""},
-    {"SetLocalMaximumThreads", 82, 83, 0x0D3B0u, 68u, Status::NotReversed, ""},
+    {"SetLocalMaximumThreads", 82, 83, 0x0D3B0u, 68u, Status::Forwarded, "// kForwarding -> impl::setLocalMaximumThreads"},
     {"SetLocalMaximumIterations", 84, 85, 0x0D400u, 36u, Status::Forwarded, "// kForwarding ordinal 84 -> impl::setLocalMaximumIterations"},
-    {"SetOrigin", 86, 87, 0x0D050u, 334u, Status::NotReversed, ""},
+    {"SetOrigin", 86, 87, 0x0D050u, 334u, Status::Forwarded, "// kForwarding -> impl::setOrigin_0D050"},
     {"GetBuildVersion", 88, 89, 0x0B490u, 31u, Status::NotReversed, ""},
     {"GetBuildDate", 90, 91, 0x0B470u, 31u, Status::NotReversed, ""},
     {"GetMajorVersion", 92, 93, 0x0B450u, 31u, Status::NotReversed, ""},
@@ -1438,26 +1456,26 @@ const Entry kEntries[] = {
     {"TerminateComputation", 122, 123, 0x10920u, 155u, Status::NotReversed, "TerminateComputation "},
     {"AddOpenCuttingPathToPart", 124, 125, 0x14A60u, 678u, Status::NotReversed, ""},
     {"SetPartPriority", 126, 127, 0x0C2A0u, 382u, Status::NotReversed, ""},
-    {"CNS_SetMultiplicityPreference", 128, 129, 0x0D1A0u, 353u, Status::NotReversed, ""},
+    {"CNS_SetMultiplicityPreference", 128, 129, 0x0D1A0u, 353u, Status::Forwarded, "// kForwarding -> impl::setMultiplicityPreference_0D1A0"},
     {"AddCircularPart", 130, 131, 0x15480u, 404u, Status::NotReversed, "// AddCircularPart"},
     {"AddCircularHoleToPart", 132, 133, 0x13800u, 581u, Status::NotReversed, "// AddCircularHoleToPart"},
     {"AddRectanglePart", 134, 135, 0x15620u, 374u, Status::NotReversed, "// AddRectanglePart"},
     {"AddRectangularHoleToPart", 136, 137, 0x13A50u, 569u, Status::NotReversed, "// AddRectangularHoleToPart"},
     {"AddOptionalQuantityToPart", 138, 139, 0x14290u, 440u, Status::NotReversed, ""},
-    {"SetAutomaticStop", 140, 141, 0x0E010u, 353u, Status::NotReversed, ""},
+    {"SetAutomaticStop", 140, 141, 0x0E010u, 353u, Status::Forwarded, "// kForwarding -> impl::setAutomaticStop_0E010"},
     {"SetOffcutEvaluation", 142, 143, 0x0E2D0u, 399u, Status::NotReversed, ""},
-    {"SetFillLastNestingStrategy", 144, 145, 0x0DD90u, 36u, Status::NotReversed, ""},
-    {"SetShearMode", 146, 147, 0x0DDC0u, 33u, Status::NotReversed, ""},
+    {"SetFillLastNestingStrategy", 144, 145, 0x0DD90u, 36u, Status::Forwarded, "// kForwarding -> impl::setFillLastNestingStrategy"},
+    {"SetShearMode", 146, 147, 0x0DDC0u, 33u, Status::Forwarded, "// kForwarding -> impl::setShearMode"},
     {"SetCommonCutMode", 148, 149, 0x0E460u, 404u, Status::NotReversed, ""},
-    {"SetCommonCutSafetyPreference", 150, 151, 0x0E940u, 354u, Status::NotReversed, ""},
+    {"SetCommonCutSafetyPreference", 150, 151, 0x0E940u, 354u, Status::Forwarded, "// kForwarding -> impl::setCommonCutSafetyPreference_0E940"},
     {"SetCommonCutAuthorizations", 152, 153, 0x0EAB0u, 468u, Status::NotReversed, ""},
-    {"SetCommonCutCuttingPreference", 154, 155, 0x0EC90u, 340u, Status::NotReversed, ""},
+    {"SetCommonCutCuttingPreference", 154, 155, 0x0EC90u, 340u, Status::Forwarded, "// kForwarding -> impl::setCommonCutCuttingPreference_0EC90"},
     {"SetCommonCutObjective", 156, 157, 0x0EDF0u, 337u, Status::NotReversed, ""},
     {"GetNumberOfCommonCuts", 158, 159, 0x0D710u, 346u, Status::NotReversed, "cns.cpp"},
     {"GetCommonCut", 160, 161, 0x0BA50u, 825u, Status::NotReversed, "cns.cpp"},
     {"UnLockLaunchingOrderSntl", 162, 163, 0x0E180u, 111u, Status::NotReversed, ""},
     {"LaunchLimitedLocalComputation", 164, 165, 0x03310u, 66u, Status::NotReversed, ""},
-    {"SetPartCommonCutMode", 166, 167, 0x0DE50u, 36u, Status::NotReversed, ""},
+    {"SetPartCommonCutMode", 166, 167, 0x0DE50u, 36u, Status::Forwarded, "// kForwarding -> impl::setPartCommonCutMode"},
     {"GetFillRatio", 168, 169, 0x0B4B0u, 34u, Status::NotReversed, ""},
     {"GetNestingDimensions", 170, 171, 0x0BD90u, 470u, Status::NotReversed, "cns.cpp"},
     {"SetSheetPrice", 172, 173, 0x0CB20u, 388u, Status::NotReversed, ""},
@@ -1465,10 +1483,10 @@ const Entry kEntries[] = {
     {"SetMultiTorchCuttingPreference", 176, 177, 0x0F130u, 388u, Status::NotReversed, ""},
     {"SetMultiTorchObjective", 178, 179, 0x0F2C0u, 633u, Status::NotReversed, ""},
     {"SetExtraGapOnPart", 180, 181, 0x14450u, 449u, Status::NotReversed, ""},
-    {"CNS_SetFloatingMode", 182, 183, 0x0DD30u, 36u, Status::NotReversed, ""},
+    {"CNS_SetFloatingMode", 182, 183, 0x0DD30u, 36u, Status::Forwarded, "// kForwarding -> impl::setFloatingMode"},
     {"GetPartTorchInfos", 184, 185, 0x0D870u, 826u, Status::NotReversed, "cns.cpp"},
     {"SetDetailedMultiTorchObjective", 186, 187, 0x0F540u, 629u, Status::NotReversed, ""},
-    {"CNS_SetNoMixPreference", 188, 189, 0x0D310u, 33u, Status::NotReversed, ""},
+    {"CNS_SetNoMixPreference", 188, 189, 0x0D310u, 33u, Status::Forwarded, "// kForwarding -> impl::setNoMixPreference"},
     {"CNS_SetNoOrientationMixOnPart", 190, 191, 0x0DBB0u, 382u, Status::NotReversed, ""},
     {"GetNestingFillRatio", 192, 193, 0x0B4E0u, 38u, Status::NotReversed, ""},
     {"AddPartVariantToPart", 194, 195, 0x18100u, 1955u, Status::NotReversed, ""},
@@ -1478,14 +1496,14 @@ const Entry kEntries[] = {
     {"CNS_SetPartVariantAuthorizations", 202, 203, 0x16DE0u, 61u, Status::NotReversed, "// CNS_SetPartVariantAuthorizations"},
     {"CNS_AddPartVariantSpecificAuthorizations", 204, 205, 0x16E20u, 63u, Status::NotReversed, "// CNS_AddPartVariantSpecificAuthorizations"},
     {"GetNestedPartPartVariant", 206, 207, 0x16E60u, 1727u, Status::NotReversed, ""},
-    {"sub_16CB0", 208, 209, 0x16CB0u, 57u, Status::NotReversed, ""},
-    {"sub_16CF0", 210, 211, 0x16CF0u, 8u, Status::NotReversed, ""},
+    {"sub_16CB0", 208, 209, 0x16CB0u, 57u, Status::Forwarded, "// kForwarding -> impl::setUserStringAt1B8"},
+    {"sub_16CF0", 210, 211, 0x16CF0u, 8u, Status::Forwarded, "// kForwarding -> impl::getUserStringAt1B8"},
     {"SetShearGap", 212, 213, 0x0CEF0u, 45u, Status::NotReversed, ""},
     {"SetIncompatibleSheet", 214, 215, 0x11490u, 423u, Status::NotReversed, ""},
     {"LaunchEstimateLocalComputation", 216, 217, 0x03360u, 52u, Status::NotReversed, "// LaunchEstimateLocalComputation"},
     {"AddSuggestedPartsGrouping", 218, 219, 0x11640u, 483u, Status::NotReversed, "cns.cpp"},
     {"AddPartToSuggestedPartsGrouping", 220, 221, 0x0F7C0u, 1072u, Status::NotReversed, "cns.cpp"},
-    {"CNS_SetNoSheetMixPreference", 222, 223, 0x0D340u, 33u, Status::NotReversed, ""},
+    {"CNS_SetNoSheetMixPreference", 222, 223, 0x0D340u, 33u, Status::Forwarded, "// kForwarding -> impl::setNoSheetMixPreference"},
     {"GenerateDxfNesting", 224, 225, 0x0BF70u, 148u, Status::NotReversed, ""},
     {"GetPCId", 226, 227, 0x0C010u, 386u, Status::NotReversed, ""},
     {"UnLockLaunchingOrderPCId", 228, 229, 0x0E260u, 111u, Status::NotReversed, ""},
@@ -1509,7 +1527,7 @@ const Entry kEntries[] = {
     {"GetNumberOfRows", 264, 265, 0x0FF30u, 271u, Status::NotReversed, ""},
     {"GetRow", 266, 267, 0x10040u, 384u, Status::NotReversed, "cns.cpp"},
     {"SetLocalEngineThreads", 268, 269, 0x0DE80u, 388u, Status::NotReversed, ""},
-    {"sub_0AFE0", 270, 271, 0x0AFE0u, 13u, Status::NotReversed, ""},
+    {"sub_0AFE0", 270, 271, 0x0AFE0u, 13u, Status::Forwarded, "// kForwarding -> impl::setModuleSwitch"},
     {"SetLeatherMode", 272, 273, 0x19C40u, 411u, Status::NotReversed, ""},
     {"AddLeatherQualityZoneInPart", 274, 275, 0x19DE0u, 350u, Status::NotReversed, ""},
     {"AddLeatherQualityZoneInSheet", 276, 277, 0x1A0A0u, 331u, Status::NotReversed, ""},
@@ -1523,27 +1541,27 @@ const Entry kEntries[] = {
     {"AddLeatherQualityZoneInPart", 292, 293, 0x19F40u, 342u, Status::NotReversed, " [label shared with the entry at ordinal 274]"},
     {"AddInflatedToolPathToPart", 294, 295, 0x12C60u, 169u, Status::NotReversed, ""},
     {"AddHoleInToolPath", 296, 297, 0x10240u, 124u, Status::NotReversed, ""},
-    {"SetSpecificSheetOrigin", 298, 299, 0x13E30u, 417u, Status::NotReversed, ""},
-    {"SetSpecificSheetObjective", 300, 301, 0x13FE0u, 417u, Status::NotReversed, ""},
+    {"SetSpecificSheetOrigin", 298, 299, 0x13E30u, 417u, Status::Forwarded, "// kForwarding -> impl::setSpecificSheetOrigin_13E30"},
+    {"SetSpecificSheetObjective", 300, 301, 0x13FE0u, 417u, Status::Forwarded, "// kForwarding -> impl::setSpecificSheetObjective_13FE0"},
     {"CNS_ForcePartOnBottomBorder", 302, 303, 0x1A8F0u, 411u, Status::NotReversed, ""},
-    {"SetShearRepulseFromBorders", 304, 305, 0x0DE20u, 33u, Status::NotReversed, ""},
+    {"SetShearRepulseFromBorders", 304, 305, 0x0DE20u, 33u, Status::Forwarded, "// kForwarding -> impl::setShearRepulseFromBorders"},
     {"CNS_AddDefectFromNestedPart", 306, 307, 0x12F40u, 894u, Status::NotReversed, ""},
     {"CNS_CreateAssemblyGroup", 308, 309, 0x10B50u, 395u, Status::NotReversed, ""},
     {"CNS_AddAssemblyGroupPart", 310, 311, 0x11830u, 180u, Status::NotReversed, ""},
-    {"CNS_SetOriginPackingMode", 312, 313, 0x0DD60u, 36u, Status::NotReversed, ""},
+    {"CNS_SetOriginPackingMode", 312, 313, 0x0DD60u, 36u, Status::Forwarded, "// kForwarding -> impl::setOriginPackingMode"},
     {"CNS_AddOpenToolPathToPart", 314, 315, 0x12D10u, 552u, Status::NotReversed, ""},
-    {"CNS_SetEvaluateIntermediateNestingsAsLast", 316, 317, 0x10440u, 42u, Status::NotReversed, ""},
+    {"CNS_SetEvaluateIntermediateNestingsAsLast", 316, 317, 0x10440u, 42u, Status::Forwarded, "// kForwarding -> impl::setEvaluateIntermediateNestingsAsLast"},
     {"NewNoFitNesting", 318, 319, 0x09330u, 449u, Status::NotReversed, "// NewNoFitNesting"},
     {"NoFitAddNestedPart", 320, 321, 0x0A9D0u, 240u, Status::NotReversed, ""},
     {"DeleteNoFitNesting", 322, 323, 0x09500u, 70u, Status::NotReversed, ""},
     {"GetNoFitPlacementMap", 324, 325, 0x0A620u, 934u, Status::NotReversed, ""},
     {"NoFitGenerateSvgNesting", 326, 327, 0x09550u, 573u, Status::NotReversed, ""},
     {"NoFitGenerateSvgGeometry", 328, 329, 0x09790u, 403u, Status::NotReversed, ""},
-    {"SetPartialShearMode", 330, 331, 0x0DDF0u, 36u, Status::NotReversed, ""},
+    {"SetPartialShearMode", 330, 331, 0x0DDF0u, 36u, Status::Forwarded, "// kForwarding -> impl::setPartialShearMode"},
     {"GetNestingBoundingBox", 332, 333, 0x0B750u, 384u, Status::NotReversed, "cns.cpp"},
-    {"ForcePartInsideHole", 334, 335, 0x0C610u, 43u, Status::NotReversed, ""},
-    {"SetReorganizeBiggestPartNearOrigin", 336, 337, 0x10470u, 42u, Status::NotReversed, ""},
-    {"SetReorganizeLongestPartNearOrigin", 338, 339, 0x104A0u, 42u, Status::NotReversed, ""},
+    {"ForcePartInsideHole", 334, 335, 0x0C610u, 43u, Status::Forwarded, "// kForwarding -> impl::forcePartInsideHole"},
+    {"SetReorganizeBiggestPartNearOrigin", 336, 337, 0x10470u, 42u, Status::Forwarded, "// kForwarding -> impl::setReorganizeBiggestPartNearOrigin"},
+    {"SetReorganizeLongestPartNearOrigin", 338, 339, 0x104A0u, 42u, Status::Forwarded, "// kForwarding -> impl::setReorganizeLongestPartNearOrigin"},
     {"NoFitSetMaximumComplexity", 340, 341, 0x09930u, 443u, Status::NotReversed, ""},
     {"UnLockLaunchingOrderOxy", 342, 343, 0x0E1F0u, 111u, Status::NotReversed, ""},
 };
