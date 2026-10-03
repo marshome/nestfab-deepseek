@@ -3643,9 +3643,17 @@
       "subject": "the-engine-base-object-is-0x20-bytes",
       "grade": "INSTRUCTION",
       "kind": "offset",
-      "predicate": "the engine base object carries a vptr and three pointers -- 0x20 bytes -- so the port's empty `EngineBase` is missing data",
-      "witness": "RE 0x754DE0, 74 bytes, three callers, is a COPY/MOVE constructor for a 0x20 object: `mov qword ptr [rcx], 0`, then `mov r8, [rdx]`, then `mov [rcx], r8` and `mov rax, [rdx + 8]` / `[rdx + 0x10]` / `[rdx + 0x18]` each stored to the same offset of rcx -- **it copies the vptr too, which is what a copy constructor does and a base constructor does not.** **The fields' MEANINGS are not established**, so this is recorded as a size and not as three named members",
-      "round": 764
+      "predicate": "**WITHDRAWN -- the 0x20-byte claim is NOT supported.** RE 0x754DE0 copies a vptr and three qwords, and NOTHING establishes that it is an engine constructor: no function in the image references any of the seven engine vtables, so nothing installs them, and 0x754DE0's three callers are 2021, 1357 and 417 bytes of general code. **The engine base's SIZE is therefore unknown**, and the port's empty `EngineBase` is not shown to be missing data.",
+      "witness": "RE 0x754DE0 stores `mov qword ptr [rcx], 0`, reads the source's vptr and copies `[rdx]`, `[rdx + 8]`, `[rdx + 0x10]` and `[rdx + 0x18]` into rcx -- **but its callers are 0x754490 (2021 B), 0x8F21B0 (1357 B) and 0x8F2AF0 (417 B, and it opens with its own `mov qword ptr [rcx], 0`)**, none of which is an engine. And re/g_engine_vtable_refs.py finds **0 referencing functions for each of the seven engine vtables**. **A `mov [rcx], 0` plus three qword copies is a three-pointer value type, and matching that shape to an engine was the same error this project keeps finding: a pattern that fits where the mechanism was never traced.** The file also records what IS established: the base is `Engine::Engine`, and every engine has exactly three slots",
+      "round": 765
+    },
+    {
+      "subject": "nothing-in-the-image-references-an-engine-vtable",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "no function in the image has any of the seven engine vtables as the target of a rip-relative operand, so nothing in this code INSTALLS one",
+      "witness": "re/g_engine_vtable_refs.py scans every function for a rip-relative operand resolving to each vtable rva (0xA3CED0, 0xA3CF00, 0xA3CF70, 0xA3CFA0, 0xA3CFD0, 0xA3D000, 0xA3D030) and finds 0 referencing functions for every one. **The limit is stated with it**: the scan uses the profiler is function boundaries, so a reference from an address the profiler does not treat as a function would be missed, and a constructor could instead reach a vtable through the data section or a relocation",
+      "round": 765
     }
   ]
 }
