@@ -7203,5 +7203,24 @@ int main() {
         CHECK(sizeof(lcns::NoMixSheetSelector::member38_) == 0x18);     // 0xAF7D0 touches rbp at +0x0 and +0x10 only
     }
 
+
+    // ---------------------------------------------------------------- NoMixSheetSelector's sub-objects and its destructor (RE 0xAFD60)
+    {
+        // **NEITHER SUB-OBJECT IS POLYMORPHIC, AND THE CONSTRUCTOR IS WHAT SAYS SO.** RE 0xAFD9F and 0xAFDB4 build them with `lea rcx, [rbx + 0x20]` and
+        // `lea rcx, [rbx + 0x38]` and then call 0x523FE0 and 0xAF7D0 -- and 0xAFD60 contains only ONE `lea` of a vtable, at 0xAFD8D, whose target 0xA3B9E0 is
+        // NoMixSheetSelector's own. **So the two 0x18 byte members are plain data**, which is a negative result and is asserted as one.
+        static_assert(!std::is_polymorphic<decltype(lcns::NoMixSheetSelector::member20_)>::value, "a byte array has no vtable");
+        static_assert(!std::is_polymorphic<decltype(lcns::NoMixSheetSelector::member38_)>::value, "a byte array has no vtable");
+        // and the two sizes, each from the function that fills it: 0x523FE0 touches rbp at +0x0 and +0x10 only, and 0xAF7D0 the same
+        static_assert(sizeof(lcns::NoMixSheetSelector::member20_) + 0x20 == 0x38, "member20_ runs from +0x20 to exactly where member38_ starts");
+        static_assert(sizeof(lcns::NoMixSheetSelector::member38_) + 0x38 == 0x50, "member38_ ends exactly at the allocation 0xAFD70 asks for");
+
+        // **AND +0x18 OWNS A POLYMORPHIC OBJECT.** RE 0xAFFA0 `mov rcx, qword [rbx + 0x18]`, 0xAFFA9 `mov rax, qword [rcx]` and 0xAFFAC `call qword
+        // [rax + 8]` -- a call through the pointed-to object's OWN table, slot 1, which is a deleting destructor. **The constructor CLEARS the source at
+        // 0xAFDA3, so this pointer was transferred and not copied**, and the destructor destroys what it points at.
+        CHECK(sizeof(lcns::NoMixSheetSelector::owned18_) == sizeof(void*));
+        CHECK(sizeof(lcns::NoMixSheetSelector) == 0x50);
+    }
+
     return check::finish("test_recovered");
 }
