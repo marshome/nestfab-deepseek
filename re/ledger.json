@@ -4550,6 +4550,15 @@
       "witness": "0x25810 (528 bytes) starts 025825 mov ecx, 0x58 / 025832 movq rdi, xmm3 and 0x25A20 (512 bytes) starts 025A2B mov ecx, 0x58 / 025A38 mov ebp, r9d; both are found by re/g_vtable_installers.py as lea-resolving to 0xA3D040, the installed vptr of N6Engine16EquivalentEngineE. **0x58 is 0x28 more than the 0x30 the class constructor asks for**, so either they construct a DERIVED type over the same table or the table is reused by a larger object. **Their argument shapes differ from the constructor too** -- xmm3 in one, r9d in the other -- and what they build is the next question rather than a conclusion",
       "tool": "g_vtable_installers.py",
       "round": 795
+    },
+    {
+      "subject": "enginebase-plus8-is-a-flag-and-plus0c-a-number",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "EngineBase byte at +0x08 is a boolean flag that two engines branch on, and its dword at +0x0C is a number one of them converts to a double",
+      "witness": "the two accessors are 0x24A80 movzx eax, byte ptr [rcx + 8]; ret (5 bytes) and 0x24A90 mov eax, dword ptr [rcx + 0xc]; ret (4 bytes), **and their only callers in the image are 0x755050 (MultiEngine::run) and 0x757250 (NestingEngine::run)**. MultiEngine branches on the byte at 755130 \test al, al / 755132 je 0x755233, NestingEngine at 7572F5 \test al, al / 7572F7 jne 0x75792b, and MultiEngine turns the dword into a double at 755208 call 0x24a90 / 75521B cvtsi2sd xmm0, rax. **So the flag is a switch and the dword is a quantity** -- which is what the closing condition for this question asked for and what six constructors alone could not say",
+      "tool": "instruction",
+      "round": 796
     }
   ]
 }

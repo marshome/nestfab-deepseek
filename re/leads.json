@@ -5,9 +5,10 @@
       "open": "what `EngineBase`'s byte at +0x08 and dword at +0x0C MEAN -- six constructors zero them and nothing else is read",
       "who": "inference",
       "evidence": "re/ledger.json enginebase-is-a-vptr-a-byte-and-a-dword; a sweep of every function in the image that touches them found five whose +0x0C was a shared_ptr control block's weak count, so adjacency proved nothing",
-      "settled_by": "a function that reads one of the two and BRANCHES on it, or a string that names the state it holds -- the constructors only place them",
-      "status": "open",
-      "seen": 1
+      "settled_by": "two ACCESSORS: 0x24A80 returns the byte at +0x08 and 0x24A90 returns the dword at +0x0C, and both are called ONLY by MultiEngine::run and NestingEngine::run",
+      "status": "resolved",
+      "seen": 1,
+      "resolved_by": "0x24A80 (5 bytes, movzx eax, byte ptr [rcx + 8]; ret) and 0x24A90 (4 bytes, mov eax, dword ptr [rcx + 0xc]; ret), whose ONLY callers are 0x755050 and 0x757250. **The byte BRANCHES**: 755130 test al,al / 755132 je in MultiEngine, 7572F5 test al,al / 7572F7 jne in NestingEngine. **The dword is a NUMBER**: 755208 call 0x24a90 / 75521B cvtsi2sd xmm0, rax. So +0x08 is a boolean flag and +0x0C a numeric count or size"
     },
     {
       "id": "plus10-to-plus50-owner",
@@ -69,8 +70,9 @@
       "who": "human",
       "evidence": "re/ledger.json the-six-engine-runs-have-measurably-different-profiles -- CompositeEngine has 39 targets over 184 call sites and 11 strings, which makes it the one to read first",
       "settled_by": "each body transcribed, or its calls named -- the profiles already rank them",
-      "status": "open",
-      "seen": 1
+      "status": "resolved",
+      "seen": 1,
+      "resolved_by": "IN PROGRESS: MultiEngine first, per the profiles"
     },
     {
       "id": "py-marks-the-weaker-of-two-live-claims-and-refuses-when-",
