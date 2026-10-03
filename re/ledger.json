@@ -3438,6 +3438,22 @@
       "predicate": "annotations citing [rbp + N] in launching_order.hpp are OBJECT writes and not stack writes, because the functions begin push rbp / mov rbp, rcx",
       "witness": "RE 0xD119 mov dword ptr [rbp + 0xc], edi is inside the function at 0xD050 whose first instructions are push rbp at 0xD050 and mov rbp, rcx at 0xD058; the same for 0xE010 and RE 0xE0D9. re/g_stack_annotations.py flagged four annotations and only 0xD062 is a defect",
       "round": 749
+    },
+    {
+      "subject": "windowslots-was-stack-arithmetic",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "WindowSlots had eight double slots and six of them were never read; all eight offsets came from stack-local arithmetic in the two windowSpan implementers rather than from a struct",
+      "witness": "0x526189 lea rsi, [rsp + 0xa0] and 0x526199 lea rbp, [rsp + 0x70] show the records are locals; 0x526227 is movsd xmm0, qword ptr [rsp + 0xb8] and 0x526230 is subsd xmm0, qword ptr [rsp + 0x78], an expression and not a member access. lcns/src/boxmerge.cpp uses only slot08 and slot10, and lcns/tests/test_boxacc.cpp moved slot18 and slot20 away and re-checked -- proving the other six were unused",
+      "round": 750
+    },
+    {
+      "subject": "the-stack-annotation-check-had-a-false-positive",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "[rbp + N] is not evidence of a stack store in this module, because the flagged functions begin push rbp / mov rbp, rcx and rbp holds the object",
+      "witness": "RE 0xD119 mov dword ptr [rbp + 0xc], edi is inside the function at 0xD050 whose prologue is push rbp at 0xD050 and mov rbp, rcx at 0xD058; the same for 0xE010. re/g_stack_annotations.py now takes the function start from the profile and reports 41 stack-writing annotations across 54 headers, of which three were rbp false positives before the fix",
+      "round": 750
     }
   ]
 }

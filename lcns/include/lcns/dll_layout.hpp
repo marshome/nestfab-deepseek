@@ -167,26 +167,21 @@ static_assert(modularInverse(27) == 0x84BDA12F684BDA13ull, "the constant 0x4F73E
  * the high side, so the window holds two dimension records. Each assertion below names the instruction that produces the
  * read it pins.
  */
+// **THE SIX SLOTS THIS USED TO CARRY ARE GONE, AND THEY WERE NEVER FIELDS OF ANYTHING.** Every offset was read from the two `windowSpan*` implementers, and those
+// functions work on STACK LOCALS: `0x526189 lea rsi, [rsp + 0xa0]` and `0x526199 lea rbp, [rsp + 0x70]`, so `rsi+0x18` is a local record and the arithmetic is
+// `movsd xmm0, [rsp + 0xb8]` / `subsd xmm0, [rsp + 0x78]` -- **an expression's two operands, not a member access.** `re/g_stack_annotations.py` is the check that
+// finds annotations of that shape.
+//
+// **AND ONLY TWO OF THE EIGHT WERE EVER READ.** `windowSpanLength` uses `slot08` and `windowSpanHeight` uses `slot10`; the other six existed only to satisfy
+// `static_assert`s, and the test says so in its own words -- "the slots these spans must not read are moved far away, so reading the wrong pair fails loudly" --
+// **which means the six were being maintained as a hypothesis that nothing used.** What is left is the two numbers the recovered functions actually take.
 struct WindowSlots {
     unsigned char opaque00[0x08];
-    double slot08;   // 0x526230 and 0x526770 (status false in both implementers)
-    double slot10;   // 0x526770 minus, the low side of the second record
-    double slot18;   // 0x526227 (0x526160, status true) and rsi+0x18 of the first record
-    double slot20;   // 0x526767 (0x5266A0, status true) and rsi+0x20
-    unsigned char opaque28[0x10];
-    double slot38;   // 0x52624D (0x526160, status true)
-    double slot40;   // 0x526767 (0x5266A0, status true)
-    double slot48;   // 0x526227 (0x526160, status false)
-    double slot50;   // 0x526767 (0x5266A0, status false)
+    double slot08;   // RE 0x526230 and 0x52624D: the low value `windowSpanLength` subtracts
+    double slot10;   // RE 0x526770 and 0x5267A2: the low value `windowSpanHeight` subtracts
 };
 static_assert(offsetof(WindowSlots, slot08) == 0x08, "RE 0x526230");
 static_assert(offsetof(WindowSlots, slot10) == 0x10, "RE 0x526770");
-static_assert(offsetof(WindowSlots, slot18) == 0x18, "RE 0x526227");
-static_assert(offsetof(WindowSlots, slot20) == 0x20, "RE 0x526767");
-static_assert(offsetof(WindowSlots, slot38) == 0x38, "RE 0x52624D");
-static_assert(offsetof(WindowSlots, slot40) == 0x40, "RE 0x526767");
-static_assert(offsetof(WindowSlots, slot48) == 0x48, "RE 0x526227");
-static_assert(offsetof(WindowSlots, slot50) == 0x50, "RE 0x526767");
 
 /** Where the status test in the two implementers reads its operand, as read from the code but NOT yet traced to a writer. */
 // The status the two implementers test is their SECOND ARGUMENT. RE 0x526170 saves edx at rsp+0x108 and RE 0x526216 passes that address to the status function, so it is not a window field, and both entry points call with zero.
