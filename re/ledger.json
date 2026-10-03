@@ -2856,7 +2856,7 @@
       "witness": "every lea rip in 0x4E9A10 is a data pointer and none is a vtable in re/vtables.json; its stores are almost all through rsp, so it assembles a value rather than filling a record in place. This is a NEGATIVE result and is recorded as a call and not as a type, because no constructor establishes the elements type"
     },
     {
-      "grade": "MEASURED",
+      "grade": "INSTRUCTION",
       "kind": "call",
       "predicate": "the callee behind 0x63F228 is OUTSIDE libcns_dump_64.dll, and its NAME is not in this dump because the import table is degenerate",
       "round": 706,
@@ -3534,6 +3534,30 @@
       "predicate": "LimitedNester derives from CompositeNester, which derives from Nester, so LimitedNester is own members start at +0x30 and the three pointers at +0x18, +0x20 and +0x28 are CompositeNester is std::vector",
       "witness": "the Itanium typeinfo chain read from the vtables: 0xA3B660 is N5Multi13LimitedNesterE, its base pointer leads to 0xA3B790 N5Multi15CompositeNesterE, and that base leads to 0xA3BB00 N5Multi6NesterE. lcns/include/lcns/base_chain.hpp already documented this chain and named CompositeNester as the owner of the fields. 0x4AADC calls CompositeNester is constructor 0xB4DA0 and 0x4AAFE constructs the first own member at +0x30 **The grade is INSTRUCTION and not DERIVATION**: the typeinfo gives the CHAIN, and what places the fields is the constructors is own stores -- 0x4AADC calls 0xB4DA0 (which writes +0x18) and 0x4AAFE constructs the first own member at +0x30.",
       "round": 756
+    },
+    {
+      "subject": "the-nester-family-has-two-layers-and-the-typeinfo-says-which",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "four nesters derive from Multi::CompositeNester and two derive straight from Multi::Nester, read from each vtable's __si_class_type_info base pointer",
+      "witness": "the typeinfo names and base pointers: LimitedNester (vtable 0xA3B660) -> N5Multi15CompositeNesterE; FlipNester (0xA3B4A0) -> the same; MultiTorchNester (0xA3B8B0) -> the same; FilterNester (0xA3B500) -> the same; NestingNester (0xA3B6A0) -> N5Multi6NesterE; DatabaseNester (0xA3B750) -> the same. lcns/include/lcns/base_chain.hpp already recorded this split, and each of the four also calls the CompositeNester constructor 0xB4DA0",
+      "round": 757
+    },
+    {
+      "subject": "the-nester-sizes-do-not-add-up-yet",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the module allocates 0x28 bytes for FlipNester and MultiTorchNester, while Nester (0x18, three fields) plus a CompositeNester std::vector (0x18) plus their own members is at least 0x30, so one of the two is wrong and it is NOT established which",
+      "witness": "RE 0x2C953 and RE 0x2C591 are `mov ecx, 0x28` then `call 0x998500` then `call 0x4B570` and `0x780E0`; and 0xB4470 writes three fields after the vptr, ending at 0x18. Declaring the CompositeNester inheritance makes FlipNester 0x30 bytes in the model, eight more than the module allocates, so the four declarations were REVERTED rather than shipped knowingly too large",
+      "round": 757
+    },
+    {
+      "subject": "the-nester-size-test-compares-a-constant-to-itself",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "lcns/tests/test_recovered.cpp asserts each nester's allocation size against a constant defined from the same instruction and never compares the model's sizeof, so a class larger than the module allocates passes",
+      "witness": "the assertions are `CHECK(kFlipNesterBytes == 0x28)`, `CHECK(kLimitedNesterBytes == 0x48)` and so on, where those names are `inline constexpr` in engine.hpp with the same value; declaring the CompositeNester inheritance makes sizeof(FlipNester) 0x30 and the suite still passes",
+      "round": 757
     }
   ]
 }
