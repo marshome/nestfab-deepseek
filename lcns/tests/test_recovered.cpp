@@ -7225,10 +7225,9 @@ int main() {
 
     // ---------------------------------------------------------------- RandomSheetSelector embeds an MT19937 (RE 0xB0040)
     {
-        // **THE SIZE IS THE MEASURED ONE AND NOT THE ALLOCATED ONE.** RE 0x0B004B asks for 0x9e0; a declaration carrying the offsets the instructions use -- 624
-        // words from +0x1C and EIGHT bytes at +0x9D8 -- measures 0x9E8. **The disagreement is asserted rather than smoothed over**: see `mtIndex8_` in
-        // tiling.hpp, where the three instructions that cannot all hold of one object are written beside the field.
-        static_assert(sizeof(lcns::RandomSheetSelector) == 0x9E8, "measured 0x9E8 against an allocation of 0x9e0 -- see tiling.hpp");
+        // **THE SIZE, AND IT AGREES WITH THE ALLOCATION NOW THAT mt[0] IS READ CORRECTLY.** RE 0x0B004B asks for 0x9e0; the members are +0x00 the vptr, +0x08,
+        // +0x10, +0x14, `mt` at +0x18 (624 words to +0x9D7) and `mti` at +0x9D8 (eight bytes) -- **0x9D8 + 8 = 0x9e0 exactly.**
+        static_assert(sizeof(lcns::RandomSheetSelector) == 0x9e0, "RE 0x0B004B: mov ecx, 0x9e0");
         static_assert(std::has_virtual_destructor<lcns::RandomSheetSelector>::value, "RE 0x0B006F installs a vtable, so it is polymorphic");
         static_assert(std::is_base_of<lcns::SheetSelector, lcns::RandomSheetSelector>::value, "its typeinfo chain puts it under Multi::SheetSelector");
 
@@ -7240,50 +7239,42 @@ int main() {
         CHECK(reinterpret_cast<const unsigned char*>(&probe.thirdArg_) - at == 0x10);    // RE 0x0B006C: mov dword [rbx + 0x10], ebp
         CHECK(reinterpret_cast<const unsigned char*>(&probe.byte14_) - at == 0x14);      // RE 0x0B0077: mov byte [rbx + 0x14], al
 
-        // **AND THE MT19937'S OWN THREE NUMBERS, EACH FROM ONE INSTRUCTION.** 0x0B0084 sets the index to 1; 0x0B00A0 writes `[rbx + rdx*4 + 0x18]` for rdx
-        // from 1 to 0x270, so the array starts at +0x1C and holds 624 words; and 0x0B00B7 writes 0x270 EIGHT bytes wide at +0x9D8.
-        CHECK(reinterpret_cast<const unsigned char*>(&probe.mtIndex_) - at == 0x18);     // RE 0x0B0084: mov dword [rbx + 0x18], 1
-        CHECK(reinterpret_cast<const unsigned char*>(&probe.mt_) - at == 0x1C);          // RE 0x0B00A0: [rbx + rdx*4 + 0x18] with rdx from 1
+        // **AND `mt` IS 624 WORDS FROM +0x18, SETTLED BY THREE INSTRUCTIONS THAT AGREE.** 0x0B0084 writes `dword [rbx + 0x18], 1` -- **`mt[0]`, which the
+        // standard seeding sets to the SEED itself** -- and 0x0B007F sets `edx` to 1 before the loop, so 0x0B00A0's `[rbx + rdx*4 + 0x18]` writes `mt[1]` at
+        // +0x1C through `mt[623]` at **+0x9D7**. **Reading +0x18 as an index was my error**: it left the loop's first write at +0x1C and the array four bytes
+        // too long, which is what made three measurements look like they could not all hold.
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.mt_) - at == 0x18);          // RE 0x0B0084 writes mt[0], and 0x0B00A0 starts at mt[1] = +0x1C
         CHECK(sizeof(probe.mt_) / sizeof(probe.mt_[0]) == 624);                          // RE 0x0B00A8: cmp rdx, 0x270
-        // **THE INDEX AT +0x9D8 IS EIGHT BYTES AND IT OVERLAPS THE LAST WORD OF THE 624.** RE 0x0B00B7 writes `qword [rbx + 0x9d8]` while 0x0B00A0's loop
-        // reaches +0x9DB, and `mov ecx, 0x9e0` at 0x0B004B allocates only 0x9e0 -- **so the declaration measures 0x9E8 and the allocation is 0x9e0, a
-        // disagreement that is recorded and NOT smoothed over by moving a field.**
-        // **AND THE ONE PLACE THE THREE MEASUREMENTS CANNOT ALL HOLD.** RE 0x0B00B7 writes EIGHT bytes at +0x9D8, while 0x0B00A0's 624 words reach +0x9DB and
-        // the next member can only start at the 8-byte boundary +0x9E0. So `mtIndex8_` MEASURES +0x9E0 and the instruction says +0x9D8. **The measured offset is
-        // asserted and the instruction is named beside it**, rather than an array resized to make the two agree.
-        CHECK(reinterpret_cast<const unsigned char*>(&probe.mtIndex8_) - at == 0x9E0);   // while RE 0x0B00B7 writes qword [rbx + 0x9d8]
-        CHECK(sizeof(probe.mtIndex8_) == 8);                                             // EIGHT bytes, as that instruction says
-        CHECK(sizeof(lcns::RandomSheetSelector) == 0x9E8);                               // while RE 0x0B004B asks for 0x9e0: see the note in tiling.hpp
+        // **AND `mti` AT +0x9D8 DOES NOT OVERLAP IT**, because the last word ends at +0x9D7. RE 0x0B00B7 writes EIGHT bytes, and 0x9D8 + 8 = 0x9e0 is the
+        // allocation. **A four byte member here would leave the object's last four bytes unexplained**, which is what the instruction's width settles.
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.mtIndex_) - at == 0x9D8);    // RE 0x0B00B7: mov qword [rbx + 0x9d8], 0x270
+        CHECK(sizeof(probe.mtIndex_) == 8);                                              // EIGHT bytes, and 0x9D8 + 8 = 0x9e0
     }
-
 
     // ---------------------------------------------------------------- the generator's arithmetic, from TWO constructors (RE 0x84510 and 0xB0040)
     {
         // **THE PROPERTY: `mti` IS 0x9C0 BYTES AFTER `mt`.** RE 0x8455E writes `qword [rax + 0x9c0], 0x270` with `mt` at +0x00 (0x84530's loop writes
         // `dword [rax + rcx*4]`), and RE 0x0B00B7 writes `qword [rbx + 0x9d8], 0x270` with `mt` at +0x18 (0x0B00A0's loop writes `[rbx + rdx*4 + 0x18]`).
-        // **0x9D8 - 0x18 = 0x9C0 = 0x9C0 - 0x00**, so the generator's internal layout agrees between the two and this constant is the part that does not
-        // depend on either object.
+        // **0x9D8 - 0x18 = 0x9C0 = 0x9C0 - 0x00**, so the generator's internal layout agrees between the two objects and this constant is the part that does
+        // not depend on either of them.
         static_assert(lcns::kMtToMti == 0x9C0, "RE: the two constructors put mti exactly this far after mt");
         static_assert(lcns::kMtWords == 624, "RE 0x0B00A8: cmp rdx, 0x270");
         static_assert(lcns::kMtIndexBytes == 8, "RE 0x0B00B7: mov qword [rbx + 0x9d8], 0x270 -- EIGHT bytes and not four");
 
-        // **AND WHERE THE PROPERTY MEETS THE DECLARATION, WHICH IS THE DISAGREEMENT.** `mt_` is at +0x1C, so the index belongs at +0x1C + 0x9C0 = +0x9DC.
-        // 0x0B00B7 writes it at +0x9D8 (four bytes early) and the declaration has it at +0x9E0 (four bytes late), because a member cannot begin inside the
-        // 624 words the loop fills, whose last one ends at +0x9DB. **The three numbers are computed here rather than described, so the arithmetic is checked
-        // even while which of the three is wrong is not yet known.**
+        // **AND THE PROPERTY HOLDS OF THE DECLARATION, WHICH IS WHAT RESOLVED THE EIGHT BYTES.** `mt_` at +0x18 plus `kMtToMti` is +0x9D8, and that is where
+        // 0x0B00B7 writes and where the member is -- so all four instructions and the declaration agree, and the earlier disagreement came from reading +0x18
+        // as an index instead of as `mt[0]`.
         alignas(lcns::RandomSheetSelector) unsigned char storage[sizeof(lcns::RandomSheetSelector)];
         lcns::RandomSheetSelector& probe = *reinterpret_cast<lcns::RandomSheetSelector*>(storage);
         const unsigned char* at = reinterpret_cast<const unsigned char*>(&probe);
         const std::size_t mtAt = static_cast<std::size_t>(reinterpret_cast<const unsigned char*>(&probe.mt_) - at);
-        const std::size_t indexAt = static_cast<std::size_t>(reinterpret_cast<const unsigned char*>(&probe.mtIndex8_) - at);
-        std::printf("RandomSheetSelector: mt_ at +0x%zX, so the index belongs at +0x%zX; the instruction writes +0x9D8 and the member is at +0x%zX\n",
+        const std::size_t indexAt = static_cast<std::size_t>(reinterpret_cast<const unsigned char*>(&probe.mtIndex_) - at);
+        std::printf("RandomSheetSelector: mt_ at +0x%zX, so mti belongs at +0x%zX; 0x0B00B7 writes +0x9D8 and the member is at +0x%zX\n",
                     mtAt, mtAt + lcns::kMtToMti, indexAt);
-        CHECK(mtAt == 0x1C);                                      // RE 0x0B00A0: [rbx + rdx*4 + 0x18] with rdx from 1
-        // **THE LAYOUT SAYS +0x9DC AND THE DECLARATION CANNOT PUT IT THERE**, so what is asserted is the measured member and the arithmetic beside it.
-        CHECK(mtAt + lcns::kMtToMti == 0x9DC);                    // the property, and 0x0B00B7 writes +0x9D8 -- FOUR BYTES EARLIER
-        CHECK(indexAt == 0x9E0);                                  // while the declaration puts it after the 624 words, which end at +0x9DB
-        CHECK(sizeof(lcns::RandomSheetSelector) == 0x9E8);        // against the allocation `mov ecx, 0x9e0` at 0x0B004B
+        CHECK(mtAt == 0x18);                                      // RE 0x0B0084 writes mt[0] here; the loop starts at mt[1] = +0x1C
+        CHECK(mtAt + lcns::kMtToMti == 0x9D8);                    // the property, and RE 0x0B00B7 writes exactly here
+        CHECK(indexAt == 0x9D8);                                  // so the member and the instruction agree
+        CHECK(sizeof(lcns::RandomSheetSelector) == 0x9e0);        // and that is `mov ecx, 0x9e0` at 0x0B004B
     }
-
     return check::finish("test_recovered");
 }

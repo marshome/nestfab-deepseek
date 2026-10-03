@@ -484,10 +484,10 @@ public:
     std::uint32_t thirdArg_ = 0;
     /** +0x14, RE 0x0B0072 `call 0x523580` and 0x0B0077 `mov byte [rbx + 0x14], al` -- ONE BYTE, and 0x523580's return. **What it means is not recovered.** */
     std::uint8_t byte14_ = 0;                         // NOT REVERSED: the byte 0x523580 returns
-    /** +0x18, RE 0x0B0084: `mov dword [rbx + 0x18], 1` -- **the MT19937 index, set to 1 after seeding**, which is what the standard seed does. */
-    std::uint32_t mtIndex_ = 0;
-    /** +0x1C, RE 0x0B00A0: `mov dword [rbx + rdx*4 + 0x18], ecx` for `rdx` from 1 to 0x26F -- **624 words, spanning +0x1C through +0x9DB**. */
-    std::uint32_t mt_[624] = {};                      // +0x1C..+0x9DB
+    /** +0x18, RE 0x0B0084: `mov dword [rbx + 0x18], 1` -- **`mt[0]`, WHICH THE SEEDING SETS TO THE SEED ITSELF.** The standard seed puts the seed in the state's
+     *  FIRST word and derives the rest from it, and 0x0B00A0's loop then writes `mt[1]` .. `mt[623]` because **`mov edx, 1` at 0x0B007F starts it at ONE**:
+     *  first write +0x18 + 1*4 = +0x1C, last +0x18 + 623*4 = **+0x9D7**. **So the 624 words span +0x18..+0x9D7 and `mti` at +0x9D8 does not overlap them.** */
+    std::uint32_t mt_[624] = {};                      // +0x18..+0x9D7
     /** +0x9D8, RE 0x0B00B7: `mov qword [rbx + 0x9d8], 0x270` -- **EIGHT bytes at +0x9D8, which OVERLAPS the last word of the 624 above.**
      *
      *  **AND THIS IS A CONTRADICTION THAT IS RECORDED RATHER THAN SMOOTHED OVER.** Three instructions and a declaration say:
@@ -499,10 +499,9 @@ public:
      *  and a declaration carrying all three measures **0x9E8**: the words reach +0x9DB, the eight bytes at +0x9D8 overlap their last word, and the next member
      *  can only begin on an 8-byte boundary at +0x9E0. **The two arithmetic facts cannot both hold of one object.** **A field is not moved to make a number
      *  agree** -- each offset and the width above is one instruction, and so is the 0x9e0 -- so what is recorded is the measurement and the disagreement. */
-    /** **+0x9E0 AS DECLARED, AND RE 0x0B00B7 WRITES +0x9D8.** The generator's own layout says `mti` is `kMtToMti` = 0x9C0 bytes after `mt`, and `mt` is at +0x1C,
-     *  so the instruction's +0x9D8 is 0x9D8 - 0x1C = 0x9BC -- **four bytes short of 0x9C0** -- while a member can only begin at +0x9E0, which is 0x9C4 after.
-     *  **Neither fits, the allocation 0x9e0 and the declaration 0x9E8 differ by those eight bytes, and the disagreement is left standing.** */
-    std::uint64_t mtIndex8_ = 0;
+    /** +0x9D8, RE 0x0B00B7: `mov qword [rbx + 0x9d8], 0x270` -- **EIGHT bytes, and +0x9D8 + 8 = 0x9e0 is exactly what 0x0B004B asks the allocator for.**
+     *  The instruction's width is what settles it: a four byte member here would leave the last four bytes of the object unaccounted for. */
+    std::uint64_t mtIndex_ = 0;                       // +0x9D8..+0x9DF, and the object ends at 0x9e0
 };
 
 class NoMixSheetSelector : public SheetSelector {

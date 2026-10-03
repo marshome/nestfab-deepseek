@@ -3050,14 +3050,6 @@
   {
    "grade": "INSTRUCTION",
    "kind": "offset",
-   "predicate": "RandomSheetSelector's three measurements cannot all hold: the allocation is 0x9e0, the 624 state words reach +0x9DB, and 0x0B00B7 writes EIGHT bytes at +0x9D8, so the declaration measures 0x9E8",
-   "round": 722,
-   "subject": "the-mt-state-overlaps-its-index",
-   "witness": "0x0B004B mov ecx,0x9e0; 0x0B00A0 mov dword [rbx + rdx*4 + 0x18],ecx for rdx 1..0x26F reaching +0x9DB; 0x0B00B7 mov qword [rbx + 0x9d8],0x270 writing eight bytes from +0x9D8, which is inside those words, while a member can only begin at the 8 byte boundary +0x9E0"
-  },
-  {
-   "grade": "INSTRUCTION",
-   "kind": "offset",
    "predicate": "Multi::RandomSheetSelector's constructor seeds the same generator shape as the one 0x84510 builds: 624 words four bytes apart from +0x1C and an eight byte index value written at +0x9D8, so mti sits 0x9C0 bytes after mt",
    "round": 723,
    "subject": "RandomSheetSelector-embeds-a-generator-of-the-same-shape",
@@ -3070,6 +3062,22 @@
    "round": 723,
    "subject": "mti-sits-0x9C0-after-mt",
    "witness": "0x84530's loop writes dword [rax + rcx*4] with mt at base +0x00 and 0x8455E writes qword [rax + 0x9c0], 0x270; 0x0B00A0's loop writes dword [rbx + rdx*4 + 0x18] with mt at +0x18 and 0x0B00B7 writes qword [rbx + 0x9d8], 0x270, and 0x9D8 minus 0x18 is 0x9C0"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RandomSheetSelector's mt is 624 words from +0x18 to +0x9D7 and mti is EIGHT bytes at +0x9D8, so 0x9D8 + 8 = 0x9e0 is exactly the allocation and nothing overlaps",
+   "round": 724,
+   "subject": "the-mt-state-does-not-overlap-its-index",
+   "witness": "0x0B007F mov edx, 1 starts the seeding loop at ONE; 0x0B0084 mov dword [rbx + 0x18], 1 is mt[0], the seed; 0x0B00A0 mov dword [rbx + rdx*4 + 0x18], ecx therefore writes mt[1] at +0x1C through mt[623] at +0x9D7; 0x0B00B7 mov qword [rbx + 0x9d8], 0x270 writes EIGHT bytes at +0x9D8 (raw bytes b9e0090000 at 0x0B004B are the 0x9e0 allocation, so the immediates are not misread) The earlier claim that these could not all hold came from reading +0x18 as an index, which put the array at +0x1C and four bytes too long"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "in the MT19937 seeding loop, mov edx,1 at 0x0B007F starts it at one because mov dword [rbx + 0x18], 1 at 0x0B0084 is mt[0], the seed",
+   "round": 724,
+   "subject": "mt-zero-is-the-seed-not-an-index",
+   "witness": "0x0B007F mov edx, 1; 0x0B0084 mov dword [rbx + 0x18], 1; 0x0B00A0 mov dword [rbx + rdx*4 + 0x18], ecx writes mt[1] at +0x1C through mt[623] at +0x9D7, so mt spans +0x18..+0x9D7 and mti at +0x9D8 does not overlap it, and 0x9D8 + 8 = 0x9e0 is the allocation"
   }
  ]
 }
