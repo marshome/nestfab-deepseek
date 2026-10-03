@@ -30,8 +30,11 @@ import g_names as N             # noqa: E402
 import g_toolchain as T         # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]")
-MOVE = re.compile(r"^([a-z0-9]+), ([a-z0-9]+)$")
+# **THE DISPLACEMENT IS PARSED BY NUMBER, NOT BY SPELLING.** Capstone prints a ONE-DIGIT displacement in DECIMAL (`[rax + 8]`) and every larger one in hex
+# (`[rax + 0x10]`), so a pattern demanding `0x` loses offsets 1 to 9 -- and `8` is the module's most common displacement (`vptr + 8`, the std::shared_ptr count).
+# **And the register class must take A-Z**: `r8`-`r15` were outside `[a-z0-9]`, so the alias tracker never saw half the register file. `[rR]\w*` covers both.
+ACCESS = re.compile(r"\[([A-Za-z][A-Za-z0-9]*)(?: \+ (0x[0-9a-f]+|\d+))?\]")
+MOVE = re.compile(r"^([A-Za-z][A-Za-z0-9]*), ([A-Za-z][A-Za-z0-9]*)$")
 ALIAS = {}
 for _full, _names in {"rax": ("eax", "ax", "al"), "rbx": ("ebx", "bx", "bl"), "rcx": ("ecx", "cx", "cl"),
                       "rdx": ("edx", "dx", "dl"), "rsi": ("esi", "si", "sil"), "rdi": ("edi", "di", "dil")}.items():
@@ -116,8 +119,11 @@ def main(argv):
                         carries.add(canonical(m.group(1)))
             for ins in body:
                 for m in ACCESS.finditer(ins.op_str):
-                    if canonical(m.group(1)) in carries and m.group(2):
-                        tally[int(m.group(2), 16)] += 1
+                    if canonical(m.group(1)) in carries:
+                        # **`[rax]` HAS NO DISPLACEMENT AND IS OFFSET 0**, so the `None` case is a value and not a skip -- which is the same
+                        # blindness that made every constructor's vtable store invisible to re/g_members_without_instructions.py.
+                        raw = m.group(2)
+                        tally[0 if raw is None else (int(raw, 16) if raw.lower().startswith("0x") else int(raw))] += 1
         busiest = [o for o, _c in tally.most_common(16)]
         rows.append((len(slots), name, mangled, info.get("vtable_rva"), touched, busiest))
 

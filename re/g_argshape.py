@@ -29,8 +29,11 @@ sys.path.insert(0, HERE)
 import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]")
-MOVE = re.compile(r"^([a-z0-9]+), ([a-z0-9]+)$")
+# **THE DISPLACEMENT IS PARSED BY NUMBER, NOT BY SPELLING.** Capstone prints a ONE-DIGIT displacement in DECIMAL (`[rax + 8]`) and every larger one in hex
+# (`[rax + 0x10]`), so a pattern demanding `0x` loses offsets 1 to 9 -- and `8` is the module's most common displacement (`vptr + 8`, the std::shared_ptr count).
+# **And the register class must take A-Z**: `r8`-`r15` were outside `[a-z0-9]`, so the alias tracker never saw half the register file. `[rR]\w*` covers both.
+ACCESS = re.compile(r"\[([A-Za-z][A-Za-z0-9]*)(?: \+ (0x[0-9a-f]+|\d+))?\]")
+MOVE = re.compile(r"^([A-Za-z][A-Za-z0-9]*), ([A-Za-z][A-Za-z0-9]*)$")
 WIDTHS = (("xmmword", 16), ("oword", 16), ("qword", 8), ("dword", 4), ("word", 2), ("byte", 1))
 STACK = ("rsp", "rbp")
 ALIAS = {}

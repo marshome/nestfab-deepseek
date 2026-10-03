@@ -1,0 +1,36 @@
+re: a GATE STAGE was blind to offsets 0 to 9 -- `check_arch` parsed displacements by spelling, and 120 of its lines change when that is fixed
+
+**`re/g_arch.py` IS A GATE STAGE, AND ITS DISPLACEMENT PARSER HAD THE SAME FAULT AS LAST ROUND'S:**
+
+    ACCESS = re.compile(r"\\[([a-z0-9]+)(?: \\+ (0x[0-9a-f]+))?\\]")
+    ...
+    if canonical(m.group(1)) in carries and m.group(2):
+        tally[int(m.group(2), 16)] += 1
+
+**capstone spells a ONE-DIGIT displacement in DECIMAL** -- `[rax + 8]` -- **so `m.group(2)` is None for offsets 1 to 9 and the branch DROPS them.** `8` is the module's
+most common displacement at 44996 occurrences, because it is `vptr + 8`: the `std::shared_ptr` reference count.
+
+**AND THERE WAS A SECOND BLINDNESS BEHIND THE FIRST**: the register class was `[a-z0-9]+`, **so `r8` to `r15` NEVER MATCHED** -- the uppercase `R` is not in the class --
+**and `MOVE`, the alias tracker that decides which register carries the object, had the same class**, so it could not follow a value into half the register file.
+**A checker whose alias tracker cannot see `r8`-`r15` reports the offsets it never attributed as "never touched".**
+
+**THE FIX IS BOTH HALVES AT ONCE, AND NEITHER WORKS ALONE**: the displacement is parsed by NUMBER (`0x`-prefixed or decimal), the register class takes `[A-Za-z]`, and
+`[rax]` with no displacement is **offset 0** rather than a skip -- **the same value-not-absence reading that two rounds ago made every constructor's vtable store invisible
+to `re/g_members_without_instructions.py`.**
+
+## And the first version of the fix crashed, which is worth keeping in the record
+
+Its consumer line became `m.group(2).lower().startswith("0x")` **with the `None` check removed**, so `[rax]` raised `AttributeError` **and the gate stage died rather than
+reporting anything**. That is a worse failure than the one being fixed -- **a stage that cannot run is not a stage that passes** -- and it is why the repair keeps the check
+and handles `None` as the value zero.
+
+**AND THE OUTPUT CHANGES ON 120 LINES**, which is the measure of how much the old parse was missing: the busiest-offset column now begins `+0x0 +0x8 +0x10 ...` where it began
+`+0x10 +0x18 ...`, **and `check_arch` still passes, because it checks the output's shape and not its contents.** **So the stage is not stricter now -- it is reading the
+image correctly for the first time**, and `re/g_fix_displacement_parsing.py` plus `re/g_repair_displacement_consumer.py` record both steps.
+
+    re/g_arch.py                        the gate stage, parsing by number and seeing r8-r15
+    re/g_argshape.py                    the same pattern, fixed for the same reason
+    re/g_fix_displacement_parsing.py    the fix, with the capstone spelling documented where the regex is
+    re/g_repair_displacement_consumer.py  the `None` repair, kept because the crash it fixed is the instructive part
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green, 466 claims with 0 problems.

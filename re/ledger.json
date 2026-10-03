@@ -3742,6 +3742,14 @@
       "predicate": "searching the whole module for an offset cannot show that a declared member is supported, because 36068 distinct displacements occur somewhere and every small offset is among them",
       "witness": "with the spelling fixed, `re/g_member_offsets_live.py` reports NO class with an untouched member -- **and that is a negative result about the question, not a clean bill of health.** The check that CAN answer it is `re/g_members_without_instructions.py`, which pairs each class with a function (its destructor) and then asks whether the object or an allocated block is touched **through that function's own object register** -- class attribution is what the module-wide search lacks",
       "round": 772
+    },
+    {
+      "subject": "a-gate-stage-was-blind-to-offsets-0-to-9",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "re/g_arch.py, a gate stage, dropped every displacement of 1 to 9 because it demanded an 0x prefix, and could not follow a value into r8-r15 because its register class was [a-z0-9]",
+      "witness": "its ACCESS pattern was [([a-z0-9]+)(?: \\+ (0x[0-9a-f]+))?] and its consumer required m.group(2) to be truthy, so [rax + 8] -- where capstone omits the 0x for a one-digit displacement -- was dropped; and the same [a-z0-9] class in MOVE meant r8-r15 never matched the alias tracker. Fixing both changes the output on 120 lines and the stage still passes, because it checks the output shape and not its contents. **The fix crashed the first time** by removing the None check, so [rax] raised AttributeError -- a stage that cannot run is worse than a stage that is blind",
+      "round": 773
     }
   ]
 }
