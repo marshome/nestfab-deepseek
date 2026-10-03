@@ -231,6 +231,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-03",
   "since": "round 142"}
 
+{"id": "re-leads-json-g-check-leads-py-sweep",
+  "rule": "跨主题的开放问题必须有载体：re/leads.json（问题+证据指针+关闭条件），g_check_leads.py 接进门禁守两条不变量（每条有证据指针、队列覆盖树的 sweep），派生关闭条件的条数作为预算报告、目标为零",
+  "check": "no check yet, which is recorded rather than hidden",
+  "where": "re/RULES.md, added 2026-10-03",
+  "since": "round 143"}
+
 ## What is deliberately NOT a rule here
 
  {"id": "push-every-thirty-rounds",

@@ -61,6 +61,11 @@ Stage 'offset-compensation' { & $py (Join-Path $root 're\g_gap_compensation.py')
 # member's offset** -- a class growing an API for a test, when the project's own form is `static_assert(offsetof(T, member) == 0xNN, "RE 0xADDR")` beside the member, 86 of
 # which already exist. **The replacement was two `static_assert`s on `sizeof`, which need no API at all.** `re/g_prove_no_offset_accessor.py` plants the mistake back.
 Stage 'offset-accessor' { & $py (Join-Path $root 're\g_no_offset_accessor.py') }
+# **AND THE LEADS CHECK**, because a question noticed while reading one function used to live in a prose comment -- and a comment is not a queue, nothing iterates a comment.
+# `re/leads.json` holds what has been NOTICED AND NOT YET ANSWERED, each with a closing condition and an evidence pointer, and `re/g_leads.py sweep` derives candidates from
+# the ledger's witnesses and the headers' comments. **This is what makes the work systematic instead of remembered**, and it is the answer to "can you record these
+# scattered points and not drop them" -- the queue is machine-checked, so a question that reaches the tree and not the queue fails the gate.
+Stage 'leads' { & $py (Join-Path $root 're\g_check_leads.py') }
 
 Write-Host 'GATE GREEN'
 # The verdict goes to a file so re/g_rules.py can check "门禁保持全绿" without paying two minutes for it. A rule checker that

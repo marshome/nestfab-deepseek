@@ -1,0 +1,418 @@
+{
+  "leads": [
+    {
+      "id": "enginebase-plus8-plus0c-meaning",
+      "open": "what `EngineBase`'s byte at +0x08 and dword at +0x0C MEAN -- six constructors zero them and nothing else is read",
+      "who": "inference",
+      "evidence": "re/ledger.json enginebase-is-a-vptr-a-byte-and-a-dword; a sweep of every function in the image that touches them found five whose +0x0C was a shared_ptr control block's weak count, so adjacency proved nothing",
+      "settled_by": "a function that reads one of the two and BRANCHES on it, or a string that names the state it holds -- the constructors only place them",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "plus10-to-plus50-owner",
+      "open": "which class owns the shared +0x10..+0x50 range: a common base below `EngineBase`, or one template instantiated by five engines",
+      "who": "inference",
+      "evidence": "re/ledger.json four-engines-agreeing-on-ten-offsets-measured-a-shared-OWN-layout; the six engine constructors place 0x78, 0x48, 0x30, 0x30, 0x28 and 0x28, so the sizes differ and a shared base would have one",
+      "settled_by": "the vtable of the intermediate type if one exists, or two engines' constructors placing the same offsets with the same WIDTHS at the same addresses -- the sizes already contradict a single shared base",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "equivalentengine-0x25810-and-0x25a20",
+      "open": "what `0x25810` (528 B) and `0x25A20` (512 B) build -- they install `EquivalentEngine`'s vtable and allocate `0x58` where its constructor allocates `0x30`",
+      "who": "tool",
+      "evidence": "re/g_vtable_installers.py -- they are lea-resolving to 0xA3D040 and their own allocations are `025825 mov ecx, 0x58` and `025A2B mov ecx, 0x58`",
+      "settled_by": "reading either body: a derived class over the same table shows a SECOND vtable installed after the first, and a copy/factory shows the source object read instead",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "nester-base-layout-four-way-contradiction",
+      "open": "where `Nester`'s base data begins -- four pieces of evidence contradicted and two claims were withdrawn",
+      "who": "inference",
+      "evidence": "re/ledger.json the-nester-base-layout-is-unresolved; and the correction the-nester-base-part-is-0x10-not-0x18 was itself withdrawn when `0x8F210` and `0x342E0` were found to CALL `0xB4470` and then write +0x18",
+      "settled_by": "a direct child of `Nester` that READS +0x08, +0x10 or +0x14 through its own object -- `0xB4470` places all three and no reader has been found",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "compositeengine-range-points-at-what",
+      "open": "what `CompositeEngine`'s +0x10 and +0x18 point at -- they come from a begin/end pair and +0x20 is the range length in bytes",
+      "who": "inference",
+      "evidence": "lcns/include/lcns/engines_composite.hpp -- `024C83 sub rdi, rdx` gives +0x20 and `024C99 sar rax, 4` divides it by a stride of 16",
+      "settled_by": "the element type, from a call that walks the range -- the class has `elementCount` and its `run` is the only walker",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "cloudengine-exempt-but-read",
+      "open": "`CloudEngine` is EXEMPT by the human's instruction, and its constructor was read anyway: it places +0x10 +0x18 +0x20 +0x30 +0x38 +0x40 +0x50 and is the ONLY engine touching +0x50",
+      "who": "human",
+      "evidence": "re/ledger.json cloudengine-is-exempt-by-decision; and re/g_engine_ctors_rest.py, which found 0x268A0 (437 B) installing 0xA3CEE0",
+      "settled_by": "NOTHING -- it is exempt. **This lead exists so the exemption is not silently re-opened, and so the +0x50 fact is not lost.**",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "displacement-readers-in-the-other-17-scripts",
+      "open": "seventeen scripts still parse a displacement with an `0x`-only pattern, so offsets 1 to 9 are invisible to them",
+      "who": "tool",
+      "evidence": "re/g_scan_displacement_readers.py found 18 files with the pattern; `re/lib.py` now has `object_offsets` and only `g_members_without_instructions.py` was wired to it",
+      "settled_by": "each script either rewritten to `object_offsets` or shown not to read displacements -- and the ones whose output supports a claim matter first",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "thin-engines-have-no-run-body",
+      "open": "four engine `run` bodies have their profiles measured and their INSTRUCTIONS unread: MultiEngine 2329 B, EquivalentEngine 3569 B, NestingEngine 1975 B, CompositeEngine 8230 B",
+      "who": "human",
+      "evidence": "re/ledger.json the-six-engine-runs-have-measurably-different-profiles -- CompositeEngine has 39 targets over 184 call sites and 11 strings, which makes it the one to read first",
+      "settled_by": "each body transcribed, or its calls named -- the profiles already rank them",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "py-marks-the-weaker-of-two-live-claims-and-refuses-when-",
+      "open": "py marks the weaker of two live claims and refuses when there are not exactly two, or when they share a grade, so a real conflict is not resolved by fiat",
+      "who": "sweep",
+      "evidence": "re/ledger.json",
+      "settled_by": "REVIEW: a witness in re/ledger.json; closed by the observation the witness itself says is missing",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "supervisor-holds-the-module-s-single-member-at-8-and-fiv",
+      "open": "Supervisor holds the module's single member at +8 and five members the port needs; the five are marked as the model's because 0x32700 and 0x827F0 have not been read",
+      "who": "sweep",
+      "evidence": "re/ledger.json",
+      "settled_by": "REVIEW: a witness in re/ledger.json; closed by the observation the witness itself says is missing",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "the-declaration-as-it-stands-fits-every-allocation-and-i",
+      "open": "**The declaration as it stands fits every allocation and is NOT established to be right**; what would settle it is a class deriving straight from Nester that reads +0x08, +0x10 or +0x14 through its ow",
+      "who": "sweep",
+      "evidence": "re/ledger.json",
+      "settled_by": "REVIEW: a witness in re/ledger.json; closed by the observation the witness itself says is missing",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "what-each-means-is-not-established-so-offset-names-are-w",
+      "open": "**What each MEANS is not established**, so offset names are what the class can carry **This is an INSTRUCTION and not a CONSTRUCTION claim on purpose**: what is measured is that the RUN body writes th",
+      "who": "sweep",
+      "evidence": "re/ledger.json",
+      "settled_by": "REVIEW: a witness in re/ledger.json; closed by the observation the witness itself says is missing",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "their-argument-shapes-differ-from-the-constructor-too-xm",
+      "open": "**Their argument shapes differ from the constructor too** -- xmm3 in one, r9d in the other -- and what they build is the next question rather than a conclusion",
+      "who": "sweep",
+      "evidence": "re/ledger.json",
+      "settled_by": "REVIEW: a witness in re/ledger.json; closed by the observation the witness itself says is missing",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "object-are-a-record-of-that-vector-and-the-vector-s-elem",
+      "open": "// object are a RECORD of that vector, and **the vector's element type is not established**: 0x4E9A10 produces it and its `lea` targets are data rather",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/base_chain.hpp",
+      "settled_by": "REVIEW: a header line at base_chain.hpp:160; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "a-value-five-times-the-count-is-not-established-here-so-",
+      "open": "// a value five times the count is NOT established here**, so this note says the measurement and stops rather than naming the arithmetic.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/base_chain.hpp",
+      "settled_by": "REVIEW: a header line at base_chain.hpp:179; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "bytes-the-strategy-loop-have-not-been-read-recorded-as-a",
+      "open": "// bytes, the strategy loop) -- have not been read. **Recorded as a difference rather than blended in**, so a reader can tell which",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engine.hpp",
+      "settled_by": "REVIEW: a header line at engine.hpp:527; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "shared-layout-and-an-agreement-between-siblings-is-not-a",
+      "open": "shared layout** -- and **an agreement between siblings is not an inherited member.** **What the two fields MEAN is not established**; a sweep of every function in the",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engine_base.hpp",
+      "settled_by": "REVIEW: a header line at engine_base.hpp:43; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "one-contiguous-range-0x00-to-0x50-with-the-widths-the-st",
+      "open": "one contiguous range, 0x00 to 0x50**, with the widths the stores give: a dword at +0x00 and +0x30 and pointers elsewhere. **What each field MEANS is not",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines.hpp",
+      "settled_by": "REVIEW: a header line at engines.hpp:81; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "what-that-means-is-not-decided-here-it-points-at-either-",
+      "open": "WHAT THAT MEANS IS NOT DECIDED HERE**: it points at either a common base below `EngineBase` (0x10 through 0x28) or the two classes being instantiations of one",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines.hpp",
+      "settled_by": "REVIEW: a header line at engines.hpp:115; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "field-means-is-not-established-so-they-carry-their-offse",
+      "open": "field MEANS is not established**, so they carry their offsets -- **except the two the constructor's own arguments reach, which say so.** */",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines.hpp",
+      "settled_by": "REVIEW: a header line at engines.hpp:236; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "what-each-field-means-is-not-established-so-they-carry-t",
+      "open": "WHAT EACH FIELD MEANS IS NOT ESTABLISHED**, so they carry their offsets; **the two the source object feeds (+0x28 and +0x30) are doubles and the two bytes at +0x1C",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines.hpp",
+      "settled_by": "REVIEW: a header line at engines.hpp:315; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "what-each-field-means-is-not-established-so-they-carry-t-2",
+      "open": "WHAT EACH FIELD MEANS IS NOT ESTABLISHED**, so they carry their offsets; **the two the source object feeds (+0x28 and +0x30) are doubles and the two bytes at +0x1C",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines.hpp",
+      "settled_by": "REVIEW: a header line at engines.hpp:315; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "and-what-0x28-through-0x50-are-is-not-established-here-i",
+      "open": "AND WHAT +0x28 THROUGH +0x50 ARE IS NOT ESTABLISHED HERE.** `InfiniteEngine`, `MultiEngine`, `DelayedEngine`, `NestingEngine` and `CompositeEngine` all touch",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines.hpp",
+      "settled_by": "REVIEW: a header line at engines.hpp:375; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "0x18-point-at-is-not-established-beyond-their-coming-fro",
+      "open": "+0x18 point at is not established beyond their coming from a begin/end pair.** */",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/engines_composite.hpp",
+      "settled_by": "REVIEW: a header line at engines_composite.hpp:119; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "difference-they-are-two-distinct-refcounted-types-and-wh",
+      "open": "// DIFFERENCE: they are two distinct refcounted types, and which is which is NOT established.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/layout.hpp",
+      "settled_by": "REVIEW: a header line at layout.hpp:1269; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "0x20-to-0x2f-is-this-std-string-s-small-string-buffer-an",
+      "open": "/** **+0x20 TO +0x2F IS THIS `std::string`'s SMALL-STRING BUFFER AND +0x30 IS THE FLAG -- AND WHICH CLASS OWNS THE FLAG IS NOT ESTABLISHED.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:111; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "has-not-been-read-so-this-says-so-rather-than-inventing-",
+      "open": "has not been read, so this says so rather than inventing one. */",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:261; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "slot-4-is-not-forwarded-either-the-module-s-table-has-it",
+      "open": "/** **SLOT 4 IS NOT FORWARDED EITHER** -- the module's table has it (0x75E060, 128 bytes) and its body has not been read, so this says so rather than",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:288; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "the-body-has-not-been-read-so-it-is-empty-rather-than-gu",
+      "open": "The body has not been read, so it is empty rather than guessed at. */",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:318; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "the-base-layout-is-unresolved-after-four-rounds-and-the-",
+      "open": "// **THE BASE LAYOUT IS UNRESOLVED AFTER FOUR ROUNDS, AND THE FOUR PIECES OF EVIDENCE CONTRADICT EACH OTHER.** They are listed together here because each one",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:509; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "allocation-static-assert-in-the-suite-and-they-are-not-e",
+      "open": "// allocation (`static_assert` in the suite), and **they are NOT established to be `Nester`'s rather than `CompositeNester`'s.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:526; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "because-the-stores-are-dword-what-the-two-integers-mean-",
+      "open": "// because the stores are `dword`. **What the two integers MEAN is not established**, so they are named by their offsets and carry their defaults.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:547; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "are-is-not-established-the-base-constructor-0xb4470-has-",
+      "open": "// are is NOT established** -- the base constructor 0xB4470 has not been read -- and inventing them would place a field on no instruction.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:613; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "are-is-not-established-the-base-constructor-0xb4470-has--2",
+      "open": "// are is NOT established** -- the base constructor 0xB4470 has not been read -- and inventing them would place a field on no instruction.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/nester.hpp",
+      "settled_by": "REVIEW: a header line at nester.hpp:613; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "what-is-not-established-and-this-file-no-longer-pretends",
+      "open": "// **WHAT IS NOT ESTABLISHED, AND THIS FILE NO LONGER PRETENDS OTHERWISE.** A member declaration was written here from these offsets and then MEASURED,",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/pattern.hpp",
+      "settled_by": "REVIEW: a header line at pattern.hpp:43; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "declaration-does-not-have-and-what-that-is-is-not-establ",
+      "open": "// declaration does not have** -- and what that is is NOT established by this evidence.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/pattern.hpp",
+      "settled_by": "REVIEW: a header line at pattern.hpp:46; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "whether-the-original-s-pricing-layer-forms-a-column-gene",
+      "open": "\"whether the original's pricing layer forms a column generation loop is NOT established\"},",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/recovery.hpp",
+      "settled_by": "REVIEW: a header line at recovery.hpp:388; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "tree-s-routines-0x13a360-and-0x13c380-have-not-been-read",
+      "open": "// tree's routines (0x13A360 and 0x13C380) have not been read.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/row.hpp",
+      "settled_by": "REVIEW: a header line at row.hpp:1038; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "says-what-they-mean-and-a-name-needs-an-oracle-the-modul",
+      "open": "says what they mean, and **a name needs an oracle** -- the module's own string, or a setter whose instruction is the field's. What they",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/small_buffer.hpp",
+      "settled_by": "REVIEW: a header line at small_buffer.hpp:50; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "what-is-a-parameter-here-and-why-0x524ee0-is-1054-bytes-",
+      "open": "// What is a parameter here and why: 0x524EE0 is 1054 bytes and has NOT been read, so `statExtent` takes the measurement as a",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/stat.hpp",
+      "settled_by": "REVIEW: a header line at stat.hpp:52; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "0x76a130-the-routine-that-fills-that-object-has-not-been",
+      "open": "// 0x76A130 -- the routine that fills that object -- has not been read.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/tiling.hpp",
+      "settled_by": "REVIEW: a header line at tiling.hpp:85; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "the-0x70-bytes-re-0x4f2943-copies-in-at-8-through-0x78-i",
+      "open": "/** The 0x70 bytes RE 0x4F2943 copies in, at +8 through +0x78. **Its fields are not established one by one**, so it is carried as the byte",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/tiling.hpp",
+      "settled_by": "REVIEW: a header line at tiling.hpp:153; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "port-can-place-the-same-calls-because-those-bytes-have-n",
+      "open": "// port can place the same calls, because those bytes have not been read field by field.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/tiling.hpp",
+      "settled_by": "REVIEW: a header line at tiling.hpp:190; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "slot-3-0x4e7e50-in-six-of-the-eight-shared-and-its-name-",
+      "open": "slot 3, 0x4E7E50 in SIX of the eight       **SHARED, AND ITS NAME IS NOT ESTABLISHED EITHER",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/tiling.hpp",
+      "settled_by": "REVIEW: a header line at tiling.hpp:210; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "0x78-byte-elements-this-keeps-a-vector-of-shared-ptr-so-",
+      "open": "// 0x78 byte elements; this keeps a vector of shared_ptr so the port can place the same calls, because those elements have not been read.",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/tiling.hpp",
+      "settled_by": "REVIEW: a header line at tiling.hpp:395; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    },
+    {
+      "id": "initialised-and-the-object-is-returned-by-ret-the-elemen",
+      "open": "initialised and the object is returned by `ret`. **The element type is NOT established** -- the bodies index sheets, not indices -- so it is declared as",
+      "who": "sweep",
+      "evidence": "lcns/include/lcns/tiling.hpp",
+      "settled_by": "REVIEW: a header line at tiling.hpp:434; closed by an instruction that establishes it, or by the note being rewritten to say what IS known",
+      "status": "open",
+      "seen": 1
+    }
+  ]
+}
