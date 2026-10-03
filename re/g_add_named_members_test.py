@@ -63,7 +63,7 @@ def main():
     result = subprocess.run([sys.executable, os.path.join(ROOT, "re", "g_note.py"), "requirement",
                              "类成员必须有 oracle 命名（模块自己回答的选项名），并与同一条指令的偏移配对；没有名字的偏移只作为具名 unplaced 区段。"
                              "标准见 lcns/docs/WHAT_IS_NORMAL_CPP.md，检查见 re/g_gen_named_members.py。",
-                             "--check", "re/g_gen_named_members.py"], capture_output=True, text=True)
+                             "--check", "re/g_gen_named_members.py"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     print(result.stdout.strip()[:300])
     return 0
 

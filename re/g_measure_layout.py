@@ -32,7 +32,7 @@ def main():
     io.open(NESTER, "w", encoding="utf-8", newline="\n").write(stripped)
 
     result = subprocess.run([GXX, "-std=c++17", "-I", os.path.join(ROOT, "lcns", "include"),
-                             PROBE, "-o", PROBE_EXE], capture_output=True, text=True)
+                             PROBE, "-o", PROBE_EXE], capture_output=True, text=True, encoding="utf-8", errors="replace")
     if result.returncode != 0:
         print("the probe still does not build:")
         print(result.stderr[:900])
@@ -40,7 +40,7 @@ def main():
         print("asserts restored unchanged")
         return 1
 
-    run = subprocess.run([PROBE_EXE], capture_output=True, text=True)
+    run = subprocess.run([PROBE_EXE], capture_output=True, text=True, encoding="utf-8", errors="replace")
     measured = run.stdout
     print(measured)
 

@@ -32,7 +32,7 @@ def main():
     for label, body, should_fail in CASES:
         io.open(PLANT, "w", encoding="utf-8", newline="\n").write(
             "#pragma once\n#include <cstdint>\nnamespace lcns {\n" + body + "}\n")
-        result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+        result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
         failed = result.returncode != 0
         named = [line.strip() for line in (result.stdout or "").split("\n") if "_probe_named.hpp" in line]
         verdict = "correct" if failed == should_fail else "WRONG"

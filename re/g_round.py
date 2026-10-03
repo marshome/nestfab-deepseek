@@ -46,7 +46,10 @@ EXTRACTOR = {
 def run(command, cwd=ROOT, capture=True):
     """Run a command with an argument VECTOR, never a shell string, so no quoting layer can inject a git subcommand."""
     assert command[0] != "git" or "push" not in command, "the driver must never push"
-    result = subprocess.run(command, cwd=cwd, capture_output=capture, text=True)
+    # **THE ENCODING IS NAMED BECAUSE THIS MACHINE DECODES WITH GBK.** The rules are written in Chinese and their output reaches this driver, so a bare
+    # `text=True` makes `.stdout` None on the first non-ASCII byte and the caller's next attribute access raises. `errors="replace"` keeps the decode total:
+    # a driver that reads a tool's verdict must not be able to fail on a byte.
+    result = subprocess.run(command, cwd=cwd, capture_output=capture, text=True, encoding="utf-8", errors="replace")
     return result.returncode, result.stdout or "", result.stderr or ""
 
 

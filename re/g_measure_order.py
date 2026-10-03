@@ -50,7 +50,7 @@ def main():
             print("REFUSING: the probe did not compile")
             print((result.stderr or "")[:1500])
             return 1
-        run = subprocess.run([os.path.join(work, "probe.exe")], capture_output=True, text=True, encoding="utf-8")
+        run = subprocess.run([os.path.join(work, "probe.exe")], capture_output=True, text=True, encoding="utf-8", errors="replace")
     if run.returncode != 0:
         print("REFUSING: the probe did not run")
         return 1

@@ -32,7 +32,7 @@ def main():
     failures = []
     for label, body in CASES:
         io.open(PLANT, "w", encoding="utf-8", newline="\n").write("#pragma once\n#include <cstddef>\nnamespace lcns {\n" + body + "}\n")
-        result = subprocess.run([sys.executable, AUDIT], capture_output=True, text=True, encoding="utf-8")
+        result = subprocess.run([sys.executable, AUDIT], capture_output=True, text=True, encoding="utf-8", errors="replace")
         named = [line.strip() for line in (result.stdout or "").split("\n") if "_probe_fabricated.hpp" in line]
         caught = result.returncode != 0 and bool(named)
         print("planted %-52s -> exit %d  %s" % (label, result.returncode, named[0][:60] if named else "NOT NAMED"))

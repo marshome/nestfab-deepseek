@@ -43,7 +43,7 @@ def main():
 
         for label, broken in cases:
             io.open(VTABLES, "w", encoding="utf-8", newline="\n").write(json.dumps(broken, indent=2, ensure_ascii=False) + "\n")
-            result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+            result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
             failed = result.returncode != 0
             # the truncated case must be caught by the "word after the last slot" test
             named = [l.strip() for l in (result.stdout or "").split("\n") if "slot" in l or "AFTER" in l]
@@ -58,7 +58,7 @@ def main():
         os.remove(BACKUP)
 
     print("")
-    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
     print("and on the real data it exits %d" % result.returncode)
     if failures:
         print("FAILING: the check is blind to %s" % "; ".join(failures))

@@ -26,7 +26,7 @@ struct LimitedNesterMembers {
 
 def main():
     io.open(PLANT, "w", encoding="utf-8", newline="\n").write(SYNTHETIC)
-    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
     print("with a synthetic duplicate planted, the check reports:")
     for line in (result.stdout or "").strip().split("\n"):
         print("   %s" % line)

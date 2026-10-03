@@ -59,7 +59,7 @@ def sha256(path, limit=None):
 
 def run(command, cwd=ROOT):
     assert not (command[0] == "git" and any("push" in part for part in command)), "never push"
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True)
+    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     return result.returncode, (result.stdout or "").strip(), (result.stderr or "").strip()
 
 

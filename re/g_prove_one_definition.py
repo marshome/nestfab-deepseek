@@ -21,7 +21,7 @@ PROBE = os.path.join(HERE, "..", "lcns", "include", "lcns", "_probe_duplicate.hp
 
 
 def run():
-    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
     return result.returncode, (result.stdout or "") + (result.stderr or "")
 
 

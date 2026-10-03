@@ -18,7 +18,7 @@ BACKUP = os.path.join(HERE, "_vtable_slots_probe.json")
 
 
 def run_check():
-    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+    result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
     return result.returncode, (result.stdout or "") + (result.stderr or "")
 
 

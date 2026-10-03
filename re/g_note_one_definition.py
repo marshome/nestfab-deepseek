@@ -16,7 +16,7 @@ RULE = ("one definition per module object: two structs whose offset-commented fi
 def main():
     result = subprocess.run([sys.executable, os.path.join(HERE, "g_note.py"), "requirement", RULE,
                              "--check", "re/g_one_definition.py"],
-                            capture_output=True, text=True, encoding="utf-8")
+                            capture_output=True, text=True, encoding="utf-8", errors="replace")
     print((result.stdout or "").strip()[:400])
     if result.returncode != 0:
         print((result.stderr or "").strip()[:300])

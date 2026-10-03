@@ -39,7 +39,7 @@ def add_exclude():
 def regen():
     import subprocess
     import sys
-    result = subprocess.run([sys.executable, GEN], capture_output=True, text=True)
+    result = subprocess.run([sys.executable, GEN], capture_output=True, text=True, encoding="utf-8", errors="replace")
     print(result.stdout.strip()[:400])
 
 

@@ -38,7 +38,7 @@ REQUIREMENT_WORDS = ("要求", "requirement", "必须", "must ", "always ", "nev
 
 def run(command, cwd=ROOT):
     assert not (command[0] == "git" and "push" in command), "never push"
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True)
+    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     return result.returncode, (result.stdout or "").strip(), (result.stderr or "").strip()
 
 

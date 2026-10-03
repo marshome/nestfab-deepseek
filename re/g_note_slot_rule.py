@@ -21,7 +21,7 @@ RULE = ("vtable slot offset: vtable_rva is the table BASE (NULL at +0, typeinfo 
 def main():
     result = subprocess.run([sys.executable, os.path.join(HERE, "g_note.py"), "requirement", RULE,
                              "--check", "re/g_check_vtable_slots.py"],
-                            capture_output=True, text=True, encoding="utf-8")
+                            capture_output=True, text=True, encoding="utf-8", errors="replace")
     print((result.stdout or "").strip()[:300])
     if result.returncode != 0:
         print((result.stderr or "").strip()[:300])

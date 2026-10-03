@@ -37,15 +37,19 @@ def main(argv):
     parser.add_argument("--min", type=int, default=4)
     args = parser.parse_args(argv)
 
+    # **`encoding="utf-8"` IS NOT COSMETIC: WITHOUT IT PYTHON DECODES THE PIPE WITH THE CONSOLE CODEPAGE.** On this machine that is GBK, and a commit subject
+    # containing any non-ASCII character -- this project's own rules are written in Chinese and land in commit messages -- makes `text=True` fail with
+    # `UnicodeDecodeError: 'gbk' codec can't decode byte 0x8f`. **The failure is silent in the worst way**: `.stdout` is None, the next `.strip()` raises, and the
+    # RULE THAT READS THIS CHECK reports "the round-output check did not report a count" rather than the encoding error underneath it.
     log = subprocess.run(["git", "log", "--format=%h %s", "-n", str(args.commits)],
-                         cwd=ROOT, capture_output=True, text=True).stdout.strip().split("\n")
+                         cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace").stdout.strip().split("\n")
     log = [line for line in log if line]
     touched = 0
     rows = []
     for line in log:
         sha = line.split()[0]
         files = subprocess.run(["git", "show", "--name-only", "--format=", sha],
-                               cwd=ROOT, capture_output=True, text=True).stdout
+                               cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
         hits = [f for f in files.split("\n") if f.startswith("lcns/") and
                 (f.endswith(".hpp") or f.endswith(".cpp") or f.endswith(".inc"))]
         if hits:

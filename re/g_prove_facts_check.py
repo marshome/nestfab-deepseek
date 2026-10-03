@@ -28,7 +28,7 @@ def main():
         body = ("// A SYNTHETIC %s description, written only to prove the check fails on one.\n"
                 "#pragma once\nnamespace lcns {\n%s\n}\n" % (suffix, declaration))
         io.open(PLANT, "w", encoding="utf-8", newline="\n").write(body)
-        result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8")
+        result = subprocess.run([sys.executable, CHECK], capture_output=True, text=True, encoding="utf-8", errors="replace")
         caught = result.returncode != 0 and ("describes" in (result.stdout or ""))
         named = [line.strip() for line in (result.stdout or "").split("\n") if "_probe_facts.hpp" in line]
         print("planted a %-8s description -> exit %d, %s" % (suffix, result.returncode, named[0] if named else "NOT NAMED"))

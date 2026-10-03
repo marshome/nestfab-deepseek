@@ -124,7 +124,7 @@ for rnd in range(ROUNDS):
     subprocess.run(["git", "-C", r"D:\Nesting\nestfab", "add", "-A"])
     subprocess.run(["git", "-C", r"D:\Nesting\nestfab", "commit", "-q", "-m",
                     "re: sweep batch %d (%d largest un-cited domain functions)" % (rnd + 1, len(batch))],
-                   capture_output=True, text=True)
+                   capture_output=True, text=True, encoding="utf-8", errors="replace")
     cited = set(cited_set())          # recompute: the doc we just wrote cites them
     print("round %d: documented %d functions, %d bytes; un-cited now %d"
           % (rnd + 1, len(batch), sum(P[a].get("size") or 0 for a in batch), len(un) - len(batch)))
