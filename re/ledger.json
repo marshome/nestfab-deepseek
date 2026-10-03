@@ -3110,6 +3110,14 @@
    "round": 726,
    "subject": "Supervisors-state-is-0x530-bytes-of-containers",
    "witness": "destructor 0x30B60: six call 0x63F6D0 on lea rcx,[rsi+0x500..0x528]; 0x030BC9 mov rbx,[rsi+0x4e0] walks from lea r12,[rsi+0x4d0]; 0x030C76 mov rbx,[rsi+0x488] and 0x030C6F mov rbp,[rsi+0x490] bound a loop calling 0x452F0 then 0x9984B0; 0x030C45 lock sub dword [rbx+8],1 is a shared_ptr release; and 0x030C57 lea rax,[rip+0xa0b092] targets 0xA3BCE0 = 0xA3BCD0+0x10, stored at [rsi+0x478]"
+  },
+  {
+   "grade": "CONSTRUCTOR",
+   "kind": "offset",
+   "predicate": "Multi::Supervisor's constructor 0x32700 allocates a 0x530 byte state object, stores it at the Supervisor's +8, and installs four vtables: Utils::TimerWinImplementation at the object's own +0, Multi::NoFitMapCanceller at +0x478, Multi::NestingContextPool at +0x4C8, and Multi::Supervisor in the destination",
+   "round": 727,
+   "subject": "Supervisors-state-object-is-0x530-and-4-nested-types",
+   "witness": "0x032720 mov ecx,0x530 is the only site in the module asking for that size; 0x03271D mov r12,rcx makes r12 the Supervisor and 0x032736 mov rbx,rax the state object; 0x032AD2 mov qword [r12+8],rbx matches the destructor's 0x030B71 mov rsi,[rcx+8]; the lea targets 0xA3BCC0, 0xA3B8F0 and 0xA3B9B0 are the recorded bases 0xA3BCB0, 0xA3B8E0 and 0xA3B9A0 plus 0x10"
   }
  ]
 }
