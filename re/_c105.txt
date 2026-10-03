@@ -1,0 +1,42 @@
+lcns: the engine `run` bodies mapped -- the tool that reads an object's fields was WRONG about stores, and the two big engines' busiest register is NOT the object
+
+**THREE THINGS CAME OUT OF MAPPING EVERY ENGINE'S OBJECT ACCESS, AND ONE OF THEM IS A TOOL BUG THAT HAD BEEN READING EVERY FIELD BACKWARDS.**
+
+## The mapper called stores "reads" and reads "stores"
+
+Its first version asked whether the instruction's TEXT matched `mov <size> ptr [..]` and treated everything else as a load -- **so `755298 mov dword ptr [r13], 0` came out
+as a READ and `75545E mov qword ptr [r15 + 0x20], rax` came out as a WRITE.** A store places a field and a load only uses one, **and the objective asks for the
+instruction that PUTS a member there**, so the two cannot be swapped. **The test is now the OPERAND'S POSITION** -- a memory operand before the comma is a destination
+-- **and every offset in the report changed kind when it was fixed.**
+
+## And the register with the most accesses is not the object in the two big engines
+
+**`re/g_arg_access.py` prints EVERY argument register rather than tracking one**, **because the tracking breaks when a function spills `rcx` and reloads it elsewhere** --
+which is why `EquivalentEngine::run` and `CompositeEngine::run` had come out empty. **And printing all of them is what showed the trap:**
+
+    759D1D  lea r12, [rsp + 0x120]     ; **r12 is a STACK BUFFER**
+    759E12  lea rbp, [rax + 0xb0]      ; **rbp points INSIDE a heap object**
+    75A769  lea r12, [rsi + 0x68]      ; and r12 is reused for something else
+
+**so the two registers with 41 and 31 "fields" are not the object at all** -- **and the two functions report the SAME 31 offsets through `r12` in the same order**, which is
+what reading the same stack local from the same source code looks like. **The object register for those two is still UNFOUND.**
+
+## And what IS established is `MultiEngine`'s offsets, with the claim stated at the grade its witness supports
+
+    +0x00  write   755298  mov dword ptr [r13], 0
+    +0x18  write   755655  mov qword ptr [r9 + 0x18], 0
+    +0x20  write   75545E  mov qword ptr [r15 + 0x20], rax
+    +0x28  write   7554C4  mov qword ptr [r15 + 0x28], r12
+    +0x30  write   755489  mov qword ptr [r15 + 0x30], rax
+    +0x38  write   755796  mov qword ptr [r15 + 0x38], rdx
+    +0x40  write   7554BC  mov qword ptr [r15 + 0x40], 0
+    +0x08  read    7552A0  mov rcx, qword ptr [r13 + 8]
+
+**and the claim says `INSTRUCTION` rather than `CONSTRUCTION` ON PURPOSE**: what is measured is that the RUN body writes those offsets through that register. **Whether
+they are members INITIALISED by a constructor is NOT established**, because **no constructor for this class was found** -- the same gap the engine family has had since the
+vtable scan found no installer. **A claim graded one level above its witness is the failure this ledger exists to refuse, and it refused this one.**
+
+    re/g_object_access.py  an object's fields through a given register, stores and loads told apart by operand position
+    re/g_arg_access.py     every argument register, which is what finds the object register instead of assuming one
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green, and 463 claims with 0 problems.

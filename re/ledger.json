@@ -3694,6 +3694,30 @@
       "predicate": "an engine is called through `mov rax, [rbx]` / `mov rcx, rbx` / `call qword ptr [rax + 0x10]`, so the object is in `rcx` and slot 2 takes `this` first",
       "witness": "three sites, 0x24040, 0x24210 and 0x24885, all the same shape; at 0x24878 the third is preceded by `lock sub dword ptr [rbx + 8], 1` with a release branch, which is a `std::shared_ptr` count and identifies `rbx` as an object. **AND NO DIRECT CALL TO ANY ENGINE'S `run` EXISTS**, so this call shape is the only evidence there is -- and it is enough",
       "round": 768
+    },
+    {
+      "subject": "multiengine-has-eight-object-offsets",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "MultiEngine::run writes the values it is given at +0x00, +0x18, +0x20, +0x28, +0x30, +0x38 and +0x40 through the register that receives rcx, and reads +0x08",
+      "witness": "RE 0x755050, 2329 bytes. `rcx` is the object -- established from the call sites (`mov rax, [rbx]` / `mov rcx, rbx` / `call qword ptr [rax + 0x10]`, one of them preceded by `lock sub dword ptr [rbx + 8], 1`). The stores are `755298 mov dword ptr [r13], 0`, `755655 mov qword ptr [r9 + 0x18], 0`, `75545E mov qword ptr [r15 + 0x20], rax`, `7554C4 [r15 + 0x28], r12`, `755489 [r15 + 0x30], rax`, `755796 [r15 + 0x38], rdx` and `7554BC [r15 + 0x40], 0`, with `7552A0 mov rcx, qword ptr [r13 + 8]` as the read. **What each MEANS is not established**, so offset names are what the class can carry **This is an INSTRUCTION and not a CONSTRUCTION claim on purpose**: what is measured is that the RUN body writes those offsets through that register. **Whether they are members INITIALISED by a constructor is NOT established**, because no constructor for this class was found -- the same gap the engine family has had since the vtable scan found no installer",
+      "round": 769
+    },
+    {
+      "subject": "r12-and-rbp-are-not-the-object-in-the-two-big-engines",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "in `EquivalentEngine::run` and `CompositeEngine::run` the registers with the most accesses are NOT the object: `r12` is a stack buffer and `rbp` points inside a heap object",
+      "witness": "`759D1D lea r12, [rsp + 0x120]` -- **a stack buffer** -- and `759E12 lea rbp, [rax + 0xb0]` -- **inside another object**; `r12` is then reused at `75A769 lea r12, [rsi + 0x68]` and `75B4B8 lea r12, [rcx + rdx*8]`. **The two functions report the SAME 31 offsets through r12 in the same order, which is what reading the same stack local from the same source code looks like.** So the object register for those two is still UNFOUND, and `re/g_arg_access.py` -- which prints every argument register rather than tracking one -- is what showed this",
+      "round": 769
+    },
+    {
+      "subject": "a-memory-operand-before-the-comma-is-a-store",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the object-access mapper called `mov dword ptr [r13], 0` a READ and `mov rax, qword ptr [r15 + 0x20]` a WRITE, because it tested the instruction's text shape instead of the operand's position",
+      "witness": "its first version asked whether the text matched `mov <size> ptr [..]` and treated everything else as a read, **so destination and source came out swapped** -- and a store places a field while a load only uses one, which is the distinction the objective asks for. The test is now whether the memory operand lies before the comma, and every offset in the report changed kind when it was fixed",
+      "round": 769
     }
   ]
 }
