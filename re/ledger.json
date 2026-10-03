@@ -3590,6 +3590,14 @@
       "predicate": "a `std::vector` at `CompositeNester`'s +0x18 would make it 0x30 bytes, which does not fit the 0x28 the module allocates for FlipNester, while LimitedNester's constructor writes a begin/capacity pair at +0x20 and +0x28 which is what a vector looks like",
       "witness": "RE 0x2C953 is `mov ecx, 0x28` then `call 0x998500` then `call 0x4B570` for FlipNester, so the object is at most 0x28; and 0x4AAFA writes +0x20 from r9 and 0x4AAF6 writes +0x28 from [r9 + 8] in LimitedNester. **Both cannot be true and this round does not establish which** -- so the four CompositeNester declarations stay reverted, and `static_assert(sizeof(T) <= allocation)` is what would catch a wrong resolution",
       "round": 759
+    },
+    {
+      "subject": "the-sheet-selectors-named-one-offset-two-ways",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "RandomSheetSelector and NoMixSheetSelector store their constructor argument-pair the same way at +0x08 and +0x10, and only the NAMES disagreed: one called +0x08 secondArg_ and the other firstArg_",
+      "witness": "RandomSheetSelector 0xB0061 is mov qword [rax + 8], rdi with rdi from rdx, and 0xB006C is mov dword [rbx + 0x10], ebp with ebp from r8d; NoMixSheetSelector 0xAFD89 is mov qword [rax + 8], rsi with rsi from rdx, and 0xAFD94 is mov dword [rbx + 0x10], r12d with r12d from r8d. Both classes are right about their own parameter order and the offset is the name that survives; re/g_members_without_instructions.py listed the writes and the members side by side, which is how it was seen",
+      "round": 760
     }
   ]
 }

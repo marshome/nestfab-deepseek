@@ -479,11 +479,12 @@ public:
     // +0x00  RE 0x0B006F: mov qword [rbx], rax, where rax is 0xA3BA70 -- RandomSheetSelector's vtable
 
     /** +0x08, RE 0x0B0061: `mov qword [rax + 8], rdi` -- the constructor's SECOND parameter, a pointer. */
-    void* secondArg_ = nullptr;
+    // **NAMED BY OFFSET AND NOT BY ARGUMENT POSITION.** This used to be secondArg_, while NoMixSheetSelector -- a sibling -- calls the SAME field at the SAME offset irstArg_. **Both are right about their own constructor and both are wrong as names**: this class takes its destination in rcx and its vtable object in rdx, so the pointer lands in its second argument, while the subclass next door stores its first. **The offset is the only convention that survives a change of calling shape**, so the name is the offset and 	hirdArg_ below keeps its name because BOTH classes agree those are the same four bytes at +0x10.
+    void* at08_ = nullptr;
     /** +0x10, RE 0x0B006C: `mov dword [rbx + 0x10], ebp` -- the constructor's THIRD parameter, FOUR bytes. */
     std::uint32_t thirdArg_ = 0;
     /** +0x14, RE 0x0B0072 `call 0x523580` and 0x0B0077 `mov byte [rbx + 0x14], al` -- ONE BYTE, and 0x523580's return. **What it means is not recovered.** */
-    std::uint8_t byte14_ = 0;                         // NOT REVERSED: the byte 0x523580 returns
+    std::uint8_t at14_ = 0;   // renamed from yte14_ for the same reason: the name said nothing the offset does not                         // NOT REVERSED: the byte 0x523580 returns
     /** +0x18, RE 0x0B0084: `mov dword [rbx + 0x18], 1` -- **`mt[0]`, WHICH THE SEEDING SETS TO THE SEED ITSELF.** The standard seed puts the seed in the state's
      *  FIRST word and derives the rest from it, and 0x0B00A0's loop then writes `mt[1]` .. `mt[623]` because **`mov edx, 1` at 0x0B007F starts it at ONE**:
      *  first write +0x18 + 1*4 = +0x1C, last +0x18 + 623*4 = **+0x9D7**. **So the 624 words span +0x18..+0x9D7 and `mti` at +0x9D8 does not overlap them.** */

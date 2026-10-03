@@ -7264,9 +7264,9 @@ int main() {
         alignas(lcns::RandomSheetSelector) unsigned char storage[sizeof(lcns::RandomSheetSelector)];
         lcns::RandomSheetSelector& probe = *reinterpret_cast<lcns::RandomSheetSelector*>(storage);
         const unsigned char* at = reinterpret_cast<const unsigned char*>(&probe);
-        CHECK(reinterpret_cast<const unsigned char*>(&probe.secondArg_) - at == 0x08);   // RE 0x0B0061: mov qword [rax + 8], rdi
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.at08_) - at == 0x08);   // RE 0x0B0061: mov qword [rax + 8], rdi
         CHECK(reinterpret_cast<const unsigned char*>(&probe.thirdArg_) - at == 0x10);    // RE 0x0B006C: mov dword [rbx + 0x10], ebp
-        CHECK(reinterpret_cast<const unsigned char*>(&probe.byte14_) - at == 0x14);      // RE 0x0B0077: mov byte [rbx + 0x14], al
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.at14_) - at == 0x14);      // RE 0x0B0077: mov byte [rbx + 0x14], al
 
         // **AND `mt` IS 624 WORDS FROM +0x18, SETTLED BY THREE INSTRUCTIONS THAT AGREE.** 0x0B0084 writes `dword [rbx + 0x18], 1` -- **`mt[0]`, which the
         // standard seeding sets to the SEED itself** -- and 0x0B007F sets `edx` to 1 before the loop, so 0x0B00A0's `[rbx + rdx*4 + 0x18]` writes `mt[1]` at
