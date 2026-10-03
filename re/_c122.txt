@@ -1,0 +1,35 @@
+lcns: DelayedEngine REWRITTEN FROM ITS CONSTRUCTOR -- eleven members became three, and the allocation says why
+
+**THE DECLARATION THAT STOOD HERE WAS READ FROM `run` (0x756EC0, 750 bytes) AND GAVE THIS CLASS ELEVEN MEMBERS. ITS CONSTRUCTOR GIVES IT THREE.**
+
+    0x24B80, 192 bytes
+    024B87  mov rsi, rcx                            ; **rcx is a DESTINATION, not this**
+    024B8A  mov ecx, 0x28 / 024B98 call 0x998500   ; **allocate 0x28**
+    024BA3  mov rbx, rax                            ; the object is the allocation
+    024BA6  mov byte  ptr [rax + 8], 0              ; the base's byte, BEFORE the vtable
+    024BAA  mov dword ptr [rax + 0xc], 0            ; the base's dword, likewise
+    024BB8  mov qword ptr [rbx], rax                ; its vtable
+    024BBE  mov qword ptr [rbx + 0x10], rax         ; **+0x10, a shared_ptr CONTROL BLOCK**
+    024BC9  mov qword ptr [rbx + 0x18], rax         ; **+0x18, its pointer**
+    024BCF  lock add dword ptr [rax + 8], 1         ; **the use count, atomically**
+    024BD4  movsd qword ptr [rbx + 0x20], xmm2      ; **+0x20, a DOUBLE -- the fifth argument**
+    024BDE  mov qword ptr [rsi], rbx                ; the object written to where rcx points
+    024C0A  mov qword ptr [rsi + 8], rax            ; and a second 0x18-byte object it allocates at 0x24BD9
+
+**AND THE ARITHMETIC CLOSES**: 0x10 of base plus the three words at +0x10, +0x18 and +0x20 **is 0x28, which is what the constructor asks the allocator for.** The eleven-member
+declaration could not close anything, **because the body it was read from does not have `this` as its object register for the whole of its length.**
+
+## And that is the general lesson this round records
+
+**READING A `run` BODY CANNOT SEPARATE A CLASS'S OWN MEMBERS FROM A SUB-OBJECT'S.** The body at `0x756EC0` reads and writes through `rdi`, and `rdi` is reloaded from the stack
+part-way through -- **so offsets that a constructor would never place appeared as if they were the class's.** The four constructors read so far place **three, six, eight and three**
+members respectively, and **every one of them closes against its own allocation**:
+
+    EquivalentEngine   0x30 allocated, 0x28 placed by the stores   (the eight-byte gap is written down, not filled)
+    MultiEngine        0x48 allocated, 0x48 placed                 **exact**
+    DelayedEngine      0x28 allocated, 0x28 placed                 **exact**
+    NestingEngine      0x78 allocated, six members placed          (the rest is the second 0x18-byte object)
+
+    lcns/include/lcns/engines.hpp   DelayedEngine's three members, the factory signature, and why the old declaration was wrong
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the seven checks green, 495 claims with 0 problems.

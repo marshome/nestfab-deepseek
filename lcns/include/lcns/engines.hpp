@@ -274,21 +274,33 @@ public:
 
     DelayedEngine() = default;
 
-    /** **AND IT HAS MEMBERS, WHICH THIS DECLARATION DID NOT.** RE 0x756EC0, 750 bytes, and `rcx` is the object -- established from the CALL SITE and not from the body:
-     *  every engine is reached by `mov rax, qword ptr [rbx]` / `mov rcx, rbx` / `call qword ptr [rax + 0x10]` (0x24040, 0x24210, 0x24885), and the last of those is
-     *  preceded by `lock sub dword ptr [rbx + 8], 1`, a `std::shared_ptr` count.
+    /** **LIKE `NestingEngine`, ITS CONSTRUCTOR ALLOCATES THE OBJECT AND HANDS IT BACK THROUGH THE FIRST ARGUMENT.** RE 0x24B80, 192 bytes:
      *
-     *  So `0x756EEA mov rdi, rcx` makes `rdi` the object, and the function initialises FOUR fields before it does anything else:
+     *      024B87  mov rsi, rcx                            ; **rcx is a DESTINATION, not `this`**
+     *      024B8A  mov ecx, 0x28 / 024B98 call 0x998500   ; **allocate 0x28 -- the SMALLEST of the three engines**
+     *      024BA3  mov rbx, rax                            ; the object is the allocation
+     *      024BA6  mov byte  ptr [rax + 8], 0              ; the base's byte, BEFORE the vtable
+     *      024BAA  mov dword ptr [rax + 0xc], 0            ; the base's dword, likewise
+     *      024BB8  mov qword ptr [rbx], rax                ; its vtable
+     *      024BBB  mov rax, qword ptr [rdi]
+     *      024BBE  mov qword ptr [rbx + 0x10], rax         ; **+0x10, a shared_ptr CONTROL BLOCK**
+     *      024BC9  mov qword ptr [rbx + 0x18], rax         ; **+0x18, its pointer**
+     *      024BCF  lock add dword ptr [rax + 8], 1         ; **the use count, atomically**
+     *      024BD4  movsd qword ptr [rbx + 0x20], xmm2      ; **+0x20, a DOUBLE -- the fifth argument**
+     *      024BDE  mov qword ptr [rsi], rbx                ; **the object written to where rcx points**
+     *      024C0A  mov qword ptr [rsi + 8], rax            ; and a second 0x18-byte object the constructor allocates at 0x24BD9
      *
-     *      756F1C  mov dword ptr [rdi], 0        ; +0x00
-     *      756F27  mov qword ptr [rdi + 8], 0
-     *      756F2F  mov qword ptr [rdi + 0x10], 0
-     *      756F37  mov qword ptr [rdi + 0x18], 0
+     *  **AND `+0x20` IS A `double` HERE WHILE `MultiEngine` PUTS A DWORD IN ITS `+0x20`** -- so the two are not one layout, **which the allocations 0x28 and 0x48 already said
+     *  and this confirms field by field.**
      *
-     *  **and then a container is taken from 0x51BFC0 and the rest of the range is filled**: pointers at +0x20, +0x28, +0x38, +0x40, +0x48, +0x50 and dwords at +0x30
-     *  and back at +0x00 (`757117 mov dword ptr [rdi], 1`). **The element stride is 39 bytes** -- `0x6F96F96F96F96F97` is the modular inverse of 3 after `sar 3`, and
-     *  312 / 8 = 39, the same stride `GetNumberOfNestings` divides by. **What each field MEANS is not established**, so they are named by offset. */
+     *  **THE DECLARATION THAT STOOD HERE WAS READ FROM `run` (0x756EC0, 750 bytes) AND GAVE THIS CLASS ELEVEN MEMBERS FROM A BODY WHOSE OBJECT REGISTER WAS NOT `this`.** The
+     *  constructor gives three. **Reading a `run` body cannot separate a class's own members from a sub-object's, and the constructor can.** */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+
+private:
+    void* control10 = nullptr;         // +0x10, RE 0x024BBE -- a std::shared_ptr control block
+    void* pointed18 = nullptr;         // +0x18, RE 0x024BC9 -- and 0x24BCF increments its +0x08 atomically
+    double at20 = 0.0;                 // +0x20, RE 0x024BD4 `movsd qword ptr [rbx + 0x20], xmm2`
 };
 
 /** Engine::NestingEngine, Run at 0x757250, vtable 0xA3CFA0.

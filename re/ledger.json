@@ -4460,6 +4460,15 @@
       "witness": "`0x23E70` does `023E84 mov rdi, rcx`, `023E87 mov ecx, 0x78` / `023E94 call 0x998500`, `023E9E mov rbx, rax`, and writes the object to `rdi` at the end; `0x24B80` does `024B87 mov rsi, rcx`, `024B8A mov ecx, 0x28` / `024B98 call 0x998500`, `024BA3 mov rbx, rax`, then `024BDE mov qword ptr [rsi], rbx` and `024C0A mov qword ptr [rsi + 8], rax`. **Both allocate and both hand the result out through the first argument**, which is why the model's `DelayedEngine() = default` and `NestingEngine() = default` describe neither -- **and why `rcx` is not `this` in either constructor**",
       "tool": "instruction",
       "round": 788
+    },
+    {
+      "subject": "delayedengines-constructor-gives-three-members-where-run-gave-eleven",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "DelayedEngine has three members -- a shared_ptr control block at +0x10, its pointer at +0x18 and a double at +0x20 -- while the declaration read from its run body gave it eleven",
+      "witness": "RE 0x24B80, 192 bytes: 024BBE qword [rbx+0x10], 024BC9 qword [rbx+0x18] with 024BCF lock add dword [rax+8],1 on what +0x18 points at, and 024BD4 movsd qword [rbx+0x20], xmm2. **The allocation is 024B8A mov ecx, 0x28**, and 0x10 of base plus those three words is 0x28. **The run body at 0x756EC0 read eleven offsets through rdi, which 024B87 mov rsi, rcx shows is a DESTINATION for the constructor and not established to be this in the body** -- reading a run body cannot separate a class own members from a sub-object",
+      "tool": "instruction",
+      "round": 789
     }
   ]
 }
