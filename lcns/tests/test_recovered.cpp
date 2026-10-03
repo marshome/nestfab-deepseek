@@ -7173,5 +7173,35 @@ int main() {
         static_assert(sizeof(lcns::Order) >= 0x2C0, "the module's object is 0x2C0 and the port's own members follow it");
     }
 
+
+    // ---------------------------------------------------------------- the sheet-selector family (RE 0xAFD60 and the four tables)
+    {
+        // **THE INTERFACE'S SHAPE.** RE 0x7D25E0 and 0x7D3CE0 are slot 3 of two tables: each builds the three word small-string form with the length at +0x08,
+        // 9 for "AllSheets" and 0xc for "LargestSheet". **The classes are abstract, which is what an interface with no out-of-line constructor looks like** --
+        // `N5Multi13SheetSelectorE` is in the RTTI and `re/vtables.json` has no table for it.
+        static_assert(std::is_abstract<lcns::SheetSelector>::value, "the base has no vtable instance, so it must be abstract");
+        static_assert(std::has_virtual_destructor<lcns::SheetSelector>::value, "slots 0 and 1 of every table are the deleting destructor and the destructor");
+
+        // **AND `NoMixSheetSelector`'S SIZE IS WHAT ITS CONSTRUCTOR ALLOCATES.** RE 0xAFD70 `mov ecx, 0x50` is the only allocation size in 0xAFD60, and the two
+        // sub-objects it builds -- at +0x20 by 0x523FE0 and at +0x38 by 0xAF7D0 -- are 0x18 bytes each, because each of those functions touches `rbp` at +0x0
+        // and +0x10 and nothing else. **0x38 + 0x18 = 0x50, so a wrong declaration cannot fit.**
+        static_assert(sizeof(lcns::NoMixSheetSelector) == 0x50, "RE 0xAFD70 allocates 0x50 and the parts must sum to it");
+        static_assert(std::has_virtual_destructor<lcns::NoMixSheetSelector>::value, "RE 0xAFD98 installs a vtable, so it is polymorphic");
+
+        // **AND THE FIVE OFFSETS, WHICH A SIZE ALONE WOULD NOT CATCH** -- a transposed pair of same-sized members keeps the size and moves the offsets. Each
+        // is one store in 0xAFD60: +0x08 at 0xAFD89, +0x10 at 0xAFD94, +0x18 at 0xAFD9B with the source CLEARED at 0xAFDA3, +0x20 at 0xAFD9F and +0x38 at
+        // 0xAFDB4. **A POINTER DIFFERENCE RATHER THAN `offsetof`**, because a class with a vtable is not standard-layout and GCC warns about the extension.
+        alignas(lcns::NoMixSheetSelector) unsigned char storage[sizeof(lcns::NoMixSheetSelector)];
+        lcns::NoMixSheetSelector& probe = *reinterpret_cast<lcns::NoMixSheetSelector*>(storage);
+        const unsigned char* at = reinterpret_cast<const unsigned char*>(&probe);
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.firstArg_) - at == 0x08);   // RE 0xAFD89: mov qword [rax + 8], rsi
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.thirdArg_) - at == 0x10);   // RE 0xAFD94: mov dword [rbx + 0x10], r12d
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.owned18_) - at == 0x18);    // RE 0xAFD9B and 0xAFDA3: a moved-from pointer
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.member20_) - at == 0x20);   // RE 0xAFD9F: lea rcx, [rbx + 0x20]
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.member38_) - at == 0x38);   // RE 0xAFDB4: lea rcx, [rbx + 0x38]
+        CHECK(sizeof(lcns::NoMixSheetSelector::member20_) == 0x18);     // 0x523FE0 touches rbp at +0x0 and +0x10 only
+        CHECK(sizeof(lcns::NoMixSheetSelector::member38_) == 0x18);     // 0xAF7D0 touches rbp at +0x0 and +0x10 only
+    }
+
     return check::finish("test_recovered");
 }

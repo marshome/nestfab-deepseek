@@ -101,6 +101,8 @@ private:
 // +0x00 that the base does not have. The constructors write a `std::shared_ptr` into a CALLER-owned 2 word object, which is a fact about the CALL rather
 // than about the layout, and the two do not yet agree on which object holds what. **Recorded, not resolved.**
 // ---------------------------------------------------------------------------
+
+
 class BiModulePattern : public Pattern {
 public:
     BiModulePattern(double moduleW, double moduleH);
@@ -406,4 +408,63 @@ private:
 };
 
 }  // namespace tiling
+// ---------------------------------------------------------------------------
+// The sheet-selector family -- RE: 0xAFD60 (NoMixSheetSelector's constructor), vtables 0xA3B840 / 0xA3B9D0 / 0xA3BA60 / 0xA3BAC0
+// ---------------------------------------------------------------------------
+
+/** **A FOUR SLOT INTERFACE, AND THE BASE ITSELF HAS NO VTABLE INSTANCE** -- the RTTI carries `N5Multi13SheetSelectorE` and `re/vtables.json` has no table for it,
+ *  which is what an abstract base with no out-of-line constructor looks like. Every subclass's table is
+ *
+ *      slot 0  the deleting destructor          `jmp 0x9984B0`
+ *      slot 1  the destructor
+ *      slot 2  the selection                    FILLS THE BUFFER THE CALLER PASSES
+ *      slot 3  the selector's NAME              also returns through that buffer
+ *
+ *  **AND SLOT 2'S `rcx` IS THE BUFFER AND NOT `this`**: `Multi::AllSheetSelector`'s body begins `mov r12, rcx` (the object) and then `mov qword [rcx], 0`,
+ *  `[rcx + 8]` and `[rcx + 0x10]` -- **three stores into the CALLER'S memory**, which an earlier probe read as three of the object's own fields. **That is why
+ *  the object register is established before any offset is believed.**
+ *
+ *  **AND SLOT 3'S CONTENT IS A NAME.** RE `Multi::AllSheetSelector` 0x7D25E0 and `Multi::LargestSheetSelector` 0x7D3CE0: each builds the three word
+ *  small-string form with the bytes at +0x10 and **the LENGTH at +0x08** -- 9 for `"AllSheets"` and **0xc for `"LargestSheet"`**, which is twelve characters. */
+class SheetSelector {
+public:
+    virtual ~SheetSelector() = default;
+
+    /** Slot 2. **RETURNED THROUGH A BUFFER THE CALLER SUPPLIES**, which is the three word `std::vector` form: `[rcx]`, `[rcx + 8]` and `[rcx + 0x10]` are
+     *  initialised and the object is returned by `ret`. **The element type is NOT established** -- the bodies index sheets, not indices -- so it is declared as
+     *  `std::size_t` and marked, rather than guessed at. */
+    virtual std::vector<std::size_t> select() const = 0;      // NOT REVERSED: the element type
+    /** Slot 3. RE 0x7D25E0 and 0x7D3CE0, and the length field at +0x08 settling it: `"AllSheets"` and `"LargestSheet"`. */
+    virtual std::string name() const = 0;
+};
+
+/** RE 0xAFD60 (671 bytes). **THE OBJECT IS 0x50 BYTES AND ITS PARTS SUM TO EXACTLY THAT**, which is what makes this class landable where its three siblings are
+ *  not: `LargestSheetSelector` and `RandomSheetSelector` are built by 0xB0000 and 0xB0040, whose allocations are 0x10 and 0x9e0, and their tables' install sites
+ *  are not in the profile. Six fields are placed below and ONE constructor initialises all of them.
+ *
+ *  **THREE OF THE SIX CARRY NO NAME, BECAUSE THE MODULE GIVES NONE.** `N5Multi18NoMixSheetSelectorE` names the class and no member string names these; the two
+ *  sub-objects at +0x20 and +0x38 are built by 0x523FE0 and 0xAF7D0, whose own types this project has not read. **Their offsets, types and constructors are
+ *  established and their meanings are not**, so they are named for what is known and marked. */
+class NoMixSheetSelector : public SheetSelector {
+public:
+    /** RE 0xAFD60, and every line below is one store in it. The constructor takes a destination, a pointer, an int and a pointer, allocates 0x50 bytes,
+     *  installs the vtable, and returns the object through the destination. */
+    NoMixSheetSelector(void** destination);
+
+    // +0x00  RE 0xAFD98: mov qword [rbx], rax, where rax is 0xA3B9E0 -- NoMixSheetSelector's vtable
+
+    /** +0x08, RE 0xAFD89: `mov qword [rax + 8], rsi` -- the constructor's FIRST parameter, a pointer. */
+    void* firstArg_ = nullptr;
+    /** +0x10, RE 0xAFD94: `mov dword [rbx + 0x10], r12d` -- the constructor's THIRD parameter, FOUR bytes. */
+    std::uint32_t thirdArg_ = 0;
+    /** +0x18, RE 0xAFD9B and 0xAFDAB: `mov rax, qword [rbp]` then `mov qword [rbp], 0` then `mov qword [rbx + 0x18], rax`
+     *  -- **the source is CLEARED, so this is a moved-from pointer and not a copy.** */
+    void* owned18_ = nullptr;
+    /** +0x20, RE 0xAFD9F `lea rcx, [rbx + 0x20]` and 0xAFDAF `call 0x523FE0`. **0x18 BYTES**, because 0x523FE0 touches `rbp` at +0x0 and +0x10 and nothing else,
+     *  so it reaches +0x38. **Its meaning is not recovered.** */
+    std::byte member20_[0x18];                        // NOT REVERSED: a sub-object constructed by 0x523FE0
+    /** +0x38, RE 0xAFDB4 `lea rcx, [rbx + 0x38]` and 0xAFDBB `call 0xAF7D0`. **0x18 BYTES**, and 0x38 + 0x18 = 0x50, which is exactly the allocation. */
+    std::byte member38_[0x18];                        // NOT REVERSED: a sub-object constructed by 0xAF7D0
+};
+
 }  // namespace lcns
