@@ -3494,6 +3494,38 @@
       "predicate": "the Run = 0x4AB40 annotation on LimitedNester was wrong: 0x4AB40 is 1650 bytes with one caller and assigns [rsi], and a vptr is never written outside a constructor",
       "witness": "disassembling 0x4AB40 gives push r14 through sub rsp, 0x190 then mov rdi, rdx, mov rsi, rcx, and later mov qword ptr [rsi], rdx at 0x4AC77, which assigns a vptr. The class run is LCNS_SUBSTITUTED and carries no address",
       "round": 753
+    },
+    {
+      "subject": "the-nester-base-constructor-has-three-fields",
+      "grade": "CONSTRUCTOR",
+      "kind": "offset",
+      "predicate": "the nester base constructor is 0xB4470, 29 bytes, five callers, and it stores a vtable pointer at +0x00, a pointer from its second argument at +0x08, 0x1869F at +0x10 and 0xFFFFFFFF at +0x14",
+      "witness": "0xB4470's whole body is `lea rax, [rip + 0x987689]` / `mov qword ptr [rcx], rax` / `mov qword ptr [rcx + 8], rdx` / `mov dword ptr [rcx + 0x10], 0x1869f` / `mov dword ptr [rcx + 0x14], 0xffffffff` / `ret`, so the object register is rcx and the base part is 0x18 bytes. **The model's Nester declares none of them**, which is the 0x10 of data `kNestingNesterBaseDataGap` was written to record",
+      "round": 754
+    },
+    {
+      "subject": "0xB4DA0-is-a-derived-constructor-not-the-base",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "0xB4DA0 is a DERIVED class's constructor that shares the 0xB4470 base, not the base constructor itself, because it does everything 0xB4470 does and then moves a qword",
+      "witness": "0xB4DA0 is 43 bytes with seven callers: it repeats the vtable store, the +0x08 pointer and the two dword defaults, then adds `0B4DAA mov rax, qword ptr [r8]`, `0B4DBF mov qword ptr [r8], 0` and `0B4DC6 mov qword ptr [rcx + 0x18], rax`. Reading it as the base added an eighth byte pair and moved every derived member 8 bytes too far, which lcns/tests/test_recovered.cpp caught: atSeedP must measure 0x08 and measured 0x18",
+      "round": 754
+    },
+    {
+      "subject": "the-nester-base-fields-cannot-be-added-yet",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "**SUPERSEDED**: the base fields CAN be added, and are -- the contradiction was that the test offsets were written from a model whose base had no data. NestingNester derives from the 0xB4470 family and its first own member is at +0x18, which is what the module says",
+      "witness": "0x342E0 is NestingNester is constructor, identified by the offsets it writes (0x18, 0x20, 0x28, 0x30, 0x38, 0x9f8) and by its callees including 0xB4470; all five callers of 0xB4470 write their first own member at +0x18 while all seven callers of 0xB4DA0 write theirs at +0x20. kNestingNesterBaseDataGap is now 0x00 and the test asserts the module offsets directly",
+      "round": 754
+    },
+    {
+      "subject": "nester-has-three-base-fields",
+      "grade": "CONSTRUCTOR",
+      "kind": "offset",
+      "predicate": "Nester has a pointer at +0x08, 99999 at +0x10 and -1 at +0x14, written by its base constructor 0xB4470",
+      "witness": "0xB4470 is 29 bytes with five callers and its body is the vtable store, mov qword ptr [rcx + 8], rdx, mov dword ptr [rcx + 0x10], 0x1869f and mov dword ptr [rcx + 0x14], 0xffffffff; its object register is rcx. All five callers write their first own member at +0x18, which is how the base part is known to be 0x18 bytes",
+      "round": 755
     }
   ]
 }

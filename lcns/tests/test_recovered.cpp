@@ -6744,20 +6744,23 @@ int main() {
         const std::ptrdiff_t atRatio = reinterpret_cast<const char*>(&probe.ratio) - base;
         const std::ptrdiff_t atTwister = reinterpret_cast<const char*>(&probe.twister) - base;
 
-        CHECK(atSeedP == 0x08);      // MEASURED
-        CHECK(atSeedQ == 0x10);      // MEASURED
-        CHECK(atSeed == 0x18);       // MEASURED
-        CHECK(atRatio == 0x20);      // MEASURED
-        CHECK(atTwister == 0x28);    // MEASURED
+        // **THE REAL OFFSETS, NOW THAT THE BASE HAS ITS THREE FIELDS.** These used to read 0x08..0x28 with a `+ gap` correction, because the model's `Nester`
+        // held no data and the module's base part is 0x18 bytes. `lcns/nester.hpp` declares them now, so the offsets ARE the module's and there is no gap to add.
+        CHECK(atSeedP == 0x18);      // RE 0x34312: mov [rbx + 0x18], rax
+        CHECK(atSeedQ == 0x20);      // RE 0x3430E: mov [rbx + 0x20], rdx
+        CHECK(atSeed == 0x28);       // RE 0x34341: mov [rbx + 0x28], eax
+        CHECK(atRatio == 0x30);      // MEASURED
+        CHECK(atTwister == 0x38);    // MEASURED
 
         // **AND THE GAP IS THE FINDING**: the module's offsets are 0x10 further along, so its base occupies two quadwords this C++ `Nester`
         // does not have. What they are is NOT established -- 0xB4470 has not been read -- and that is recorded rather than filled in.
-        CHECK(lcns::kNestingNesterBaseDataGap == 0x10u);
-        CHECK(atSeedP + lcns::kNestingNesterBaseDataGap == 0x18);    // RE 0x34312: mov [rbx + 0x18], rax
-        CHECK(atSeedQ + lcns::kNestingNesterBaseDataGap == 0x20);    // RE 0x3430E: mov [rbx + 0x20], rdx
-        CHECK(atSeed + lcns::kNestingNesterBaseDataGap == 0x28);     // RE 0x34341: mov [rbx + 0x28], eax
-        CHECK(atRatio + lcns::kNestingNesterBaseDataGap == 0x30);    // RE 0x343E3: movsd [rbx + 0x30], xmm6
-        CHECK(atTwister + lcns::kNestingNesterBaseDataGap == 0x38);  // RE 0x34354: [rbx + rdx*4 + 0x38]
+        // **THE GAP IS ZERO NOW, AND THAT IS THE WHOLE POINT OF THE ROUND**: the 0x10 it recorded WAS the base's three fields, and they are declared.
+        CHECK(lcns::kNestingNesterBaseDataGap == 0x00u);
+        CHECK(atSeedP == 0x18);   // the base fields are declared, so no correction is needed    // RE 0x34312: mov [rbx + 0x18], rax
+        CHECK(atSeedQ == 0x20);   // the base fields are declared, so no correction is needed    // RE 0x3430E: mov [rbx + 0x20], rdx
+        CHECK(atSeed == 0x28);   // the base fields are declared, so no correction is needed     // RE 0x34341: mov [rbx + 0x28], eax
+        CHECK(atRatio == 0x30);   // the base fields are declared, so no correction is needed    // RE 0x343E3: movsd [rbx + 0x30], xmm6
+        CHECK(atTwister == 0x38);   // the base fields are declared, so no correction is needed  // RE 0x34354: [rbx + rdx*4 + 0x38]
 
         CHECK(offsetof(lcns::Mt19937, index) == 624u * 4u);
         CHECK(offsetof(lcns::SeedPair, second) == 0x08u);    // RE 0x34301

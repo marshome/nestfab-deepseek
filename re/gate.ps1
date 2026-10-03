@@ -53,6 +53,10 @@ Stage 'check_arch' { & $py (Join-Path $lcns 'tools\check_arch.py') }
 Stage 'embeddings' { & $py (Join-Path $root 're\check_embeddings.py') }
 Stage 'coverage' { & $py (Join-Path $root 're\g_coverage.py') }
 Stage 'acceptance' { & $py (Join-Path $root 're\g_acceptance.py') }
+# **AND THE OFFSET COMPENSATION CHECK**, because `lcns` declared `Nester` with no data while the module's base part is 0x18 bytes and a constant plus five
+# `member + gap == offset` assertions made that look measured. **An offset that needs arithmetic to reach is an offset the model does not have.** It was added after
+# the human asked "Nester 这个基类没有字段？" and the answer was no.
+Stage 'offset-compensation' { & $py (Join-Path $root 're\g_gap_compensation.py') }
 
 Write-Host 'GATE GREEN'
 # The verdict goes to a file so re/g_rules.py can check "门禁保持全绿" without paying two minutes for it. A rule checker that

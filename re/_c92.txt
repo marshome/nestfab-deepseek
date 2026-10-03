@@ -1,0 +1,42 @@
+lcns: `Nester` HAS three data fields -- and the round that found them first added the wrong ones, then let the test say so
+
+**THE HUMAN ASKED "Nester 这个基类没有字段？" AND THE ANSWER WAS NO.** `lcns/include/lcns/nester.hpp` declared the base with no data, and RE 0xB4470 -- the base
+constructor, 29 bytes, five callers -- is:
+
+    0B4470  lea rax, [rip + 0x987689]
+    0B4477  mov qword ptr [rcx], rax              ; the BASE vtable
+    0B447A  mov qword ptr [rcx + 8], rdx          ; a pointer, from the constructor's second argument
+    0B447E  mov dword ptr [rcx + 0x10], 0x1869F   ; 99999
+    0B4485  mov dword ptr [rcx + 0x14], 0xffffffff
+
+**so the base part is 0x18 bytes and the model had none of it.** `Nester` now declares `at08`, `at10` and `at14`, with the instructions on them.
+
+## And the round got it wrong once, in a way worth keeping
+
+**The first attempt read `0xB4DA0` as the base.** It does everything 0xB4470 does **and then moves a qword** -- `0B4DAA mov rax, [r8]`, `0B4DBF mov qword [r8], 0`,
+`0B4DC6 mov qword [rcx + 0x18], rax` -- **so it is a DERIVED class's constructor that shares this base, not the base.** Reading it as the base added a fourth field
+and pushed every derived member 8 bytes too far, **and `lcns/tests/test_recovered.cpp` failed on `atSeedP == 0x08` in the next build.**
+
+**THE TEST WAS RIGHT AND ITS PREMISE WAS WRONG**, and it said so itself: it asserted `atSeedP == 0x08` and carried `kNestingNesterBaseDataGap = 0x10` with the note
+*"the base constructor 0xB4470 has not been read"*. **That 0x10 WAS the base's three fields**, and the `member + gap == moduleOffset` arithmetic was the model
+compensating for data it did not declare.
+
+## And the discriminating measurement is the CALLERS' OWN OFFSETS
+
+    all five callers of 0xB4470 write their first own member at +0x18
+    all seven callers of 0xB4DA0 write theirs at +0x20
+
+**so the two constructors are bases of two different families**, and `0x342E0` -- `NestingNester`'s constructor, identified by the offsets it writes -- calls 0xB4470.
+**The smaller of two constructors of the same family is the base, and a class's own first offset says which family it belongs to.**
+
+## What changed
+
+    lcns/include/lcns/nester.hpp   at08, at10 = 99999, at14 = -1, with 0xB4470's instructions above them
+    lcns/include/lcns/nester.hpp   kNestingNesterBaseDataGap = 0x10 becomes 0x00, because the gap is now declared
+    lcns/tests/test_recovered.cpp  the five offsets move to 0x18..0x38 and the five `+ gap` corrections are gone
+
+**so the module's offsets are the model's offsets, and nothing adds a correction to reach them.**
+
+    re/g_missing_base.py   the scan for this shape: a non-zero `*gap*` constant, and the `member + gap` arithmetic that consumes it
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the five checks green.

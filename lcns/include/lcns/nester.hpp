@@ -365,6 +365,31 @@ public:
     virtual bool prepare(SolveContext&) { return true; }  // v3
     virtual double estimate(const SolveContext&) const;   // v4
     virtual Solution run(SolveContext&) = 0;              // v5
+
+    // **AND IT HAS THREE DATA MEMBERS, WHICH THIS DECLARATION DID NOT HAVE.** RE 0xB4470 is the base constructor; it has FIVE callers and its whole body is 29 bytes:
+    //
+    //     0B4470  lea rax, [rip + 0x987689]
+    //     0B4477  mov qword ptr [rcx], rax              ; the BASE vtable
+    //     0B447A  mov qword ptr [rcx + 8], rdx          ; a pointer, from the constructor's second argument
+    //     0B447E  mov dword ptr [rcx + 0x10], 0x1869F   ; 99999
+    //     0B4485  mov dword ptr [rcx + 0x14], 0xffffffff
+    //
+    // **the object register is `rcx`**, established by its use as the store base in every store above, **and the base part is 0x18 bytes**.
+    //
+    // **AND THE PROOF THAT IT IS THIS CLASS'S BASE IS THE CALLERS' OWN OFFSETS**: all five of 0xB4470's callers write their first own member at +0x18 -- while the
+    // seven callers of `0xB4DA0` write theirs at +0x20, **so 0xB4DA0 is a DIFFERENT class's base** (it does everything 0xB4470 does and then moves a qword from
+    // [r8] into +0x18, making that part 0x20 bytes). `0x342E0`, which is `NestingNester`'s constructor, calls 0xB4470 and writes +0x18 first.
+    //
+    // **AND READING `0xB4DA0` AS THIS BASE WAS THIS ROUND'S MISTAKE**: it added a fourth field, moved every derived member 8 bytes too far, and
+    // `lcns/tests/test_recovered.cpp` caught it in one build. **The lesson is that the smaller of two constructors of the same family is the base, and the
+    // caller offsets say which family a class belongs to.**
+    //
+    // **THE TYPES ARE WHAT THE INSTRUCTIONS SAY AND NOT MORE**: `+0x8` is a pointer because a register is stored there, `+0x10` and `+0x14` are thirty-two bits
+    // because the stores are `dword`. **What the two integers MEAN is not established**, so they are named by their offsets and carry their defaults.
+protected:
+    void* at08 = nullptr;             // +0x08, 0xB447A: from the constructor's second argument
+    std::int32_t at10 = 99999;        // +0x10, 0xB447E: 0x1869F
+    std::int32_t at14 = -1;           // +0x14, 0xB4485: 0xFFFFFFFF
 };
 
 // --- concrete strategies -----------------------------------------------------
@@ -432,7 +457,7 @@ public:
 // instructions, the model's offsets are asserted in lcns/tests/test_recovered.cpp -- **a test is where a measurement belongs and a header is
 // where a declaration belongs**, which is also why the offsets are not asserted here: `offsetof` on a polymorphic class is only conditionally
 // supported and GCC warns, and a warning is a measurement the gate refuses.
-constexpr std::size_t kNestingNesterBaseDataGap = 0x10;    // module offset minus model offset, the same for all five members
+constexpr std::size_t kNestingNesterBaseDataGap = 0x00;    // module offset minus model offset, the same for all five members
 
 static_assert(offsetof(SeedPair, second) == 0x08, "RE 0x34301: mov rdx, [rdi + 8]");
 static_assert(Mt19937::kStateSize == 624, "RE 0x3435C: cmp rdx, 0x270");
