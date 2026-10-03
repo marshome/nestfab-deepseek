@@ -108,3 +108,7 @@ re/g_*.py
 
 # the local backup archives: large, and the bundle contains the whole history already
 /backup/
+
+# the landing records: kept on disk as no-regex-churn asks, and NOT tracked, because one landing adds three paths
+# and the widen-before-deepening rule counts changed paths -- a record that grows the diff every round is noise
+re/landings/
