@@ -542,19 +542,48 @@ public:
  *
  *  **AND THE TWO INT MEMBERS HAD NO EVIDENCE AT ALL**: nothing in the constructor stores at +0x08 or +0x0C, and the substitute does not read them. **They are
  *  deleted rather than kept looking recovered**, and the fields the constructor DOES write are declared in their place. */
-class LimitedNester : public Nester {
+// **`COMPOSITE NESTER` IS DEFINED HERE AND NOT NEXT TO THE OTHERS, BECAUSE `LimitedNester` DERIVES FROM IT AND A BASE MUST BE COMPLETE.** RE 0xA3B780 (shell);
+// its own constructor is RE 0xB4DA0, 43 bytes, seven callers, and it is the one that writes the `std::vector` at +0x18 -- **which is why every LimitedNester
+// member is 0x10 further along than an inheritance straight from `Nester` would put it.**
+class CompositeNester : public Nester {
+public:
+    void add(std::shared_ptr<Nester> n) { children_.push_back(std::move(n)); }
+    const char* name() const override { return "CompositeNester"; }
+    Solution run(SolveContext&) override;
+private:
+    // +0x18 begin, +0x20 end, +0x28 capacity -- the three pointers `0xB4DA0` and every derived constructor write
+    std::vector<std::shared_ptr<Nester>> children_;
+};
+
+// **`LimitedNester` DERIVES FROM `CompositeNester` AND NOT FROM `Nester`, AND ITS FIELDS ARE THE ONES THE CONSTRUCTOR WRITES AT +0x30 AND BEYOND.** The proof is
+// the typeinfo chain, which this project already documented in base_chain.hpp: `N5Multi13LimitedNesterE` at vtable 0xA3B660, its base `N5Multi15CompositeNesterE` at
+// 0xA3B790, and `N5Multi6NesterE` at 0xA3BB00. **So the object is:**
+//
+//     +0x00  vptr of LimitedNester
+//     +0x08  Nester::at08          +0x10 Nester::at10      +0x14 Nester::at14
+//     +0x18  **CompositeNester::children_ -- a std::vector, THREE pointers**
+//     +0x20       its end pointer      +0x28 its capacity pointer
+//     +0x30  LimitedNester's own members
+//
+// **AND THAT IS WHAT THE CONSTRUCTOR'S STORES ARE.** 0x4AAFA writes +0x20 and 0x4AAF6 writes +0x28 from `r9` and `[r9 + 8]` -- **a begin/end pair going into the
+// vector's end and capacity slots** -- and then `0x4AAFE lea rcx, [rbx + 0x30]` constructs the FIRST OWN MEMBER at 0x30. **The previous declaration listed
+// `+0x20` and `+0x28` as LimitedNester's own, which put every field 0x10 too low.** 0xB4DA0 is `CompositeNester`'s constructor and it is what wrote the vector's
+// storage pointer at +0x18.
+class CompositeNester;   // **ITS DEFINITION IS ABOVE `LimitedNester`** -- a base must be complete
+class LimitedNester : public CompositeNester {
 public:
 
-    /** RE 0x4AAD0, 101 bytes, one caller. `rcx` is the new object, `r8` is a `{count, pointer}` pair and `r9` is a copy of it. **The object register is `rbx`,
-     *  established by 0x4AAD6 `mov rbx, rcx`, and every store below is through it**:
+    /** RE 0x4AAD0, 101 bytes. **The object register is `rbx`, established by 0x4AAD6 `mov rbx, rcx`**, and every store below is through it:
      *
-     *      04AAE9  lea rax, [rip + 0x9f0b70]      ; the vtable
-     *      04AAF0  mov qword [rbx], rax           ; **written here and nowhere else, which is what a constructor is**
-     *      04AAFA  mov qword [rbx + 0x20], rax    ; from r9
-     *      04AAF6  mov qword [rbx + 0x28], rdx    ; from [r9 + 8]
-     *      04AAFE  call 0x5f3900 with rcx = rbx + 0x30   ; constructs the member at +0x30
+     *      04AADC  call 0xB4DA0                        ; **CompositeNester's constructor -- the vector and the +0x18 storage pointer**
+     *      04AAE9  lea rax, [rip + 0x9f0b70]           ; LimitedNester's vtable
+     *      04AAF0  mov qword [rbx], rax                ; **written here and nowhere else, which is what a constructor is**
+     *      04AAF3  mov rax, qword [rsi]                ; rsi = r9, the argument
+     *      04AAF6  mov qword [rbx + 0x28], rdx         ; rdx = [r9 + 8] -- the vector's capacity slot
+     *      04AAFA  mov qword [rbx + 0x20], rax         ; -- the vector's end slot
+     *      04AAFE  lea rcx, [rbx + 0x30] ; call 0x5F3900   ; **constructs the first OWN member, at +0x30**
      *      04AB03  mov qword [rbx + 0x38], 0
-     *      04AB0B  mov dword [rbx + 0x40], 0x3b9ac999f   ; a large bound
+     *      04AB0B  mov dword [rbx + 0x40], 0x3B9AC99F ; a large bound
      *      04AB12  mov byte  [rbx + 0x44], 1
      *      04AB16  mov byte  [rbx + 0x45], 0
      *
@@ -565,8 +594,6 @@ public:
 private:
     // **THE NAMES ARE THE OFFSETS BECAUSE THE MODULE GIVES NO ORACLE FOR THEM YET.** The two members that were here (`maxParts_`, `maxAngles_`) had NO evidence --
     // nothing stores at +0x08 or +0x0C and the substitute does not read them -- so they are gone. What is certain is WHERE the constructor writes:
-    std::uint64_t at20 = 0;   // +0x20, 0x4AAFA: `mov qword [rbx + 0x20], rax`, rax from r9
-    std::uint64_t at28 = 0;   // +0x28, 0x4AAF6: `mov qword [rbx + 0x28], rdx`, rdx from [r9 + 8]
     std::uint64_t at30 = 0;   // +0x30, 0x4AAFE: constructed by 0x5F3900, which stores the result of 0x5F47C0 at its own +0x00
     std::uint64_t at38 = 0;   // +0x38, 0x4AB03: zeroed
     std::uint32_t at40 = 0;   // +0x40, 0x4AB0B: initialised to 0x3B9AC99F, a large bound
@@ -755,14 +782,8 @@ public:
     Solution run(SolveContext&) override;
 };
 
-class CompositeNester : public Nester {        // RE 0xA3B780 (shell)
-public:
-    void add(std::shared_ptr<Nester> n) { children_.push_back(std::move(n)); }
-    const char* name() const override { return "CompositeNester"; }
-    Solution run(SolveContext&) override;
-private:
-    std::vector<std::shared_ptr<Nester>> children_;
-};
+// **`CompositeNester` IS DEFINED ABOVE, BEFORE `LimitedNester`, BECAUSE `LimitedNester` DERIVES FROM IT AND A BASE MUST BE COMPLETE.** Its definition used to sit
+// here, after the class that inherits it -- **which is why `LimitedNester` declared `public Nester` instead and every one of its members ended up 0x10 too low.**
 
 namespace pack {
 // RE Pack::BestNester 0xA3B400 / KnapsackNester 0xA3B430 / RecursiveNester 0xA3B460

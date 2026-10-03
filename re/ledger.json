@@ -3483,8 +3483,8 @@
       "subject": "limitednester-constructor-is-0x4AAD0",
       "grade": "CONSTRUCTOR",
       "kind": "offset",
-      "predicate": "LimitedNester is 0x48 bytes and its constructor is 0x4AAD0, which writes the vtable at +0x00, two quadwords at +0x20 and +0x28, constructs a member at +0x30, zeroes +0x38, sets +0x40 to 0x3B9AC99F and sets the bytes at +0x44 and +0x45",
-      "witness": "0x2C9A0 and 0x2C9F0 are mov ecx, 0x48 / call 0x998500 / call 0x4AAD0; 0x4AAD0 is 101 bytes and 0x4AAD6 mov rbx, rcx establishes the object register. 0x4AAF0 mov qword [rbx], rax after 0x4AAE9 lea rax, [rip + 0x9f0b70] writes the vtable. No instruction stores at +0x08 or +0x0C, so the maxParts_ and maxAngles_ members that were declared there had no evidence and were deleted",
+      "predicate": "LimitedNester derives from CompositeNester and its constructor 0x4AAD0 writes the vtable at +0x00, the base vector end and capacity pointers at +0x20 and +0x28, a constructed member at +0x30, zeroes +0x38, sets +0x40 to 0x3B9AC99F and sets the bytes at +0x44 and +0x45",
+      "witness": "typeinfo at vtable 0xA3B660 is N5Multi13LimitedNesterE, its base at 0xA3B790 is N5Multi15CompositeNesterE and at 0xA3BB00 is N5Multi6NesterE. 0x4AADC calls 0xB4DA0, which is CompositeNester is constructor and writes the vector storage pointer at +0x18; 0x4AAFA writes +0x20 and 0x4AAF6 writes +0x28 from r9 and [r9+8]; 0x4AAFE does lea rcx, [rbx + 0x30] and calls 0x5F3900, which constructs the first OWN member",
       "round": 753
     },
     {
@@ -3526,6 +3526,14 @@
       "predicate": "Nester has a pointer at +0x08, 99999 at +0x10 and -1 at +0x14, written by its base constructor 0xB4470",
       "witness": "0xB4470 is 29 bytes with five callers and its body is the vtable store, mov qword ptr [rcx + 8], rdx, mov dword ptr [rcx + 0x10], 0x1869f and mov dword ptr [rcx + 0x14], 0xffffffff; its object register is rcx. All five callers write their first own member at +0x18, which is how the base part is known to be 0x18 bytes",
       "round": 755
+    },
+    {
+      "subject": "limitednester-derives-from-compositenester",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "LimitedNester derives from CompositeNester, which derives from Nester, so LimitedNester is own members start at +0x30 and the three pointers at +0x18, +0x20 and +0x28 are CompositeNester is std::vector",
+      "witness": "the Itanium typeinfo chain read from the vtables: 0xA3B660 is N5Multi13LimitedNesterE, its base pointer leads to 0xA3B790 N5Multi15CompositeNesterE, and that base leads to 0xA3BB00 N5Multi6NesterE. lcns/include/lcns/base_chain.hpp already documented this chain and named CompositeNester as the owner of the fields. 0x4AADC calls CompositeNester is constructor 0xB4DA0 and 0x4AAFE constructs the first own member at +0x30 **The grade is INSTRUCTION and not DERIVATION**: the typeinfo gives the CHAIN, and what places the fields is the constructors is own stores -- 0x4AADC calls 0xB4DA0 (which writes +0x18) and 0x4AAFE constructs the first own member at +0x30.",
+      "round": 756
     }
   ]
 }

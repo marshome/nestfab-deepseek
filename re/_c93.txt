@@ -1,0 +1,39 @@
+lcns: `LimitedNester` derives from `CompositeNester` -- the MIDDLE CLASS of the nester family, and the 0x10 that every one of its members was missing
+
+**THE PREVIOUS ROUND DECLARED `LimitedNester : public Nester` WITH FIELDS AT +0x20, AND BOTH WERE WRONG BY 0x10.** The evidence is the typeinfo chain, which this
+project had ALREADY written down in `lcns/include/lcns/base_chain.hpp` -- *"TWO LAYERS, AND THE MIDDLE ONE WAS ENTIRELY MISSING"* -- and which the constructors' own
+stores confirm:
+
+    vtable 0xA3B660  'N5Multi13LimitedNesterE'     Multi::LimitedNester
+    vtable 0xA3B790  'N5Multi15CompositeNesterE'   **Multi::CompositeNester**
+    vtable 0xA3BB00  'N5Multi6NesterE'             Multi::Nester
+
+**so the object is:**
+
+    +0x00  LimitedNester's vptr
+    +0x08  Nester::at08         +0x10 Nester::at10        +0x14 Nester::at14
+    +0x18  **CompositeNester::children_ -- a std::vector, THREE pointers**
+    +0x20      its end pointer      +0x28 its capacity pointer
+    +0x30  LimitedNester's own members
+
+**AND THE CONSTRUCTOR'S STORES ARE EXACTLY THAT**: `0x4AAFA` writes +0x20 and `0x4AAF6` writes +0x28 from `r9` and `[r9 + 8]` -- **a begin/end pair going into the
+vector's end and capacity slots** -- and then `0x4AAFE lea rcx, [rbx + 0x30]` constructs the FIRST OWN MEMBER at 0x30. **The previous declaration called +0x20 and
++0x28 LimitedNester's own, which put every field 0x10 too low and invented two members that are the base's vector.**
+
+**AND `0xB4DA0` -- WHICH THE PREVIOUS ROUND READ AS A CLASS'S OWN BASE -- IS `CompositeNester`'S CONSTRUCTOR.** It writes the vector's storage pointer at +0x18,
+which is the third of the three pointers a `std::vector` has.
+
+## What changed
+
+    lcns/include/lcns/nester.hpp   CompositeNester is DEFINED ABOVE LimitedNester, because a base must be complete
+    lcns/include/lcns/nester.hpp   LimitedNester derives from it, and its members start at +0x30
+    lcns/include/lcns/nester.hpp   the duplicate CompositeNester definition below is removed, with the reason it was misplaced
+
+**AND THE REORDERING WAS FORCED BY THE LANGUAGE RATHER THAN CHOSEN**: a forward declaration is not enough for a base class, so the definition had to move above
+`LimitedNester` -- **and its old position, after the class that inherits it, is exactly why that class declared `public Nester` instead.**
+
+**AND THIS IS THE THIRD TIME IN THREE ROUNDS THAT THE SAME SHAPE APPEARED -- a model that is systematically short of the module by a fixed amount, with the missing
+bytes belonging to a base.** `re/g_gap_compensation.py` is the check that now names it, and `lcns/base_chain.hpp` is the document that already said which class owned
+the fields: **the information was in the repository and the declaration beside it disagreed with it.**
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green.
