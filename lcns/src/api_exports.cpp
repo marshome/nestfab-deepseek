@@ -39,28 +39,28 @@ extern "C" int AddPolygonHoleToPart(Part, int, const double*) {
 
 // ordinal 3/4  rva 0x162B0  353 bytes  // AddPolygonPart
 // signature from the inferred typed table
-extern "C" Part AddPolygonPart(Order, int, int, const double*, int) {
+extern "C" Part AddPolygonPart(OrderHandle, int, int, const double*, int) {
     lcns::dll::exports::notReversed(1u);
     return nullptr;
 }
 
 // ordinal 5/6  rva 0x15BF0  1717 bytes
 // signature from the inferred typed table
-extern "C" Sheet AddSheet(Order, int, double, double, int) {
+extern "C" Sheet AddSheet(OrderHandle, int, double, double, int) {
     lcns::dll::exports::notReversed(2u);
     return nullptr;
 }
 
 // ordinal 7/8  rva 0x118F0  3660 bytes  *** ERROR unterminated/cancelled computation ***
 // signature from the inferred typed table
-extern "C" int DeleteLaunchingOrder(Order) {
+extern "C" int DeleteLaunchingOrder(OrderHandle) {
     lcns::dll::exports::notReversed(3u);
     return 0;
 }
 
 // ordinal 9/10  rva 0x0B1D0  370 bytes  <h1> Problem contains invalid parts. </h1>
 // signature from the inferred typed table
-extern "C" int GenerateHtmlLaunchingOrderReport(Order, const char*) {
+extern "C" int GenerateHtmlLaunchingOrderReport(OrderHandle, const char*) {
     lcns::dll::exports::notReversed(4u);
     return 0;
 }
@@ -74,7 +74,7 @@ extern "C" int GenerateHtmlSolutionReport(Solution, const char*) {
 
 // ordinal 13/14  rva 0x0B8D0  378 bytes  source_version
 // signature from the inferred typed table
-extern "C" int GenerateLaunchingOrderProblem(Order, const char*) {
+extern "C" int GenerateLaunchingOrderProblem(OrderHandle, const char*) {
     lcns::dll::exports::notReversed(6u);
     return 0;
 }
@@ -134,60 +134,60 @@ extern "C" const char* GetPartUserString(Part* object) {
 
 // ordinal 29/30  rva 0x0B510  43 bytes
 // signature from the inferred typed table
-extern "C" void* GetPartWithBadGeometry(Order* object) {
+extern "C" void* GetPartWithBadGeometry(OrderHandle* object) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xB510's body reads through rcx.
     return lcns::dll::exports::impl::getPartWithBadGeometry(static_cast<void*>(object));
 }
 
 // ordinal 31/32  rva 0x0B600  332 bytes  number <= order->sheets.size()
 // signature from the inferred typed table
-extern "C" Sheet GetSheet(Order, int) {
+extern "C" Sheet GetSheet(OrderHandle, int) {
     lcns::dll::exports::notReversed(15u);
     return nullptr;
 }
 
 // ordinal 33/34  rva 0x0B0A0  29 bytes
 // signature from the inferred typed table
-extern "C" void* GetSolution(Order* object) {
+extern "C" void* GetSolution(OrderHandle* object) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx as the argument register(s), and 0xB0A0's body reads through rcx.
     return lcns::dll::exports::impl::getSolutionIdentity(static_cast<void*>(object));
 }
 
 // ordinal 35/36  rva 0x06100  3894 bytes  c:/Temp/cns.pb.json
 // signature from the inferred typed table
-extern "C" void* LaunchComputation(Order, const char*, const char*, double) {
+extern "C" void* LaunchComputation(OrderHandle, const char*, const char*, double) {
     lcns::dll::exports::notReversed(17u);
     return nullptr;
 }
 
 // ordinal 37/38  rva 0x14620  1081 bytes
 // signature from the inferred typed table
-extern "C" Order NewLaunchingOrder(int, double, double) {
+extern "C" OrderHandle NewLaunchingOrder(int, double, double) {
     lcns::dll::exports::notReversed(18u);
     return nullptr;
 }
 
 // ordinal 39/40  rva 0x0CF20  303 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" void SetInterpartGap(Order, double) {
+extern "C" void SetInterpartGap(OrderHandle, double) {
     lcns::dll::exports::notReversed(19u);
 }
 
 // ordinal 41/42  rva 0x0C1A0  241 bytes
 // signature from the inferred typed table
-extern "C" void SetPartAuthorizations(Order, int, int) {
+extern "C" void SetPartAuthorizations(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(20u);
 }
 
 // ordinal 43/44  rva 0x0C420  446 bytes
 // signature from the inferred typed table
-extern "C" void SetPartUserString(Order, int, const char*) {
+extern "C" void SetPartUserString(OrderHandle, int, const char*) {
     lcns::dll::exports::notReversed(21u);
 }
 
 // ordinal 45/46  rva 0x0CCB0  527 bytes
 // signature from the inferred typed table
-extern "C" void SetSheetGaps(Order, double, double, double, double) {
+extern "C" void SetSheetGaps(OrderHandle, double, double, double, double) {
     lcns::dll::exports::notReversed(22u);
 }
 
@@ -207,7 +207,7 @@ extern "C" int WaitNextSolution(void*, int*) {
 
 // ordinal 51/52  rva 0x02AB0  2134 bytes  cns_force_cloud
 // signature from the inferred typed table
-extern "C" void* LaunchLocalComputation(Order, double) {
+extern "C" void* LaunchLocalComputation(OrderHandle, double) {
     lcns::dll::exports::notReversed(25u);
     return nullptr;
 }
@@ -229,7 +229,7 @@ extern "C" std::intptr_t GetPartUserStringEx(std::intptr_t, std::intptr_t, std::
 
 // ordinal 57/58  rva 0x0C670  446 bytes
 // signature from the inferred typed table
-extern "C" void SetSheetUserString(Order, int, const char*) {
+extern "C" void SetSheetUserString(OrderHandle, int, const char*) {
     lcns::dll::exports::notReversed(28u);
 }
 
@@ -250,19 +250,19 @@ extern "C" std::intptr_t GetSheetUserStringEx(std::intptr_t, std::intptr_t, std:
 
 // ordinal 65/66  rva 0x11120  868 bytes
 // signature from the inferred typed table
-extern "C" void SetExtraParameters(Order, const char*, double) {
+extern "C" void SetExtraParameters(OrderHandle, const char*, double) {
     lcns::dll::exports::notReversed(31u);
 }
 
 // ordinal 67/68  rva 0x13C90  411 bytes
 // signature from the inferred typed table
-extern "C" void SetSheetPriority(Order, int) {
+extern "C" void SetSheetPriority(OrderHandle, int) {
     lcns::dll::exports::notReversed(32u);
 }
 
 // ordinal 69/70  rva 0x16B20  353 bytes  // AddNonRectangularPolygonSheet
 // signature from the inferred typed table
-extern "C" Sheet AddNonRectangularPolygonSheet(Order, int, int, const double*, int) {
+extern "C" Sheet AddNonRectangularPolygonSheet(OrderHandle, int, int, const double*, int) {
     lcns::dll::exports::notReversed(33u);
     return nullptr;
 }
@@ -276,36 +276,39 @@ extern "C" int AddPolygonDefectToSheet(Sheet, const double*) {
 
 // ordinal 73/74  rva 0x0D370  61 bytes
 // signature from the inferred typed table
-extern "C" void SetLocalEngine(Order* object, int value) {
+extern "C" void SetLocalEngine(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD370's body reads through rcx.
     lcns::dll::exports::impl::setLocalEngine(static_cast<void*>(object), value);
 }
 
 // ordinal 76/77  rva 0x0D430  36 bytes
 // signature from the inferred typed table
-extern "C" void UnLockLaunchingOrder(Order* object, int value) {
+extern "C" void UnLockLaunchingOrder(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD430's body reads through rcx.
     lcns::dll::exports::impl::unlockLaunchingOrder(static_cast<void*>(object), value);
 }
 
 // ordinal 78/79  rva 0x0CEC0  45 bytes
 // signature from the inferred typed table
-extern "C" void SetObjective(Order* object, int value) {
+extern "C" void SetObjective(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xCEC0's body reads through rcx.
     lcns::dll::exports::impl::setObjective(static_cast<void*>(object), value);
 }
 
 // ordinal 80/81  rva 0x109C0  388 bytes
 // signature from the inferred typed table
-extern "C" void SetDefectGap(Order, double) {
+extern "C" void SetDefectGap(OrderHandle, double) {
     lcns::dll::exports::notReversed(38u);
 }
 
 // ordinal 82/83  rva 0x0D3B0  68 bytes
 // signature from the inferred typed table
-extern "C" void SetLocalMaximumThreads(Order* object, int value) {
+extern "C" void SetLocalMaximumThreads(OrderHandle object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD3B0's body reads through rcx.
-    lcns::dll::exports::impl::setLocalMaximumThreads(static_cast<void*>(object), value);
+    // **AND THE HANDLE BECOMES THE CLASS HERE AND NOWHERE ELSE.** `OrderHandle` is `lcns::dll::Order_t*`, the C ABI's name for the pointer; the object it points at
+    // is `lcns::Order`, which `lcns/model.hpp` declares with named fields. **The two names meet at this line**, which is what an ABI boundary is -- and the
+    // implementation's signature says `Order*` rather than `void*`, so the type survives the whole call instead of being erased and re-derived.
+    lcns::dll::exports::impl::setLocalMaximumThreads(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 84/85  rva 0x0D400  36 bytes
@@ -315,13 +318,14 @@ extern "C" void SetLocalMaximumThreads(Order* object, int value) {
 //
 // **AND THIS WRAPPER DISPATCHES**: it calls the implementation in exports_impl.cpp, and kForwarding already names `impl::setInt_1FC` at ordinal 84. Before this
 // change the list claimed the forward and this wrapper reported the ordinal to notReversed instead, which is the gap re/g_forwarding_gap.py counts for 39 of 47.
-extern "C" void SetLocalMaximumIterations(Order* order, int iterations) {
-    lcns::dll::exports::impl::setLocalMaximumIterations(static_cast<void*>(order), iterations);
+extern "C" void SetLocalMaximumIterations(OrderHandle order, int iterations) {
+    // and the same boundary, one field later: the handle is the ABI's pointer and the implementation takes the class.
+    lcns::dll::exports::impl::setLocalMaximumIterations(reinterpret_cast<lcns::Order*>(order), iterations);
 }
 
 // ordinal 86/87  rva 0x0D050  334 bytes
 // signature from the inferred typed table
-extern "C" void SetOrigin(Order* object, int value) {
+extern "C" void SetOrigin(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xD050's body reads through rcx.
     lcns::dll::exports::impl::setOrigin_0D050(static_cast<void*>(object), value);
 }
@@ -350,7 +354,7 @@ extern "C" int GetMajorVersion() {
 
 // ordinal 94/95  rva 0x10CE0  584 bytes
 // signature from the inferred typed table
-extern "C" void AddPartSpecificAuthorizations(Order, int, int) {
+extern "C" void AddPartSpecificAuthorizations(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(45u);
 }
 
@@ -363,7 +367,7 @@ extern "C" double GetLength(Part) {
 
 // ordinal 98/99  rva 0x0C9A0  372 bytes
 // signature from the inferred typed table
-extern "C" void SetSheetGrainDirection(Order, int) {
+extern "C" void SetSheetGrainDirection(OrderHandle, int) {
     lcns::dll::exports::notReversed(47u);
 }
 
@@ -391,7 +395,7 @@ extern "C" int AddExternalPolygonBoundaryToPart(Part, const double*) {
 
 // ordinal 110/111  rva 0x14D10  1891 bytes
 // signature from the inferred typed table
-extern "C" Part AddPart(Order, int, int, const double*, int) {
+extern "C" Part AddPart(OrderHandle, int, int, const double*, int) {
     lcns::dll::exports::notReversed(51u);
     return nullptr;
 }
@@ -412,7 +416,7 @@ extern "C" int AddExternalBoundaryToPart(Part, int, const double*) {
 
 // ordinal 116/117  rva 0x157A0  1098 bytes
 // signature from the inferred typed table
-extern "C" Sheet AddNonRectangularSheet(Order, int, int, const double*, int) {
+extern "C" Sheet AddNonRectangularSheet(OrderHandle, int, int, const double*, int) {
     lcns::dll::exports::notReversed(54u);
     return nullptr;
 }
@@ -448,7 +452,7 @@ extern "C" int AddOpenCuttingPathToPart(Part, int, const double*) {
 
 // ordinal 126/127  rva 0x0C2A0  382 bytes
 // signature from the inferred typed table
-extern "C" void SetPartPriority(Order, int, int) {
+extern "C" void SetPartPriority(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(59u);
 }
 
@@ -462,7 +466,7 @@ extern "C" void CNS_SetMultiplicityPreference(std::intptr_t* object, int value) 
 
 // ordinal 130/131  rva 0x15480  404 bytes  // AddCircularPart
 // signature from the inferred typed table
-extern "C" Part AddCircularPart(Order, int, double, double, double, int) {
+extern "C" Part AddCircularPart(OrderHandle, int, double, double, double, int) {
     lcns::dll::exports::notReversed(61u);
     return nullptr;
 }
@@ -476,7 +480,7 @@ extern "C" int AddCircularHoleToPart(Part, double, double, double) {
 
 // ordinal 134/135  rva 0x15620  374 bytes  // AddRectanglePart
 // signature from the inferred typed table
-extern "C" Part AddRectanglePart(Order, int, double, double, double, double, int) {
+extern "C" Part AddRectanglePart(OrderHandle, int, double, double, double, double, int) {
     lcns::dll::exports::notReversed(63u);
     return nullptr;
 }
@@ -497,94 +501,94 @@ extern "C" int AddOptionalQuantityToPart(Part, int) {
 
 // ordinal 140/141  rva 0x0E010  353 bytes
 // signature from the inferred typed table
-extern "C" void SetAutomaticStop(Order* object, int value) {
+extern "C" void SetAutomaticStop(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xE010's body reads through rcx.
     lcns::dll::exports::impl::setAutomaticStop_0E010(static_cast<void*>(object), value);
 }
 
 // ordinal 142/143  rva 0x0E2D0  399 bytes
 // signature from the inferred typed table
-extern "C" void SetOffcutEvaluation(Order, double, double, double) {
+extern "C" void SetOffcutEvaluation(OrderHandle, double, double, double) {
     lcns::dll::exports::notReversed(67u);
 }
 
 // ordinal 144/145  rva 0x0DD90  36 bytes
 // signature from the inferred typed table
-extern "C" void SetFillLastNestingStrategy(Order* object, int value) {
+extern "C" void SetFillLastNestingStrategy(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD90's body reads through rcx.
     lcns::dll::exports::impl::setFillLastNestingStrategy(static_cast<void*>(object), value);
 }
 
 // ordinal 146/147  rva 0x0DDC0  33 bytes
 // signature from the inferred typed table
-extern "C" void SetShearMode(Order* object, int value) {
+extern "C" void SetShearMode(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDDC0's body reads through rcx.
     lcns::dll::exports::impl::setShearMode(static_cast<void*>(object), value);
 }
 
 // ordinal 148/149  rva 0x0E460  404 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutMode(Order, int, int) {
+extern "C" void SetCommonCutMode(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(70u);
 }
 
 // ordinal 150/151  rva 0x0E940  354 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutSafetyPreference(Order* object, int value) {
+extern "C" void SetCommonCutSafetyPreference(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xE940's body reads through rcx.
     lcns::dll::exports::impl::setCommonCutSafetyPreference_0E940(static_cast<void*>(object), value);
 }
 
 // ordinal 152/153  rva 0x0EAB0  468 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutAuthorizations(Order, int, int, int) {
+extern "C" void SetCommonCutAuthorizations(OrderHandle, int, int, int) {
     lcns::dll::exports::notReversed(72u);
 }
 
 // ordinal 154/155  rva 0x0EC90  340 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutCuttingPreference(Order* object, int value) {
+extern "C" void SetCommonCutCuttingPreference(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xEC90's body reads through rcx.
     lcns::dll::exports::impl::setCommonCutCuttingPreference_0EC90(static_cast<void*>(object), value);
 }
 
 // ordinal 156/157  rva 0x0EDF0  337 bytes
 // signature from the inferred typed table
-extern "C" void SetCommonCutObjective(Order, double, double) {
+extern "C" void SetCommonCutObjective(OrderHandle, double, double) {
     lcns::dll::exports::notReversed(74u);
 }
 
 // ordinal 158/159  rva 0x0D710  346 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" int GetNumberOfCommonCuts(Order) {
+extern "C" int GetNumberOfCommonCuts(OrderHandle) {
     lcns::dll::exports::notReversed(75u);
     return 0;
 }
 
 // ordinal 160/161  rva 0x0BA50  825 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" int GetCommonCut(Order, int, void*) {
+extern "C" int GetCommonCut(OrderHandle, int, void*) {
     lcns::dll::exports::notReversed(76u);
     return 0;
 }
 
 // ordinal 162/163  rva 0x0E180  111 bytes
 // signature from the inferred typed table
-extern "C" int UnLockLaunchingOrderSntl(Order, const char*, const char*) {
+extern "C" int UnLockLaunchingOrderSntl(OrderHandle, const char*, const char*) {
     lcns::dll::exports::notReversed(77u);
     return 0;
 }
 
 // ordinal 164/165  rva 0x03310  66 bytes
 // signature from the inferred typed table
-extern "C" void* LaunchLimitedLocalComputation(Order, double) {
+extern "C" void* LaunchLimitedLocalComputation(OrderHandle, double) {
     lcns::dll::exports::notReversed(78u);
     return nullptr;
 }
 
 // ordinal 166/167  rva 0x0DE50  36 bytes
 // signature from the inferred typed table
-extern "C" void SetPartCommonCutMode(Order* object, int value) {
+extern "C" void SetPartCommonCutMode(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDE50's body reads through rcx.
     lcns::dll::exports::impl::setPartCommonCutMode(static_cast<void*>(object), value);
 }
@@ -605,13 +609,13 @@ extern "C" int GetNestingDimensions(Nesting, double*, double*) {
 
 // ordinal 172/173  rva 0x0CB20  388 bytes
 // signature from the inferred typed table
-extern "C" void SetSheetPrice(Order, double) {
+extern "C" void SetSheetPrice(OrderHandle, double) {
     lcns::dll::exports::notReversed(82u);
 }
 
 // ordinal 174/175  rva 0x0EF50  479 bytes
 // signature from the inferred typed table
-extern "C" void SetMultiTorchMode(Order, int, int, double, double, int) {
+extern "C" void SetMultiTorchMode(OrderHandle, int, int, double, double, int) {
     lcns::dll::exports::notReversed(83u);
 }
 
@@ -619,19 +623,19 @@ extern "C" void SetMultiTorchMode(Order, int, int, double, double, int) {
 // **WIRED, AND THE INFERRED SIGNATURE WAS RIGHT ABOUT THE ARITY AND WRONG ABOUT THE TYPE.** It said `(Order, int, int)` and the module reads `rcx`, `edx` and
 // `r8d` -- so the first parameter is a POINTER, because 0xF13A is `mov rsi, rcx` and 0xF233 stores THROUGH rsi. **The implementation took only two arguments
 // until this round**, and derived its positive flag from `value > 0` where 0xF22C's `setg` reads the THIRD argument.
-extern "C" void SetMultiTorchCuttingPreference(Order* order, int value, int flag) {
+extern "C" void SetMultiTorchCuttingPreference(OrderHandle* order, int value, int flag) {
     lcns::dll::exports::impl::setMultiTorchCuttingPreference_0F130(static_cast<void*>(order), value, flag);
 }
 
 // ordinal 178/179  rva 0x0F2C0  633 bytes
 // signature from the inferred typed table
-extern "C" void SetMultiTorchObjective(Order, double, double, double, double) {
+extern "C" void SetMultiTorchObjective(OrderHandle, double, double, double, double) {
     lcns::dll::exports::notReversed(85u);
 }
 
 // ordinal 180/181  rva 0x14450  449 bytes
 // signature from the inferred typed table
-extern "C" void SetExtraGapOnPart(Order, int, double) {
+extern "C" void SetExtraGapOnPart(OrderHandle, int, double) {
     lcns::dll::exports::notReversed(86u);
 }
 
@@ -645,14 +649,14 @@ extern "C" void CNS_SetFloatingMode(std::intptr_t* object, int value) {
 
 // ordinal 184/185  rva 0x0D870  826 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" int GetPartTorchInfos(Order, int, void*) {
+extern "C" int GetPartTorchInfos(OrderHandle, int, void*) {
     lcns::dll::exports::notReversed(88u);
     return 0;
 }
 
 // ordinal 186/187  rva 0x0F540  629 bytes
 // signature from the inferred typed table
-extern "C" void SetDetailedMultiTorchObjective(Order, double, double, double, double) {
+extern "C" void SetDetailedMultiTorchObjective(OrderHandle, double, double, double, double) {
     lcns::dll::exports::notReversed(89u);
 }
 
@@ -759,33 +763,33 @@ extern "C" const char* sub_16CF0(std::intptr_t* object) {
 
 // ordinal 212/213  rva 0x0CEF0  45 bytes
 // signature from the inferred typed table
-extern "C" void SetShearGap(Order* order, double gap) {
+extern "C" void SetShearGap(OrderHandle* order, double gap) {
     // **THE MODULE READS ONE INTEGER REGISTER AND ONE XMM, SO THE FIRST PARAMETER IS A POINTER AND THE SECOND IS A DOUBLE.** The inferred table said `(Order, double)`, which is right about the second and wrong about the first.
     lcns::dll::exports::impl::setShearGap(static_cast<void*>(order), gap);
 }
 
 // ordinal 214/215  rva 0x11490  423 bytes
 // signature from the inferred typed table
-extern "C" void SetIncompatibleSheet(Order, int, int) {
+extern "C" void SetIncompatibleSheet(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(103u);
 }
 
 // ordinal 216/217  rva 0x03360  52 bytes  // LaunchEstimateLocalComputation
 // signature from the inferred typed table
-extern "C" void* LaunchEstimateLocalComputation(Order, double) {
+extern "C" void* LaunchEstimateLocalComputation(OrderHandle, double) {
     lcns::dll::exports::notReversed(104u);
     return nullptr;
 }
 
 // ordinal 218/219  rva 0x11640  483 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" void AddSuggestedPartsGrouping(Order, int, int) {
+extern "C" void AddSuggestedPartsGrouping(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(105u);
 }
 
 // ordinal 220/221  rva 0x0F7C0  1072 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" void AddPartToSuggestedPartsGrouping(Order, int, int) {
+extern "C" void AddPartToSuggestedPartsGrouping(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(106u);
 }
 
@@ -813,7 +817,7 @@ extern "C" const char* GetPCId() {
 
 // ordinal 228/229  rva 0x0E260  111 bytes
 // signature from the inferred typed table
-extern "C" int UnLockLaunchingOrderPCId(Order, const char*, const char*) {
+extern "C" int UnLockLaunchingOrderPCId(OrderHandle, const char*, const char*) {
     lcns::dll::exports::notReversed(110u);
     return 0;
 }
@@ -878,28 +882,28 @@ extern "C" int NoFitGetPoint(NoFitGeometry, int, int, int, double*, double*) {
 
 // ordinal 246/247  rva 0x188D0  529 bytes
 // signature from the inferred typed table
-extern "C" void SetMarkMode(Order* order, int flag, double first, double second) {
+extern "C" void SetMarkMode(OrderHandle* order, int flag, double first, double second) {
     // **FOUR ARGUMENTS AND THE PROBE SAID TWO**, because 0x188F0 `movapd xmm7, xmm2` and 0x188F4 `movapd xmm6, xmm3` put two DOUBLES in xmm2 and xmm3 and a probe that reads only rcx/rdx/r8/r9 cannot see them. `setMarkMode_188D0(void*, int, double, double)` matches the four moves exactly.
     lcns::dll::exports::impl::setMarkMode_188D0(static_cast<void*>(order), flag, first, second);
 }
 
 // ordinal 248/249  rva 0x18AF0  889 bytes
 // signature from the inferred typed table
-extern "C" int GetNumberOfMarks(Order) {
+extern "C" int GetNumberOfMarks(OrderHandle) {
     lcns::dll::exports::notReversed(120u);
     return 0;
 }
 
 // ordinal 250/251  rva 0x18E70  1312 bytes
 // signature from the inferred typed table
-extern "C" int GetMark(Order, int) {
+extern "C" int GetMark(OrderHandle, int) {
     lcns::dll::exports::notReversed(121u);
     return 0;
 }
 
 // ordinal 252/253  rva 0x0B540  177 bytes
 // signature from the inferred typed table
-extern "C" int AsyncCancelAllComputationsAndDeleteLaunchingOrder(Order) {
+extern "C" int AsyncCancelAllComputationsAndDeleteLaunchingOrder(OrderHandle) {
     lcns::dll::exports::notReversed(122u);
     return 0;
 }
@@ -914,13 +918,13 @@ extern "C" double AddRotatedPartVariantToPart(std::intptr_t, std::intptr_t, std:
 
 // ordinal 256/257  rva 0x0FBF0  244 bytes
 // signature from the inferred typed table
-extern "C" void SetRowMode(Order, int) {
+extern "C" void SetRowMode(OrderHandle, int) {
     lcns::dll::exports::notReversed(124u);
 }
 
 // ordinal 258/259  rva 0x0FCF0  568 bytes
 // signature from the inferred typed table
-extern "C" void SetPipeMode(Order, int) {
+extern "C" void SetPipeMode(OrderHandle, int) {
     lcns::dll::exports::notReversed(125u);
 }
 
@@ -940,21 +944,21 @@ extern "C" int AddRectangularExternalBoundaryToPart(Part, double, double, double
 
 // ordinal 264/265  rva 0x0FF30  271 bytes
 // signature from the inferred typed table
-extern "C" int GetNumberOfRows(Order) {
+extern "C" int GetNumberOfRows(OrderHandle) {
     lcns::dll::exports::notReversed(128u);
     return 0;
 }
 
 // ordinal 266/267  rva 0x10040  384 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" int GetRow(Order, int, double*, double*) {
+extern "C" int GetRow(OrderHandle, int, double*, double*) {
     lcns::dll::exports::notReversed(129u);
     return 0;
 }
 
 // ordinal 268/269  rva 0x0DE80  388 bytes
 // signature from the inferred typed table
-extern "C" void SetLocalEngineThreads(Order, int, int) {
+extern "C" void SetLocalEngineThreads(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(130u);
 }
 
@@ -970,7 +974,7 @@ extern "C" void sub_0AFE0(std::intptr_t value) {
 
 // ordinal 272/273  rva 0x19C40  411 bytes
 // signature from the inferred typed table
-extern "C" void SetLeatherMode(Order, int) {
+extern "C" void SetLeatherMode(OrderHandle, int) {
     lcns::dll::exports::notReversed(132u);
 }
 
@@ -988,13 +992,13 @@ extern "C" void AddLeatherQualityZoneInSheet(Sheet, int, int, const double*) {
 
 // ordinal 278/279  rva 0x1AA90  944 bytes
 // signature from the inferred typed table
-extern "C" void CreateRestrictedZoneConstraint(Order, int, int) {
+extern "C" void CreateRestrictedZoneConstraint(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(135u);
 }
 
 // ordinal 280/281  rva 0x1AE40  507 bytes
 // signature from the inferred typed table
-extern "C" void CNS_SetZoneRestrictedPart(Order, int, int) {
+extern "C" void CNS_SetZoneRestrictedPart(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(136u);
 }
 
@@ -1008,14 +1012,14 @@ extern "C" double sub_1A7D0(std::intptr_t, std::intptr_t, std::intptr_t, std::in
 
 // ordinal 284/285  rva 0x1A210  1468 bytes
 // signature from the inferred typed table
-extern "C" void CNS_SheetAddRestrictedZone(Order, int, int, const double*) {
+extern "C" void CNS_SheetAddRestrictedZone(OrderHandle, int, int, const double*) {
     lcns::dll::exports::notReversed(138u);
 }
 
 // ordinal 286/287  rva 0x0B000  18 bytes
 // signature synthesized from the register analysis: 1 integer register(s), 1 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" void sub_0B000(Order* order, int flag, double value) {
+extern "C" void sub_0B000(OrderHandle* order, int flag, double value) {
     // **THE BODY IS THREE INSTRUCTIONS AND USES ALL THREE ARGUMENTS**: `0xB000 test edx, edx`, `0xB002 movsd qword [rcx + 0x100], xmm2` and `0xB00A setne byte [rcx + 0xf9]`. So the flag is `edx > 0`, the double is `xmm2` and the object is `rcx` -- and `setDoubleAndFlag(void*, int, double)` matches.
     lcns::dll::exports::impl::setDoubleAndFlag(static_cast<void*>(order), flag, value);
 }
@@ -1057,27 +1061,27 @@ extern "C" int AddHoleInToolPath(Part, int, const double*) {
 
 // ordinal 298/299  rva 0x13E30  417 bytes
 // signature from the inferred typed table
-extern "C" void SetSpecificSheetOrigin(Order* object, int value) {
+extern "C" void SetSpecificSheetOrigin(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x13E30's body reads through rcx.
     lcns::dll::exports::impl::setSpecificSheetOrigin_13E30(static_cast<void*>(object), value);
 }
 
 // ordinal 300/301  rva 0x13FE0  417 bytes
 // signature from the inferred typed table
-extern "C" void SetSpecificSheetObjective(Order* object, int value) {
+extern "C" void SetSpecificSheetObjective(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x13FE0's body reads through rcx.
     lcns::dll::exports::impl::setSpecificSheetObjective_13FE0(static_cast<void*>(object), value);
 }
 
 // ordinal 302/303  rva 0x1A8F0  411 bytes
 // signature from the inferred typed table
-extern "C" void CNS_ForcePartOnBottomBorder(Order, int, int) {
+extern "C" void CNS_ForcePartOnBottomBorder(OrderHandle, int, int) {
     lcns::dll::exports::notReversed(147u);
 }
 
 // ordinal 304/305  rva 0x0DE20  33 bytes
 // signature from the inferred typed table
-extern "C" void SetShearRepulseFromBorders(Order* object, int value) {
+extern "C" void SetShearRepulseFromBorders(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDE20's body reads through rcx.
     lcns::dll::exports::impl::setShearRepulseFromBorders(static_cast<void*>(object), value);
 }
@@ -1092,13 +1096,13 @@ extern "C" double CNS_AddDefectFromNestedPart(std::intptr_t, std::intptr_t, doub
 
 // ordinal 308/309  rva 0x10B50  395 bytes
 // signature from the inferred typed table
-extern "C" void CNS_CreateAssemblyGroup(Order, int) {
+extern "C" void CNS_CreateAssemblyGroup(OrderHandle, int) {
     lcns::dll::exports::notReversed(150u);
 }
 
 // ordinal 310/311  rva 0x11830  180 bytes
 // signature from the inferred typed table
-extern "C" void CNS_AddAssemblyGroupPart(Order, int, int, int) {
+extern "C" void CNS_AddAssemblyGroupPart(OrderHandle, int, int, int) {
     lcns::dll::exports::notReversed(151u);
 }
 
@@ -1168,14 +1172,14 @@ extern "C" int NoFitGenerateSvgGeometry(NoFitGeometry, const char*) {
 
 // ordinal 330/331  rva 0x0DDF0  36 bytes
 // signature from the inferred typed table
-extern "C" void SetPartialShearMode(Order* object, int value) {
+extern "C" void SetPartialShearMode(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDDF0's body reads through rcx.
     lcns::dll::exports::impl::setPartialShearMode(static_cast<void*>(object), value);
 }
 
 // ordinal 332/333  rva 0x0B750  384 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" int GetNestingBoundingBox(Order, double*, double*, double*, double*) {
+extern "C" int GetNestingBoundingBox(OrderHandle, double*, double*, double*, double*) {
     lcns::dll::exports::notReversed(162u);
     return 0;
 }
@@ -1190,14 +1194,14 @@ extern "C" void ForcePartInsideHole(std::intptr_t* object) {
 
 // ordinal 336/337  rva 0x10470  42 bytes
 // signature from the inferred typed table
-extern "C" void SetReorganizeBiggestPartNearOrigin(Order* object, int value) {
+extern "C" void SetReorganizeBiggestPartNearOrigin(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x10470's body reads through rcx.
     lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin(static_cast<void*>(object), value);
 }
 
 // ordinal 338/339  rva 0x104A0  42 bytes
 // signature from the inferred typed table
-extern "C" void SetReorganizeLongestPartNearOrigin(Order* object, int value) {
+extern "C" void SetReorganizeLongestPartNearOrigin(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x104A0's body reads through rcx.
     lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin(static_cast<void*>(object), value);
 }
@@ -1210,7 +1214,7 @@ extern "C" void NoFitSetMaximumComplexity(NoFitContext, int) {
 
 // ordinal 342/343  rva 0x0E1F0  111 bytes
 // signature from the inferred typed table
-extern "C" int UnLockLaunchingOrderOxy(Order, const char*, const char*) {
+extern "C" int UnLockLaunchingOrderOxy(OrderHandle, const char*, const char*) {
     lcns::dll::exports::notReversed(167u);
     return 0;
 }

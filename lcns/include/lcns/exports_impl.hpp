@@ -6,6 +6,9 @@
 #pragma once
 
 #include "lcns/dll_layout.hpp"
+// **`Order` IS INCLUDED SO A SIGNATURE CAN SAY THE REAL TYPE.** The two local-engine setters took `void*` and cast it inside; the object is `Order`, which
+// `lcns/model.hpp` declares, and a header that cannot name it is a header whose functions have to erase what they are given.
+#include "lcns/model.hpp"
 
 #include <cstddef>
 #include <cstdint>
@@ -82,14 +85,15 @@ void setLocalEngine(void* object, int value);
 unsigned platformConcurrency();
 /** RE 0xB5B70 with RE 0xB5B79, and RE 0xD3B0: floor at one, then the requested value or the minimum of the two. */
 unsigned clampMaximumThreads(unsigned platformValue, int requested);
-/** RE 0xD3B0 (ordinal 82): stores clampMaximumThreads(platformConcurrency(), value) at +0x1F8. */
-void setLocalMaximumThreads(void* object, int value);
+/** RE 0xD3B0 (ordinal 82): stores clampMaximumThreads(platformConcurrency(), value) at +0x1F8. **`Order*` AND NOT `void*`** -- the object is the one the wrapper
+ *  already names, and `LocalEngineCarrier` was a second description of four fields that `Order` has with the same types at the same offsets. */
+void setLocalMaximumThreads(Order* order, int value);
 
 /** RE 0x0D400 (ordinal 84), 36 bytes, and the body is ONE store: `mov dword [rsi + 0x1fc], ebx` at 0x0D417. **The export's own name is the oracle for the
  *  field** -- the module calls it `SetLocalMaximumIterations` and it writes exactly one offset, which is `Order`'s `maxIterations`. **It was called `setInt_1FC`
  *  here, a name built from its position**, and `kForwarding` named it at ordinal 84; the module's name replaces it. **No clamp**: 0xD3C7's `test ebx, ebx` and
- *  0xD3D2's `cmova` are in the function next door. */
-void setLocalMaximumIterations(void* object, int value);
+ *  0xD3D2's `cmova` are in the function next door. **And it takes `Order*` like its neighbour**: the module's object is the one the wrapper names. */
+void setLocalMaximumIterations(Order* order, int value);
 
 /** RE 0xAFE0 through 0x1B270: normalises the argument to zero or one. */
 void setModuleSwitch(int value);

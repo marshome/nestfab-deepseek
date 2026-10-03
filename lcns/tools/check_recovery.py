@@ -182,6 +182,9 @@ UNTESTED_OK = {
     "Supervisor": "the engine supervisor, covered indirectly by the nester and engine tests",
     "ConvEdge": "geometry half edge inside boolean.cpp, covered by the boolean tests",
     "Triplet": "LP triplet helper, covered through the linear program tests",
+    "Order_t": ("**NOT A CLASS -- AN INCOMPLETE TYPE.** `api.hpp` declares `struct Order_t;` so the C ABI has a handle name, and `using OrderHandle = Order_t*` is that "
+                "handle. The object it points at is `lcns::Order` in model.hpp, which IS tested. **A forward declaration cannot be tested and is not a recovered "
+                "type**, which is why it is here rather than in a test."),
     "CommonCutSegment": "plain segment record asserted through the common cut tests",
     "MultitorchInfo": "plain info record, exercised via the nester tests",
     "BestObserver": "observer implementation used by the beam search tests",

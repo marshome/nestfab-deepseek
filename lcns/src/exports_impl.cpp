@@ -144,15 +144,19 @@ unsigned clampMaximumThreads(unsigned platformValue, int requested) {
     return (floored > want) ? want : floored;               // RE 0xD3D2: cmova takes the smaller of the two
 }
 
-void setLocalMaximumThreads(void* object, int value) {
-    static_cast<LocalEngineCarrier*>(object)->maxThreads = clampMaximumThreads(platformConcurrency(), value);
+// **THE `void*` IS GONE FROM BOTH, AND `LocalEngineCarrier` WITH IT.** Its four fields and `Order`'s are the same types at the same offsets -- `std::uint32_t` at
+// +0x1F8 and +0x1FC, `std::uint8_t` at +0x200 and +0x201 -- so naming the carrier was a SECOND description of an object the port already has. **The erasure was
+// what let `SetMultiTorchCuttingPreference` take two arguments where the module reads three**: a signature that says `void*, int` cannot be checked against an
+// object whose fields have names and widths.
+void setLocalMaximumThreads(Order* order, int value) {
+    order->maxThreads = clampMaximumThreads(platformConcurrency(), value);
 }
 
-void setLocalMaximumIterations(void* object, int value) {
+void setLocalMaximumIterations(Order* order, int value) {
     // RE 0x0D417: mov dword ptr [rsi + 0x1fc], ebx.
     // **AND NOTHING ELSE**: 0x0D400 is 36 bytes and every other instruction in it is the prologue or the return, so a clamp here would be a behaviour the
     // module does not have. The thread count beside it IS clamped, which is why the two are easy to confuse.
-    static_cast<LocalEngineCarrier*>(object)->maxIterations = static_cast<std::uint32_t>(value);
+    order->maxIterations = static_cast<std::uint32_t>(value);
 }
 
 namespace {

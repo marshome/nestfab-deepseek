@@ -324,15 +324,19 @@ int main() {
             CHECK(got == 0xFFFFFFFEu);          // stored as a 32-bit value, not widened
         }
         // SetLocalMaximumIterations (ord 84, offset 0x1FC)
+        // **AND IT READS `Order` RATHER THAN A BYTE BUFFER AT +0x1FC.** The implementation now takes `Order*` -- the type the wrapper has always named -- so the
+        // test asserts the FIELD. **The `memcpy` at a hand-written offset was the test doing the compiler's job**, and it is what let the carrier names survive:
+        // a buffer cannot disagree with a signature.
         {
-            std::vector<unsigned char> obj(0x300, 0xAA);
-            ex::impl::setLocalMaximumIterations(obj.data(), 0x12345678);
-            std::uint32_t got = 0;
-            std::memcpy(&got, obj.data() + 0x1FC, 4);
-            CHECK(got == 0x12345678u);
-            ex::impl::setLocalMaximumIterations(obj.data(), -2);
-            std::memcpy(&got, obj.data() + 0x1FC, 4);
-            CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
+            lcns::Order order{};
+            ex::impl::setLocalMaximumIterations(&order, 0x12345678);
+            CHECK(order.maxIterations == 0x12345678u);
+            ex::impl::setLocalMaximumIterations(&order, -2);
+            CHECK(order.maxIterations == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
+            // and the byte-level view agrees, which is the one thing the field cannot show
+            std::uint32_t atOffset = 0;
+            std::memcpy(&atOffset, static_cast<const void*>(&order) + 0x1FC, 4);
+            CHECK(atOffset == 0xFFFFFFFEu);
             // **AND THE FORWARD IS NOW REAL AND NOT JUST LISTED.** `kForwarding` named this ordinal before the wrapper dispatched, so `forwards(84)` was true
             // while the exported function still reported the ordinal to `notReversed` -- a list saying one thing and the code another. **The wrapper now calls
             // the implementation, so the two agree**, and this checks the agreement rather than the list.

@@ -41,7 +41,10 @@ using lcns::Objective;
 #define LCNS_OPAQUE(name)      \
     struct name##_t;           \
     using name = name##_t*
-LCNS_OPAQUE(Order);        // LaunchingOrder   (NewLaunchingOrder)
+// **`Order` IS THE REAL CLASS IN lcns/model.hpp, SO THE HANDLE IS NAMED `OrderHandle`.** A handle that shares its name with the class it points at is
+// two declarations of one name: `using Order = Order_t*` beside `struct Order`, which makes a signature saying `Order*` mean `Order_t**`.
+struct Order_t;
+using OrderHandle = Order_t*;   // LaunchingOrder   (NewLaunchingOrder)
 LCNS_OPAQUE(Part);         // a part to nest
 LCNS_OPAQUE(Sheet);        // a sheet/plate
 LCNS_OPAQUE(Nesting);      // one nesting inside a solution
