@@ -202,7 +202,35 @@ public:
 
     DelayedEngine() = default;
 
+    /** **AND IT HAS MEMBERS, WHICH THIS DECLARATION DID NOT.** RE 0x756EC0, 750 bytes, and `rcx` is the object -- established from the CALL SITE and not from the body:
+     *  every engine is reached by `mov rax, qword ptr [rbx]` / `mov rcx, rbx` / `call qword ptr [rax + 0x10]` (0x24040, 0x24210, 0x24885), and the last of those is
+     *  preceded by `lock sub dword ptr [rbx + 8], 1`, a `std::shared_ptr` count.
+     *
+     *  So `0x756EEA mov rdi, rcx` makes `rdi` the object, and the function initialises FOUR fields before it does anything else:
+     *
+     *      756F1C  mov dword ptr [rdi], 0        ; +0x00
+     *      756F27  mov qword ptr [rdi + 8], 0
+     *      756F2F  mov qword ptr [rdi + 0x10], 0
+     *      756F37  mov qword ptr [rdi + 0x18], 0
+     *
+     *  **and then a container is taken from 0x51BFC0 and the rest of the range is filled**: pointers at +0x20, +0x28, +0x38, +0x40, +0x48, +0x50 and dwords at +0x30
+     *  and back at +0x00 (`757117 mov dword ptr [rdi], 1`). **The element stride is 39 bytes** -- `0x6F96F96F96F96F97` is the modular inverse of 3 after `sar 3`, and
+     *  312 / 8 = 39, the same stride `GetNumberOfNestings` divides by. **What each field MEANS is not established**, so they are named by offset. */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+
+private:
+    std::int32_t state00_ = 0;        // +0x00, 0x756F1C writes 0 and 0x757117 writes 1
+    void* at08_ = nullptr;            // +0x08, 0x756F27: zeroed
+    void* at10_ = nullptr;            // +0x10, 0x756F2F: zeroed, then written from rsi and r13
+    void* at18_ = nullptr;            // +0x18, 0x756F37: zeroed, then written from rsi
+    void* at20_ = nullptr;            // +0x20, 0x756FEB: from rax
+    // +0x28 is taken as an address by `lea rcx, [rdi + 0x28]` at 0x756FC9 and passed to 0x5F3960
+    void* at28_[1] = {};              // +0x28
+    std::int32_t at30_ = 0;           // +0x30, 0x756FCD: zeroed, and `lea r8, [rdi + 0x30]` at 0x756FBC takes its address
+    void* at38_ = nullptr;            // +0x38, 0x756FD4: zeroed, then from rax
+    void* at40_ = nullptr;            // +0x40, 0x756FE7: from r8, then rcx
+    void* at48_ = nullptr;            // +0x48, 0x756FEF: from r8, then rax
+    void* at50_ = nullptr;            // +0x50, 0x756FDC: zeroed, then from rax
 };
 
 /** Engine::NestingEngine, Run at 0x757250, vtable 0xA3CFA0.

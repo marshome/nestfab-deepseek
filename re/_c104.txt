@@ -1,0 +1,45 @@
+lcns: `rcx` IS `this` after all -- my sret claim was WRONG and the CALL SITE says so, and it gives `DelayedEngine` eleven members
+
+**LAST ROUND I CONCLUDED THAT `InfiniteEngine::run` AND `EquivalentEngine::run` TAKE AN SRET BUFFER IN `rcx`.** That was wrong, and this round's search for the callers
+found the evidence that refutes it.
+
+## The virtual-call shape, three times, and one of them names the object
+
+    024040  mov rax, qword ptr [rbx]        ; rax = [rbx] = the vptr
+    024043  mov rcx, rbx                    ; **rcx = the object**
+    024046  call qword ptr [rax + 0x10]     ; through slot 2
+
+**and the third site cannot be misread:**
+
+    024878  lock sub dword ptr [rbx + 8], 1     ; a std::shared_ptr REFERENCE COUNT
+    02487D  je 0x24885                          ; released at zero
+    024885  mov rax, qword ptr [rbx]
+    024888  mov rcx, rbx
+    02488B  call qword ptr [rax + 0x10]
+
+**SO `rbx` IS AN OBJECT, `rcx` RECEIVES IT, AND `EngineBase::run`'s FIRST PARAMETER IS `this`** -- which is the Itanium C++ ABI and which is what this tree said
+originally. **What misled last round is that two bodies never DEREFERENCE `rcx`: an absence of member use is not evidence of sret**, and `mov rax, rbx` therefore returns
+`this` rather than a buffer address.
+
+**AND THE CLAIM IS CORRECTED IN PLACE** rather than deleted, because the wrong half is worth reading: **the absence of a dereference was treated as a positive
+measurement, and it is the third time this session that the absence of a thing was read as evidence of a different thing.**
+
+## And the call-site evidence is not only a correction -- it says `DelayedEngine` has ELEVEN MEMBERS
+
+`0x756EEA mov rdi, rcx` makes `rdi` the object, and the body initialises four fields before anything else:
+
+    756F1C  mov dword ptr [rdi], 0        ; +0x00
+    756F27  mov qword ptr [rdi + 8], 0
+    756F2F  mov qword ptr [rdi + 0x10], 0
+    756F37  mov qword ptr [rdi + 0x18], 0
+
+**and then a container comes from 0x51BFC0 and the rest of the range is filled**: pointers at +0x20, +0x28, +0x38, +0x40, +0x48, +0x50 and dwords at +0x30 and back at
++0x00 (`757117 mov dword ptr [rdi], 1`). **The element stride is 39 bytes** -- `0x6F96F96F96F96F97` is the modular inverse of 3 after `sar 3` and 312 / 8 = 39, the same
+stride `GetNumberOfNestings` divides by. **What each field MEANS is not established, so they are named by offset** and the class's declaration now carries them with
+their instructions.
+
+    re/g_engine_run_callers.py  direct calls to an engine's run (there are none) and calls through slot 2
+    re/g_engine_call_site.py    the instructions before one such call, which is where the arguments are set
+    re/g_correct_sret_claim.py  the correction, applied in place
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green, FABRICATED 0, and 460 claims with 0 problems.

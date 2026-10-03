@@ -3675,9 +3675,9 @@
       "subject": "two-engines-run-return-by-sret-so-rcx-is-not-this",
       "grade": "INSTRUCTION",
       "kind": "offset",
-      "predicate": "`InfiniteEngine::run` and `EquivalentEngine::run` never dereference `rcx`, and write a return buffer through it -- `mov [rcx], 0`, `[rcx + 0x10]`, `[rcx + 0x18]`, `[rcx + 0x30]` -- so for those two the first argument is an SRET BUFFER and not `this`",
-      "witness": "0x756EC0 `DelayedEngine::run` after `mov rdi, rcx` writes `dword ptr [rdi], 0` at 0x756F1C, `[rdi + 0x10]` at 0x756F2F, `[rdi + 0x18]` at 0x756F37, moves the fifth argument in at 0x756F87 and takes `lea r8, [rdi + 0x30]` at 0x756FBC. **The four engines that DO dereference rcx cannot be told apart from `this` by this test**, so the family is split and the split is recorded rather than averaged",
-      "round": 767
+      "predicate": "**WITHDRAWN -- `rcx` IS `this`.** Three call sites show the standard virtual-call shape `mov rax, [rbx]` / `mov rcx, rbx` / `call qword ptr [rax + 0x10]`, and one of them is preceded by `lock sub dword ptr [rbx + 8], 1` -- a `std::shared_ptr` count -- **so the object is in `rcx` and `EngineBase::run`'s first parameter is `this` after all.**",
+      "witness": "the sites are at 0x24040, 0x24210 and 0x24885, all the same shape; the third has `lock sub dword ptr [rbx + 8], 1` at 0x24878 with a release branch. **What misled last round is that `InfiniteEngine::run` and `EquivalentEngine::run` never DEREFERENCE `rcx` -- and an absence of member use is not evidence of sret.** `mov rax, rbx` in `InfiniteEngine::run` therefore returns `this`, which is what this tree originally said. **And the useful result is that `DelayedEngine` HAS data**: through `rdi` (= `rcx`) it writes a dword at +0x00, pointers at +0x10, +0x18, +0x20, +0x28, +0x38, +0x40, +0x48 and +0x50, and dwords at +0x30 -- **at least 0x54 bytes, and the port declares none**",
+      "round": 768
     },
     {
       "subject": "engine-run-takes-five-arguments-not-four",
@@ -3686,6 +3686,14 @@
       "predicate": "every engine's `run` reads an argument from the stack, so it takes a FIFTH argument beyond the four registers, while the port's `EngineBase::run(const void*, double, void*, void*)` declares four",
       "witness": "`0x759A94 mov r9, qword ptr [rsp + 0x60]` in `InfiniteEngine::run` -- **read AFTER the prologue's `sub rsp, 0x30` and `push rbx`, so it cannot be a local**; and every one of the six reads a `[rsp + N]` above its own frame. **A method with a `this` and four more arguments has no room for an sret pointer**, which is why the two findings are one problem: the port's signature has four arguments AND treats the first as `this`",
       "round": 767
+    },
+    {
+      "subject": "the-virtual-call-shape-settles-the-object-register",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "an engine is called through `mov rax, [rbx]` / `mov rcx, rbx` / `call qword ptr [rax + 0x10]`, so the object is in `rcx` and slot 2 takes `this` first",
+      "witness": "three sites, 0x24040, 0x24210 and 0x24885, all the same shape; at 0x24878 the third is preceded by `lock sub dword ptr [rbx + 8], 1` with a release branch, which is a `std::shared_ptr` count and identifies `rbx` as an object. **AND NO DIRECT CALL TO ANY ENGINE'S `run` EXISTS**, so this call shape is the only evidence there is -- and it is enough",
+      "round": 768
     }
   ]
 }
