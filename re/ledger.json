@@ -2894,6 +2894,22 @@
    "round": 709,
    "subject": "narrowing-widths-before-reordering-breaks-tests",
    "witness": "applying the three widths the adjudicator gives -- cfgAt188 double to uint8_t, commonCutNoHoles and commonCutOnlyBiModules int to uint8_t -- made the tests fail, and the changes were reverted"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "offset",
+   "predicate": "sorting Order's fields by the offset each comment gives, with explicit padding for every gap and the model-only members moved aside, places 41 of 48 fields exactly where their comments say",
+   "round": 710,
+   "subject": "Order-permutation-places-41-of-48",
+   "witness": "measured in test_recovered.cpp: the count went from 0 of 48 with sizeof 552 to 41 of 48 with sizeof 904, and the 7 that remain are comments that contradict the module rather than placement failures"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "cfgAt188 is at Pb + 0x188 in the pipe block and NOT at Order + 0x18, so the adjudicator's pairing of it with unnamed018 is a match on a SUBSTRING",
+   "round": 710,
+   "subject": "cfgAt188-is-in-the-pipe-block",
+   "witness": "the field carries a +0x20 comment while test_nester.cpp says RE 0x6AC20A reads Pb+0x188 -> core+0x20 through the base 0x4FC3A0 = mov rax,[rcx] ; add rax,0x170, and narrowing it to uint8_t made o.cfgAt188 = 11.5 store 11 and fail c.coeff()=11.5"
   }
  ]
 }
