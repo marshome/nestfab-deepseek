@@ -3670,6 +3670,22 @@
       "predicate": "InfiniteEngine::run reads and writes nothing on this beyond saving it and returning it, so the class has no data member",
       "witness": "the whole 80 bytes at 0x759A80 are: mov rbx, rcx at 0x759A8D, then either call 0x757AE0 directly or mov rdx, [rdx + 0x10] (the PROBLEM is field) followed by call qword ptr [rax + 0x10], and mov rax, rbx at 0x759A9E. **Every other operand is an argument or the problem**, so the delegation the tree documented from a comment is now read instruction by instruction",
       "round": 766
+    },
+    {
+      "subject": "two-engines-run-return-by-sret-so-rcx-is-not-this",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "`InfiniteEngine::run` and `EquivalentEngine::run` never dereference `rcx`, and write a return buffer through it -- `mov [rcx], 0`, `[rcx + 0x10]`, `[rcx + 0x18]`, `[rcx + 0x30]` -- so for those two the first argument is an SRET BUFFER and not `this`",
+      "witness": "0x756EC0 `DelayedEngine::run` after `mov rdi, rcx` writes `dword ptr [rdi], 0` at 0x756F1C, `[rdi + 0x10]` at 0x756F2F, `[rdi + 0x18]` at 0x756F37, moves the fifth argument in at 0x756F87 and takes `lea r8, [rdi + 0x30]` at 0x756FBC. **The four engines that DO dereference rcx cannot be told apart from `this` by this test**, so the family is split and the split is recorded rather than averaged",
+      "round": 767
+    },
+    {
+      "subject": "engine-run-takes-five-arguments-not-four",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "every engine's `run` reads an argument from the stack, so it takes a FIFTH argument beyond the four registers, while the port's `EngineBase::run(const void*, double, void*, void*)` declares four",
+      "witness": "`0x759A94 mov r9, qword ptr [rsp + 0x60]` in `InfiniteEngine::run` -- **read AFTER the prologue's `sub rsp, 0x30` and `push rbx`, so it cannot be a local**; and every one of the six reads a `[rsp + N]` above its own frame. **A method with a `this` and four more arguments has no room for an sret pointer**, which is why the two findings are one problem: the port's signature has four arguments AND treats the first as `this`",
+      "round": 767
     }
   ]
 }
