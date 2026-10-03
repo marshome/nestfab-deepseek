@@ -4577,6 +4577,15 @@
       "witness": "0x755050 calls 0x9302C0 at 045D2, and 0x9302C0 itself calls 0x9302C0 at 930338 and 9303B1 (two recursion sites). Its loop is 930350 mov ecx, 0x48 / 930355 call 0x998500 / 930365 mov qword ptr [rbx+0x20], rax / 93037E mov eax, dword [rsi] / 930399 mov dword [rbx], eax / 930379 movsd xmm0, qword [rsi+0x40] / 93038C movsd qword [rbx+0x40], xmm0 / 9303BA mov rsi, qword [rsi+0x10] / 9303C4 jne 0x930350, with 93033D mov qword [r13+0x18], rax storing the recursive result and 930399/9303A2 setting the +0x10/+0x18 links. **So it copies a tree of same-sized engines field by field**, and its two failure paths call 0x9989A0, 0x9984B0 and 0x62F280 -- the module is destructor, operator delete and the C++ throw path",
       "tool": "instruction",
       "round": 798
+    },
+    {
+      "subject": "0x92ECB0-is-library-tree-code-not-engine-logic",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "0x92ECB0, called by MultiEngine::run, is a library tree routine rather than engine logic",
+      "witness": "three independent signals: (1) **179 callers spread across the whole module** -- 0x2AB0, 0x33A0, 0x44E0, 0x6100, 0x85D0, 0x9550, 0x118F0, 0x1C5F0 and more -- where an engine helper would have engine callers; (2) it lives at 0x92Exxx beside 0x9984B0 operator delete, 0x998500 operator new and 0x910BA0 basic_string::_M_create, which is the runtime region; (3) it walks DOWN through [obj + 0x18] testing for null at each level (92ECDC mov rax, [rax+0x18] / 92ECE0 test rax,rax / 92ECE8 je, then again at 92ECEE), and +0x18 is a parent link, which is a tree descent. **So the second of MultiEngine::run helper calls is the library, and only 0x9302C0 is the engine own code**",
+      "tool": "instruction",
+      "round": 799
     }
   ]
 }
