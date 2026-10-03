@@ -3726,6 +3726,22 @@
       "predicate": "TWO engines' named object registers read and write the same ten offsets -- 0x00, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38, 0x40, 0x48 and 0x50 -- through registers that received `rcx`, which is evidence that the range is the BASE's data",
       "witness": "`DelayedEngine::run` through `rdi` (`756EEA mov rdi, rcx`) touches +0x00 +0x10 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40 +0x48 +0x50; `EquivalentEngine::run` through `rsi` (reloaded from the `rcx` spill at [rsp + 0x210] by 0x75BDD8) touches the SAME ten and then +0x54 +0x58 +0x60. **`+0x54`, `+0x58` and `+0x60` are NOT shown to be the base's** -- only `EquivalentEngine` touches them here. **AND THE EARLIER VERSION OF THIS CLAIM SAID FOUR ENGINES AGREE ON ELEVEN OFFSETS, WHICH IS TOO STRONG**: `MultiEngine`'s extra offsets came from counting EVERY register that ever received `rcx`, including `r15` after it took over from `r13`, so they mix registers. **Measured through the one register each prologue establishes, `MultiEngine` (r13) and `NestingEngine` (r15) each show `+0x00` alone** -- which is agreement and not contradiction, but it is much less than was claimed",
       "round": 771
+    },
+    {
+      "subject": "capstone-prints-one-digit-displacements-in-decimal",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "capstone prints a ONE-DIGIT memory displacement in DECIMAL and a larger one in hex, so `[rax + 8]` and `[rax + 0x10]` are the same notation for two different values",
+      "witness": "counting the spellings over the first few thousand functions gives `8` 38 times and `0x10` 20, `0x20` 14, `0x18` 12, `0x28` 6 -- **so a regex demanding an `0x` prefix sees offset 8 NOWHERE.** A checker built that way reported NINE classes as having an untouched member at +0x8 at once, which is what the tell looks like: **when the same offset comes out dead in many unrelated classes, the fault is in the reader.** And `[rax]` with no displacement is offset 0, which has the same effect on vtable stores",
+      "round": 772
+    },
+    {
+      "subject": "a-module-wide-offset-search-cannot-support-a-member",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "searching the whole module for an offset cannot show that a declared member is supported, because 36068 distinct displacements occur somewhere and every small offset is among them",
+      "witness": "with the spelling fixed, `re/g_member_offsets_live.py` reports NO class with an untouched member -- **and that is a negative result about the question, not a clean bill of health.** The check that CAN answer it is `re/g_members_without_instructions.py`, which pairs each class with a function (its destructor) and then asks whether the object or an allocated block is touched **through that function's own object register** -- class attribution is what the module-wide search lacks",
+      "round": 772
     }
   ]
 }
