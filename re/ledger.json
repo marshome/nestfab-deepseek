@@ -3598,6 +3598,14 @@
       "predicate": "RandomSheetSelector and NoMixSheetSelector store their constructor argument-pair the same way at +0x08 and +0x10, and only the NAMES disagreed: one called +0x08 secondArg_ and the other firstArg_",
       "witness": "RandomSheetSelector 0xB0061 is mov qword [rax + 8], rdi with rdi from rdx, and 0xB006C is mov dword [rbx + 0x10], ebp with ebp from r8d; NoMixSheetSelector 0xAFD89 is mov qword [rax + 8], rsi with rsi from rdx, and 0xAFD94 is mov dword [rbx + 0x10], r12d with r12d from r8d. Both classes are right about their own parameter order and the offset is the name that survives; re/g_members_without_instructions.py listed the writes and the members side by side, which is how it was seen",
       "round": 760
+    },
+    {
+      "subject": "the-nester-base-layout-is-unresolved",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the placement of Nester's base data is UNRESOLVED: four pieces of evidence disagree and no round has settled which survives",
+      "witness": "(1) 0xB4470 writes a vptr at +0x00, a pointer at +0x08 and two dwords at +0x10 and +0x14, with five callers. (2) lcns/include/lcns/base_chain.hpp already says `Multi::Nester` declares no data members and that the fields belong to N5Multi15CompositeNesterE, which would make Nester 0x08 and make 0xB4470's +0x08 store a store into the class that file calls empty. (3) the direct Nester children put their first own member at +0x18 -- NestingNester derives straight from Nester and the suite asserts atSeedP == 0x18 -- which fits 0x10 and not 0x08. (4) the module allocates 0x28 for FlipNester (RE 0x2C953 mov ecx, 0x28), while Nester at 0x18 plus an 0x18 vector at CompositeNester's +0x18 is 0x30. **The declaration as it stands fits every allocation and is NOT established to be right**; what would settle it is a class deriving straight from Nester that reads +0x08, +0x10 or +0x14 through its own object",
+      "round": 761
     }
   ]
 }
