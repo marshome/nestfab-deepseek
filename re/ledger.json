@@ -4559,6 +4559,15 @@
       "witness": "the two accessors are 0x24A80 movzx eax, byte ptr [rcx + 8]; ret (5 bytes) and 0x24A90 mov eax, dword ptr [rcx + 0xc]; ret (4 bytes), **and their only callers in the image are 0x755050 (MultiEngine::run) and 0x757250 (NestingEngine::run)**. MultiEngine branches on the byte at 755130 \test al, al / 755132 je 0x755233, NestingEngine at 7572F5 \test al, al / 7572F7 jne 0x75792b, and MultiEngine turns the dword into a double at 755208 call 0x24a90 / 75521B cvtsi2sd xmm0, rax. **So the flag is a switch and the dword is a quantity** -- which is what the closing condition for this question asked for and what six constructors alone could not say",
       "tool": "instruction",
       "round": 796
+    },
+    {
+      "subject": "multiengine-run-calls-a-factory-allocating-its-own-size",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "MultiEngine::run calls 0x9302C0, whose first action is to allocate 0x48 bytes -- exactly sizeof(MultiEngine) -- so it builds another engine of its own type",
+      "witness": "0x755050 call 045D2 -> 0x9302C0, and that function begins 9302CF mov rbp, rcx / 9302CC mov rbx, rdx / 9302D2 mov ecx, 0x48 / 9302DD call 0x998500 / 9302E2 mov rdx, qword ptr [rbx + 0x20]. **0x48 is the allocation 0x240D0 makes for MultiEngine itself** (0240E7 mov ecx, 0x48), and the function takes four register arguments (rcx, rdx, r8, r9). **So the engine builds a same-sized object rather than delegating to a different one** -- which is the opposite of the delegation tree the family was expected to be, and matches the earlier measurement that NONE of the five run bodies calls another engine through a vtable",
+      "tool": "instruction",
+      "round": 797
     }
   ]
 }
