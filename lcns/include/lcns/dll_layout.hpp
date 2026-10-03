@@ -97,10 +97,10 @@ static_assert(offsetof(PartObject, userString) == 0x1B8, "RE 0xC5E0");
 /** ONLY the offsets the int setters write -- a carrier, not "the order object", which is what the contradiction leaves open. */
 struct IntFieldCarrier {
     unsigned char opaque00[0x18];
-    std::int32_t field18;      // RE 0x0D310
-    std::int32_t field1C;      // RE 0x0D340
+    std::int32_t field18;      // +0x18, RE 0xD310: this carrier's name for Order::field18
+    std::int32_t field1C;      // +0x1C, RE 0xD340: Order::field1C
     unsigned char opaque20[0x24];
-    std::int32_t field44;      // RE 0x0DDC0
+    std::int32_t field44;      // +0x44, RE 0x0DDC0 -- **AND ORDER NAMES +0x44 `shear`**
     unsigned char opaque48[0x10];
     std::int32_t field58;      // RE 0x0DE20
     unsigned char opaque5C[0x1A0];

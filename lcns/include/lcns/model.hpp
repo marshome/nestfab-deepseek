@@ -182,7 +182,13 @@ struct Order {
     std::byte padding00[0x8];   // +0x000..+0x007, no field here
     Objective objective = Objective::MinimizeArea;   // +0x008
     NestingOrigin origin = NestingOrigin::BottomLeft;   // +0x00C
-    std::byte padding01[0x12];   // +0x010..+0x021, no field here
+    std::byte padding01a[0x8];   // +0x010..+0x017, no field here
+    /** +0x18, RE 0xD327: `mov dword [rsi + 0x18], ebx` in the 33-byte setter at 0xD310. **The module names no field here**, so this is the offset
+     *  as a name -- and it is the SAME name `IntFieldCarrier::field18` used, which is the point: the two structures became one. */
+    std::uint32_t field18 = 0;
+    /** +0x1C, RE 0xD357: `mov dword [rsi + 0x1c], ebx` in the 33-byte setter at 0xD340. The same, one field later. */
+    std::uint32_t field1C = 0;
+    std::byte padding01b[0x2];   // +0x020..+0x021, no field here
     bool reorganizeBiggestPartNearOrigin = false;   // +0x022
     bool reorganizeLongestPartNearOrigin = false;   // +0x023
     std::byte padding02[0x4];   // +0x024..+0x027, no field here

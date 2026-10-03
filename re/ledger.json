@@ -3254,6 +3254,22 @@
       "predicate": "four of the arity refusals were the probe's error, each for a different reason: a destination counted as an argument, `test` writing no register, doubles in xmm that the integer rule cannot see, and a logger's copy of the object counted as a second parameter",
       "witness": "GetNumberOfNestedParts: 0xB1A4 mov rcx, qword [rbx + 8] is a destination. sub_0AFF0: 0xAFF0 test edx, edx reads both operands and writes none. SetMarkMode: 0x188F0 movapd xmm7, xmm2 and 0x188F4 movapd xmm6, xmm3 are arguments 3 and 4. NoFitGetNumberOfExternalPolygons: 0x89D8 mov rdx, rcx is a copy for the logger called at 0x89E2, and the body starts at 0x89E7",
       "round": 739
+    },
+    {
+      "subject": "order-names-the-0x18-and-0x1c-fields",
+      "grade": "CONSTRUCTOR",
+      "kind": "offset",
+      "predicate": "Order has a field at +0x18 and another at +0x1C, both four bytes, where it previously carried padding01[0x12] across +0x10..+0x21",
+      "witness": "0xD310, 33 bytes, is `mov dword [rsi + 0x18], ebx` at 0xD327; 0xD340, 33 bytes, is `mov dword [rsi + 0x1c], ebx` at 0xD357; and +0x244's `mov dword [rsi + 0x244], ebx` at 0xD447 was already `Order::unlockMode`. **The module names no field at +0x18 or +0x1C**, so they are named for their offsets -- the same names IntFieldCarrier used, which is the point: one structure instead of two",
+      "round": 740
+    },
+    {
+      "subject": "the-measurement-regenerator-deleted-tests",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "re/g_measure_order_run.py replaced everything between its BLOCK_START and the finish marker, so every assertion appended after the measurement block was inside the span it rewrote; one run deleted 217 lines and check_recovery then reported five classes with no test",
+      "witness": "the guard now counts CHECK(, static_assert( and distinct lcns:: class names before and after and refuses when any falls; on the tree as it stands it reports `REFUSING: the rewrite would remove evidence. checks 3982->3939, static_asserts 39->12, class names 123->113`. The test file was restored from git, which is the difference between fixing a deletion and covering for it",
+      "round": 740
     }
   ]
 }
