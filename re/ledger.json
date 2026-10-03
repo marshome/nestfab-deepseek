@@ -4523,6 +4523,33 @@
       "witness": "read with re/g_read_engine_run.py: CompositeEngine (0x759B70, 8230 B) has 39 distinct targets over 184 call sites, 70 of them operator delete at 0x9984B0, and references 11 strings -- **the only one that looks like an implementation**. MultiEngine (0x755050, 2329 B) has 16 over 43 and no strings; EquivalentEngine (0x75BCC0, 3569 B) has 22 over 59; NestingEngine (0x757250, 1975 B) has 11 over 56; DelayedEngine (0x756EC0, 750 B) has 17 over 23. **And two of them call into the engine constructor region at 0x24A80 and 0x24A90** -- MultiEngine and NestingEngine -- which is what building sub-engines looks like. **NONE of the five calls another engine through a vtable and NONE delegates through slot 2**, which was the shape the family was expected to have",
       "tool": "g_read_engine_run.py",
       "round": 793
+    },
+    {
+      "subject": "off-6befcfe0-is-the-installed-vptr-and-three-leas-reference-it",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the address IDA names off_6BEFCFE0 is InfiniteEngine is runtime vptr -- slot 0 of its table -- and it is referenced by exactly three lea instructions and by no data word",
+      "witness": "read directly: at rva 0xA3CFD0 sits 0x0 then the typeinfo pointer 0x6BED90F0 at +0x08, and at 0xA3CFE0 sit 0x6BC19B20, 0x6BC19AD0 and 0x6BC19A80 -- **which are 0x759B20, 0x759AD0 and 0x759A80, the deleting destructor, the destructor and run**. The three references are lea at 02500D (the constructor 0x24FD0), at 759AD6 (inside slot 1, the destructor) and at 759B25 (inside slot 0). **And a raw 8-byte search for 0x6BEFCFE0 in the image finds ZERO occurrences** -- so every reference is an operand and none is data. **That independently confirms on InfiniteEngine the rule measured on NestingEngine two rounds ago**: vtable_rva is the table HEADER and the value stored in an object is vtable_rva + 0x10, with the typeinfo pointer in front of slot 0",
+      "tool": "g_off_6befcfe0.py",
+      "round": 794
+    },
+    {
+      "subject": "every-engine-table-has-an-installer-and-the-tool-finds-them-generically",
+      "grade": "MEASURED",
+      "kind": "call",
+      "predicate": "all ten engine-family vtables have at least one function whose lea resolves to their installed vptr, and the count per class is the constructor plus the destructor pair",
+      "witness": "re/g_vtable_installers.py looks for lea operands resolving to vtable_rva + 0x10 over every function in the image and finds 10 of 10, with MultiEngine 0x240D0/0x755970/0x7559E0, DelayedEngine 0x24B80/0x7571B0/0x757200, NestingEngine 0x23E70/0x757A10/0x757A70, InfiniteEngine 0x24FD0/0x759AD0/0x759B20, CompositeEngine 0x24C40/0x75BBA0/0x75BC30 and EquivalentEngine 0x24AB0/0x75CAC0 plus TWO MORE. **The lead was the human pointing at off_6BEFCFE0 in IDA**, which is slot 0 of InfiniteEngine table and is reachable only through three lea instructions -- and generalising that turned a six-round manual search into one pass over 443 tables",
+      "tool": "g_vtable_installers.py",
+      "round": 795
+    },
+    {
+      "subject": "equivalentengines-table-has-two-more-installers-with-a-larger-allocation",
+      "grade": "INSTRUCTION",
+      "kind": "width",
+      "predicate": "two functions other than EquivalentEngine constructor install its vtable and both allocate 0x58 rather than 0x30",
+      "witness": "0x25810 (528 bytes) starts 025825 mov ecx, 0x58 / 025832 movq rdi, xmm3 and 0x25A20 (512 bytes) starts 025A2B mov ecx, 0x58 / 025A38 mov ebp, r9d; both are found by re/g_vtable_installers.py as lea-resolving to 0xA3D040, the installed vptr of N6Engine16EquivalentEngineE. **0x58 is 0x28 more than the 0x30 the class constructor asks for**, so either they construct a DERIVED type over the same table or the table is reused by a larger object. **Their argument shapes differ from the constructor too** -- xmm3 in one, r9d in the other -- and what they build is the next question rather than a conclusion",
+      "tool": "g_vtable_installers.py",
+      "round": 795
     }
   ]
 }
