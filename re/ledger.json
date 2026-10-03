@@ -4505,6 +4505,24 @@
       "witness": "CompositeEngine at 0x24C40 writes 024C7B qword [rbx+0x10],0 and 024CCB qword [rbx+0x10],rax where rax comes from [rbp+8], 024C86/024CCF the same at +0x18 from [rbp], and 024CD3 qword [rbx+0x20],rdi where 024C83 sub rdi, rdx -- **so +0x10 and +0x18 are a range END and BEGIN and +0x20 is the range LENGTH in bytes**, confirmed by 024C99 sar rax, 4 against the class own stride of 16. **DelayedEngine at 0x24B80 puts a shared_ptr control block at +0x10, its pointer at +0x18 and a double at +0x20.** So the same three offsets carry a container in one class and a refcounted pointer in another: **an agreement count over offsets says the LAYOUT is shared and says nothing about the MEANING, which is why the fields must be read per class**",
       "tool": "instruction",
       "round": 792
+    },
+    {
+      "subject": "multiengine-run-orchestrates-and-builds-sub-engines",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "MultiEngine::run makes 43 calls to 16 distinct targets, delegates to no engine through a vtable, logs nothing, and calls into the engine constructor region at 0x24A80 and 0x24A90",
+      "witness": "read with re/g_read_engine_run.py on RE 0x755050 (2329 bytes): the target histogram is 0x9984B0 x16 (operator delete), 0x63F300 x8, 0x7C24C0 x3, 0x92ECB0 x3, then singles including **0x24A80 and 0x24A90, which lie between the engine constructors 0x240D0 (MultiEngine) and 0x24AB0 (EquivalentEngine)**. **There are ZERO indirect calls through a vtable slot and ZERO strings referenced** -- so this engine neither dispatches virtually nor logs, which is what its siblings do. **16 distinct targets over 43 sites in 2329 bytes is sparse**, which is an orchestrator rather than an implementation. The offsets it touches most are +0x08 x10, +0x10 x10, +0x20 x10, +0x28 x7, +0x40 x5, +0x30 x4, +0x18 x3 -- the same offsets its constructor places",
+      "tool": "g_read_engine_run.py",
+      "round": 793
+    },
+    {
+      "subject": "the-six-engine-runs-have-measurably-different-profiles",
+      "grade": "MEASURED",
+      "kind": "call",
+      "predicate": "the engine run bodies separate into one implementation and four orchestrators by call count, distinct targets and string use",
+      "witness": "read with re/g_read_engine_run.py: CompositeEngine (0x759B70, 8230 B) has 39 distinct targets over 184 call sites, 70 of them operator delete at 0x9984B0, and references 11 strings -- **the only one that looks like an implementation**. MultiEngine (0x755050, 2329 B) has 16 over 43 and no strings; EquivalentEngine (0x75BCC0, 3569 B) has 22 over 59; NestingEngine (0x757250, 1975 B) has 11 over 56; DelayedEngine (0x756EC0, 750 B) has 17 over 23. **And two of them call into the engine constructor region at 0x24A80 and 0x24A90** -- MultiEngine and NestingEngine -- which is what building sub-engines looks like. **NONE of the five calls another engine through a vtable and NONE delegates through slot 2**, which was the shape the family was expected to have",
+      "tool": "g_read_engine_run.py",
+      "round": 793
     }
   ]
 }
