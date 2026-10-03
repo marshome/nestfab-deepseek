@@ -236,10 +236,14 @@ void setCommonCutSafetyPreference_0E940(void* order, int value) {
     order_fields(order)->commonCutSafetyPreference = static_cast<std::uint32_t>(value);     // RE 0xEA0D
 }
 
-void setMultiTorchCuttingPreference_0F130(void* order, int value) {
-    order_fields(order)->multiTorchCuttingPreferenceGiven = 1;                              // RE 0xF225
-    order_fields(order)->multiTorchCuttingPreferencePositive = (value > 0) ? 1 : 0;         // RE 0xF22C, setg
-    order_fields(order)->multiTorchCuttingPreference = static_cast<std::uint32_t>(value);   // RE 0xF233
+void setMultiTorchCuttingPreference_0F130(void* order, int value, int flag) {
+    order_fields(order)->multiTorchCuttingPreferenceGiven = 1;                              // RE 0xF225: mov byte [rsi + 0x98], 1
+    // **FROM THE THIRD ARGUMENT AND NOT FROM `value`.** 0xF13D is `mov r12d, edx` and 0xF140 is `mov ebp, r8d`, and 0xF22C is `setg byte [rsi + 0xa0]` --
+    // so it is `flag > 0` that is stored. **The port derived it from `value > 0`, which is a real behavioural difference**: a caller passing `value = 5,
+    // flag = 0` got `Positive = 1` from this code and `Positive = 0` from the module. **And `ebp` is never stored**, so the third argument is read, tested
+    // and discarded, which is why an offset-based reading of this function looked complete.
+    order_fields(order)->multiTorchCuttingPreferencePositive = (flag > 0) ? 1 : 0;          // RE 0xF22C, setg
+    order_fields(order)->multiTorchCuttingPreference = static_cast<std::uint32_t>(value);   // RE 0xF233: mov dword [rsi + 0x9c], r12d
 }
 
 void setSpecificSheetOrigin_13E30(void* order, int value) {

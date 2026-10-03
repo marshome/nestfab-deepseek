@@ -3230,6 +3230,14 @@
       "predicate": "kForwarding's ordinals 286 and 288 are NOT swapped: 286 is sub_0B000 at rva 0xB000 and setDoubleAndFlag, and 288 is sub_0AFF0 at rva 0xAFF0 and setByteAtF8",
       "witness": "0xAFF0, 10 bytes, is test edx, edx / setne byte [rcx + 0xf8] / ret -- a byte at +0xF8, which is setByteAtF8; 0xB000, 18 bytes, is test edx, edx / movsd qword [rcx + 0x100], xmm2 / setne byte [rcx + 0xf9] / ret -- a double at +0x100 and a flag at +0xF9, which is setDoubleAndFlag. **An earlier claim that the list had them swapped was wrong and is withdrawn** -- it would have sent a later round to fix a correct file",
       "round": 737
+    },
+    {
+      "subject": "multitorch-positive-flag-is-the-third-argument",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "setMultiTorchCuttingPreference_0F130 takes THREE arguments: it stores `edx` at +0x9C, sets the byte at +0x98 unconditionally, and takes the byte at +0xA0 from `r8d > 0` rather than from the value",
+      "witness": "0xF13D mov r12d, edx and 0xF140 mov ebp, r8d; 0xF223 test ebp, ebp; 0xF225 mov byte [rsi + 0x98], 1; 0xF22C setg byte [rsi + 0xa0]; 0xF233 mov dword [rsi + 0x9c], r12d. `ebp` is never stored, so the third argument is read, tested and discarded. The implementation had two parameters and computed the flag from `value > 0`, and its test passed because both calls used the value AS the flag",
+      "round": 738
     }
   ]
 }

@@ -616,9 +616,11 @@ extern "C" void SetMultiTorchMode(Order, int, int, double, double, int) {
 }
 
 // ordinal 176/177  rva 0x0F130  388 bytes
-// signature from the inferred typed table
-extern "C" void SetMultiTorchCuttingPreference(Order, int, int) {
-    lcns::dll::exports::notReversed(84u);
+// **WIRED, AND THE INFERRED SIGNATURE WAS RIGHT ABOUT THE ARITY AND WRONG ABOUT THE TYPE.** It said `(Order, int, int)` and the module reads `rcx`, `edx` and
+// `r8d` -- so the first parameter is a POINTER, because 0xF13A is `mov rsi, rcx` and 0xF233 stores THROUGH rsi. **The implementation took only two arguments
+// until this round**, and derived its positive flag from `value > 0` where 0xF22C's `setg` reads the THIRD argument.
+extern "C" void SetMultiTorchCuttingPreference(Order* order, int value, int flag) {
+    lcns::dll::exports::impl::setMultiTorchCuttingPreference_0F130(static_cast<void*>(order), value, flag);
 }
 
 // ordinal 178/179  rva 0x0F2C0  633 bytes
@@ -1480,7 +1482,7 @@ const Entry kEntries[] = {
     {"GetNestingDimensions", 170, 171, 0x0BD90u, 470u, Status::NotReversed, "cns.cpp"},
     {"SetSheetPrice", 172, 173, 0x0CB20u, 388u, Status::NotReversed, ""},
     {"SetMultiTorchMode", 174, 175, 0x0EF50u, 479u, Status::NotReversed, ""},
-    {"SetMultiTorchCuttingPreference", 176, 177, 0x0F130u, 388u, Status::NotReversed, ""},
+    {"SetMultiTorchCuttingPreference", 176, 177, 0x0F130u, 388u, Status::Forwarded, "// kForwarding -> impl::setMultiTorchCuttingPreference_0F130, three arguments"},
     {"SetMultiTorchObjective", 178, 179, 0x0F2C0u, 633u, Status::NotReversed, ""},
     {"SetExtraGapOnPart", 180, 181, 0x14450u, 449u, Status::NotReversed, ""},
     {"CNS_SetFloatingMode", 182, 183, 0x0DD30u, 36u, Status::Forwarded, "// kForwarding -> impl::setFloatingMode"},

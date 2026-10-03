@@ -676,15 +676,19 @@ int main() {
         ex::impl::setCommonCutSafetyPreference_0E940(order.data(), 13);
         CHECK(byte(kCommonCutSafetyGiven) == 1);
         CHECK(dword(kCommonCutSafety) == 13u);
-        // RE 0xF225, 0xF22C and 0xF233: SetMultiTorchCuttingPreference (176) also derives a byte with setg.
+        // RE 0xF225, 0xF22C and 0xF233: SetMultiTorchCuttingPreference (176). **THE POSITIVE BYTE COMES FROM THE THIRD ARGUMENT AND NOT FROM THE VALUE** --
+        // 0xF140 is `mov ebp, r8d` and 0xF22C is `setg byte [rsi + 0xa0]`. **The two calls below differ ONLY in the flag**, so a port that read the value
+        // instead would pass the first and fail the second.
         std::memset(order.data(), 0, order.size());
-        ex::impl::setMultiTorchCuttingPreference_0F130(order.data(), 5);
+        ex::impl::setMultiTorchCuttingPreference_0F130(order.data(), 5, 5);
         CHECK(byte(kMultiTorchGiven) == 1);
-        CHECK(byte(kMultiTorchPositive) == 1);
-        CHECK(dword(kMultiTorch) == 5u);
+        CHECK(byte(kMultiTorchPositive) == 1);       // the flag is positive
+        CHECK(dword(kMultiTorch) == 5u);             // the value is stored whatever the flag says
         std::memset(order.data(), 0, order.size());
-        ex::impl::setMultiTorchCuttingPreference_0F130(order.data(), 0);
-        CHECK(byte(kMultiTorchPositive) == 0);       // setg: zero when the value is not positive
+        ex::impl::setMultiTorchCuttingPreference_0F130(order.data(), 5, 0);
+        CHECK(byte(kMultiTorchGiven) == 1);          // unconditional, RE 0xF225
+        CHECK(byte(kMultiTorchPositive) == 0);       // **setg reads the FLAG, and 5 > 0 would have said 1**
+        CHECK(dword(kMultiTorch) == 5u);
         // RE 0x13F02 and 0x13F09: SetSpecificSheetOrigin (298).
         std::memset(order.data(), 0, order.size());
         ex::impl::setSpecificSheetOrigin_13E30(order.data(), 17);

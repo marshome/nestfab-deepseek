@@ -123,7 +123,10 @@ void setAutomaticStop_0E010(void* order, int value);
 /** RE 0xEA09 and 0xEA0D (150, SetCommonCutSafetyPreference): +0x68 = 1, then the argument at +0x6C. */
 void setCommonCutSafetyPreference_0E940(void* order, int value);
 /** RE 0xF225, 0xF22C and 0xF233 (176, SetMultiTorchCuttingPreference): +0x98 = 1, +0xA0 = (value > 0), value at +0x9C. */
-void setMultiTorchCuttingPreference_0F130(void* order, int value);
+/** RE 0xF130, 388 bytes. **THE POSITIVE FLAG COMES FROM A THIRD PARAMETER, NOT FROM THE VALUE.** 0xF140 is `mov ebp, r8d` and 0xF22C is
+ *  `setg byte [rsi + 0xa0]` -- so `flag > 0` is stored and `value > 0` is not. 0xF225 writes the "given" byte unconditionally and 0xF233 stores
+ *  `edx` (argument 2) at +0x9C. **`ebp` is never stored**, so the third argument is read, tested and discarded. */
+void setMultiTorchCuttingPreference_0F130(void* order, int value, int flag);
 /** RE 0x13F02 and 0x13F09 (298, SetSpecificSheetOrigin): +0x124 = 1, then the argument at +0x128. */
 void setSpecificSheetOrigin_13E30(void* order, int value);
 /** RE 0x140B2 and 0x140B9 (300, SetSpecificSheetObjective): +0x12C = 1, then the argument at +0x130. */
