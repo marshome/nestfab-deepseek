@@ -21,6 +21,10 @@ CASES = [
      "struct Probe {\n    void* at_0020 = {};\n};\n"),
     ("a member whose comment cites a stack store",
      "struct Probe {\n    void* slot = {}; // +0x20, RE 0x50CFCA: mov qword ptr [rsp + 0x20], rax\n};\n"),
+    # **AND THE ADDRESS-ONLY FORM IS PROVED SEPARATELY, BECAUSE IT IS A REPORT AND NOT A GATE.** Every real annotation says `RE 0xD062` and leaves the instruction in
+    # the image; **the first version of the stack check matched only literal instruction text, so it reported 0 while `launching_order.hpp`'s `unnamed028` cited a
+    # stack store for its width** -- and the plant above passed, because the plant wrote the instruction out. **A proof whose fixture is a shape the repository does
+    # not produce proves nothing about it**, so this shape is planted and the REPORT is required to name it.
     ("an unplaced byte region standing in for a type",
      "struct Probe {\n    std::byte unplaced_0008[0x18]{};\n};\n"),
     ("a placeholder class",
@@ -39,6 +43,23 @@ def main():
         if not caught:
             failures.append(label)
         os.remove(PLANT)
+
+    # **AND THE ADDRESS-ONLY FORM, WHICH IS A REPORT AND NOT A GATE.** Every real annotation says `RE 0xD062` and leaves the instruction in the image; **the first
+    # version of the stack check matched only literal instruction text, so it reported 0 while `launching_order.hpp`'s `unnamed028` cited a stack store for its
+    # width** -- and the plant above passed, because that plant writes the instruction out. **A proof whose fixture is a shape the repository does not produce proves
+    # nothing about the repository.** So this one plants the address-only form and requires the REPORT to name it while the exit code stays 0.
+    io.open(PLANT, "w", encoding="utf-8", newline="\n").write(
+        "#pragma once\n#include <cstddef>\nnamespace lcns {\nstruct Probe {\n"
+        "    std::int64_t slot = 0;   // +0x028  RE 0xD062: the width was read off a stack store\n};\n}\n")
+    result = subprocess.run([sys.executable, AUDIT], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    output = result.stdout or ""
+    reported = "_probe_fabricated.hpp" in output and "STACK-STORE REPORTS" in output
+    gated = result.returncode != 0
+    print("planted %-52s -> exit %d  reported=%s gated=%s"
+          % ("a member citing an ADDRESS that writes the stack", result.returncode, reported, gated))
+    if not reported or gated:
+        failures.append("the address-only stack form (reported=%s, gated=%s)" % (reported, gated))
+    os.remove(PLANT)
 
     print("")
     if failures:

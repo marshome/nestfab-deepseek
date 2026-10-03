@@ -3454,6 +3454,22 @@
       "predicate": "[rbp + N] is not evidence of a stack store in this module, because the flagged functions begin push rbp / mov rbp, rcx and rbp holds the object",
       "witness": "RE 0xD119 mov dword ptr [rbp + 0xc], edi is inside the function at 0xD050 whose prologue is push rbp at 0xD050 and mov rbp, rcx at 0xD058; the same for 0xE010. re/g_stack_annotations.py now takes the function start from the profile and reports 41 stack-writing annotations across 54 headers, of which three were rbp false positives before the fix",
       "round": 750
+    },
+    {
+      "subject": "the-stack-check-was-too-narrow",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the stack-store pattern in re/g_full_cpp_audit.py required the instruction TEXT in the comment, so it reported 0 while two real defects existed; it now resolves the RE address and reads the instruction from the dump",
+      "witness": "the old pattern was ^ {4,}\\S.*;\\s*//[^\\n]*mov\\s+\\w+\\s+ptr\\s+\\[rsp\\s*\\+, which is what its own plant wrote: \u000boid* slot = {}; // +0x20, RE 0x50CFCA: mov qword ptr [rsp + 0x20], rax. Every real annotation says RE 0xD062 and leaves the instruction in the image, which is how launching_order.hpp unnamed028 took a 1-byte width from mov byte [rsp + 0x28], 0. The new check disassembles the address and establishes the object register first",
+      "round": 751
+    },
+    {
+      "subject": "the-live-stack-check-reports-and-does-not-gate",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the address-resolving stack check reports rather than gates, because it cannot tell a spill slot from an object field and names two false positives in row.hpp",
+      "witness": "0x5C4950 spills its arguments to [rsp + 0x120] at 0x5C496B and its callee-saved registers to [rsp + 0xb8] at 0x5C4A45, so row.hpp lo and hi cite stack stores that never go through the object. Telling the two apart needs the base register provenance, which the check approximates by asking whether the base is rcx at the function entry",
+      "round": 751
     }
   ]
 }

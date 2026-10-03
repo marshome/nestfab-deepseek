@@ -49,9 +49,18 @@ REGISTRY = {
 # semicolon) whose trailing comment cites a stack store as the thing that places it. `void* at_0020 = {}; // +0x20, RE .. mov [rsp+0x20], rax`.
 FABRICATED = [
     (re.compile(r"\bat_[0-9A-Fa-f]{4}\b"), "a member named after its own offset"),
-    (re.compile(r"^ {4,}\S.*;\s*//[^\n]*mov\s+\w+\s+ptr\s+\[rsp\s*\+", re.M), "a MEMBER whose comment cites a STACK store"),
+    # **THE SECOND CHECK USED TO REQUIRE THE INSTRUCTION TEXT IN THE COMMENT, WHICH IS NOT HOW THIS TREE WRITES ITS EVIDENCE.** It matched
+    # `;  // ... mov qword ptr [rsp + 0x20], rax` literally, and every real annotation says `RE 0xD062` -- an ADDRESS. So the check reported 0 while
+    # `launching_order.hpp`'s `unnamed028` cited a stack store for its width and `WindowSlots` had eight slots read off stack arithmetic. **The planted proof
+    # passed because the plant wrote the instruction literally**, which is a proof of a shape the repository does not produce. The live test is STACK_ANNOTATION
+    # below, which resolves the address and disassembles it.
+    (re.compile(r"^ {4,}\S.*;\s*//[^\n]*mov\s+\w+\s+ptr\s+\[rsp\s*\+", re.M), "a MEMBER whose comment cites a STACK store (literal instruction text)"),
     (re.compile(r"unplaced_[0-9A-Fa-f]{4}"), "an unplaced byte region standing in for a type"),
 ]
+
+# A MEMBER DECLARATION WHOSE COMMENT CITES AN ADDRESS, so the instruction behind the address can be read.
+MEMBER_ANNOTATION = re.compile(r"^ {4,}(?P<member>[^;{}()]+?)\s*;\s*//(?P<comment>[^\n]*?)\bRE 0x(?P<address>[0-9A-Fa-f]{4,})", re.M)
+STACK_WRITE = re.compile(r"\[(?:rsp|esp)(?:\s*[+-]\s*0x[0-9a-f]+)?\]")
 
 PLACEHOLDER = re.compile(r"(?:class|struct)\s+(\w+)\s*\{(?P<body>[^}]*)\}", re.S)
 ONLY_DESTRUCTOR = re.compile(r"^\s*(?:virtual\s+)?~\w+\s*\(\s*\)\s*=\s*default\s*;", re.M)
@@ -61,6 +70,67 @@ TYPES = re.compile(r"^\s*(?:class|struct|union|enum)\s+\w+", re.M)
 ADDRESS = re.compile(r"0x[0-9A-Fa-f]{5,}")
 # AN OFFSET COMMENT ON A MEMBER: `// +0x18` at the end of a line that declares something
 OFFSET_COMMENT = re.compile(r";\s*//\s*\+0x[0-9A-Fa-f]+")
+
+
+def stack_store_members(text):
+    """Members whose `RE 0xNNN` annotation resolves to an instruction that WRITES THE STACK.
+
+    **THE OBJECT REGISTER HAS TO BE ESTABLISHED FIRST**, which is this project's own rule: a store is evidence for a field only when its base register is the object.
+    A `[rsp + N]` destination never is. A `[rbp + N]` destination depends on the prologue -- **and in this module it is usually the OBJECT**, because the setters begin
+    `push rbp` / `mov rbp, rcx`, so `[rbp + N]` is NOT flagged. **A check that flags correct code gets switched off**, and the first version of this idea flagged
+    three correct annotations for exactly that reason.
+
+    **AND THE ADDRESS MUST BE READ, NOT THE COMMENT'S PROSE.** Every real annotation says `RE 0xD062`; the instruction is behind the address, and only the memory
+    dump can say what is there.
+    """
+    out = []
+    here = os.path.dirname(os.path.abspath(__file__))
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    try:
+        from lib import disasm, load_prof          # noqa: PLC0415
+        functions = {a: (e.get("size") or 0) for a, e in load_prof().items()}
+    except Exception:
+        return out, False                              # the dump is unavailable; the check cannot run and says so
+
+    def loads_object_into(base, start):
+        size = functions.get(start) or 0
+        count = 0
+        for instruction in disasm(start):
+            if (size and instruction.address >= start + size) or count > 14:
+                break
+            count += 1
+            if instruction.mnemonic == "mov" and instruction.op_str.replace(" ", "") == "%s,rcx" % base:
+                return True
+        return False
+
+    def owner_of(address):
+        for start, size in functions.items():
+            if size and start <= address < start + size:
+                return start
+        return None
+
+    for match in MEMBER_ANNOTATION.finditer(text):
+        member = match.group("member").strip()
+        if not member or member.split()[0] in ("return", "if", "for", "while"):
+            continue
+        address = int(match.group("address"), 16)
+        instructions = list(disasm(address, count=1))
+        if not instructions:
+            continue
+        first = instructions[0]
+        if not first.mnemonic.startswith("mov"):
+            continue
+        destination = first.op_str.split(",")[0]
+        if not STACK_WRITE.search(destination):
+            if "[rbp" in destination:
+                start = owner_of(address)
+                if start is not None and loads_object_into("rbp", start):
+                    continue                           # rbp holds the OBJECT; this is a real field write
+            else:
+                continue
+        out.append((member, match.group("address"), first.mnemonic + " " + first.op_str))
+    return out, True
 
 
 def audit(path):
@@ -74,6 +144,22 @@ def audit(path):
         hits = pattern.findall(text)
         if hits:
             fabricated_hits.append((reason, len(hits)))
+
+    # and the LIVE form of the stack test: resolve each member's cited address and read the instruction.
+    #
+    # **IT IS REPORTED AND NOT GATED, BECAUSE IT IS RIGHT ABOUT THE SHAPE AND WRONG ABOUT THE INSTANCE.** It found `launching_order.hpp`'s `unnamed028`, whose
+    # width came from `mov byte [rsp + 0x28], 0` -- a genuine defect, fixed. **And it reports `row.hpp`'s `lo` and `hi`, which are NOT defects**: those cite
+    # `mov qword [rsp + 0xb8], r15` in a function that spills its ARGUMENTS to `[rsp + 0x120]` and its callee-saved registers to `[rsp + 0xb8]`, so the stores
+    # never go through the object at all. **Telling a spill slot from an object field needs register provenance tracking** -- the base register's origin -- and this
+    # check approximates it by asking whether the base is `rcx` at the function's entry. So it is a REPORT: gating on it would switch off a check that has already
+    # found one real defect, and the gating test above stays the strictly-narrower regex.
+    stack_members, checked = stack_store_members(text)
+    reported = []
+    if not checked:
+        reported.append(("the stack check could not run: the memory dump is unavailable", 1))
+    for member, address, instruction in stack_members:
+        reported.append(("a member whose cited instruction writes the STACK (may be a spill slot)", 1))
+        reported.append(("%s at RE 0x%s: %s" % (member, address, instruction), 0))
 
     placeholders = []
     for match in PLACEHOLDER.finditer(text):
@@ -95,6 +181,7 @@ def audit(path):
         "offset_comments": offset_comments,
         "placeholders": placeholders,
         "fabricated": fabricated_hits,
+        "stack_reports": reported,
         "registry": REGISTRY.get(name),
     }
 
@@ -165,6 +252,21 @@ def main(argv):
 
     print("CODE and DATA are as expected. **A FABRICATED file is one whose content no instruction supports**, and the tests for it are the")
     print("three patterns above -- which were each found in this repository by the human, not by a tool.")
+
+    # **THE STACK REPORTS ARE PRINTED AND NOT GATED.** A `[rsp + N]` destination is never the object, so a member citing one is suspicious -- **but a function that
+    # spills its arguments and callee-saved registers writes the stack for reasons that have nothing to do with the member.** `row.hpp`'s `lo` and `hi` are exactly
+    # that, so gating would fail on correct code. **A check that flags correct code gets switched off, and this check has already found one real defect**
+    # (`launching_order.hpp`'s `unnamed028`, whose width came from `mov byte [rsp + 0x28], 0`). What it cannot do is tell a spill slot from a field, which needs the
+    # base register's provenance, so it reports and the narrow regex above gates.
+    detailed = [(row, entry[0]) for row in rows for entry in row.get("stack_reports", []) if entry[1] == 0]
+    unavailable = [row for row in rows for entry in row.get("stack_reports", []) if "could not run" in entry[0]]
+    if detailed or unavailable:
+        print("")
+        print("STACK-STORE REPORTS (reported, NOT gated -- a spill slot looks the same as a field):")
+        for row, text in detailed:
+            print("   %-24s %s" % (row["name"][:24], text))
+        for row in unavailable:
+            print("   %-24s the check could not run: the memory dump is unavailable" % row["name"][:24])
     if args.json:
         io.open(args.json, "w", encoding="utf-8", newline="\n").write(json.dumps(rows, indent=1, sort_keys=True))
         print("wrote %s" % args.json)
