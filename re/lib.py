@@ -125,6 +125,45 @@ def load_prof():
 def get_prof():
     return load_prof()
 
+# ---- the ONE displacement parser --------------------------------------------------------------
+#
+# **EVERY SCRIPT IN THIS DIRECTORY THAT READ A MEMORY DISPLACEMENT SPELLED IT THE SAME WRONG WAY**, and eighteen of them did it:
+#
+#     (?: \+ (0x[0-9a-f]+))?
+#
+# **capstone prints a ONE-DIGIT displacement in DECIMAL** -- `[rax + 8]`, not `[rax + 0x8]` -- and every larger one in hex. So that pattern loses offsets 1 to 9, and `8`
+# is the module's most common displacement at 44996 occurrences, because it is `vptr + 8`: **the `std::shared_ptr` reference count.** The counts for the rest are 1: 3453,
+# 4: 3021, 2: 1027, 7: 787, 3: 624, 6: 581, 5: 524, 9: 145.
+#
+# **AND THE OTHER HALF IS WORSE THAN THE REGEX**: six of those scripts wrote `if m.group(2)` or `... and m.group(2)`, so a memory operand with NO displacement -- `[rax]`,
+# which is **offset 0** -- was treated as a skip. **Offset 0 is the table pointer, so every constructor's vtable store was invisible to those checks.**
+#
+# So: use these, and do not write a nineteenth private displacement regex.
+OBJECT_ACCESS = re.compile(r"\[([A-Za-z][A-Za-z0-9]*)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
+STORE_TO = re.compile(r"^(byte|word|dword|qword|xmmword) ptr \[([A-Za-z][A-Za-z0-9]*)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], ")
+
+
+def displacement(text):
+    """The offset a captured displacement group means: `0x10` -> 16, `8` -> 8, **and None -> 0**.
+
+    **`None` IS A VALUE AND NOT AN ABSENCE.** `[rax]` has no displacement and its offset is zero -- the vtable pointer's own offset -- so a caller that skips on `None`
+    loses the single most informative store a constructor makes.
+    """
+    if text is None:
+        return 0
+    return int(text, 16) if text.lower().startswith("0x") else int(text)
+
+
+def object_offsets(op_str):
+    """Yield `(register, offset, is_store)` for every register-relative memory operand in one instruction.
+
+    **`is_store` COMES FROM THE OPERAND'S POSITION AND NOT FROM THE MNEMONIC'S SHAPE.** A memory operand before the comma is a destination; after it, a source. Testing
+    the text instead of the position is how `re/g_object_access.py` first reported `mov dword ptr [r13], 0` as a READ.
+    """
+    comma = op_str.index(",") if "," in op_str else len(op_str)
+    for match in OBJECT_ACCESS.finditer(op_str):
+        yield match.group(1), displacement(match.group(2)), match.start() < comma
+
 # ---- capstone ----
 from capstone import Cs, CS_ARCH_X86, CS_MODE_64
 from capstone.x86 import X86_OP_MEM, X86_OP_IMM, X86_REG_RIP

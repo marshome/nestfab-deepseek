@@ -22,11 +22,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
-from lib import disasm, load_prof  # noqa: E402
+from lib import disasm, load_prof, object_offsets  # noqa: E402
+# **THE DISPLACEMENT COMES FROM `lib.object_offsets` AND NOT FROM A PRIVATE REGEX.** The pattern that stood here was
+# `\[(\w+)(?: \+ (0x[0-9a-f]+))?\]`, which loses offsets 1 to 9 -- capstone prints a one-digit displacement in DECIMAL (`[rbx + 8]`), and `8` is the module's
+# most common displacement (44996 occurrences) because it is `vptr + 8`, the `std::shared_ptr` count. `object_offsets` takes both spellings and treats a missing
+# displacement as offset 0, which is the value a vtable store has.
 
 FREE = 0x9984B0
 ALLOCATOR = 0x998500
-ACCESS = re.compile(r"\[(\w+)(?: \+ (0x[0-9a-f]+))?\]")
+# the private ACCESS regex that stood here is gone: see the note at the import
 MEMBER = re.compile(r"^ {4,}([\w:<>,\s\*&]+?)\s+(\w+)\s*(?:\{\})?\s*(?:=\s*[^;]*)?;", re.M)
 ALLOC_SIZE = re.compile(r"^ecx, 0x([0-9a-f]+)$")
 
@@ -115,12 +119,11 @@ def walk(function, profile):
             # store through `rbx` was counted as neither the object nor the block.** That is why `TimerWinImplementation` was reported unsupported while its
             # constructor writes the vtable at +0x00 and `baselineSeconds_` at +0x08 through `rbx`.
             holds.add("rax")
-        for match in ACCESS.finditer(text):
-            base, offset = match.group(1), match.group(2)
-            # **`[rbx]` WITH NO DISPLACEMENT IS OFFSET 0, AND THE FIRST VERSION SKIPPED IT** -- so every constructor's vtable store was invisible, and a class whose
-            # ONLY object write is that store came out as "touches nothing on the object". **The vptr is the most important evidence a constructor gives**, and
-            # `TimerWinImplementation` is the class that exposed it: `0x5F47DF mov qword [rbx], rax` is its+0x00, and the tool called it unsupported.
-            value = int(offset, 16) if offset else 0
+        # **AND THE DISPLACEMENT COMES FROM THE SHARED PARSER, NOT FROM A PRIVATE REGEX.** The local pattern was `\[(\w+)(?: \+ (0x[0-9a-f]+))?\]`, which loses offsets 1 to
+        # 9 -- **capstone prints a one-digit displacement in DECIMAL (`[rbx + 8]`), and `8` is the module's most common displacement because it is `vptr + 8`, the
+        # `std::shared_ptr` count.** `re/lib.py`'s `object_offsets` takes both spellings and treats a missing displacement as offset 0, **which is the value the vtable
+        # store has.** The local arithmetic `int(offset, 16) if offset else 0` happened to give the right answer for a single decimal digit and was luck, not design.
+        for base, value, _is_store in object_offsets(text):
             if base in holds:
                 on_this.add(value)
             elif base in ("rax", "rbx") and blocks:

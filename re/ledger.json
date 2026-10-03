@@ -3750,6 +3750,14 @@
       "predicate": "re/g_arch.py, a gate stage, dropped every displacement of 1 to 9 because it demanded an 0x prefix, and could not follow a value into r8-r15 because its register class was [a-z0-9]",
       "witness": "its ACCESS pattern was [([a-z0-9]+)(?: \\+ (0x[0-9a-f]+))?] and its consumer required m.group(2) to be truthy, so [rax + 8] -- where capstone omits the 0x for a one-digit displacement -- was dropped; and the same [a-z0-9] class in MOVE meant r8-r15 never matched the alias tracker. Fixing both changes the output on 120 lines and the stage still passes, because it checks the output shape and not its contents. **The fix crashed the first time** by removing the None check, so [rax] raised AttributeError -- a stage that cannot run is worse than a stage that is blind",
       "round": 773
+    },
+    {
+      "subject": "eighteen-scripts-parsed-displacements-by-spelling",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "21 lines across 18 scripts in re/ parsed a memory displacement with a pattern that requires an 0x prefix, so offsets 1 to 9 were invisible to all of them, and six of them also treated a missing displacement (offset 0) as a skip",
+      "witness": "re/g_scan_displacement_readers.py finds the pattern in g_class_fields, g_class_probe, g_class_slot_offsets, g_class_sites, g_class_methods, g_members_without_instructions, g_offset_stores, g_fill_placeholders, g_find_real_ctor, g_find_pool_field, g_find_ctor_by_vtable_store, g_find_engine_ctor, g_flag_widths, g_gen_named_members, g_gen_real_structs, g_setter_types, g_trace_supervisor_ctor, g_types_propagate, g_virtual_call_sites, g_adjudicate, g_trace_timer, g_arch and g_argshape. Capstone prints a one-digit displacement in decimal -- 8 occurs 44996 times, 1: 3453, 4: 3021, 2: 1027, 7: 787, 3: 624, 6: 581, 5: 524, 9: 145. **re/lib.py now carries one shared parser** (object_offsets, displacement) and g_members_without_instructions is wired to it; its report gained +0x8 and +0x4 where it had neither",
+      "round": 774
     }
   ]
 }
