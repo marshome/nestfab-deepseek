@@ -4469,6 +4469,24 @@
       "witness": "RE 0x24B80, 192 bytes: 024BBE qword [rbx+0x10], 024BC9 qword [rbx+0x18] with 024BCF lock add dword [rax+8],1 on what +0x18 points at, and 024BD4 movsd qword [rbx+0x20], xmm2. **The allocation is 024B8A mov ecx, 0x28**, and 0x10 of base plus those three words is 0x28. **The run body at 0x756EC0 read eleven offsets through rdi, which 024B87 mov rsi, rcx shows is a DESTINATION for the constructor and not established to be this in the body** -- reading a run body cannot separate a class own members from a sub-object",
       "tool": "instruction",
       "round": 789
+    },
+    {
+      "subject": "infiniteengines-constructor-places-three-members-its-run-never-reads",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "InfiniteEngine constructor places a shared_ptr control block at +0x10, its pointer at +0x18 and a double at +0x20, and its run never reads any of the three",
+      "witness": "RE 0x24FD0, 209 bytes: 024FDA mov ecx, 0x30 / 024FEE call 0x998500 allocates, 024FFC byte [rax+8],0 and 025006 dword [rax+0xc],0 are the base, 025014 installs the vtable, 02501A qword [rbx+0x10], 025025 qword [rbx+0x18] with 02502B lock add dword [rax+8],1, and 025030 movsd qword [rbx+0x20], xmm2. **And the whole 80 bytes of run at 0x759A80 read nothing at +0x10 or above** -- mov rbx, rcx, the timeLimit compare, the direct call to 0x757AE0 or the delegate through the problem, and mov rax, rbx. **So a fact about a METHOD was read as a fact about the CLASS**, which is the same error the canceller round made",
+      "tool": "instruction",
+      "round": 790
+    },
+    {
+      "subject": "three-engines-share-a-three-word-layout-at-0x10",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "InfiniteEngine and EquivalentEngine have the same three words at the same three offsets -- a shared_ptr control block at +0x10, its pointer at +0x18 and a word at +0x20 -- and both allocate 0x30",
+      "witness": "0x24FD0 (InfiniteEngine) does 02501A qword [rbx+0x10], 025025 qword [rbx+0x18] with 02502B lock add dword [rax+8],1, and 025030 movsd qword [rbx+0x20], xmm2; 0x24AB0 (EquivalentEngine) does 024AE2 qword [rbx+0x10], 024AED qword [rbx+0x18] with 024AF3 lock add dword [rax+8],1, and 024AF8 qword [rbx+0x20], 0. **Both allocations are 024ABA/024FDA mov ecx, 0x30.** So the three words are a SHARED layout, and whether that is a common base between 0x10 and 0x28 or one template instantiated twice is not decided -- **what tells them apart is reading EquivalentEngine run against InfiniteEngine run, since only the first touches the words**",
+      "tool": "instruction",
+      "round": 790
     }
   ]
 }

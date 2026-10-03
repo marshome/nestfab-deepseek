@@ -130,19 +130,39 @@ struct ProblemView {
 
 class InfiniteEngine : public EngineBase {
 public:
+
     InfiniteEngine() = default;
 
-    /** **THE CLASS HAS NO MEMBER THAT AN INSTRUCTION SUPPORTS.** RE 0x759A80 reads `this` only in order to return it -- `mov rbx, rcx` at
-     *  0x759A8D and `mov rax, rbx` at 0x759A9E -- and the engine it delegates to comes from the PROBLEM's +0x10, because in slot 2 `rdx` is
-     *  the second argument and NOT `this`. An earlier `inner_` member at +0x10 was a misreading of that, and `setInner`, `inner` and the
-     *  `dispatch` template existed only to serve it; they are deleted rather than left looking recovered.
+    /** **"THE CLASS HAS NO MEMBER" WAS TRUE OF ITS `run` AND FALSE OF THE CLASS.** RE 0x24FD0, 209 bytes, and it ALLOCATES AND PLACES THREE:
      *
-     *  The class's whole content is the DECISION: unlimited time enters the nesting engine at 0x757AE0 directly, and anything else -- a NaN
-     *  included, because the branch is a `jp` -- goes through the engine the problem carries. */
+     *      024FD7  mov rsi, rcx                            ; **rcx is a DESTINATION for this constructor too**
+     *      024FDA  mov ecx, 0x30 / 024FEE call 0x998500   ; **allocate 0x30**
+     *      024FF9  mov rbx, rax                            ; the object is the allocation
+     *      024FFC  mov byte  ptr [rax + 8], 0              ; the base's byte, BEFORE the vtable
+     *      025006  mov dword ptr [rax + 0xc], 0            ; the base's dword, likewise
+     *      025014  mov qword ptr [rbx], rax                ; its vtable
+     *      02501A  mov qword ptr [rbx + 0x10], rax         ; **+0x10, a shared_ptr CONTROL BLOCK**
+     *      025025  mov qword ptr [rbx + 0x18], rax         ; **+0x18, its pointer**
+     *      02502B  lock add dword ptr [rax + 8], 1         ; **the use count, atomically**
+     *      025030  movsd qword ptr [rbx + 0x20], xmm2      ; **+0x20, a DOUBLE -- the third argument**
+     *
+     *  **AND THE SAME THREE WORDS AT THE SAME THREE OFFSETS ARE WHAT `EquivalentEngine`'S CONSTRUCTOR BUILDS** (`0x24AB0`, allocation 0x30, `024AE2`, `024AED`, `024AF8`).
+     *  **So `+0x10`, `+0x18` and `+0x20` are a SHARED THREE-WORD LAYOUT rather than one class's fields** -- and **this class's `run` (0x759A80, 80 bytes) never reads them
+     *  while `EquivalentEngine`'s does.**
+     *
+     *  **WHAT THAT MEANS IS NOT DECIDED HERE**: it points at either a common base below `EngineBase` (0x10 through 0x28) or the two classes being instantiations of one
+     *  template, **and the two candidates are told apart by reading `EquivalentEngine`'s `run` against this one rather than by guessing.**
+     *
+     *  **AND THE `run` NOTE THAT STOOD HERE WAS ABOUT THE BODY, WHICH IS STILL RIGHT**: RE 0x759A80 reads `this` only to return it, and the engine it delegates to comes
+     *  from the problem's +0x10. **The mistake was concluding a fact about the CLASS from a fact about one METHOD.** */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+
+private:
+    void* control10 = nullptr;         // +0x10, RE 0x02501A -- a std::shared_ptr control block
+    void* pointed18 = nullptr;         // +0x18, RE 0x025025 -- and 0x02502B increments its +0x08 atomically
+    double at20 = 0.0;                 // +0x20, RE 0x025030 `movsd qword ptr [rbx + 0x20], xmm2`
 };
 
-// ------------------------------------------------------------------------------------------------
 // The rest of the Engine family, each with its vtable and its three slots.
 //
 // EVERY ONE OF THESE HAS THE SAME THREE SLOTS: the deleting destructor, the destructor and Run. What differs is where Run
