@@ -422,6 +422,34 @@ struct StrategyDescriber {
 std::shared_ptr<Nester> makeStrategy(int mode);
 std::vector<std::shared_ptr<Nester>> makeDefaultStrategies();
 
+/** RE 0xA3BCB0, THREE SLOTS: 0x6D5970 and 0x6D5960 the destructor pair, and 0x6D5910 the ONE method. **The object is 0x10 bytes**, from the only site that
+ *  installs this vtable, 0x5F47C0, whose `mov ecx, 0x10` at 0x5F47C6 is the allocation and whose store at 0x5F4810 is the field.
+ *
+ *  **AND THE TWO FUNCTIONS AGREE ON WHAT +0x08 MEANS.** The constructor stores `counter / frequency` there, and the method computes the same quotient and then
+ *  **subtracts that field**:
+ *
+ *      5F4810  movsd qword [rbx + 8], xmm0        ; the constructor's baseline, in SECONDS
+ *      6D5948  subsd xmm0, qword [rbx + 8]        ; and the method's `now - baseline`
+ *      6D5952  ret                                ; returned in xmm0
+ *
+ *  so the method is **seconds elapsed since the object was built**, and the subtraction is the whole purpose of the field. **The only calls in either function are
+ *  two imports at 0x534304 and 0x5342F1 through the IAT**, which is what `Win` in the class's own name says. `Utils::TimerWinImplementation` is the module's
+ *  string for it, from the RTTI. */
+class TimerWinImplementation {
+public:
+    virtual ~TimerWinImplementation() = default;
+
+    /** RE 0x6D5910, 67 bytes: `counter / frequency - baseline`, returned in `xmm0` as a double. **The name says what it returns and not what the module calls
+     *  it** -- the module has no string for this method, so it is named for its arithmetic rather than given a plausible one. */
+    virtual double elapsedSeconds() const;       // RE 0x6D5952 returns in xmm0
+
+    // +0x00  RE 0x5F47DF: mov qword [rbx], rax, where rax is 0xA3BCC0 -- this class's own vtable
+
+    /** +0x08, RE 0x5F4810: `movsd qword [rbx + 8], xmm0`, where xmm0 is `counter / frequency` from the two imports at 0x5F47E2 and 0x5F47ED. **It is a baseline
+     *  in seconds and the method subtracts it**, so the pair of instructions is what establishes the meaning rather than the field alone. */
+    double baselineSeconds_ = 0.0;               // +0x08
+};
+
 // RE Multi::Supervisor (vtable 0xA3B4D0), Run at 0x827F0
 class Supervisor {
 public:

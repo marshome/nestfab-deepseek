@@ -3118,6 +3118,14 @@
    "round": 727,
    "subject": "Supervisors-state-object-is-0x530-and-4-nested-types",
    "witness": "0x032720 mov ecx,0x530 is the only site in the module asking for that size; 0x03271D mov r12,rcx makes r12 the Supervisor and 0x032736 mov rbx,rax the state object; 0x032AD2 mov qword [r12+8],rbx matches the destructor's 0x030B71 mov rsi,[rcx+8]; the lea targets 0xA3BCC0, 0xA3B8F0 and 0xA3B9B0 are the recorded bases 0xA3BCB0, 0xA3B8E0 and 0xA3B9A0 plus 0x10"
+  },
+  {
+   "grade": "CONSTRUCTOR",
+   "kind": "offset",
+   "predicate": "Utils::TimerWinImplementation is a 0x10 byte class with a vptr at +0 and a double baseline at +0x08, and its one method returns counter/frequency minus that baseline",
+   "round": 728,
+   "subject": "TimerWinImplementation-is-0x10-bytes",
+   "witness": "constructor 0x5F47C0 is the only site installing 0xA3BCC0 and has mov ecx,0x10 at 0x5F47C6, calls the two imports at 0x5F47E2 and 0x5F47ED, divides the two values at 0x5F480C and stores at 0x5F4810 movsd qword [rbx+8],xmm0; slot 2 at 0x6D5910 computes the same quotient and does subsd xmm0, qword [rbx+8] at 0x6D5948 before ret"
   }
  ]
 }

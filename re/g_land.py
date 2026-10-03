@@ -84,7 +84,10 @@ def main(argv):
     # **THE RECORD GOES TO re/landings/ AND NOT INTO lcns/**, which is what keeps this tool's footprint off the tree it edits.
     if not os.path.isdir(LANDINGS):
         os.makedirs(LANDINGS)
-    stem = "%s-%s" % (os.path.basename(target).replace(".", "_"), spec["old_sha"])
+    # **AND THE STEM CARRIES BOTH HASHES, BECAUSE ONE OF THEM COLLIDES.** The first version used only the OLD block's hash, and two landings that APPEND to the
+    # same anchor share that block -- so the second overwrote the first's record, which is the opposite of what "records the block it replaced" is for. A landing
+    # is identified by the PAIR it changes, so the pair is the name.
+    stem = "%s-%s-%s" % (os.path.basename(target).replace(".", "_"), spec["old_sha"], spec["new_sha"])
     io.open(os.path.join(LANDINGS, stem + ".old"), "w", encoding="utf-8", newline="\n").write(old)
     io.open(os.path.join(LANDINGS, stem + ".new"), "w", encoding="utf-8", newline="\n").write(new)
     io.open(os.path.join(LANDINGS, stem + ".json"), "w", encoding="utf-8", newline="\n").write(

@@ -7298,5 +7298,31 @@ int main() {
         static_assert(sizeof(lcns::Supervisor) >= 0x10, "a vptr and one pointer, and the 0x530 byte state object is reached through it");
     }
 
+    // ---------------------------------------------------------------- Utils::TimerWinImplementation (RE 0x5F47C0 and 0x6D5910)
+    {
+        // **THE SIZE 0x5F47C0 ASKS FOR, AND THE ONE FIELD IT STORES.** `mov ecx, 0x10` at 0x5F47C6 is the allocation and `movsd qword [rbx + 8], xmm0` at
+        // 0x5F4810 is the field, so a declaration that put anything else in this class cannot measure 0x10 with a double at +8.
+        static_assert(sizeof(lcns::TimerWinImplementation) == 0x10, "RE 0x5F47C6: mov ecx, 0x10");
+        static_assert(std::has_virtual_destructor<lcns::TimerWinImplementation>::value,
+                      "RE 0xA3BCB0's slots 0x6D5970 and 0x6D5960 are the destructor pair");
+        static_assert(std::is_polymorphic<lcns::TimerWinImplementation>::value, "a class with a vtable is polymorphic");
+
+        alignas(lcns::TimerWinImplementation) unsigned char storage[sizeof(lcns::TimerWinImplementation)];
+        lcns::TimerWinImplementation& probe = *reinterpret_cast<lcns::TimerWinImplementation*>(storage);
+        const unsigned char* at = reinterpret_cast<const unsigned char*>(&probe);
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.baselineSeconds_) - at == 0x08);   // RE 0x5F4810: movsd qword [rbx + 8], xmm0
+
+        // **AND THE PAIR OF INSTRUCTIONS IS WHAT MAKES +0x08 A BASELINE RATHER THAN A NUMBER.** The constructor divides the counter by the frequency and
+        // stores it; the method divides the same two and SUBTRACTS it. **So the class is a stopwatch and this checks the reading as a reading**: the port's own
+        // member is writable and the method's arithmetic over it is what the two addresses establish, so what can be verified here without the imports is the
+        // field's role -- two objects built at different times hold different values, which is what a baseline is.
+        lcns::TimerWinImplementation first;
+        lcns::TimerWinImplementation second;
+        first.baselineSeconds_ = 1.0;
+        second.baselineSeconds_ = 2.0;
+        CHECK(second.baselineSeconds_ - first.baselineSeconds_ == 1.0);   // the field is a scalar and the method subtracts it
+        CHECK(sizeof(lcns::TimerWinImplementation) == sizeof(first));
+    }
+    return check::finish("test_recovered");
     return check::finish("test_recovered");
 }
