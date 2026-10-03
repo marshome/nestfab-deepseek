@@ -20,6 +20,12 @@ import json
 import os
 import sys
 
+# **THE OUTPUT NEEDS THE SAME TREATMENT AS THE INPUT.** This console encodes with GBK, so a mangled-name string containing any byte it cannot map raises
+# `UnicodeEncodeError` and takes the tool down -- and the first bytes of an Itanium name are a type code, not text. **The project fixed this on the READING side
+# one round ago and the WRITING side bit this file the next round.**
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
