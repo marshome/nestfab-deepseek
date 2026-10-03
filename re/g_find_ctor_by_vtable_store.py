@@ -29,7 +29,7 @@ sys.path.insert(0, HERE)
 
 from lib import disasm, load_prof  # noqa: E402
 
-STORE = re.compile(r"^qword ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\], (\w+)$")
+STORE = re.compile(r"^qword ptr \[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], (\w+)$")
 
 
 def find(class_name, profile, data):

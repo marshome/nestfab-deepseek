@@ -30,7 +30,7 @@ import lib as LIB               # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
 ALLOC = re.compile(r"^ecx, (0x[0-9a-f]+)$")
-STORE = re.compile(r"^(qword|dword) ptr \[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\], ([a-z0-9]+)$")
+STORE = re.compile(r"^(qword|dword) ptr \[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], ([a-z0-9]+)$")
 LEA = re.compile(r"^([a-z0-9]+), \[rip \+ 0x([0-9a-f]+)\]$")
 
 

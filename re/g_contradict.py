@@ -42,7 +42,7 @@ import ledger            # noqa: E402
 import lib as LIB        # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?:\+(0x[0-9a-f]+))?\]")
+ACCESS = re.compile(r"\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
 WIDTHS = (("xmmword", 16), ("oword", 16), ("dword", 4), ("word", 2), ("qword", 8), ("byte", 1))
 
 

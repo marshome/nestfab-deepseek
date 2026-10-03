@@ -32,9 +32,9 @@ sys.path.insert(0, HERE)
 import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]")
-LEA_MEMBER = re.compile(r"^([a-z0-9]+), \[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]$")
-MOV_MEMBER = re.compile(r"^([a-z0-9]+), (?:qword ptr )?\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]$")
+ACCESS = re.compile(r"\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
+LEA_MEMBER = re.compile(r"^([a-z0-9]+), \[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]$")
+MOV_MEMBER = re.compile(r"^([a-z0-9]+), (?:qword ptr )?\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]$")
 WIDTHS = (("xmmword", 16), ("oword", 16), ("qword", 8), ("dword", 4), ("word", 2), ("byte", 1))
 ALIAS = {}
 for _full, _names in {"rax": ("eax", "ax", "al"), "rbx": ("ebx", "bx", "bl"), "rcx": ("ecx", "cx", "cl"),

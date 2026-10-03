@@ -31,7 +31,7 @@ from lib import disasm, load_prof, rip_targets  # noqa: E402
 
 ALLOCATOR = 0x998500
 FREE = 0x9984B0
-STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\], (.+)$")
+STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], (.+)$")
 
 
 def evidence(function, profile):

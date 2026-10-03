@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.join(ROOT, "re"))
 from lib import disasm, load_prof  # noqa: E402
 
 LEA = re.compile(r"^lea (\w+), \[rip \+ (0x[0-9a-f]+)\]$")
-STORE = re.compile(r"^mov (?:qword|dword) ptr \[(r\w+)(?: \+ (0x[0-9a-f]+))?\], (\w+)$")
+STORE = re.compile(r"^mov (?:qword|dword) ptr \[(r\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], (\w+)$")
 
 
 def main():

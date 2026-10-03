@@ -27,7 +27,7 @@ sys.path.insert(0, HERE)
 
 from lib import disasm, load_prof  # noqa: E402
 
-STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\], (.+)$")
+STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], (.+)$")
 LOADS_FROM_RCX = re.compile(r"^rcx(?:d|w|b)?$")
 
 

@@ -24,9 +24,9 @@ sys.path.insert(0, HERE)
 
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[(\w+)(?: \+ (0x[0-9a-f]+))?\]")
-STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\", ")
-STORE = re.compile(r"^(?:byte|word|dword|qword) ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\], ")
+ACCESS = re.compile(r"\[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
+STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\", ")
+STORE = re.compile(r"^(?:byte|word|dword|qword) ptr \[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], ")
 
 
 def slot_offsets(function, profile):

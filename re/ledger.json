@@ -3758,6 +3758,14 @@
       "predicate": "21 lines across 18 scripts in re/ parsed a memory displacement with a pattern that requires an 0x prefix, so offsets 1 to 9 were invisible to all of them, and six of them also treated a missing displacement (offset 0) as a skip",
       "witness": "re/g_scan_displacement_readers.py finds the pattern in g_class_fields, g_class_probe, g_class_slot_offsets, g_class_sites, g_class_methods, g_members_without_instructions, g_offset_stores, g_fill_placeholders, g_find_real_ctor, g_find_pool_field, g_find_ctor_by_vtable_store, g_find_engine_ctor, g_flag_widths, g_gen_named_members, g_gen_real_structs, g_setter_types, g_trace_supervisor_ctor, g_types_propagate, g_virtual_call_sites, g_adjudicate, g_trace_timer, g_arch and g_argshape. Capstone prints a one-digit displacement in decimal -- 8 occurs 44996 times, 1: 3453, 4: 3021, 2: 1027, 7: 787, 3: 624, 6: 581, 5: 524, 9: 145. **re/lib.py now carries one shared parser** (object_offsets, displacement) and g_members_without_instructions is wired to it; its report gained +0x8 and +0x4 where it had neither",
       "round": 774
+    },
+    {
+      "subject": "the-ledger-does-not-record-a-witness-provenance",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "re/ledger.json grades the KIND of a witness and not WHICH TOOL produced it, so a claim whose witness is a line of a script is not distinguishable from one whose witness is an instruction address",
+      "witness": "the displacement repair changed the output of eleven scripts -- g_embedded_structs by 127 of 164 lines, g_find_pool_field by 78 of 92, g_arrays by 68 of 86, g_classes by 40 of 123, g_class_sites by 33 of 84 -- **and the gate was GREEN BEFORE AND AFTER, because it runs g_acceptance, g_coverage, g_gap_compensation and g_rules and none of the eleven is among them.** A claim witnessed by an instruction address is unaffected by which script found it; **a claim witnessed by a line of output is now suspect and the ledger cannot say which those are.** That is the gap this round records",
+      "round": 775
     }
   ]
 }

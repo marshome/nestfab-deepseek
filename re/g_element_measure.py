@@ -26,7 +26,7 @@ from lib import disasm, load_prof, rva2off  # noqa: E402
 
 TARGET = 0x524EE0
 DIRECT = re.compile(r"^0x([0-9a-f]+)$")
-ACCESS = re.compile(r"\[([a-z0-9]+)(?:\+(0x[0-9a-f]+))?\]")
+ACCESS = re.compile(r"\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
 PRINTABLE = re.compile(rb"[\x20-\x7e]{4,}")
 ALIAS = {}
 for _full, _names in {"rax": ("eax", "ax", "al"), "rbx": ("ebx", "bx", "bl"), "rcx": ("ecx", "cx", "cl"),

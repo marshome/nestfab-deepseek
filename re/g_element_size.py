@@ -31,7 +31,7 @@ sys.path.insert(0, HERE)
 import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?:\+(0x[0-9a-f]+))?\]")# Every pattern below is matched against a SPACE-STRIPPED operand, because that is the only way one pattern reads both
+ACCESS = re.compile(r"\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")# Every pattern below is matched against a SPACE-STRIPPED operand, because that is the only way one pattern reads both
 # `lea rdi, [rax + rax*4]` and `lea rdi,[rax+rax*4]`, and capstone produces the spaced form while objdump produces the other.
 # Two rounds were lost this session to patterns that assumed one spelling.
 LEA_MUL = re.compile(r"^([a-z0-9]+),\[([a-z0-9]+)\+([a-z0-9]+)\*([1248])\]$")

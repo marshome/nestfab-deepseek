@@ -92,7 +92,7 @@ def profile(body):
             continue
         dst = canonical(m.group(1))
         src = re.sub(r"^(byte|word|dword|qword|xmmword|oword) ptr ", "", m.group(2).strip())
-        mm = re.match(r"^\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]$", src)
+        mm = re.match(r"^\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]$", src)
         if mm and canonical(mm.group(1)) in carries and not mm.group(2):
             behind.add(dst)
     # and copies of those

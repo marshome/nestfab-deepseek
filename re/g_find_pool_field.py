@@ -24,7 +24,7 @@ sys.path.insert(0, HERE)
 from lib import disasm, load_prof  # noqa: E402
 
 FUNCTIONS = [0x30B60, 0x30EB0, 0x32700, 0x69A480, 0x69A500, 0x871570]
-STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?: \+ (0x[0-9a-f]+))?\], ")
+STORE = re.compile(r"^(byte|word|dword|qword) ptr \[(\w+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\], ")
 
 
 def main():

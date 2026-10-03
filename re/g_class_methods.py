@@ -28,7 +28,7 @@ sys.path.insert(0, HERE)
 import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]")
+ACCESS = re.compile(r"\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
 MOVE = re.compile(r"^([a-z0-9]+), ([a-z0-9]+)$")
 ALIAS = {}
 for _full, _names in {"rax": ("eax", "ax", "al"), "rbx": ("ebx", "bx", "bl"), "rcx": ("ecx", "cx", "cl"),

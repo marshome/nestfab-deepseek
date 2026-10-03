@@ -29,7 +29,7 @@ sys.path.insert(0, HERE)
 import g_names as N             # noqa: E402
 from lib import disasm, load_prof  # noqa: E402
 
-ACCESS = re.compile(r"\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]")
+ACCESS = re.compile(r"\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]")
 MOVE = re.compile(r"^([a-z0-9]+), (.+)$")
 ALIAS = {}
 for _full, _names in {"rax": ("eax", "ax", "al"), "rbx": ("ebx", "bx", "bl"), "rcx": ("ecx", "cx", "cl"),
@@ -63,7 +63,7 @@ def handles(body):
             if ins.mnemonic != "mov" or not m:
                 continue
             src = re.sub(r"^(byte|word|dword|qword|xmmword|oword) ptr ", "", m.group(2).strip())
-            mm = re.match(r"^\[([a-z0-9]+)(?: \+ (0x[0-9a-f]+))?\]$", src)
+            mm = re.match(r"^\[([a-z0-9]+)(?:\s*\+\s*(0x[0-9a-f]+|\d+))?\]$", src)
             if mm and canonical(mm.group(1)) in (carries | behind) and not mm.group(2):
                 behind.add(canonical(m.group(1)))
             elif canonical(m.group(2)) in behind:
