@@ -3358,6 +3358,22 @@
       "predicate": "ranking the unreversed exports by body size puts GetLength and GetHeight in the easy group although their entry points tail-call into 757- and 759-byte functions",
       "witness": "GetLength at 0xB130 is 36 bytes and ends `jmp 0x526160`, which is 757 bytes; GetHeight at 0xB160 is 36 bytes and ends `jmp 0x5266a0`, which is 759. re/g_easy_queue.py lists 14 unreversed exports of 64 bytes or less, and these two plus GetBuildVersion, GetBuildDate and GetMajorVersion -- which read GLOBALS through `mov rax, [rip + ...]` -- are the five that are not single-field accessors",
       "round": 745
+    },
+    {
+      "subject": "no-unreversed-export-is-a-simple-accessor",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "of the 128 unreversed exports, none has a delegation chain whose largest function is 64 bytes or less, so ranking them by entry-point size does not find the easy ones",
+      "witness": "re/g_chain_size.py follows each export's calls and jumps and reports the largest function reached: 0 exports have a chain under 64 bytes and 128 delegate to something bigger. GetLength at 0xB130 is 36 bytes and reaches 2620; GetFillRatio at 0xB4B0 is 34 bytes and reaches 2493; AddHoleToPartVariant at 0x16D00 is 49 bytes and reaches 3494",
+      "round": 746
+    },
+    {
+      "subject": "a-rip-relative-jmp-is-an-import-thunk",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "0x63F228 is an import thunk -- `jmp qword ptr [rip + 0x4e9cee]` with nop padding repeating every 8 bytes -- so GetPartUserStringEx's chain leaves the module there, while 0x64AEA0 is the module's own 403-byte logging helper and not a thunk",
+      "witness": "disassembling 0x63F228 gives `jmp qword ptr [rip + 0x4e9cee]`, `nop`, `nop`, then `jmp qword ptr [rip + 0x4e9cde]` eight bytes later; 0x64AEA0 gives `push rsi` / `push rbx` / `sub rsp, 0x38` and has a measured size of 403 bytes",
+      "round": 746
     }
   ]
 }
