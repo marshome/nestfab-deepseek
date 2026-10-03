@@ -27,7 +27,17 @@ ROOT = os.path.dirname(HERE)
 
 STRUCT = re.compile(r"^(?:struct|class)\s+(\w+)\s*(?::[^\{]*)?\{(?P<body>.*?)^\};", re.M | re.S)
 # a field line carrying `+0xNNN` in its comment, which is how this project records an offset it derived
-FIELD = re.compile(r"^\s+[\w:<>\s\*&\[\]]+?\b(\w+)\s*(?:\[[^\]]*\])?\s*(?:=[^;]*)?;\s*//.*?\+0x([0-9A-Fa-f]+)", re.M)
+# **AND THE PADDING IS NOT A FIELD.** The permutation inserts `std::byte paddingNN[...]` members to force the next field onto its offset, and those
+# declarations carry a `+0xNNN` comment -- so a field regex matches them and counts the tool's own scaffolding as the module's structure. **Thirteen of
+# the "15 offsets only Order has" were padding**, and the same omission made `re/g_one_definition.py` report 68 shared offsets where this tool reports
+# 67. A member whose type is `std::byte`, whose name begins with `padding` and whose width is zero is not a field.
+NOT_A_FIELD = re.compile(r"^padding\d*$")
+# **AND THE COMMENT MUST BE ON THE SAME LINE, WHICH IS THE FIX FOR A BUG THAT WAS ALREADY FIXED ELSEWHERE.** The pattern this replaces let its `//...` part span a
+# NEWLINE, so `incompatibleSheets` -- which has no comment of its own -- matched the SECTION HEADER below it, "// --- pipe mode / late common-cut block
+# (+0x170, +0x1A0..+0x1C0) ---", and was recorded as claiming +0x170. **A regex that can cross a newline will find the next line's data**, and the reason it
+# was caught here is that `re/g_order_union.py` read the same file with the same-line rule and reported one field fewer -- **two tools disagreeing is what makes
+# a bug like this visible.**
+FIELD = re.compile(r"^\s+[\w:<>\s\*&\[\]]+?\b(\w+)\s*(?:\[[^\]]*\])?\s*(?:=[^;]*)?;[^\n]*?//[^\n]*?\+0x([0-9A-Fa-f]+)", re.M)
 
 # PAIRS THAT ARE NOT A DUPLICATION, each with the reason. **`SimplexLinearProgram` and `ClpLinearProgram` share offsets because a linear program's
 # fields are a linear program's fields, and the module has TWO back-ends for it** -- that is two implementations of one interface and both belong.
@@ -42,10 +52,11 @@ NOT_DUPLICATES = {
 # this a task with two lists rather than a choice between two structs.
 KNOWN_DUPLICATES = {
     frozenset({("model.hpp", "Order"), ("launching_order.hpp", "LaunchingOrderLayout")}):
-        "ONE object described twice, and the MEASURED division is in re/ORDER_UNION.md: 68 shared offsets, 60 that only the layout has -- 54 of them carrying "
-        "an unnamedXXX name, which is the offset-derived shape this objective removes -- and 15 that only Order has. **So NEITHER is the module's object "
-        "alone, and the merge direction is a real decision rather than a preference**: taking Order and adding the 60 puts 54 unnamedXXX members into the file "
-        "being cleaned, and taking the layout deletes 234 call sites' names and the export-derived witnesses with them",
+        "ONE object described twice. **THE NUMBERS, WITH THE PADDING THE PERMUTATION INSERTS EXCLUDED** (this tool counted it only because a padding member "
+        "carries a `+0xNNN` comment, and it is excluded at NOT_A_FIELD): 54 shared offsets, 73 that only the layout has -- **62 of them carrying an unnamedXXX "
+        "name**, which is the offset-derived shape this objective removes -- and 2 that only Order has. **So NEITHER is the module's object alone, and the merge "
+        "direction is a real decision rather than a preference**: taking Order and adding the 73 puts 62 unnamedXXX members into the file being cleaned, and "
+        "taking the layout deletes 234 call sites' names and the export-derived witnesses with them",
 }
 
 # **HOW TO TELL TWO STRUCTS OVER THE SAME OFFSETS APART FROM TWO STRUCTS THAT MERELY ALIGN, MEASURED RATHER THAN GUESSED.**
@@ -80,6 +91,8 @@ def structs():
                 continue
             offsets = {}
             for field, offset in found:
+                if NOT_A_FIELD.match(field):
+                    continue      # **PADDING IS NOT A FIELD**, see the note at NOT_A_FIELD
                 offsets[int(offset, 16)] = field
             yield name, match.group(1), offsets
 

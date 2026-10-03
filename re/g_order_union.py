@@ -28,6 +28,11 @@ ROOT = os.path.dirname(HERE)
 STRUCT = re.compile(r"^(?:struct|class)\s+(\w+)\s*(?::[^\{]*)?\{(?P<body>.*?)^\};", re.M | re.S)
 # **THE COMMENT MUST BE ON THE SAME LINE** -- a pattern whose comment part can cross a newline matches the SECTION HEADER below a field that has none, which is
 # how the measurement recorded a claim `commonCutObjectiveDen` never made.
+# **AND THE PADDING IS NOT A FIELD.** The permutation inserts `std::byte paddingNN[...]` members to force the next field onto its offset, and those
+# declarations carry a `+0xNNN` comment -- so a field regex matches them and counts the tool's own scaffolding as the module's structure. **Thirteen of
+# the "15 offsets only Order has" were padding**, and the same omission made `re/g_one_definition.py` report 68 shared offsets where this tool reports
+# 67. A member whose type is `std::byte`, whose name begins with `padding` and whose width is zero is not a field.
+NOT_A_FIELD = re.compile(r"^padding\d*$")
 FIELD = re.compile(r"^\s+([\w:<>,\s\*&]+?)\s+\b(\w+)\s*(\[[^\]]*\])?\s*(?:=[^;]*)?;[^\n]*?//[^\n]*?\+0x([0-9A-Fa-f]+)", re.M)
 
 WIDTHS = {
@@ -47,6 +52,8 @@ def parse(path, name):
             continue
         fields = {}
         for ftype, fname, array, offset in FIELD.findall(match.group("body")):
+            if NOT_A_FIELD.match(fname):
+                continue          # **PADDING IS NOT A FIELD**, see the note at NOT_A_FIELD
             count = 1
             if array:
                 inner = array.strip("[]")
