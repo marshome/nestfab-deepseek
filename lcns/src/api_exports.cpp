@@ -516,7 +516,7 @@ extern "C" void SetOffcutEvaluation(OrderHandle, double, double, double) {
 // signature from the inferred typed table
 extern "C" void SetFillLastNestingStrategy(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD90's body reads through rcx.
-    lcns::dll::exports::impl::setFillLastNestingStrategy(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setFillLastNestingStrategy(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 146/147  rva 0x0DDC0  33 bytes
@@ -590,7 +590,7 @@ extern "C" void* LaunchLimitedLocalComputation(OrderHandle, double) {
 // signature from the inferred typed table
 extern "C" void SetPartCommonCutMode(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDE50's body reads through rcx.
-    lcns::dll::exports::impl::setPartCommonCutMode(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setPartCommonCutMode(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 168/169  rva 0x0B4B0  34 bytes
@@ -644,7 +644,7 @@ extern "C" void SetExtraGapOnPart(OrderHandle, int, double) {
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
 extern "C" void CNS_SetFloatingMode(std::intptr_t* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD30's body reads through rcx.
-    lcns::dll::exports::impl::setFloatingMode(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setFloatingMode(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 184/185  rva 0x0D870  826 bytes  cns.cpp
@@ -1111,7 +1111,7 @@ extern "C" void CNS_AddAssemblyGroupPart(OrderHandle, int, int, int) {
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
 extern "C" void CNS_SetOriginPackingMode(std::intptr_t* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDD60's body reads through rcx.
-    lcns::dll::exports::impl::setOriginPackingMode(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setOriginPackingMode(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 314/315  rva 0x12D10  552 bytes
@@ -1127,7 +1127,7 @@ extern "C" std::intptr_t CNS_AddOpenToolPathToPart(std::intptr_t, std::intptr_t,
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
 extern "C" void CNS_SetEvaluateIntermediateNestingsAsLast(std::intptr_t* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x10440's body reads through rcx.
-    lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 318/319  rva 0x09330  449 bytes  // NewNoFitNesting
@@ -1174,7 +1174,7 @@ extern "C" int NoFitGenerateSvgGeometry(NoFitGeometry, const char*) {
 // signature from the inferred typed table
 extern "C" void SetPartialShearMode(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0xDDF0's body reads through rcx.
-    lcns::dll::exports::impl::setPartialShearMode(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setPartialShearMode(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 332/333  rva 0x0B750  384 bytes  cns.cpp
@@ -1196,14 +1196,14 @@ extern "C" void ForcePartInsideHole(std::intptr_t* object) {
 // signature from the inferred typed table
 extern "C" void SetReorganizeBiggestPartNearOrigin(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x10470's body reads through rcx.
-    lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 338/339  rva 0x104A0  42 bytes
 // signature from the inferred typed table
 extern "C" void SetReorganizeLongestPartNearOrigin(OrderHandle* object, int value) {
     // **WIRED FROM THE MODULE'S OWN ARITY**: re/g_plan_wiring.py read rcx, rdx as the argument register(s), and 0x104A0's body reads through rcx.
-    lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin(static_cast<void*>(object), value);
+    lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin(reinterpret_cast<lcns::Order*>(object), value);
 }
 
 // ordinal 340/341  rva 0x09930  443 bytes

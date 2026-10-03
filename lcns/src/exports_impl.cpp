@@ -59,38 +59,39 @@ void* getPartWithBadGeometry(void* object) {
     return carrier->geometry;
 }
 
-void setFillLastNestingStrategy(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag40 = (value != 0) ? 1 : 0;   // RE 0xDDA9: setne
+void setFillLastNestingStrategy(Order* order, int value) {
+    order->fillLastNestingStrategy = (value != 0);   // RE 0xDDA9: setne byte [rsi + 0x40]
 }
 
-void setPartCommonCutMode(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag1C = (value != 0) ? 1 : 0;   // RE 0xDE69: setne
+void setPartCommonCutMode(Order* order, int value) {
+    // **THE LOW BYTE OF `field1C` AND NOT A FIELD OF ITS OWN.** RE 0xDE69 is `setne byte [rsi + 0x1c]` while RE 0xD357 is `mov dword [rsi + 0x1c], ebx` -- two
+    // views of one address, so a byte member here would alias the dword and the compiler would not say so.
+    order->field1C = (order->field1C & 0xFFFFFF00u) | static_cast<std::uint32_t>(value != 0);   // RE 0xDE69
 }
 
-void setFloatingMode(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag20 = (value != 0) ? 1 : 0;   // RE 0xDD49: setne
+void setFloatingMode(Order* order, int value) {
+    order->floatingMode = (value != 0);   // RE 0xDD49: setne byte [rsi + 0x20]
 }
 
-void setOriginPackingMode(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag21 = (value != 0) ? 1 : 0;   // RE 0xDD79: setne
+void setOriginPackingMode(Order* order, int value) {
+    order->originPackingMode = (value != 0);   // RE 0xDD79: setne byte [rsi + 0x21]
 }
 
-void setPartialShearMode(void* object, int value) {
-    OptionFlagCarrier* carrier = static_cast<OptionFlagCarrier*>(object);
-    carrier->field48 = static_cast<std::uint32_t>(value);   // RE 0xDE07
-    carrier->field44 = static_cast<std::uint32_t>(value);   // RE 0xDE0A, the same field setShearMode writes
+void setPartialShearMode(Order* order, int value) {
+    order->shearCorner = static_cast<std::uint32_t>(value);   // RE 0xDE07: mov dword [rsi + 0x48], ebx
+    order->shear = static_cast<std::uint32_t>(value);         // RE 0xDE0A: mov dword [rsi + 0x44], ebx, the same field setShearMode writes
 }
 
-void setEvaluateIntermediateNestingsAsLast(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag41 = (value != 0) ? 1 : 0;   // RE 0x1045F: setne
+void setEvaluateIntermediateNestingsAsLast(Order* order, int value) {
+    order->evaluateIntermediateNestingsAsLast = (value != 0);   // RE 0x1045F: setne byte [rbx + 0x41]
 }
 
-void setReorganizeBiggestPartNearOrigin(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag22 = (value != 0) ? 1 : 0;   // RE 0x1048F: setne
+void setReorganizeBiggestPartNearOrigin(Order* order, int value) {
+    order->reorganizeBiggestPartNearOrigin = (value != 0);   // RE 0x1048F: setne byte [rbx + 0x22]
 }
 
-void setReorganizeLongestPartNearOrigin(void* object, int value) {
-    static_cast<OptionFlagCarrier*>(object)->flag23 = (value != 0) ? 1 : 0;   // RE 0x104BF: setne
+void setReorganizeLongestPartNearOrigin(Order* order, int value) {
+    order->reorganizeLongestPartNearOrigin = (value != 0);   // RE 0x104BF: setne byte [rbx + 0x23]
 }
 
 void forcePartInsideHole(void* part) {

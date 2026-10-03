@@ -54,22 +54,22 @@ void addOpenCuttingPathToPartVariant(void* object, const void* pair, int flag, v
 void setPartVariantAuthorizations(void* order, int first, int second, double value);
 
 /** RE 0xDD90 (ordinal 144): byte at +0x40 becomes the truth value of the argument. */
-void setFillLastNestingStrategy(void* object, int value);
+void setFillLastNestingStrategy(Order* order, int value);
 /** RE 0xDE50 (ordinal 166): byte at +0x1C. */
-void setPartCommonCutMode(void* object, int value);
+void setPartCommonCutMode(Order* order, int value);
 /** RE 0xDD30 (ordinal 182): byte at +0x20. */
-void setFloatingMode(void* object, int value);
+void setFloatingMode(Order* order, int value);
 /** RE 0xDD60 (ordinal 312): byte at +0x21. */
-void setOriginPackingMode(void* object, int value);
+void setOriginPackingMode(Order* order, int value);
 /** RE 0xDDF0 (ordinal 330): the 32-bit value goes to BOTH +0x48 and +0x44. */
-void setPartialShearMode(void* object, int value);
+void setPartialShearMode(Order* order, int value);
 
 /** RE 0x10440 (ordinal 316): byte at +0x41 becomes the truth value of the argument. */
-void setEvaluateIntermediateNestingsAsLast(void* object, int value);
+void setEvaluateIntermediateNestingsAsLast(Order* order, int value);
 /** RE 0x10470 (ordinal 336): byte at +0x22. */
-void setReorganizeBiggestPartNearOrigin(void* object, int value);
+void setReorganizeBiggestPartNearOrigin(Order* order, int value);
 /** RE 0x104A0 (ordinal 338): byte at +0x23. */
-void setReorganizeLongestPartNearOrigin(void* object, int value);
+void setReorganizeLongestPartNearOrigin(Order* order, int value);
 /** RE 0xC610 (ordinal 334): sets +0x20A to 1 and +0x20B to 0. No argument beyond the object. */
 void forcePartInsideHole(void* part);
 /** RE 0xCEC0 (ordinal 78): the 32-bit argument goes to +0x08. */

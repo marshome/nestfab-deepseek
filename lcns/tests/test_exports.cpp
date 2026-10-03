@@ -463,59 +463,69 @@ int main() {
         CHECK(offsetof(lcns::dll::CachedBoxCarrier, initialised) == 0x100);   // RE 0x4F920B
         CHECK(offsetof(lcns::dll::CachedBoxCarrier, box) == 0x108);           // RE 0x4F9217
 
-    // ------------------- the five mode setters, each against its own decoded offset
+    // ------------------- the mode setters, each against its own decoded offset on `Order` itself
+    // **THESE USED TO RUN AGAINST `OptionFlagCarrier`, WHICH IS A SECOND DESCRIPTION OF FIELDS `Order` HAS.** Each byte is now read through the name the export
+    // that writes it gave the field, so a rename that broke the mapping would fail here rather than pass.
     {
-        lcns::dll::OptionFlagCarrier option{};
-        std::memset(&option, 0x5A, sizeof(option));   // noise, so a write to the wrong byte shows up
+        // **NOISE IN THE FIELDS UNDER TEST AND NOT A memset OVER THE WHOLE OBJECT.** Order has non-trivial members, so memset is -Wclass-memaccess and the gate
+        // fails on warnings -- and it would also be wrong: the noise is only meaningful where a write could land.
+        lcns::Order order{};
+        order.fillLastNestingStrategy = true; order.floatingMode = true; order.originPackingMode = true;
+        order.field1C = 0x5A5A5A5Au; order.shear = 0x5A5A5A5Au; order.shearCorner = 0x5A5A5A5Au;
 
-        lcns::dll::exports::impl::setFillLastNestingStrategy(&option, 7);
-        CHECK(option.flag40 == 1);                    // RE 0xDDA9 stores the truth value, not the number
-        lcns::dll::exports::impl::setFillLastNestingStrategy(&option, 0);
-        CHECK(option.flag40 == 0);
+        lcns::dll::exports::impl::setFillLastNestingStrategy(&order, 7);
+        CHECK(order.fillLastNestingStrategy == 1);          // RE 0xDDA9 stores the truth value, not the number
+        lcns::dll::exports::impl::setFillLastNestingStrategy(&order, 0);
+        CHECK(order.fillLastNestingStrategy == 0);
 
-        lcns::dll::exports::impl::setPartCommonCutMode(&option, -1);
-        CHECK(option.flag1C == 1);
-        lcns::dll::exports::impl::setPartCommonCutMode(&option, 0);
-        CHECK(option.flag1C == 0);
+        lcns::dll::exports::impl::setPartCommonCutMode(&order, -1);
+        CHECK((order.field1C & 0xFFu) == 1u);               // RE 0xDE69 writes the LOW BYTE of a 32-bit field
+        lcns::dll::exports::impl::setPartCommonCutMode(&order, 0);
+        CHECK((order.field1C & 0xFFu) == 0u);
 
-        lcns::dll::exports::impl::setFloatingMode(&option, 3);
-        CHECK(option.flag20 == 1);
-        lcns::dll::exports::impl::setFloatingMode(&option, 0);
-        CHECK(option.flag20 == 0);
+        lcns::dll::exports::impl::setFloatingMode(&order, 3);
+        CHECK(order.floatingMode == 1);
+        lcns::dll::exports::impl::setFloatingMode(&order, 0);
+        CHECK(order.floatingMode == 0);
 
-        lcns::dll::exports::impl::setOriginPackingMode(&option, 1);
-        CHECK(option.flag21 == 1);
-        lcns::dll::exports::impl::setOriginPackingMode(&option, 0);
-        CHECK(option.flag21 == 0);
+        lcns::dll::exports::impl::setOriginPackingMode(&order, 1);
+        CHECK(order.originPackingMode == 1);
+        lcns::dll::exports::impl::setOriginPackingMode(&order, 0);
+        CHECK(order.originPackingMode == 0);
 
-        lcns::dll::exports::impl::setPartialShearMode(&option, 12345);
-        CHECK(option.field44 == 12345u);              // RE 0xDE0A
-        CHECK(option.field48 == 12345u);              // RE 0xDE07: both fields take the value, not its truth value
-        // and the neighbours the four flag setters must not touch
-        CHECK(option.flag1C != 0x5A || option.flag20 != 0x5A || option.flag21 != 0x5A || option.flag40 != 0x5A);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag1C) == 0x1C);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag20) == 0x20);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag21) == 0x21);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag40) == 0x40);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, field44) == 0x44);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, field48) == 0x48);
+        lcns::dll::exports::impl::setPartialShearMode(&order, 12345);
+        CHECK(order.shear == 12345u);                       // RE 0xDE0A
+        CHECK(order.shearCorner == 12345u);                 // RE 0xDE07: both take the value, not its truth
+
+        // **AND THE FIELDS THE FOUR FLAG SETTERS MUST NOT TOUCH.** `shear` and `shearCorner` are thirty-two bits, so a byte write aimed at a neighbouring flag
+        // would land inside them -- which is exactly the damage the carrier's byte layout could hide.
+        CHECK(order.shear == 12345u && order.shearCorner == 12345u);
+
+        CHECK(offsetof(lcns::Order, field1C) == 0x1C);
+        CHECK(offsetof(lcns::Order, floatingMode) == 0x20);
+        CHECK(offsetof(lcns::Order, originPackingMode) == 0x21);
+        CHECK(offsetof(lcns::Order, fillLastNestingStrategy) == 0x40);
+        CHECK(offsetof(lcns::Order, shear) == 0x44);
+        CHECK(offsetof(lcns::Order, shearCorner) == 0x48);
     }
 
     // ------------------- second sweep: seven more exports, each against its decoded offset
     {
-        lcns::dll::OptionFlagCarrier flags{};
-        std::memset(&flags, 0x5A, sizeof(flags));
+        lcns::Order flags{};
+        flags.evaluateIntermediateNestingsAsLast = true;
+        flags.reorganizeBiggestPartNearOrigin = true;
+        flags.reorganizeLongestPartNearOrigin = true;
         lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(&flags, 5);
-        CHECK(flags.flag41 == 1);                       // RE 0x1045F stores the truth value
+        CHECK(flags.evaluateIntermediateNestingsAsLast == 1);                       // RE 0x1045F stores the truth value
         lcns::dll::exports::impl::setEvaluateIntermediateNestingsAsLast(&flags, 0);
-        CHECK(flags.flag41 == 0);
+        CHECK(flags.evaluateIntermediateNestingsAsLast == 0);
         lcns::dll::exports::impl::setReorganizeBiggestPartNearOrigin(&flags, -2);
-        CHECK(flags.flag22 == 1);                       // RE 0x1048F
+        CHECK(flags.reorganizeBiggestPartNearOrigin == 1);                       // RE 0x1048F
         lcns::dll::exports::impl::setReorganizeLongestPartNearOrigin(&flags, 9);
-        CHECK(flags.flag23 == 1);                       // RE 0x104BF
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag22) == 0x22);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag23) == 0x23);
-        CHECK(offsetof(lcns::dll::OptionFlagCarrier, flag41) == 0x41);
+        CHECK(flags.reorganizeLongestPartNearOrigin == 1);                       // RE 0x104BF
+        CHECK(offsetof(lcns::Order, reorganizeBiggestPartNearOrigin) == 0x22);
+        CHECK(offsetof(lcns::Order, reorganizeLongestPartNearOrigin) == 0x23);
+        CHECK(offsetof(lcns::Order, evaluateIntermediateNestingsAsLast) == 0x41);
 
         lcns::dll::HoleForceCarrier part{};
         std::memset(&part, 0x5A, sizeof(part));
