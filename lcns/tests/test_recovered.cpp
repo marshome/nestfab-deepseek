@@ -7323,6 +7323,32 @@ int main() {
         CHECK(second.baselineSeconds_ - first.baselineSeconds_ == 1.0);   // the field is a scalar and the method subtracts it
         CHECK(sizeof(lcns::TimerWinImplementation) == sizeof(first));
     }
-    return check::finish("test_recovered");
+    // ---------------------------------------------------------------- the two 0x10 byte cancellers the Supervisor allocates (RE 0x32700)
+    {
+        // **BOTH ARE `{vptr, owner}` AND BOTH ARE 0x10 BYTES**, each from its own `mov ecx, 0x10` in the Supervisor's constructor -- 0x32913 for
+        // `NestingContextPool` and 0x32AD7 for `NoFitMapCanceller` -- with the vtable stored at +0x00 and the OWNER at +0x08.
+        static_assert(sizeof(lcns::NestingContextPool) == 0x10, "RE 0x32913: mov ecx, 0x10");
+        static_assert(sizeof(lcns::NoFitMapCanceller) == 0x10, "RE 0x32AD7: mov ecx, 0x10");
+        static_assert(std::has_virtual_destructor<lcns::NestingContextPool>::value, "RE 0xA3B9A0's first two slots are the destructor pair");
+        static_assert(std::has_virtual_destructor<lcns::NoFitMapCanceller>::value, "RE 0xA3B8E0's first two slots are the destructor pair");
+
+        // **AND THE OWNER'S OFFSET, WHICH IS WHAT MAKES THEM CANCELLERS.** RE 0x32AE5 `mov rdx, qword [rbx + 8]` reads the Supervisor -- stored at 0x32AD2 --
+        // and 0x32AFF `mov qword [rax + 8], rdx` writes it into the new object, so +0x08 is a pointer to the object whose work the canceller stops.
+        alignas(lcns::NoFitMapCanceller) unsigned char storageA[sizeof(lcns::NoFitMapCanceller)];
+        lcns::NoFitMapCanceller& canceller = *reinterpret_cast<lcns::NoFitMapCanceller*>(storageA);
+        const unsigned char* at = reinterpret_cast<const unsigned char*>(&canceller);
+        CHECK(reinterpret_cast<const unsigned char*>(&canceller.owner_) - at == 0x08);   // RE 0x32AFF: mov qword [rax + 8], rdx
+
+        alignas(lcns::NestingContextPool) unsigned char storageB[sizeof(lcns::NestingContextPool)];
+        lcns::NestingContextPool& pool = *reinterpret_cast<lcns::NestingContextPool*>(storageB);
+        const unsigned char* bt = reinterpret_cast<const unsigned char*>(&pool);
+        CHECK(reinterpret_cast<const unsigned char*>(&pool.owner_) - bt == 0x08);        // the same shape, from 0x3290C's allocation
+
+        // **AND THE TWO ARE NOT EACH OTHER'S BASE.** Their tables are separate -- 0xA3B9A0 and 0xA3B8E0 -- with different destructor addresses (0x69A500/0x69A480
+        // and 0x69A410/0x69A400), so declaring one as deriving from the other would be a relationship the module does not have. **A `static_assert` rather than a
+        // `CHECK`, because the template's comma is a macro argument separator.**
+        static_assert(!std::is_base_of<lcns::NestingContextPool, lcns::NoFitMapCanceller>::value, "separate vtables, so no derivation");
+        static_assert(!std::is_base_of<lcns::NoFitMapCanceller, lcns::NestingContextPool>::value, "and not the other way either");
+    }
     return check::finish("test_recovered");
 }
