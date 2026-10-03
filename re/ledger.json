@@ -3606,6 +3606,14 @@
       "predicate": "the placement of Nester's base data is UNRESOLVED: four pieces of evidence disagree and no round has settled which survives",
       "witness": "(1) 0xB4470 writes a vptr at +0x00, a pointer at +0x08 and two dwords at +0x10 and +0x14, with five callers. (2) lcns/include/lcns/base_chain.hpp already says `Multi::Nester` declares no data members and that the fields belong to N5Multi15CompositeNesterE, which would make Nester 0x08 and make 0xB4470's +0x08 store a store into the class that file calls empty. (3) the direct Nester children put their first own member at +0x18 -- NestingNester derives straight from Nester and the suite asserts atSeedP == 0x18 -- which fits 0x10 and not 0x08. (4) the module allocates 0x28 for FlipNester (RE 0x2C953 mov ecx, 0x28), while Nester at 0x18 plus an 0x18 vector at CompositeNester's +0x18 is 0x30. **The declaration as it stands fits every allocation and is NOT established to be right**; what would settle it is a class deriving straight from Nester that reads +0x08, +0x10 or +0x14 through its own object",
       "round": 761
+    },
+    {
+      "subject": "the-member-support-audit-was-blind-to-offset-zero",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the member-support audit skipped any access with no displacement, so every constructor is vtable store at +0x00 was invisible and a class whose only object write is that store was reported as touching nothing",
+      "witness": "its ACCESS regex captured the displacement optionally and the code did if offset is None: continue, so [rbx] was dropped. TimerWinImplementation is the class that exposed it: 0x5F47DF is mov qword ptr [rbx], rax in a constructor that allocates its own object at 0x5F47C6-0x5F47D5. **A second blindness sat behind it**: holds began as {rcx} only, so the allocator is return value in rax never became the object and mov rbx, rax did not join it. Both are fixed and the unsupported count is now 0, from 1",
+      "round": 762
     }
   ]
 }

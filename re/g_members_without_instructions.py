@@ -110,11 +110,17 @@ def walk(function, profile):
             if text.strip() == "0x%x" % ALLOCATOR and pending:
                 blocks.add("__alloc__")
                 pending = None
+            # **THE ALLOCATOR RETURNS THE OBJECT IN `rax`, AND THE FIRST VERSION DID NOT KNOW THAT.** `0x5F47C6 mov ecx, 0x10` / `call 0x998500` / `0x5F47D5 mov
+            # rbx, rax` is a constructor that ALLOCATES ITS OWN OBJECT -- **and `holds` began as `{rcx}` only, so `rax` was never in it, `rbx` never joined, and every
+            # store through `rbx` was counted as neither the object nor the block.** That is why `TimerWinImplementation` was reported unsupported while its
+            # constructor writes the vtable at +0x00 and `baselineSeconds_` at +0x08 through `rbx`.
+            holds.add("rax")
         for match in ACCESS.finditer(text):
             base, offset = match.group(1), match.group(2)
-            if offset is None:
-                continue
-            value = int(offset, 16)
+            # **`[rbx]` WITH NO DISPLACEMENT IS OFFSET 0, AND THE FIRST VERSION SKIPPED IT** -- so every constructor's vtable store was invisible, and a class whose
+            # ONLY object write is that store came out as "touches nothing on the object". **The vptr is the most important evidence a constructor gives**, and
+            # `TimerWinImplementation` is the class that exposed it: `0x5F47DF mov qword [rbx], rax` is its+0x00, and the tool called it unsupported.
+            value = int(offset, 16) if offset else 0
             if base in holds:
                 on_this.add(value)
             elif base in ("rax", "rbx") and blocks:
@@ -183,17 +189,23 @@ def main(argv):
 
     print("%-22s %-10s %-8s %-22s %-22s %s" % ("class", "fn", "kind", "offsets ON THE OBJECT", "offsets IN THE BLOCK", "members"))
     unsupported = 0
+    unsupported_names = []
     for name, short, function, destructor, on_this, on_block, blocks, members, supported in rows:
         kind = "NOT FOUND" if (destructor and not on_this) else ("DESTRUCTOR" if destructor else "constructor")
         if not supported:
             unsupported += 1
+            unsupported_names.append(short)
         print("%-22s 0x%-8X %-8s %-22s %-22s %s"
               % (short[:22], function, kind,
                  " ".join("+0x%X" % o for o in sorted(on_this)[:4]) or "-- none --",
                  ("%d block(s): %s" % (blocks, " ".join("+0x%X" % o for o in sorted(on_block)[:4]))) if blocks else "--",
                  ", ".join(m[1] for m in members)[:26]))
     print("")
+    # **AND IT NAMES THEM, BECAUSE A COUNT WITH NO NAMES IS NOT A REPORT.** The first version printed the number and not which classes it counted, so finding
+    # them meant scanning the table by eye -- **and an unsupported class is exactly what a reader needs to be pointed at.**
     print("classes where NEITHER the object NOR any block the paired function allocates is touched: %d" % unsupported)
+    for name in unsupported_names:
+        print("   %s" % name)
     print("**THE TWO COLUMNS ARE THE POINT**: a handle class legitimately touches nothing on itself, and its fields are one level down. Four")
     print("classes were reported unsupported in a row before this was written, and all four were handles.")
     return 0
