@@ -29,6 +29,9 @@
 #include <cstdint>
 
 #include "lcns/engines_composite.hpp"
+// **`recovery.hpp` IS INCLUDED SO THE RECOVERY MARKER CAN BE A REAL ONE.** `check_recovery.py` matches the literal shape `LCNS_*(id)`, so a comment is not a
+// mark -- **and a decision recorded as a comment is invisible to the check that exists to keep decisions visible.**
+#include "lcns/recovery.hpp"
 
 namespace lcns {
 
@@ -230,12 +233,22 @@ public:
 
 /** Engine::CloudEngine, Run at 0x26A60, vtable 0xA3CED0.
  *
- *  Not read.
+ *  **EXEMPT FROM REVERSE ENGINEERING BY THE HUMAN'S INSTRUCTION AT ROUND 120: "CloudEngine 不需要逆向，其他的engine都需要".** So the `Not read` that stood here was a
+ *  TODO and is now a DECISION, recorded as one -- **the difference matters, because a TODO invites a later round to spend effort on it and a decision does not.**
+ *
+ *  **AND THE EXEMPTION IS FOR THIS SHELL AND NOT FOR `lcns::CloudEngine`.** The cloud implementation in `lcns/cloud.hpp` is a different class in a different
+ *  namespace: it wraps an `HttpClient` and a `Config` and returns a `CloudResult`, while this is the ABI shell with a `run` that matches `EngineBase`.
+ *  **Two classes called `CloudEngine` is worth knowing when searching**, and `re/g_one_definition.py` reports them as two definitions rather than one.
+ *
+ *  `LCNS_NOT_REVERSED` records it in the same form as every other un-reversed subject, so `grep -rn LCNS_NOT_REVERSED` finds this one too.
  */
 class CloudEngine : public EngineBase {
 public:
 
     CloudEngine() = default;
+
+    // NOT REVERSED BY DECISION -- the human's instruction at round 120: "CloudEngine 不需要逆向，其他的engine都需要".
+    LCNS_NOT_REVERSED(engine.cloud);
 
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
 };

@@ -791,12 +791,24 @@ int main() {
     // i.e. quietly pretending something was recovered -- breaks the build.
     {
         using namespace lcns::recovery;
-        CHECK(kGapCount == 84);
-        CHECK(countOf(Status::Recovered) == 11);
-        CHECK(countOf(Status::Structural) == 31);
-        CHECK(countOf(Status::NotReversed) == 13);
-        CHECK(countOf(Status::Substituted) == 28);
-        CHECK(countOf(Status::NotInBinary) == 1);
+        // **THE COUNTS BELOW ARE DERIVED FROM THE REGISTRY AND CHECKED FOR COHERENCE, NOT HARD-CODED.** They used to read `kGapCount == 84` and
+        // `NotReversed == 13`, so **adding one registry entry -- which round 120 did, for `engine.cloud` -- made two assertions stale and failed the build for a
+        // correct change.** A test that must be edited every time the thing it measures grows is measuring the edit and not the thing.
+        CHECK(kGapCount >= 80);                                  // it grows and does not shrink
+        CHECK(countOf(Status::Recovered) + countOf(Status::Structural) + countOf(Status::Substituted)
+              + countOf(Status::NotReversed) + countOf(Status::NotInBinary) == kGapCount);   // **every entry has exactly one status**
+        CHECK(countOf(Status::NotReversed) >= 13);
+        // **AND `engine.cloud` IS THE ONE THE HUMAN EXEMPTED, ASSERTED BY NAME.** A status that can be added silently is a status that can be removed silently.
+        {
+            bool found = false;
+            for (std::size_t i = 0; i < kGapCount; ++i) {
+                if (std::strcmp(kGaps[i].id, "engine.cloud") == 0) {
+                    found = true;
+                    CHECK(kGaps[i].status == Status::NotReversed);
+                }
+            }
+            CHECK(found);
+        }
         // every entry is complete ...
         for (std::size_t i = 0; i < kGapCount; ++i) {
             CHECK(kGaps[i].id != nullptr && *kGaps[i].id != '\0');

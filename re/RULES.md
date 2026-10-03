@@ -213,6 +213,12 @@ feeling of compliance.
   "where": "re/g_rules.py",
   "since": "round 113, the human's instruction 网络不太好，减少push吧"}
 
+{"id": "cloudengine-the-lcns-dll-abi-shell-engin",
+  "rule": "CloudEngine (the lcns::dll ABI shell, engines.hpp) 不需要逆向；其余 engine 类（InfiniteEngine、MultiEngine、DelayedEngine、NestingEngine、EquivalentEngine 以及 CompositeEngine）都需要按同样标准逆出来",
+  "check": "no check yet, which is recorded rather than hidden",
+  "where": "re/RULES.md, added 2026-10-03",
+  "since": "round 120"}
+
 ## What is deliberately NOT a rule here
 
  {"id": "push-every-thirty-rounds",

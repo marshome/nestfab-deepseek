@@ -336,6 +336,11 @@ inline constexpr Gap kGaps[] = {
      "tabulated. NOT transcribed: the three branch bodies inside 0x2CE00 and the cpuid probe branch "
      "at 0x2DA00 -- the mode/flags -> nester table is recovered in engine.strategy_adder, and the "
      "mode-2 route plus the four extra schedule routes are in engine.mode2_shear_route"},
+    {"engine.cloud", Status::NotReversed, "Run 0x26A60, vtable 0xA3CED0",
+     "**EXEMPT BY THE HUMAN'S INSTRUCTION AT ROUND 120: \"CloudEngine 不需要逆向，其他的engine都需要\".** So this is a DECISION and not a TODO, and that difference "
+     "matters: a TODO invites a later round to spend effort here and a decision does not. **The exemption is for the ABI shell `lcns::dll::CloudEngine` and NOT for "
+     "`lcns::CloudEngine` in lcns/cloud.hpp**, which is a different class in a different namespace wrapping an HttpClient and returning a CloudResult. "
+     "The neighbouring shells -- InfiniteEngine, MultiEngine, DelayedEngine, NestingEngine, EquivalentEngine and CompositeEngine -- are all still to be read."},
     {"engine.beam_tree", Status::NotReversed, "0x22CCA0 / 0x1C1650 / 0x974F0",
      "tree_db preparation and node scoring (leaf value at +0x48, internal at +0x50) are located, "
      "and the TU plus its whole API surface are now on record in tu.bucket_manager; the beam tree "

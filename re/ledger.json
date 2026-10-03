@@ -3614,6 +3614,14 @@
       "predicate": "the member-support audit skipped any access with no displacement, so every constructor is vtable store at +0x00 was invisible and a class whose only object write is that store was reported as touching nothing",
       "witness": "its ACCESS regex captured the displacement optionally and the code did if offset is None: continue, so [rbx] was dropped. TimerWinImplementation is the class that exposed it: 0x5F47DF is mov qword ptr [rbx], rax in a constructor that allocates its own object at 0x5F47C6-0x5F47D5. **A second blindness sat behind it**: holds began as {rcx} only, so the allocator is return value in rax never became the object and mov rbx, rax did not join it. Both are fixed and the unsupported count is now 0, from 1",
       "round": 762
+    },
+    {
+      "subject": "cloudengine-is-exempt-by-decision",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the ABI shell lcns::dll::CloudEngine is exempt from reverse engineering by the human is instruction at round 120, while the other engine shells still have to be read",
+      "witness": "the human wrote on round 120: CloudEngine 不需要逆向，其他的engine都需要. The exemption is recorded in lcns/include/lcns/engines.hpp as LCNS_NOT_REVERSED(engine.cloud) with the words beside it, and in lcns/include/lcns/recovery.hpp as engine.cloud with Status::NotReversed. **It is for the SHELL and not for lcns::CloudEngine in cloud.hpp**, which is a different class in a different namespace wrapping an HttpClient",
+      "round": 763
     }
   ]
 }
