@@ -445,6 +445,18 @@ public:
  *  **THREE OF THE SIX CARRY NO NAME, BECAUSE THE MODULE GIVES NONE.** `N5Multi18NoMixSheetSelectorE` names the class and no member string names these; the two
  *  sub-objects at +0x20 and +0x38 are built by 0x523FE0 and 0xAF7D0, whose own types this project has not read. **Their offsets, types and constructors are
  *  established and their meanings are not**, so they are named for what is known and marked. */
+/** **THE GENERATOR'S TWO OFFSETS ARE SETTLED AND THE OBJECT'S EIGHT TRAILING BYTES ARE NOT.** Two constructors place the same generator and a `constexpr`
+ *  difference between them is the part that does not depend on either object:
+ *
+ *      0x84510   0x9f8 byte object (`mov ecx, 0x9f8` at 0x084519)   mt at +0x00, mti written EIGHT bytes at +0x9C0
+ *      0xB0040   0x9e0 byte object (`mov ecx, 0x9e0` at 0x0B004B)   mt at +0x18, mti written EIGHT bytes at +0x9D8
+ *
+ *  **and +0x9D8 - +0x18 = +0x9C0**, so `mti` sits 0x9C0 bytes after `mt` in both. **What is NOT settled is where `RandomSheetSelector`'s object ends**: the
+ *  loop's 624 words reach +0x9DB, the eight bytes begin at +0x9D8, and a member can only begin at +0x9E0 -- **0x9E8 against an allocation of 0x9e0.** */
+inline constexpr std::size_t kMtToMti = 0x9C0;                       // RE: 0x9D8 - 0x18, and 0x9C0 - 0x00 in the other constructor
+inline constexpr std::size_t kMtWords = 0x270;                       // RE 0x0B00A8 `cmp rdx, 0x270`: 624 words
+inline constexpr std::size_t kMtIndexBytes = 8;                      // RE 0x0B00B7 `mov qword [rbx + 0x9d8], 0x270`
+
 /** RE 0xB0040 (159 bytes). **THE OBJECT IS 0x9e0 BYTES AND MOST OF IT IS A `std::mt19937`**, which is what makes the class's NAME established rather than
  *  chosen: `RandomSheetSelector` selects sheets at random and carries its own generator.
  *
@@ -487,7 +499,10 @@ public:
      *  and a declaration carrying all three measures **0x9E8**: the words reach +0x9DB, the eight bytes at +0x9D8 overlap their last word, and the next member
      *  can only begin on an 8-byte boundary at +0x9E0. **The two arithmetic facts cannot both hold of one object.** **A field is not moved to make a number
      *  agree** -- each offset and the width above is one instruction, and so is the 0x9e0 -- so what is recorded is the measurement and the disagreement. */
-    std::uint64_t mtIndex8_ = 0;                      // **+0x9E0 AS DECLARED, and RE 0x0B00B7 writes +0x9D8 -- see the note above**
+    /** **+0x9E0 AS DECLARED, AND RE 0x0B00B7 WRITES +0x9D8.** The generator's own layout says `mti` is `kMtToMti` = 0x9C0 bytes after `mt`, and `mt` is at +0x1C,
+     *  so the instruction's +0x9D8 is 0x9D8 - 0x1C = 0x9BC -- **four bytes short of 0x9C0** -- while a member can only begin at +0x9E0, which is 0x9C4 after.
+     *  **Neither fits, the allocation 0x9e0 and the declaration 0x9E8 differ by those eight bytes, and the disagreement is left standing.** */
+    std::uint64_t mtIndex8_ = 0;
 };
 
 class NoMixSheetSelector : public SheetSelector {
