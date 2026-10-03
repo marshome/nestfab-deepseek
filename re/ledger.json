@@ -3158,6 +3158,22 @@
    "round": 731,
    "subject": "the-pool-size-and-its-destructor-disagree",
    "witness": "0x69A492 mov qword [rcx], rax then 0x69A495 mov rcx, qword [rcx + 0x28] / 0x69A4A3 mov rdi, qword [rbp + 0x18] / 0x69A4A7 mov rbx, qword [rbp + 0x10]; a 0x10 byte object has no +0x28. Utils::Pool is NOT declared because a declaration of the measured size cannot contain the fields the destructor reads"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "Status is derived from kForwarding by ordinal and not from the table's column, so 39 of the 47 forwarded entry points have wrappers that report notReversed instead of calling the implementation the list names",
+   "round": 732,
+   "subject": "the-forwarding-list-is-the-mechanism",
+   "witness": "lcns/src/exports.cpp statusOf returns forwards(index) ? Status::Forwarded : Status::NotReversed and forwards searches kForwarding in lcns/include/lcns/detail/exports_forwarding.inc by ordinal; re/g_forwarding_gap.py joins the 47 entries to their wrappers and finds 8 that call impl:: and 39 that do not; re/g_forwarding_symbols.py finds all 39 named symbols ARE defined in exports_impl.cpp"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "the claim that zero wrappers dispatch to a body was produced by grepping for exports_impl:: while the forwarders call impl::, so it counted one identifier rather than the mechanism",
+   "round": 732,
+   "subject": "the-count-was-of-the-pattern",
+   "witness": "re/g_export_status.py searched exports_impl:: and found 0; lcns/src/api_exports.cpp has 8 wrappers calling impl:: and 160 calling notReversed. A count produced by one pattern is a count of that pattern"
   }
  ]
 }
