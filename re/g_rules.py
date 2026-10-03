@@ -525,12 +525,16 @@ def check_push_every_thirty_rounds():
     as broken because GitHub is down is a rule that lies. The check says UNCHECKED with the git error beside it, so the difference between "not pushed" and "could
     not ask" stays visible.
     """
+    # **AND THE EXIT CODE IS THE OTHER WAY ROUND FROM THE FIRST VERSION.** `g_rounds.py --check` exits 4 once thirty rounds have passed WITHOUT a sync and 0
+    # while the sync is not yet due -- so `code != 0` means the sync IS due. The first version read it backwards, so it said "the sync is due and 3 commit(s) are
+    # not pushed" at TWO rounds of thirty, and would have passed silently at exactly the moment the rule exists for. **A check whose condition is inverted is
+    # worse than no check: it is green when it should fire and fires when it should not.**
     code, out, _err = run([sys.executable, os.path.join(HERE, "g_rounds.py"), "--check"])
-    if code != 0:
-        return "PASS", "the sync is not due yet, so no push is owed"
+    if code == 0:
+        return "PASS", "the sync is not due yet (%s), so no push is owed" % (out or "").strip()[:48]
     code, out, err = run(["git", "rev-list", "--count", "origin/main..HEAD"])
     if code != 0:
-        return "UNCHECKED", "origin is unreachable: %s" % (err or out).strip()[:80]
+        return "UNCHECKED", "the sync is due and origin is unreachable: %s" % (err or out).strip()[:64]
     behind = int((out or "0").strip() or 0)
     if behind:
         return "FAIL", "the sync is due and %d commit(s) are not pushed" % behind
