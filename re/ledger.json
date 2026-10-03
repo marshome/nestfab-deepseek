@@ -4298,6 +4298,24 @@
       "witness": "the two sizes were PRINTED by the test binary rather than asserted, because the first two attempts asserted a value the model does not have and the compiler refused them: `ENGINE SIZES: EngineBase=96 EquivalentEngine=112`. **The cause is the base's DECLARATION ORDER and not a typo** -- a dword, five pointers, a dword, four pointers and a pointer is 0x50 of data, and the compiler's alignment padding after the second dword pushes every member from `at38` upward by eight. **That is this project's own rule in its own words: an offset that needs arithmetic to reach is an offset the model does not have.** The test now asserts the model's 0x60 and 0x68 WITH the module's 0x58 and 0x60 named beside them as the disagreement, and nothing was reordered to make one assertion pass",
       "tool": "measurement",
       "round": 778
+    },
+    {
+      "subject": "every-engine-base-member-is-eight-bytes-low",
+      "grade": "MEASURED",
+      "kind": "offset",
+      "predicate": "the model places all eleven of `EngineBase`'s members eight bytes lower than the instruction that uses each one, so its arithmetic is internally consistent and wrong as a whole",
+      "witness": "computed from the declaration order and the widths the instructions give: `state00` is an `int32` declared first, the vptr's 8-byte alignment pushes it to +0x08, and every member after it follows. `state00` +0x08 where RE 0x756F1C writes +0x00; `at08` +0x10 where RE 0x756F27 writes +0x08; and so on through `at50` at +0x58 where RE 0x756FDC writes +0x50. **ELEVEN OF ELEVEN DIFFER, EACH BY EIGHT**, and `sizeof(EngineBase)` is 0x60 for that reason rather than because the class has 0x58 of data",
+      "tool": "measurement",
+      "round": 779
+    },
+    {
+      "subject": "the-engine-bases-vptr-boundary-is-unresolved",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "whether `+0x00` is a member or the vptr -- and therefore whether the model's eight-byte shift is a bug or the instruction is being read wrong -- is not established",
+      "witness": "RE 0x756F1C `mov dword ptr [rdi], 0` writes the low half of the location a vptr occupies, **which a constructor may legitimately do just before installing a table there**; and `0x756EFD lea r12, [rsp + 0x40]` / `0x756F08 call 0x51BFC0` immediately before it suggest the surrounding code is building something on the STACK rather than on `this`. **On the reading that +0x00 is the vptr, `state00` is not a member, the class's data starts at +0x08, and every other offset is right as an instruction.** The competing reading is that `rdi` is not `this` for this function, **though `0x756EEA mov rdi, rcx` establishes it at the top and nothing between overwrites it.** **And a third: RE 0x75C71E reads a DWORD at +0x54, where the model's `at50` pointer would still be occupying bytes.** What would settle it is the constructor that installs THIS class's vtable -- `0x30A30` is the derived class's, writes its own +0x08, and never calls this base's",
+      "tool": "instruction",
+      "round": 779
     }
   ]
 }

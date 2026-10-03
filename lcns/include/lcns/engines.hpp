@@ -97,24 +97,57 @@ public:
     virtual void* run(const void* problem, double timeLimit, void* observer, void* result) = 0;
 
 protected:
-    std::int32_t state00 = 0;      // +0x00, RE 0x756F1C writes 0 and 0x757117 writes 1; read at 0x75BE01
-    void* at08 = nullptr;          // +0x08, RE 0x756F27 zeroes it, 0x7552A0 reads it
-    void* at10 = nullptr;          // +0x10, RE 0x756F2F zeroes it, 0x75A6E9 reads it
-    void* at18 = nullptr;          // +0x18, RE 0x756F37 zeroes it, 0x75A6D5 reads it
-    void* at20 = nullptr;          // +0x20, RE 0x756FEB and 0x75C4A0 write it
-    void* at28 = nullptr;          // +0x28, RE 0x756FC9 takes its ADDRESS, 0x75C495 reads it
-    std::int32_t at30 = 0;         // +0x30, RE 0x756FCD and 0x75C48E are DWORD stores
-    void* at38 = nullptr;          // +0x38, RE 0x756FD4 and 0x75C4A4 write it
-    void* at40 = nullptr;          // +0x40, RE 0x756FE7 `mov qword ptr [rdi + 0x40], r8`
-    void* at48 = nullptr;          // +0x48, RE 0x756FEF `mov qword ptr [rdi + 0x48], r8`
-    void* at50 = nullptr;          // +0x50, RE 0x756FDC and 0x75C4AC write it
-    // **AND `+0x54` IS A DWORD THE MODULE READS, WHICH THIS DECLARATION CANNOT PLACE -- RECORDED RATHER THAN FORCED.**
-    //
-    // RE 0x75C71E `mov eax, dword ptr [rsi + 0x54]`, in `EquivalentEngine::run`, and its TWO NEIGHBOURS AT +0x58 AND +0x60 are that class's own pointers. So the reading
-    // that fits is a dword at +0x54 with the derived class starting at 0x58. **BUT DECLARING IT HERE AS `at54` AFTER `at50` PUTS IT AT 0x58, NOT 0x54, because a pointer
-    // at +0x50 occupies through +0x57** -- so the member order the base's own instructions imply and the offset this one instruction reads CANNOT BOTH BE RIGHT AS WRITTEN.
-    // **The two readings that survive are that the member at +0x50 is a DWORD rather than a pointer, or that the +0x54 dword belongs to the derived class** -- and neither is
-    // chosen here. `static_assert(sizeof(EngineBase) == 0x58)` is what a wrong choice would break.
+    /** **EVERY MEMBER BELOW IS EIGHT BYTES LOWER THAN THE INSTRUCTION THAT PUTS IT THERE, AND THAT IS WRITTEN DOWN RATHER THAN HIDDEN.**
+     *
+     * The measured arithmetic for this declaration is:
+     *
+     *      member    MODEL    the instruction says
+     *      state00   +0x08    +0x00        <- and `state00` is an `int32`, so the 8-byte vptr above it pushes it down
+     *      at08      +0x10    +0x08        <- RE 0x756F27, 0x7552A0
+     *      at10      +0x18    +0x10        <- RE 0x756F2F, 0x75A6E9
+     *      at18      +0x20    +0x18        <- RE 0x756F37, 0x75A6D5
+     *      at20      +0x28    +0x20        <- RE 0x756FEB, 0x75C4A0
+     *      at28      +0x30    +0x28        <- RE 0x756FC9, 0x75C495
+     *      at30      +0x38    +0x30        <- RE 0x756FCD, 0x75C48E
+     *      at38      +0x40    +0x38        <- RE 0x756FD4, 0x75C4A4
+     *      at40      +0x48    +0x40        <- RE 0x756FE7
+     *      at48      +0x50    +0x48        <- RE 0x756FEF
+     *      at50      +0x58    +0x50        <- RE 0x756FDC, 0x75C4AC
+     *
+     * **ELEVEN OF ELEVEN DIFFER, EACH BY EIGHT**, so the model's arithmetic is internally consistent and wrong as a whole. **The cause is `state00`: a 32-bit member
+     * declared first, with the vptr's 8-byte alignment pushing everything after it down.** `sizeof(EngineBase)` is 0x60 for that reason and not because the class has
+     * 0x58 of data.
+     *
+     * **AND TWO READINGS SURVIVE, NEITHER OF WHICH IS ADOPTED HERE:**
+     *
+     *   1. **`+0x00` IS NOT A MEMBER AT ALL.** `RE 0x756F1C mov dword ptr [rdi], 0` writes the bottom half of a location the vptr already occupies -- which a
+     *      constructor may legitimately do **when it is about to install a vtable there**, and `0x756EFD lea r12, [rsp + 0x40]` / `call 0x51BFC0` immediately before
+     *      suggests the surrounding code is building something on the stack rather than on `this`. **On this reading `state00` is not a member, the class's data
+     *      starts at +0x08, and every other offset is correct as an instruction.**
+     *   2. **`rdi` IS NOT `this` FOR THIS FUNCTION**, because the `call 0x51BFC0` before the store could leave `rdi` pointing elsewhere -- **though `0x756EEA mov rdi,
+     *      rcx` establishes it at the top and nothing between the two overwrites it.**
+     *
+     * **AND `+0x54` IS A THIRD ONE**: `RE 0x75C71E mov eax, dword ptr [rsi + 0x54]` reads a dword where reading 1 would put `at50`'s tail. **So reading 1 also leaves
+     * `at50` needing to be a dword rather than a pointer**, or the members are not a single contiguous run of declarations at all.
+     *
+     * **WHAT WOULD SETTLE IT IS THE CONSTRUCTOR THAT INSTALLS THIS CLASS'S VTABLE** -- the function whose `lea rax, [rip + N]` resolves to 0xA3BAA0's neighbourhood and
+     * whose first stores are `[rcx]` and then `[rcx + 8]`. **`0x30A30` is such a constructor and it is the DERIVED class's, so it writes its own +0x08 and never calls
+     * this base's -- which is exactly why the boundary is unresolved.**
+     *
+     * **SO THE MEMBERS STAY AS THEY ARE, WITH A REAL COMMENT EACH, AND THIS NOTE IS THE TRUTH ABOUT THEM**: they are the offsets the instructions USE, placed in an
+     * order that does not reproduce them. **A model bent to fit one offset stops being a model of the others.**
+     */
+    std::int32_t state00 = 0;      // the module writes a DWORD at [this + 0x00] -- see the note; the model puts this at +0x08
+    void* at08 = nullptr;          // RE 0x756F27 zeroes it, 0x7552A0 reads it -- the module's +0x08
+    void* at10 = nullptr;          // RE 0x756F2F zeroes it, 0x75A6E9 reads it -- the module's +0x10
+    void* at18 = nullptr;          // RE 0x756F37 zeroes it, 0x75A6D5 reads it -- the module's +0x18
+    void* at20 = nullptr;          // RE 0x756FEB and 0x75C4A0 write it -- the module's +0x20
+    void* at28 = nullptr;          // RE 0x756FC9 takes its ADDRESS, 0x75C495 reads it -- the module's +0x28
+    std::int32_t at30 = 0;         // RE 0x756FCD and 0x75C48E are DWORD stores -- the module's +0x30
+    void* at38 = nullptr;          // RE 0x756FD4 and 0x75C4A4 write it -- the module's +0x38
+    void* at40 = nullptr;          // RE 0x756FE7 `mov qword ptr [rdi + 0x40], r8` -- the module's +0x40
+    void* at48 = nullptr;          // RE 0x756FEF `mov qword ptr [rdi + 0x48], r8` -- the module's +0x48
+    void* at50 = nullptr;          // RE 0x756FDC and 0x75C4AC write it -- the module's +0x50
 };
 
 /** RE vtable 0xA3CFD0, THREE slots. Slot 0 is the deleting destructor 0x759B20, slot 1 the destructor 0x759AD0, and slot 2 is `run` at 0x759A80, 80 bytes.

@@ -1,0 +1,48 @@
+lcns: NO, the engines are NOT reversed -- and measuring them found that `EngineBase`'s ELEVEN members are each EIGHT BYTES LOWER than the instruction that uses them
+
+**THE HUMAN ASKED "these engines 逆向好了?" AND THE ANSWER IS NO.** Writing it down as a comparison rather than an impression, because the state is uneven in a way
+that a short answer would hide.
+
+## What IS established, per class
+
+    InfiniteEngine     vtable 0xA3CFD0, 3 slots, run 0x759A80 (80 bytes, READ IN FULL), NO MEMBER -- instruction by instruction
+    MultiEngine        vtable 0xA3CF00, 3 slots, run 0x755050 (2329 bytes), object register r13 (0x755072), NO MEMBER PAST THE BASE
+    DelayedEngine      vtable 0xA3CF70, 3 slots, run 0x756EC0 (750 bytes), object register rdi (0x756EEA), NO MEMBER PAST THE BASE
+    NestingEngine      vtable 0xA3CFA0, 3 slots, run 0x757250 (1975 bytes), object register r15, NO MEMBER PAST THE BASE
+    EquivalentEngine   vtable 0xA3D030, 3 slots, run 0x75BCC0 (3569 bytes), object register rsi (0x75BDD8), TWO members at its own offsets
+    CompositeEngine    vtable 0xA3D000, 3 slots, run 0x759B70 (8230 bytes), object register rdi (0x75AD1D), NO MEMBER PAST THE BASE
+    EngineBase         **the base is `Engine::Engine`, every engine has exactly three slots, and the base's DATA is 0x00 to 0x50 -- BUT SEE BELOW**
+
+**"NO MEMBER" IS A REAL RESULT AND A STRONG ONE** -- it answers the objective's own question, *is there an instruction behind this member*, **with "there is no member to
+have one."** **AND THE INTERFACES ARE NOT DONE**: `MultiEngine::run`, `DelayedEngine::run`, `NestingEngine::run`, `EquivalentEngine::run` and `CompositeEngine::run` are
+**declarations with a body that has not been written from the instructions.** Only `InfiniteEngine::run`'s 80 bytes have been read line by line.
+
+## And the base's layout is WORSE than unfinished -- it is measurably wrong
+
+    member    MODEL    the instruction says
+    state00   +0x08    +0x00        <- `state00` is an `int32`, so the 8-byte vptr above it pushes it down
+    at08      +0x10    +0x08        <- RE 0x756F27, 0x7552A0
+    at10      +0x18    +0x10        <- RE 0x756F2F, 0x75A6E9
+    ...                              (the same eight-byte gap all the way down)
+    at50      +0x58    +0x50        <- RE 0x756FDC, 0x75C4AC
+
+**ELEVEN OF ELEVEN DIFFER, EACH BY EIGHT**, so the model's arithmetic is internally consistent **and wrong as a whole** -- **and `sizeof(EngineBase)` is 0x60 for that
+reason and not because the class has 0x58 of data.** That also means the `sizeof` assertions added last round are pinning a wrong layout rather than a right one.
+
+**AND THREE READINGS SURVIVE, NONE OF WHICH IS ADOPTED:**
+
+1. **`+0x00` IS NOT A MEMBER.** `RE 0x756F1C mov dword ptr [rdi], 0` writes the low half of where a vptr lives, **which a constructor may do just before installing a
+   table there** -- and `0x756EFD lea r12, [rsp + 0x40]` / `0x756F08 call 0x51BFC0` immediately before it suggest the code is building something on the STACK. **On this
+   reading `state00` is not a member and every other offset is right as an instruction.**
+2. **`rdi` IS NOT `this` HERE** -- though `0x756EEA mov rdi, rcx` establishes it and nothing between overwrites it.
+3. **THE MEMBERS ARE NOT ONE CONTIGUOUS RUN**: `RE 0x75C71E mov eax, dword ptr [rsi + 0x54]` reads a dword where reading 1 would still be inside `at50`.
+
+**WHAT WOULD SETTLE IT IS THE CONSTRUCTOR THAT INSTALLS `EngineBase`'s VTABLE** -- the function whose `lea rax, [rip + N]` lands near 0xA3BAA0 and whose first stores are
+`[rcx]` then `[rcx + 8]`. **`0x30A30` is such a constructor and it is the DERIVED class's**: it writes its own +0x08 and never calls this base's, **which is exactly why
+the boundary is unresolved.**
+
+**SO THE ANSWER TO "are the engines reversed" IS: one of seven has its body read, six have their shape measured and their bodies NOT read, and the base layer's offsets
+are known to be wrong by a constant that has a specific explanation and no resolution.** The header and the ledger say all of this, **and nothing was bent to make a
+`sizeof` assertion pass.**
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the seven checks green, 478 claims with 0 problems.
