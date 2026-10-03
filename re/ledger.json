@@ -4600,10 +4600,19 @@
       "subject": "an-immediate-string-is-invisible-to-a-data-reference-scan",
       "grade": "INSTRUCTION",
       "kind": "call",
-      "predicate": "re/g_read_engine_run.py reported zero strings for MultiEngine::run while the function builds the four-character string seed from an immediate",
-      "witness": "the tool reads the profile strings list, which holds RIP-RELATIVE data references, and 755144 mov dword ptr [rsp + 0xb0], 0x64656573 is a four-byte immediate -- **so the tool was right about what it measures and the measurement was not the question**. A short literal built in a register never appears as a data reference. **This is the same failure mode as the allocation constant two rounds ago**: the thing being looked for was in the instruction stream and the tool consulted measures something adjacent to it",
+      "predicate": "`re/g_read_engine_run.py` reported zero strings for `MultiEngine::run` while the function builds the four-character string `seed` from an immediate, **and the call that follows it is an IAT thunk rather than a module function**",
+      "witness": "the tool reads the profile's `strings` list, which holds RIP-RELATIVE data references, **and `755144 mov dword ptr [rsp + 0xb0], 0x64656573` is a four-byte immediate** -- so the tool was right about what it measures and the measurement was not the question. **AND THE CALL AFTER IT IS NOT WHAT I FIRST INFERRED**: I claimed `0x63F300` reads options by key because a string precedes it and it is called eight times, **but `0x63F300` is the first of a run of eight-byte `jmp qword ptr [rip + N]` stubs with `nop` padding -- an IMPORT ADDRESS TABLE thunk ladder** -- and the profile agrees with that reading, giving it `size=None` and `callers=0` because a thunk is not a function. **So it is an external routine, and the key-value-reader inference was a shape match that a look at the address region would have refused.**",
+      "tool": "g_find_seed_string.py",
+      "round": 801
+    },
+    {
+      "subject": "0x63f300-is-an-iat-thunk-ladder",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "`0x63F300` and the addresses after it every eight bytes are IMPORT ADDRESS TABLE thunks -- `jmp qword ptr [rip + N]` followed by two `nop`s -- so a call to one leaves the module",
+      "witness": "read directly: `63F300 jmp qword ptr [rip + 0x4e9b3e]` / `nop` / `nop`, then the same shape at 63F308, 63F310, 63F318, 63F320 and 63F328 with the displacements decreasing by 0x10 each time. **The profile gives this address `size=None` and `callers=0`, which is what a thunk looks like to a profiler that does not count them as functions** -- and that signature is the reusable part: **a hot address with no size is a thunk, not a busy function.**",
       "tool": "instruction",
-      "round": 800
+      "round": 801
     }
   ]
 }
