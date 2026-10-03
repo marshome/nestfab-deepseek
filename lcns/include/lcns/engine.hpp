@@ -425,6 +425,13 @@ std::vector<std::shared_ptr<Nester>> makeDefaultStrategies();
 // RE Multi::Supervisor (vtable 0xA3B4D0), Run at 0x827F0
 class Supervisor {
 public:
+    /** **RE 0xA3B4D0, TWO SLOTS: 0x30B60 and 0x30EB0, both the destructor pair.** So the class HAS a vptr and its destructor IS virtual, and the construct is
+     *  `lea rax, [rip + 0xa0a96f]` at 0x030B6A, whose target is 0x30B71 + 0xA0A96F = **0xA3B4E0 = 0xA3B4D0 + 0x10** -- the pointer a constructor installs.
+     *
+     *  **AND THE VPTR DOES NOT MOVE `state_`.** 0x030B71 reads `mov rsi, qword [rcx + 8]`, so the state pointer is at +0x08 in a class that already has a vptr
+     *  at +0x00, and declaring this destructor virtual is what makes that arrangement expressible rather than accidental. */
+    virtual ~Supervisor() = default;
+
     Supervisor(const Order& order, SolveContext& ctx, EngineParams params);
 
     void addStrategy(std::shared_ptr<Nester> n, const StrategyDescriber& d);

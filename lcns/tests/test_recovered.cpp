@@ -7276,5 +7276,27 @@ int main() {
         CHECK(indexAt == 0x9D8);                                  // so the member and the instruction agree
         CHECK(sizeof(lcns::RandomSheetSelector) == 0x9e0);        // and that is `mov ecx, 0x9e0` at 0x0B004B
     }
+    // ---------------------------------------------------------------- Multi::Supervisor IS polymorphic and state_ stays at +0x08 (RE 0x30B60)
+    {
+        // **THE VTABLE, AND THE OFFSET THAT MUST NOT MOVE BECAUSE OF IT.** `re/vtables.json` records `Multi::Supervisor` at base 0xA3B4D0 with TWO slots,
+        // 0x30B60 and 0x30EB0, both the destructor pair, and the class's vtable pointer 0xA3B4E0 = 0xA3B4D0 + 0x10 is what `lea rax, [rip + 0xa0a96f]` at
+        // 0x030B6A computes (0x30B71 + 0xA0A96F). **So the class has a vptr and a virtual destructor.**
+        static_assert(std::has_virtual_destructor<lcns::Supervisor>::value, "RE 0xA3B4D0's two slots are the destructor pair");
+        static_assert(std::is_polymorphic<lcns::Supervisor>::value, "a class with a vtable is polymorphic");
+
+        // **AND THE ASSERTION THAT WOULD CATCH THE WRONG FIX.** The destructor reads the state pointer with `mov rsi, qword [rcx + 8]` at 0x030B71, so +0x08 is
+        // where it must stay: adding the vptr puts it at +0x00 and leaves `state_` at +0x08, **whereas any OTHER member added before it would push the state
+        // pointer off the offset the destructor uses, and nothing else in this test would notice.**
+        alignas(lcns::Supervisor) unsigned char storage[sizeof(lcns::Supervisor)];
+        lcns::Supervisor& probe = *reinterpret_cast<lcns::Supervisor*>(storage);
+        const unsigned char* at = reinterpret_cast<const unsigned char*>(&probe);
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.state_) - at == 0x08);   // RE 0x030B71: mov rsi, qword ptr [rcx + 8]
+
+        // **AND THE STATE OBJECT IS 0x530 BYTES BUILT FROM CONTAINERS**, which the destructor shows and this records without declaring: six consecutive
+        // containers destroyed at +0x500 .. +0x528, an `unordered_map` header at +0x4D0 with its first node at +0x4E0, a `vector` of pointers between +0x488
+        // and +0x490, a refcounted pointer at +0x4C8, and an embedded sub-object whose own vtable 0xA3BCE0 is installed at +0x478.
+        static_assert(sizeof(lcns::Supervisor) >= 0x10, "a vptr and one pointer, and the 0x530 byte state object is reached through it");
+    }
+
     return check::finish("test_recovered");
 }

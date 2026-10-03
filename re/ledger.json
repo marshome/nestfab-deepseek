@@ -3094,6 +3094,22 @@
    "round": 725,
    "subject": "the-local-setter-names-are-the-oracle",
    "witness": "0xD3B0 SetLocalMaximumThreads writes dword [rsi + 0x1f8] at 0xD3D5 after clamping with 0xD3CB call 0xb5b70 and 0xD3D2 cmova; 0xD400 SetLocalMaximumIterations writes dword [rsi + 0x1fc] at 0xD417"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::Supervisor has a vtable at 0xA3B4D0 with two destructor slots, so it is polymorphic, and its state pointer stays at +0x08 because the vptr takes +0x00",
+   "round": 726,
+   "subject": "Supervisor-is-polymorphic-and-state-stays-at-8",
+   "witness": "re/vtables.json records Multi::Supervisor at base 0xA3B4D0 with slots 0x30B60 and 0x30EB0; 0x030B6A lea rax,[rip+0xa0a96f] targets 0x30B71+0xA0A96F = 0xA3B4E0 = base+0x10; and 0x030B71 mov rsi,[rcx+8] reads the state pointer, which stays at +0x08 in a class with a vptr at +0x00"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "Multi::Supervisor's state object is 0x530 bytes holding six consecutive containers at +0x500..+0x528, an unordered_map header at +0x4D0 with its first node at +0x4E0, a vector of pointers between +0x488 and +0x490, a refcounted pointer at +0x4C8 and an embedded sub-object whose own vtable 0xA3BCE0 is installed at +0x478",
+   "round": 726,
+   "subject": "Supervisors-state-is-0x530-bytes-of-containers",
+   "witness": "destructor 0x30B60: six call 0x63F6D0 on lea rcx,[rsi+0x500..0x528]; 0x030BC9 mov rbx,[rsi+0x4e0] walks from lea r12,[rsi+0x4d0]; 0x030C76 mov rbx,[rsi+0x488] and 0x030C6F mov rbp,[rsi+0x490] bound a loop calling 0x452F0 then 0x9984B0; 0x030C45 lock sub dword [rbx+8],1 is a shared_ptr release; and 0x030C57 lea rax,[rip+0xa0b092] targets 0xA3BCE0 = 0xA3BCD0+0x10, stored at [rsi+0x478]"
   }
  ]
 }
