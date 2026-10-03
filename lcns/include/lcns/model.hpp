@@ -207,10 +207,13 @@ struct Order {
     bool fillLastNestingStrategy = false;
     bool evaluateIntermediateNestingsAsLast = false;   // +0x041
     std::byte padding04[0x2];   // +0x042..+0x043, no field here
-    bool shear = false;   // +0x044
-    std::byte padding05[0x3];   // +0x045..+0x047, no field here
-    bool shearCorner = false;   // +0x048
-    std::byte padding06[0x7];   // +0x049..+0x04F, no field here
+    // **THIRTY-TWO BITS AND NOT A `bool`, WHICH IS WHAT IT SAID BEFORE.** RE 0xDDD7 is `mov dword ptr [rsi + 0x44], ebx` in setShearMode (0xDDC0) and RE 0xDE0A is
+    // the same in setPartialShearMode -- **a one-byte member here would let a four-byte store overwrite +0x45..+0x47.** The byte and word reads elsewhere are other
+    // objects at the same displacement, not this field.
+    std::uint32_t shear = 0;   // +0x044
+    // and the same measurement one field later: RE 0xDE07 is `mov dword ptr [rsi + 0x48], ebx` in setPartialShearMode
+    std::uint32_t shearCorner = 0;   // +0x048
+    std::byte padding06[0x4];   // +0x04C..+0x04F, no field here
     double shearGap = 0.0;   // +0x050
     bool shearRepulseFromBorders = false;   // +0x058
     std::byte padding07[0x3];   // +0x059..+0x05B, no field here

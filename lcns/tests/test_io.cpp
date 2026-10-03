@@ -177,7 +177,10 @@ int main() {
         CHECK(back.origin == order.origin);
         CHECK_NEAR(back.interpartGap, 2.5, 1e-12);
         CHECK_NEAR(back.defectGap, 0.5, 1e-12);
-        CHECK(back.shear && back.shearCorner);
+        // **COMPARED AGAINST ZERO AND NOT USED AS A CONDITION.** `shear` and `shearCorner` are `std::uint32_t` -- RE 0xDDD7 and RE 0xDE07 are `mov dword` stores --
+        // so `back.shear && back.shearCorner` was arithmetic on the value rather than the flag it looks like. **The round-trip is what is being tested**, so the
+        // assertion says so.
+        CHECK(back.shear != 0u && back.shearCorner != 0u);
         CHECK_NEAR(back.shearGap, 1.25, 1e-12);
         // RE 0xD390: +0x200 is ONE BYTE, so `engineLo` is compared as a byte and not as a bool
         CHECK(back.markMode && back.leatherMode && back.engineLo == 1);

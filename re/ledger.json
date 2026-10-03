@@ -3326,6 +3326,22 @@
       "predicate": "replacing a padding member with named fields of the same total width keeps every later offset, and failing to do so moves them all and is caught by the byte-level assertions rather than by a compile error",
       "witness": "removing padding01b[0x2] and padding03[0x1] and adding four one-byte members grew sizeof(Order) by four; `test_exports.cpp`'s memcpy at +0x1FC and `test_recovered.cpp`'s per-field checks both failed, and shrinking padding02 from 4 bytes to 2 restored the size",
       "round": 743
+    },
+    {
+      "subject": "shear-and-shearCorner-are-thirty-two-bits",
+      "grade": "CONSTRUCTOR",
+      "kind": "offset",
+      "predicate": "Order's `shear` at +0x44 and `shearCorner` at +0x48 are std::uint32_t, not bool, because the setters store four-byte values there",
+      "witness": "setShearMode at 0xDDC0 is 33 bytes and RE 0xDDD7 is `mov dword ptr [rsi + 0x44], ebx`; setPartialShearMode at 0xDDF0 is 36 bytes and RE 0xDE07 is `mov dword ptr [rsi + 0x48], ebx` and RE 0xDE0A is the same at +0x44. The struct previously declared both as bool with padding05 and padding06 beside them, so a four-byte store would have written the padding; the padding is now shrunk to match and the layout still reports 58 fields, 0 disagreements and sizeof 864",
+      "round": 744
+    },
+    {
+      "subject": "the-json-reader-truncated-a-value-and-not-a-flag",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "lcns/src/io.cpp read `shear` and `shearCorner` with asBool, which keeps only zero or one from a field whose store preserves the whole value",
+      "witness": "setShearMode writes the argument unchanged (RE 0xDDD7 `mov dword [rsi + 0x44], ebx`), so `setShearMode(order, 7)` writes 7 while asBool returned 1; the reader is now asNumber with a cast, and Value(order.shear) being ambiguous between overloads is the compiler reporting the width change",
+      "round": 744
     }
   ]
 }

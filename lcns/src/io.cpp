@@ -410,9 +410,12 @@ std::string saveProblem(const Order& order, bool pretty) {
     root.set("nesting_origin", Value(static_cast<int>(order.origin)));
     root.set("interpart_gap", Value(order.interpartGap));
     root.set("defect_gap", Value(order.defectGap));
-    root.set("shear", Value(order.shear));
+    // **`shear` AND `shearCorner` ARE THIRTY-TWO BITS**, measured from `mov dword ptr [rsi + 0x44], ebx` in setShearMode and `mov dword ptr [rsi + 0x48], ebx` in
+    // setPartialShearMode -- so `Value` cannot choose between its overloads and the width has to be said. **The ambiguity is the type change being visible**,
+    // which is what the change was for.
+    root.set("shear", Value(static_cast<std::int64_t>(order.shear)));
     root.set("shear_gap", Value(order.shearGap));
-    root.set("shear_corner", Value(order.shearCorner));
+    root.set("shear_corner", Value(static_cast<std::int64_t>(order.shearCorner)));
     root.set("shear_repulse_from_borders", Value(order.shearRepulseFromBorders));
     root.set("automatic_stop", Value(order.automaticStop));
     root.set("evaluate_intermediate_nestings_as_last",
@@ -489,9 +492,9 @@ bool loadProblem(const std::string& text, Order& out, std::string* error) {
     out.origin = static_cast<NestingOrigin>(root.get("nesting_origin").asInt(0));
     out.interpartGap = root.get("interpart_gap").asNumber(0.0);
     out.defectGap = root.get("defect_gap").asNumber(0.0);
-    out.shear = root.get("shear").asBool(false);
+    out.shear = static_cast<std::uint32_t>(root.get("shear").asNumber(0.0));
     out.shearGap = root.get("shear_gap").asNumber(0.0);
-    out.shearCorner = root.get("shear_corner").asBool(false);
+    out.shearCorner = static_cast<std::uint32_t>(root.get("shear_corner").asNumber(0.0));
     out.shearRepulseFromBorders = root.get("shear_repulse_from_borders").asBool(false);
     out.automaticStop = root.get("automatic_stop").asBool(false);
     out.evaluateIntermediateNestingsAsLast =
