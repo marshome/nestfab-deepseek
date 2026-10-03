@@ -318,23 +318,12 @@ private:
      *  arithmetic to reach is an offset the model does not have -- and the fix is to find the members' real widths and order, which is the next round's job.**
      *  **Nothing here is reordered to make one assertion pass**, because a model bent to fit one offset stops being a model of the others.
      *
-     *  **`offsetOfAt58` and `offsetOfAt60` below report 0x60 and 0x68, and the test asserts THOSE with the module's numbers named beside them as the disagreement.** */
-    void* at58 = nullptr;              // +0x58, RE 0x75C72C `mov r15, qword ptr [rsi + 0x58]`
-    void* at60 = nullptr;              // +0x60, RE 0x75C703 `mov rdi, qword ptr [rsi + 0x60]`
-
-public:
-    /** **THIS CLASS'S OWN TWO OFFSETS, MEASURED BY THE CLASS.** They start where the base ends, **and the base ends at 0x58 because its last member is a pointer at
-     *  0x50** -- so these two numbers are the joint statement of both layouts, and a member added to either class moves them. */
-    static int32_t offsetOfAt58() {
-        const EquivalentEngine probe;
-        return static_cast<int32_t>(reinterpret_cast<const std::byte*>(&probe.at58)
-                                    - reinterpret_cast<const std::byte*>(&probe));
-    }
-    static int32_t offsetOfAt60() {
-        const EquivalentEngine probe;
-        return static_cast<int32_t>(reinterpret_cast<const std::byte*>(&probe.at60)
-                                    - reinterpret_cast<const std::byte*>(&probe));
-    }
+     *  **THE TWO MEMBERS BELOW LAND AT 0x60 AND 0x68 BECAUSE OF THAT, AND THE TEST ASSERTS THE SIZES RATHER THAN REACHING IN FOR THE FIELDS.** An earlier version of
+     *  this file gave both classes a static `offsetOfAtNN()` so a test could read a protected offset -- **which is a class growing an API so that a test can ask a
+     *  question the class should answer at compile time, and it is not C++ anyone would write after reading the module.** `sizeof(EngineBase) == 0x60` and
+     *  `sizeof(EquivalentEngine) == 0x70` pin the same arithmetic with no accessor at all. */
+    void* at58 = nullptr;              // +0x58 per RE 0x75C72C; the model puts it at 0x60 -- see above
+    void* at60 = nullptr;              // +0x60 per RE 0x75C703; the model puts it at 0x68 -- see above
 };
 
 /** Engine::CloudEngine, Run at 0x26A60, vtable 0xA3CED0.

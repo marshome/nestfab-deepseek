@@ -6671,10 +6671,13 @@ int main() {
             // **THE CAUSE IS DECLARATION ORDER AND NOT A TYPO**: a dword, five pointers, a dword, four pointers and a pointer add to 0x50 of DATA, **and the compiler
             // pads after the second dword, which pushes every member from `at38` up by eight.** That is this project's own rule -- **an offset that needs arithmetic to
             // reach is an offset the model does not have** -- and it is recorded here rather than papered over by reordering members until this one assertion passes.
-            CHECK(lcns::EquivalentEngine::offsetOfAt58() == 0x60);   // the model; the module reads 0x58
-            CHECK(lcns::EquivalentEngine::offsetOfAt60() == 0x68);   // the model; the module reads 0x60
-            CHECK(sizeof(lcns::EngineBase) == 0x60);
-            CHECK(sizeof(lcns::EquivalentEngine) == 0x70);
+            // **THE SIZES ARE THE ASSERTION AND NOT AN ACCESSOR.** `sizeof(EngineBase) == 0x60` pins the base's whole arithmetic -- a dword, five pointers, a
+            // dword, four pointers and a pointer, plus the compiler's padding after the second dword -- **and `sizeof(EquivalentEngine) == 0x70` then pins where the
+            // derived class's own two pointers land.** An earlier version reached into the protected members through `offsetOfAtNN()` functions declared ON the
+            // classes, which was a class growing an API so that a test could ask a question the class should answer at compile time; these two numbers say the same
+            // thing with none of that, and `static_assert` says it before the program runs.
+            static_assert(sizeof(lcns::EngineBase) == 0x60, "the base's data plus the alignment the compiler inserts after at30");
+            static_assert(sizeof(lcns::EquivalentEngine) == 0x70, "so its own at58 and at60 land at 0x60 and 0x68, where RE reads 0x58 and 0x60");
         }
     }
 

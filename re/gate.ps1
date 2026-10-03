@@ -57,6 +57,10 @@ Stage 'acceptance' { & $py (Join-Path $root 're\g_acceptance.py') }
 # `member + gap == offset` assertions made that look measured. **An offset that needs arithmetic to reach is an offset the model does not have.** It was added after
 # the human asked "Nester 这个基类没有字段？" and the answer was no.
 Stage 'offset-compensation' { & $py (Join-Path $root 're\g_gap_compensation.py') }
+# **AND THE OFFSET-ACCESSOR CHECK**, because round 135 gave `EngineBase` and `EquivalentEngine` a `static int32_t offsetOfAtNN()` **so that a test could read a protected
+# member's offset** -- a class growing an API for a test, when the project's own form is `static_assert(offsetof(T, member) == 0xNN, "RE 0xADDR")` beside the member, 86 of
+# which already exist. **The replacement was two `static_assert`s on `sizeof`, which need no API at all.** `re/g_prove_no_offset_accessor.py` plants the mistake back.
+Stage 'offset-accessor' { & $py (Join-Path $root 're\g_no_offset_accessor.py') }
 
 Write-Host 'GATE GREEN'
 # The verdict goes to a file so re/g_rules.py can check "门禁保持全绿" without paying two minutes for it. A rule checker that
