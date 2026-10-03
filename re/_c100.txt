@@ -1,0 +1,41 @@
+lcns: the engine family measured -- the base is `Engine::Engine`, every engine has exactly THREE slots, and the base object is 0x20 bytes
+
+**THE QUESTION WAS WHETHER THE SEVEN ENGINE SHELLS ARE AS EMPTY AS THE PORT DECLARES THEM.** The answer comes from `re/vtables.json`, which is keyed by MANGLED NAME
+and is therefore an oracle rather than a location -- **and this round's first attempt read seven hard-coded vtable ADDRESSES taken from prose, five of which were wrong,
+reporting zero slots for `InfiniteEngine` and one for `DelayedEngine`.**
+
+## What the mangled names say
+
+    N6Engine14InfiniteEngineE       vtable 0xA3CFD0   3 slots: 0x759B20 0x759AD0 **0x759A80**
+    N6Engine11MultiEngineE          vtable 0xA3CF00   3 slots
+    N6Engine13DelayedEngineE        vtable 0xA3CF70   3 slots
+    N6Engine13NestingEngineE        vtable 0xA3CFA0   3 slots
+    N6Engine16EquivalentEngineE     vtable 0xA3D030   3 slots
+    N6Engine11CloudEngineE          vtable 0xA3CED0   3 slots
+    N6Engine15CompositeEngineE      vtable 0xA3D000   3 slots
+
+**AND `N6Engine` IS THE NAMESPACE `Engine`, SO THE BASE CLASS IS `Engine::Engine`** -- **the port's `EngineBase` is a name this project invented for it.** There is no
+entry ending in `6EngineE` in the table, **which is consistent with `engines.hpp`'s own note**: an abstract base has no vtable of its own, **and that is also why the whole
+base layer was missing from this tree.**
+
+**AND EVERY ENGINE HAS EXACTLY THREE SLOTS**, so the claim that the base's whole surface is one virtual is now CHECKED rather than asserted -- **and slot 2 does differ in
+all seven**: 0x759A80, 0x755050, 0x756EC0, 0x757250, 0x75BCC0, 0x26A60, 0x759B70.
+
+## And the base object is 0x20 bytes, which the port's empty declaration is not
+
+**RE 0x754DE0, 74 bytes, three callers, is a COPY/MOVE CONSTRUCTOR**, and it is worth reading because of what it refuses to be:
+
+    754DE0  mov qword ptr [rcx], 0        ; the destination starts nulled
+    754DE7  mov r8, qword ptr [rdx]       ; the SOURCE's vptr
+    754DF3  mov qword ptr [rcx], r8       ; **copied into the destination**
+    754DF8  mov rax, [rdx + 8]  / 754DFC  mov [rcx + 8], rax
+    754E00  mov rax, [rdx + 0x10] / 754E04 mov [rcx + 0x10], rax
+    754E08  mov rax, [rdx + 0x18] / 754E0C mov [rcx + 0x18], rax
+
+**it copies the vptr, which is what a copy constructor does and a base constructor does not** -- so this is not the constructor and cannot name the fields. **But
+it bounds the object: a vptr and THREE POINTERS.** The three fields' MEANINGS are not established, **so this is recorded as a size and not as three named members** --
+which is the distinction the objective asks for between what an instruction supports and what a name would merely fit.
+
+    re/g_engine_vtables.py   every engine's vtable looked up by MANGLED NAME, with the family listed so the set is known rather than assumed
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green, and three claims added.
