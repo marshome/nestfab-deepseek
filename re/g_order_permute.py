@@ -60,7 +60,11 @@ NARROW = {"commonCutNoHoles": "std::uint8_t", "commonCutOnlyBiModules": "std::ui
 # `o.cfgAt188 = 11.5` for a field the module reads at `Pb + 0x188`; `cfgAt178`, `cfgAt180`, `cfgAt198` and `cfgAt190` are named for the same block. **A field
 # whose comment says `+0x20` and whose NAME says `+0x188` cannot be both**, and which is right is a question for the module's stores rather than for this
 # tool -- so they move to the port's own section, with their comments intact, instead of being forced into the module's run.
-NEEDS_A_READING = {"cfgAt178", "cfgAt180", "cfgAt188", "cfgAt190", "cfgAt198"}
+# **AND IT IS EMPTY NOW, BECAUSE THE FIVE `cfg*` COMMENTS WERE CORRECTED TO THE OFFSETS THEIR OWN NAMES GIVE.** It held them while the comments said
+# +0x18/+0x20 and the names said +0x188/+0x190 -- **and a field cannot be at both.** The resolution came from the module: `launching_order.hpp` records
+# `std::uint8_t pipeMode;   // +0x170  RE 0xFCF0 SetPipeMode, read by 0x4FC2F0`, and 0x4FC2F0 is `mov rax,[rcx] ; movzx eax, byte [rax + 0x170]`, **so the
+# pipe block is a REGION INSIDE `Order` and not another object** -- the names were right and the two comments were wrong.
+NEEDS_A_READING = set()
 
 # **AND SEVEN FIELDS HAVE THEIR OFFSET IN THE BLOCK COMMENT ABOVE THEM RATHER THAN BESIDE THEM.** The first permutation got 41 of 48 fields onto their
 # offsets and left these where they had been, which is why `usedSurfaceUsableOffcutRatio` measured +0x2D0 -- **at the END of the struct, after the run.**

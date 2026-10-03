@@ -2910,6 +2910,22 @@
    "round": 710,
    "subject": "cfgAt188-is-in-the-pipe-block",
    "witness": "the field carries a +0x20 comment while test_nester.cpp says RE 0x6AC20A reads Pb+0x188 -> core+0x20 through the base 0x4FC3A0 = mov rax,[rcx] ; add rax,0x170, and narrowing it to uint8_t made o.cfgAt188 = 11.5 store 11 and fail c.coeff()=11.5"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "the pipe block is a REGION OF Order at +0x170 and not another object, so cfgAt188/+0x188, cfgAt190/+0x190, cfgAt198/+0x198, cfgAt178/+0x178 and cfgAt180/+0x180 take their offsets from their names",
+   "round": 711,
+   "subject": "the-pipe-block-is-inside-Order",
+   "witness": "launching_order.hpp records std::uint8_t pipeMode at +0x170, RE 0xFCF0 SetPipeMode read by 0x4FC2F0; 0x4FC2F0 is mov rax,[rcx] then movzx eax, byte [rax + 0x170]; and 0x4FC3A0 is mov rax,[rcx] then add rax,0x170"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a test whose expected value was copied in at generation time compares against the copy, so correcting the source does not change its verdict",
+   "round": 711,
+   "subject": "a-baked-measurement-measures-the-copy",
+   "witness": "re/g_test_order_layout.py wrote model.hpp's offsets into test_recovered.cpp as literals, so after the seven comments were corrected it still reported the same seven mismatches; regenerating the claim column from the declaration moved the count from 41 of 57 to 50 of 57"
   }
  ]
 }
