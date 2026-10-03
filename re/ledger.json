@@ -3374,6 +3374,30 @@
       "predicate": "0x63F228 is an import thunk -- `jmp qword ptr [rip + 0x4e9cee]` with nop padding repeating every 8 bytes -- so GetPartUserStringEx's chain leaves the module there, while 0x64AEA0 is the module's own 403-byte logging helper and not a thunk",
       "witness": "disassembling 0x63F228 gives `jmp qword ptr [rip + 0x4e9cee]`, `nop`, `nop`, then `jmp qword ptr [rip + 0x4e9cde]` eight bytes later; 0x64AEA0 gives `push rsi` / `push rbx` / `sub rsp, 0x38` and has a measured size of 403 bytes",
       "round": 746
+    },
+    {
+      "subject": "62F280-is-the-cpp-throw-path",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "0x62F280, with 10418 call sites, is the module C++ exception throw path: it builds a throw object on the stack and calls into the C++ runtime through the IAT",
+      "witness": "0x62F29A writes 0x10001f, 0x62F2CF writes 0x20474343 at [rsp+0x30] which is little-endian CCG , the _GLIBCXX_ typeinfo signature, and 0x62F301 and 0x62F31F are call qword ptr [rip + ...] imports followed by 0x62F325 call 0x63f420",
+      "round": 747
+    },
+    {
+      "subject": "978010-is-the-shared-body-of-six-exports",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "0x978010 is 959 bytes, is not in any export, and has 841 callers; it is the body that GetPartUserStringEx, GetSheetUserStringEx, GetBuildVersion, GetBuildDate, GetMajorVersion and CNS_AddPartVariantSpecificAuthorizations all reach",
+      "witness": "re/g_chain_size.py reports 959 as the largest function on each of those six exports chains; re/g_hot_functions.py reports 0x978010 at 841 callers and 959 bytes; re/exports_table.json has no row whose rva..rva+size contains 0x2C8010",
+      "round": 747
+    },
+    {
+      "subject": "the-hot-list-rank-and-count-disagree",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the per-function callers field in the profile holds 5209 for 0x62F280 while counting every callees entry gives 10418, so the rank is usable and the absolute count is not",
+      "witness": "re/g_hot_functions.py counts by walking every callees list and reports 10418; load_prof()[0x62F280][callers] has 5209 entries",
+      "round": 747
     }
   ]
 }
