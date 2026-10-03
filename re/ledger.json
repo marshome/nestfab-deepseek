@@ -4442,6 +4442,24 @@
       "witness": "`0x24860` reads `rbx` from `[rcx + 0x18]` and installs its own vtable on `rcx`, **so its object is neither an engine nor an `EngineBase`** -- and a sweep that treated it as engine-family because of where it sits produced a claim about `EngineBase`'s fields that had to be dropped. **What distinguishes family membership is the VTABLE a function's object carries, not the address it occupies**, which is the same rule that identified `N5Multi19SupervisorCancellerE` from `re/vtables.json` rather than from a guessed range",
       "tool": "instruction",
       "round": 143
+    },
+    {
+      "subject": "the-three-engines-allocate-different-sizes",
+      "grade": "MEASURED",
+      "kind": "width",
+      "predicate": "`NestingEngine`, `MultiEngine` and `DelayedEngine` allocate 0x78, 0x48 and 0x28 bytes, so they are not one shared layout",
+      "witness": "each constructor's own allocation: `023E87 mov ecx, 0x78` in `0x23E70` (`NestingEngine`), `0240E7 mov ecx, 0x48` in `0x240D0` (`MultiEngine`), and `024B8A mov ecx, 0x28` in `0x24B80` (`DelayedEngine`). **Three sizes for three classes whose `run` bodies were read as agreeing on ten offsets** -- and the sizes settle it without any further argument, **because a shared layout has one size.** **This is the third time this subject has been re-read and the first time the answer needed no inference at all**",
+      "tool": "measurement",
+      "round": 788
+    },
+    {
+      "subject": "the-engine-constructors-allocate-and-return-through-the-first-argument",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "`NestingEngine` and `DelayedEngine` allocate their own object and hand it back through the first argument, so `rcx` is a destination for those two and `this` for none of the constructors read",
+      "witness": "`0x23E70` does `023E84 mov rdi, rcx`, `023E87 mov ecx, 0x78` / `023E94 call 0x998500`, `023E9E mov rbx, rax`, and writes the object to `rdi` at the end; `0x24B80` does `024B87 mov rsi, rcx`, `024B8A mov ecx, 0x28` / `024B98 call 0x998500`, `024BA3 mov rbx, rax`, then `024BDE mov qword ptr [rsi], rbx` and `024C0A mov qword ptr [rsi + 8], rax`. **Both allocate and both hand the result out through the first argument**, which is why the model's `DelayedEngine() = default` and `NestingEngine() = default` describe neither -- **and why `rcx` is not `this` in either constructor**",
+      "tool": "instruction",
+      "round": 788
     }
   ]
 }

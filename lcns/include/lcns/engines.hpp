@@ -300,7 +300,35 @@ public:
 
     NestingEngine() = default;
 
+    /** **ITS CONSTRUCTOR IS A FACTORY: it allocates the object itself and returns it through the FIRST ARGUMENT.** RE 0x23E70, 595 bytes:
+     *
+     *      023E84  mov rdi, rcx                  ; **rcx is a DESTINATION, not `this`**
+     *      023E87  mov ecx, 0x78 / 023E94 call 0x998500   ; **allocate 0x78**
+     *      023E9E  mov rbx, rax                  ; **the object is the allocation**
+     *      023EA1  mov byte  ptr [rax + 8], 0    ; **the base's byte, before the vtable**
+     *      023EA5  mov dword ptr [rax + 0xc], 0  ; **the base's dword, likewise**
+     *      023EB8  mov qword ptr [rbx], rax      ; its vtable
+     *      023EBD  mov dword ptr [rbx + 0x10], r12d   ; **+0x10 = the THIRD argument (r8d)**
+     *      023ECB  mov dword ptr [rbx + 0x18], eax    ; +0x18 = a dword out of the source object
+     *      023ED2  mov byte  ptr [rbx + 0x1c], al     ; +0x1C = [src + 4]
+     *      023ED9  mov byte  ptr [rbx + 0x1d], al     ; +0x1D = [src + 5]
+     *      023EC1  movlpd qword ptr [rbx + 0x28], xmm0  ; **+0x28 = a DOUBLE out of [src + 0x10]**
+     *      023EC6  movhpd qword ptr [rbx + 0x30], xmm0  ; **+0x30 = a DOUBLE out of [src + 0x18]**
+     *
+     *  **AND `023E87 mov ecx, 0x78` IS THE OBJECT'S SIZE** -- 0x78, against `MultiEngine`'s 0x48 and `DelayedEngine`'s 0x28 -- **so these three classes are NOT one layout
+     *  and the "shared range" reading was wrong in a way the sizes make obvious.**
+     *
+     *  **WHAT EACH FIELD MEANS IS NOT ESTABLISHED**, so they carry their offsets; **the two the source object feeds (+0x28 and +0x30) are doubles and the two bytes at +0x1C
+     *  and +0x1D come from a packed struct of flags.** */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+
+private:
+    std::int32_t at10 = 0;             // +0x10, RE 0x023EBD -- the constructor's third argument
+    std::int32_t at18 = 0;             // +0x18, RE 0x023ECB `mov dword ptr [rbx + 0x18], eax`
+    std::uint8_t at1C = 0;             // +0x1C, RE 0x023ED2 -- a byte of a packed flag set
+    std::uint8_t at1D = 0;             // +0x1D, RE 0x023ED9
+    double at28 = 0.0;                 // +0x28, RE 0x023EC1 `movlpd qword ptr [rbx + 0x28], xmm0`
+    double at30 = 0.0;                 // +0x30, RE 0x023EC6 `movhpd qword ptr [rbx + 0x30], xmm0`
 };
 
 // CompositeEngine is declared in lcns/engines_composite.hpp, which carries the evidence for it.
