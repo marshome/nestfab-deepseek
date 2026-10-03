@@ -2974,6 +2974,22 @@
    "round": 716,
    "subject": "localEngine-could-not-be-a-bool",
    "witness": "RE 0xD390 is mov byte [rsi + 0x200], al and RE 0xDF73 is mov dword [rdi + 0x204], r12d, so the range +0x1F8..+0x208 holds five fields and a bool accounted for one byte of it"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "call",
+   "predicate": "Order's threadsA at +0x204 stores SetLocalEngineThreads' SECOND argument and threadsB at +0x208 its THIRD, so the two names are placeholders and the module carries no string for either",
+   "round": 717,
+   "subject": "plus-0x204-and-0x208-hold-the-exports-arguments",
+   "witness": "0xDE8D mov r12d, edx and 0xDE90 mov ebp, r8d take arguments 2 and 3, and 0xDF73 mov dword [rdi + 0x204], r12d and 0xDF7A mov dword [rdi + 0x208], ebp store them; re/exports_table.md records the export's arity and ordinals and not its parameter names"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "width",
+   "predicate": "the five offsets only Order has are a granularity difference and not a disagreement: Order records maxIterations, engineLo, engineHi, threadsA and threadsB, and LaunchingOrderLayout covers 0x1F8..0x218 with one unsigned char unnamed1F8[32]",
+   "round": 717,
+   "subject": "the-two-layouts-differ-by-granularity",
+   "witness": "Order's own stores pin 4 bytes at +0x1F8, 4 at +0x1FC, 1 at +0x200, 1 at +0x201, 4 at +0x204 and 4 at +0x208, while the layout's construction never went finer than the block"
   }
  ]
 }
