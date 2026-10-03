@@ -514,6 +514,29 @@ def check_four_conditions():
     return "PASS", "all four exist and re/ledger.py check exits zero"
 
 
+
+def check_push_every_thirty_rounds():
+    """每30轮push一次 -- at the thirty-round sync, local must be level with origin.
+
+    The human's instruction at round 92 is "每30轮push一下吧", which replaces the default of never pushing with a cadence. The sync is the same thirty rounds
+    `sync-every-thirty-rounds` counts, so the condition is: **when the sync is due, `origin/main..HEAD` must be empty.**
+
+    **AND AN UNREACHABLE REMOTE IS UNCHECKED AND NOT A FAILURE.** This project's origin has been unreachable for long stretches, and a rule that reports the tree
+    as broken because GitHub is down is a rule that lies. The check says UNCHECKED with the git error beside it, so the difference between "not pushed" and "could
+    not ask" stays visible.
+    """
+    code, out, _err = run([sys.executable, os.path.join(HERE, "g_rounds.py"), "--check"])
+    if code != 0:
+        return "PASS", "the sync is not due yet, so no push is owed"
+    code, out, err = run(["git", "rev-list", "--count", "origin/main..HEAD"])
+    if code != 0:
+        return "UNCHECKED", "origin is unreachable: %s" % (err or out).strip()[:80]
+    behind = int((out or "0").strip() or 0)
+    if behind:
+        return "FAIL", "the sync is due and %d commit(s) are not pushed" % behind
+    return "PASS", "the sync is due and origin/main is level with HEAD"
+
+
 CHECKS = [
     ("local-commits-only", "本地提交、不要 push", check_local_commits_only),
     ("gate-before-commit", "门禁保持全绿", check_gate),
@@ -537,6 +560,7 @@ CHECKS = [
     ("goal-drives-continuation", "用持久化目标驱动连续推进", check_goal_drives_continuation),
     ("counts-need-consistent-rows", "计数需要行一致", check_counts_need_consistent_rows),
     ("rounds-must-land-code", "每轮必须落地代码", check_rounds_must_land_code),
+    ("push-every-thirty-rounds", "每30轮push一次", check_push_every_thirty_rounds),
     ("extractor-self-check", "提取器必须自带对照输入", check_extractor_self_check),
 ]
 

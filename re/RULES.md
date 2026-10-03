@@ -209,6 +209,12 @@ feeling of compliance.
 
 ## What is deliberately NOT a rule here
 
+ {"id": "push-every-thirty-rounds",
+  "rule": "每30轮push一次",
+  "check": "re/g_rules.py check_push_every_thirty_rounds: when re/g_rounds.py --check says the sync is due, `git rev-list --count origin/main..HEAD` must be 0, and UNCHECKED when origin cannot be reached",
+  "where": "re/g_rules.py, and this rule",
+  "since": "round 92, the human's instruction 每30轮push一下吧"},
+
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a
 toolchain artefact with no effect on a return value) and mutex guards. Library code -- iostreams, locale facets, `num_put`,
 `__cxa_guard_*`, `std::shared_ptr` refcounts -- is CLASSIFIED and counted, never reimplemented, and the rule for that lives in
