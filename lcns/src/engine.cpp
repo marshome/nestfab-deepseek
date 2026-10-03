@@ -167,7 +167,10 @@ std::vector<std::shared_ptr<Nester>> makeDefaultStrategies() {
             std::make_shared<TilingNester>(),                // mode 0 route
             std::make_shared<CompactNester>(),               // flag +0x05
             std::make_shared<FilterNester>(),                // flag +0x05 with options[+0x168]
-            std::make_shared<LimitedNester>(64, 8),          // flags +0x18 / +0x1C
+            // **RE 0x2C9A0 / 0x2C9F0: `mov ecx, 0x48` then `call 0x998500` then `call 0x4AAD0`** -- the constructor takes NO integer arguments, so the `(64, 8)`
+            // this used to pass was invented. **What selects the bound is the `{count, pointer}` pair in r8/r9**, and the constructor's own +0x40 default is
+            // 0x3B9AC99F, which the substitute now uses.
+            std::make_shared<LimitedNester>(),                // flags +0x18 / +0x1C
             std::make_shared<MultiTorchNester>(),             // flag +0x0C > 0
             std::make_shared<NoFillNester>(),                // +0x20 == 1.0 and Pb[+0x120] > 1
             makeStrategy(2),                                 // RectangleNester

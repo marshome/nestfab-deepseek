@@ -511,15 +511,42 @@ public:
     Solution run(SolveContext&) override;
 };
 
-class LimitedNester : public Nester {          // RE 0xA3B650, Run = 0x4AB40
+/** RE 0x2C9A0 and 0x2C9F0: the engine allocates 0x48 bytes twice and calls 0x4AAD0, whose body is the constructor below. **`Run = 0x4AB40` WAS WRONG and is
+ *  removed**: 0x4AB40 is 1650 bytes, has one caller, and its second instruction group writes `[rsi]` -- **a vptr is never assigned outside a constructor**, so
+ *  0x4AB40 is not this class's `run`. Its `run` is `LCNS_SUBSTITUTED` and has no address here.
+ *
+ *  **AND THE TWO INT MEMBERS HAD NO EVIDENCE AT ALL**: nothing in the constructor stores at +0x08 or +0x0C, and the substitute does not read them. **They are
+ *  deleted rather than kept looking recovered**, and the fields the constructor DOES write are declared in their place. */
+class LimitedNester : public Nester {
 public:
 
-    LimitedNester(int maxParts, int maxAngles) : maxParts_(maxParts), maxAngles_(maxAngles) {}
+    /** RE 0x4AAD0, 101 bytes, one caller. `rcx` is the new object, `r8` is a `{count, pointer}` pair and `r9` is a copy of it. **The object register is `rbx`,
+     *  established by 0x4AAD6 `mov rbx, rcx`, and every store below is through it**:
+     *
+     *      04AAE9  lea rax, [rip + 0x9f0b70]      ; the vtable
+     *      04AAF0  mov qword [rbx], rax           ; **written here and nowhere else, which is what a constructor is**
+     *      04AAFA  mov qword [rbx + 0x20], rax    ; from r9
+     *      04AAF6  mov qword [rbx + 0x28], rdx    ; from [r9 + 8]
+     *      04AAFE  call 0x5f3900 with rcx = rbx + 0x30   ; constructs the member at +0x30
+     *      04AB03  mov qword [rbx + 0x38], 0
+     *      04AB0B  mov dword [rbx + 0x40], 0x3b9ac999f   ; a large bound
+     *      04AB12  mov byte  [rbx + 0x44], 1
+     *      04AB16  mov byte  [rbx + 0x45], 0
+     *
+     *  **AND THE `(int maxParts, int maxAngles)` ARGUMENTS THE PREVIOUS DECLARATION NAMED ARE NOT IN THIS BODY**: r8 and r9 carry a pair, not two ints. */
+    LimitedNester();
     const char* name() const override { return "LimitedNester"; }
     Solution run(SolveContext&) override;
 private:
-    int maxParts_;
-    int maxAngles_;
+    // **THE NAMES ARE THE OFFSETS BECAUSE THE MODULE GIVES NO ORACLE FOR THEM YET.** The two members that were here (`maxParts_`, `maxAngles_`) had NO evidence --
+    // nothing stores at +0x08 or +0x0C and the substitute does not read them -- so they are gone. What is certain is WHERE the constructor writes:
+    std::uint64_t at20 = 0;   // +0x20, 0x4AAFA: `mov qword [rbx + 0x20], rax`, rax from r9
+    std::uint64_t at28 = 0;   // +0x28, 0x4AAF6: `mov qword [rbx + 0x28], rdx`, rdx from [r9 + 8]
+    std::uint64_t at30 = 0;   // +0x30, 0x4AAFE: constructed by 0x5F3900, which stores the result of 0x5F47C0 at its own +0x00
+    std::uint64_t at38 = 0;   // +0x38, 0x4AB03: zeroed
+    std::uint32_t at40 = 0;   // +0x40, 0x4AB0B: initialised to 0x3B9AC99F, a large bound
+    bool at44 = true;         // +0x44, 0x4AB12
+    bool at45 = false;        // +0x45, 0x4AB16
 };
 
 class DatabaseNester : public Nester {         // RE 0xA3B740, Run = 0x5B250

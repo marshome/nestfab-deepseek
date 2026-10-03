@@ -638,11 +638,21 @@ Solution CompactNester::run(SolveContext& ctx) {
 }
 
 LCNS_SUBSTITUTED(strategy.limited);
+// RE 0x4AAD0, 101 bytes: **THE CONSTRUCTOR, AND THE OBJECT REGISTER IS RBX FROM 0x4AAD6 `mov rbx, rcx`.** It writes the vtable at +0x00 (0x4AAF0), takes a
+// {count, pointer} pair from r8/r9 into +0x20 and +0x28, constructs the member at +0x30 via 0x5F3900, zeroes +0x38, sets +0x40 to 0x3B9AC99F and sets the two
+// bytes at +0x44 and +0x45. **The `(int maxParts, int maxAngles)` this class used to declare is not in the body** -- r8 and r9 carry a pair.
+LimitedNester::LimitedNester() = default;
+
+// **LCNS_SUBSTITUTED, AND THE ADDRESS ON THE CLASS WAS WRONG.** The declaration used to say `Run = 0x4AB40`; 0x4AB40 is 1650 bytes, has one caller, and assigns
+// [rsi] -- **a vptr is never written outside a constructor**, so it is not this class's run.
 Solution LimitedNester::run(SolveContext& ctx) {
     Order limited = *ctx.order;
-    if (static_cast<int>(limited.parts.size()) > maxParts_) limited.parts.resize(static_cast<std::size_t>(maxParts_));
+    // **THE TWO MEMBERS THIS SUBSTITUTE READ ARE GONE, BECAUSE NOTHING SUPPORTED THEM.** They were `maxParts_` and `maxAngles_`, and no instruction stores at
+    // +0x08 or +0x0C -- the constructor writes +0x20, +0x28, +0x30, +0x38, +0x40, +0x44 and +0x45. **The substitute now bounds the work by `at40`, which the
+    // constructor DOES initialise** (to 0x3B9AC99F), rather than by a member that was invented. **This is still a substitution and still says so above**; what
+    // changed is that it no longer reads fields the module does not have.
+    if (limited.parts.size() > static_cast<std::size_t>(at40)) limited.parts.resize(static_cast<std::size_t>(at40));
     BeamParams b = ctx.beam;
-    b.maxAngleSteps = std::max(1, std::min(b.maxAngleSteps, maxAngles_));
     const Order* saved = ctx.order;
     const BeamParams savedB = ctx.beam;
     ctx.order = &limited;

@@ -3478,6 +3478,22 @@
       "predicate": "the stack check gates only when the member annotation CLAIMS A WIDTH, and reports a value claim, because a width claim says the store places the member and a value claim does not",
       "witness": "launching_order.hpp unnamed028 said narrowest store is 1 byte(s) at RE 0xD062, a width claim whose instruction is mov byte [rsp + 0x28], 0 in 0xD050 whose prologue puts the object in rbp; row.hpp lo says RE 0x5C4A45: a fixed-degree ANGLE, a value claim in 0x5C4950 whose prologue puts the object NOWHERE. re/g_prove_full_audit.py plants both and requires the first to fail the audit and the second not to",
       "round": 752
+    },
+    {
+      "subject": "limitednester-constructor-is-0x4AAD0",
+      "grade": "CONSTRUCTOR",
+      "kind": "offset",
+      "predicate": "LimitedNester is 0x48 bytes and its constructor is 0x4AAD0, which writes the vtable at +0x00, two quadwords at +0x20 and +0x28, constructs a member at +0x30, zeroes +0x38, sets +0x40 to 0x3B9AC99F and sets the bytes at +0x44 and +0x45",
+      "witness": "0x2C9A0 and 0x2C9F0 are mov ecx, 0x48 / call 0x998500 / call 0x4AAD0; 0x4AAD0 is 101 bytes and 0x4AAD6 mov rbx, rcx establishes the object register. 0x4AAF0 mov qword [rbx], rax after 0x4AAE9 lea rax, [rip + 0x9f0b70] writes the vtable. No instruction stores at +0x08 or +0x0C, so the maxParts_ and maxAngles_ members that were declared there had no evidence and were deleted",
+      "round": 753
+    },
+    {
+      "subject": "limitednester-run-address-was-wrong",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the Run = 0x4AB40 annotation on LimitedNester was wrong: 0x4AB40 is 1650 bytes with one caller and assigns [rsi], and a vptr is never written outside a constructor",
+      "witness": "disassembling 0x4AB40 gives push r14 through sub rsp, 0x190 then mov rdi, rdx, mov rsi, rcx, and later mov qword ptr [rsi], rdx at 0x4AC77, which assigns a vptr. The class run is LCNS_SUBSTITUTED and carries no address",
+      "round": 753
     }
   ]
 }
