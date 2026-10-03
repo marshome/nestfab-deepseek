@@ -2878,6 +2878,22 @@
    "round": 708,
    "subject": "Order-members-land-nowhere-near-its-comments",
    "witness": "measured in test_recovered.cpp by taking the address of each member against the object's base: objective says +0x8 and measures +0x0, shear says +0x44 and measures +0x20, commonCutModeA says +0x5C and measures +0x34, and 0 of 48 agree"
+  },
+  {
+   "grade": "MEASURED",
+   "kind": "offset",
+   "predicate": "Order's 45 offset-commented fields fall into 7 runs of ascending offsets, so 6 declarations must be relocated before padding can place the rest",
+   "round": 709,
+   "subject": "Order-needs-six-declarations-moved",
+   "witness": "re/g_place_order_fields.py groups them: run 0 is lines 2..38 over +0x008..+0x0D8, and the first field of each later run -- reorganizeBiggestPartNearOrigin +0x22, localEngine +0x200, maxThreads +0x1F8, commonCutBlockSet +0x1A0, cfgAt188 +0x20, cfgAt190 +0x18 -- has an offset below the end of the previous run"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "width",
+   "predicate": "a member's width cannot be narrowed before Order's member order is fixed, because narrowing one member moves every later member away from the offsets the module's stores use",
+   "round": 709,
+   "subject": "narrowing-widths-before-reordering-breaks-tests",
+   "witness": "applying the three widths the adjudicator gives -- cfgAt188 double to uint8_t, commonCutNoHoles and commonCutOnlyBiModules int to uint8_t -- made the tests fail, and the changes were reverted"
   }
  ]
 }
