@@ -201,6 +201,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-02",
   "since": "round now"}
 
+{"id": "one-definition-per-module-object-two-str",
+  "rule": "one definition per module object: two structs whose offset-commented fields share 20 or more offsets AND cover 60 percent of the smaller one describe the same module object, and that is the second description this project forbids. The FIELD NAMES are deliberately not part of the test, because Order and LaunchingOrderLayout agree on only 2 names in 45 while describing the same fields -- one names a field by the export that sets it and the other by its offset, and a name-based rule therefore excludes the very duplication the check is for. Each pair is either reconciled, or recorded as not a duplication with the reason it is two things, or recorded as debt with the adjudication.",
+  "check": "re/g_one_definition.py",
+  "where": "re/RULES.md, added 2026-10-03",
+  "since": "round now"}
+
 ## What is deliberately NOT a rule here
 
 Things this project has decided it does not reproduce are recorded at their sites, not here: logger calls (`0x64AEA0`, a

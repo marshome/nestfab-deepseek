@@ -2862,6 +2862,14 @@
       "round": 706,
       "subject": "the-import-thunk-is-external",
       "witness": "the IAT slot 0xB28F1C holds 0x7FF998BDD6F0, in the 0x7FF9 range where a 64 bit process loads system dlls, while the whole module image ends at 0xB43000; the import directory at 0xB42274 has KERNEL32.DLL with OriginalFirstThunk 0x0 and an IAT holding resolved runtime addresses, because the file came from a process that had already loaded the module"
+    },
+    {
+      "grade": "MEASURED",
+      "kind": "offset",
+      "predicate": "the 47 offset-commented fields of model.hpp Order and the 127 of launching_order.hpp LaunchingOrderLayout place 45 of the SAME offsets, which is 96 percent of the smaller struct",
+      "round": 707,
+      "subject": "Order-and-the-layout-share-45-offsets",
+      "witness": "both name +0x44 (shear / unnamed044), +0x68 (commonCutSafetyFlag / commonCutSafetyPreferenceGiven) and +0x98 (multitorchModeTag / multiTorchCuttingPreferenceGiven), and shared offsets cover 45 of Order 47; only 2 of the 45 carry the same name, because one side names a field by the export that sets it. The 0x2C0 size is separately established by LaunchingOrder.size, RE 0x14620"
     }
   ]
 }
