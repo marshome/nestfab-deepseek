@@ -4235,6 +4235,24 @@
       "witness": "the displacement repair changed the output of eleven scripts -- g_embedded_structs by 127 of 164 lines, g_find_pool_field by 78 of 92, g_arrays by 68 of 86, g_classes by 40 of 123, g_class_sites by 33 of 84 -- **and the gate was GREEN BEFORE AND AFTER, because it runs g_acceptance, g_coverage, g_gap_compensation and g_rules and none of the eleven is among them.** A claim witnessed by an instruction address is unaffected by which script found it; **a claim witnessed by a line of output is now suspect and the ledger cannot say which those are.** That is the gap this round records",
       "round": 775,
       "tool": "re/ledger.json"
+    },
+    {
+      "subject": "the-three-observer-derivatives-split-two-ways",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "of the three Structure_Observer derivatives, two forward their slots to an object they hold and do so at DIFFERENT offsets -- BestObserver at +0x10 and EquivalentObserver at +0x08 -- while CompositeObserver forwards nothing and implements every slot itself",
+      "witness": "re/vtables.json: N6Engine12BestObserverE vtable 0xA3CF30, slots 0x756CF0 0x756B20 0x755A40 0x755A50 0x755A80 0x755A60, where 0x755A40, 0x755A50 and 0x755A60 are 11 to 18 bytes each of `mov rcx, qword ptr [rcx + 0x10]` then `mov rax, [rcx]` then `jmp qword ptr [rax + N]`. N6Engine18EquivalentObserverE vtable 0xA3D0A0 has 0x75DDD0 and 0x75DDE0 in the same shape but reading **+0x08**. N6Engine17CompositeObserverE vtable 0xA3D060 has a slot 2 at 0x75CBC0 of 193 bytes and a slot 3 at 0x75CC90 of 152 bytes -- **real bodies and not forwards** -- with slot 0 a one-byte `ret` and slot 1 a five-byte `jmp 0x9984b0`. re/g_observer_slots.py printed the three tables side by side, which is how the split was seen",
+      "tool": "re/vtables.json",
+      "round": 776
+    },
+    {
+      "subject": "compositeobserver-is-one-word-not-two",
+      "grade": "INSTRUCTION",
+      "kind": "width",
+      "predicate": "CompositeObserver is one word -- a vptr and no member -- while its two sibling forwarders are two words, and the build refused an assertion that it matched them",
+      "witness": "the static_assert `sizeof(lcns::CompositeObserver) == 2 * sizeof(void*)` FAILED at build, and the class is `sizeof(void*)` because **nothing places a pointer in it**: its slot 0 at 0x75DDC0 is a ONE-BYTE `ret` and its slot 1 at 0x75DDB0 is a five-byte `jmp 0x9984b0`, which is operator delete, so it has no destructor body and no constructor in the profile. **Inventing a sink_ so that it matched its siblings is the shape-matching this project forbids, and the assertion is what stopped it** -- the same way the nester size assertions stopped a wrong base layout",
+      "tool": "g_observer_slots.py",
+      "round": 776
     }
   ]
 }
