@@ -2926,6 +2926,22 @@
    "round": 711,
    "subject": "a-baked-measurement-measures-the-copy",
    "witness": "re/g_test_order_layout.py wrote model.hpp's offsets into test_recovered.cpp as literals, so after the seven comments were corrected it still reported the same seven mismatches; regenerating the claim column from the declaration moved the count from 41 of 57 to 50 of 57"
+  },
+  {
+   "grade": "CONSTRUCTOR",
+   "kind": "layout",
+   "predicate": "every offset-commented field of Order lands on the offset its comment gives, the run is ascending, nothing overlaps, and the module's own bytes end at 0x2C0",
+   "round": 712,
+   "subject": "Order-module-run-is-placed",
+   "witness": "measured in test_recovered.cpp: 55 fields, 0 disagreement, 0 reversal, 0 overlap, 0 past 0x2C0, sizeof(Order) 864 against the module's object 704"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "a field line with no comment of its own matched the SECTION comment below it, because the comment part of the pattern could span a newline",
+   "round": 712,
+   "subject": "a-regex-that-crosses-a-newline-finds-the-next-line",
+   "witness": "the measurement recorded commonCutObjectiveDen as claiming +0x98, a claim it never made, and matched the header // --- multi torch (+0x98..+0xD8) --- instead; requiring the comment to be on the same line fixed it and the field count went from 57 to 55"
   }
  ]
 }

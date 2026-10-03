@@ -175,57 +175,104 @@ struct Solution {
 // --------------------------------------------------------------------------
 struct Order {
     // --- objective / origin (enums proven) ---
-    Objective objective = Objective::MinimizeArea;     // +0x08
-    NestingOrigin origin = NestingOrigin::BottomLeft;  // +0x0C
+
+    // **THE MODULE'S LAYOUT, PLACED AT THE OFFSETS THE FIELD COMMENTS GIVE.** Every field below carries the offset its own comment states, padding fills the gaps, and this section is what makes `offsetof` agree with those comments.
+    std::byte padding00[0x8];   // +0x000..+0x007, no field here
+    Objective objective = Objective::MinimizeArea;   // +0x008
+    NestingOrigin origin = NestingOrigin::BottomLeft;   // +0x00C
+    std::byte padding01[0x12];   // +0x010..+0x021, no field here
+    bool reorganizeBiggestPartNearOrigin = false;   // +0x022
+    bool reorganizeLongestPartNearOrigin = false;   // +0x023
+    std::byte padding02[0x4];   // +0x024..+0x027, no field here
+    double usedSurfaceMinOffcutDimension = 0.0;   // +0x028
+    double usedSurfaceMinOffcutArea = 0.0;   // +0x030
+    double usedSurfaceUsableOffcutRatio = 0.0;   // +0x038
+    std::byte padding03[0x1];   // +0x040..+0x040, no field here
+    bool evaluateIntermediateNestingsAsLast = false;   // +0x041
+    std::byte padding04[0x2];   // +0x042..+0x043, no field here
+    bool shear = false;   // +0x044
+    std::byte padding05[0x3];   // +0x045..+0x047, no field here
+    bool shearCorner = false;   // +0x048
+    std::byte padding06[0x7];   // +0x049..+0x04F, no field here
+    double shearGap = 0.0;   // +0x050
+    bool shearRepulseFromBorders = false;   // +0x058
+    std::byte padding07[0x3];   // +0x059..+0x05B, no field here
+    int commonCutModeA = 0;   // +0x05C
+    int commonCutModeB = 0;   // +0x060
+    std::byte padding08[0x4];   // +0x064..+0x067, no field here
+    int commonCutSafetyFlag = 0;   // +0x068
+    int commonCutPresetIndex = 0;   // +0x06C
+    int commonCutAuthorizations[3] = {0, 0, 0};   // +0x070
+    std::byte padding09[0x8];   // +0x07C..+0x083, no field here
+    std::uint8_t commonCutNoHoles = 0;   // +0x084  narrower: int
+    std::uint8_t commonCutOnlyBiModules = 0;   // +0x085  narrower: int
+    std::byte padding10[0x2];   // +0x086..+0x087, no field here
+    int commonCutModeTag = 0;   // +0x088
+    int commonCutPresetIndex2 = 0;   // +0x08C
+    double commonCutObjectiveNum = 1.0;   // +0x090
+    int multitorchModeTag = 0;   // +0x098
+    int multitorchPresetIndex = 0;   // +0x09C
+    std::byte padding11[0x8];   // +0x0A0..+0x0A7, no field here
+    bool multitorchAllowed = false;   // +0x0A8
+    std::byte padding12[0x7];   // +0x0A9..+0x0AF, no field here
+    double multitorchCostRatio = 0.0;   // +0x0B0
+    double multitorchReconfig = 0.66;   // +0x0B8
+    int multitorchNbTorches = 0;   // +0x0C0
+    std::byte padding13[0x4];   // +0x0C4..+0x0C7, no field here
+    double multitorchMinDistance = 0.0;   // +0x0C8
+    double multitorchMaxDistance = 0.0;   // +0x0D0
+    double multitorchA = 0.0;   // +0x0D8
+    std::byte padding14[0x8];   // +0x0E0..+0x0E7, no field here
+    bool markMode = false;   // +0x0E8
+    std::byte padding15[0x2F];   // +0x0E9..+0x117, no field here
+    double defectGap = 0.0;   // +0x118
+    std::byte padding16[0x8];   // +0x120..+0x127, no field here
+    bool rowMode = false;   // +0x128
+    std::byte padding17[0x7];   // +0x129..+0x12F, no field here
+    double rowShearGap = 0.0;   // +0x130
+    double rowShearCommonCutGap = 0.0;   // +0x138
+    double rowPunchGap = 0.0;   // +0x140
+    double rowPunchCommonCutGap = 0.0;   // +0x148
+    bool rowAlternate = false;   // +0x150
+    std::byte padding18[0x27];   // +0x151..+0x177, no field here
+    double cfgAt178 = 0.0;   // +0x178
+    double cfgAt180 = 0.0;   // +0x180
+    double cfgAt188 = 0.0;   // +0x188
+    double cfgAt190 = 0.0;   // +0x190
+    unsigned char cfgAt198 = 0;   // +0x198
+    std::byte padding19[0x7];   // +0x199..+0x19F, no field here
+    bool commonCutBlockSet = false;   // +0x1A0
+    std::byte padding20[0x7];   // +0x1A1..+0x1A7, no field here
+    double commonCutAt1A8 = 0.0;   // +0x1A8
+    double commonCutAt1B0 = 0.0;   // +0x1B0
+    unsigned char commonCutAt1B8 = 0;   // +0x1B8
+    std::byte padding21[0x7];   // +0x1B9..+0x1BF, no field here
+    double commonCutAt1C0 = 0.0;   // +0x1C0
+    std::byte padding22[0x30];   // +0x1C8..+0x1F7, no field here
+    int maxThreads = 1;   // +0x1F8
+    int maxIterations = 1000;   // +0x1FC
+    bool localEngine = false;   // +0x200
+    std::byte padding23[0x3F];   // +0x201..+0x23F, no field here
+    bool automaticStop = false;   // +0x240
+    std::byte padding24[0x3];   // +0x241..+0x243, no field here
+    int unlockMode = 0;   // +0x244
+    std::string licenseKey1 ;   // +0x248
+    std::string licenseKey2 ;   // +0x268
+    std::byte padding25[0x38];   // +0x288..+0x2BF, no field here
+
+    // **THIS PROJECT'S OWN MEMBERS, NOT THE MODULE'S LAYOUT.** None of them carries an offset because no store establishes one, and they sat INTERLEAVED with the module's fields -- a model-only member between two module fields pushes every later module field off its offset. That is part of why the members landed nowhere near their comments.
 
     // --- offcut evaluation: three doubles (RE +0x28/+0x30/+0x38) ---
-    double usedSurfaceMinOffcutDimension = 0.0;
-    double usedSurfaceMinOffcutArea = 0.0;
-    double usedSurfaceUsableOffcutRatio = 0.0;
 
     // --- shear block (+0x44..+0x5C) ---
-    bool shear = false;                    // +0x44
-    bool shearCorner = false;              // +0x48
-    double shearGap = 0.0;                 // +0x50
-    bool shearRepulseFromBorders = false;  // +0x58
 
     // --- common cut (+0x5C..+0x90) ---
-    int commonCutModeA = 0;             // +0x5C
-    int commonCutModeB = 0;             // +0x60
-    int commonCutSafetyFlag = 0;        // +0x68
-    int commonCutPresetIndex = 0;       // +0x6C
-    int commonCutAuthorizations[3] = {0, 0, 0};  // +0x70/+0x78/+0x80
-    int commonCutNoHoles = 0;           // +0x84
-    int commonCutOnlyBiModules = 0;     // +0x85
-    int commonCutModeTag = 0;           // +0x88: 1 = preset (use +0x8C), 0 = objective (+0x90)
-    int commonCutPresetIndex2 = 0;      // +0x8C
-    double commonCutObjectiveNum = 1.0; // +0x90
     double commonCutObjectiveDen = 1.0;
 
     // --- multi torch (+0x98..+0xD8) ---
-    int multitorchModeTag = 0;          // +0x98: 1 = preset (use +0x9C)
-    int multitorchPresetIndex = 0;      // +0x9C
-    bool multitorchAllowed = false;     // +0xA8
-    double multitorchCostRatio = 0.0;   // +0xB0
-    double multitorchReconfig = 0.66;   // +0xB8
-    int multitorchNbTorches = 0;        // +0xC0
-    double multitorchMinDistance = 0.0; // +0xC8
-    double multitorchMaxDistance = 0.0; // +0xD0
-    double multitorchA = 0.0;           // +0xD8
 
     // --- misc flags proven by offset ---
-    bool reorganizeBiggestPartNearOrigin = false;     // +0x22
-    bool reorganizeLongestPartNearOrigin = false;     // +0x23
-    bool evaluateIntermediateNestingsAsLast = false;  // +0x41
     double interpartGap = 0.0;
-    double defectGap = 0.0;             // +0x118
-    bool automaticStop = false;         // +0x240
-    int unlockMode = 0;                 // +0x244
-    std::string licenseKey1;            // +0x248 std::string
-    std::string licenseKey2;            // +0x268 std::string
-    bool localEngine = false;           // +0x200 / +0x201
-    int maxThreads = 1;                 // +0x1F8
-    int maxIterations = 1000;           // +0x1FC
     double timeLimitSeconds = 10.0;     // consumed by the canceller
     bool incompatibleSheets = false;
 
@@ -241,19 +288,8 @@ struct Order {
     // 0x4FC2F0(arg) = byte [[arg]+0x170] gates the core's configuration path, and the export
     // SetPipeMode (0xFCF0) is what writes this block (by copying qwords to +0x160/+0x168/+0x170/
     // +0x178). So the gate is the pipe-mode flag; which qword of the block it is, is [推断].
-    bool commonCutBlockSet = false;     // +0x1A0 (read by 0x4FC300)
-    double commonCutAt1A8 = 0.0;        // +0x1A8 -> core+0x20 (the coefficient)
-    double commonCutAt1B0 = 0.0;        // +0x1B0 -> core+0x18 (the cost threshold)
-    unsigned char commonCutAt1B8 = 0;   // +0x1B8 -> core+0x28
-    double commonCutAt1C0 = 0.0;        // +0x1C0 -> core+0x30
 
     // --- row block (+0x128..+0x150) ---
-    bool rowMode = false;
-    double rowShearGap = 0.0;
-    double rowShearCommonCutGap = 0.0;
-    double rowPunchGap = 0.0;
-    double rowPunchCommonCutGap = 0.0;
-    bool rowAlternate = false;
 
     // --- pipe block (+0x158..+0x178) ---
     bool pipeMode = false;
@@ -278,14 +314,8 @@ struct Order {
     //                                     +0x1B0, +0x1B8, +0x1C0, +0x1C8, +0x1CC, ...
     // so +0x178/+0x180 come from SetPipeMode while +0x188/+0x190/+0x198 come from
     // SetCommonCutParameters (which copies its own argument struct verbatim through 0x185A40).
-    double cfgAt178 = 0.0;
-    double cfgAt180 = 0.0;
-    double cfgAt188 = 0.0;   // -> core+0x20 (the coefficient)
-    double cfgAt190 = 0.0;   // -> core+0x18 (the cost threshold)
-    unsigned char cfgAt198 = 0;   // -> core+0x38
 
     // --- marks / leather ---
-    bool markMode = false;              // +0xE8 / +0xF0
     double markSize = 0.0;
     double markInterDistance = 0.0;
     // RE ..\structure\border_property.hpp (re/findings_border_property.md): the original models
