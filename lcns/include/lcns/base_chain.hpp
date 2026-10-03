@@ -107,6 +107,10 @@ inline constexpr const char* kTilingEvaluator = "N6Tiling9EvaluatorE";
 //     Multi::AllSheetSelector and its siblings                   ->  Multi::SheetSelector
 //     Multi::AdvancedStrategist                                  ->  Multi::Strategist
 //     Multi::SplitNode, Multi::TerminalNode                      ->  Multi::Node
+//         **DECLARED** in nester.hpp, from four slot bodies and the layout they imply: `TerminalNode` 0xA3B570 is slot 2 `movsd xmm0, [rcx + 0x48] / ret` and
+//         slot 3 `movsd xmm0, [rcx + 0x50] / ret`; `SplitNode` 0xA3BB70 is slot 2 `movsd xmm0, [rcx + 0x50] / ret` and slot 3 `movsd xmm0, [rcx + 0x58] / ret`.
+//         **so the base's `value()` reads +0x48 and `secondary()` is the slot each class supplies, with `SplitNode` overriding `value()` too** -- the SAME
+//         offset +0x50 in a DIFFERENT SLOT of the two tables. Neither vtable has an install site in the profile, so there is no constructor.
 //     Multi::CompactCanceller, NoFitMapCanceller, RCompactCanceller,
 //     SupervisorCanceller, Tiling::WarpCanceller                 ->  Utils::Canceller
 //

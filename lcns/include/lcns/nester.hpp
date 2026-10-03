@@ -260,15 +260,53 @@ int width = 8;               // NOT recovered from the binary -> tunable
     int maxAngleSteps = 24;
 };
 
-struct BeamNode {
-    enum class Kind { Terminal, Split };
-    Kind kind = Kind::Terminal;
-    double value48 = 0.0;  // TerminalNode: `movsd xmm0,[rcx+0x48]`
-    double value50 = 0.0;  // SplitNode:     `movsd xmm0,[rcx+0x50]`
-    int depth = 0;
-    int sheetIndex = 0;
-    Nesting partial;
-    double eval() const { return kind == Kind::Terminal ? value48 : value50; }
+/** **THE THREE CLASSES THE MODULE HAS, WHICH THE PORT HAD FLATTENED INTO ONE.** The vtables and the bodies of their slots:
+
+ *      Multi::TerminalNode   0xA3B570   4 slots   slot 2: `movsd xmm0, [rcx + 0x48] / ret`
+ *                                                 slot 3: `movsd xmm0, [rcx + 0x50] / ret`
+ *      Multi::SplitNode      0xA3BB70   4 slots   slot 2: `movsd xmm0, [rcx + 0x50] / ret`
+ *                                                 slot 3: `movsd xmm0, [rcx + 0x58] / ret`
+ *
+ *  and both derive from `Multi::Node` by their typeinfo chains. **So `value()` reads +0x48 in the base, `secondary()` is the slot each class supplies, and
+ *  `SplitNode` OVERRIDES `value()` as well** -- **the same offset +0x50 sits in a DIFFERENT SLOT in the two tables**, which is what a `Kind` tag with a
+ *  conditional could not say, and the module has no `Kind` field anywhere.
+ *
+ *  **AND +0x08..+0x47 IS A REGION NO ACCESSOR READS.** The three doubles are at +0x48, +0x50 and +0x58, while a vptr and three doubles is sixteen bytes, so
+ *  sixty-four bytes sit between them that no recovered function reads or writes. **They are explicit `std::byte` padding rather than named fields, because a
+ *  name needs an oracle and none of the module's strings, setters or accessors names them.**
+ *
+ *  **AND THE ACCESSORS KEEP NEUTRAL NAMES FOR THE SAME REASON**: the module exposes them through vtable slots 2 and 3 and never names what they return. No
+ *  function in the profile installs either vtable, so there is no constructor to initialise these and the members are public rather than protected. */
+class Node {
+public:
+    virtual ~Node() = default;
+
+    /** RE `movsd xmm0, [rcx + 0x48]`: `TerminalNode`'s slot 2, and what `SplitNode` overrides with +0x50. */
+    virtual double value() const { return value48; }
+    /** RE slot 3 of both tables: +0x50 in `TerminalNode` and +0x58 in `SplitNode`, so the base supplies only a default. */
+    virtual double secondary() const { return 0.0; }
+
+    std::byte reserved08[0x40];                              // +0x08..+0x47: **NO ACCESSOR READS THIS**, so it is padded rather than named
+    double value48 = 0.0;                                    // +0x48
+};
+
+/** RE 0xA3B570. Four slots: the destructor pair, `value()` at slot 2 reading **+0x48** (inherited), and `secondary()` at slot 3 reading **+0x50**. */
+class TerminalNode : public Node {
+public:
+    double secondary() const override { return value50; }     // RE 0x97500: movsd xmm0, [rcx + 0x50]
+
+    double value50 = 0.0;                                     // +0x50
+};
+
+/** RE 0xA3BB70. Four slots: the destructor pair, `value()` at slot 2 reading **+0x50** -- an OVERRIDE, where `TerminalNode` inherits -- and `secondary()` at
+ *  slot 3 reading **+0x58**. */
+class SplitNode : public Node {
+public:
+    double value() const override { return value50; }         // RE 0x97510: movsd xmm0, [rcx + 0x50]
+    double secondary() const override { return value58; }     // RE 0x97520: movsd xmm0, [rcx + 0x58]
+
+    double value50 = 0.0;                                     // +0x50
+    double value58 = 0.0;                                     // +0x58
 };
 
 struct BeamStats {

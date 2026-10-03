@@ -392,11 +392,29 @@ int main() {
         CHECK(b_beamparams.distinctAngle == true);
         CHECK(b_beamparams.frequencyRatio == 1.0);
         CHECK(b_beamparams.maxAngleSteps == 24);
-        BeamNode b_beamnode;
-        CHECK(b_beamnode.value48 == 0.0);
-        CHECK(b_beamnode.value50 == 0.0);
-        CHECK(b_beamnode.depth == 0);
-        CHECK(b_beamnode.sheetIndex == 0);
+        // **THE THREE CLASSES THE MODULE HAS, DRIVEN THROUGH THE BASE POINTER.** RE 0xA3B570 (TerminalNode) and 0xA3BB70 (SplitNode) are two four slot
+        // tables whose slots 2 and 3 each read a double at a fixed offset -- so what the test has to show is that THE SAME CALL REACHES DIFFERENT OFFSETS,
+        // which a `Kind` tag and a conditional cannot express.
+        lcns::TerminalNode terminal;
+        lcns::SplitNode split;
+        terminal.value48 = 1.5;      // +0x48, TerminalNode slot 2: movsd xmm0, [rcx + 0x48]
+        terminal.value50 = 2.5;      // +0x50, TerminalNode slot 3
+        split.value50 = 3.5;         // +0x50, SplitNode slot 2 -- THE SAME OFFSET, A DIFFERENT SLOT
+        split.value58 = 4.5;         // +0x58, SplitNode slot 3
+
+        lcns::Node* as_base = &terminal;
+        CHECK(as_base->value() == 1.5);        // the base's slot 2 reads +0x48 through TerminalNode
+        CHECK(as_base->secondary() == 2.5);    // and TerminalNode's slot 3 override reads +0x50
+        as_base = &split;
+        CHECK(as_base->value() == 3.5);        // SplitNode OVERRIDES value(), reading +0x50 in ITS table
+        CHECK(as_base->secondary() == 4.5);    // and adds +0x58
+
+        // **AND THE OFFSETS, WHICH IS WHAT MAKES THE FOUR NUMBERS ABOVE A LAYOUT.** The first declaration of these classes put the doubles at +8, +0x10 and
+        // +0x18, and these four lines are what caught it.
+        CHECK(reinterpret_cast<const unsigned char*>(&terminal.value48) - reinterpret_cast<const unsigned char*>(&terminal) == 0x48);
+        CHECK(reinterpret_cast<const unsigned char*>(&terminal.value50) - reinterpret_cast<const unsigned char*>(&terminal) == 0x50);
+        CHECK(reinterpret_cast<const unsigned char*>(&split.value50) - reinterpret_cast<const unsigned char*>(&split) == 0x50);
+        CHECK(reinterpret_cast<const unsigned char*>(&split.value58) - reinterpret_cast<const unsigned char*>(&split) == 0x58);
     }
 
     // --- common-cut reporting scales (RE 0x68a1a0: 'raw_evaluation_ratio_100'/'_10', constant 10.0) --

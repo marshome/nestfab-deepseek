@@ -2990,6 +2990,22 @@
    "round": 717,
    "subject": "the-two-layouts-differ-by-granularity",
    "witness": "Order's own stores pin 4 bytes at +0x1F8, 4 at +0x1FC, 1 at +0x200, 1 at +0x201, 4 at +0x204 and 4 at +0x208, while the layout's construction never went finer than the block"
+  },
+  {
+   "grade": "CONSTRUCTOR",
+   "kind": "type",
+   "predicate": "Multi::Node, Multi::TerminalNode and Multi::SplitNode are three classes: the base's value() reads +0x48, TerminalNode supplies secondary() at +0x50, SplitNode overrides value() at +0x50 and supplies secondary() at +0x58",
+   "round": 718,
+   "subject": "the-node-family-is-three-classes",
+   "witness": "TerminalNode vtable 0xA3B570 slot 2 is movsd xmm0,[rcx+0x48]/ret and slot 3 movsd xmm0,[rcx+0x50]/ret; SplitNode vtable 0xA3BB70 slot 2 is movsd xmm0,[rcx+0x50]/ret and slot 3 movsd xmm0,[rcx+0x58]/ret; both derive from Multi::Node by typeinfo and neither vtable has an install site in the profile"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "type",
+   "predicate": "the port's BeamNode flattened Multi::TerminalNode and Multi::SplitNode into one struct with enum class Kind and a conditional eval(), while the module has two vtables and no Kind field anywhere",
+   "round": 718,
+   "subject": "a-kind-tag-is-not-two-classes",
+   "witness": "the same offset +0x50 sits in slot 2 of SplitNode's table and slot 3 of TerminalNode's, so the two tables discriminate by which slot reads which offset and a conditional over a tag cannot express that"
   }
  ]
 }
