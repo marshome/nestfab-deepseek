@@ -234,7 +234,35 @@ public:
 
     MultiEngine() = default;
 
+    /** **ITS CONSTRUCTOR PLACES TEN OFFSETS AND THEY ARE THE CLASS'S OWN LAYOUT.** RE 0x240D0, 431 bytes, `0240E7 mov ecx, 0x48 / call 0x998500` -- **so the object is
+     *  0x48 bytes: 0x10 of `EngineBase` and 0x38 of this class.**
+     *
+     *      024100  mov byte  ptr [rax + 8], 0     ; **the base's byte, BEFORE the vtable -- see `EngineBase`'s note**
+     *      024104  mov dword ptr [rax + 0xc], 0   ; **the base's dword, likewise**
+     *      02411A  mov qword ptr [rbx], rax       ; its own vtable
+     *      024116  mov dword ptr [rbx + 0x10], r13d   ; **+0x10, the constructor's third argument, 32 bits**
+     *      024124  mov byte  ptr [rbx + 0x14], r12b   ; **+0x14, its fourth argument, ONE BYTE**
+     *      024226  mov qword ptr [rax + 0x18]         ; +0x18
+     *      024128  mov dword ptr [rbx + 0x20], 0      ; +0x20
+     *      02412F  mov qword ptr [rbx + 0x28], 0      ; +0x28
+     *      02413F  mov qword ptr [rbx + 0x30], r8     ; +0x30 and +0x38 take the same register
+     *      024143  mov qword ptr [rbx + 0x38], r8
+     *      024137  mov qword ptr [rbx + 0x40], 0      ; +0x40
+     *
+     *  **AND `+0x10` AND `+0x18` ARE SHARED WITH `NestingEngine` AND `CloudEngine`, WHILE `+0x20` THROUGH `+0x50` ARE `CloudEngine`'S ALONE** (`re/g_engine_ctor_full.py`).
+     *  **So `+0x10` and `+0x18` are declared on the base of this family or repeated in each; nothing above `+0x18` is shown to be shared by more than one class.** **What each
+     *  field MEANS is not established**, so they carry their offsets -- **except the two the constructor's own arguments reach, which say so.** */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+
+private:
+    std::int32_t at10 = 0;             // +0x10, RE 0x024116 `mov dword ptr [rbx + 0x10], r13d` -- the third argument
+    std::uint8_t at14 = 0;             // +0x14, RE 0x024124 `mov byte ptr [rbx + 0x14], r12b` -- the fourth argument, narrowed to a byte
+    void* at18 = nullptr;              // +0x18, RE 0x024226 -- SHARED with NestingEngine and CloudEngine
+    std::int32_t at20 = 0;             // +0x20, RE 0x024128 is a DWORD store
+    void* at28 = nullptr;              // +0x28, RE 0x02412F
+    void* at30 = nullptr;              // +0x30, RE 0x02413F
+    void* at38 = nullptr;              // +0x38, RE 0x024143 -- the same register as +0x30
+    void* at40 = nullptr;              // +0x40, RE 0x024137
 };
 
 /** Engine::DelayedEngine, Run at 0x756EC0, vtable 0xA3CF70.

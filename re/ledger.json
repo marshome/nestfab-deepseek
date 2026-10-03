@@ -4186,10 +4186,10 @@
       "subject": "the-engines-share-one-member-layout-so-it-is-the-bases",
       "grade": "INSTRUCTION",
       "kind": "offset",
-      "predicate": "TWO engines' named object registers read and write the same ten offsets -- 0x00, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38, 0x40, 0x48 and 0x50 -- through registers that received `rcx`, which is evidence that the range is the BASE's data",
-      "witness": "`DelayedEngine::run` through `rdi` (`756EEA mov rdi, rcx`) touches +0x00 +0x10 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40 +0x48 +0x50; `EquivalentEngine::run` through `rsi` (reloaded from the `rcx` spill at [rsp + 0x210] by 0x75BDD8) touches the SAME ten and then +0x54 +0x58 +0x60. **`+0x54`, `+0x58` and `+0x60` are NOT shown to be the base's** -- only `EquivalentEngine` touches them here. **AND THE EARLIER VERSION OF THIS CLAIM SAID FOUR ENGINES AGREE ON ELEVEN OFFSETS, WHICH IS TOO STRONG**: `MultiEngine`'s extra offsets came from counting EVERY register that ever received `rcx`, including `r15` after it took over from `r13`, so they mix registers. **Measured through the one register each prologue establishes, `MultiEngine` (r13) and `NestingEngine` (r15) each show `+0x00` alone** -- which is agreement and not contradiction, but it is much less than was claimed",
-      "round": 771,
-      "tool": "instruction"
+      "predicate": "**WITHDRAWN, TWICE OVER.** The constructors show that only THREE engines place anything past the base, and they agree on TWO offsets: **+0x10 and +0x18**. `+0x20` through `+0x50` are placed by `CloudEngine` alone.",
+      "witness": "the six constructors, with spills followed (`re/g_engine_ctor_full.py`): `+0x10` and `+0x18` in `MultiEngine` (024116/024226), `NestingEngine` (023F8F/02405A) and `CloudEngine` (0269E4/02691B); `+0x20`, `+0x30`, `+0x38`, `+0x40` and `+0x50` in `CloudEngine` only (0269ED, 026927, 02696D, 0269AD, 026975). **And the `run`-body offsets above +0x20 came from REGISTERS RELOADED OUT OF STACK SLOTS** -- `DelayedEngine::run` reloads `rdi` from `[rsp + N]` and `EquivalentEngine::run` reloads `rsi` from `[rsp + 0x210]` -- **so a register that received the object at the top and one reloaded from a spill are not the same evidence, and two rounds treated them as one because the same register NAME was involved.** The narrower reading is the one the constructors support",
+      "round": 785,
+      "tool": "g_engine_ctor_full.py"
     },
     {
       "subject": "capstone-prints-one-digit-displacements-in-decimal",
@@ -4397,6 +4397,15 @@
       "witness": "`0x240D0` (MultiEngine, 431 bytes) places +0x08 +0x0C +0x10 +0x14 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40; `0x24B80` (DelayedEngine, 192 bytes) places +0x08 +0x0C +0x10 +0x18 +0x20; `0x24FD0` (InfiniteEngine, 209 bytes) places +0x08 +0x0C +0x10 +0x18 +0x20. **So `MultiEngine` reaches +0x40 and the other two stop at +0x20, while their `run` bodies all touch up to +0x50** -- which means the range is a shared own layout whose members are NOT all placed by any constructor read so far, **and the +0x48 and +0x50 reads remain unattributed**",
       "tool": "instruction",
       "round": 784
+    },
+    {
+      "subject": "multiengines-ten-offsets-reproduce-its-allocation",
+      "grade": "MEASURED",
+      "kind": "width",
+      "predicate": "MultiEngines constructor places ten offsets that add up to exactly the 0x48 bytes it allocates, so the model reproduces the module rather than being asserted against it",
+      "witness": "0240E7 mov ecx, 0x48 / call 0x998500 is the allocation, and the stores are 024116 dword [rbx+0x10] (a dword), 024124 byte [rbx+0x14] (a byte), 024226 [rax+0x18], 024128 dword [rbx+0x20], 02412F [rbx+0x28], 02413F [rbx+0x30], 024143 [rbx+0x38] and 024137 [rbx+0x40]. **Laid out from the widths the instructions give, those land on +0x10, +0x14, +0x18, +0x20, +0x28, +0x30, +0x38 and +0x40 and end at 0x48** -- which is the allocation. **The first class in this tree whose derived offsets and total size both match the module, and the assertion is on the arithmetic rather than on the instruction alone**",
+      "tool": "measurement",
+      "round": 785
     }
   ]
 }

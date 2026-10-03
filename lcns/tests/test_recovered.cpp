@@ -6692,6 +6692,15 @@ int main() {
             // the block is rounded. **The assertion is the 0x28 the instructions PLACE** -- asserting 0x30 would be a claim that a member exists where no instruction
             // writes one, which is the mistake this project's rules are for.
             static_assert(sizeof(lcns::EquivalentEngine) == 0x28, "what the constructor's stores place; RE 0x24ABA allocates 0x30, so eight bytes are unaccounted for");
+            // **`MultiEngine` IS THE FIRST CLASS IN THIS TREE WHOSE DERIVED OFFSETS AND TOTAL SIZE BOTH MATCH THE MODULE.** Its constructor places ten offsets and
+            // `0240E7 mov ecx, 0x48` allocates exactly what they add up to:
+            //
+            //     base 0x10 | at10 dword 0x10 | at14 byte 0x14 | at18 0x18 | at20 dword 0x20
+            //     at28 0x28 | at30 0x30       | at38 0x38      | at40 0x40                ->  0x48
+            //
+            // **so the model REPRODUCES the allocation instead of being asserted against it**, which is the difference between this assertion and the two above it.
+            static_assert(sizeof(lcns::MultiEngine) == 0x48,
+                          "RE 0x240E7 mov ecx, 0x48 -- and the model's own arithmetic lands on the same number");
         }
     }
 
