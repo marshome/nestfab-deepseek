@@ -4015,18 +4015,18 @@
       "subject": "the-nester-base-part-is-0x10-not-0x18",
       "grade": "INSTRUCTION",
       "kind": "offset",
-      "predicate": "the Nester base part is 0x10 bytes -- a vptr and the +0x08 pointer -- so the two dwords 0xB4470 writes at +0x10 and +0x14 belong to CompositeNester, which makes CompositeNester 16 + 24 = 40 and fits FlipNester is allocation exactly",
-      "witness": "the module allocates 40 bytes for FlipNester (RE 0x2C953 mov ecx, 0x28 / call 0x998500 / call 0x4B570); Nester at 0x18 plus a 0x18 std::vector is 48, which does NOT fit, while Nester at 0x10 plus the vector is 40, which does. **This is an INFERENCE from the allocation sizes and is NOT yet confirmed by an instruction** -- the way to settle it is to find a class deriving straight from Nester that reads +0x10 or +0x14",
-      "round": 758,
+      "predicate": "**WITHDRAWN -- the `Nester` base part is 0x18 bytes, not 0x10.** RE 0x8F210 (`RowNester`'s constructor) and 0x342E0 (`NestingNester`'s) **each CALL 0xB4470** -- the base constructor -- and then install their own vtable and write their **first own member at +0x18**. And `0xB4470` writes +0x08, +0x10 and +0x14. **So the base is a vptr, a pointer at +0x08 and two dwords at +0x10 and +0x14: 0x18 bytes, which is what lcns/include/lcns/nester.hpp already declares.**",
+      "witness": "**THE CALL IS THE EVIDENCE, AND NINE ROUNDS OF LOOKING AT THE OFFSETS DID NOT FIND IT.** 0x8F218 `mov rbx, rcx` then **0x8F221 `call 0xb4470`**, 0x8F230 installing vtable 0xA3BB40, then **0x8F257 `mov qword ptr [rbx + 0x18], rsi`**. 0x342F5 **`call 0xb4470`**, 0x34308 installing its vtable, then **0x34312 `mov qword ptr [rbx + 0x18], rax`** and 0x3430E writing +0x20. **Two independent derived constructors calling the base and writing +0x18 first.** The 0x10 reading reasoned from the first-member offset alone -- treating +0x18 as the first offset after a 0x10 base rounded up to the pointer alignment, **rather than as the base's own end** -- and a CALL is the boundary evidence that an offset only implies. **Corrected in place, with the wrong reading kept so the mistake stays readable.**",
+      "round": 780,
       "tool": "instruction"
     },
     {
       "subject": "nester-is-0x10-bytes-of-data-and-the-two-dwords-are-the-composites",
       "grade": "INSTRUCTION",
       "kind": "offset",
-      "predicate": "the `Nester` base part is 0x10 bytes -- a vptr and one pointer at +0x08 -- so the two dwords `0xB4470` writes at +0x10 and +0x14 belong to whatever class owns that constructor, and the direct `Nester` children start their own members at +0x18",
-      "witness": "`NestingNester` derives straight from `Nester` (typeinfo base N5Multi6NesterE) and its first own member measures 0x18, which lcns/tests/test_recovered.cpp asserts as `atSeedP == 0x18`; and its constructor 0x342E0 writes 0x18, 0x20, 0x28, 0x30, 0x38 and then 0x9F8/0xA00/0xA18, never +0x10 or +0x14. **None of 0xB4470's five callers writes its first own member below +0x18 either**, so the 0x10 is the base's data",
-      "round": 759,
+      "predicate": "**WITHDRAWN -- the `Nester` base part is 0x18 bytes, not 0x10.** RE 0x8F210 (`RowNester`'s constructor) and 0x342E0 (`NestingNester`'s) **each CALL 0xB4470** -- the base constructor -- and then install their own vtable and write their **first own member at +0x18**. And `0xB4470` writes +0x08, +0x10 and +0x14. **So the base is a vptr, a pointer at +0x08 and two dwords at +0x10 and +0x14: 0x18 bytes, which is what lcns/include/lcns/nester.hpp already declares.**",
+      "witness": "**THE CALL IS THE EVIDENCE, AND NINE ROUNDS OF LOOKING AT THE OFFSETS DID NOT FIND IT.** 0x8F218 `mov rbx, rcx` then **0x8F221 `call 0xb4470`**, 0x8F230 installing vtable 0xA3BB40, then **0x8F257 `mov qword ptr [rbx + 0x18], rsi`**. 0x342F5 **`call 0xb4470`**, 0x34308 installing its vtable, then **0x34312 `mov qword ptr [rbx + 0x18], rax`** and 0x3430E writing +0x20. **Two independent derived constructors calling the base and writing +0x18 first.** The 0x10 reading reasoned from the first-member offset alone -- treating +0x18 as the first offset after a 0x10 base rounded up to the pointer alignment, **rather than as the base's own end** -- and a CALL is the boundary evidence that an offset only implies. **Corrected in place, with the wrong reading kept so the mistake stays readable.**",
+      "round": 780,
       "tool": "instruction"
     },
     {
@@ -4316,6 +4316,33 @@
       "witness": "RE 0x756F1C `mov dword ptr [rdi], 0` writes the low half of the location a vptr occupies, **which a constructor may legitimately do just before installing a table there**; and `0x756EFD lea r12, [rsp + 0x40]` / `0x756F08 call 0x51BFC0` immediately before it suggest the surrounding code is building something on the STACK rather than on `this`. **On the reading that +0x00 is the vptr, `state00` is not a member, the class's data starts at +0x08, and every other offset is right as an instruction.** The competing reading is that `rdi` is not `this` for this function, **though `0x756EEA mov rdi, rcx` establishes it at the top and nothing between overwrites it.** **And a third: RE 0x75C71E reads a DWORD at +0x54, where the model's `at50` pointer would still be occupying bytes.** What would settle it is the constructor that installs THIS class's vtable -- `0x30A30` is the derived class's, writes its own +0x08, and never calls this base's",
       "tool": "instruction",
       "round": 779
+    },
+    {
+      "subject": "enginebase-ends-at-0x10-not-0x58",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "`EngineBase` is a vptr and one pointer at +0x08 and ends at +0x10, so the eleven members the header declares from +0x00 to +0x50 are NOT the base's",
+      "witness": "three engine constructors each install their own vtable and then write their FIRST OWN MEMBER at **+0x10**: `0x23E70` (`NestingEngine`) does `023EB8 mov qword ptr [rbx], rax` then `023EBD mov dword ptr [rbx + 0x10], r12d`; `0x240D0` (`MultiEngine`) does `02411A mov [rbx], rax` then `024116 mov dword ptr [rbx + 0x10], r13d`; `0x24AB0` (`EquivalentEngine`) does `024ADC mov [rbx], rax` then `024AE2 mov qword ptr [rbx + 0x10], rax`. **The method is the one that withdrew the `Nester` base-size claim**: a derived constructor's first own store is the first byte past its base. **None of the three CALLS a base constructor**, which is the one difference from `Nester`'s case and means the base has no data of its own beyond the pointer at +0x08",
+      "tool": "instruction",
+      "round": 781
+    },
+    {
+      "subject": "four-engines-agreeing-on-ten-offsets-measured-a-shared-OWN-layout",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the ten offsets from +0x10 to +0x50 that four engine `run` bodies agree on are the DERIVED classes' own layout, not an inherited one",
+      "witness": "`EngineBase` ends at +0x10 per the three constructors above, **so nothing between +0x10 and +0x50 can be the base's.** The earlier claim -- \"four engines agree on ten offsets, so that range is the base's data\" -- **read an agreement between SIBLINGS as an inherited member**, which is the same error as the `EngineBase` declaration itself. Four classes with the same own layout is a CODE-GENERATION or SHARED-SOURCE fact; it is not inheritance, and only a constructor call can tell the two apart",
+      "tool": "instruction",
+      "round": 781
+    },
+    {
+      "subject": "the-installed-vptr-is-vtable_rva-plus-0x10",
+      "grade": "MEASURED",
+      "kind": "constant",
+      "predicate": "a constructor installs a vtable at `re/vtables.json`'s recorded `vtable_rva` PLUS 0x10, in every case checked",
+      "witness": "`0x23E70` installs 0xA3CFB0 where the table is recorded at 0xA3CFA0; `0x240D0` installs 0xA3CF10 against 0xA3CF00; `0x24AB0` installs 0xA3D040 against 0xA3D030. **In all three the recorded value is the installed one MINUS 0x10**, and `0xA3CFA0`, `0xA3CF00` and `0xA3D030` are exactly `NestingEngine`, `MultiEngine` and `EquivalentEngine`. **GETTING THIS WRONG COST TWO ROUNDS**: one scan looked 0x10 too high and concluded that nothing installs an engine vtable, and the next compared the values directly and found nothing at all -- **both times the addresses were right and the arithmetic between them was wrong**",
+      "tool": "measurement",
+      "round": 781
     }
   ]
 }

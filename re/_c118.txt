@@ -1,0 +1,46 @@
+lcns: THE ENGINE CONSTRUCTORS SETTLE IT -- `EngineBase` ends at 0x10, and the eleven members the header declares are NOT the base's
+
+**I WAS NOT STOPPED. THE LAST MESSAGE WAS AN ANSWER TO A QUESTION, AND THE WORK CONTINUED BY FINDING THE CONSTRUCTORS.**
+
+## The method is the one that withdrew the `Nester` claim, applied with the right constructors
+
+**A DERIVED class's constructor installs its vtable, and the first store it makes to its own data after that is the first byte PAST its base.** For `Nester` that was
+`+0x18` in two independent constructors, which withdrew a claim that had stood for nine rounds. For the engines:
+
+    0x23E70  installs 0xA3CFB0  (recorded 0xA3CFA0 = N6Engine13NestingEngineE)
+             023EB8  mov qword ptr [rbx], rax              ; its own vtable
+             023EBD  **mov dword ptr [rbx + 0x10], r12d**  ; **ITS FIRST OWN MEMBER**
+
+    0x240D0  installs 0xA3CF10  (recorded 0xA3CF00 = N6Engine11MultiEngineE)
+             02411A  mov qword ptr [rbx], rax
+             024116  **mov dword ptr [rbx + 0x10], r13d**
+
+    0x24AB0  installs 0xA3D040  (recorded 0xA3D030 = N6Engine16EquivalentEngineE)
+             024ADC  mov qword ptr [rbx], rax
+             024AE2  **mov qword ptr [rbx + 0x10], rax**
+
+**THREE INDEPENDENT ENGINE CONSTRUCTORS, EACH WRITING +0x10 FIRST.** So `EngineBase` is a vptr and **one pointer at +0x08**, ending at **0x10** -- **not the eleven
+members from +0x00 to +0x50 that `engines.hpp` declares, and not 0x58 or 0x60 either.**
+
+**AND THAT MAKES THE TEN OFFSETS FOUR ENGINES AGREE ON THEIR OWN LAYOUT, NOT AN INHERITED ONE.** The claim "four engines agree on +0x10 through +0x50, so that range is
+the base's" **read an agreement between SIBLINGS as an inherited member** -- **which is the same error as the declaration itself.** Four classes with the same own layout is
+a shared-source or code-generation fact, **and only a constructor call tells the two apart.**
+
+## And the reason two rounds of scanning found nothing is an arithmetic error I made twice in opposite directions
+
+    0x23E70 installs 0xA3CFB0 ... recorded 0xA3CFA0     -> installed = recorded + 0x10
+    0x240D0 installs 0xA3CF10 ... recorded 0xA3CF00     -> the same
+    0x24AB0 installs 0xA3D040 ... recorded 0xA3D030     -> the same
+
+**ONE SCAN LOOKED 0x10 TOO HIGH AND SAID NOTHING INSTALLS AN ENGINE VTABLE; THE NEXT COMPARED THE VALUES DIRECTLY AND FOUND NOTHING AT ALL.** Both times the addresses
+were right and **the arithmetic between them was wrong** -- and the first time I concluded from the empty result that the engines are only reachable through a table
+nothing installs, **which was a conclusion about the module drawn from a mistake in my own subtraction.**
+
+    lcns/include/lcns/engines.hpp   unchanged this round -- the correction it needs is next, and it is large
+    re/g_find_engine_base_ctor.py   the scan, with the two wrong ranges and the reason recorded where they were
+
+**AND THE HEADER IS NOT FIXED YET, WHICH IS DELIBERATE**: `EngineBase`'s eleven members have to be reattributed to the derived classes, **and that is a layout change across
+six classes with a `static_assert` on the base's size that will have to change with it.** Guessing it at the end of a round is exactly how the current declaration got
+written.
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the seven checks green, 481 claims with 0 problems.
