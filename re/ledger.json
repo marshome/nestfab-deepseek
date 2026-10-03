@@ -3198,6 +3198,14 @@
       "predicate": "SetLocalMaximumIterations, ordinal 84 at rva 0x0D400, has a wrapper that calls impl::setLocalMaximumIterations, which stores a 32-bit value at +0x1FC with no clamp, and the table row says Forwarded",
       "witness": "lcns/src/api_exports.cpp's wrapper is `extern \"C\" void SetLocalMaximumIterations(Order* order, int iterations)` and calls impl::setLocalMaximumIterations; the implementation stores through LocalEngineCarrier::maxIterations at +0x1FC, from 0x0D417 `mov dword [rsi + 0x1fc], ebx`; re/exports_table.md counts 2 register arguments; test_exports.cpp asserts the store is 32-bit and not widened",
       "round": 734
+    },
+    {
+      "subject": "ordinal-25-was-restored",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "GetNumberOfNestings, ordinal 25 at rva 0x0B0C0, dispatches again: its wrapper takes `Solution*` and returns `std::size_t`, calling `impl::getNumberOfNestings`, after a table regeneration had replaced it with a `notReversed` stub",
+      "witness": "kForwarding names `impl::getNumberOfNestings` at ordinal 25 and lcns/tests/test_exports.cpp has a runtime test for it with four 312-byte elements; the wrapper was `extern \"C\" int GetNumberOfNestings(Solution)` BY VALUE, reporting the ordinal and returning 0; 0xB0C5 is `mov rbx, rcx` and 0xB0D4 is `mov rax, [rbx + 0x58]`, so rcx holds the address; the arithmetic is `0x6f96f96f96f96f97 * 3 = 0xAAAAAAAAAAAAAAAB`, which the implementation calls `modularInverse(3)`, and 312/8 = 39 which is the stride the instruction encodes",
+      "round": 735
     }
   ]
 }
