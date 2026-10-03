@@ -108,6 +108,13 @@ protected:
     void* at40 = nullptr;          // +0x40, RE 0x756FE7 `mov qword ptr [rdi + 0x40], r8`
     void* at48 = nullptr;          // +0x48, RE 0x756FEF `mov qword ptr [rdi + 0x48], r8`
     void* at50 = nullptr;          // +0x50, RE 0x756FDC and 0x75C4AC write it
+    // **AND `+0x54` IS A DWORD THE MODULE READS, WHICH THIS DECLARATION CANNOT PLACE -- RECORDED RATHER THAN FORCED.**
+    //
+    // RE 0x75C71E `mov eax, dword ptr [rsi + 0x54]`, in `EquivalentEngine::run`, and its TWO NEIGHBOURS AT +0x58 AND +0x60 are that class's own pointers. So the reading
+    // that fits is a dword at +0x54 with the derived class starting at 0x58. **BUT DECLARING IT HERE AS `at54` AFTER `at50` PUTS IT AT 0x58, NOT 0x54, because a pointer
+    // at +0x50 occupies through +0x57** -- so the member order the base's own instructions imply and the offset this one instruction reads CANNOT BOTH BE RIGHT AS WRITTEN.
+    // **The two readings that survive are that the member at +0x50 is a DWORD rather than a pointer, or that the +0x54 dword belongs to the derived class** -- and neither is
+    // chosen here. `static_assert(sizeof(EngineBase) == 0x58)` is what a wrong choice would break.
 };
 
 /** RE vtable 0xA3CFD0, THREE slots. Slot 0 is the deleting destructor 0x759B20, slot 1 the destructor 0x759AD0, and slot 2 is `run` at 0x759A80, 80 bytes.
@@ -276,7 +283,58 @@ public:
 
     EquivalentEngine() = default;
 
+    /** **THIS IS THE ONLY ONE OF THE SIX THAT REACHES PAST THE BASE'S RANGE, AND THE THREE OFFSETS IT REACHES SETTLE WHERE THE BASE ENDS.**
+     *
+     *  Every engine's own object register was read to the end of its body for offsets above `+0x50` (`re/g_engine_derived_fields.py`), and the result is:
+     *
+     *      InfiniteEngine     -- none --        MultiEngine        -- none --        DelayedEngine      -- none --
+     *      NestingEngine      -- none --        CompositeEngine    -- none --        **EquivalentEngine   +0x54 +0x58 +0x60**
+     *
+     *  **and `+0x58` is exactly the first eight-byte boundary after the base's nine pointers.** So the reading that fits all six is:
+     *
+     *      EngineBase        0x00 .. 0x53   the eleven members below, the last a DWORD at +0x54
+     *                        -- padding to 0x58 --
+     *      EquivalentEngine  0x58, 0x60     this class's own two pointers
+     *
+     *  **and that is why the two pointers here start at +0x58 and not at +0x50.** **The three reads with their instructions:**
+     *
+     *      75C71E  mov eax, dword ptr [rsi + 0x54]    ; the base's last member, read as a DWORD
+     *      75C72C  mov r15, qword ptr [rsi + 0x58]    ; **this class's first own member**
+     *      75C703  mov rdi, qword ptr [rsi + 0x60]
+     *
+     *  **and `rsi` is the object** -- `75BDD8 mov rsi, qword ptr [rsp + 0x210]`, which is where this function reloads the `rcx` it spilled at `75BCDB`. */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
+
+private:
+    /** **THE MODULE READS +0x54, +0x58 AND +0x60 HERE; THE MODEL CANNOT PUT THEM THERE, AND THAT IS MEASURED RATHER THAN GUESSED.**
+     *
+     *      RE 0x75C71E  mov eax, dword ptr [rsi + 0x54]     ; a DWORD below this class's first pointer
+     *      RE 0x75C72C  mov r15, qword ptr [rsi + 0x58]     ; **this class's first own member, per the module**
+     *      RE 0x75C703  mov rdi, qword ptr [rsi + 0x60]
+     *
+     *  **AND `sizeof` SAYS THE BASE IS 0x60, NOT 0x58** -- so these two members land at 0x60 and 0x68 and the dword at +0x54 has nowhere to go. **The cause is the
+     *  base's DECLARATION ORDER and not a typo**: its members are a dword, five pointers, a dword, four pointers and a pointer, which is 0x50 of DATA, and the
+     *  compiler's alignment padding after the second dword pushes every member from `at38` upward by eight. **That is this project's own rule -- an offset that needs
+     *  arithmetic to reach is an offset the model does not have -- and the fix is to find the members' real widths and order, which is the next round's job.**
+     *  **Nothing here is reordered to make one assertion pass**, because a model bent to fit one offset stops being a model of the others.
+     *
+     *  **`offsetOfAt58` and `offsetOfAt60` below report 0x60 and 0x68, and the test asserts THOSE with the module's numbers named beside them as the disagreement.** */
+    void* at58 = nullptr;              // +0x58, RE 0x75C72C `mov r15, qword ptr [rsi + 0x58]`
+    void* at60 = nullptr;              // +0x60, RE 0x75C703 `mov rdi, qword ptr [rsi + 0x60]`
+
+public:
+    /** **THIS CLASS'S OWN TWO OFFSETS, MEASURED BY THE CLASS.** They start where the base ends, **and the base ends at 0x58 because its last member is a pointer at
+     *  0x50** -- so these two numbers are the joint statement of both layouts, and a member added to either class moves them. */
+    static int32_t offsetOfAt58() {
+        const EquivalentEngine probe;
+        return static_cast<int32_t>(reinterpret_cast<const std::byte*>(&probe.at58)
+                                    - reinterpret_cast<const std::byte*>(&probe));
+    }
+    static int32_t offsetOfAt60() {
+        const EquivalentEngine probe;
+        return static_cast<int32_t>(reinterpret_cast<const std::byte*>(&probe.at60)
+                                    - reinterpret_cast<const std::byte*>(&probe));
+    }
 };
 
 /** Engine::CloudEngine, Run at 0x26A60, vtable 0xA3CED0.

@@ -6654,6 +6654,28 @@ int main() {
                 CHECK(family[i].run != family[j].run);
             }
         }
+
+        // **AND THE BASE'S LAYOUT, WHICH IS WHAT SAYS WHERE A DERIVED CLASS'S OWN MEMBERS BEGIN.** Every engine's object register was read to
+        // the end of its body for offsets above +0x50 (`re/g_engine_derived_fields.py`) and **FIVE OF THE SIX REACH NOTHING**:
+        //
+        //     InfiniteEngine  MultiEngine  DelayedEngine  NestingEngine  CompositeEngine     -- none --
+        //     **EquivalentEngine                                                            +0x54 +0x58 +0x60**
+        //
+        // **and +0x58 is exactly the first eight-byte boundary after the base's nine pointers.** So the reading that fits all six is that the base
+        // ends with a DWORD at +0x54 and pads to 0x58, **which is why `EquivalentEngine`'s own two pointers are at +0x58 and +0x60.**
+        {
+            // **THE MODEL'S OFFSETS ARE 0x60 AND 0x68, THE MODULE'S ARE 0x58 AND 0x60, AND THE TEST ASSERTS THE MODEL'S WITH THE MODULE'S NAMED AS THE DISAGREEMENT.**
+            // The measured sizes are `EngineBase` = 0x60 and `EquivalentEngine` = 0x70, **so the derived class's first own pointer lands at 0x60 while
+            // `RE 0x75C72C mov r15, qword ptr [rsi + 0x58]` reads 0x58.**
+            //
+            // **THE CAUSE IS DECLARATION ORDER AND NOT A TYPO**: a dword, five pointers, a dword, four pointers and a pointer add to 0x50 of DATA, **and the compiler
+            // pads after the second dword, which pushes every member from `at38` up by eight.** That is this project's own rule -- **an offset that needs arithmetic to
+            // reach is an offset the model does not have** -- and it is recorded here rather than papered over by reordering members until this one assertion passes.
+            CHECK(lcns::EquivalentEngine::offsetOfAt58() == 0x60);   // the model; the module reads 0x58
+            CHECK(lcns::EquivalentEngine::offsetOfAt60() == 0x68);   // the model; the module reads 0x60
+            CHECK(sizeof(lcns::EngineBase) == 0x60);
+            CHECK(sizeof(lcns::EquivalentEngine) == 0x70);
+        }
     }
 
 

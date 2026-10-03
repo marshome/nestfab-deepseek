@@ -219,6 +219,12 @@ feeling of compliance.
   "where": "re/RULES.md, added 2026-10-03",
   "since": "round 120"}
 
+{"id": "enginebase-infiniteengine-multiengine-de",
+  "rule": "EngineBase 下的几个类优先安排：InfiniteEngine、MultiEngine、DelayedEngine、NestingEngine、EquivalentEngine、CompositeEngine（CloudEngine 已豁免）",
+  "check": "no check yet, which is recorded rather than hidden",
+  "where": "re/RULES.md, added 2026-10-03",
+  "since": "round 135"}
+
 ## What is deliberately NOT a rule here
 
  {"id": "push-every-thirty-rounds",

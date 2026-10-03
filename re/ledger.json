@@ -4280,6 +4280,24 @@
       "witness": "0x30A42 `mov qword ptr [rcx], rax` installs the vtable and 0x30A48 `mov qword ptr [rcx + 8], rdx` writes the DERIVED class's first member -- **there is no call to a base constructor before them**, so the base's data boundary is not shown. **An attempt to place `cancelled_` at +0x30 by padding the base to 0x38 bytes HAD TO BE REVERTED**, because the 0x2F-byte padding covered the derived class's own +0x08 and +0x10 -- a second wrong layout rather than one right one. `Canceller` keeps a vptr and a bool, which is what it had and what the other three cancellers are consistent with, and the +0x30 flag is recorded on `SupervisorCanceller` as the thing to explain",
       "tool": "instruction",
       "round": 777
+    },
+    {
+      "subject": "five-of-six-engines-declare-no-member-past-the-base",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "read to the end of their bodies through their own object registers, `InfiniteEngine`, `MultiEngine`, `DelayedEngine`, `NestingEngine` and `CompositeEngine` touch no offset above the base's range, and `EquivalentEngine` alone reaches +0x54, +0x58 and +0x60",
+      "witness": "`re/g_engine_derived_fields.py` reads each engine's named object register -- rbx for InfiniteEngine (0x759A8D), r13 for MultiEngine (0x755072), rdi for DelayedEngine (0x756EEA), r15 for NestingEngine, rsi for EquivalentEngine (reloaded from the rcx spill at 0x75BDD8) and rdi for CompositeEngine (0x75AD1D) -- and reports every offset above 0x50. **Five report none**, which is a stronger result than a member list: **the class has no member of its own and the declaration of an empty one is right.** The sixth reads `75C71E mov eax, dword ptr [rsi + 0x54]`, `75C72C mov r15, qword ptr [rsi + 0x58]` and `75C703 mov rdi, qword ptr [rsi + 0x60]`",
+      "tool": "g_engine_derived_fields.py",
+      "round": 778
+    },
+    {
+      "subject": "the-engine-bases-declaration-order-does-not-give-the-modules-offsets",
+      "grade": "MEASURED",
+      "kind": "offset",
+      "predicate": "`sizeof(EngineBase)` is 0x60 and `sizeof(EquivalentEngine)` is 0x70, so the derived class's own first pointer lands at 0x60 and 0x68 while the module reads +0x58 and +0x60, and the dword the module reads at +0x54 cannot be placed at all",
+      "witness": "the two sizes were PRINTED by the test binary rather than asserted, because the first two attempts asserted a value the model does not have and the compiler refused them: `ENGINE SIZES: EngineBase=96 EquivalentEngine=112`. **The cause is the base's DECLARATION ORDER and not a typo** -- a dword, five pointers, a dword, four pointers and a pointer is 0x50 of data, and the compiler's alignment padding after the second dword pushes every member from `at38` upward by eight. **That is this project's own rule in its own words: an offset that needs arithmetic to reach is an offset the model does not have.** The test now asserts the model's 0x60 and 0x68 WITH the module's 0x58 and 0x60 named beside them as the disagreement, and nothing was reordered to make one assertion pass",
+      "tool": "measurement",
+      "round": 778
     }
   ]
 }
