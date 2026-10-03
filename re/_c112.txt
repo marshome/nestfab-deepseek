@@ -1,0 +1,38 @@
+re: every claim now says WHAT PRODUCED IT -- because the last round could not scope its own correction
+
+**THE GAP**: the displacement repair changed eleven scripts' answers, the gate was green before and after, **and `re/ledger.json` could not say which claims rested on those
+scripts** -- because it recorded the KIND of a witness (instruction, offset, name, call) and not its SOURCE. A claim witnessed by an instruction address survives a script
+being fixed; **one witnessed by a line of a script's OUTPUT does not, and there was no way to tell them apart.**
+
+## The field, and the three things that stop it being filled with a guess
+
+    "tool": "g_forwarding_gap.py"   a file that EXISTS in re/
+    "tool": "re/vtables.json"       a data file that exists
+    "tool": "instruction"           the witness cites an address in the module
+    "tool": "measurement"           the witness cites a COUNT over the image, so a re-count falsifies it
+    "tool": "unrecorded"            **nobody wrote down what produced this -- a value and not a blank**
+
+* **a value that is not a file in `re/` is REFUSED**, so the field cannot absorb a plausible-sounding word the way a free-text note would;
+* **`re/g_provenance.py` re-checks it**, so a script that is deleted or renamed makes its claims fail rather than go quiet;
+* **it is `ledger.py check`'s**, the same gate every other claim rule goes through -- **not a separate report nobody runs.**
+
+**AND `ledger.py add` NOW REQUIRES `--tool`**, so a new claim cannot be written without one.
+
+## And the classification itself was wrong twice, in a way worth recording
+
+**FIRST, "unrecorded" WAS OVERCOUNTED BY 28 CLAIMS.** The first classifier knew scripts and addresses and nothing else, **so `Module.classes`, whose witness is
+`re/vtables.json filtered on the MANGLED name`, and `parent+0x40.subobject`, whose witness is `15 functions derive its address with lea`, both came out as provenance-less
+when each names its source plainly.** An oracle table is as much a provenance as a program is -- **a claim resting on one is falsified by the FILE changing rather than by a
+script changing** -- and a witness that cites a COUNT is a measurement. Adding those two sentinels moved 28 claims out of the blank.
+
+**SECOND, THE VALIDATOR HAD A NARROWER NOTION OF THE FIELD THAN THE PRODUCER DID**, and it reported **42 problems for claims whose provenance was `re/vtables.json`** --
+a file that exists and that the claim genuinely rests on. **A validator that fails correct data is the failure this project has already met twice in one session** (the
+registry's size hard-coded in a test, and the `RowNester` size assertion before it was bounded rather than equated), **and each time the fix is the same: make the checker's
+notion of the thing at least as wide as the producer's.**
+
+    the standing ledger:   265 instruction, 72 unrecorded, 19 measurement, 14 re/vtables.json, and the rest from named scripts
+
+**AND `ROUNDS-MUST-LAND-CODE` IS NOW FAILING, WHICH IS THE RIGHT KIND OF COMPLAINT**: 3 of the last 12 commits landed C++ under `lcns/`, below the floor of 4, **because
+this round and the four before it were tooling.** It is left failing and named here rather than papered over, and the next round returns to the class queue.
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green. `re/g_rules.py` reports 24 rules with 1 broken -- `rounds-must-land-code`.
