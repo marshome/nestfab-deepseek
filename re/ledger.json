@@ -3398,6 +3398,30 @@
       "predicate": "the per-function callers field in the profile holds 5209 for 0x62F280 while counting every callees entry gives 10418, so the rank is usable and the absolute count is not",
       "witness": "re/g_hot_functions.py counts by walking every callees list and reports 10418; load_prof()[0x62F280][callers] has 5209 entries",
       "round": 747
+    },
+    {
+      "subject": "launch-estimate-strings-name-the-two-fields",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the function at 0x1E70 builds the message Launching local engines N threads for multi, M threads for nesting, K max iterations, which names Order maxThreads at +0x1F8 and maxIterations at +0x1FC",
+      "witness": "lib.strings_of(0x1E70) returns 0x9AC0D3 Launching local engines , 0x9AC0EC  threads for multi,, 0x9AC100  threads for nesting,  and 0x9AC117  max iterations.; 0x1E70 is 3135 bytes, 726 instructions and 3 callers, and LaunchEstimateLocalComputation at 0x03360 is one of the exports, whose chain re/g_chain_size.py measured at 2134 bytes",
+      "round": 748
+    },
+    {
+      "subject": "978010-is-a-polymorphic-method-and-not-infrastructure",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "0x978010 is 959 bytes, 255 instructions, 841 callers and has no string literals; it makes virtual calls through [rax+0x68], [rax+0x30] and [rax+0x60] and reaches the exception path, so it is a method on a polymorphic type rather than a utility",
+      "witness": "lib.strings_of(0x978010) is empty; its calls include call qword ptr [rax + 0x68] at 0x9780C0, [rax + 0x30] at 0x978127 and [rax + 0x60] at 0x978170; its callees include 0x8264E0 and 0x62F280, the throw path",
+      "round": 748
+    },
+    {
+      "subject": "the-basic_string-string-is-the-linked-librarys",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "the string basic_string::_M_construct null not valid at 0x9AC060 is referenced by no function in the image, so it is the linked library text rather than a message this module writes",
+      "witness": "searching every function in lib.FUNCS for rip_targets containing 0x9AC060 returns 0; lib.STRS[0x9AC060] is that text",
+      "round": 748
     }
   ]
 }
