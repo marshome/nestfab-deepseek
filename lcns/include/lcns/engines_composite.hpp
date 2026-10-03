@@ -32,6 +32,12 @@
 #include <cstddef>
 #include <cstdint>
 
+// **`EngineBase` LIVES IN ITS OWN HEADER SO THAT THIS ONE CAN NAME IT.** The comment on this class used to say it could not: `engines.hpp` includes THIS header, so a base
+// declared there is unreachable from here. **The base therefore moved to `lcns/engine_base.hpp`, which both include** -- **because the module's own vtable says this class is
+// an engine**: `re/vtables.json` has `N6Engine15CompositeEngineE` at 0xA3D000 with the same three slots as the rest, and its `run` is 0x759B70, reached through `[rax + 0x10]`
+// at the call site in `engines.hpp`. **A declaration that cannot name its base is a declaration with a hole in it.**
+#include "lcns/engine_base.hpp"
+
 namespace lcns {
 
 /** RE 0x759B70: CompositeEngine's Run, 8230 bytes. */
@@ -76,7 +82,7 @@ constexpr std::uintptr_t kEnginesNotCalled[] = {0x755050, 0x756EC0, 0x757250, 0x
  *  IT DOES NOT NAME ITS BASE HERE, because engines.hpp includes THIS header and a cycle is not a dependency. That its Run overrides
  *  EngineBase::run is stated in engines.cpp where the definition lives; a declaration without the base is enough to say the class exists.
  */
-class CompositeEngine {
+class CompositeEngine : public EngineBase {
 public:
     CompositeEngine() = default;
 
@@ -85,7 +91,9 @@ public:
         return compositeElementCount(begin, end);
     }
 
-    void* run(const void* problem, double timeLimit, void* observer, void* result);
+    /** **SLOT 2, AND IT IS AN OVERRIDE RATHER THAN A LOOSE METHOD WITH A MATCHING SIGNATURE.** RE 0x759B70, 8230 bytes -- the largest of the six -- and the module's table
+     *  is `0xA3D000` with slots `0x75BC30 0x75BBA0 0x759B70`. */
+    void* run(const void* problem, double timeLimit, void* observer, void* result) override;
 
 private:
     // RE 0x759BBC: the eight quadwords its prologue zeroes are LOCALS, not members -- they live at rsp+0xe0 upward. The only thing this

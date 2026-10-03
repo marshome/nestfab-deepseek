@@ -4487,6 +4487,15 @@
       "witness": "0x24FD0 (InfiniteEngine) does 02501A qword [rbx+0x10], 025025 qword [rbx+0x18] with 02502B lock add dword [rax+8],1, and 025030 movsd qword [rbx+0x20], xmm2; 0x24AB0 (EquivalentEngine) does 024AE2 qword [rbx+0x10], 024AED qword [rbx+0x18] with 024AF3 lock add dword [rax+8],1, and 024AF8 qword [rbx+0x20], 0. **Both allocations are 024ABA/024FDA mov ecx, 0x30.** So the three words are a SHARED layout, and whether that is a common base between 0x10 and 0x28 or one template instantiated twice is not decided -- **what tells them apart is reading EquivalentEngine run against InfiniteEngine run, since only the first touches the words**",
       "tool": "instruction",
       "round": 790
+    },
+    {
+      "subject": "EngineBase-moved-to-its-own-header-so-CompositeEngine-can-name-it",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "EngineBase and ProblemView live in lcns/engine_base.hpp so that engines_composite.hpp can derive CompositeEngine from the base, which a cycle had made impossible",
+      "witness": "the composite header said so itself -- IT DOES NOT NAME ITS BASE HERE, because engines.hpp includes THIS header and a cycle is not a declaration -- and its class was written class CompositeEngine { with \u000boid* run(...) and no override. **The module says it is an engine**: re/vtables.json has N6Engine15CompositeEngineE at vtable 0xA3D000 with the same three slots as the other six, its run is 0x759B70, and the call site reaches every engine through call qword ptr [rax + 0x10]. After the split the class derives from EngineBase and its run is an override, and the build is clean",
+      "tool": "instruction",
+      "round": 791
     }
   ]
 }

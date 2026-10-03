@@ -28,6 +28,7 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "lcns/engine_base.hpp"
 #include "lcns/engines_composite.hpp"
 // **`recovery.hpp` IS INCLUDED SO THE RECOVERY MARKER CAN BE A REAL ONE.** `check_recovery.py` matches the literal shape `LCNS_*(id)`, so a comment is not a
 // mark -- **and a decision recorded as a comment is invisible to the check that exists to keep decisions visible.**
@@ -89,45 +90,6 @@ constexpr std::uintptr_t kNestingEngineRunDirect = 0x757AE0;
  * `rcx` to several registers and then REUSES `rcx` as scratch, so a heuristic over "registers that ever received rcx" collects registers that received it and stopped
  * being it.
  */
-class EngineBase {
-public:
-    virtual ~EngineBase() = default;
-
-    /** Slot 2, RE 0x2516E. The default is pure, so a subclass must say what it does rather than inherit silence. */
-    virtual void* run(const void* problem, double timeLimit, void* observer, void* result) = 0;
-
-protected:
-    /** **THE BASE IS A VPTR, A BYTE AND A DWORD -- AND THE ELEVEN MEMBERS THAT STOOD HERE WERE NOT THE BASE'S AT ALL.**
-     *
-     * **WHAT SETTLED IT WAS A CONSTRUCTOR PREAMBLE, WHICH IS THE EVIDENCE NINE ROUNDS OF READING `run` BODIES COULD NOT GIVE.** Two independent engine constructors
-     * zero these two offsets **BEFORE** installing their vtable, which is what constructing a base sub-object looks like:
-     *
-     *      0x24AB0  EquivalentEngine     0x240D0  MultiEngine
-     *      024ACA  byte  ptr [rax+8], 0          024100  byte  ptr [rax+8], 0
-     *      024ACE  dword ptr [rax+0xc], 0        024104  dword ptr [rax+0xc], 0
-     *      024ADC  qword ptr [rbx], rax          02411A  qword ptr [rbx], rax      ; the vtable, AFTER
-     *      024AE2  qword ptr [rbx+0x10], rax     024116  dword ptr [rbx+0x10], r13d   ; **the first own member**
-     *
-     * **AND `0x23E70` (`NestingEngine`) WRITES THE SAME TWO OFFSETS WITH THE VALUE 1** -- `023F93 dword ptr [rax + 8], 1` and `023F9A dword ptr [rax + 0xc], 1` --
-     * **which is why they are flags or counters and not a pointer.**
-     *
-     * **SO THE BASE ENDS AT 0x10 AND THE DERIVED CLASSES START THERE.** The declaration that stood here held eleven members from +0x00 to +0x50, **all of them eight bytes
-     * lower than the instruction that uses each one**, and `static_assert(sizeof(EngineBase) == 0x60)` was pinning that wrong layout. **What that declaration actually
-     * captured was an agreement between FOUR SIBLINGS about their OWN shared layout** -- `InfiniteEngine`, `MultiEngine`, `DelayedEngine`, `NestingEngine` and
-     * `CompositeEngine` all touch +0x10 through +0x50 -- **and an agreement between siblings is not an inherited member.** Which class those offsets belong to is the next
-     * question, and it is asked in the note on `EquivalentEngine` below rather than answered here. */
-    std::uint8_t at08 = 0;         // +0x08, RE 0x024ACA `mov byte ptr [rax + 8], 0` and 0x023F93 `dword ptr [rax + 8], 1`
-    std::uint32_t at0C = 0;        // +0x0C, RE 0x024ACE `mov dword ptr [rax + 0xc], 0` and 0x023F9A `dword ptr [rax + 0xc], 1`
-};
-
-/** RE vtable 0xA3CFD0, THREE slots. Slot 0 is the deleting destructor 0x759B20, slot 1 the destructor 0x759AD0, and slot 2 is `run` at 0x759A80, 80 bytes.
- *  **The slot-2 address DIFFERS IN ALL SEVEN ENGINES**, which is why slot 2 is the class's one virtual and the base is abstract. */
-/** What RE 0x759AB0 reads out of the SECOND argument: the engine it delegates to sits at +0x10 of the problem. */
-struct ProblemView {
-    std::byte header[0x10]{};
-    EngineBase* engine = nullptr;      // RE 0x759AB0: mov rdx, [rdx + 0x10]
-};
-
 class InfiniteEngine : public EngineBase {
 public:
 
