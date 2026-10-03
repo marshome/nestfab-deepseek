@@ -109,9 +109,9 @@ extern "C" Nesting GetNesting(Solution, int) {
 
 // ordinal 23/24  rva 0x0B190  63 bytes
 // signature from the inferred typed table
-extern "C" int GetNumberOfNestedParts(Nesting) {
-    lcns::dll::exports::notReversed(11u);
-    return 0;
+extern "C" std::size_t GetNumberOfNestedParts(Solution* solution) {
+    // **ONE ARGUMENT, AND THE PROBE SAID TWO.** 0xB195 is `mov rbx, rcx` and 0xB1A4 is `mov rcx, qword [rbx + 8]` -- the second rcx is a DESTINATION loaded from the object and not a second argument. The implementation's `(void* order)` was right and the refusal was the tool's.
+    return lcns::dll::exports::impl::getNumberOfNestedParts(static_cast<void*>(solution));
 }
 
 // ordinal 25/26  rva 0x0B0C0  52 bytes
@@ -1015,9 +1015,9 @@ extern "C" std::intptr_t sub_0B000(std::intptr_t, double) {
 // ordinal 288/289  rva 0x0AFF0  10 bytes
 // signature synthesized from the register analysis: 1 integer register(s), 0 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t sub_0AFF0(std::intptr_t) {
-    lcns::dll::exports::notReversed(140u);
-    return 0;
+extern "C" void sub_0AFF0(void* order, int value) {
+    // **TWO ARGUMENTS AND THE PROBE SAID ZERO.** `test edx, edx` READS edx and writes no register, so a rule that looks at destinations saw nothing; the body is `setne byte [rcx + 0xf8]`, which uses rcx as the object and edx as the value. `setByteAtF8(void*, int)` matches exactly.
+    lcns::dll::exports::impl::setByteAtF8(order, value);
 }
 
 // ordinal 290/291  rva 0x101C0  127 bytes
@@ -1407,7 +1407,7 @@ const Entry kEntries[] = {
     {"GetMultiplicity", 17, 18, 0x0B100u, 34u, Status::Forwarded, "// kForwarding -> impl::getMultiplicity"},
     {"GetNestedPart", 19, 20, 0x0D460u, 688u, Status::NotReversed, "cns.cpp"},
     {"GetNesting", 21, 22, 0x10F30u, 490u, Status::NotReversed, "cns.cpp"},
-    {"GetNumberOfNestedParts", 23, 24, 0x0B190u, 63u, Status::NotReversed, ""},
+    {"GetNumberOfNestedParts", 23, 24, 0x0B190u, 63u, Status::Forwarded, "// wired after the arity was re-read"},
     {"GetNumberOfNestings", 25, 26, 0x0B0C0u, 52u, Status::Forwarded, "// kForwarding 25 -> impl::getNumberOfNestings; restored after a regression to a stub"},
     {"GetPartUserString", 27, 28, 0x0C5E0u, 36u, Status::Forwarded, "// kForwarding -> impl::getPartUserString"},
     {"GetPartWithBadGeometry", 29, 30, 0x0B510u, 43u, Status::Forwarded, "// kForwarding -> impl::getPartWithBadGeometry"},
@@ -1536,7 +1536,7 @@ const Entry kEntries[] = {
     {"sub_1A7D0", 282, 283, 0x1A7D0u, 286u, Status::NotReversed, ""},
     {"CNS_SheetAddRestrictedZone", 284, 285, 0x1A210u, 1468u, Status::NotReversed, ""},
     {"sub_0B000", 286, 287, 0x0B000u, 18u, Status::NotReversed, ""},
-    {"sub_0AFF0", 288, 289, 0x0AFF0u, 10u, Status::NotReversed, ""},
+    {"sub_0AFF0", 288, 289, 0x0AFF0u, 10u, Status::Forwarded, "// wired after the arity was re-read"},
     {"AddToolPathToPart", 290, 291, 0x101C0u, 127u, Status::NotReversed, ""},
     {"AddLeatherQualityZoneInPart", 292, 293, 0x19F40u, 342u, Status::NotReversed, " [label shared with the entry at ordinal 274]"},
     {"AddInflatedToolPathToPart", 294, 295, 0x12C60u, 169u, Status::NotReversed, ""},
