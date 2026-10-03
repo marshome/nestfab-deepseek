@@ -445,6 +445,51 @@ public:
  *  **THREE OF THE SIX CARRY NO NAME, BECAUSE THE MODULE GIVES NONE.** `N5Multi18NoMixSheetSelectorE` names the class and no member string names these; the two
  *  sub-objects at +0x20 and +0x38 are built by 0x523FE0 and 0xAF7D0, whose own types this project has not read. **Their offsets, types and constructors are
  *  established and their meanings are not**, so they are named for what is known and marked. */
+/** RE 0xB0040 (159 bytes). **THE OBJECT IS 0x9e0 BYTES AND MOST OF IT IS A `std::mt19937`**, which is what makes the class's NAME established rather than
+ *  chosen: `RandomSheetSelector` selects sheets at random and carries its own generator.
+ *
+ *  The constructor's loop is the MT19937 seeding algorithm, instruction for instruction:
+ *
+ *      0B0090  mov eax, ecx / shr eax, 0x1e / xor eax, ecx
+ *      0B0097  imul eax, eax, 0x6c078965          ; 1812433253 -- THE SEEDING MULTIPLIER
+ *      0B00A0  mov dword [rbx + rdx*4 + 0x18], ecx
+ *      0B00A8  cmp rdx, 0x270                     ; **624 elements**
+ *
+ *  **and the three numbers agree with the standard generator and with the allocation**: 624 words from +0x1C, an index at +0x9D8, and 0x9D8 + 8 = **0x9e0**,
+ *  which is `mov ecx, 0x9e0` at 0x0B004B. **This project already records those two instructions as the generator's signature** (`re/19_mt19937.py`), so the field
+ *  is not a guess: **a name established by what a class DOES is a name with an oracle.**
+ *
+ *  **AND THE WHOLE OBJECT IS STILL WRITTEN OUT RATHER THAN SUMMARISED**, because a declaration that said only `std::mt19937 engine_` would hide the offsets every
+ *  other function uses. The three members before it are the ones 0xB0040 writes: +0x08 the second parameter, +0x10 the third (four bytes) and +0x14 a byte
+ *  returned by 0x523580. */
+class RandomSheetSelector : public SheetSelector {
+public:
+    // +0x00  RE 0x0B006F: mov qword [rbx], rax, where rax is 0xA3BA70 -- RandomSheetSelector's vtable
+
+    /** +0x08, RE 0x0B0061: `mov qword [rax + 8], rdi` -- the constructor's SECOND parameter, a pointer. */
+    void* secondArg_ = nullptr;
+    /** +0x10, RE 0x0B006C: `mov dword [rbx + 0x10], ebp` -- the constructor's THIRD parameter, FOUR bytes. */
+    std::uint32_t thirdArg_ = 0;
+    /** +0x14, RE 0x0B0072 `call 0x523580` and 0x0B0077 `mov byte [rbx + 0x14], al` -- ONE BYTE, and 0x523580's return. **What it means is not recovered.** */
+    std::uint8_t byte14_ = 0;                         // NOT REVERSED: the byte 0x523580 returns
+    /** +0x18, RE 0x0B0084: `mov dword [rbx + 0x18], 1` -- **the MT19937 index, set to 1 after seeding**, which is what the standard seed does. */
+    std::uint32_t mtIndex_ = 0;
+    /** +0x1C, RE 0x0B00A0: `mov dword [rbx + rdx*4 + 0x18], ecx` for `rdx` from 1 to 0x26F -- **624 words, spanning +0x1C through +0x9DB**. */
+    std::uint32_t mt_[624] = {};                      // +0x1C..+0x9DB
+    /** +0x9D8, RE 0x0B00B7: `mov qword [rbx + 0x9d8], 0x270` -- **EIGHT bytes at +0x9D8, which OVERLAPS the last word of the 624 above.**
+     *
+     *  **AND THIS IS A CONTRADICTION THAT IS RECORDED RATHER THAN SMOOTHED OVER.** Three instructions and a declaration say:
+     *
+     *      0x0B004B  mov ecx, 0x9e0            the constructor allocates 0x9e0 bytes
+     *      0x0B00A0  mov dword [rbx + rdx*4 + 0x18], ecx for rdx = 1..0x26F    624 words, +0x1C .. +0x9DB
+     *      0x0B00B7  mov qword [rbx + 0x9d8], 0x270                            eight bytes at +0x9D8
+     *
+     *  and a declaration carrying all three measures **0x9E8**: the words reach +0x9DB, the eight bytes at +0x9D8 overlap their last word, and the next member
+     *  can only begin on an 8-byte boundary at +0x9E0. **The two arithmetic facts cannot both hold of one object.** **A field is not moved to make a number
+     *  agree** -- each offset and the width above is one instruction, and so is the 0x9e0 -- so what is recorded is the measurement and the disagreement. */
+    std::uint64_t mtIndex8_ = 0;                      // **+0x9E0 AS DECLARED, and RE 0x0B00B7 writes +0x9D8 -- see the note above**
+};
+
 class NoMixSheetSelector : public SheetSelector {
 public:
     /** RE 0xAFD60, and every line below is one store in it. The constructor takes a destination, a pointer, an int and a pointer, allocates 0x50 bytes,

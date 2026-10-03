@@ -7222,5 +7222,39 @@ int main() {
         CHECK(sizeof(lcns::NoMixSheetSelector) == 0x50);
     }
 
+
+    // ---------------------------------------------------------------- RandomSheetSelector embeds an MT19937 (RE 0xB0040)
+    {
+        // **THE SIZE IS THE MEASURED ONE AND NOT THE ALLOCATED ONE.** RE 0x0B004B asks for 0x9e0; a declaration carrying the offsets the instructions use -- 624
+        // words from +0x1C and EIGHT bytes at +0x9D8 -- measures 0x9E8. **The disagreement is asserted rather than smoothed over**: see `mtIndex8_` in
+        // tiling.hpp, where the three instructions that cannot all hold of one object are written beside the field.
+        static_assert(sizeof(lcns::RandomSheetSelector) == 0x9E8, "measured 0x9E8 against an allocation of 0x9e0 -- see tiling.hpp");
+        static_assert(std::has_virtual_destructor<lcns::RandomSheetSelector>::value, "RE 0x0B006F installs a vtable, so it is polymorphic");
+        static_assert(std::is_base_of<lcns::SheetSelector, lcns::RandomSheetSelector>::value, "its typeinfo chain puts it under Multi::SheetSelector");
+
+        // **THE THREE OFFSETS THE CONSTRUCTOR WRITES.** A pointer difference rather than `offsetof`, because a class with a vtable is not standard-layout.
+        alignas(lcns::RandomSheetSelector) unsigned char storage[sizeof(lcns::RandomSheetSelector)];
+        lcns::RandomSheetSelector& probe = *reinterpret_cast<lcns::RandomSheetSelector*>(storage);
+        const unsigned char* at = reinterpret_cast<const unsigned char*>(&probe);
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.secondArg_) - at == 0x08);   // RE 0x0B0061: mov qword [rax + 8], rdi
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.thirdArg_) - at == 0x10);    // RE 0x0B006C: mov dword [rbx + 0x10], ebp
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.byte14_) - at == 0x14);      // RE 0x0B0077: mov byte [rbx + 0x14], al
+
+        // **AND THE MT19937'S OWN THREE NUMBERS, EACH FROM ONE INSTRUCTION.** 0x0B0084 sets the index to 1; 0x0B00A0 writes `[rbx + rdx*4 + 0x18]` for rdx
+        // from 1 to 0x270, so the array starts at +0x1C and holds 624 words; and 0x0B00B7 writes 0x270 EIGHT bytes wide at +0x9D8.
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.mtIndex_) - at == 0x18);     // RE 0x0B0084: mov dword [rbx + 0x18], 1
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.mt_) - at == 0x1C);          // RE 0x0B00A0: [rbx + rdx*4 + 0x18] with rdx from 1
+        CHECK(sizeof(probe.mt_) / sizeof(probe.mt_[0]) == 624);                          // RE 0x0B00A8: cmp rdx, 0x270
+        // **THE INDEX AT +0x9D8 IS EIGHT BYTES AND IT OVERLAPS THE LAST WORD OF THE 624.** RE 0x0B00B7 writes `qword [rbx + 0x9d8]` while 0x0B00A0's loop
+        // reaches +0x9DB, and `mov ecx, 0x9e0` at 0x0B004B allocates only 0x9e0 -- **so the declaration measures 0x9E8 and the allocation is 0x9e0, a
+        // disagreement that is recorded and NOT smoothed over by moving a field.**
+        // **AND THE ONE PLACE THE THREE MEASUREMENTS CANNOT ALL HOLD.** RE 0x0B00B7 writes EIGHT bytes at +0x9D8, while 0x0B00A0's 624 words reach +0x9DB and
+        // the next member can only start at the 8-byte boundary +0x9E0. So `mtIndex8_` MEASURES +0x9E0 and the instruction says +0x9D8. **The measured offset is
+        // asserted and the instruction is named beside it**, rather than an array resized to make the two agree.
+        CHECK(reinterpret_cast<const unsigned char*>(&probe.mtIndex8_) - at == 0x9E0);   // while RE 0x0B00B7 writes qword [rbx + 0x9d8]
+        CHECK(sizeof(probe.mtIndex8_) == 8);                                             // EIGHT bytes, as that instruction says
+        CHECK(sizeof(lcns::RandomSheetSelector) == 0x9E8);                               // while RE 0x0B004B asks for 0x9e0: see the note in tiling.hpp
+    }
+
     return check::finish("test_recovered");
 }

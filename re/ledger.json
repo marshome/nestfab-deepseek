@@ -3046,6 +3046,22 @@
    "round": 721,
    "subject": "the-selector-sub-objects-are-not-polymorphic",
    "witness": "0xAFD60 contains four lea of a rip-relative address and only 0xAFD8D loads a vtable (0xA3B9E0); 0x523FE0 and 0xAF7D0 each touch rbp at +0x0 and +0x10 only; and 0xAFFA0 mov rcx,[rbx+0x18] / 0xAFFA9 mov rax,[rcx] / 0xAFFAC call qword [rax+8] is the destructor's path, which is why 0xAFDA3 clears the source"
+  },
+  {
+   "grade": "CONSTRUCTOR",
+   "kind": "offset",
+   "predicate": "Multi::RandomSheetSelector is 0x9e0 bytes as allocated and carries a complete std::mt19937: 624 state words from +0x1C, an index written as EIGHT bytes at +0x9D8, and a vptr at +0 with a pointer at +8, a 4 byte field at +0x10 and a byte at +0x14",
+   "round": 722,
+   "subject": "RandomSheetSelector-embeds-an-mt19937",
+   "witness": "its constructor 0xB0040 allocates 0x9e0 at 0x0B004B and installs 0xA3BA70 at 0x0B006F; 0x0B0084 sets +0x18 to 1; 0x0B0097 imul eax,eax,0x6c078965 and 0x0B00A8 cmp rdx,0x270 are the MT19937 seeding signature this project already records in re/19_mt19937.py, and the loop writes [rbx + rdx*4 + 0x18] for rdx 1..0x26F"
+  },
+  {
+   "grade": "INSTRUCTION",
+   "kind": "offset",
+   "predicate": "RandomSheetSelector's three measurements cannot all hold: the allocation is 0x9e0, the 624 state words reach +0x9DB, and 0x0B00B7 writes EIGHT bytes at +0x9D8, so the declaration measures 0x9E8",
+   "round": 722,
+   "subject": "the-mt-state-overlaps-its-index",
+   "witness": "0x0B004B mov ecx,0x9e0; 0x0B00A0 mov dword [rbx + rdx*4 + 0x18],ecx for rdx 1..0x26F reaching +0x9DB; 0x0B00B7 mov qword [rbx + 0x9d8],0x270 writing eight bytes from +0x9D8, which is inside those words, while a member can only begin at the 8 byte boundary +0x9E0"
   }
  ]
 }
