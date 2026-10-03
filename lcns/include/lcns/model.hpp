@@ -183,19 +183,28 @@ struct Order {
     Objective objective = Objective::MinimizeArea;   // +0x008
     NestingOrigin origin = NestingOrigin::BottomLeft;   // +0x00C
     std::byte padding01a[0x8];   // +0x010..+0x017, no field here
-    /** +0x18, RE 0xD327: `mov dword [rsi + 0x18], ebx` in the 33-byte setter at 0xD310. **The module names no field here**, so this is the offset
-     *  as a name -- and it is the SAME name `IntFieldCarrier::field18` used, which is the point: the two structures became one. */
-    std::uint32_t field18 = 0;
-    /** +0x1C, RE 0xD357: `mov dword [rsi + 0x1c], ebx` in the 33-byte setter at 0xD340. The same, one field later. */
-    std::uint32_t field1C = 0;
-    std::byte padding01b[0x2];   // +0x020..+0x021, no field here
+    // **AN OFFSET COMMENT GOES INLINE, AND THAT IS NOT COSMETIC.** `re/g_measure_order_run.py` reads `// ... +0xNNN` from the SAME LINE as the declaration, so a
+    // field whose offset lives in a doc block ABOVE it is unmeasured -- and worse, the block's first line is then matched as if it WERE a field, which shifts
+    // every offset after it. **`reorganizeBiggestPartNearOrigin says +0x22 and measures +0x23` was this**: the +0x in the prose was read as a field.
+    std::uint32_t field18 = 0;   // +0x018, RE 0xD327: the 33-byte setter at 0xD310 stores `ebx` here
+    // **AND +0x1C HAS TWO VIEWS IN THE MODULE, WHICH IS A MEASUREMENT AND NOT A CHOICE.** RE 0xD357 writes a DWORD here (the 33-byte setter at 0xD340) and RE
+    // 0xDE69 writes the low BYTE of the same address (`setne byte [rsi + 0x1c]`, SetPartCommonCutMode). **The two overlap**, so a byte field here would alias
+    // this one; the dword is declared and the byte is reachable through it. `OptionFlagCarrier::flag1C` was that byte, and this is where it lands.
+    std::uint32_t field1C = 0;   // +0x01C, RE 0xD357 (dword) and RE 0xDE69 (the low byte, SetPartCommonCutMode)
+    bool floatingMode = false;   // +0x020, RE 0xDD49 `setne byte [rsi + 0x20]` in CNS_SetFloatingMode (ordinal 182)
+    bool originPackingMode = false;   // +0x021, RE 0xDD79 `setne byte [rsi + 0x21]` in CNS_SetOriginPackingMode
     bool reorganizeBiggestPartNearOrigin = false;   // +0x022
     bool reorganizeLongestPartNearOrigin = false;   // +0x023
-    std::byte padding02[0x4];   // +0x024..+0x027, no field here
+    // **SHRUNK FROM FOUR BYTES TO TWO BECAUSE THE NAMES ABOVE TOOK THE FIRST TWO.** A padding member is not decoration: it is what keeps every field after it at
+    // the module's offset, so naming a byte INSIDE a gap has to take the byte OUT of the gap. **The layout check caught this when I forgot**: `sizeof(Order)` grew
+    // by four, every later offset moved by four, and two byte-level assertions failed.
+    std::byte padding02[0x2];   // +0x026..+0x027, no field here
     double usedSurfaceMinOffcutDimension = 0.0;   // +0x028
     double usedSurfaceMinOffcutArea = 0.0;   // +0x030
     double usedSurfaceUsableOffcutRatio = 0.0;   // +0x038
-    std::byte padding03[0x1];   // +0x040..+0x040, no field here
+    /** +0x40, RE 0xDDA9: `setne byte [rsi + 0x40]` in SetFillLastNestingStrategy (ordinal 144). **The export's name is the oracle for the field**, and the byte was
+     *  inside `padding03` before this -- a real flag the port had written off as a gap. */
+    bool fillLastNestingStrategy = false;
     bool evaluateIntermediateNestingsAsLast = false;   // +0x041
     std::byte padding04[0x2];   // +0x042..+0x043, no field here
     bool shear = false;   // +0x044

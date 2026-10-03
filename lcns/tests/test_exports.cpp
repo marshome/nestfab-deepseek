@@ -335,7 +335,9 @@ int main() {
             CHECK(order.maxIterations == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
             // and the byte-level view agrees, which is the one thing the field cannot show
             std::uint32_t atOffset = 0;
-            std::memcpy(&atOffset, static_cast<const void*>(&order) + 0x1FC, 4);
+            // **and a BYTE pointer, not a `void*`**: `void*` arithmetic is a GCC extension that warns, and the warning is the compiler asking which width the
+            // offset is in. `reinterpret_cast<const unsigned char*>` answers it.
+            std::memcpy(&atOffset, reinterpret_cast<const unsigned char*>(&order) + 0x1FC, 4);
             CHECK(atOffset == 0xFFFFFFFEu);
             // **AND THE FORWARD IS NOW REAL AND NOT JUST LISTED.** `kForwarding` named this ordinal before the wrapper dispatched, so `forwards(84)` was true
             // while the exported function still reported the ordinal to `notReversed` -- a list saying one thing and the code another. **The wrapper now calls
