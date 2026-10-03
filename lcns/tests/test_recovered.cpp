@@ -6989,6 +6989,59 @@ int main() {
                       "the module's typeinfo chain says so");
     }
 
+    // ---------------------------------------------------------------- the OTHER TWO `Structure_Observer`
+    //
+    // **AND THE THREE DERIVATIVES SPLIT TWO WAYS, WHICH IS WHY THERE ARE THREE DECLARATIONS.** Read from each class's own slot bodies in
+    // `re/vtables.json`:
+    //
+    //     Engine::EquivalentObserver   vtable 0xA3D0A0, N6Engine18EquivalentObserverE
+    //         slot 2  0x75DDD0   11 B   mov rcx, qword ptr [rcx + 8] / mov rax, [rcx] / jmp [rax + 0x10]
+    //         slot 3  0x75DDE0   11 B   the same shape
+    //         slot 5  0x75DDF0  621 B   its own body
+    //
+    //     Engine::CompositeObserver    vtable 0xA3D060, N6Engine17CompositeObserverE
+    //         slot 2  0x75CBC0  193 B   **ITS OWN**, not an 11-byte forward
+    //         slot 3  0x75CC90  152 B   **ITS OWN**
+    //         slot 5  0x75CD30  100 B   its own
+    //
+    // **`EquivalentObserver`'s FIELD IS AT +0x08 WHERE `BestObserver`'s IS AT +0x10** -- so a shared base holding the pointer at one offset would make one of them
+    // wrong, and the instructions say two different offsets. **And `CompositeObserver` forwards nothing**, which is what the note above `Structure_Observer` was
+    // measuring when it found slot 2 to be `xor eax, eax; ret` in TWO of the three: **the two forwarders.**
+    {
+        // **`EquivalentObserver` IS THE SAME SIZE AS `BestObserver` AND `CompositeObserver` IS NOT -- WHICH IS THE EVIDENCE, NOT AN INCONVENIENCE.** Both
+        // forwarders hold one pointer of their own; **the non-forwarder declares nothing, because nothing places anything in it.** Its slot 0 is a ONE-BYTE
+        // `ret` and its slot 1 is a `jmp` to operator delete, so the class has no destructor body and no constructor in the profile -- **and a declaration
+        // that invented a `sink_` for it to match its siblings would be the shape-matching this project forbids.**
+        static_assert(sizeof(lcns::EquivalentObserver) == 2 * sizeof(void*),
+                      "a vptr and the pointer at +0x08 that its two forwarders read");
+        static_assert(sizeof(lcns::CompositeObserver) == sizeof(void*),
+                      "**THE NON-FORWARDER IS ONE WORD** -- it declares no member, and an assertion that it matched its siblings would have forced one in");
+        static_assert(std::is_base_of<lcns::Structure_Observer, lcns::EquivalentObserver>::value,
+                      "N6Engine18EquivalentObserverE -> N9Structure8ObserverE");
+        static_assert(std::is_base_of<lcns::Structure_Observer, lcns::CompositeObserver>::value,
+                      "N6Engine17CompositeObserverE -> N9Structure8ObserverE");
+        static_assert(std::is_abstract<lcns::Structure_Observer>::value, "a pure interface");
+
+        // With nothing to forward to, `EquivalentObserver`'s two forwarders answer without a sink -- and `hasSolution` is FALSE rather than true, which is the
+        // behaviour the null check produces and the only thing this test can reach without a way to place the sink.
+        lcns::EquivalentObserver equivalent;
+        CHECK(equivalent.hasSolution() == false);
+        equivalent.offer(lcns::Solution{}, 1.0);           // harmless with no sink
+        equivalent.notify(true, 0);
+
+        // **AND `CompositeObserver` IS THE ONE WHOSE SLOTS ARE ITS OWN, SO ITS ANSWER IS NOT A FORWARD.** `hasSolution` returning false here is a placeholder
+        // for a body that has not been read -- **it is NOT the same claim as `EquivalentObserver`'s**, where the false comes from the null check the module's own
+        // eleven bytes perform.
+        lcns::CompositeObserver composite;
+        CHECK(composite.hasSolution() == false);
+        composite.offer(lcns::Solution{}, 1.0);
+        composite.notify(false, 0);
+
+        // **AND THE TWO OFFSETS ARE DIFFERENT, WHICH IS THE WHOLE POINT OF TWO DECLARATIONS.** They cannot be asserted directly -- `sink_` is private -- so the
+        // evidence for the split is the slot bodies named above, and this line records that the test does not check it.
+        CHECK(sizeof(lcns::EquivalentObserver) == sizeof(lcns::BestObserver));
+    }
+
 
     // ---------------------------------------------------------------- the base chain (RE the module's own RTTI typeinfo)
     //

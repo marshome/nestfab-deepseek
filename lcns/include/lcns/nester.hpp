@@ -179,6 +179,60 @@ private:
     Structure_Observer* sink_ = nullptr;             // +0x10, RE 0x755A40: mov rcx, [rcx + 0x10]
 };
 
+/** **`Engine::EquivalentObserver`, A FORWARDER WHOSE FIELD SITS AT A DIFFERENT OFFSET FROM ITS SIBLING.** RE vtable 0xA3D0A0, six slots
+ *  `0x75E130 0x75E0E0 0x75DDD0 0x75DDE0 0x75E060 0x75DDF0`, read from `re/vtables.json` under `N6Engine18EquivalentObserverE`.
+ *
+ *      slot 2  0x75DDD0   11 bytes  `mov rcx, qword ptr [rcx + 8]` / `mov rax, qword ptr [rcx]` / `jmp qword ptr [rax + 0x10]`
+ *      slot 3  0x75DDE0   11 bytes  the same shape
+ *      slot 0  0x75E130   71 bytes  its own deleting destructor
+ *      slot 1  0x75E0E0   76 bytes  its own destructor
+ *      slot 4  0x75E060  128 bytes  its own
+ *      slot 5  0x75DDF0  621 bytes  its own
+ *
+ *  **AND THE OBJECT IT FORWARDS TO IS AT +0x08 WHERE `BestObserver`'s IS AT +0x10.** That difference is why these are two declarations and not one: **a shared base
+ *  with the pointer at a single offset would make one of them wrong**, and the instructions say two different offsets. **Slots 2 and 3 forward, so they are declared
+ *  as forwarding overrides** -- the base `Structure_Observer` already answers `xor eax, eax`, and this class does not give that answer. */
+class EquivalentObserver : public Structure_Observer {
+public:
+    EquivalentObserver();
+
+    void offer(const Solution& s, double score) override;      // RE 0x75DDD0: forwards through +0x08
+    bool hasSolution() const override;                         // RE 0x75DDE0: the same shape
+    void notify(bool finished, int offers) override;           // RE 0x75DDF0, 621 bytes, its own body
+    /** **SLOT 4 IS NOT FORWARDED EITHER** -- the module's table has it (0x75E060, 128 bytes) and its body has not been read, so this says so rather than
+     *  inventing one. BestObserver carries the same note for the same reason. */
+    void slot4() override {}
+
+private:
+    Structure_Observer* sink_ = nullptr;             // +0x08, RE 0x75DDD0: mov rcx, [rcx + 8]
+};
+
+/** **`Engine::CompositeObserver` IS NOT A FORWARDER, WHICH MAKES IT THE THIRD SHAPE.** RE vtable 0xA3D060 under `N6Engine17CompositeObserverE`, six slots
+ *  `0x75DDC0 0x75DDB0 0x75CBC0 0x75CC90 0x75CDA0 0x75CD30`.
+ *
+ *      slot 0  0x75DDC0     1 byte   `ret`
+ *      slot 1  0x75DDB0     5 bytes  `jmp 0x9984b0` -- operator delete
+ *      slot 2  0x75CBC0   193 bytes  **ITS OWN BODY**, not an 11-byte forward
+ *      slot 3  0x75CC90   152 bytes  **ITS OWN**
+ *      slot 4  0x75CDA0  4111 bytes  its own
+ *      slot 5  0x75CD30   100 bytes  its own
+ *
+ *  **SO THE THREE `Structure_Observer` DERIVATIVES SPLIT TWO WAYS**: `BestObserver` forwards slots 2, 3 and 5 through **+0x10**, `EquivalentObserver` forwards 2 and 3
+ *  through **+0x08**, **and this one forwards nothing.** That is what the note above `Structure_Observer` was measuring when it found slot 2 to be `xor eax, eax; ret`
+ *  in TWO of the three -- **the two forwarders; the third answers for itself.** **Its members are not read here, so it declares none**: a slot body being present is
+ *  not evidence about the object's fields, and inventing a `sink_` for it would be the shape-matching this project forbids. */
+class CompositeObserver : public Structure_Observer {
+public:
+    CompositeObserver();
+
+    void offer(const Solution& s, double score) override;      // RE 0x75CBC0, 193 bytes, its own
+    bool hasSolution() const override;                         // RE 0x75CC90, 152 bytes
+    void notify(bool finished, int offers) override;           // RE 0x75CD30, 100 bytes
+    /** **SLOT 4 IS THIS CLASS'S OWN** (0x75CDA0, 4111 bytes) -- unlike its two siblings it forwards nothing, so this slot is a body and not a hand-off.
+     *  The body has not been read, so it is empty rather than guessed at. */
+    void slot4() override {}
+};
+
 // ---------------------------------------------------------------------------
 // pricing -- RE: Prc::PriceComputer and its four implementations.
 //   BoxSurface   : the largest candidate bounding box area (y1-y0)*(x1-x0)  [0x7CB750]

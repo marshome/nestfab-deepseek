@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.20)
 project(lcns LANGUAGES CXX VERSION 0.1.0)
 
 # ---------------------------------------------------------------------------
@@ -66,7 +66,7 @@ add_library(lcns_model STATIC src/model.cpp src/nfp.cpp src/tiling.cpp src/row.c
 target_link_libraries(lcns_model PUBLIC lcns_geom)
 
 # --- search / strategies / engine / reporting ---
-add_library(lcns_nest STATIC src/nester.cpp src/flip_nester.cpp src/filter_nester.cpp src/best_observer.cpp src/engine.cpp src/engines.cpp src/io.cpp src/cloud.cpp
+add_library(lcns_nest STATIC src/nester.cpp src/flip_nester.cpp src/filter_nester.cpp src/best_observer.cpp src/observers.cpp src/engine.cpp src/engines.cpp src/io.cpp src/cloud.cpp
                              src/licensing.cpp src/lp.cpp src/lp_column_generation.cpp
                              src/lp_nesting.cpp)
 target_link_libraries(lcns_nest PUBLIC lcns_model)
