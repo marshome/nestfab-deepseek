@@ -3120,12 +3120,28 @@
       "witness": "constructor 0x5F47C0 is the only site installing 0xA3BCC0 and has mov ecx,0x10 at 0x5F47C6, calls the two imports at 0x5F47E2 and 0x5F47ED, divides the two values at 0x5F480C and stores at 0x5F4810 movsd qword [rbx+8],xmm0; slot 2 at 0x6D5910 computes the same quotient and does subsd xmm0, qword [rbx+8] at 0x6D5948 before ret"
     },
     {
-      "subject": "Supervisors-state-and-the-two-0x10-byte-cancellers",
       "grade": "CONSTRUCTOR",
       "kind": "offset",
       "predicate": "Multi::Supervisor's constructor 0x32700 allocates a 0x530 byte state object and stores it at the Supervisor's +8, and separately allocates TWO 0x10 byte objects, `Multi::NestingContextPool` at 0x32913 and `Multi::NoFitMapCanceller` at 0x32AD7, each `{vptr at +0, OWNER at +8}` whose +8 receives the Supervisor itself",
-      "witness": "0x032720 mov ecx,0x530 is the only site in the module asking for that size and 0x032AD2 mov qword [r12+8],rbx stores it where the destructor's 0x030B71 mov rsi,[rcx+8] reads; 0x3290C lea rax,[rip+0xa0909d] gives 0x32913+0xA0909D = 0xA3B9B0 = NestingContextPool's vtable and 0x32913 mov ecx,0x10 its size; 0x32AE9 lea rsi,[rip+0xa08e00] gives 0x32AF0+0xA08E00 = 0xA3B8F0 = NoFitMapCanceller's vtable and 0x32AD7 mov ecx,0x10 its size; 0x32AFC and 0x32AFF write the vtable and then the owner, which 0x32AE5 mov rdx,[rbx+8] took from the Supervisor. The earlier claim that these were installed at [rbx+0x478] and [rbx+0x4C8] was WRONG -- +0x478 is an 0x18 byte sub-object and +0x4C8 is a std::shared_ptr whose control block is installed from 0xA560C0 -- because the installs were read without establishing which base register they used",
-      "round": 729
+      "round": 729,
+      "subject": "Supervisors-state-and-the-two-0x10-byte-cancellers",
+      "witness": "0x032720 mov ecx,0x530 is the only site in the module asking for that size and 0x032AD2 mov qword [r12+8],rbx stores it where the destructor's 0x030B71 mov rsi,[rcx+8] reads; 0x3290C lea rax,[rip+0xa0909d] gives 0x32913+0xA0909D = 0xA3B9B0 = NestingContextPool's vtable and 0x32913 mov ecx,0x10 its size; 0x32AE9 lea rsi,[rip+0xa08e00] gives 0x32AF0+0xA08E00 = 0xA3B8F0 = NoFitMapCanceller's vtable and 0x32AD7 mov ecx,0x10 its size; 0x32AFC and 0x32AFF write the vtable and then the owner, which 0x32AE5 mov rdx,[rbx+8] took from the Supervisor. The earlier claim that these were installed at [rbx+0x478] and [rbx+0x4C8] was WRONG -- +0x478 is an 0x18 byte sub-object and +0x4C8 is a std::shared_ptr whose control block is installed from 0xA560C0 -- because the installs were read without establishing which base register they used"
+    },
+    {
+      "subject": "the-typeinfo-shows-one-base-for-NestingContextPool",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "Multi::NestingContextPool's typeinfo at 0xA18290 has a base-class pointer at +0x10 whose referent names itself N5Utils4PoolIN5Multi14NestingContextEEE, so the typeinfo is the __si_class_type_info shape and records exactly one base",
+      "witness": "0xA18290's words are [0x6BEFAED0, 0x6BEE2840 -> \"N5Multi18NestingContextPoolE\", 0x6BED8490]; 0x6BED8490 minus the image base 0x6B4C0000 is the RVA 0xA18490, whose word at +8 reads the string N5Utils4PoolIN5Multi14NestingContextEEE. **Whether a DERIVATION is a claim that needs a constructor is an open rule question: the rule's reason is that a layout without stores is arranged, and this is not a layout.** Utils::Pool appears nowhere in lcns/ and its constructor has not been found, so no class is declared",
+      "round": 730
+    },
+    {
+      "subject": "the-table-at-0xA560B0-names-libstdcxxs-counted-ptr",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the vtable at 0xA560B0 has a typeinfo whose name is St15_Sp_counted_ptrIPN6Tiling11PackerCacheELN9__gnu_cxx12_Lock_policyE2EE, so the object whose first word is 0xA560C0 is a std::shared_ptr control block and not a module class",
+      "witness": "0xA560B0's word at +8 is 0x6BEE0120; minus the image base that is the RVA 0xA20120, which reads St15_Sp_counted_ptrIPN6Tiling11PackerCacheELN9__gnu_cxx12_Lock_policyE2EE; the control block's counters are at +8 and +0xc and its pointed-to object at +0x10, which the Supervisor constructor sets to r14 at 0x329BC",
+      "round": 730
     }
   ]
 }

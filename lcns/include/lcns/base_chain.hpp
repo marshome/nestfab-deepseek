@@ -99,6 +99,21 @@ inline constexpr const char* kTilingMultiTiler = "N6Tiling10MultiTilerE";
 inline constexpr const char* kTilingEvaluator = "N6Tiling9EvaluatorE";
 
 // -------------------------------------------------------------------------------------------------------------------------------
+// **AND TWO BASES FOUND BY READING A TYPEINFO'S `+0x10`, WHICH IS WHERE ITANIUM PUTS THE BASE POINTER.**
+//
+//     Multi::NestingContextPool   ->  Utils::Pool<Multi::NestingContext>
+//         typeinfo 0xA18490, name N5Utils4PoolIN5Multi14NestingContextEEE
+//
+// **THE DERIVATION IS CERTAIN AND THE LAYOUT IS NOT.** `Multi::NestingContextPool`'s typeinfo at 0xA18290 has three words -- its own typeinfo vtable, the name
+// `N5Multi18NestingContextPoolE`, and **0x6BED8490**, a virtual address whose RVA 0xA18490 is the template's typeinfo. That is the `__si_class_type_info` shape
+// and not `__class_type_info`, so there IS exactly one base. **`Utils::Pool` appears nowhere in lcns/ and its constructor has not been found**, so it is recorded
+// here with its typeinfo and NOT declared: a class written without its constructor read is a class arranged rather than measured.
+//
+// **AND THE OTHER UNRECORDED TABLE IS NOT A MODULE CLASS AT ALL.** 0xA560B0's typeinfo is
+// `St15_Sp_counted_ptrIPN6Tiling11PackerCacheELN9__gnu_cxx12_Lock_policyE2EE` -- **libstdc++'s `std::_Sp_counted_ptr<Tiling::PackerCache*, ...>`**, which is what
+// a `std::shared_ptr`'s control block always is: its vtable at 0xA560B0, its two counters at +8 and +0xc, and the pointed-to object at +0x10. **An earlier round
+// read that control block's vtable as a class's and placed a module class there**; the correction is that `[rbx + 0x4C8]` is a `shared_ptr`.
+//
 // THE PATTERN FAMILY.
 //
 //     Tiling::BiModulePattern, Tiling::MultiOrientedPartPattern  ->  Tiling::Pattern
