@@ -759,8 +759,9 @@ extern "C" const char* sub_16CF0(std::intptr_t* object) {
 
 // ordinal 212/213  rva 0x0CEF0  45 bytes
 // signature from the inferred typed table
-extern "C" void SetShearGap(Order, double) {
-    lcns::dll::exports::notReversed(102u);
+extern "C" void SetShearGap(Order* order, double gap) {
+    // **THE MODULE READS ONE INTEGER REGISTER AND ONE XMM, SO THE FIRST PARAMETER IS A POINTER AND THE SECOND IS A DOUBLE.** The inferred table said `(Order, double)`, which is right about the second and wrong about the first.
+    lcns::dll::exports::impl::setShearGap(static_cast<void*>(order), gap);
 }
 
 // ordinal 214/215  rva 0x11490  423 bytes
@@ -844,10 +845,14 @@ extern "C" void DeleteNoFitGeometry(NoFitGeometry) {
 }
 
 // ordinal 238/239  rva 0x089D0  54 bytes
-// signature from the inferred typed table
-extern "C" int NoFitGetNumberOfExternalPolygons(NoFitGeometry) {
-    lcns::dll::exports::notReversed(115u);
-    return 0;
+// **ONE ARGUMENT, AND THE PROBE COUNTED TWO BECAUSE OF A LOGGING CALL.** `0x89D8 mov rdx, rcx` puts a COPY of the object in rdx for the logger at 0x89E2, whose
+// own convention is `(format, object)` -- **so rdx is not a second parameter**, and the probe recorded it as one because the instruction's source is rcx and its
+// destination is rdx. The real body starts at `0x89E7 mov rax, [rbx + 8]`.
+//
+// **AND THE FIRST PARAMETER IS A POINTER**: 0x89D5 is `mov rbx, rcx` and the vector's begin and end are read from `[rbx]` and `[rbx + 8]`.
+// **The return is 64 bits**: the module leaves the count in `rax` after the full `sub`/`sar`/`imul`.
+extern "C" std::size_t NoFitGetNumberOfExternalPolygons(NoFitGeometry* geometry) {
+    return lcns::dll::exports::impl::noFitGetNumberOfExternalPolygons(static_cast<const void*>(geometry));
 }
 
 // ordinal 240/241  rva 0x08E70  335 bytes  cns_no_fit.cpp
@@ -873,8 +878,9 @@ extern "C" int NoFitGetPoint(NoFitGeometry, int, int, int, double*, double*) {
 
 // ordinal 246/247  rva 0x188D0  529 bytes
 // signature from the inferred typed table
-extern "C" void SetMarkMode(Order, int) {
-    lcns::dll::exports::notReversed(119u);
+extern "C" void SetMarkMode(Order* order, int flag, double first, double second) {
+    // **FOUR ARGUMENTS AND THE PROBE SAID TWO**, because 0x188F0 `movapd xmm7, xmm2` and 0x188F4 `movapd xmm6, xmm3` put two DOUBLES in xmm2 and xmm3 and a probe that reads only rcx/rdx/r8/r9 cannot see them. `setMarkMode_188D0(void*, int, double, double)` matches the four moves exactly.
+    lcns::dll::exports::impl::setMarkMode_188D0(static_cast<void*>(order), flag, first, second);
 }
 
 // ordinal 248/249  rva 0x18AF0  889 bytes
@@ -1009,9 +1015,9 @@ extern "C" void CNS_SheetAddRestrictedZone(Order, int, int, const double*) {
 // ordinal 286/287  rva 0x0B000  18 bytes
 // signature synthesized from the register analysis: 1 integer register(s), 1 xmm; the
 // interleaving of the two classes is not recoverable, so treat the parameter list as opaque
-extern "C" std::intptr_t sub_0B000(std::intptr_t, double) {
-    lcns::dll::exports::notReversed(139u);
-    return 0;
+extern "C" void sub_0B000(Order* order, int flag, double value) {
+    // **THE BODY IS THREE INSTRUCTIONS AND USES ALL THREE ARGUMENTS**: `0xB000 test edx, edx`, `0xB002 movsd qword [rcx + 0x100], xmm2` and `0xB00A setne byte [rcx + 0xf9]`. So the flag is `edx > 0`, the double is `xmm2` and the object is `rcx` -- and `setDoubleAndFlag(void*, int, double)` matches.
+    lcns::dll::exports::impl::setDoubleAndFlag(static_cast<void*>(order), flag, value);
 }
 
 // ordinal 288/289  rva 0x0AFF0  10 bytes
@@ -1500,7 +1506,7 @@ const Entry kEntries[] = {
     {"GetNestedPartPartVariant", 206, 207, 0x16E60u, 1727u, Status::NotReversed, ""},
     {"sub_16CB0", 208, 209, 0x16CB0u, 57u, Status::Forwarded, "// kForwarding -> impl::setUserStringAt1B8"},
     {"sub_16CF0", 210, 211, 0x16CF0u, 8u, Status::Forwarded, "// kForwarding -> impl::getUserStringAt1B8"},
-    {"SetShearGap", 212, 213, 0x0CEF0u, 45u, Status::NotReversed, ""},
+    {"SetShearGap", 212, 213, 0x0CEF0u, 45u, Status::Forwarded, "// wired after the SSE arguments were counted"},
     {"SetIncompatibleSheet", 214, 215, 0x11490u, 423u, Status::NotReversed, ""},
     {"LaunchEstimateLocalComputation", 216, 217, 0x03360u, 52u, Status::NotReversed, "// LaunchEstimateLocalComputation"},
     {"AddSuggestedPartsGrouping", 218, 219, 0x11640u, 483u, Status::NotReversed, "cns.cpp"},
@@ -1513,11 +1519,11 @@ const Entry kEntries[] = {
     {"DeleteNoFitContext", 232, 233, 0x09CC0u, 568u, Status::NotReversed, ""},
     {"GetNoFitMap", 234, 235, 0x08AC0u, 939u, Status::NotReversed, "//GetNoFitMap"},
     {"DeleteNoFitGeometry", 236, 237, 0x08A10u, 171u, Status::NotReversed, ""},
-    {"NoFitGetNumberOfExternalPolygons", 238, 239, 0x089D0u, 54u, Status::NotReversed, ""},
+    {"NoFitGetNumberOfExternalPolygons", 238, 239, 0x089D0u, 54u, Status::Forwarded, "// kForwarding 238 -> impl::noFitGetNumberOfExternalPolygons"},
     {"NoFitGetNumberOfInternalHoles", 240, 241, 0x08E70u, 335u, Status::NotReversed, "cns_no_fit.cpp"},
     {"NoFitGetNumberOfPoints", 242, 243, 0x08FC0u, 497u, Status::NotReversed, ""},
     {"NoFitGetPoint", 244, 245, 0x091C0u, 366u, Status::NotReversed, "cns_no_fit.cpp"},
-    {"SetMarkMode", 246, 247, 0x188D0u, 529u, Status::NotReversed, ""},
+    {"SetMarkMode", 246, 247, 0x188D0u, 529u, Status::Forwarded, "// wired after the SSE arguments were counted"},
     {"GetNumberOfMarks", 248, 249, 0x18AF0u, 889u, Status::NotReversed, ""},
     {"GetMark", 250, 251, 0x18E70u, 1312u, Status::NotReversed, ""},
     {"AsyncCancelAllComputationsAndDeleteLaunchingOrder", 252, 253, 0x0B540u, 177u, Status::NotReversed, ""},
@@ -1537,7 +1543,7 @@ const Entry kEntries[] = {
     {"CNS_SetZoneRestrictedPart", 280, 281, 0x1AE40u, 507u, Status::NotReversed, ""},
     {"sub_1A7D0", 282, 283, 0x1A7D0u, 286u, Status::NotReversed, ""},
     {"CNS_SheetAddRestrictedZone", 284, 285, 0x1A210u, 1468u, Status::NotReversed, ""},
-    {"sub_0B000", 286, 287, 0x0B000u, 18u, Status::NotReversed, ""},
+    {"sub_0B000", 286, 287, 0x0B000u, 18u, Status::Forwarded, "// wired after the SSE arguments were counted"},
     {"sub_0AFF0", 288, 289, 0x0AFF0u, 10u, Status::Forwarded, "// wired after the arity was re-read"},
     {"AddToolPathToPart", 290, 291, 0x101C0u, 127u, Status::NotReversed, ""},
     {"AddLeatherQualityZoneInPart", 292, 293, 0x19F40u, 342u, Status::NotReversed, " [label shared with the entry at ordinal 274]"},

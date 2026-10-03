@@ -3238,6 +3238,22 @@
       "predicate": "setMultiTorchCuttingPreference_0F130 takes THREE arguments: it stores `edx` at +0x9C, sets the byte at +0x98 unconditionally, and takes the byte at +0xA0 from `r8d > 0` rather than from the value",
       "witness": "0xF13D mov r12d, edx and 0xF140 mov ebp, r8d; 0xF223 test ebp, ebp; 0xF225 mov byte [rsi + 0x98], 1; 0xF22C setg byte [rsi + 0xa0]; 0xF233 mov dword [rsi + 0x9c], r12d. `ebp` is never stored, so the third argument is read, tested and discarded. The implementation had two parameters and computed the flag from `value > 0`, and its test passed because both calls used the value AS the flag",
       "round": 738
+    },
+    {
+      "subject": "all-forty-seven-forwarded-ordinals-dispatch",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "all 47 kForwarding ordinals have a wrapper that calls the named implementation, and 121 of the 168 wrappers still report their ordinal",
+      "witness": "re/g_forwarding_gap.py reports 47 dispatching and 0 not; re/g_export_status.py counts 47 calls of the shape exports::impl::<name>( and 121 notReversed stubs, which sum to 168",
+      "round": 739
+    },
+    {
+      "subject": "four-arity-refusals-were-the-probes-error",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "four of the arity refusals were the probe's error, each for a different reason: a destination counted as an argument, `test` writing no register, doubles in xmm that the integer rule cannot see, and a logger's copy of the object counted as a second parameter",
+      "witness": "GetNumberOfNestedParts: 0xB1A4 mov rcx, qword [rbx + 8] is a destination. sub_0AFF0: 0xAFF0 test edx, edx reads both operands and writes none. SetMarkMode: 0x188F0 movapd xmm7, xmm2 and 0x188F4 movapd xmm6, xmm3 are arguments 3 and 4. NoFitGetNumberOfExternalPolygons: 0x89D8 mov rdx, rcx is a copy for the logger called at 0x89E2, and the body starts at 0x89E7",
+      "round": 739
     }
   ]
 }
