@@ -35,8 +35,12 @@ struct LaunchingOrderLayout {
     std::uint8_t         unnamed022;   // +0x022  written by RE 0x14620
     std::uint8_t         unnamed023;   // +0x023  written by RE 0x14620
     unsigned char unnamed024[0x4];   // +0x024..+0x027, not written by RE 0x14620
-    std::uint8_t         unnamed028;   // +0x028  narrowest store is 1 byte(s) at RE 0xD062
-    unsigned char unnamed029[0x7];   // +0x029..+0x02F, not written by RE 0x14620
+    // **THE WIDTH HERE WAS READ OFF A STACK STORE, AND THE SPAN IS EIGHT BYTES.** The annotation used to say "narrowest store is 1 byte(s) at RE 0xD062", and
+    // **0xD062 is `mov byte ptr [rsp + 0x28], 0`** -- the SAME DISPLACEMENT on the STACK, inside the log object that function builds, **not a store into this
+    // structure at all.** Measured through a register the prologue loaded from rcx, +0x28 takes **108 qword stores, 22 dword stores and 15 byte stores**, so eight
+    // bytes is the span and one byte was the wrong reading. **Whether the eight bytes are a `double` or a union with byte flags is a separate question** --
+    // `lcns/model.hpp`'s `usedSurfaceMinOffcutDimension` says `double` -- and it is recorded rather than resolved.
+    unsigned char        unnamed028[0x8];   // +0x028..+0x02F, eight bytes by store width; formerly declared 1 byte
     std::uint64_t        unnamed030;   // +0x030  written by RE 0x14620
     std::uint8_t         unnamed038;   // +0x038  narrowest store is 1 byte(s) at RE 0xD0F8
     unsigned char unnamed039[0x7];   // +0x039..+0x03F, not written by RE 0x14620

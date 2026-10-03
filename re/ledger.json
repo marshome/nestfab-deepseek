@@ -3422,6 +3422,22 @@
       "predicate": "the string basic_string::_M_construct null not valid at 0x9AC060 is referenced by no function in the image, so it is the linked library text rather than a message this module writes",
       "witness": "searching every function in lib.FUNCS for rip_targets containing 0x9AC060 returns 0; lib.STRS[0x9AC060] is that text",
       "round": 748
+    },
+    {
+      "subject": "unnamed028-was-read-off-a-stack-store",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "LaunchingOrderLayout unnamed028 at +0x028 spans eight bytes and was declared one byte, because its annotation cited RE 0xD062 which is a store to [rsp + 0x28] and not into the structure",
+      "witness": "0xD062 is mov byte ptr [rsp + 0x28], 0 in the function at 0xD050, whose prologue is push rbp / mov rbp, rcx, so rbp holds the object and the rsp store is inside the log object. Measured through a register loaded from rcx, +0x28 takes 108 qword, 22 dword and 15 byte stores, so the span is eight bytes. static_assert(sizeof(LaunchingOrderLayout) == 0x2C0) still holds after the correction",
+      "round": 749
+    },
+    {
+      "subject": "rbp-plus-N-is-not-a-stack-store-here",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "annotations citing [rbp + N] in launching_order.hpp are OBJECT writes and not stack writes, because the functions begin push rbp / mov rbp, rcx",
+      "witness": "RE 0xD119 mov dword ptr [rbp + 0xc], edi is inside the function at 0xD050 whose first instructions are push rbp at 0xD050 and mov rbp, rcx at 0xD058; the same for 0xE010 and RE 0xE0D9. re/g_stack_annotations.py flagged four annotations and only 0xD062 is a defect",
+      "round": 749
     }
   ]
 }
