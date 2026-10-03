@@ -434,9 +434,11 @@ std::string saveProblem(const Order& order, bool pretty) {
     root.set("pipe_enable", Value(order.pipeMode));
     root.set("mark_mode", Value(order.markMode));
     root.set("leather_mode", Value(order.leatherMode));
-    root.set("local_engine", Value(order.localEngine));
-    root.set("local_max_threads", Value(order.maxThreads));
-    root.set("local_max_iterations", Value(order.maxIterations));
+    // RE 0xD390: the module stores ONE BYTE at +0x200, so this is the byte and not a bool
+    root.set("local_engine", Value(static_cast<int>(order.engineLo)));
+    root.set("local_max_threads", Value(static_cast<int>(order.maxThreads)));   // RE 0xD3D5: mov dword [rsi], eax
+    root.set("local_engine_hi", Value(static_cast<int>(order.engineHi)));   // RE 0xD3A0: mov byte [rsi + 0x201], bl
+    root.set("local_max_iterations", Value(static_cast<int>(order.maxIterations)));   // RE 0xDF73 and 0xDF7A write +0x204 and +0x208, not this
     root.set("licence_key_1", Value(order.licenseKey1));
     root.set("licence_key_2", Value(order.licenseKey2));
 
@@ -511,7 +513,7 @@ bool loadProblem(const std::string& text, Order& out, std::string* error) {
     out.pipeMode = root.get("pipe_enable").asBool(false);
     out.markMode = root.get("mark_mode").asBool(false);
     out.leatherMode = root.get("leather_mode").asBool(false);
-    out.localEngine = root.get("local_engine").asBool(false);
+    out.engineLo = static_cast<std::uint8_t>(root.get("local_engine").asInt(0) & 0xFFu);   // RE 0xD390, one byte at +0x200
     out.maxThreads = root.get("local_max_threads").asInt(1);
     out.maxIterations = root.get("local_max_iterations").asInt(1000);
     out.licenseKey1 = root.get("licence_key_1").asString();

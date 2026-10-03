@@ -40,6 +40,11 @@ WIDTHS = {
 # lines" -- `usedSurfaceMinOffcutDimension`, `rowMode`, `pipeSides`, `markSize`, `leatherMode` and the rest -- **so they would have stayed interleaved with
 # the module's fields and kept pushing them off their offsets, which is the very thing this pass exists to fix.** A field line is a field line with or
 # without a note beside it.
+# **AND A PADDING MEMBER IS NOT A FIELD, NOR IS A BYTE RANGE NOTHING ESTABLISHES.** This tool INSERTS `std::byte paddingNN[...]` members and `Order` carries a
+# `std::byte unestablished202[...]` for the two bytes no export writes -- **and both carry a `+0xNNN` comment, so a field regex matches them and the tool starts
+# treating its own scaffolding, and a range with no evidence, as the module's structure.** The first run after the correction refused 27 of them as "types whose
+# width the table lacks", which is how the omission showed up.
+NOT_A_FIELD = re.compile(r"^(?:padding\d*|unestablished\w*)$")
 FIELD = re.compile(r"^(?P<indent>\s+)(?P<type>[\w:<>,\s\*&]+?)\s+(?P<name>\w+)\s*(?P<array>\[[^\]]*\])?\s*"
                    r"(?P<init>=[^;]*)?;\s*(?://(?P<comment>.*))?$")
 STRUCT = re.compile(r"^struct Order \{.*?^\};", re.M | re.S)
@@ -113,6 +118,10 @@ def main(argv):
         found = FIELD.match(line)
         if not found:
             others.append((index, line))
+            continue
+        if NOT_A_FIELD.match(found.group("name")):
+            # **PADDING AND UNESTABLISHED RANGES ARE NOT FIELDS**, so they are not placed, not sorted and not counted -- and their lines are dropped from the
+            # rebuild because the run computes its own padding.
             continue
         offsets = re.findall(r"\+0x([0-9A-Fa-f]+)", found.group("comment") or "")
         entry = {"line": index, "raw": line, "type": found.group("type").strip(), "name": found.group("name"),
@@ -194,15 +203,22 @@ def main(argv):
     # fallback is what put the padding after the closing brace.**
     rebuilt = [line for _index, line in body]
 
-    # **THE GUARD: A PERMUTATION CANNOT LOSE A LINE.** The multiset of lines must be unchanged, apart from the padding and the narrowed types.
-    original_set = sorted(line for line in lines if line.strip())
-    result_set = sorted(line for line in rebuilt if line.strip() and not line.lstrip().startswith("std::byte padding"))
-    # the narrowed lines differ deliberately, so they are compared by field NAME
+    # **THE GUARD: A PERMUTATION CANNOT LOSE A FIELD.** Every field name must survive, and **`paddingNN`/`unestablishedNNN` are not field names** -- the run
+    # recomputes its own padding and `Order`'s unestablished range is dropped, so comparing them would report a loss that is the tool doing its job. **The first
+    # version of this guard compared every `std::byte` line and refused on 27 padding members**, which is the same omission as everywhere else in this file.
     def names(seq):
-        return sorted(FIELD.match(line).group("name") for line in seq if FIELD.match(line))
-    if names(original_set) != names(result_set):
-        missing = set(names(original_set)) - set(names(result_set))
-        added = set(names(result_set)) - set(names(original_set))
+        found = []
+        for line in seq:
+            match = FIELD.match(line)
+            if match and not NOT_A_FIELD.match(match.group("name")):
+                found.append(match.group("name"))
+        return sorted(found)
+
+    original_names = names(lines)
+    result_names = names(rebuilt)
+    if original_names != result_names:
+        missing = set(original_names) - set(result_names)
+        added = set(result_names) - set(original_names)
         print("REFUSING: the permutation changed the field set. missing: %s  added: %s" % (sorted(missing), sorted(added)))
         return 2
 

@@ -126,7 +126,7 @@ int main() {
         order.shearGap = 1.25;
         order.markMode = true;
         order.leatherMode = true;
-        order.localEngine = true;
+        order.engineLo = true;
         order.maxThreads = 4;
         order.maxIterations = 321;
         order.reorganizeBiggestPartNearOrigin = true;
@@ -179,7 +179,8 @@ int main() {
         CHECK_NEAR(back.defectGap, 0.5, 1e-12);
         CHECK(back.shear && back.shearCorner);
         CHECK_NEAR(back.shearGap, 1.25, 1e-12);
-        CHECK(back.markMode && back.leatherMode && back.localEngine);
+        // RE 0xD390: +0x200 is ONE BYTE, so `engineLo` is compared as a byte and not as a bool
+        CHECK(back.markMode && back.leatherMode && back.engineLo == 1);
         CHECK(back.maxThreads == 4);
         CHECK(back.maxIterations == 321);
         CHECK(back.commonCutModeA == 2);

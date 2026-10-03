@@ -177,6 +177,8 @@ struct Order {
     // --- objective / origin (enums proven) ---
 
     // **THE MODULE'S LAYOUT, PLACED AT THE OFFSETS THE FIELD COMMENTS GIVE.** Every field below carries the offset its own comment states, padding fills the gaps, and this section is what makes `offsetof` agree with those comments.
+
+    // **THE MODULE'S LAYOUT, PLACED AT THE OFFSETS THE FIELD COMMENTS GIVE.** Every field below carries the offset its own comment states, padding fills the gaps, and this section is what makes `offsetof` agree with those comments.
     std::byte padding00[0x8];   // +0x000..+0x007, no field here
     Objective objective = Objective::MinimizeArea;   // +0x008
     NestingOrigin origin = NestingOrigin::BottomLeft;   // +0x00C
@@ -204,8 +206,8 @@ struct Order {
     int commonCutPresetIndex = 0;   // +0x06C
     int commonCutAuthorizations[3] = {0, 0, 0};   // +0x070
     std::byte padding09[0x8];   // +0x07C..+0x083, no field here
-    std::uint8_t commonCutNoHoles = 0;   // +0x084  narrower: int
-    std::uint8_t commonCutOnlyBiModules = 0;   // +0x085  narrower: int
+    std::uint8_t commonCutNoHoles = 0;   // +0x084
+    std::uint8_t commonCutOnlyBiModules = 0;   // +0x085
     std::byte padding10[0x2];   // +0x086..+0x087, no field here
     int commonCutModeTag = 0;   // +0x088
     int commonCutPresetIndex2 = 0;   // +0x08C
@@ -249,16 +251,28 @@ struct Order {
     std::byte padding21[0x7];   // +0x1B9..+0x1BF, no field here
     double commonCutAt1C0 = 0.0;   // +0x1C0
     std::byte padding22[0x30];   // +0x1C8..+0x1F7, no field here
-    int maxThreads = 1;   // +0x1F8
-    int maxIterations = 1000;   // +0x1FC
-    bool localEngine = false;   // +0x200
-    std::byte padding23[0x3F];   // +0x201..+0x23F, no field here
+    std::uint32_t maxThreads = 1;   // +0x1F8
+    std::uint32_t maxIterations = 1000;   // +0x1FC
+    std::uint8_t engineLo = 0;   // +0x200
+    std::uint8_t engineHi = 0;   // +0x201
+    std::byte padding23[0x2];   // +0x202..+0x203, no field here
+    std::uint32_t threadsA = 0;   // +0x204
+    std::uint32_t threadsB = 0;   // +0x208
+    std::byte padding24[0x34];   // +0x20C..+0x23F, no field here
     bool automaticStop = false;   // +0x240
-    std::byte padding24[0x3];   // +0x241..+0x243, no field here
+    std::byte padding25[0x3];   // +0x241..+0x243, no field here
     int unlockMode = 0;   // +0x244
     std::string licenseKey1 ;   // +0x248
     std::string licenseKey2 ;   // +0x268
-    std::byte padding25[0x38];   // +0x288..+0x2BF, no field here
+    std::byte padding26[0x38];   // +0x288..+0x2BF, no field here
+
+    // **THIS PROJECT'S OWN MEMBERS, NOT THE MODULE'S LAYOUT.** None of them carries an offset because no store establishes one, and they sat INTERLEAVED with the module's fields -- a model-only member between two module fields pushes every later module field off its offset. That is part of why the members landed nowhere near their comments.
+    /** **THE +0x1F8..+0x208 RANGE, FROM THREE EXPORTS.** `SetLocalEngine` at 0xD370 is `mov byte [rsi + 0x200], al` and `mov byte [rsi + 0x201], bl`;
+     *  `SetLocalEngineThreads` at 0xDE80 is `mov dword [rdi + 0x204], r12d` and `mov dword [rdi + 0x208], ebp`; and `exports_impl.cpp` already reads 0xD3D5,
+     *  0xD3E7, 0xD390 and 0xD3A0 into a `LocalEngineCarrier` whose fields are `maxThreads` at +0x1F8, `engineLo` at +0x200 and `engineHi` at +0x201.
+     *
+     *  **SO THE WIDTHS ARE PINNED BY INSTRUCTIONS RATHER THAN BY THE DECLARATION**: four bytes at +0x1F8, one byte at +0x200, one at +0x201, **two bytes at
+     *  +0x202 that NO export writes and that nothing therefore establishes**, and four bytes each at +0x204 and +0x208. */
 
     // **THIS PROJECT'S OWN MEMBERS, NOT THE MODULE'S LAYOUT.** None of them carries an offset because no store establishes one, and they sat INTERLEAVED with the module's fields -- a model-only member between two module fields pushes every later module field off its offset. That is part of why the members landed nowhere near their comments.
 

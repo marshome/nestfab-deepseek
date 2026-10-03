@@ -2,9 +2,9 @@
 
 | | Order (model.hpp) | LaunchingOrderLayout (launching_order.hpp) |
 |---|---|---|
-| fields with an offset | 56 | 127 |
+| fields with an offset | 59 | 127 |
 | shared offsets | colspan=2 | **54** |
-| only here | 2 | 73 |
+| only here | 5 | 73 |
 
 **AND `LaunchingOrderLayout` HAS 73 OFFSETS `Order` DOES NOT, OF WHICH 62 CARRY AN `unnamedXXX` NAME** -- which that file's own header explains: "A field with an OFFSET-DERIVED name (unnamedXXX) is one the module never names anywhere this project [can see]". **So the merge takes those offsets and NOT their names**, and `Order`'s names stand where it has one.
 
@@ -87,10 +87,13 @@
 | +0x2B0 | `std::uint64_t` | `unnamed2B0` | 8 B |
 | +0x2B8 | `std::uint64_t` | `unnamed2B8` | 8 B |
 
-## And the 2 offsets only `Order` has
+## And the 5 offsets only `Order` has
 
 | offset | Order's type | its name |
 |---|---|---|
-| +0x1FC | `int` | `maxIterations` |
-| +0x200 | `bool` | `localEngine` |
+| +0x1FC | `std::uint32_t` | `maxIterations` |
+| +0x200 | `std::uint8_t` | `engineLo` |
+| +0x201 | `std::uint8_t` | `engineHi` |
+| +0x204 | `std::uint32_t` | `threadsA` |
+| +0x208 | `std::uint32_t` | `threadsB` |
 
