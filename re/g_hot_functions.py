@@ -26,11 +26,11 @@ def main():
     top_n = int(sys.argv[1]) if len(sys.argv) > 1 else 26
     profile = load_prof()
 
-    # the profile's own caller lists are the authority; a function's `callers` may be empty if only `callees` was filled
+    # **THE RANK COMES FROM `callers` AND NOT FROM WALKING `callees`.** `callees` holds CALL-SITE ADDRESSES -- several per call, and entries inside the function
+    # itself -- **so counting it counts call sites and not callers**: it reported 10418 for `0x62F280` while that function's `callers` list holds 5209, **and a
+    # count that differs from the mechanism by a factor of two is the wrong count even when the rank happens to survive.**
     incoming = Counter()
     for address, entry in profile.items():
-        for callee in entry.get("callees") or []:
-            incoming[callee] += 1
         for caller in entry.get("callers") or []:
             incoming[address] += 1
 

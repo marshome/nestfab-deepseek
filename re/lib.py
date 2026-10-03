@@ -99,7 +99,28 @@ for s in sorted(pe.DIRECTORY_ENTRY_EXPORT.symbols, key=lambda x: x.ordinal):
 
 # ---- xref profile: written by 12_xref.py ----
 def load_prof():
-    return pickle.load(open(REDIR + r"\prof2.pkl", "rb"))
+    """The profile, with the `callers` lists de-self-referenced on load.
+
+    **74% OF THE FUNCTIONS IN THIS PROFILE LIST THEMSELVES AS THEIR OWN CALLER**, and the cause is a granularity mismatch:
+
+        the `callees` list holds CALL-SITE ADDRESSES, not callee function starts -- 0x1050's begins 0x109b 0x10c9 0x1120, all INSIDE 0x1050 itself
+        the reverse pass in re/12_xref.py attributes each call to `owner(target)`, so a call that stays within one function is attributed to that function
+
+    **so a function appears to call itself whenever it has an intra-function reference**, which is why the ratio is a prevalence and not one bad entry. **The two
+    lists are also different sizes for the same reason** -- 128184 callee edges against 77941 caller edges -- because the reverse pass drops targets whose owner
+    cannot be resolved.
+
+    **SO A SELF-REFERENCE IS REMOVED AND NOTHING ELSE IS TOUCHED.** A function calling itself is information for no question this project asks -- call-graph ranking,
+    reachability, who-references-this -- and it is what made 0x62F280 look like the module's most-called function with 10418 callers while its own list holds 5209.
+    **The honest fix is a profile whose `callees` names FUNCTIONS, and that needs the generator; this makes the existing data usable in the meantime without
+    pretending it is more than it is.**
+    """
+    profile = pickle.load(open(REDIR + r"\prof2.pkl", "rb"))
+    for start, entry in profile.items():
+        callers = entry.get("callers")
+        if callers and start in callers:
+            entry["callers"] = [c for c in callers if c != start]
+    return profile
 
 def get_prof():
     return load_prof()

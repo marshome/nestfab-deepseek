@@ -3654,6 +3654,22 @@
       "predicate": "no function in the image has any of the seven engine vtables as the target of a rip-relative operand, so nothing in this code INSTALLS one",
       "witness": "re/g_engine_vtable_refs.py scans every function for a rip-relative operand resolving to each vtable rva (0xA3CED0, 0xA3CF00, 0xA3CF70, 0xA3CFA0, 0xA3CFD0, 0xA3D000, 0xA3D030) and finds 0 referencing functions for every one. **The limit is stated with it**: the scan uses the profiler is function boundaries, so a reference from an address the profiler does not treat as a function would be missed, and a constructor could instead reach a vtable through the data section or a relocation",
       "round": 765
+    },
+    {
+      "subject": "the-profile-lists-every-function-as-its-own-caller",
+      "grade": "INSTRUCTION",
+      "kind": "call",
+      "predicate": "74 per cent of the functions in prof2.pkl list themselves as their own caller, because the callees list holds CALL-SITE ADDRESSES and the reverse pass attributes each call to owner(target)",
+      "witness": "8355 of 11240 functions with a non-empty callers list contain their own start. 0x1050 is size 571 and its callees begin 0x109b 0x10c9 0x1120, all inside 0x1050 itself. The two lists also differ in size for the same reason: 128184 callee edges against 77941 caller edges. **load_prof now drops the self-reference**, which halves the counts this project has been quoting: 0x62F280 goes from 10418 to 5209, which is what its own callers list held all along",
+      "round": 766
+    },
+    {
+      "subject": "infiniteengine-run-has-no-member",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "InfiniteEngine::run reads and writes nothing on this beyond saving it and returning it, so the class has no data member",
+      "witness": "the whole 80 bytes at 0x759A80 are: mov rbx, rcx at 0x759A8D, then either call 0x757AE0 directly or mov rdx, [rdx + 0x10] (the PROBLEM is field) followed by call qword ptr [rax + 0x10], and mov rax, rbx at 0x759A9E. **Every other operand is an argument or the problem**, so the delegation the tree documented from a comment is now read instruction by instruction",
+      "round": 766
     }
   ]
 }
