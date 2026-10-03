@@ -135,10 +135,36 @@ int main() {
     // fingerprints of the mapping (see re/findings_engine.md appendix 4).
     {
         CHECK(kTilingNesterBytes == 0x20);
+        // **AND THE MODEL MUST FIT IN WHAT THE MODULE ALLOCATES -- A COMPILE-TIME MEASUREMENT THE SUITE DID NOT HAVE.**
+        // Every assertion above compares a constant to the SAME constant (`kFlipNesterBytes == 0x28`, and kFlipNesterBytes IS 0x28), so a class larger
+        // than its allocation passed. `sizeof` against the allocation is the check that can fail, and a contradiction that only a human notices is one
+        // that gets shipped. **It is an UPPER BOUND and not an equality**, because the module allocates a block and constructs in it, so the object may
+        // be smaller than the block -- `NestingNester` is 0xA40 and the block is what the allocation site passes.
+        //
+        // **AND A CLASS WHOSE LAYOUT DELIBERATELY DEVIATES IS EXCLUDED AND NAMED, NOT SILENTLY DROPPED.** The module inlines a 208-byte `RowNestCore`
+        // inside `RowNester` at +0x18 and this port holds a `std::unique_ptr` to it instead, because `makeStrategy()` has no `Order` at construction
+        // time -- so the port's object is SMALLER than the module's and its size is not comparable. **A check that flags a documented deviation gets
+        // switched off; one that names the exception keeps working for everything else.**
+        //
+        // sizes as the model sees them (a failure here prints the real number):
+        static_assert(sizeof(lcns::FlipNester) <= static_cast<std::size_t>(lcns::kFlipNesterBytes), "the model's FlipNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::MultiTorchNester) <= static_cast<std::size_t>(lcns::kMultiTorchNesterBytes), "the model's MultiTorchNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::LimitedNester) <= static_cast<std::size_t>(lcns::kLimitedNesterBytes), "the model's LimitedNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::FilterNester) <= static_cast<std::size_t>(lcns::kFilterNesterBytes), "the model's FilterNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::NoFillNester) <= static_cast<std::size_t>(lcns::kNoFillNesterBytes), "the model's NoFillNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::CompactNester) <= static_cast<std::size_t>(lcns::kCompactNesterBytes), "the model's CompactNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::NestingNester) <= static_cast<std::size_t>(lcns::kNestingNesterBytes), "the model's NestingNester is larger than the module's allocation");
+        static_assert(sizeof(lcns::RectangleNester) <= static_cast<std::size_t>(lcns::kRectangleNesterBytes), "the model's RectangleNester is larger than the module's allocation");
+        std::printf("model sizes: Flip %zu/%d  MultiTorch %zu/%d  Limited %zu/%d  Filter %zu/%d  NoFill %zu/%d  Compact %zu/%d  Nesting %zu/%d  Rectangle %zu/%d  Row %zu/%d\n",
+            sizeof(lcns::FlipNester), lcns::kFlipNesterBytes, sizeof(lcns::MultiTorchNester), lcns::kMultiTorchNesterBytes,
+            sizeof(lcns::LimitedNester), lcns::kLimitedNesterBytes, sizeof(lcns::FilterNester), lcns::kFilterNesterBytes,
+            sizeof(lcns::NoFillNester), lcns::kNoFillNesterBytes, sizeof(lcns::CompactNester), lcns::kCompactNesterBytes,
+            sizeof(lcns::NestingNester), lcns::kNestingNesterBytes, sizeof(lcns::RectangleNester), lcns::kRectangleNesterBytes,
+            sizeof(lcns::RowNester), lcns::kRowNesterBytes);   // **the documented deviation: the port holds a pointer where the module inlines 208 bytes**
         CHECK(kNestingNesterBytes == 0xA40);
         CHECK(kRectangleNesterBytes == 0x20);
         CHECK(kRowNesterBytes == 0x20);
-        CHECK(kFlipNesterBytes == 0x28);
+        CHECK(kFlipNesterBytes == 0x28);   // the CONSTANT, not the model -- the static_asserts below are the measurement
         CHECK(kMultiTorchNesterBytes == 0x28);
         CHECK(kLimitedNesterBytes == 0x48);
         CHECK(kNoFillNesterBytes == 0x60);

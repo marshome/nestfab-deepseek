@@ -3558,6 +3558,22 @@
       "predicate": "lcns/tests/test_recovered.cpp asserts each nester's allocation size against a constant defined from the same instruction and never compares the model's sizeof, so a class larger than the module allocates passes",
       "witness": "the assertions are `CHECK(kFlipNesterBytes == 0x28)`, `CHECK(kLimitedNesterBytes == 0x48)` and so on, where those names are `inline constexpr` in engine.hpp with the same value; declaring the CompositeNester inheritance makes sizeof(FlipNester) 0x30 and the suite still passes",
       "round": 757
+    },
+    {
+      "subject": "the-model-is-short-of-every-nester-allocation",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "every nester class in the model is SMALLER than the module allocation for it, and none is larger, which is the signature of base data the model does not declare",
+      "witness": "one build prints: Flip 32/40, MultiTorch 24/40, Limited 72/72, Filter 2536/2536, NoFill 24/96, Compact 24/2552, Nesting 2560/2624, Rectangle 24/32, Row 56/32. Eight classes now carry static_assert(sizeof(T) <= allocation) in lcns/tests/test_recovered.cpp and all eight pass; the sizes come from the same build that runs the suite",
+      "round": 758
+    },
+    {
+      "subject": "the-nester-base-part-is-0x10-not-0x18",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "the Nester base part is 0x10 bytes -- a vptr and the +0x08 pointer -- so the two dwords 0xB4470 writes at +0x10 and +0x14 belong to CompositeNester, which makes CompositeNester 16 + 24 = 40 and fits FlipNester is allocation exactly",
+      "witness": "the module allocates 40 bytes for FlipNester (RE 0x2C953 mov ecx, 0x28 / call 0x998500 / call 0x4B570); Nester at 0x18 plus a 0x18 std::vector is 48, which does NOT fit, while Nester at 0x10 plus the vector is 40, which does. **This is an INFERENCE from the allocation sizes and is NOT yet confirmed by an instruction** -- the way to settle it is to find a class deriving straight from Nester that reads +0x10 or +0x14",
+      "round": 758
     }
   ]
 }
