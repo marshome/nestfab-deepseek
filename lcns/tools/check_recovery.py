@@ -185,6 +185,9 @@ UNTESTED_OK = {
     "Order_t": ("**NOT A CLASS -- AN INCOMPLETE TYPE.** `api.hpp` declares `struct Order_t;` so the C ABI has a handle name, and `using OrderHandle = Order_t*` is that "
                 "handle. The object it points at is `lcns::Order` in model.hpp, which IS tested. **A forward declaration cannot be tested and is not a recovered "
                 "type**, which is why it is here rather than in a test."),
+    "Solution_t": ("Same as Order_t: a forward declaration for the C ABI's handle name, `using SolutionHandle = Solution_t*`. **The object is `lcns::Solution` in "
+                   "model.hpp, which IS tested**, and `Solution` is used only as a parameter in the export wrappers, which is why its handle could be renamed "
+                   "without changing any return value."),
     "CommonCutSegment": "plain segment record asserted through the common cut tests",
     "MultitorchInfo": "plain info record, exercised via the nester tests",
     "BestObserver": "observer implementation used by the beam search tests",

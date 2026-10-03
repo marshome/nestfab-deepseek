@@ -49,7 +49,10 @@ LCNS_OPAQUE(Part);         // a part to nest
 LCNS_OPAQUE(Sheet);        // a sheet/plate
 LCNS_OPAQUE(Nesting);      // one nesting inside a solution
 LCNS_OPAQUE(NestedPart);   // a placed part
-LCNS_OPAQUE(Solution);     // SolveResult
+// **`Solution` IS THE REAL CLASS IN lcns/model.hpp, SO THE HANDLE IS NAMED `SolutionHandle`** -- the same rename `Order` needed, and for the same
+// reason: `using Solution = Solution_t*` beside `struct Solution` is two declarations of one name.
+struct Solution_t;
+using SolutionHandle = Solution_t*;   // SolveResult
 LCNS_OPAQUE(NoFitContext); // NoFitContext (0xF0 bytes in the original)
 LCNS_OPAQUE(NoFitNesting);
 LCNS_OPAQUE(NoFitGeometry);

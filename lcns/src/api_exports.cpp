@@ -67,7 +67,7 @@ extern "C" int GenerateHtmlLaunchingOrderReport(OrderHandle, const char*) {
 
 // ordinal 11/12  rva 0x0B350  247 bytes
 // signature from the inferred typed table
-extern "C" int GenerateHtmlSolutionReport(Solution, const char*) {
+extern "C" int GenerateHtmlSolutionReport(SolutionHandle, const char*) {
     lcns::dll::exports::notReversed(5u);
     return 0;
 }
@@ -102,14 +102,14 @@ extern "C" NestedPart GetNestedPart(Nesting, int) {
 
 // ordinal 21/22  rva 0x10F30  490 bytes  cns.cpp
 // signature from the inferred typed table
-extern "C" Nesting GetNesting(Solution, int) {
+extern "C" Nesting GetNesting(SolutionHandle, int) {
     lcns::dll::exports::notReversed(10u);
     return 0;
 }
 
 // ordinal 23/24  rva 0x0B190  63 bytes
 // signature from the inferred typed table
-extern "C" std::size_t GetNumberOfNestedParts(Solution* solution) {
+extern "C" std::size_t GetNumberOfNestedParts(SolutionHandle* solution) {
     // **ONE ARGUMENT, AND THE PROBE SAID TWO.** 0xB195 is `mov rbx, rcx` and 0xB1A4 is `mov rcx, qword [rbx + 8]` -- the second rcx is a DESTINATION loaded from the object and not a second argument. The implementation's `(void* order)` was right and the refusal was the tool's.
     return lcns::dll::exports::impl::getNumberOfNestedParts(static_cast<void*>(solution));
 }
@@ -121,7 +121,7 @@ extern "C" std::size_t GetNumberOfNestedParts(Solution* solution) {
 //
 // **AND THE PARAMETER IS A POINTER.** The inferred table said `(Solution)` by value, while 0xB0C5 is `mov rbx, rcx` and 0xB0D4 reads `[rbx + 0x58]` -- so rcx
 // holds the ADDRESS of the object whose vector is being measured.
-extern "C" std::size_t GetNumberOfNestings(Solution* solution) {
+extern "C" std::size_t GetNumberOfNestings(SolutionHandle* solution) {
     return lcns::dll::exports::impl::getNumberOfNestings(static_cast<void*>(solution));
 }
 
@@ -595,7 +595,7 @@ extern "C" void SetPartCommonCutMode(OrderHandle* object, int value) {
 
 // ordinal 168/169  rva 0x0B4B0  34 bytes
 // signature from the inferred typed table
-extern "C" double GetFillRatio(Solution) {
+extern "C" double GetFillRatio(SolutionHandle) {
     lcns::dll::exports::notReversed(80u);
     return std::numeric_limits<double>::quiet_NaN();
 }
