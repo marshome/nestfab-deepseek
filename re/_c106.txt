@@ -1,0 +1,35 @@
+lcns: FOUR engines agree on the same eleven offsets -- so that range is the BASE's data, and `EngineBase` is no longer empty
+
+**THE OBJECT REGISTER FOR THE TWO BIG ENGINES WAS UNFOUND LAST ROUND, AND THE REASON WAS THE SPILL.** Both save `rcx` to the stack in their prologue and reload it
+somewhere else:
+
+    75BCDB  mov qword ptr [rsp + 0x210], rcx      ; EquivalentEngine
+    759B9B  mov qword ptr [rsp + 0x410], rcx      ; CompositeEngine
+    75BDD8  mov rsi, qword ptr [rsp + 0x210]      ; **and it comes back in rsi**
+    75ABD1  mov rax, qword ptr [rsp + 0x410]      ; **and in CompositeEngine's case, rdi** (0x75AD1D)
+
+**so following `rcx` through `mov` copies loses it -- the tracking is not wrong, it is incomplete** -- and the fix is to find WHO READS THE SPILL SLOT.
+
+## And then the four of them agree
+
+    EquivalentEngine   rsi:  +0x00 +0x10 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40 +0x48 +0x50   (+0x54 +0x58 +0x60 read)
+    CompositeEngine    rdi:  +0x00 +0x10 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40 +0x48 +0x50
+    MultiEngine              +0x00 +0x08 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40
+    DelayedEngine            +0x00 +0x08 +0x10 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40 +0x48 +0x50
+
+**ELEVEN OFFSETS, THE SAME ELEVEN, AND THE WIDTHS MATCH WHERE THEY OVERLAP** -- a dword at +0x00 and +0x30, pointers elsewhere. **Four classes agreeing on eleven
+offsets is a base and not a coincidence**, so the range 0x00 to 0x50 belongs to `Engine::Engine`, **and the port declared it empty.**
+
+**AND THAT IS WHY THE MEMBERS GO ON THE BASE AND NOT ON `DelayedEngine`** -- which is where last round put them, from `DelayedEngine`'s own body. **The evidence was
+always that four classes agreed; reading one body first made it look like one class's data.**
+
+**AND THE CLAIM IS `INSTRUCTION` AND NOT `CONSTRUCTION`**, because nothing installs an engine vtable and there is no constructor to read a member off: **what is measured
+is that four `run` bodies read and write those offsets through the register that receives `rcx`.** Whether a constructor ALSO initialises them is not established, **and
+the initialisers written here are the values the bodies themselves store.**
+
+**AND THE FIELDS ARE NAMED BY OFFSET ON PURPOSE.** `EquivalentEngine::run` reads +0x54, +0x58 and +0x60 as well, **and it is not known whether those are the base's or a
+derived class's** -- **so the base stops at the range all four agree on, which is a decision the declaration can defend.**
+
+    lcns/include/lcns/engines.hpp   the base's eleven members with their instructions, and DelayedEngine back to its override alone
+
+Gate: build 0 errors 0 warnings, ctest 22 of 22, the six checks green, FABRICATED 0, the unsupported count 0, 464 claims with 0 problems.

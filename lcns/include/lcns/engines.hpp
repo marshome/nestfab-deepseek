@@ -68,12 +68,40 @@ constexpr std::uintptr_t kNestingEngineRunDirect = 0x757AE0;
  * `CompositeEngine` is 137, 129 and 8230. **So the base's whole surface is that one method**, and it is abstract because every derived class
  * implements it. There is no vtable for `Engine::Engine` ITSELF in re/vtables.json because an abstract base has no instantiated table, which is the
  * same reason the whole base layer was missing from this tree.
- */class EngineBase {
+ *
+ * **AND THE BASE HAS DATA, WHICH THIS DECLARATION DID NOT.**
+ *
+ * Nothing in the image references an engine vtable, so there is no constructor to read the members off -- **but FOUR engines read and write the SAME offsets through
+ * their object register**, and four classes agreeing on eleven offsets is a base and not a coincidence:
+ *
+ *     EquivalentEngine::run   through rsi, reloaded from the `rcx` spill at [rsp + 0x210] by 0x75BDD8 and 0x75BE6A
+ *     CompositeEngine::run    through rdi, reloaded from [rsp + 0x410] by 0x75ABD1 and 0x75AD1D
+ *     MultiEngine::run        reaches +0x00 +0x08 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40
+ *     DelayedEngine::run      reaches +0x00 +0x08 +0x10 +0x18 +0x20 +0x28 +0x30 +0x38 +0x40 +0x48 +0x50
+ *
+ * **the union is one contiguous range, 0x00 to 0x50**, with the widths the stores give: a dword at +0x00 and +0x30 and pointers elsewhere. **What each field MEANS is
+ * not established**, so they are named by offset -- **and they live HERE rather than on a derived class, because the evidence that they exist is that four derived
+ * classes agree about them.** The initialisers are the values the bodies themselves write (0x756F1C, 0x756F27, 0x756F2F, 0x756F37, 0x756FCD, 0x756FD4, 0x756FDC).
+ */
+class EngineBase {
 public:
     virtual ~EngineBase() = default;
 
     /** Slot 2, RE 0x2516E. The default is pure, so a subclass must say what it does rather than inherit silence. */
     virtual void* run(const void* problem, double timeLimit, void* observer, void* result) = 0;
+
+protected:
+    std::int32_t state00 = 0;      // +0x00, RE 0x756F1C writes 0 and 0x757117 writes 1; read at 0x75BE01
+    void* at08 = nullptr;          // +0x08, RE 0x756F27 zeroes it, 0x7552A0 reads it
+    void* at10 = nullptr;          // +0x10, RE 0x756F2F zeroes it, 0x75A6E9 reads it
+    void* at18 = nullptr;          // +0x18, RE 0x756F37 zeroes it, 0x75A6D5 reads it
+    void* at20 = nullptr;          // +0x20, RE 0x756FEB and 0x75C4A0 write it
+    void* at28 = nullptr;          // +0x28, RE 0x756FC9 takes its ADDRESS, 0x75C495 reads it
+    std::int32_t at30 = 0;         // +0x30, RE 0x756FCD and 0x75C48E are DWORD stores
+    void* at38 = nullptr;          // +0x38, RE 0x756FD4 and 0x75C4A4 write it
+    void* at40 = nullptr;          // +0x40, RE 0x756FE7 `mov qword ptr [rdi + 0x40], r8`
+    void* at48 = nullptr;          // +0x48, RE 0x756FEF `mov qword ptr [rdi + 0x48], r8`
+    void* at50 = nullptr;          // +0x50, RE 0x756FDC and 0x75C4AC write it
 };
 
 /** RE vtable 0xA3CFD0, THREE slots. Slot 0 is the deleting destructor 0x759B20, slot 1 the destructor 0x759AD0, and slot 2 is `run` at 0x759A80, 80 bytes.
@@ -217,20 +245,6 @@ public:
      *  and back at +0x00 (`757117 mov dword ptr [rdi], 1`). **The element stride is 39 bytes** -- `0x6F96F96F96F96F97` is the modular inverse of 3 after `sar 3`, and
      *  312 / 8 = 39, the same stride `GetNumberOfNestings` divides by. **What each field MEANS is not established**, so they are named by offset. */
     void* run(const void* problem, double timeLimit, void* observer, void* result) override;
-
-private:
-    std::int32_t state00_ = 0;        // +0x00, 0x756F1C writes 0 and 0x757117 writes 1
-    void* at08_ = nullptr;            // +0x08, 0x756F27: zeroed
-    void* at10_ = nullptr;            // +0x10, 0x756F2F: zeroed, then written from rsi and r13
-    void* at18_ = nullptr;            // +0x18, 0x756F37: zeroed, then written from rsi
-    void* at20_ = nullptr;            // +0x20, 0x756FEB: from rax
-    // +0x28 is taken as an address by `lea rcx, [rdi + 0x28]` at 0x756FC9 and passed to 0x5F3960
-    void* at28_[1] = {};              // +0x28
-    std::int32_t at30_ = 0;           // +0x30, 0x756FCD: zeroed, and `lea r8, [rdi + 0x30]` at 0x756FBC takes its address
-    void* at38_ = nullptr;            // +0x38, 0x756FD4: zeroed, then from rax
-    void* at40_ = nullptr;            // +0x40, 0x756FE7: from r8, then rcx
-    void* at48_ = nullptr;            // +0x48, 0x756FEF: from r8, then rax
-    void* at50_ = nullptr;            // +0x50, 0x756FDC: zeroed, then from rax
 };
 
 /** Engine::NestingEngine, Run at 0x757250, vtable 0xA3CFA0.

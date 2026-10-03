@@ -3718,6 +3718,14 @@
       "predicate": "the object-access mapper called `mov dword ptr [r13], 0` a READ and `mov rax, qword ptr [r15 + 0x20]` a WRITE, because it tested the instruction's text shape instead of the operand's position",
       "witness": "its first version asked whether the text matched `mov <size> ptr [..]` and treated everything else as a read, **so destination and source came out swapped** -- and a store places a field while a load only uses one, which is the distinction the objective asks for. The test is now whether the memory operand lies before the comma, and every offset in the report changed kind when it was fixed",
       "round": 769
+    },
+    {
+      "subject": "the-engines-share-one-member-layout-so-it-is-the-bases",
+      "grade": "INSTRUCTION",
+      "kind": "offset",
+      "predicate": "four engines read and write the SAME offsets through their object register -- 0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38, 0x40, 0x48 and 0x50 -- so that range is the BASE's data and not four classes' members",
+      "witness": "EquivalentEngine::run through rsi (which is reloaded from the `rcx` spill at [rsp + 0x210] by 0x75BDD8 and 0x75BE6A): +0x00 WR, +0x10 W, +0x18 W, +0x20 WR, +0x28 R, +0x30 WR, +0x38 WR, +0x40 WR, +0x48 WR, +0x50 WR. CompositeEngine::run through rdi (reloaded from [rsp + 0x410] by 0x75ABD1 and 0x75AD1D): +0x00 R, +0x10 R, +0x18 R, +0x20 WR, +0x28 R, +0x30 WR, +0x38 WR, +0x40 WR, +0x48 WR, +0x50 WR. **MultiEngine reaches +0x00, +0x08, +0x18, +0x20, +0x28, +0x30, +0x38 and +0x40, and DelayedEngine +0x00, +0x08, +0x10, +0x18, +0x20, +0x28, +0x30, +0x38, +0x40, +0x48 and +0x50.** Four classes agreeing on eleven offsets is a base and not a coincidence, and `no function references an engine vtable` means there is no constructor to read the members off directly",
+      "round": 770
     }
   ]
 }
