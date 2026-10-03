@@ -148,6 +148,13 @@ void setLocalMaximumThreads(void* object, int value) {
     static_cast<LocalEngineCarrier*>(object)->maxThreads = clampMaximumThreads(platformConcurrency(), value);
 }
 
+void setLocalMaximumIterations(void* object, int value) {
+    // RE 0x0D417: mov dword ptr [rsi + 0x1fc], ebx.
+    // **AND NOTHING ELSE**: 0x0D400 is 36 bytes and every other instruction in it is the prologue or the return, so a clamp here would be a behaviour the
+    // module does not have. The thread count beside it IS clamped, which is why the two are easy to confuse.
+    static_cast<LocalEngineCarrier*>(object)->maxIterations = static_cast<std::uint32_t>(value);
+}
+
 namespace {
 // RE 0x60A610 writes the byte at rip + 0x518D3A. The address is the original image's and cannot be reproduced, but the
 // value can, and that is what any caller can observe.
@@ -175,7 +182,7 @@ void setNoMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(
 void setNoSheetMixPreference(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field1C = value; }
 void setShearRepulseFromBorders(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field58 = value; }
 void unlockLaunchingOrder(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field244 = value; }
-void setInt_1FC(void* order, int value) { static_cast<IntFieldCarrier*>(order)->field1FC = value; }
+
 
 
 // ---------------------------------------------------------------- the nine setters (RE round 537)

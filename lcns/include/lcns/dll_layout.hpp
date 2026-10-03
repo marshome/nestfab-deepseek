@@ -264,8 +264,8 @@ static_assert(offsetof(HoleForceCarrier, something) == 0x20B, "RE 0xC62E");
  */
 struct LocalEngineCarrier {
     unsigned char opaque00[0x1F8];
-    std::uint32_t maxThreads;   // +0x1F8, RE 0xD3D5 and RE 0xD3E7
-    unsigned char opaque1FC[0x04];
+    std::uint32_t maxThreads;   // +0x1F8, RE 0xD3D5 and RE 0xD3E7: mov dword [rsi], eax
+    std::uint32_t maxIterations;  // +0x1FC, RE 0xD417: mov dword [rsi + 0x1fc], ebx -- SetLocalMaximumIterations
     unsigned char engineLo;     // +0x200, RE 0xD390, the complement of the argument low bit
     unsigned char engineHi;     // +0x201, RE 0xD3A0, the complement of bit one
 };

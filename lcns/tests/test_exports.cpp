@@ -326,13 +326,18 @@ int main() {
         // SetLocalMaximumIterations (ord 84, offset 0x1FC)
         {
             std::vector<unsigned char> obj(0x300, 0xAA);
-            ex::impl::setInt_1FC(obj.data(), 0x12345678);
+            ex::impl::setLocalMaximumIterations(obj.data(), 0x12345678);
             std::uint32_t got = 0;
             std::memcpy(&got, obj.data() + 0x1FC, 4);
             CHECK(got == 0x12345678u);
-            ex::impl::setInt_1FC(obj.data(), -2);
+            ex::impl::setLocalMaximumIterations(obj.data(), -2);
             std::memcpy(&got, obj.data() + 0x1FC, 4);
             CHECK(got == 0xFFFFFFFEu);   // a 32-bit store: the value is not widened
+            // **AND THE FORWARD IS NOW REAL AND NOT JUST LISTED.** `kForwarding` named this ordinal before the wrapper dispatched, so `forwards(84)` was true
+            // while the exported function still reported the ordinal to `notReversed` -- a list saying one thing and the code another. **The wrapper now calls
+            // the implementation, so the two agree**, and this checks the agreement rather than the list.
+            CHECK(ex::forwards(84u));
+            CHECK(ex::forwardingCount() == 47u);
         }
         // The 14 are exactly the entries the hand-written map forwards to.
         CHECK(ex::forwardedCount() == 47u);

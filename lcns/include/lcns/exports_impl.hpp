@@ -85,6 +85,12 @@ unsigned clampMaximumThreads(unsigned platformValue, int requested);
 /** RE 0xD3B0 (ordinal 82): stores clampMaximumThreads(platformConcurrency(), value) at +0x1F8. */
 void setLocalMaximumThreads(void* object, int value);
 
+/** RE 0x0D400 (ordinal 84), 36 bytes, and the body is ONE store: `mov dword [rsi + 0x1fc], ebx` at 0x0D417. **The export's own name is the oracle for the
+ *  field** -- the module calls it `SetLocalMaximumIterations` and it writes exactly one offset, which is `Order`'s `maxIterations`. **It was called `setInt_1FC`
+ *  here, a name built from its position**, and `kForwarding` named it at ordinal 84; the module's name replaces it. **No clamp**: 0xD3C7's `test ebx, ebx` and
+ *  0xD3D2's `cmova` are in the function next door. */
+void setLocalMaximumIterations(void* object, int value);
+
 /** RE 0xAFE0 through 0x1B270: normalises the argument to zero or one. */
 void setModuleSwitch(int value);
 /** RE 0x60A610: reads back the byte the switch writes, so the behaviour can be checked. */
@@ -98,7 +104,6 @@ void setNoMixPreference(void* order, int value);   // RE 0x0D310 -> +0x18
 void setNoSheetMixPreference(void* order, int value);   // RE 0x0D340 -> +0x1C
 void setShearRepulseFromBorders(void* order, int value);   // RE 0x0DE20 -> +0x58
 void unlockLaunchingOrder(void* order, int value); // RE 0x0D430 -> +0x244
-void setInt_1FC(void* order, int value);           // RE 0x0D400 -> +0x1FC
 
 
 // ---------------------------------------------------------------- the nine setters re/g_ready.py found ready (round 537)

@@ -302,9 +302,14 @@ extern "C" void SetLocalMaximumThreads(Order, int) {
 }
 
 // ordinal 84/85  rva 0x0D400  36 bytes
-// signature from the inferred typed table
-extern "C" void SetLocalMaximumIterations(Order, int) {
-    lcns::dll::exports::notReversed(40u);
+// **AND THE FIRST PARAMETER IS A POINTER, NOT A VALUE.** The inferred typed table said `(Order, int)`, while 0x0D406 is `mov rsi, rcx` and 0x0D417 writes
+// `dword [rsi + 0x1fc]` THROUGH it -- so rcx holds the ADDRESS of the Order. re/exports_table.md counts 2 register arguments, which is rcx and edx.
+// **The inferred signature was the guess and the instruction is the measurement.**
+//
+// **AND THIS WRAPPER DISPATCHES**: it calls the implementation in exports_impl.cpp, and kForwarding already names `impl::setInt_1FC` at ordinal 84. Before this
+// change the list claimed the forward and this wrapper reported the ordinal to notReversed instead, which is the gap re/g_forwarding_gap.py counts for 39 of 47.
+extern "C" void SetLocalMaximumIterations(Order* order, int iterations) {
+    lcns::dll::exports::impl::setLocalMaximumIterations(static_cast<void*>(order), iterations);
 }
 
 // ordinal 86/87  rva 0x0D050  334 bytes
@@ -1409,7 +1414,7 @@ const Entry kEntries[] = {
     {"SetObjective", 78, 79, 0x0CEC0u, 45u, Status::NotReversed, ""},
     {"SetDefectGap", 80, 81, 0x109C0u, 388u, Status::NotReversed, ""},
     {"SetLocalMaximumThreads", 82, 83, 0x0D3B0u, 68u, Status::NotReversed, ""},
-    {"SetLocalMaximumIterations", 84, 85, 0x0D400u, 36u, Status::NotReversed, ""},
+    {"SetLocalMaximumIterations", 84, 85, 0x0D400u, 36u, Status::Forwarded, "// kForwarding ordinal 84 -> impl::setLocalMaximumIterations"},
     {"SetOrigin", 86, 87, 0x0D050u, 334u, Status::NotReversed, ""},
     {"GetBuildVersion", 88, 89, 0x0B490u, 31u, Status::NotReversed, ""},
     {"GetBuildDate", 90, 91, 0x0B470u, 31u, Status::NotReversed, ""},

@@ -40,7 +40,7 @@ const Forwarding kForwarding[] = {
     {312, reinterpret_cast<void*>(&lcns::dll::exports::impl::setOriginPackingMode)},  // CNS_SetOriginPackingMode
     {330, reinterpret_cast<void*>(&lcns::dll::exports::impl::setPartialShearMode)},  // SetPartialShearMode
     {29, reinterpret_cast<void*>(&lcns::dll::exports::impl::getPartWithBadGeometry)},  // GetPartWithBadGeometry
-    {84, reinterpret_cast<void*>(&lcns::dll::exports::impl::setInt_1FC)},   // SetLocalMaximumIterations, offset 0x1FC
+    {84, reinterpret_cast<void*>(&lcns::dll::exports::impl::setLocalMaximumIterations)},   // SetLocalMaximumIterations, offset 0x1FC
     {146, reinterpret_cast<void*>(&lcns::dll::exports::impl::setShearMode)}, // SetShearMode, offset 0x44
     {188, reinterpret_cast<void*>(&lcns::dll::exports::impl::setNoMixPreference)}, // CNS_SetNoMixPreference, offset 0x18
     {222, reinterpret_cast<void*>(&lcns::dll::exports::impl::setNoSheetMixPreference)}, // CNS_SetNoSheetMixPreference, offset 0x1C
